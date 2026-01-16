@@ -1,0 +1,21 @@
+cercami l'oggetto che ha come campo description: "Errore di configurazione 4" 
+
+ "Pen121": {
+                "Name": "Pen121_P01T05D01",
+                "Pen": "Read122",
+                "Measurement": "",
+                "Hidden": false,
+                "Type": 0,
+                "Labels": [
+                    {
+                        "Code": "it",
+                        "Description": "Allarme Carico 11"   <-- questo è il campo che voglio te consideri(questo è un metadato aggiunto da Ash)
+                    {
+                        "Code": "en",
+                        "Description": "Load alarm 11"
+                    }
+                ],
+                "IsDefault": false
+            },
+
+qua ti do un esempio del tipo di oggetti che ti trovarai. La comparazione la voglio sul campo description
