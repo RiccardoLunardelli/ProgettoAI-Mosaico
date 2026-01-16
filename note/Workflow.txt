@@ -43,3 +43,24 @@ tokens ex: [SARA L INPUT PRINCIPALE DI DIZIONARIO, MATCHING E LLM]
 parse_warnings: 
 "MultiLanguageDescription is not valid JSON"
 "Measurement field is empty"
+
+extract_normalized_variables(template: dict) -> list[NormalizedVariable]
+È la funzione principale della fase 1.
+Per ogni sezione con Values:
+per ogni entry in Values crea un NormalizedVariable
+raw_key è la chiave della variabile
+raw_fields è il dict originale (non modificato)
+estrae e pulisce i campi testuali
+parsa MultiLanguageDescription se possibile
+costruisce tokens
+ricava unit da Measurement
+var_type prende Type se è int o str
+id = "{source_section}:{raw_key}"
+Ordina il risultato per (source_section, raw_key) per output deterministico.
+
+
+1) variabili utili secondo me valutare
+2) schema (io metto variabili scritte sullo schema e cosi è scalabile perche il nuovo json ha solo quelle variabili)
+3)
+4)json 
+5) capire che liunguaggio puo andare meglio con llm. md tipo o bho
