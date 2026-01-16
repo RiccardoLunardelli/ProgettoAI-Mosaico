@@ -1,0 +1,45 @@
+FASE 1
+Parsing e normalizzazione per produrre un outpu utilizzabile dal sistema.
+
+VARIABILI:
+| Campo          | Serve a                   |
+| -------------- | ------------------------- |
+| id             | identificare la variabile |
+| source_section | contesto                  |
+| raw_key        | identità originale        |
+| raw_fields     | fonte di verità           |
+| text_sources   | testo umano estratto      |
+| tokens         | confronto semantico       |
+| unit           | segnale fisico            |
+| var_type       | segnale tecnico           |
+| parse_warnings | qualità input             |
+
+
+template_parser.py
+- raw_fields ex: 
+{
+  "Enable": true,
+  "Name": "Read1_P02T01D01",
+  "Alias": "Read1",
+  "Description": "Sonda mandata",
+  "MultiLanguageDescription": "{...}",
+  "Type": 3,
+  "Measurement": "Â°C"
+}
+
+text_sources ex:
+{
+  "label": "LS",
+  "description": "Limite inferiore",
+  "multilanguage": {
+    "it": "Limite inferiore",
+    "en": "Lower limit"
+  }
+}
+
+tokens ex: [SARA L INPUT PRINCIPALE DI DIZIONARIO, MATCHING E LLM]
+["sonda", "mandata", "delivery", "probe"]
+
+parse_warnings: 
+"MultiLanguageDescription is not valid JSON"
+"Measurement field is empty"
