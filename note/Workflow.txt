@@ -1,66 +1,264 @@
-FASE 1
-Parsing e normalizzazione per produrre un outpu utilizzabile dal sistema.
-
-VARIABILI:
-| Campo          | Serve a                   |
-| -------------- | ------------------------- |
-| id             | identificare la variabile |
-| source_section | contesto                  |
-| raw_key        | identità originale        |
-| raw_fields     | fonte di verità           |
-| text_sources   | testo umano estratto      |
-| tokens         | confronto semantico       |
-| unit           | segnale fisico            |
-| var_type       | segnale tecnico           |
-| parse_warnings | qualità input             |
+FLUSSO --> load, normalize, match deterministico, fallback llm, patchactions, 
 
 
-template_parser.py
-- raw_fields ex: 
-{
-  "Enable": true,
-  "Name": "Read1_P02T01D01",
-  "Alias": "Read1",
-  "Description": "Sonda mandata",
-  "MultiLanguageDescription": "{...}",
-  "Type": 3,
-  "Measurement": "Â°C"
-}
+FASE 1 — Analisi template e perimetro dati
+----------Scopo-----------
+Capire quali parti dei template servono davvero.
 
-text_sources ex:
-{
-  "label": "LS",
-  "description": "Limite inferiore",
-  "multilanguage": {
-    "it": "Limite inferiore",
-    "en": "Lower limit"
-  }
-}
+---------Attività---------
+Studiare template reali
+Identificare sezioni prioritarie
+Decidere campi utili vs rumorosi
 
-tokens ex: [SARA L INPUT PRINCIPALE DI DIZIONARIO, MATCHING E LLM]
-["sonda", "mandata", "delivery", "probe"]
-
-parse_warnings: 
-"MultiLanguageDescription is not valid JSON"
-"Measurement field is empty"
-
-extract_normalized_variables(template: dict) -> list[NormalizedVariable]
-È la funzione principale della fase 1.
-Per ogni sezione con Values:
-per ogni entry in Values crea un NormalizedVariable
-raw_key è la chiave della variabile
-raw_fields è il dict originale (non modificato)
-estrae e pulisce i campi testuali
-parsa MultiLanguageDescription se possibile
-costruisce tokens
-ricava unit da Measurement
-var_type prende Type se è int o str
-id = "{source_section}:{raw_key}"
-Ordina il risultato per (source_section, raw_key) per output deterministico.
+----------Output------------
+Decisioni di perimetro (documento/notes)
+Lista sezioni e campi da includere
 
 
-1) variabili utili secondo me valutare
-2) schema (io metto variabili scritte sullo schema e cosi è scalabile perche il nuovo json ha solo quelle variabili)
-3)
-4)json 
-5) capire che liunguaggio puo andare meglio con llm. md tipo o bho
+FASE 2 — Creazione schema_tipo (schema-first)
+---------Scopo---------------
+Definire uno schema dichiarativo che governa l’estrazione dei dati.
+
+--------Attività----------
+Definizione sezioni incluse
+Definizione campi da estrarre
+Filtri (type ammessi, pattern esclusi)
+
+-------Output----------
+schema_tipo_v1.json
+
+
+FASE 3 — Creazione normalizzatore
+--------Scopo------------------
+Trasformare template grezzi in un formato uniforme.
+
+--------Attività----------------
+Parsing template JSON
+Applicazione schema_tipo
+Normalizzazione testo (encoding, lower, multilanguage)
+
+-------Output--------------------
+normalized_template_v1.json
+
+FASE 4 — Creazione Template Base (concetti canonici)
+---------Scopo---------------
+Definire il linguaggio standard del dominio.
+
+---------Attività----------------
+Identificazione concetti chiave
+Definizione categorie
+Etichette multilingua
+
+---------Output------------------
+template_base_v1.json
+
+🔹 FASE 5 — Creazione Dizionario
+
+Scopo
+Collegare il linguaggio reale dei template ai concetti canonici.
+
+Attività
+
+Raccolta sinonimi
+
+Pattern e abbreviazioni
+
+Versioning
+
+Output
+
+dictionary_v0.1.json
+
+🔹 FASE 6 — Creazione Knowledge Base (KB)
+
+Scopo
+Gestire il contesto (vendor, device, storico).
+
+Attività
+
+Definizione struttura KB
+
+Inserimento hint iniziali
+
+Output
+
+kb_v0.1.json
+
+🔹 FASE 7 — Matching deterministico
+
+Scopo
+Associare variabili a concetti senza usare AI.
+
+Attività
+
+Lookup dizionario
+
+Scoring numerico
+
+Applicazione KB
+
+Identificazione ambiguità
+
+Output
+
+match_result_v1.json
+
+mapped
+
+ambiguous
+
+unmapped_terms
+
+🔹 FASE 8 — Creazione MCP Server (infrastruttura core)
+
+Scopo
+Costruire l’orchestratore e gatekeeper del sistema.
+
+Attività
+
+Implementazione tool MCP:
+
+template.load / apply_patch
+
+schema.get / validate
+
+dictionary.search
+
+kb.load / upsert
+
+device_list.enrich
+
+Logging e audit
+
+Controllo I/O
+
+Output
+
+MCP server v1 funzionante
+
+JSON Schema ufficiali
+
+🔹 FASE 9 — Generazione PatchActions (senza LLM)
+
+Scopo
+Produrre PatchActions per i mapping deterministici.
+
+Attività
+
+Trasformare match_result in azioni
+
+Reason standard
+
+Confidence deterministica
+
+Output
+
+patch_actions_v1.json (deterministico)
+
+🔹 FASE 10 — Apply patch + Dry-run
+
+Scopo
+Applicare le PatchActions in modo sicuro.
+
+Attività
+
+Validazione schema
+
+Dry-run
+
+Produzione diff e warning
+
+Output
+
+diff.json
+
+warnings
+
+🔹 FASE 11 — Integrazione LLM (Ollama fallback)
+
+Scopo
+Risolvere ambiguità reali con AI controllata.
+
+Attività
+
+Chiamata Ollama per casi ambigui
+
+Produzione reason ed llm_signal
+
+Nessuna decisione autonoma
+
+Output
+
+contributo LLM strutturato
+
+🔹 FASE 12 — Fusione confidence e PatchActions ibride
+
+Scopo
+Calcolare confidence finale governata.
+
+Attività
+
+Fusione base_confidence + llm_signal
+
+Applicazione soglie
+
+Aggiornamento PatchActions
+
+Output
+
+patch_actions_v1.json (ibrido)
+
+🔹 FASE 13 — Report e audit
+
+Scopo
+Tracciabilità completa della run.
+
+Attività
+
+Raccolta metriche
+
+Version tracking
+
+Log strutturati
+
+Output
+
+run_report.json
+
+🔹 FASE 14 — Evoluzione Dizionario e KB
+
+Scopo
+Migliorare il sistema nel tempo.
+
+Attività
+
+Analisi unmapped_terms
+
+Update controllati
+
+Version bump
+
+Output
+
+dictionary_vX.Y.json
+
+kb_vX.Y.json
+
+🔹 FASE 15 — Test e non-regressione
+
+Scopo
+Garantire stabilità e qualità.
+
+Attività
+
+Golden dataset
+
+Test automatici
+
+Verifica output
+
+Output
+
+test suite
+
+expected outputs
