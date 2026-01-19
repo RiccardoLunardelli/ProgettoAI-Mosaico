@@ -1,5 +1,38 @@
 FLUSSO --> load, normalize, match deterministico, fallback llm, patchactions, 
+Struttura repository proposta
 
+schemas/
+    schema_tipo_v1.json
+    normalized_template_v1.schema.json
+    template_base_v1.schema.json
+    dictionary_v0.1.schema.json
+    kb_v0.1.schema.json
+    match_result_v1.schema.json
+    patch_actions_v1.schema.json
+    run_report_v1.schema.json
+data/
+    template_base_v1.json
+    dictionary_v0.1.json
+    kb_v0.1.json
+src/
+    normalizer/ (normalizzazione e parsing multilanguage)
+    matcher/ (deterministico + scoring)
+    patcher/ (genera PatchActions)
+    confidence/ (fusione pesata + soglie)
+    llm/ (client Ollama, solo fallback)
+    reporting/ (run_report, audit log)
+mcp_server/
+    tools/ (template, schema, dictionary, kb, device_list)
+    orchestrator/ (flow e retry bounded)
+    storage/ (versioning, allowlist path)
+tests/
+    schemas/ (validazioni)
+    matcher/ (golden deterministici)
+    patch_apply/ (idempotenza)
+    e2e/ (template reali)
+runs/ (output per run, diff, report, log)
+pv_datas/ (input reali esistenti)
+note/ (documentazione esistente)
 
 FASE 1 — Analisi template e perimetro dati
 ----------Scopo-----------
@@ -26,7 +59,6 @@ Filtri (type ammessi, pattern esclusi)
 
 -------Output----------
 schema_tipo_v1.json
-
 
 FASE 3 — Creazione normalizzatore
 --------Scopo------------------
