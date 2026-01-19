@@ -50,3 +50,16 @@ Etichette multilingua
 
 ### Output
 template_base_v1.json
+
+# FASE 5 — Creazione Dizionario
+
+### Scopo
+Collegare il linguaggio reale dei template ai concetti canonici.
+
+### Attività
+Raccolta sinonimi
+Pattern e abbreviazioni
+Versioning
+
+### Output
+dictionary_v0.1.json
