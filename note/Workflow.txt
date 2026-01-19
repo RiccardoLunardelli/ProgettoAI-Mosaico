@@ -40,6 +40,9 @@ Normalizzazione testo (encoding, lower, multilanguage)
 -------Output--------------------
 normalized_template_v1.json
 
+RICERCA --> % Uscita analogica (Write sole se TRA=UAL)
+Valore sonda 1Â° DEFROST
+
 FASE 4 — Creazione Template Base (concetti canonici)
 ---------Scopo---------------
 Definire il linguaggio standard del dominio.
