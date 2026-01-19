@@ -1,0 +1,292 @@
+{
+  "dictionary_version": "0.1",
+  "language": ["it", "en"],
+  "entries": [
+    {
+      "concept_id": "air_supply_temperature",
+      "category": "measurement",
+      "synonyms": { "it": ["temperatura di mandata"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "air_return_temperature",
+      "category": "measurement",
+      "synonyms": { "it": ["temperatura di ripresa"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "ambient_temperature",
+      "category": "measurement",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "evaporator_temperature",
+      "category": "measurement",
+      "synonyms": { "it": ["temperatura evaportatore satura"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "condenser_temperature",
+      "category": "measurement",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "defrost_temperature",
+      "category": "measurement",
+      "synonyms": { "it": ["temperatura di sbrinamento"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "suction_pressure",
+      "category": "measurement",
+      "synonyms": { "it": ["pressione evaporatore satura"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "discharge_pressure",
+      "category": "measurement",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "humidity",
+      "category": "measurement",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "compressor_state",
+      "category": "measurement",
+      "synonyms": { "it": ["compressori"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "fan_state",
+      "category": "measurement",
+      "synonyms": { "it": ["ventilatori"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "defrost_state",
+      "category": "measurement",
+      "synonyms": { "it": ["sbrinamento"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "door_open_state",
+      "category": "measurement",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+
+    {
+      "concept_id": "temperature_setpoint",
+      "category": "parameter",
+      "synonyms": { "it": ["setpoint", "set di regolazione parametro set"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "temperature_hysteresis",
+      "category": "parameter",
+      "synonyms": { "it": ["differenziale"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "defrost_interval",
+      "category": "parameter",
+      "synonyms": { "it": ["intervallo fra gli sbrinamenti"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "defrost_duration",
+      "category": "parameter",
+      "synonyms": { "it": ["durata massima sbrinamento"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "fan_delay",
+      "category": "parameter",
+      "synonyms": { "it": ["ritardo ventole dopo sbrinamento"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "high_temperature_threshold",
+      "category": "parameter",
+      "synonyms": { "it": ["temperatura massima", "soglia allarme di alta temperatura"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "low_temperature_threshold",
+      "category": "parameter",
+      "synonyms": { "it": ["temperatura minima", "soglia allarme di bassa temperatura"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+
+    {
+      "concept_id": "high_temperature_alarm",
+      "category": "alarm",
+      "synonyms": { "it": ["allarme di alta temperatura"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "low_temperature_alarm",
+      "category": "alarm",
+      "synonyms": { "it": ["allarme di bassa temperatura"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "sensor_fault_alarm",
+      "category": "alarm",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+
+    {
+      "concept_id": "compressor_fault_alarm",
+      "category": "alarm",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "defrost_failure_alarm",
+      "category": "alarm",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "high_pressure_alarm",
+      "category": "alarm",
+      "synonyms": { "it": ["allarme di alta pressione"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "low_pressure_alarm",
+      "category": "alarm",
+      "synonyms": { "it": ["allarme di bassa pressione"], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "door_open_alarm",
+      "category": "alarm",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+
+    {
+      "concept_id": "high_temperature_warning",
+      "category": "warning",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "low_temperature_warning",
+      "category": "warning",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "maintenance_warning",
+      "category": "warning",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "sensor_drift_warning",
+      "category": "warning",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+
+    {
+      "concept_id": "start_device_command",
+      "category": "command",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "stop_device_command",
+      "category": "command",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "start_defrost_command",
+      "category": "command",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "stop_defrost_command",
+      "category": "command",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "reset_alarm_command",
+      "category": "command",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+
+    {
+      "concept_id": "temperature_delta",
+      "category": "virtual_variable",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "defrost_count",
+      "category": "virtual_variable",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "runtime_hours",
+      "category": "virtual_variable",
+      "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    }
+  ]
+}

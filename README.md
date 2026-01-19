@@ -54,7 +54,7 @@ template_base_v1.json
 # FASE 5 — Creazione Dizionario
 
 ### Scopo
-Collegare il linguaggio reale dei template ai concetti canonici.
+Collegare il linguaggio reale dei templat (normalizzato)e ai concetti canonici.
 
 ### Attività
 Raccolta sinonimi

@@ -130,7 +130,32 @@
           "category": "parameter",
           "label": { "it": "Soglia bassa temperatura", "en": "Low temperature threshold" },
           "description": "Soglia per allarme o warning di bassa temperatura."
+        },
+        {
+            "concept_id": "superheat_temperature",
+            "category": "measurement",
+            "label": { "it": "Temperatura di surriscaldamento", "en": "Superheat temperature" },
+            "description": "Temperatura associata al surriscaldamento."
+        },
+        {
+            "concept_id": "regulation_pressure",
+            "category": "measurement",
+            "label": { "it": "Pressione di regolazione", "en": "Regulation pressure" },
+            "description": "Pressione usata come riferimento per la regolazione (locale o remota)."
+        },
+        {
+            "concept_id": "superheat_setpoint",
+            "category": "parameter",
+            "label": { "it": "Setpoint di surriscaldamento", "en": "Superheat setpoint" },
+            "description": "Setpoint target del surriscaldamento."
+        },
+        {
+            "concept_id": "dew_point_setpoint",
+            "category": "parameter",
+            "label": { "it": "Setpoint dew point", "en": "Dew point setpoint" },
+            "description": "Valore target del dew point per la regolazione."
         }
+
       ]
     },
     {
