@@ -1,52 +1,52 @@
-## FASE 1— Analisi template e perimetro dati
-# Scopo
+# FASE 1— Analisi template e perimetro dati
+### Scopo
 Capire quali parti dei template servono davvero.
 
-# Attività
+### Attività
 Studiare template reali
 Identificare sezioni prioritarie
 Decidere campi utili vs rumorosi
 
-# Output
+### Output
 Decisioni di perimetro (documento/notes)
 Lista sezioni e campi da includere
 
-## FASE 2 — Creazione schema_tipo (schema-first)
-# Scopo
+# FASE 2 — Creazione schema_tipo (schema-first)
+### Scopo
 Definire uno schema dichiarativo che governa l’estrazione dei dati.
 
-# Attività
+### Attività
 Definizione sezioni incluse
 Definizione campi da estrarre
 Filtri (type ammessi, pattern esclusi)
 
-# Output
+### Output
 schema_tipo_v1.json
 
 
-## FASE 3 — Creazione normalizzatore
-# Scopo
+# FASE 3 — Creazione normalizzatore
+### Scopo
 Trasformare template grezzi in un formato uniforme.
 
-# Attività
+### Attività
 Parsing template JSON
 Applicazione schema_tipo
 Normalizzazione testo (encoding, lower, multilanguage)
 
-# Output
+### Output
 normalized_template_v1.json
 
-# PER ESEGUIRE NORMALIZER
+### PER ESEGUIRE NORMALIZER
 uv run python src/parser/normalizer.py   --template pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json   --schema schemas/schema_tipo_v1.json   --output output_dir/normalized_template_v1.json
 
-## FASE 4 — Creazione Template Base (concetti canonici)
-# Scopo
+# FASE 4 — Creazione Template Base (concetti canonici)
+### Scopo
 Definire il linguaggio standard del dominio.
 
-# Attività
+### Attività
 Identificazione concetti chiave
 Definizione categorie
 Etichette multilingua
 
-# Output
+### Output
 template_base_v1.json
