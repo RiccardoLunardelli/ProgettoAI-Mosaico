@@ -1,7 +1,7 @@
 import argparse
 import json
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Field
@@ -209,7 +209,7 @@ def normalize_template(raw_template: Dict[str, Any], schema: Dict[str, Any]) -> 
     return NormalizedTemplate(
         template_guid=template_guid,
         schema_tipo_version=schema_version,
-        generated_at=datetime.now(timezone.utc).isoformat(),
+        generated_at=datetime.now(timezone(timedelta(hours=1))).isoformat(),
         variables=variables,
         support_only=support,
     )
