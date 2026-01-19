@@ -1,4 +1,4 @@
-# FASE 1— Analisi template e perimetro dati
+# FASE 1 — Analisi template e perimetro dati
 ### Scopo
 Capire quali parti dei template servono davvero.
 

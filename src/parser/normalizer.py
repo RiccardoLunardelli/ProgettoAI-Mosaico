@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 EVIDENCE_KEYS = {"Name", "Alias", "MultiLanguageDescription", "Label", "Category", "Priority"}
 
 class EvidenceFields(BaseModel):
+    # Campi di evidenza (non usati per matching, ma utili per audit/debug)
     Name: Optional[str] = None
     Alias: Optional[str] = None
     MultiLanguageDescription: Optional[Any] = None
@@ -17,6 +18,7 @@ class EvidenceFields(BaseModel):
     Priority: Optional[int] = None
 
 class VariableNormalized(BaseModel):   
+    # variabili normalizzate (Core)
     section: str
     source_key: str
     raw_text: Optional[str] = None
@@ -27,6 +29,7 @@ class VariableNormalized(BaseModel):
     evidence_fields: EvidenceFields
 
 class DataloggerPenEntry(BaseModel):
+    # Supporto per DatallogerPen (non usata per matching, solo evidenza)
     Pen: Optional[str] = None
     Labels: Optional[List[Dict[str, Any]]] = None
     Measurement: Optional[str] = None
@@ -34,10 +37,12 @@ class DataloggerPenEntry(BaseModel):
     Type: Optional[int] = None
 
 class SupportOnly(BaseModel):   
+    # Seziondi di supporto estratte dal template
     DataloggerPen: List[DataloggerPenEntry] = Field(default_factory=list)
     TemplateGuid: Optional[str] = None
 
 class NormalizedTemplate(BaseModel):
+    # Output finale del normalizzatore
     template_guid: Optional[str] = None
     schema_tipo_version: str
     generated_at: str
