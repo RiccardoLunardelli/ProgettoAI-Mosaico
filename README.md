@@ -64,12 +64,10 @@ Versioning
 ### Output
 dictionary_v0.1.json
 
-# Fase
-
 # FASE 6 - Creazione Knowledge Base
 
 ### Scopo
 Gestire il contesto (vendor, device, storico).
 
 ### Attività
-Creazione generatore device_list_context.json che aggiunge automaticamente type_fam, enum, device_role
+Creazione generatore device_list_context.json che aggiunge automaticamente type_fam_generated, enum_generated, device_role_generated

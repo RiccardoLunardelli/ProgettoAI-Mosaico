@@ -99,16 +99,18 @@ Versioning
 Output
 dictionary_v0.1.json
 
-🔹 FASE 6 — Creazione Knowledge Base (KB)
+FASE 6 — Creazione Knowledge Base (KB)
 
-Scopo
+-----------Scopo------------------
 Gestire il contesto (vendor, device, storico).
 
-Attività
+-------------Attività-------------------
+creazione generatore autoamtico type_fam enum e device role. --> I campi *_AI non sono mai letti direttamente dalla KB o dal matching.
+Servono solo per costruire il device_context finale tramite regole deterministiche e override manuali.
 Definizione struttura KB
 Inserimento hint iniziali
 
-Output
+-------------Output-----------------------------
 kb_v0.1.json
 
 🔹 FASE 7 — Matching deterministico
