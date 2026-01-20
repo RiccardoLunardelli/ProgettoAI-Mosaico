@@ -113,18 +113,18 @@ Inserimento hint iniziali
 -------------Output-----------------------------
 kb_v0.1.json
 
-🔹 FASE 7 — Matching deterministico
+FASE 7 — Matching deterministico
 
-Scopo
+--------Scopo----------
 Associare variabili a concetti senza usare AI.
 
-Attività
+--------Attività----------------
 Lookup dizionario
 Scoring numerico
 Applicazione KB
 Identificazione ambiguità
 
-Output
+------------Output-------------------
 match_result_v1.json
 mapped
 ambiguous

@@ -26,7 +26,7 @@
     {
       "concept_id": "superheat_temperature",   
       "category": "measurement",
-      "synonyms": { "it": ["temperatura di surriscaldamento"], "en": [] },
+      "synonyms": { "it": ["temperatura di surriscaldamento", "temperatura surriscaldamento"], "en": [] },
       "abbreviations": [],
       "patterns": []
     },
@@ -47,7 +47,7 @@
     {
       "concept_id": "temp_defrost",
       "category": "measurement",
-      "synonyms": { "it": ["temperatura di sbrinamento"], "en": [] },
+      "synonyms": { "it": ["temperatura di sbrinamento", "temperatura sbrinamento"], "en": [] },
       "abbreviations": [],
       "patterns": []
     },

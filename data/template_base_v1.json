@@ -14,7 +14,7 @@
         {
           "concept_id": "temp_return",
           "category": "measurement",
-          "label": { "it": "Temperatura aria di ripresatem", "en": "Return air temperature" },
+          "label": { "it": "Temperatura aria di ripresa", "en": "Return air temperature" },
           "description": "Temperatura dell’aria in uscita (ripresa)."
         },
         {
