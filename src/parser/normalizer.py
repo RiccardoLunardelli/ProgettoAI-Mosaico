@@ -173,14 +173,14 @@ def normalize_template(raw_template: Dict[str, Any], schema: Dict[str, Any]) -> 
     template_guid: Optional[str] = None
 
     for section in schema.get("sections", []):
-        name = section["name"]
-        role = section["role"]
-        path = section["path"]
-        value_type = section["value_type"]
+        name = section["name"]  # ContinuosRead | Parameter etc..
+        role = section["role"]  # support_only | core
+        path = section["path"]  # $.ContinuosRead.Values | $.Parameters.Values etc..
+        value_type = section["value_type"]  # scalar | keyed_map | 
 
-        data = resolve_path(raw_template, path)
+        data = resolve_path(raw_template, path) 
 
-        if value_type == "scalar":
+        if value_type == "scalar": 
             if name == "TemplateGuid":
                 template_guid = data
                 support.TemplateGuid = data

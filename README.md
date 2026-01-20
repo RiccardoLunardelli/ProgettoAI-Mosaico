@@ -63,3 +63,5 @@ Versioning
 
 ### Output
 dictionary_v0.1.json
+
+# Fase

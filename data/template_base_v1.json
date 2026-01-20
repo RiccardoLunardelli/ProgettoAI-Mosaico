@@ -9,13 +9,13 @@
           "concept_id": "temp_delivery",
           "category": "measurement",
           "label": { "it": "Temperatura aria di mandata", "en": "Supply air temperature" },
-          "description": "Temperatura dell’aria in uscita (mandata)."
+          "description": "Temperatura dell’aria in ingresso (mandata)."
         },
         {
           "concept_id": "temp_return",
           "category": "measurement",
-          "label": { "it": "Temperatura aria di ritorno", "en": "Return air temperature" },
-          "description": "Temperatura dell’aria in ingresso (ritorno)."
+          "label": { "it": "Temperatura aria di ripresa", "en": "Return air temperature" },
+          "description": "Temperatura dell’aria in uscita (ripresa)."
         },
         {
           "concept_id": "temp_ambient",

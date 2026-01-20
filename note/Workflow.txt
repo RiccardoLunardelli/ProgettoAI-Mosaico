@@ -105,13 +105,10 @@ Scopo
 Gestire il contesto (vendor, device, storico).
 
 Attività
-
 Definizione struttura KB
-
 Inserimento hint iniziali
 
 Output
-
 kb_v0.1.json
 
 🔹 FASE 7 — Matching deterministico
@@ -120,23 +117,15 @@ Scopo
 Associare variabili a concetti senza usare AI.
 
 Attività
-
 Lookup dizionario
-
 Scoring numerico
-
 Applicazione KB
-
 Identificazione ambiguità
 
 Output
-
 match_result_v1.json
-
 mapped
-
 ambiguous
-
 unmapped_terms
 
 🔹 FASE 8 — Creazione MCP Server (infrastruttura core)

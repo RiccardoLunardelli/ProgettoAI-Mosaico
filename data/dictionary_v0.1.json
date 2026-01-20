@@ -5,7 +5,7 @@
     {
       "concept_id": "temp_delivery",
       "category": "measurement",
-      "synonyms": { "it": ["temperatura di mandata"], "en": [] },
+      "synonyms": { "it": ["temperatura di mandata", "mandata", "Sm"], "en": [] },
       "abbreviations": [],
       "patterns": []
     },
@@ -20,6 +20,13 @@
       "concept_id": "temp_ambient",
       "category": "measurement",
       "synonyms": { "it": [], "en": [] },
+      "abbreviations": [],
+      "patterns": []
+    },
+    {
+      "concept_id": "superheat_temperature",   
+      "category": "measurement",
+      "synonyms": { "it": ["temperatura di surriscaldamento"], "en": [] },
       "abbreviations": [],
       "patterns": []
     },
