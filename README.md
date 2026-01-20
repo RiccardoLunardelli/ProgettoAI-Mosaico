@@ -70,4 +70,8 @@ dictionary_v0.1.json
 Gestire il contesto (vendor, device, storico).
 
 ### Attività
-Creazione generatore device_list_context.json che aggiunge automaticamente type_fam_generated, enum_generated, device_role_generated
+Creazione generatore(device_list_generator.py) device_list_context.json che aggiunge automaticamente type_fam_generated, enum_generated, device_role_generated
+Definizione struttura KB
+
+### Output
+kb_v0.1.json
