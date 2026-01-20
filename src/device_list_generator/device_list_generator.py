@@ -3,11 +3,11 @@ import re
 from pathlib import Path
 
 # percorso file device_list
-ROOT = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/FAMILA_RAVENNA/")
+ROOT = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/262174_VIGODA_ALI/")
 
 def derive_device_role(desc: str):
     # assegna ruolo device_role_AI
-
+    
     if not desc:
         return None
     d = desc.upper()
@@ -72,9 +72,9 @@ for path in ROOT.rglob("device_list.json"):
         enum = derive_enum(desc, type_fam)
 
         enriched = dict(item)
-        enriched["type_fam_AI"] = type_fam
-        enriched["enum_AI"] = enum
-        enriched["device_role_AI"] = device_role
+        enriched["type_fam_generated"] = type_fam
+        enriched["enum_generated"] = enum
+        enriched["device_role_generated"] = device_role
         out.append(enriched)
 
     out_path = path.with_name("device_list_context.json")
