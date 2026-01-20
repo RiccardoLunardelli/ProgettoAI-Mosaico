@@ -1,6 +1,7 @@
 import json
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
+import argparse
 
 SECTION_TO_CATEGORY = {
     "ContinuosReads": "measurement",
@@ -273,7 +274,6 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
         json.dump(report, f, ensure_ascii=False, indent=2)
 
 if __name__ == "__main__":
-    import argparse
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--normalized", required=True)

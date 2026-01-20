@@ -130,31 +130,21 @@ mapped
 ambiguous
 unmapped_terms
 
-🔹 FASE 8 — Creazione MCP Server (infrastruttura core)
-
-Scopo
+FASE 8 — Creazione MCP Server (infrastruttura core)
+----------Scopo--------------
 Costruire l’orchestratore e gatekeeper del sistema.
 
-Attività
-
+-----------Attività---------------
 Implementazione tool MCP:
-
 template.load / apply_patch
-
 schema.get / validate
-
 dictionary.search
-
 kb.load / upsert
-
 device_list.enrich
-
 Logging e audit
-
 Controllo I/O
 
-Output
-
+-------------Output----------------------
 MCP server v1 funzionante
 
 JSON Schema ufficiali
