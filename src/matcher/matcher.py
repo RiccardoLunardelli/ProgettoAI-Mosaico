@@ -69,40 +69,49 @@ def extract_device_context(device_context_path: str, template_guid: str) -> Dict
     return {"template_guid": template_guid}
 
 def run_matching(normalized_path: str, template_base_path: str, dictionary_path: str, kb_path: str, device_context_path: str, output_path: str) -> None:
-    #
+    # associa ogni variabile normalizzata a un concept_id del dizionario usando: categoria attesa, sinonimi, contesto del device, blacklist, punteggi del match
 
+    #caricamento dei dati
     normalized = load_json(normalized_path)
     template_base = load_json(template_base_path)
     dictionary = load_json(dictionary_path)
     kb = load_json(kb_path)
 
+    #costruzione indice {concept_id - category}
     concept_category = build_concept_index(template_base)
 
+    #recupero contesto del device
     template_guid  = normalized.get("template_guid")
     device_ctx = extract_device_context(device_context_path, template_guid)
 
+    #calcolo degli scope validi --> scorre tutti gli scope nella KB
     scope_ids = set()
     for scope in kb.get("scopes", []):
         match = scope.get("match", {})
+        # tiene solo quelli compatibili con il device
         if match.get("template_guid") == template_guid:
             ok = True
+            # verifica tutti i campi
             for k in ["type_fam", "device_role", "enum", "device_id"]:
+                # se tutto combacia, aggiunge lo scope_id
                 if match.get(k) is not None and match.get(k) != device_ctx.get(k):
                     ok = False
                     break
             if ok:
                 scope_ids.add(scope.get("scope_id"))
 
-    # Blacklist (opzionale)
+    # Blacklist --> serve per escludere concetti vietati in certi scope
     blacklist = kb.get("exceptions", {}).get("blacklist", [])
 
     items = []
+    # var = variabile del dispositivo
     for var in normalized.get("variables", []):
         section = var.get("section")
         source_key = var.get("source_key")
         enabled = var.get("enabled", True)
         text = normalize_str(var.get("normalized_text"))
 
+        # Variabile disabilitata --> no matching
         if enabled is False:
             items.append({
                 "source_key": source_key,
@@ -119,6 +128,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
             })
             continue
 
+        # Testo mancante / vuoto --> no matching
         if not text:
             items.append({
                 "source_key": source_key,
@@ -135,6 +145,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
             })
             continue
 
+        # Sezione non mappata --> no matching
         expected_category = SECTION_TO_CATEGORY.get(section)
         if expected_category is None:
             items.append({
@@ -152,9 +163,11 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
             })
             continue
 
+        # ricerca candidati nel dizionario
         candidates = []
         for entry in dictionary.get("entries", []):
             concept_id = entry.get("concept_id")
+            # scarta se: conceprt id non esiste, categoria diversa da quella attesa, incoerenza tra dizionario e template
             if concept_id not in concept_category:
                 continue
             if entry.get("category") != expected_category:
@@ -169,9 +182,10 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
             if is_blacklisted:
                 continue
 
+            # matching sui sinonimi. Per ogni sinonimo: normalizza, calcola lo score, se match -> aggiunge candidato
             for lang in ["it", "en"]:
                 for syn in entry.get("synonyms", {}).get(lang, []):
-                    syn_norm = normalize_str(syn)
+                    syn_norm = normalize_str(syn)   
                     if not syn_norm:
                         continue
                     score = match_score(text, syn_norm)
@@ -183,7 +197,8 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                             "dictionary_entry_id": concept_id,
                             "category": expected_category
                         })
-
+        
+        # nessun candidato compatibile
         if not candidates:
             items.append({
                 "source_key": source_key,
@@ -200,6 +215,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
             })
             continue
 
+        # se piu sinonimi matchano -> score piu alto vince
         best_by_concept = {}
         for cand in candidates:
             cid = cand["concept_id"]
@@ -212,6 +228,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
         # determinismo: ordina per score desc, poi concept_id, poi matched_synonym
         candidates.sort(key=lambda c: (-c["score"], c["concept_id"], c["matched_synonym"]))
 
+        # decisione di un candidato
         top = candidates[0]
         if len(candidates) == 1:
             items.append({
@@ -230,7 +247,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
             continue
 
         second = candidates[1]
-        if top["score"] >= 0.9 and (top["score"] - second["score"]) >= 0.15:
+        if top["score"] >= 0.9 and (top["score"] - second["score"]) >= 0.15: # Auto-match
             items.append({
                 "source_key": source_key,
                 "section": section,
@@ -245,6 +262,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                 }
             })
         else:
+            # Ambiguo
             items.append({
                 "source_key": source_key,
                 "section": section,
