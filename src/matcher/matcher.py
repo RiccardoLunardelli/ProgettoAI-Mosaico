@@ -37,11 +37,11 @@ def match_score(text: str, synonym: str) -> Optional[float]:
     if text == synonym: # uguali
         return 1.0
     if synonym in text: # synonym è presente in text
-        return 0.9
+        return 0.7
     syn_tokens = tokenize(synonym) # match per token
     text_tokens = set(tokenize(text))
     if syn_tokens and all(tok in text_tokens for tok in syn_tokens): # tutti i token del sinonimo sono presenti in text.
-        return 0.8                                             # ex: text = "learning automatico e machine vision", synonym = "machine learning"
+        return 0.6                                             # ex: text = "learning automatico e machine vision", synonym = "machine learning"
     return None
 
 def build_concept_index(template_base: Dict[str, Any]) -> Dict[str, str]:
@@ -117,6 +117,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                 "source_key": source_key,
                 "section": section,
                 "status": "skipped_disabled",
+                "technical_reason": "disabled_variable",
                 "concept_id": None,
                 "confidence": None,
                 "evidence": {
@@ -134,6 +135,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                 "source_key": source_key,
                 "section": section,
                 "status": "skipped_invalid",
+                "technical_reason": "missing_normalized_text",
                 "concept_id": None,
                 "confidence": None,
                 "evidence": {
@@ -152,6 +154,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                 "source_key": source_key,
                 "section": section,
                 "status": "unmapped",
+                "technical_reason": "unkown_section",
                 "concept_id": None,
                 "confidence": None,
                 "evidence": {
@@ -204,6 +207,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                 "source_key": source_key,
                 "section": section,
                 "status": "unmapped",
+                "technical_reason": "no_dictionary_match",
                 "concept_id": None,
                 "confidence": None,
                 "evidence": {
@@ -231,10 +235,12 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
         # decisione di un candidato
         top = candidates[0]
         if len(candidates) == 1:
+            reason = "exact_match" if top["score"] == 1.0 else "single_candidate_match"
             items.append({
                 "source_key": source_key,
                 "section": section,
                 "status": "matched",
+                "technical_reason": reason,
                 "concept_id": top["concept_id"],
                 "confidence": top["score"],
                 "evidence": {
@@ -251,7 +257,8 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
             items.append({
                 "source_key": source_key,
                 "section": section,
-                "status": "matched_auto",
+                "status": "matched",
+                "technical_reason": "top_score_dominant",
                 "concept_id": top["concept_id"],
                 "confidence": top["score"],
                 "evidence": {
@@ -267,6 +274,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                 "source_key": source_key,
                 "section": section,
                 "status": "ambiguous",
+                "technical_reason": "multiple_candidates_no_dominance",
                 "concept_id": None,
                 "confidence": None,
                 "evidence": {
