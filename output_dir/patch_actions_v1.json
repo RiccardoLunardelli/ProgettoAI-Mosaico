@@ -1,6 +1,6 @@
 {
   "patch_actions_version": "v0.1",
-  "generated_at": "2026-01-21T12:28:19.035912+01:00",
+  "generated_at": "2026-01-21T13:38:38.495177+01:00",
   "source_matching_version": "v0.1",
   "actions": [
     {
@@ -120,7 +120,7 @@
       "normalized_text": "valore sonda regolazione ventilatori",
       "concept_id": "state_fan",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Read11"
     },
     {
@@ -180,7 +180,7 @@
       "normalized_text": "tempo mancante al prossimo sbrinamento 1=10 sec",
       "concept_id": "state_defrost",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Read17"
     },
     {
@@ -320,7 +320,7 @@
       "normalized_text": "uscita digitale sbrinamento resistenze",
       "concept_id": "state_defrost",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Read31"
     },
     {
@@ -430,7 +430,7 @@
       "normalized_text": "stato sbrinamento ritardo avviamento attesa dsd",
       "concept_id": "state_defrost",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Read42"
     },
     {
@@ -440,7 +440,7 @@
       "normalized_text": "stato sbrinamento manuale",
       "concept_id": "state_defrost",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Read43"
     },
     {
@@ -450,7 +450,7 @@
       "normalized_text": "stato sbrinamento sincronizzato lan",
       "concept_id": "state_defrost",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Read44"
     },
     {
@@ -460,7 +460,7 @@
       "normalized_text": "stato sbrinamento in gocciolamento",
       "concept_id": "state_defrost",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Read45"
     },
     {
@@ -470,7 +470,7 @@
       "normalized_text": "stato sbrinamento in pausa attesa consenso di fine da lan",
       "concept_id": "state_defrost",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Read46"
     },
     {
@@ -510,7 +510,7 @@
       "normalized_text": "master sbrinamento",
       "concept_id": "state_defrost",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Read50"
     },
     {
@@ -966,7 +966,7 @@
       "normalized_text": "configurazione differenziale relativo/assoluto",
       "concept_id": "hysteresis_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param3"
     },
     {
@@ -976,7 +976,7 @@
       "normalized_text": "differenziale assoluto",
       "concept_id": "hysteresis_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param4"
     },
     {
@@ -986,7 +986,7 @@
       "normalized_text": "setpoint minimo",
       "concept_id": "setpoint_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param5"
     },
     {
@@ -996,7 +996,7 @@
       "normalized_text": "setpoint massimo",
       "concept_id": "setpoint_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param6"
     },
     {
@@ -1076,7 +1076,7 @@
       "normalized_text": "setpoint per ciclo continuo",
       "concept_id": "setpoint_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param14"
     },
     {
@@ -1256,7 +1256,7 @@
       "normalized_text": "setpoint surriscaldamento",
       "concept_id": "setpoint_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param32"
     },
     {
@@ -1636,7 +1636,7 @@
       "normalized_text": "setpoint resistenze durante sbrinamento",
       "concept_id": "setpoint_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param70"
     },
     {
@@ -1646,7 +1646,7 @@
       "normalized_text": "differenziale per le resistenze",
       "concept_id": "hysteresis_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param71"
     },
     {
@@ -1856,7 +1856,7 @@
       "normalized_text": "differenziale di temperatura per evitare la pendolazione delle ventole",
       "concept_id": "hysteresis_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param92"
     },
     {
@@ -1876,7 +1876,7 @@
       "normalized_text": "differenziale ripartenza ventole",
       "concept_id": "hysteresis_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param94"
     },
     {
@@ -1976,7 +1976,7 @@
       "normalized_text": "differenziale resistenze anti condensanti",
       "concept_id": "hysteresis_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param104"
     },
     {
@@ -2056,7 +2056,7 @@
       "normalized_text": "differenziale rientro allarme temperatura",
       "concept_id": "hysteresis_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param112"
     },
     {
@@ -2076,7 +2076,7 @@
       "normalized_text": "soglia allarme di alta temperatura sonda sbrinamento",
       "concept_id": "threshold_high_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param114"
     },
     {
@@ -2086,7 +2086,7 @@
       "normalized_text": "soglia allarme di bassa temperatura sonda sbrinamento",
       "concept_id": "threshold_low_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param115"
     },
     {
@@ -2096,7 +2096,7 @@
       "normalized_text": "differenziale rientro allarme temperatura sonda sbrinamento",
       "concept_id": "hysteresis_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param116"
     },
     {
@@ -2116,7 +2116,7 @@
       "normalized_text": "soglia allarme di alta temperatura sonda ventole",
       "concept_id": "threshold_high_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param118"
     },
     {
@@ -2126,7 +2126,7 @@
       "normalized_text": "soglia allarme di bassa temperatura sonda ventole",
       "concept_id": "threshold_low_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param119"
     },
     {
@@ -2136,7 +2136,7 @@
       "normalized_text": "differenziale rientro allarme temperatura sonda ventole",
       "concept_id": "hysteresis_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param120"
     },
     {
@@ -3016,7 +3016,7 @@
       "normalized_text": "sincronizzazione setpoint",
       "concept_id": "setpoint_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Param208"
     },
     {
@@ -3406,7 +3406,7 @@
       "normalized_text": "allarme di bassa temperatura sonda 1",
       "concept_id": "alarm_low_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Alarm9"
     },
     {
@@ -3416,7 +3416,7 @@
       "normalized_text": "allarme di alta temperatura sonda 1",
       "concept_id": "alarm_high_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Alarm10"
     },
     {
@@ -3426,7 +3426,7 @@
       "normalized_text": "allarme di bassa temperatura sbrinamento",
       "concept_id": "alarm_low_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Alarm11"
     },
     {
@@ -3436,7 +3436,7 @@
       "normalized_text": "allarme di alta temperatura sbrinamento",
       "concept_id": "alarm_high_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Alarm12"
     },
     {
@@ -3446,7 +3446,7 @@
       "normalized_text": "allarme di bassa temperatura ventole",
       "concept_id": "alarm_low_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Alarm13"
     },
     {
@@ -3456,7 +3456,7 @@
       "normalized_text": "allarme di alta temperatura ventole",
       "concept_id": "alarm_high_temperature",
       "confidence": 0.7,
-      "reason": "ambiguita_ma_confidenza_minore_soglia",
+      "reason": "ambiguita_confidenza_minore_soglia",
       "evidence_ref": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json#Alarm14"
     },
     {

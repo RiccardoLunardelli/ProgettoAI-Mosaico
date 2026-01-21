@@ -34,7 +34,7 @@ def run_patch_actions(matching_path: str, output_path: str) -> None:
 
         evidence_ref = f"{matching_path}#{source_key}"
 
-        # CASI MATCHED
+        # CASI MATCHED CON CONDIFEDENCE > 0.9
         if status == "matched" and confidence >= 0.9:
             actions.append({
                 "action_type": "NO_OP",
@@ -46,6 +46,7 @@ def run_patch_actions(matching_path: str, output_path: str) -> None:
                 "reason": "matching_deterministico",
                 "evidence_ref": evidence_ref      
             })
+        # CASI MATCHED CON SOGLIA < 0.9
         elif status == "matched":
             actions.append({
                 "action_type": "REQUIRE_REVIEW",
@@ -54,7 +55,7 @@ def run_patch_actions(matching_path: str, output_path: str) -> None:
                 "normalized_text": normalized_text,
                 "concept_id": item.get("concept_id"),
                 "confidence": confidence,
-                "reason": "ambiguita_ma_confidenza_minore_soglia",
+                "reason": "ambiguita_confidenza_minore_soglia",
                 "evidence_ref": evidence_ref
             })
             continue
