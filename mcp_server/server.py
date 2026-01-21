@@ -1,29 +1,31 @@
 from mcp.server.fastmcp import FastMCP
+from .core import MCPContext
 from .tools import template_tool, schema_tool, kb_tool, dictionary_tool, device_list_tool
 
 mcp = FastMCP("MCP-Server")
+ctx = MCPContext(repo_root=".")
 
 # ----------------TEMPLATE-----------------------
 @mcp.tool()
 def template_load(path: str) -> dict:
-    pass
+    return template_tool.template_load(ctx, path)
 
 @mcp.tool()
 def template_save(path: str, template: dict) -> dict:
-    pass
+    return template_tool.template_save(ctx, path, template)
 
 @mcp.tool()
-def template_apply_path(path: str, patch: dict, dru_run: bool) -> dict:
-    pass
+def template_apply_path(path: str, patch: dict, dry_run: bool) -> dict:
+    return template_tool.template_apply_patch(ctx, path, patch, dry_run)
 
 # ----------------SCHEMA------------------------
 @mcp.tool()
-def schema_validate(schema_id: str, payload: dict) -> dict:
-    pass
+def schema_get(schema_id: str) -> dict:
+    return schema_tool.schema_get(ctx, schema_id)
 
 @mcp.tool()
-def schema_get(schema_id: str) -> dict:
-    pass
+def schema_validate(schema_id: str, payload: dict) -> dict:
+    return schema_tool.schema_validate(ctx, schema_id, payload)
 
 # ---------------DIZIONARIO-------------------------
 @mcp.tool()
