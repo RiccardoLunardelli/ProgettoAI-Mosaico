@@ -290,7 +290,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
             })
 
     report = {
-        "schema_version": "v1",
+        "schema_version": "v0.1",
         "template_guid": template_guid,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "items": items
