@@ -1,0 +1,202 @@
+🔹 FASE 8 — Derivazione delle Patch Actions
+---------------Ruolo-------------------------
+Trasformare l’output del matching in azioni dichiarative candidate, senza decidere nulla.
+
+---------------Input-----------------
+matching_report
+template_normalized
+dictionary
+template_base
+kb
+Cosa succede
+Per ogni variabile:
+matched → nessuna azione
+ambiguous → REQUIRE_REVIEW
+unmapped → PROPOSE_SYNONYM o PROPOSE_CONCEPT
+out_of_scope → MARK_OUT_OF_SCOPE
+
+-------------------Output-----------------------
+patch_actions_v1.json
+⚠️
+Nessuna modifica diretta
+Nessuna intelligenza
+Solo regole meccaniche
+
+🔹 FASE 9 — MCP Server (core operativo)
+Ruolo
+
+Diventa l’orchestratore unico dell’intero flusso.
+
+Responsabilità
+
+eseguire le fasi in ordine
+
+isolare side effects
+
+applicare policy
+
+garantire auditabilità
+
+Tool MCP (minimi)
+
+load_run
+
+validate_patch
+
+apply_patch (dry_run=true|false)
+
+compute_diff
+
+commit_run
+
+generate_run_report
+
+👉 MCP non interpreta, non decide, non inventa.
+
+🔹 FASE 10 — Validazione schema-first
+Ruolo
+
+Bloccare modifiche non conformi prima che tocchino il dominio.
+
+Cosa viene validato
+
+struttura patch
+
+coerenza category
+
+vincoli KB
+
+versioning
+
+Output
+
+patch accettate / rifiutate
+
+errori strutturali espliciti
+
+🔹 FASE 11 — Dry-run deterministico
+Ruolo
+
+Simulare l’effetto delle patch senza modificare nulla.
+
+Cosa succede
+
+applicazione virtuale patch
+
+riesecuzione matching
+
+raccolta metriche
+
+Output
+
+dry_run_result.json
+
+nuovo matching_report simulato
+
+🔹 FASE 12 — Diff strutturato
+Ruolo
+
+Rendere visibile l’impatto delle modifiche.
+
+Diff calcolati
+
+dictionary: prima / dopo
+
+template_base: prima / dopo
+
+matching outcome: prima / dopo
+
+Output
+
+diff_v1_to_v2.json
+
+⚠️
+
+Nessuna valutazione automatica
+
+Il diff informa, non decide
+
+🔹 FASE 13 — Decisione umana (governata)
+Ruolo
+
+Qui avviene l’unica vera decisione di dominio.
+
+Possibili esiti
+
+approva patch
+
+rifiuta patch
+
+modifica patch
+
+rinvia
+
+Caratteristiche
+
+tracciata
+
+motivata
+
+reversibile
+
+🔹 FASE 14 — Commit versionato
+Ruolo
+
+Congelare uno stato stabile del sistema.
+
+Cosa viene versionato
+
+dictionary
+
+template_base
+
+kb (se coinvolta)
+
+matching_report finale
+
+Proprietà
+
+commit atomico
+
+immutabile
+
+riproducibile
+
+🔹 FASE 15 — Run Report finale
+Ruolo
+
+Produrre l’output enterprise-grade del run.
+
+Contenuto
+
+versioni input/output
+
+patch applicate
+
+diff
+
+metriche (matched / ambiguous / unmapped)
+
+chiamate LLM (se presenti)
+
+errori evitati
+
+🔹 FASE 16 — (Opzionale) LLM come assistente
+
+⚠️ Solo dopo che tutto sopra esiste.
+
+Ruolo
+
+suggerire Patch Actions migliori
+
+spiegare ambiguità
+
+accelerare curation umana
+
+Limiti
+
+mai commit diretto
+
+mai modifica autonoma
+
+tutto passa da MCP + validazione

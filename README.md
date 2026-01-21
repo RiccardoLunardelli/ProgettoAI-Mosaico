@@ -130,3 +130,22 @@ python3 matcher.py --normalized /home/ricky-lu/rickylu-workspace/ProgettiAI/Prog
 
 ### Output
 matching_report_v1.json
+
+# FASE 8
+
+### Scopo
+Trasformare l'output del matching in azioni dichiarative, senza decidere nulla
+
+### Input
+matching_report_vx.json
+
+### Attività
+Creazione script che produce path Actions. 
+
+### ESEGUIRE PATCHER
+python3 patcher.py \
+  --matching /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json \
+  --output /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/patch_actions_v1.json
+
+### Output
+patch_actions_vx.json

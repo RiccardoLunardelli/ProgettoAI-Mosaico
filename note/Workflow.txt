@@ -130,41 +130,42 @@ mapped
 ambiguous
 unmapped_terms
 
-FASE 8 — Creazione MCP Server (infrastruttura core)
-----------Scopo--------------
-Costruire l’orchestratore e gatekeeper del sistema.
-
------------Attività---------------
-Implementazione tool MCP:
-template.load / apply_patch
-schema.get / validate
-dictionary.search
-kb.load / upsert
-device_list.enrich
-Logging e audit
-Controllo I/O
-
--------------Output----------------------
-MCP server v1 funzionante
-
-JSON Schema ufficiali
-
-🔹 FASE 9 — Generazione PatchActions (senza LLM)
+FASE 8 — Generazione PatchActions (senza LLM)
 
 Scopo
 Produrre PatchActions per i mapping deterministici.
 
 Attività
-
 Trasformare match_result in azioni
-
 Reason standard
-
 Confidence deterministica
 
 Output
-
 patch_actions_v1.json (deterministico)
+
+Ruolo
+Trasformare l’output del matching in azioni dichiarative candidate, senza decidere nulla.
+
+Input
+matching_report
+template_normalized
+dictionary
+template_base
+kb
+Cosa succede
+Per ogni variabile:
+matched → nessuna azione
+ambiguous → REQUIRE_REVIEW
+unmapped → PROPOSE_SYNONYM o PROPOSE_CONCEPT
+out_of_scope → MARK_OUT_OF_SCOPE
+
+Output
+patch_actions_v1.json
+⚠️
+Nessuna modifica diretta
+Nessuna intelligenza
+Solo regole meccaniche
+
 
 🔹 FASE 10 — Apply patch + Dry-run
 
