@@ -44,7 +44,7 @@ def _next_versioned_path(path: Path) -> Path:
 
 def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) -> Dict:
     # Inserisce/aggiorna una entry nel dizionario
-    
+
     p = ctx.ensure_within_root(path)
     dictionary = ctx.read_json(p)
 
@@ -54,6 +54,7 @@ def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
     entries = new_dict.setdefault("entries", [])
 
     for op in patch.get("operations", []):
+        # -----ADD SYNONYM-------
         if op["op"] == "add_synonym":
             concept_id = op["concept_id"]
             lang = op["lang"]
@@ -74,9 +75,10 @@ def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
                     synonyms = entry.setdefault("synonyms", {})
                     synonyms.setdefault(lang, [])
                     if value not in synonyms[lang]:
-                        synonyms[lang].append(value)
+                        synonyms[lang].append(value)    # aggiunge sinonimo a concetto
                     break
-
+        
+        # ----------ADD CONCEPT-------------------
         elif op["op"] == "add_concept":
             concept_id = op["concept_id"]
 
@@ -97,7 +99,7 @@ def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
                 "abbreviations": op.get("abbreviations", []),
                 "patterns": op.get("patterns", []),
             }
-            entries.append(new_entry)
+            entries.append(new_entry)   # aggiunge nuovo concetto a dizionario
         else:
             raise ValueError(f"Unsupported operation: {op['op']}")
 
