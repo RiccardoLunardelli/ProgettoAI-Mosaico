@@ -30,30 +30,30 @@ def schema_validate(schema_id: str, payload: dict) -> dict:
 # ---------------DIZIONARIO-------------------------
 @mcp.tool()
 def dictionary_search(text: str, lang: str) -> dict:
-    pass
+    return dictionary_tool.dictionary_search(ctx, text, lang)
 
 @mcp.tool()
-def dictionary_upsearch(entry: dict) -> dict:
-    pass
+def dictionary_upsert(entry: dict) -> dict:
+    return dictionary_tool.dictionary_upsert(ctx, entry)
 
 @mcp.tool()
 def dictionary_bulk_suggest(terms: list) -> dict:
-    pass
+    return dictionary_tool.dictionary_bulk_suggest(ctx, terms)
 
-#-------------KNOWLEDGE BASE------------------------
+# -------------KNOWLEDGE BASE------------------------
 @mcp.tool()
 def kb_load() -> dict:
-    pass
+    return kb_tool.kb_load(ctx)
 
 @mcp.tool()
 def kb_save(versioned: dict) -> dict:
-    pass
+    return kb_tool.kb_save(ctx, versioned)
 
 @mcp.tool()
 def kb_upsert_mapping(mapping: dict) -> dict:
-    pass
+    return kb_tool.kb_upsert_mapping(ctx, mapping)
 
 # ----------------DEVICE-------------------------
 @mcp.tool()
 def device_list_enrich(path: str) -> dict:
-    pass
+    return device_list_tool.device_list_enrich(ctx, path)
