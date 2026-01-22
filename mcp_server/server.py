@@ -6,7 +6,7 @@ mcp = FastMCP("MCP-Server")
 ctx = MCPContext(repo_root=".")
 
 # ----------------TEMPLATE-----------------------
-@mcp.tool()
+@mcp.tool() 
 def template_load(path: str) -> dict:
     return template_tool.template_load(ctx, path)
 
@@ -15,7 +15,7 @@ def template_save(path: str, template: dict) -> dict:
     return template_tool.template_save(ctx, path, template)
 
 @mcp.tool()
-def template_apply_path(path: str, patch: dict, dry_run: bool) -> dict:
+def template_apply_patch(path: str, patch: dict, dry_run: bool) -> dict:
     return template_tool.template_apply_patch(ctx, path, patch, dry_run)
 
 # ----------------SCHEMA------------------------
