@@ -1,0 +1,11 @@
+{
+  "target": "dictionary",
+  "operations": [
+    {
+      "op": "add_synonym",
+      "concept_id": "temp_defrost",
+      "lang": "it",
+      "value": "temperatura sbrinamento test"
+    }
+  ]
+}
