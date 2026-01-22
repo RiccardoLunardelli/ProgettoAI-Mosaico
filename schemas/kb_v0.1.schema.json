@@ -1,0 +1,216 @@
+{
+  "$defs": {
+    "KBAudit": {
+      "properties": {
+        "notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "notes"
+      ],
+      "title": "KBAudit",
+      "type": "object"
+    },
+    "KBExceptions": {
+      "properties": {
+        "blacklist": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Blacklist",
+          "type": "array"
+        }
+      },
+      "required": [
+        "blacklist"
+      ],
+      "title": "KBExceptions",
+      "type": "object"
+    },
+    "KBMapping": {
+      "properties": {
+        "scope_id": {
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "source_type": {
+          "title": "Source Type",
+          "type": "string"
+        },
+        "source_key": {
+          "title": "Source Key",
+          "type": "string"
+        },
+        "concept_id": {
+          "title": "Concept Id",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "evidence": {
+          "title": "Evidence",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scope_id",
+        "source_type",
+        "source_key",
+        "concept_id",
+        "reason",
+        "evidence"
+      ],
+      "title": "KBMapping",
+      "type": "object"
+    },
+    "KBScope": {
+      "properties": {
+        "scope_id": {
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "match": {
+          "$ref": "#/$defs/KBScopeMatch"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source"
+        }
+      },
+      "required": [
+        "scope_id",
+        "match"
+      ],
+      "title": "KBScope",
+      "type": "object"
+    },
+    "KBScopeMatch": {
+      "properties": {
+        "template_guid": {
+          "title": "Template Guid",
+          "type": "string"
+        },
+        "type_fam": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Type Fam"
+        },
+        "device_role": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Device Role"
+        },
+        "enum": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Enum"
+        },
+        "device_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Device Id"
+        }
+      },
+      "required": [
+        "template_guid"
+      ],
+      "title": "KBScopeMatch",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "kb_version": {
+      "title": "Kb Version",
+      "type": "string"
+    },
+    "generated_at": {
+      "title": "Generated At",
+      "type": "string"
+    },
+    "template_base_version": {
+      "title": "Template Base Version",
+      "type": "string"
+    },
+    "dictionary_version": {
+      "title": "Dictionary Version",
+      "type": "string"
+    },
+    "scopes": {
+      "items": {
+        "$ref": "#/$defs/KBScope"
+      },
+      "title": "Scopes",
+      "type": "array"
+    },
+    "mappings": {
+      "items": {
+        "$ref": "#/$defs/KBMapping"
+      },
+      "title": "Mappings",
+      "type": "array"
+    },
+    "exceptions": {
+      "$ref": "#/$defs/KBExceptions"
+    },
+    "audit": {
+      "$ref": "#/$defs/KBAudit"
+    }
+  },
+  "required": [
+    "kb_version",
+    "generated_at",
+    "template_base_version",
+    "dictionary_version",
+    "scopes",
+    "mappings",
+    "exceptions",
+    "audit"
+  ],
+  "title": "KB",
+  "type": "object"
+}

@@ -1,0 +1,94 @@
+{
+  "$defs": {
+    "Concept": {
+      "properties": {
+        "concept_id": {
+          "title": "Concept Id",
+          "type": "string"
+        },
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "label": {
+          "$ref": "#/$defs/ConceptLabel"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "concept_id",
+        "category",
+        "label",
+        "description"
+      ],
+      "title": "Concept",
+      "type": "object"
+    },
+    "ConceptLabel": {
+      "properties": {
+        "it": {
+          "title": "It",
+          "type": "string"
+        },
+        "en": {
+          "title": "En",
+          "type": "string"
+        }
+      },
+      "required": [
+        "it",
+        "en"
+      ],
+      "title": "ConceptLabel",
+      "type": "object"
+    },
+    "TemplateBaseCategory": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "concepts": {
+          "items": {
+            "$ref": "#/$defs/Concept"
+          },
+          "title": "Concepts",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "concepts"
+      ],
+      "title": "TemplateBaseCategory",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "template_base_version": {
+      "title": "Template Base Version",
+      "type": "string"
+    },
+    "categories": {
+      "items": {
+        "$ref": "#/$defs/TemplateBaseCategory"
+      },
+      "title": "Categories",
+      "type": "array"
+    }
+  },
+  "required": [
+    "template_base_version",
+    "categories"
+  ],
+  "title": "TemplateBase",
+  "type": "object"
+}
