@@ -22,6 +22,7 @@ def apply_dictionary_patch(dictionary: Dict[str, Any], patch: Dict[str, Any]) ->
     new_dict = copy.deepcopy(dictionary)
 
     for op in patch.get("operations", []):
+        # ---AGGIUNTA SINONIMI-----
         if op["op"] == "add_synonym":
             concept_id = op["concept_id"]
             lang = op["lang"]
