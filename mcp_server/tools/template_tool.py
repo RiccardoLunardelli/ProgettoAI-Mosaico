@@ -20,6 +20,7 @@ def apply_dictionary_patch(dictionary: Dict[str, Any], patch: Dict[str, Any]) ->
     # applica la patch al dizionario
 
     new_dict = copy.deepcopy(dictionary)
+    entries = new_dict.setdefault("entries", [])
 
     for op in patch.get("operations", []):
         # ---AGGIUNTA SINONIMI-----
@@ -29,7 +30,7 @@ def apply_dictionary_patch(dictionary: Dict[str, Any], patch: Dict[str, Any]) ->
             value = op["value"]
         
             found = False
-            for entry in new_dict.get("entries", []):
+            for entry in entries:
                 if entry["concept_id"] == concept_id:
                     synonyms = entry.setdefault("synonyms", {})
                     synonyms.setdefault(lang, [])
@@ -40,6 +41,26 @@ def apply_dictionary_patch(dictionary: Dict[str, Any], patch: Dict[str, Any]) ->
                 
             if not found:
                 raise ValueError(f"Concept {concept_id} not found")
+        #-----AGGIUNTA CONCETTO-------
+        elif op["op"] == "add_concept":
+            concept_id = op["concept_id"]
+
+            if any(e["concept_id"] == concept_id for e in entries):
+                raise ValueError(f"Concept {concept_id} already exists")
+            
+            category = op["category"]
+            synonyms = op.get("synonyms", {})
+            abbreviations = op.get("abbreviations", [])
+            patterns = op.get("patterns", [])
+
+            new_entry = {
+                "concept_id": concept_id,
+                "category": category,
+                "synonyms": synonyms,
+                "abbreviations": abbreviations,
+                "patterns": patterns,
+            }
+            entries.append(new_entry)
         else: 
             raise ValueError(f"Unsopported operation: {op['op']}")
     
