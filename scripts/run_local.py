@@ -6,12 +6,13 @@ from pathlib import Path
 from datetime import datetime, timezone, timedelta
 
 TIMEZONE = timezone(timedelta(hours=1))
-RUNS_ROOT = Path("mcp_server/runs")
+PATCH_ROOT = Path("mcp_server/patch")
+RUNS_ROOT = Path("runs")
 
 ARTIFACTS = {
     "dictionary": {
-        "input_path": "data/dictionary_v0.2.json",
-        "patch_path": "mcp_server/runs/manual_patch_002.json",
+        "input_path": "data/dictionary_v0.1.json",
+        "patch_path": str(PATCH_ROOT / "dictionary" / "manual_patch_002.json"),
         "input_version": "v0.1",
     }
 }
