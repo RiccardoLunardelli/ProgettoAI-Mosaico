@@ -18,6 +18,8 @@ ARTIFACTS = {
 }
 
 def generate_run_id() -> str:
+    # genera id della run
+
     ts = datetime.now(TIMEZONE).strftime("%Y%m%d_%H%M%S")
     return f"run{ts}"
 
@@ -43,6 +45,8 @@ def summarize_dictionary_diff(before: dict, after: dict) -> list[str]:
     return summary
 
 def build_run_report(run_id: str, input_path: str, output_path: str, patch_path: str, diff: list[str]) -> dict:
+    # costruzione del report
+
     return {
         "run_id": run_id,
         "timestamp": datetime.now(TIMEZONE).isoformat(),
@@ -66,6 +70,8 @@ def build_run_report(run_id: str, input_path: str, output_path: str, patch_path:
     }
 
 def run_dictionary_patch(cfg: dict) -> None:
+    # esecuzione della run
+
     run_id = generate_run_id()
     run_dir = RUNS_ROOT / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
