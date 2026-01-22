@@ -1,8 +1,7 @@
-from mcp_server.server import template_apply_patch, template_save, schema_validate
-from mcp_server.tools.template_tool import apply_dictionary_patch
+from mcp_server.server import dictionary_upsert
+from mcp_server.core import MCPContext
 
 import json
-import re
 from pathlib import Path
 from datetime import datetime, timezone, timedelta
 
@@ -10,24 +9,33 @@ def generate_run_id() -> str:
     ts = datetime.now(TIMEZONE).strftime("%Y%m%d_%H%M%S")
     return f"run{ts}"
 
-def next_versioned_path(path: str) -> str:
-    # data/foo_v0.1.json -> data/foo_v0.2.json
-    p = Path(path)
-    m = re.search(r"_v(\d+)\.(\d+)\.json$", p.name)
-    if not m:
-        raise ValueError(f"Invalid versioned filename: {p.name}")
+def summarize_dictionary_diff(before: dict, after: dict) -> list[str]:
+    before_entries = {e["concept_id"]: e for e in before.get("entries", [])}
+    after_entries = {e["concept_id"]: e for e in after.get("entries", [])}
+    summary = []
 
-    major, minor = int(m.group(1)), int(m.group(2))
-    return str(p.with_name(p.name.replace(f"_v{major}.{minor}.json", f"_v{major}.{minor+1}.json")))
+    # nuovi concetti
+    for concept_id in sorted(set(after_entries) - set(before_entries)):
+        summary.append(f"add_concept: {concept_id}")
 
-# CONFIG (scalable per artefatti)
+    # sinonimi aggiunti
+    for concept_id in sorted(set(after_entries) & set(before_entries)):
+        b_syn = before_entries[concept_id].get("synonyms", {})
+        a_syn = after_entries[concept_id].get("synonyms", {})
+        for lang in sorted(set(a_syn) | set(b_syn)):
+            b_vals = set(b_syn.get(lang, []))
+            a_vals = set(a_syn.get(lang, []))
+            for val in sorted(a_vals - b_vals):
+                summary.append(f"add_synonym: {concept_id} [{lang}] '{val}'")
+
+    return summary
+
+
 ARTIFACTS = {
     "dictionary": {
-        "schema_id": "dictionary",
         "input_path": "data/dictionary_v0.1.json",
         "patch_path": "mcp_server/runs/manual_patch_001.json",
         "input_version": "v0.1",
-        "output_version": "v0.2",
     }
 }
 
@@ -35,42 +43,41 @@ ARTIFACT = "dictionary"
 TIMEZONE = timezone(timedelta(hours=1))
 RUNS_ROOT = Path("mcp_server/runs")
 
-# LOAD CONFIG
 cfg = ARTIFACTS[ARTIFACT]
 input_path = cfg["input_path"]
-output_path = next_versioned_path(input_path)
 patch_path = cfg["patch_path"]
-schema_id = cfg["schema_id"]
 
 run_id = generate_run_id()
 timestamp = datetime.now(TIMEZONE).isoformat()
 run_dir = RUNS_ROOT / run_id
 run_dir.mkdir(parents=True, exist_ok=True)
 
-# LOAD INPUTS
 with open(patch_path, "r", encoding="utf-8") as f:
     patch = json.load(f)
 
 with open(input_path, "r", encoding="utf-8") as f:
     artifact = json.load(f)
 
-# VALIDATE + DRY RUN
-schema_validate(schema_id, artifact)
-
-dry_run_result = template_apply_patch(
-    input_path,
-    patch,
-    dry_run=True
+# DRY RUN
+dry_run_result = dictionary_upsert(
+    path=input_path,
+    patch=patch,
+    dry_run=True,
 )
-print("DRY RUN ESEGUITO")
+preview = dry_run_result.get("preview")
 
-# COMMIT (nuova versione)
-preview = apply_dictionary_patch(artifact, patch)
-schema_validate(schema_id, preview)
-template_save(output_path, preview)
-print(f"NUOVA VERSIONE DEL {ARTIFACT.upper()} SALVATA: {output_path}")
+# COMMIT
+commit_result = dictionary_upsert(
+    path=input_path,
+    patch=patch,
+    dry_run=False,
+)
+output_path = commit_result.get("output_path")
 
-# RUN REPORT
+# DIFF (computed by run)
+ctx = MCPContext(repo_root=".")
+diff = summarize_dictionary_diff(artifact, preview)
+
 run_report = {
     "run_id": run_id,
     "timestamp": timestamp,
@@ -79,11 +86,9 @@ run_report = {
         "input_path": input_path,
         "output_path": output_path,
         "input_version": cfg["input_version"],
-        "output_version": cfg["output_version"],
     },
     "patch": {
         "patch_path": patch_path,
-        "patch_type": "manual_approved",
         "operations_count": len(patch.get("operations", [])),
     },
     "execution": {
@@ -92,18 +97,11 @@ run_report = {
         "status": "success",
     },
     "diff_summary": {
-        "changed_paths": dry_run_result.get("diff", []),
-        "operations_applied": patch.get("operations", []),
-    },
-    "checks": {
-        "schema_validated": True,
-        "dry_run_required": True,
-        "dry_run_performed": True,
+        "diff": diff,
     },
 }
 
 report_path = run_dir / "run_report.json"
 with open(report_path, "w", encoding="utf-8") as f:
     json.dump(run_report, f, indent=2, ensure_ascii=False)
-
-print(f"RUN REPORT SALVATO: {report_path}")
+print("run eseguito con successo. Run salvato")

@@ -1,0 +1,24 @@
+{
+  "run_id": "run20260122_155245",
+  "timestamp": "2026-01-22T15:52:45.705361+01:00",
+  "target": {
+    "artifact_type": "dictionary",
+    "input_path": "data/dictionary_v0.1.json",
+    "output_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionary_v0.2.json",
+    "input_version": "v0.1"
+  },
+  "patch": {
+    "patch_path": "mcp_server/runs/manual_patch_001.json",
+    "operations_count": 1
+  },
+  "execution": {
+    "dry_run": true,
+    "committed": true,
+    "status": "success"
+  },
+  "diff_summary": {
+    "diff": [
+      "add_synonym: temp_defrost [it] 'temperatura sbrinamento test'"
+    ]
+  }
+}

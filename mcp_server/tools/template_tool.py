@@ -16,56 +16,6 @@ def template_save(ctx: MCPContext, path: str, template: Dict[str, Any]) -> Dict[
     ctx.write_json(p, template)
     return {"status": "ok", "path": str(p)}
 
-def apply_dictionary_patch(dictionary: Dict[str, Any], patch: Dict[str, Any]) -> Dict[str, Any]:
-    # applica la patch al dizionario
-
-    new_dict = copy.deepcopy(dictionary)
-    entries = new_dict.setdefault("entries", [])
-
-    for op in patch.get("operations", []):
-        # ---AGGIUNTA SINONIMI-----
-        if op["op"] == "add_synonym":
-            concept_id = op["concept_id"]
-            lang = op["lang"]
-            value = op["value"]
-        
-            found = False
-            for entry in entries:
-                if entry["concept_id"] == concept_id:
-                    synonyms = entry.setdefault("synonyms", {})
-                    synonyms.setdefault(lang, [])
-                    if value not in synonyms[lang]:
-                        synonyms[lang].append(value)
-                    found = True
-                    break
-                
-            if not found:
-                raise ValueError(f"Concept {concept_id} not found")
-        #-----AGGIUNTA CONCETTO-------
-        elif op["op"] == "add_concept":
-            concept_id = op["concept_id"]
-
-            if any(e["concept_id"] == concept_id for e in entries):
-                raise ValueError(f"Concept {concept_id} already exists")
-            
-            category = op["category"]
-            synonyms = op.get("synonyms", {})
-            abbreviations = op.get("abbreviations", [])
-            patterns = op.get("patterns", [])
-
-            new_entry = {
-                "concept_id": concept_id,
-                "category": category,
-                "synonyms": synonyms,
-                "abbreviations": abbreviations,
-                "patterns": patterns,
-            }
-            entries.append(new_entry)
-        else: 
-            raise ValueError(f"Unsopported operation: {op['op']}")
-    
-    return new_dict
-
 def template_apply_patch(ctx: MCPContext, path: str, patch_actions: Dict[str, Any], dry_run: bool) -> Dict[str, Any]:
     # Protegge l’accesso al filesystem, Legge un template JSON, Prevede un meccanismo di preview e diff
 
@@ -74,8 +24,6 @@ def template_apply_patch(ctx: MCPContext, path: str, patch_actions: Dict[str, An
 
     # applicazione patch
     preview = template  # template modificato
-    if patch_actions.get("target") == "dictionary":
-        preview = apply_dictionary_patch(template, patch_actions)
 
     diff = ctx.diff_json(template, preview)
 

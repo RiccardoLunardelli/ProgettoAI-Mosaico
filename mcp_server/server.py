@@ -29,12 +29,12 @@ def schema_validate(schema_id: str, payload: dict) -> dict:
 
 # ---------------DIZIONARIO-------------------------
 @mcp.tool()
-def dictionary_search(text: str, lang: str) -> dict:
-    return dictionary_tool.dictionary_search(ctx, text, lang)
+def dictionary_search(path: str, text: str | None, lang: str | None, concept_id: str | None) -> dict:
+    return dictionary_tool.dictionary_search(ctx, path, text, lang)
 
 @mcp.tool()
-def dictionary_upsert(entry: dict) -> dict:
-    return dictionary_tool.dictionary_upsert(ctx, entry)
+def dictionary_upsert(path: str, patch: dict, dry_run: bool) -> dict:
+    return dictionary_tool.dictionary_upsert(ctx, path, patch, dry_run)
 
 @mcp.tool()
 def dictionary_bulk_suggest(terms: list) -> dict:
