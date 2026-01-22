@@ -100,8 +100,8 @@
     }
   },
   "properties": {
-    "schema_version": {
-      "title": "Schema Version",
+    "matching_version": {
+      "title": "Matching Version",
       "type": "string"
     },
     "template_guid": {
@@ -129,7 +129,7 @@
     }
   },
   "required": [
-    "schema_version",
+    "matching_version",
     "generated_at",
     "items"
   ],

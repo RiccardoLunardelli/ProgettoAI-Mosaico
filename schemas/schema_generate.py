@@ -39,7 +39,7 @@ class MatchingItem(BaseModel):
     candidates: Optional[List[MatchingCandidate]] = None
 
 class MatchingReport(BaseModel):
-    schema_version: str
+    matching_version: str
     template_guid: Optional[str] = None
     generated_at: str
     items: List[MatchingItem]
