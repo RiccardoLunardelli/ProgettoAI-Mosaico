@@ -81,43 +81,6 @@ class Dictionary(BaseModel):
     language: List[str]
     entries: List[DictionaryEntry]
 
-# -------------KB-------------------------
-class KBScopeMatch(BaseModel):
-    template_guid: str
-    type_fam: Optional[str] = None
-    device_role: Optional[str] = None
-    enum: Optional[str] = None
-    device_id: Optional[str] = None
-
-class KBScope(BaseModel):
-    scope_id: str
-    match: KBScopeMatch
-    source: Optional[Dict[str, Any]] = None
-
-class KBMapping(BaseModel):
-    scope_id: str
-    source_type: str
-    source_key: str
-    concept_id: str
-    reason: str
-    evidence: str
-
-class KBExceptions(BaseModel):
-    blacklist: List[Dict[str, Any]]
-
-class KBAudit(BaseModel):
-    notes: List[str]
-
-class KB(BaseModel):
-    kb_version: str
-    generated_at: str
-    template_base_version: str
-    dictionary_version: str
-    scopes: List[KBScope]
-    mappings: List[KBMapping]
-    exceptions: KBExceptions
-    audit: KBAudit
-
 #-----------DICTIONARY PATCH----------------
 class DictionaryPatchAddSynonym(BaseModel):
     op: Literal["add_synonym"]
@@ -169,6 +132,65 @@ class DictionaryPatch(BaseModel):
         ]
     ]
 
+# -------------KB-------------------------
+class KBScopeMatch(BaseModel):
+    template_guid: str
+    type_fam: Optional[str] = None
+    device_role: Optional[str] = None
+    enum: Optional[str] = None
+    device_id: Optional[str] = None
+
+class KBScope(BaseModel):
+    scope_id: str
+    match: KBScopeMatch
+    source: Optional[Dict[str, Any]] = None
+
+class KBMapping(BaseModel):
+    scope_id: str
+    source_type: str
+    source_key: str
+    concept_id: str
+    reason: str
+    evidence: str
+
+class KBExceptions(BaseModel):
+    blacklist: List[Dict[str, Any]]
+
+class KBAudit(BaseModel):
+    notes: List[str]
+
+class KB(BaseModel):
+    kb_version: str
+    generated_at: str
+    template_base_version: str
+    dictionary_version: str
+    scopes: List[KBScope]
+    mappings: List[KBMapping]
+    exceptions: KBExceptions
+    audit: KBAudit
+
+#-----------KB PATCH----------------------
+class KBPatchAddRule(BaseModel):
+    op: Literal["add_kb_rule"]
+    scope_id: str 
+    source_type: str 
+    source_key: str 
+    concept_id: str 
+    reason: str 
+    evidence: str
+
+class KBPatchUpdateRule(BaseModel):
+    op: Literal["update_kb_rule"]
+    scope_id: str 
+    source_type: str 
+    source_key: str 
+    concept_id: Optional[str] = None
+    reason: Optional[str] = None 
+    evidence: Optional[str] = None
+
+class KBPatch(BaseModel):
+    target: Literal["kb"]
+    operations: List[Union[KBPatchAddRule, KBPatchUpdateRule]]
 
 # GENERAZIONI
 SCHEMA_OUT = {
@@ -178,6 +200,8 @@ SCHEMA_OUT = {
     "dictionary_v0.1.schema.json": Dictionary,
     "kb_v0.1.schema.json": KB,
     "dictionary_patch_v1.schema.json": DictionaryPatch,
+    "kb_patch_v1.schema.json": KBPatch,
+
 }
 
 def write_schema(name: str, model: BaseModel, out_dir: Path) -> None:

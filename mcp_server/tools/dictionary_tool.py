@@ -34,7 +34,7 @@ def dictionary_search(ctx: MCPContext, path: str, text: str | None, lang: str | 
     raise ValueError("invalid_search_params: provide concept_id OR (text and lang)")
 
 def _next_versioned_path(path: Path) -> Path:
-    # data/dictionary_v0.1.json -> data/dictionary_v0.2.json
+    # data/filename_v0.1.json -> data/filename_v0.2.json
 
     m = re.search(r"_v(\d+)\.(\d+)\.json$", path.name)
     if not m:

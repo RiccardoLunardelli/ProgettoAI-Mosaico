@@ -25,6 +25,7 @@ class MCPContext:
             "dictionary": "dictionary_v0.1.schema.json",
             "kb": "kb_v0.1.schema.json",
             "dictionary_patch": "dictionary_patch_v1.schema.json",
+            "kb_patch": "kb_patch_v1.schema.json",
         }
     
     def ensure_within_root(self, path: str) -> Path:

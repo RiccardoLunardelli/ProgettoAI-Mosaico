@@ -1,0 +1,14 @@
+{
+  "target": "kb",
+  "operations": [
+    {
+      "op": "update_kb_rule",
+      "scope_id": "tpl_028d14de_tn",
+      "source_type": "ContinuosRead",
+      "source_key": "Read101",
+      "concept_id": "temp_delivery",
+      "reason": "correction_after_review",
+      "evidence": "manual_patch_update"
+    }
+  ]
+}

@@ -42,16 +42,16 @@ def dictionary_bulk_suggest(terms: list) -> dict:
 
 # -------------KNOWLEDGE BASE------------------------
 @mcp.tool()
-def kb_load() -> dict:
-    return kb_tool.kb_load(ctx)
+def kb_load(path:str) -> dict:
+    return kb_tool.kb_load(ctx, path)
 
 @mcp.tool()
-def kb_save(versioned: dict) -> dict:
-    return kb_tool.kb_save(ctx, versioned)
+def kb_save(path: str, versioned: dict) -> dict:
+    return kb_tool.kb_save(ctx, path, versioned)
 
 @mcp.tool()
-def kb_upsert_mapping(mapping: dict) -> dict:
-    return kb_tool.kb_upsert_mapping(ctx, mapping)
+def kb_upsert_mapping(path: str, patch: dict, dry_run: bool) -> dict:
+    return kb_tool.kb_upsert_mapping(ctx, path, patch, dry_run)
 
 # ----------------DEVICE-------------------------
 @mcp.tool()

@@ -1,0 +1,21 @@
+{
+  "run_id": "run20260123_121145",
+  "timestamp": "2026-01-23T12:11:45.503797+01:00",
+  "target": {
+    "artifact_type": "kb",
+    "input_path": "data/kb_v0.1.json",
+    "output_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/kb_v0.2.json"
+  },
+  "patch": {
+    "patch_path": "mcp_server/patch/kb/patch_manual_addkbrule.json",
+    "operations_count": 1
+  },
+  "execution": {
+    "dry_run": true,
+    "committed": true,
+    "status": "success"
+  },
+  "diff_summary": {
+    "changed_paths": []
+  }
+}

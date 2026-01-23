@@ -1,0 +1,14 @@
+{
+  "target": "kb",
+  "operations": [
+    {
+      "op": "add_kb_rule",
+      "scope_id": "tpl_028d14de_tn",
+      "source_type": "ContinuosRead",
+      "source_key": "Read101",
+      "concept_id": "temp_defrost",
+      "reason": "deterministic_mapping_from_vendor",
+      "evidence": "manual_patch_test"
+    }
+  ]
+}

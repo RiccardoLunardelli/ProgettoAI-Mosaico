@@ -1,4 +1,4 @@
-from mcp_server.server import dictionary_upsert
+from mcp_server.server import dictionary_upsert, kb_upsert_mapping
 from mcp_server.core import MCPContext
 
 import json
@@ -13,6 +13,11 @@ ARTIFACTS = {
     "dictionary": {
         "input_path": "data/dictionary_v0.1.json",
         "patch_path": str(PATCH_ROOT / "dictionary" / "manual_patch_upcat.json"),
+        "input_version": "v0.1",
+    },
+    "kb": {
+        "input_path": "data/kb_v0.2.json",
+        "patch_path": str(PATCH_ROOT / "kb" / "patch_manual_upkbrule.json"),
         "input_version": "v0.1",
     }
 }
@@ -70,14 +75,31 @@ def summarize_dictionary_diff(before: dict, after: dict) -> list[str]:
 
     return summary
 
-def build_run_report(run_id: str, input_path: str, output_path: str, patch_path: str, diff: list[str]) -> dict:
+def summarize_kb_diff(before: dict, after: dict) -> list[str]:
+    summary = []
+    b_map = {(m["scope_id"], m["source_type"], m["source_key"]): m for m in before.get("mappings", [])}
+    a_map = {(m["scope_id"], m["source_type"], m["source_key"]): m for m in after.get("mappings", [])}
+
+    for key in sorted(set(a_map) - set(b_map)):
+        m = a_map[key]
+        summary.append(f"add_kb_rule: {m['scope_id']} {m['source_type']} {m['source_key']} -> {m['concept_id']}")
+
+    for key in sorted(set(a_map) & set(b_map)):
+        b = b_map[key]
+        a = a_map[key]
+        if b.get("concept_id") != a.get("concept_id") or b.get("reason") != a.get("reason") or b.get("evidence") != a.get("evidence"):
+            summary.append(f"update_kb_rule: {a['scope_id']} {a['source_type']} {a['source_key']}")
+
+    return summary
+
+def build_run_report(run_id: str, input_path: str, output_path: str, patch_path: str, diff: list[str], artifact_type: str) -> dict:
     # costruzione del report
 
     return {
         "run_id": run_id,
         "timestamp": datetime.now(TIMEZONE).isoformat(),
         "target": {
-            "artifact_type": "dictionary",
+            "artifact_type": artifact_type,
             "input_path": input_path,
             "output_path": output_path,
         },
@@ -95,7 +117,7 @@ def build_run_report(run_id: str, input_path: str, output_path: str, patch_path:
         },
     }
 
-def run_dictionary_patch(cfg: dict) -> None:
+def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     # esecuzione della run
 
     run_id = generate_run_id()
@@ -105,24 +127,26 @@ def run_dictionary_patch(cfg: dict) -> None:
     input_path = cfg["input_path"]
     patch_path = cfg["patch_path"]
 
-    patch = json.load(open(patch_path, "r", encoding="utf-8"))
-    artifact = json.load(open(input_path, "r", encoding="utf-8"))
+    with open(patch_path, "r", encoding="utf-8") as f:
+        patch = json.load(f)
+    with open(input_path, "r", encoding="utf-8") as f:
+        artifact = json.load(f)
 
-    dry_run_result = dictionary_upsert(
+    dry_run_result = upsert_fn(
         path=input_path,
         patch=patch,
         dry_run=True,
     )
     preview = dry_run_result.get("preview")
 
-    commit_result = dictionary_upsert(
+    commit_result = upsert_fn(
         path=input_path,
         patch=patch,
         dry_run=False,
     )
     output_path = commit_result.get("output_path")
 
-    diff = summarize_dictionary_diff(artifact, preview)
+    diff = diff_fn(artifact, preview)
 
     run_report = build_run_report(
         run_id=run_id,
@@ -130,11 +154,17 @@ def run_dictionary_patch(cfg: dict) -> None:
         output_path=output_path,
         patch_path=patch_path,
         diff=diff,
+        artifact_type=artifact_type,
     )
 
     report_path = run_dir / "run_report.json"
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(run_report, f, indent=2, ensure_ascii=False)
 
+
 if __name__ == "__main__":
-    run_dictionary_patch(ARTIFACTS["dictionary"])
+    choose = int(input("1--> diz. 2--> kb: "))
+    if choose == 1:
+        run_patch(ARTIFACTS["dictionary"], "dictionary", dictionary_upsert, summarize_dictionary_diff)
+    elif choose == 2:   
+        run_patch(ARTIFACTS["kb"],  "kb", kb_upsert_mapping, summarize_kb_diff)
