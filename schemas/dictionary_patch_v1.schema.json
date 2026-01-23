@@ -1,0 +1,126 @@
+{
+  "$defs": {
+    "DictionaryPatchAddConcept": {
+      "properties": {
+        "op": {
+          "const": "add_concept",
+          "title": "Op",
+          "type": "string"
+        },
+        "concept_id": {
+          "title": "Concept Id",
+          "type": "string"
+        },
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "synonyms": {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "title": "Synonyms",
+          "type": "object"
+        },
+        "abbreviations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Abbreviations",
+          "type": "array"
+        },
+        "patterns": {
+          "items": {
+            "$ref": "#/$defs/DictionaryPatterns"
+          },
+          "title": "Patterns",
+          "type": "array"
+        }
+      },
+      "required": [
+        "op",
+        "concept_id",
+        "category"
+      ],
+      "title": "DictionaryPatchAddConcept",
+      "type": "object"
+    },
+    "DictionaryPatchAddSynonym": {
+      "properties": {
+        "op": {
+          "const": "add_synonym",
+          "title": "Op",
+          "type": "string"
+        },
+        "concept_id": {
+          "title": "Concept Id",
+          "type": "string"
+        },
+        "lang": {
+          "title": "Lang",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "concept_id",
+        "lang",
+        "value"
+      ],
+      "title": "DictionaryPatchAddSynonym",
+      "type": "object"
+    },
+    "DictionaryPatterns": {
+      "properties": {
+        "regex": {
+          "title": "Regex",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "regex",
+        "description"
+      ],
+      "title": "DictionaryPatterns",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "target": {
+      "const": "dictionary",
+      "title": "Target",
+      "type": "string"
+    },
+    "operations": {
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/DictionaryPatchAddSynonym"
+          },
+          {
+            "$ref": "#/$defs/DictionaryPatchAddConcept"
+          }
+        ]
+      },
+      "title": "Operations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "target",
+    "operations"
+  ],
+  "title": "DictionaryPatch",
+  "type": "object"
+}

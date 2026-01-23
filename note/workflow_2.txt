@@ -61,25 +61,15 @@ Queste esistono davvero nel codice e sono operative.
 Stato: ✅ implementata e testata
 
 Cosa fa
-
 aggiunge un sinonimo a un concept esistente
-
 per una lingua specifica (it, en, …)
-
 Guardrail
-
 concept deve esistere
-
 sinonimo non duplicato
-
 errore esplicito se concept mancante
-
 Perché è corretta
-
 deterministica
-
 non introduce concetti
-
 migliora matching senza cambiare dominio
 
 2️⃣ add_concept
@@ -87,66 +77,40 @@ migliora matching senza cambiare dominio
 Stato: ✅ implementata (come da ultimo step)
 
 Cosa fa
-
 aggiunge un nuovo concept al dizionario
-
 con:
-
-concept_id
-
-category (ruolo strutturale)
-
-synonyms
-
-abbreviations
-
-patterns
-
+    concept_id
+    category (ruolo strutturale)
+    synonyms
+    abbreviations
+    patterns
 Guardrail
-
 concept_id unico
-
 nessuna inferenza
-
 errore se già esistente
-
 Perché è corretta
-
 il dominio nasce solo qui
-
 sempre human-approved
-
 versionata
 
 🟡 FUNZIONALITÀ DA AGGIUNGERE (TUTTE QUELLE COERENTI)
 
 Queste non sono ancora implementate, ma sono coerenti al 100% con:
-
 il PDF
-
 la pipeline
-
 MCP
-
 audit-first
-
 Le elenco tutte, per artefatto.
 
-🧩 DIZIONARIO (dictionary)
+🧩 ---------------DIZIONARIO (dictionary)----------------------
 3️⃣ remove_synonym
 
 Perché serve
-
 sinonimi errati / rumorosi
-
 cleanup del dizionario
-
 Guardrail
-
 concept deve esistere
-
 sinonimo deve esistere
-
 errore se non trovato
 
 4️⃣ update_synonym
@@ -154,80 +118,54 @@ errore se non trovato
 (opzionale ma pulita)
 
 Cosa fa
-
 sostituisce un sinonimo con un altro
-
 equivalente a remove + add atomico
 
 5️⃣ add_abbreviation
 
 Cosa fa
-
 aggiunge abbreviazioni controllate (HP, SP, …)
-
 Nota
-
 NON sinonimi
-
 matching separato
 
 6️⃣ remove_abbreviation
 7️⃣ add_pattern
 
 Cosa fa
-
 aggiunge pattern regex deterministici
-
 per casi industriali complessi
-
 Nota
-
 sempre statici
-
 mai generati automaticamente
 
 8️⃣ remove_pattern
 9️⃣ update_category (⚠️ SOLO STRUTTURALE)
 
 Cosa fa
-
 cambia il ruolo strutturale:
-
-measurement
-
-parameter
-
-alarm
-
-warning
-
-command
-
-virtual_variable
+    measurement
+    parameter
+    alarm
+    warning
+    command
+    virtual_variable
 
 ❌ NON:
-
 temperature
-
 pressure
-
 dimensioni fisiche
 
 🔟 deprecate_concept
 
 Cosa fa
-
 marca un concept come deprecato
-
 NON lo rimuove
-
 Perché serve
-
 backward compatibility
-
 audit storico
 
-🧩 TEMPLATE BASE (template_base)
+🧩 ---------------------TEMPLATE BASE (template_base)----------------------
 11️⃣ add_base_concept
 
 (simile a add_concept, ma su template_base)
@@ -240,13 +178,12 @@ audit storico
 
 (label, description, ecc.)
 
-🧩 KB (knowledge base)
+🧩 --------------------KB (knowledge base)-------------------------------------
 14️⃣ add_kb_rule
 
 Cosa fa
 
 aggiunge una regola deterministica
-
 scope, vincoli, blacklist
 
 15️⃣ remove_kb_rule

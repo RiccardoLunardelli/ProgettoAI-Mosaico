@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Literal, Union
 import json
 from pathlib import Path
 
@@ -118,6 +118,26 @@ class KB(BaseModel):
     exceptions: KBExceptions
     audit: KBAudit
 
+#-----------DICTIONARY PATCH----------------
+class DictionaryPatchAddSynonym(BaseModel):
+    op: Literal["add_synonym"]
+    concept_id: str
+    lang: str
+    value: str 
+
+class DictionaryPatchAddConcept(BaseModel):
+    op: Literal["add_concept"]
+    concept_id: str 
+    category: str 
+    synonyms: Dict[str, List[str]] = Field(default_factory=dict)
+    abbreviations: List[str] = Field(default_factory=list)
+    patterns: List[DictionaryPatterns] = Field(default_factory=list)
+
+class DictionaryPatch(BaseModel):
+    target: Literal["dictionary"]
+    operations: List[Union[DictionaryPatchAddSynonym, DictionaryPatchAddConcept]]
+
+
 # GENERAZIONI
 SCHEMA_OUT = {
     "patch_actions_v1.schema.json": PatchActionsReport,
@@ -125,6 +145,7 @@ SCHEMA_OUT = {
     "template_base_v1.schema.json": TemplateBase,
     "dictionary_v0.1.schema.json": Dictionary,
     "kb_v0.1.schema.json": KB,
+    "dictionary_patch_v1.schema.json": DictionaryPatch,
 }
 
 def write_schema(name: str, model: BaseModel, out_dir: Path) -> None:

@@ -39,7 +39,7 @@ def _next_versioned_path(path: Path) -> Path:
     m = re.search(r"_v(\d+)\.(\d+)\.json$", path.name)
     if not m:
         raise ValueError(f"Invalid versioned filename: {path.name}")
-    major, minor = int(m.group(1)), int(m.group(2))
+    major, minor = int(m.group(1)), int(m.group(2)) # 0.1 --> major = 0, minor= 1
     return path.with_name(path.name.replace(f"_v{major}.{minor}.json", f"_v{major}.{minor+1}.json"))
 
 def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) -> Dict:
@@ -49,6 +49,7 @@ def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
     dictionary = ctx.read_json(p)
 
     ctx.schema_validate("dictionary", dictionary)
+    ctx.schema_validate("dictionary_patch", patch)
 
     new_dict = copy.deepcopy(dictionary)
     entries = new_dict.setdefault("entries", [])
