@@ -158,7 +158,7 @@ patch_actions_vx.json
 
 ### Output
 
-# FASE 10 - Applicare Patch a dizionario
+# FASE 10 - Applicare Patch e Tool a dizionario
 
 ### Scopo
 Testare che tool dictionary siano funzionanti. Test con patch manuali.
@@ -169,3 +169,14 @@ Creazione patch manuali
 
 ### Output
 Tool dictionary funzionanti.
+
+# FASE 11 - Applicare Patch e Tool a KB
+### Scopo
+Testare che tool kb siano funzionanti. Test con patch manuali.
+
+### Attività
+Aggiornato schema_generate per validare schema correttamente
+Creazione patch manuali
+
+### Output
+Tool kb funzionanti.
