@@ -1,0 +1,332 @@
+🔹 FASE 8 — Derivazione delle Patch Actions
+---------------Ruolo-------------------------
+Trasformare l’output del matching in azioni dichiarative candidate, senza decidere nulla.
+
+---------------Input-----------------
+matching_report
+template_normalized
+dictionary
+template_base
+kb
+Cosa succede
+Per ogni variabile:
+matched → nessuna azione
+ambiguous → REQUIRE_REVIEW
+unmapped → PROPOSE_SYNONYM o PROPOSE_CONCEPT
+out_of_scope → MARK_OUT_OF_SCOPE
+
+-------------------Output-----------------------
+patch_actions_v1.json
+⚠️
+Nessuna modifica diretta
+Nessuna intelligenza
+Solo regole meccaniche
+
+🔹 FASE 9 — MCP Server (core operativo)
+Ruolo
+Diventa l’orchestratore unico dell’intero flusso.
+Responsabilità
+eseguire le fasi in ordine
+isolare side effects
+applicare policy
+garantire auditabilità
+Tool MCP (minimi)
+load_run
+validate_patch
+apply_patch (dry_run=true|false)
+compute_diff
+commit_run
+generate_run_report
+👉 MCP non interpreta, non decide, non inventa.
+
+🔹 FASE 10 — Validazione schema-first
+Ruolo
+Bloccare modifiche non conformi prima che tocchino il dominio.
+Cosa viene validato
+struttura patch
+coerenza category
+vincoli KB
+versioning
+
+Output
+patch accettate / rifiutate
+errori strutturali espliciti
+--------------------------------------------------------------------------------------------------
+Definire lo schema patch per dictionary (dictionary_patch_v1.schema.json) e agganciarlo a schema_validate.
+Validare la patch nel dictionary_upsert prima del dry‑run.
+Aggiornare run_local.py per usare i nuovi path (PATCH_ROOT, RUNS_ROOT) e scrivere report in runs/.
+Agganciare la diff semantica al run_report (add_concept / add_synonym).
+Se vuoi, iniziamo dalla 
+1) e preparo lo schema.
+
+e poi non anche inserire tutte le funzioni?
+-----------------------------------------------------------------------------------------
+Sì, ma dopo aver chiuso il flusso base. Quindi:
+
+Estendere le patch ops del dictionary: update_synonym, add_abbreviation, add_pattern, update_category.
+Estendere template_base: add_base_concept, remove_base_concept, update_base_metadata.
+Estendere KB: add_kb_rule, update_kb_rule.
+------------------------------------------------------------------------------------------------
+✅ FUNZIONALITÀ GIÀ IMPLEMENTATE (FASE 10)
+
+Queste esistono davvero nel codice e sono operative.
+
+1️⃣ add_synonym
+
+Stato: ✅ implementata e testata
+
+Cosa fa
+aggiunge un sinonimo a un concept esistente
+per una lingua specifica (it, en, …)
+Guardrail
+concept deve esistere
+sinonimo non duplicato
+errore esplicito se concept mancante
+Perché è corretta
+deterministica
+non introduce concetti
+migliora matching senza cambiare dominio
+
+2️⃣ add_concept
+
+Stato: ✅ implementata (come da ultimo step)
+
+Cosa fa
+aggiunge un nuovo concept al dizionario
+con:
+    concept_id
+    category (ruolo strutturale)
+    synonyms
+    abbreviations
+    patterns
+Guardrail
+concept_id unico
+nessuna inferenza
+errore se già esistente
+Perché è corretta
+il dominio nasce solo qui
+sempre human-approved
+versionata
+
+🟡 FUNZIONALITÀ DA AGGIUNGERE (TUTTE QUELLE COERENTI)
+
+Queste non sono ancora implementate, ma sono coerenti al 100% con:
+il PDF
+la pipeline
+MCP
+audit-first
+Le elenco tutte, per artefatto.
+
+🧩 ---------------DIZIONARIO (dictionary)----------------------
+3️⃣ remove_synonym
+
+Perché serve
+sinonimi errati / rumorosi
+cleanup del dizionario
+Guardrail
+concept deve esistere
+sinonimo deve esistere
+errore se non trovato
+
+4️⃣ update_synonym
+
+(opzionale ma pulita)
+
+Cosa fa
+sostituisce un sinonimo con un altro
+equivalente a remove + add atomico
+
+5️⃣ add_abbreviation
+
+Cosa fa
+aggiunge abbreviazioni controllate (HP, SP, …)
+Nota
+NON sinonimi
+matching separato
+
+6️⃣ remove_abbreviation
+7️⃣ add_pattern
+
+Cosa fa
+aggiunge pattern regex deterministici
+per casi industriali complessi
+Nota
+sempre statici
+mai generati automaticamente
+
+8️⃣ remove_pattern
+9️⃣ update_category (⚠️ SOLO STRUTTURALE)
+
+Cosa fa
+cambia il ruolo strutturale:
+    measurement
+    parameter
+    alarm
+    warning
+    command
+    virtual_variable
+
+❌ NON:
+temperature
+pressure
+dimensioni fisiche
+
+🔟 deprecate_concept
+
+Cosa fa
+marca un concept come deprecato
+NON lo rimuove
+Perché serve
+backward compatibility
+audit storico
+
+🧩 ---------------------TEMPLATE BASE (template_base)----------------------
+11️⃣ add_base_concept
+
+(simile a add_concept, ma su template_base)
+
+12️⃣ remove_base_concept
+
+(raro, ma possibile)
+
+13️⃣ update_base_metadata
+
+(label, description, ecc.)
+
+🧩 --------------------KB (knowledge base)-------------------------------------
+14️⃣ add_kb_rule
+
+Cosa fa
+
+aggiunge una regola deterministica
+scope, vincoli, blacklist
+
+15️⃣ remove_kb_rule
+16️⃣ update_kb_rule
+
+🔹 FASE 11 — Dry-run deterministico
+Ruolo
+
+Simulare l’effetto delle patch senza modificare nulla.
+
+Cosa succede
+
+applicazione virtuale patch
+
+riesecuzione matching
+
+raccolta metriche
+
+Output
+
+dry_run_result.json
+
+nuovo matching_report simulato
+
+🔹 FASE 12 — Diff strutturato
+Ruolo
+
+Rendere visibile l’impatto delle modifiche.
+
+Diff calcolati
+
+dictionary: prima / dopo
+
+template_base: prima / dopo
+
+matching outcome: prima / dopo
+
+Output
+
+diff_v1_to_v2.json
+
+⚠️
+
+Nessuna valutazione automatica
+
+Il diff informa, non decide
+
+🔹 FASE 13 — Decisione umana (governata)
+Ruolo
+
+Qui avviene l’unica vera decisione di dominio.
+
+Possibili esiti
+
+approva patch
+
+rifiuta patch
+
+modifica patch
+
+rinvia
+
+Caratteristiche
+
+tracciata
+
+motivata
+
+reversibile
+
+🔹 FASE 14 — Commit versionato
+Ruolo
+
+Congelare uno stato stabile del sistema.
+
+Cosa viene versionato
+
+dictionary
+
+template_base
+
+kb (se coinvolta)
+
+matching_report finale
+
+Proprietà
+
+commit atomico
+
+immutabile
+
+riproducibile
+
+🔹 FASE 15 — Run Report finale
+Ruolo
+
+Produrre l’output enterprise-grade del run.
+
+Contenuto
+
+versioni input/output
+
+patch applicate
+
+diff
+
+metriche (matched / ambiguous / unmapped)
+
+chiamate LLM (se presenti)
+
+errori evitati
+
+🔹 FASE 16 — (Opzionale) LLM come assistente
+
+⚠️ Solo dopo che tutto sopra esiste.
+
+Ruolo
+
+suggerire Patch Actions migliori
+
+spiegare ambiguità
+
+accelerare curation umana
+
+Limiti
+
+mai commit diretto
+
+mai modifica autonoma
+
+tutto passa da MCP + validazione

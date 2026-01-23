@@ -1,0 +1,94 @@
+{
+  "$defs": {
+    "DictionaryEntry": {
+      "properties": {
+        "concept_id": {
+          "title": "Concept Id",
+          "type": "string"
+        },
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "synonyms": {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "title": "Synonyms",
+          "type": "object"
+        },
+        "abbreviations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Abbreviations",
+          "type": "array"
+        },
+        "patterns": {
+          "items": {
+            "$ref": "#/$defs/DictionaryPatterns"
+          },
+          "title": "Patterns",
+          "type": "array"
+        }
+      },
+      "required": [
+        "concept_id",
+        "category",
+        "synonyms",
+        "abbreviations",
+        "patterns"
+      ],
+      "title": "DictionaryEntry",
+      "type": "object"
+    },
+    "DictionaryPatterns": {
+      "properties": {
+        "regex": {
+          "title": "Regex",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "regex",
+        "description"
+      ],
+      "title": "DictionaryPatterns",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "dictionary_version": {
+      "title": "Dictionary Version",
+      "type": "string"
+    },
+    "language": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Language",
+      "type": "array"
+    },
+    "entries": {
+      "items": {
+        "$ref": "#/$defs/DictionaryEntry"
+      },
+      "title": "Entries",
+      "type": "array"
+    }
+  },
+  "required": [
+    "dictionary_version",
+    "language",
+    "entries"
+  ],
+  "title": "Dictionary",
+  "type": "object"
+}

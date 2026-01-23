@@ -1,0 +1,276 @@
+FLUSSO --> load, normalize, match deterministico, fallback llm, patchactions, 
+Struttura repository proposta
+
+schemas/
+    schema_tipo_v1.json
+    normalized_template_v1.schema.json
+    template_base_v1.schema.json
+    dictionary_v0.1.schema.json
+    kb_v0.1.schema.json
+    match_result_v1.schema.json
+    patch_actions_v1.schema.json
+    run_report_v1.schema.json
+data/
+    template_base_v1.json
+    dictionary_v0.1.json
+    kb_v0.1.json
+src/
+    normalizer/ (normalizzazione e parsing multilanguage)
+    matcher/ (deterministico + scoring)
+    patcher/ (genera PatchActions)
+    confidence/ (fusione pesata + soglie)
+    llm/ (client Ollama, solo fallback)
+    reporting/ (run_report, audit log)
+mcp_server/
+    tools/ (template, schema, dictionary, kb, device_list)
+    orchestrator/ (flow e retry bounded)
+    storage/ (versioning, allowlist path)
+tests/
+    schemas/ (validazioni)
+    matcher/ (golden deterministici)
+    patch_apply/ (idempotenza)
+    e2e/ (template reali)
+runs/ (output per run, diff, report, log)
+pv_datas/ (input reali esistenti)
+note/ (documentazione esistente)
+
+FASE 1 — Analisi template e perimetro dati
+----------Scopo-----------
+Capire quali parti dei template servono davvero.
+
+---------Attività---------
+Studiare template reali
+Identificare sezioni prioritarie
+Decidere campi utili vs rumorosi
+
+----------Output------------
+Decisioni di perimetro (documento/notes)
+Lista sezioni e campi da includere
+
+
+FASE 2 — Creazione schema_tipo (schema-first)
+---------Scopo---------------
+Definire uno schema dichiarativo che governa l’estrazione dei dati.
+
+--------Attività----------
+Definizione sezioni incluse
+Definizione campi da estrarre
+Filtri (type ammessi, pattern esclusi)
+
+-------Output----------
+schema_tipo_v1.json
+
+FASE 3 — Creazione normalizzatore
+--------Scopo------------------
+Trasformare template grezzi in un formato uniforme.
+
+--------Attività----------------
+Parsing template JSON
+Applicazione schema_tipo
+Normalizzazione testo (encoding, lower, multilanguage)
+
+-------Output--------------------
+normalized_template_v1.json
+
+RICERCA --> % Uscita analogica (Write sole se TRA=UAL)
+Valore sonda 1Â° DEFROST
+
+FASE 4 — Creazione Template Base (concetti canonici)
+---------Scopo---------------
+Definire il linguaggio standard del dominio.
+
+---------Attività----------------
+Identificazione concetti chiave
+Definizione categorie
+Etichette multilingua
+
+---------Output------------------
+template_base_v1.json
+
+FASE 5 — Creazione Dizionario
+Scopo
+Collegare il linguaggio reale dei template ai concetti canonici.
+
+Attività
+Raccolta sinonim
+Pattern e abbreviazioni
+Versioning
+
+Output
+dictionary_v0.1.json
+
+FASE 6 — Creazione Knowledge Base (KB)
+
+-----------Scopo------------------
+Gestire il contesto (vendor, device, storico).
+
+-------------Attività-------------------
+creazione generatore autoamtico type_fam enum e device role. --> I campi *_AI non sono mai letti direttamente dalla KB o dal matching.
+Servono solo per costruire il device_context finale tramite regole deterministiche e override manuali.
+Definizione struttura KB
+Inserimento hint iniziali
+
+-------------Output-----------------------------
+kb_v0.1.json
+
+FASE 7 — Matching deterministico
+
+--------Scopo----------
+Associare variabili a concetti senza usare AI.
+
+--------Attività----------------
+Lookup dizionario
+Scoring numerico
+Applicazione KB
+Identificazione ambiguità
+
+------------Output-------------------
+match_result_v1.json
+mapped
+ambiguous
+unmapped_terms
+
+FASE 8 — Generazione PatchActions (senza LLM)
+
+Scopo
+Produrre PatchActions per i mapping deterministici.
+
+Attività
+Trasformare match_result in azioni
+Reason standard
+Confidence deterministica
+
+Output
+patch_actions_v1.json (deterministico)
+
+Ruolo
+Trasformare l’output del matching in azioni dichiarative candidate, senza decidere nulla.
+
+Input
+matching_report
+template_normalized
+dictionary
+template_base
+kb
+Cosa succede
+Per ogni variabile:
+matched → nessuna azione
+ambiguous → REQUIRE_REVIEW
+unmapped → PROPOSE_SYNONYM o PROPOSE_CONCEPT
+out_of_scope → MARK_OUT_OF_SCOPE
+
+Output
+patch_actions_v1.json
+⚠️
+Nessuna modifica diretta
+Nessuna intelligenza
+Solo regole meccaniche
+
+
+🔹 FASE 10 — Apply patch + Dry-run
+
+Scopo
+Applicare le PatchActions in modo sicuro.
+
+Attività
+
+Validazione schema
+
+Dry-run
+
+Produzione diff e warning
+
+Output
+
+diff.json
+
+warnings
+
+🔹 FASE 11 — Integrazione LLM (Ollama fallback)
+
+Scopo
+Risolvere ambiguità reali con AI controllata.
+
+Attività
+
+Chiamata Ollama per casi ambigui
+
+Produzione reason ed llm_signal
+
+Nessuna decisione autonoma
+
+Output
+
+contributo LLM strutturato
+
+🔹 FASE 12 — Fusione confidence e PatchActions ibride
+
+Scopo
+Calcolare confidence finale governata.
+
+Attività
+
+Fusione base_confidence + llm_signal
+
+Applicazione soglie
+
+Aggiornamento PatchActions
+
+Output
+
+patch_actions_v1.json (ibrido)
+
+🔹 FASE 13 — Report e audit
+
+Scopo
+Tracciabilità completa della run.
+
+Attività
+
+Raccolta metriche
+
+Version tracking
+
+Log strutturati
+
+Output
+
+run_report.json
+
+🔹 FASE 14 — Evoluzione Dizionario e KB
+
+Scopo
+Migliorare il sistema nel tempo.
+
+Attività
+
+Analisi unmapped_terms
+
+Update controllati
+
+Version bump
+
+Output
+
+dictionary_vX.Y.json
+
+kb_vX.Y.json
+
+🔹 FASE 15 — Test e non-regressione
+
+Scopo
+Garantire stabilità e qualità.
+
+Attività
+
+Golden dataset
+
+Test automatici
+
+Verifica output
+
+Output
+
+test suite
+
+expected outputs

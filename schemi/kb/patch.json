@@ -1,0 +1,140 @@
+{
+  "$defs": {
+    "KBPatchAddRule": {
+      "properties": {
+        "op": {
+          "const": "add_kb_rule",
+          "title": "Op",
+          "type": "string"
+        },
+        "scope_id": {
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "source_type": {
+          "title": "Source Type",
+          "type": "string"
+        },
+        "source_key": {
+          "title": "Source Key",
+          "type": "string"
+        },
+        "concept_id": {
+          "title": "Concept Id",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "evidence": {
+          "title": "Evidence",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "scope_id",
+        "source_type",
+        "source_key",
+        "concept_id",
+        "reason",
+        "evidence"
+      ],
+      "title": "KBPatchAddRule",
+      "type": "object"
+    },
+    "KBPatchUpdateRule": {
+      "properties": {
+        "op": {
+          "const": "update_kb_rule",
+          "title": "Op",
+          "type": "string"
+        },
+        "scope_id": {
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "source_type": {
+          "title": "Source Type",
+          "type": "string"
+        },
+        "source_key": {
+          "title": "Source Key",
+          "type": "string"
+        },
+        "concept_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Concept Id"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence"
+        }
+      },
+      "required": [
+        "op",
+        "scope_id",
+        "source_type",
+        "source_key"
+      ],
+      "title": "KBPatchUpdateRule",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "target": {
+      "const": "kb",
+      "title": "Target",
+      "type": "string"
+    },
+    "operations": {
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/KBPatchAddRule"
+          },
+          {
+            "$ref": "#/$defs/KBPatchUpdateRule"
+          }
+        ]
+      },
+      "title": "Operations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "target",
+    "operations"
+  ],
+  "title": "KBPatch",
+  "type": "object"
+}

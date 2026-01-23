@@ -1,0 +1,241 @@
+{
+  "schema_tipo_version": "v0.1",
+  "output_fields": [
+            "section",
+            "source_key",
+            "raw_text",
+            "normalized_text",
+            "measurement",
+            "type",
+            "enabled",
+            "evidence_fields"
+        ],      
+  "sections": [
+    {
+        "name": "TemplateGuid",
+        "role": "support_only",
+        "path": "$.TemplateGuid",
+        "value_type": "scalar",
+        "extract_fields": ["TemplateGuid"]
+    },
+
+    {
+        "name": "ContinuosReads",
+        "role": "core",
+        "path": "$.ContinuosReads.Values",
+        "value_type": "keyed_map",
+        "entry_key_from": "map_key",
+        "extract_fields": [
+            "Description",
+            "MultiLanguageDescription",
+            "Measurement",
+            "Type",
+            "Alias",
+            "Name",
+            "Enable"
+        ],
+        "text_fields": {
+            "raw_text": "Description",
+            "multilang": "MultiLanguageDescription"
+        },
+        "normalizations": {
+            "parse_json_fields": ["MultiLanguageDescription"],
+            "measurement_cleanup": true
+        },
+        "matching_rules": {
+            "enabled_field": "Enable",
+            "include_disabled": true,
+            "match_only_if_enabled": true
+        },
+        "filters": {
+            "type_allowlist": null
+        }
+    },
+
+    {
+      "name": "Parameters",
+      "role": "core",
+      "path": "$.Parameters.Values",
+      "value_type": "keyed_map",
+      "entry_key_from": "map_key",
+      "extract_fields": [
+        "Description",
+        "MultiLanguageDescription",
+        "Measurement",
+        "Type",
+        "Alias",
+        "Name",
+        "Enable",
+        "Label",
+        "Category"
+      ],
+      "text_fields": {
+        "raw_text": "Description",
+        "multilang": "MultiLanguageDescription"
+      },
+      "normalizations": {
+        "parse_json_fields": ["MultiLanguageDescription"],
+        "measurement_cleanup": true
+      },
+      "matching_rules": {
+        "enabled_field": "Enable",
+        "include_disabled": true,
+        "match_only_if_enabled": true
+      },
+      "filters": {
+        "type_allowlist": null
+      }
+    },
+
+    {
+      "name": "Alarms",
+      "role": "core",
+      "path": "$.Alarms.Values",
+      "value_type": "keyed_map",
+      "entry_key_from": "map_key",
+      "extract_fields": [
+        "Description",
+        "MultiLanguageDescription",
+        "Measurement",
+        "Type",
+        "Alias",
+        "Name",
+        "Enable",
+        "Priority"
+      ],
+      "text_fields": {
+        "raw_text": "Description",
+        "multilang": "MultiLanguageDescription"
+      },
+      "normalizations": {
+        "parse_json_fields": ["MultiLanguageDescription"],
+        "measurement_cleanup": true
+      },
+      "matching_rules": {
+        "enabled_field": "Enable",
+        "include_disabled": true,
+        "match_only_if_enabled": true
+      },
+      "filters": {
+        "type_allowlist": null
+      }
+    },
+
+    {
+      "name": "Warnings",
+      "role": "core",
+      "path": "$.Warnings.Values",
+      "value_type": "keyed_map",
+      "entry_key_from": "map_key",
+      "extract_fields": [
+        "Description",
+        "MultiLanguageDescription",
+        "Measurement",
+        "Type",
+        "Alias",
+        "Name",
+        "Enable"
+      ],
+      "text_fields": {
+        "raw_text": "Description",
+        "multilang": "MultiLanguageDescription"
+      },
+      "normalizations": {
+        "parse_json_fields": ["MultiLanguageDescription"],
+        "measurement_cleanup": true
+      },
+      "matching_rules": {
+        "enabled_field": "Enable",
+        "include_disabled": true,
+        "match_only_if_enabled": true
+      },
+      "filters": {
+        "type_allowlist": null
+      }
+    },
+
+    {
+      "name": "Commands",
+      "role": "core",
+      "path": "$.Commands.Values",
+      "value_type": "keyed_map",
+      "entry_key_from": "map_key",
+      "extract_fields": [
+        "Description",
+        "MultiLanguageDescription",
+        "Measurement",
+        "Type",
+        "Alias",
+        "Name",
+        "Enable"
+      ],
+      "text_fields": {
+        "raw_text": "Description",
+        "multilang": "MultiLanguageDescription"
+      },
+      "normalizations": {
+        "parse_json_fields": ["MultiLanguageDescription"],
+        "measurement_cleanup": true
+      },
+      "matching_rules": {
+        "enabled_field": "Enable",
+        "include_disabled": true,
+        "match_only_if_enabled": true
+      },
+      "filters": {
+        "type_allowlist": null
+      }
+    },
+
+    {
+      "name": "VirtualVariables",
+      "role": "core",
+      "path": "$.VirtualVariables.Values",
+      "value_type": "keyed_map",
+      "entry_key_from": "map_key",
+      "extract_fields": [
+        "Description",
+        "MultiLanguageDescription",
+        "Measurement",
+        "Type",
+        "Alias",
+        "Name",
+        "Enable"
+      ],
+      "text_fields": {
+        "raw_text": "Description",
+        "multilang": "MultiLanguageDescription"
+      },
+      "normalizations": {
+        "parse_json_fields": ["MultiLanguageDescription"],
+        "measurement_cleanup": true
+      },
+      "matching_rules": {
+        "enabled_field": "Enable",
+        "include_disabled": true,
+        "match_only_if_enabled": true
+      },
+      "filters": {
+        "type_allowlist": null
+      }
+    },
+
+    {
+      "name": "DataloggerPen",
+      "role": "support_only",
+      "path": "$.DataloggerPen.Values",
+      "value_type": "keyed_map",
+      "entry_key_from": "map_key",
+      "extract_fields": [
+        "Pen",
+        "Labels",
+        "Measurement",
+        "Name",
+        "Type"
+      ],
+      "normalizations": {
+        "measurement_cleanup": true
+      }
+    }
+  ]
+}
