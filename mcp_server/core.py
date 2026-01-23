@@ -19,14 +19,14 @@ class MCPContext:
         self._dry_run_hashes: Dict[str, bool] = {}
 
         self.schema_map = {
-            "patch_actions": "patch_actions_v1.schema.json",
-            "maching_report": "matching_report_v1.schema.json",
-            "template_base": "template_base_v1.schema.json",
-            "dictionary": "dictionary_v0.1.schema.json",
-            "kb": "kb_v0.1.schema.json",
-            "dictionary_patch": "dictionary_patch_v1.schema.json",
-            "kb_patch": "kb_patch_v1.schema.json",
-            "template_base_patch": "template_base_patch_v1.schema.json",
+            "patch_actions": "patch_actions/patch_actions_v0.1.schema.json",
+            "matching_report": "matching/matching_report_v0.1.schema.json",
+            "template_base": "template_base/template_base_v0.1.schema.json",
+            "template_base_patch": "template_base/template_base_patch_v0.1.schema.json",
+            "dictionary": "dictionary/dictionary_v0.1.schema.json",
+            "dictionary_patch": "dictionary/dictionary_patch_v0.1.schema.json",
+            "kb": "kb/kb_v0.1.schema.json",
+            "kb_patch": "kb/kb_patch_v0.1.schema.json",
         }
     
     def ensure_within_root(self, path: str) -> Path:

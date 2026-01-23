@@ -220,21 +220,20 @@ class KBPatch(BaseModel):
 
 # GENERAZIONI
 SCHEMA_OUT = {
-    "patch_actions_v1.schema.json": PatchActionsReport,
-    "matching_report_v1.schema.json": MatchingReport,
-    "template_base_v1.schema.json": TemplateBase,
-    "dictionary_v0.1.schema.json": Dictionary,
-    "kb_v0.1.schema.json": KB,
-    "dictionary_patch_v1.schema.json": DictionaryPatch,
-    "kb_patch_v1.schema.json": KBPatch,
-    "template_base_patch_v1.schema.json": TemplateBasePatch,
-
-
+    "patch_actions/patch_actions_v0.1.schema.json": PatchActionsReport,
+    "matching/matching_report_v0.1.schema.json": MatchingReport,
+    "template_base/template_base_v0.1.schema.json": TemplateBase,
+    "template_base/template_base_patch_v0.1.schema.json": TemplateBasePatch,
+    "dictionary/dictionary_v0.1.schema.json": Dictionary,
+    "dictionary/dictionary_patch_v0.1.schema.json": DictionaryPatch,
+    "kb/kb_v0.1.schema.json": KB,
+    "kb/kb_patch_v0.1.schema.json": KBPatch,
 }
 
 def write_schema(name: str, model: BaseModel, out_dir: Path) -> None:
     schema = model.model_json_schema()
     out_path = out_dir/name
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(schema, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"wrote: {out_path}")
 

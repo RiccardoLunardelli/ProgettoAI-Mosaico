@@ -31,7 +31,7 @@ Filtri (type ammessi, pattern esclusi)
 Regole di parsing
 
 ### Output
-schema_tipo_v1.json
+schema_tipo_v0.1.json
 
 # FASE 3 — Creazione normalizzatore
 
@@ -40,7 +40,7 @@ Trasformare template grezzi in un formato uniforme e auditabile.
 
 ### Input
 Template reale (JSON)
-schema_tipo_v1.json
+schema_tipo_v0.1.json
 
 ### Attività
 Parsing template JSON
@@ -48,10 +48,10 @@ Applicazione schema_tipo
 Normalizzazione testo (encoding, lower, multilanguage)
 
 ### Output
-normalized_template_v1.json
+normalized_template_v0.1.json
 
 ### PER ESEGUIRE NORMALIZER
-uv run python src/parser/normalizer.py   --template pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json   --schema schemas/schema_tipo_v1.json   --output output_dir/normalized_template_v1.json
+uv run python src/parser/normalizer.py   --template pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json   --schema schemas/schema_tipo_v0.1.json   --output output_dir/normalized_template_v0.1.json
 
 # FASE 4 — Creazione Template Base (concetti canonici)
 
@@ -67,7 +67,7 @@ Definizione categorie
 Etichette multilingua
 
 ### Output
-template_base_v1.json
+template_base_v0.1.json
 
 # FASE 5 — Creazione Dizionario
 
@@ -75,8 +75,8 @@ template_base_v1.json
 Collegare il linguaggio reale dei templat (normalizzato)e ai concetti canonici.
 
 ### Input
-template_normalized_v1.json
-template_base_v1.json
+template_normalized_v0.1.json
+template_base_v0.1.json
 
 ### Attività
 Raccolta sinonimi da testo normalizzato
@@ -93,8 +93,8 @@ Gestire il contesto (vendor, device, storico).
 
 ### Input
 device_list_context.json
-template_normalized_v1.json
-template_base_v1.json
+template_normalized_v0.1.json
+template_base_v0.1.json
 dictionary_v0.1.json
 
 ### Attività
@@ -116,20 +116,20 @@ kb_v0.1.json
 Associare in modo deterministico ogni variabile attiva a un concept canonico.
 
 ### Input
-template_normalized_v1.json
+template_normalized_v0.1.json
 dictionary_v0.1.json
-template_base_v1.json
-device_context_v1.json
+template_base_v0.1.json
+device_context_v0.1.json
 kb_v0.1.json
 
 ### Attività
 Creazione matcher.py
 
 ###  PER ESEGUIRE MATCHER
-python3 matcher.py --normalized /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/normalized_template_v1.json --template_base /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/template_base_v1.json --dictionary /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionary_v0.1.json --kb /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/kb_v0.1.json --device_context /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/262174_VIGODA_ALI/device_list_context.json --output /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json
+python3 matcher.py --normalized /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/normalized_template_v0.1.json --template_base /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/template_base_v0.1.json --dictionary /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionary_v0.1.json --kb /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/kb_v0.1.json --device_context /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/262174_VIGODA_ALI/device_list_context.json --output /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v0.1.json
 
 ### Output
-matching_report_v1.json
+matching_report_v0.1.json
 
 # FASE 8
 
@@ -144,8 +144,8 @@ Creazione script che produce path Actions.
 
 ### ESEGUIRE PATCHER
 python3 patcher.py \
-  --matching /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v1.json \
-  --output /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/patch_actions_v1.json
+  --matching /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v0.1.json \
+  --output /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/patch_actions_v0.1.json
 
 ### Output
 patch_actions_vx.json

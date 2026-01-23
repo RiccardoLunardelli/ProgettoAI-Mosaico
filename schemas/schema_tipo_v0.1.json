@@ -1,5 +1,5 @@
 {
-  "schema_tipo_version": "v1",
+  "schema_tipo_version": "v0.1",
   "output_fields": [
             "section",
             "source_key",

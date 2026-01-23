@@ -16,12 +16,12 @@ ARTIFACTS = {
         "input_version": "v0.1",
     },
     "kb": {
-        "input_path": "data/kb_v0.2.json",
+        "input_path": "data/kb_v0.1.json",
         "patch_path": str(PATCH_ROOT / "kb" / "patch_manual_upkbrule.json"),
         "input_version": "v0.1",
     },
     "template_base": {
-        "input_path": "data/template_base_v0.2.json",
+        "input_path": "data/template_base_v0.1.json",
         "patch_path": str(PATCH_ROOT / "template" / "manual_patch_upbasemeta.json"),
         "input_version": "v1",
     }
