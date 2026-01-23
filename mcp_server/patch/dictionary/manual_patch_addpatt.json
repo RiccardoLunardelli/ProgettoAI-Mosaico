@@ -1,0 +1,11 @@
+{
+  "target": "dictionary",
+  "operations": [
+    {
+      "op": "add_pattern",
+      "concept_id": "temp_defrost",
+      "regex": "(?i)\\b(temp|temperatura)\\s*(sbrinamento|defrost|td)\\b",
+      "description": "Pattern temperatura sbrinamento/defrost"
+    }
+  ]
+}

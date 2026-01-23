@@ -1,0 +1,12 @@
+{
+  "target": "dictionary",
+  "operations": [
+    {
+      "op": "update_synonym",
+      "concept_id": "temp_defrost",
+      "lang": "it",
+      "old_value": "temperatura sbrinamento",
+      "new_value": "temperatura fase sbrinamento"
+    }
+  ]
+}

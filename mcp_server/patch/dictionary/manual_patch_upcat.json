@@ -1,0 +1,10 @@
+{
+  "target": "dictionary",
+  "operations": [
+    {
+      "op": "update_category",
+      "concept_id": "temp_defrost",
+      "category": "parameter"
+    }
+  ]
+}

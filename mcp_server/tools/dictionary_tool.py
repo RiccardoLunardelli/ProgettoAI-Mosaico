@@ -61,13 +61,7 @@ def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
             lang = op["lang"]
             value = op["value"]
 
-            search_result = dictionary_search(
-                ctx=ctx,
-                path=str(p),
-                text=None,
-                lang=None,
-                concept_id=concept_id,
-            )
+            search_result = dictionary_search(ctx, str(p), None, None, concept_id)
             if not search_result["results"]:
                 raise ValueError(f"Concept {concept_id} not found")
 
@@ -83,13 +77,7 @@ def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
         elif op["op"] == "add_concept":
             concept_id = op["concept_id"]
 
-            search_result = dictionary_search(
-                ctx=ctx,
-                path=str(p),
-                text=None,
-                lang=None,
-                concept_id=concept_id,
-            )
+            search_result = dictionary_search(ctx, str(p), None, None, concept_id)
             if search_result["results"]:
                 raise ValueError(f"Concept {concept_id} already exists")
 
@@ -101,6 +89,75 @@ def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
                 "patterns": op.get("patterns", []),
             }
             entries.append(new_entry)   # aggiunge nuovo concetto a dizionario
+
+        # ---------UPDATE SYNONYM-------------
+        elif op["op"] == "update_synonym":
+            concept_id = op["concept_id"]
+            lang = op["lang"]
+            old_value = op["old_value"]
+            new_value = op["new_value"]
+
+            search_result = dictionary_search(ctx, str(p), None, None, concept_id)
+            if not search_result["results"]:
+                raise ValueError(f"Concept {concept_id} not found")
+            
+            for entry in entries:
+                if entry["concept_id"] == concept_id:
+                    synonyms = entry.setdefault("synonyms", {})
+                    synonyms.setdefault(lang, [])
+                    if old_value not in synonyms[lang]:
+                        raise ValueError(f"Old synonym not found: {old_value}")
+                    if new_value not in synonyms[lang]:
+                        synonyms[lang].append(new_value)    # aggiunge nuovo sinonimo
+                    synonyms[lang] = [v for v in synonyms[lang] if v != old_value]
+                    break
+            
+        #-------ADD ABBREVIATION-------------------
+        elif op["op"] == "add_abbreviation":
+            concept_id = op["concept_id"]
+            value = op["value"]
+
+            search_result = dictionary_search(ctx, str(p), None, None, concept_id)
+            if not search_result["results"]:
+                raise ValueError(f" Concept {concept_id} not found")
+            
+            for entry in entries:
+                if entry["concept_id"] == concept_id:
+                    abbreviations = entry.setdefault("abbreviations", [])
+                    if value not in abbreviations:
+                        abbreviations.append(value)
+                    break
+        
+        #-------ADD PATTERN---------------------
+        elif op["op"] == "add_pattern":
+            concept_id = op["concept_id"]
+            regex = op["regex"]
+            description = op["description"]
+
+            search_result = dictionary_search(ctx, str(p), None, None, concept_id)
+            if not search_result["results"]:
+                raise ValueError(f"Concept {concept_id} not found")
+
+            for entry in entries:
+                if entry["concept_id"] == concept_id:
+                    patterns = entry.setdefault("patterns", [])
+                    patterns.append({"regex": regex, "description": description})
+                    break
+        
+        #-------UPDATE CATEGORY------------------------
+        elif op["op"] == "update_category":
+            concept_id = op["concept_id"]
+            category = op["category"]
+
+            search_result = dictionary_search(ctx, str(p), None, None, concept_id)
+            if not search_result["results"]:
+                raise ValueError(f"Concept {concept_id} not found")
+            
+            for entry in entries:
+                if entry["concept_id"] == concept_id:
+                    entry["category"] = category
+                    break
+
         else:
             raise ValueError(f"Unsupported operation: {op['op']}")
 

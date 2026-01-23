@@ -1,0 +1,10 @@
+{
+  "target": "dictionary",
+  "operations": [
+    {
+      "op": "add_abbreviation",
+      "concept_id": "temp_defrost",
+      "value": "TD"
+    }
+  ]
+}

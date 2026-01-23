@@ -12,7 +12,7 @@ RUNS_ROOT = Path("runs")
 ARTIFACTS = {
     "dictionary": {
         "input_path": "data/dictionary_v0.1.json",
-        "patch_path": str(PATCH_ROOT / "dictionary" / "manual_patch_002.json"),
+        "patch_path": str(PATCH_ROOT / "dictionary" / "manual_patch_upcat.json"),
         "input_version": "v0.1",
     }
 }
@@ -24,23 +24,49 @@ def generate_run_id() -> str:
     return f"run{ts}"
 
 def summarize_dictionary_diff(before: dict, after: dict) -> list[str]:
-    # creazione diff corretto
-
     before_entries = {e["concept_id"]: e for e in before.get("entries", [])}
     after_entries = {e["concept_id"]: e for e in after.get("entries", [])}
     summary = []
 
+    # nuovi concetti
     for concept_id in sorted(set(after_entries) - set(before_entries)):
         summary.append(f"add_concept: {concept_id}")
 
+    # concetti comuni
     for concept_id in sorted(set(after_entries) & set(before_entries)):
-        b_syn = before_entries[concept_id].get("synonyms", {})
-        a_syn = after_entries[concept_id].get("synonyms", {})
+        b_entry = before_entries[concept_id]
+        a_entry = after_entries[concept_id]
+
+        # update_category
+        if b_entry.get("category") != a_entry.get("category"):
+            summary.append(f"update_category: {concept_id} -> {a_entry.get('category')}")
+
+        # synonyms diff
+        b_syn = b_entry.get("synonyms", {})
+        a_syn = a_entry.get("synonyms", {})
         for lang in sorted(set(a_syn) | set(b_syn)):
             b_vals = set(b_syn.get(lang, []))
             a_vals = set(a_syn.get(lang, []))
             for val in sorted(a_vals - b_vals):
                 summary.append(f"add_synonym: {concept_id} [{lang}] '{val}'")
+            for val in sorted(b_vals - a_vals):
+                summary.append(f"remove_synonym: {concept_id} [{lang}] '{val}'")
+
+        # abbreviations diff
+        b_abbr = set(b_entry.get("abbreviations", []))
+        a_abbr = set(a_entry.get("abbreviations", []))
+        for val in sorted(a_abbr - b_abbr):
+            summary.append(f"add_abbreviation: {concept_id} '{val}'")
+        for val in sorted(b_abbr - a_abbr):
+            summary.append(f"remove_abbreviation: {concept_id} '{val}'")
+
+        # patterns diff (by regex+description)
+        b_pat = {(p.get("regex"), p.get("description")) for p in b_entry.get("patterns", [])}
+        a_pat = {(p.get("regex"), p.get("description")) for p in a_entry.get("patterns", [])}
+        for regex, desc in sorted(a_pat - b_pat):
+            summary.append(f"add_pattern: {concept_id} /{regex}/ ({desc})")
+        for regex, desc in sorted(b_pat - a_pat):
+            summary.append(f"remove_pattern: {concept_id} /{regex}/ ({desc})")
 
     return summary
 

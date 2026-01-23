@@ -125,6 +125,29 @@ class DictionaryPatchAddSynonym(BaseModel):
     lang: str
     value: str 
 
+class DictionaryPatchUpdateSynonym(BaseModel):
+    op: Literal["update_synonym"]
+    concept_id: str 
+    lang: str 
+    old_value: str 
+    new_value: str
+
+class DictionaryPatchAddAbbreviation(BaseModel):
+    op: Literal["add_abbreviation"]
+    concept_id: str 
+    value: str 
+
+class DictionaryPatchAddPattern(BaseModel):
+    op: Literal["add_pattern"]
+    concept_id: str 
+    regex: str 
+    description: str
+
+class DictionaryPatchUpdateCategory(BaseModel):
+    op: Literal["update_category"]
+    concept_id: str
+    category: str
+
 class DictionaryPatchAddConcept(BaseModel):
     op: Literal["add_concept"]
     concept_id: str 
@@ -135,7 +158,16 @@ class DictionaryPatchAddConcept(BaseModel):
 
 class DictionaryPatch(BaseModel):
     target: Literal["dictionary"]
-    operations: List[Union[DictionaryPatchAddSynonym, DictionaryPatchAddConcept]]
+    operations: List[
+        Union[
+            DictionaryPatchAddSynonym, 
+            DictionaryPatchAddConcept,
+            DictionaryPatchUpdateSynonym,
+            DictionaryPatchAddAbbreviation,
+            DictionaryPatchAddPattern,
+            DictionaryPatchUpdateCategory,
+        ]
+    ]
 
 
 # GENERAZIONI
