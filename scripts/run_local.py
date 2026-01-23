@@ -1,4 +1,4 @@
-from mcp_server.server import dictionary_upsert, kb_upsert_mapping
+from mcp_server.server import dictionary_upsert, kb_upsert_mapping, template_apply_patch
 from mcp_server.core import MCPContext
 
 import json
@@ -19,6 +19,11 @@ ARTIFACTS = {
         "input_path": "data/kb_v0.2.json",
         "patch_path": str(PATCH_ROOT / "kb" / "patch_manual_upkbrule.json"),
         "input_version": "v0.1",
+    },
+    "template_base": {
+        "input_path": "data/template_base_v0.2.json",
+        "patch_path": str(PATCH_ROOT / "template" / "manual_patch_upbasemeta.json"),
+        "input_version": "v1",
     }
 }
 
@@ -89,6 +94,37 @@ def summarize_kb_diff(before: dict, after: dict) -> list[str]:
         a = a_map[key]
         if b.get("concept_id") != a.get("concept_id") or b.get("reason") != a.get("reason") or b.get("evidence") != a.get("evidence"):
             summary.append(f"update_kb_rule: {a['scope_id']} {a['source_type']} {a['source_key']}")
+
+    return summary
+
+def summarize_template_base_diff(before: dict, after: dict) -> list[str]:
+    summary = []
+
+    def flat_map(tb):
+        out = {}
+        for cat in tb.get("categories", []):
+            for c in cat.get("concepts", []):
+                out[c["concept_id"]] = (cat.get("id"), c)
+        return out
+
+    b = flat_map(before)
+    a = flat_map(after)
+
+    for concept_id in sorted(set(a) - set(b)):
+        summary.append(f"add_base_concept: {concept_id} -> {a[concept_id][0]}")
+
+    for concept_id in sorted(set(b) - set(a)):
+        summary.append(f"remove_base_concept: {concept_id}")
+
+    for concept_id in sorted(set(a) & set(b)):
+        b_cat, b_c = b[concept_id]
+        a_cat, a_c = a[concept_id]
+        if b_cat != a_cat:
+            summary.append(f"update_base_category: {concept_id} {b_cat} -> {a_cat}")
+        if b_c.get("label") != a_c.get("label"):
+            summary.append(f"update_base_label: {concept_id}")
+        if b_c.get("description") != a_c.get("description"):
+            summary.append(f"update_base_description: {concept_id}")
 
     return summary
 
@@ -163,8 +199,10 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
 
 
 if __name__ == "__main__":
-    choose = int(input("1--> diz. 2--> kb: "))
+    choose = int(input("1--> diz. 2--> kb. 3--> template: "))
     if choose == 1:
         run_patch(ARTIFACTS["dictionary"], "dictionary", dictionary_upsert, summarize_dictionary_diff)
     elif choose == 2:   
         run_patch(ARTIFACTS["kb"],  "kb", kb_upsert_mapping, summarize_kb_diff)
+    elif choose == 3:
+        run_patch(ARTIFACTS["template_base"], "template_base", template_apply_patch, summarize_template_base_diff)

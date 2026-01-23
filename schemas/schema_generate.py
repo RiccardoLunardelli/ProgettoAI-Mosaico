@@ -22,7 +22,6 @@ class PatchActionsReport(BaseModel):
     source_matching_version: Optional[str] = None
     actions: List[PatchAction]
 
-
 # ------------MATCHING REPORT--------------------
 class MatchingCandidate(BaseModel):
     concept_id: str
@@ -63,6 +62,33 @@ class TemplateBaseCategory(BaseModel):
 class TemplateBase(BaseModel):
     template_base_version: str
     categories: List[TemplateBaseCategory]
+
+#----------TEMPLATE PATCH--------------------
+class TemplateBasePatchAddConcept(BaseModel):
+    op: Literal["add_base_concept"]
+    category_id: str 
+    concept_id: str 
+    label: ConceptLabel
+    description: str 
+
+class TemplateBasePatchRemoveConcept(BaseModel):
+    op: Literal["remove_base_concept"]
+    concept_id: str 
+
+class TemplateBasePatchUpdateMetadata(BaseModel):
+    op: Literal["update_base_metadata"]
+    concept_id: str 
+    label: Optional[ConceptLabel] = None 
+    description: Optional[str] = None 
+    category: Optional[str] = None 
+
+class TemplateBasePatch(BaseModel):
+    target: Literal["template_base"]
+    operations: List[Union[
+        TemplateBasePatchAddConcept,
+        TemplateBasePatchRemoveConcept,
+        TemplateBasePatchUpdateMetadata
+    ]]
 
 # ---------DIZIONARIO-----------------------
 class DictionaryPatterns(BaseModel):
@@ -201,6 +227,8 @@ SCHEMA_OUT = {
     "kb_v0.1.schema.json": KB,
     "dictionary_patch_v1.schema.json": DictionaryPatch,
     "kb_patch_v1.schema.json": KBPatch,
+    "template_base_patch_v1.schema.json": TemplateBasePatch,
+
 
 }
 

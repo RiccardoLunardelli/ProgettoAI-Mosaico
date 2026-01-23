@@ -1,0 +1,12 @@
+{
+  "target": "template_base",
+  "operations": [
+    {
+      "op": "update_base_metadata",
+      "concept_id": "temp_defrost",
+      "label": { "it": "Temperatura sbrinamento", "en": "Defrost temperature" },
+      "description": "Temperatura associata alla fase di sbrinamento.",
+      "category": "measurement"
+    }
+  ]
+}

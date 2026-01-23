@@ -1,0 +1,158 @@
+{
+  "$defs": {
+    "ConceptLabel": {
+      "properties": {
+        "it": {
+          "title": "It",
+          "type": "string"
+        },
+        "en": {
+          "title": "En",
+          "type": "string"
+        }
+      },
+      "required": [
+        "it",
+        "en"
+      ],
+      "title": "ConceptLabel",
+      "type": "object"
+    },
+    "TemplateBasePatchAddConcept": {
+      "properties": {
+        "op": {
+          "const": "add_base_concept",
+          "title": "Op",
+          "type": "string"
+        },
+        "category_id": {
+          "title": "Category Id",
+          "type": "string"
+        },
+        "concept_id": {
+          "title": "Concept Id",
+          "type": "string"
+        },
+        "label": {
+          "$ref": "#/$defs/ConceptLabel"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "category_id",
+        "concept_id",
+        "label",
+        "description"
+      ],
+      "title": "TemplateBasePatchAddConcept",
+      "type": "object"
+    },
+    "TemplateBasePatchRemoveConcept": {
+      "properties": {
+        "op": {
+          "const": "remove_base_concept",
+          "title": "Op",
+          "type": "string"
+        },
+        "concept_id": {
+          "title": "Concept Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "concept_id"
+      ],
+      "title": "TemplateBasePatchRemoveConcept",
+      "type": "object"
+    },
+    "TemplateBasePatchUpdateMetadata": {
+      "properties": {
+        "op": {
+          "const": "update_base_metadata",
+          "title": "Op",
+          "type": "string"
+        },
+        "concept_id": {
+          "title": "Concept Id",
+          "type": "string"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ConceptLabel"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Category"
+        }
+      },
+      "required": [
+        "op",
+        "concept_id"
+      ],
+      "title": "TemplateBasePatchUpdateMetadata",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "target": {
+      "const": "template_base",
+      "title": "Target",
+      "type": "string"
+    },
+    "operations": {
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/TemplateBasePatchAddConcept"
+          },
+          {
+            "$ref": "#/$defs/TemplateBasePatchRemoveConcept"
+          },
+          {
+            "$ref": "#/$defs/TemplateBasePatchUpdateMetadata"
+          }
+        ]
+      },
+      "title": "Operations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "target",
+    "operations"
+  ],
+  "title": "TemplateBasePatch",
+  "type": "object"
+}

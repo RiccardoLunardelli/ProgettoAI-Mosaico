@@ -1,0 +1,12 @@
+{
+  "target": "template_base",
+  "operations": [
+    {
+      "op": "add_base_concept",
+      "category_id": "measurement",
+      "concept_id": "temp_probe",
+      "label": { "it": "Temperatura sonda", "en": "Probe temperature" },
+      "description": "Temperatura rilevata da una sonda generica."
+    }
+  ]
+}

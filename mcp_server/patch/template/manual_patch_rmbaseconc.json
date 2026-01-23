@@ -1,0 +1,9 @@
+{
+  "target": "template_base",
+  "operations": [
+    {
+      "op": "remove_base_concept",
+      "concept_id": "temp_probe"
+    }
+  ]
+}
