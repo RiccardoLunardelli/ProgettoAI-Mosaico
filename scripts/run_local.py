@@ -18,7 +18,7 @@ ARTIFACTS = {
     },
     "kb": {
         "input_path": "data/kb_v0.1.json",
-        "patch_path": str(PATCH_ROOT / "kb" / "patch_manual_upkbrule.json"),
+        "patch_path": str(PATCH_ROOT / "kb" / "patch_manual_addkbrule.json"),
         "input_version": "v0.1",
     },
     "template_base": {
@@ -75,6 +75,7 @@ def extract_analysis_from_matching_report(mr: dict) -> dict:
             })
     
     return {
+        "matching_version": mr.get("matching_version"),
         "ambiguous_matches": ambiguous,
         "unmapped_terms": unmapped,
         "proposed_concepts" : proposed
@@ -215,6 +216,8 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     if matching_path:
         with open(matching_path, "r", encoding="utf-8") as f:
             mr = json.load(f)
+        ctx = MCPContext(repo_root=".")
+        ctx.schema_validate("matching_report", mr)
         analysis = extract_analysis_from_matching_report(mr)
 
     with open(patch_path, "r", encoding="utf-8") as f:
