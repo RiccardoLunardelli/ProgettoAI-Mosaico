@@ -1,0 +1,130 @@
+{
+  "$defs": {
+    "PatchActionLabelPair": {
+      "properties": {
+        "it": {
+          "title": "It",
+          "type": "string"
+        },
+        "en": {
+          "title": "En",
+          "type": "string"
+        }
+      },
+      "required": [
+        "it",
+        "en"
+      ],
+      "title": "PatchActionLabelPair",
+      "type": "object"
+    },
+    "PatchActionMapVariable": {
+      "properties": {
+        "type": {
+          "const": "map_variable",
+          "title": "Type",
+          "type": "string"
+        },
+        "section": {
+          "title": "Section",
+          "type": "string"
+        },
+        "source_key": {
+          "title": "Source Key",
+          "type": "string"
+        },
+        "target": {
+          "$ref": "#/$defs/PatchActionTarget"
+        },
+        "patch": {
+          "$ref": "#/$defs/PatchActionPatch"
+        },
+        "confidence": {
+          "title": "Confidence",
+          "type": "number"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "evidence": {
+          "additionalProperties": true,
+          "title": "Evidence",
+          "type": "object"
+        }
+      },
+      "required": [
+        "type",
+        "section",
+        "source_key",
+        "target",
+        "patch",
+        "confidence",
+        "reason",
+        "evidence"
+      ],
+      "title": "PatchActionMapVariable",
+      "type": "object"
+    },
+    "PatchActionPatch": {
+      "properties": {
+        "set_fields": {
+          "additionalProperties": true,
+          "title": "Set Fields",
+          "type": "object"
+        }
+      },
+      "required": [
+        "set_fields"
+      ],
+      "title": "PatchActionPatch",
+      "type": "object"
+    },
+    "PatchActionTarget": {
+      "properties": {
+        "concept_id": {
+          "title": "Concept Id",
+          "type": "string"
+        },
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "labels": {
+          "$ref": "#/$defs/PatchActionLabelPair"
+        }
+      },
+      "required": [
+        "concept_id",
+        "category",
+        "labels"
+      ],
+      "title": "PatchActionTarget",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "patch_actions_version": {
+      "title": "Patch Actions Version",
+      "type": "string"
+    },
+    "generated_at": {
+      "title": "Generated At",
+      "type": "string"
+    },
+    "actions": {
+      "items": {
+        "$ref": "#/$defs/PatchActionMapVariable"
+      },
+      "title": "Actions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "patch_actions_version",
+    "generated_at",
+    "actions"
+  ],
+  "title": "PatchActionsTemplate",
+  "type": "object"
+}

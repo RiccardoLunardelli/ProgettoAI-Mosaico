@@ -29,6 +29,8 @@ ARTIFACTS = {
     "template": {
         "input_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json",
         "patch_path": "mcp_server/patch/template_real/patch_2.json",
+        "matching_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v0.1.json",
+        "patch_actions_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/patch_actions_v0.1.json",
     }
 }
 
@@ -37,6 +39,27 @@ def generate_run_id() -> str:
 
     ts = datetime.now(TIMEZONE).strftime("%Y%m%d_%H%M%S")
     return f"run{ts}"
+
+def extract_matched_variables_from_patch_actions(pa: dict, min_conf: float = 0.9) -> list[dict]:
+    # estrae variabili NO_OP || confidence >= 0.9
+
+    out = []
+    for a in pa.get("actions", []):
+        if a.get("action_type") == "NO_OP" and (a.get("confidence") or 0.0) >= min_conf:
+            out.append({
+                "section": a.get("section"),
+                "source_key": a.get("source_key"),
+                "description": a.get("normalized_text"),
+                "concept_id": a.get("concept_id"),
+                "confidence": a.get("confidence"),
+                "reason": a.get("reason"),
+            })
+    return out
+ 
+def extract_actions_from_patch_actions(pa: dict) -> list[dict]:
+    # estrae actions da patch_actions
+
+    return pa.get("actions", [])
 
 def extract_analysis_from_matching_report(mr: dict) -> dict:
     # aggiunge nel report tutte le variabili che si riferiscono ad un concetto non ancora mappato
@@ -237,10 +260,12 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     run_dir = RUNS_ROOT / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
     analysis = {}
+    actions = None
 
     input_path = cfg["input_path"]
     patch_path = cfg["patch_path"]
     matching_path = cfg.get("matching_path")
+    patch_actions_path = cfg.get("patch_actions_path")
 
     if matching_path:
         with open(matching_path, "r", encoding="utf-8") as f:
@@ -248,13 +273,17 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
         ctx = MCPContext(repo_root=".")
         ctx.schema_validate("matching_report", mr)
         analysis = extract_analysis_from_matching_report(mr)
+    
+    if patch_actions_path:
+        with open(patch_actions_path, "r", encoding="utf-8") as f:
+            pa = json.load(f)
 
     with open(patch_path, "r", encoding="utf-8") as f:
         patch = json.load(f)
     with open(input_path, "r", encoding="utf-8") as f:
         artifact = json.load(f)
 
-    dry_run_only = False # TEST
+    dry_run_only = False # TEST; True = No commit. False = Si commit
 
     dry_run_result = upsert_fn(
         path=input_path,
@@ -276,7 +305,6 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     else:
         output_path = input_path
 
-
     run_report = build_run_report(
         run_id=run_id,
         input_path=input_path,
@@ -292,6 +320,9 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     if analysis:
         run_report["analysis"] = analysis
         run_report["analysis"]["matching_path"] = matching_path
+
+    run_report["matched_variables"] = extract_matched_variables_from_patch_actions(pa)
+    run_report["patch_actions_path"] = patch_actions_path
 
     report_path = run_dir / "run_report.json"
     with open(report_path, "w", encoding="utf-8") as f:

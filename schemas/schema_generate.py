@@ -14,6 +14,35 @@ class TemplatePatch(BaseModel):
     target: Literal["template"]
     operations: List[TemplatePatchSetFields]
 
+# --------PATCH ACTIONS TEMPLATE------------------
+class PatchActionLabelPair(BaseModel):
+    it: str
+    en: str
+
+class PatchActionTarget(BaseModel):
+    concept_id: str
+    category: str
+    labels: PatchActionLabelPair
+
+class PatchActionPatch(BaseModel):
+    set_fields: Dict[str, Any]
+
+class PatchActionMapVariable(BaseModel):
+    type: Literal["map_variable"]
+    section: str
+    source_key: str
+    target: PatchActionTarget
+    patch: PatchActionPatch
+    confidence: float
+    reason: str
+    evidence: Dict[str, Any]
+
+class PatchActionsTemplate(BaseModel):
+    patch_actions_version: str
+    generated_at: str
+    actions: List[PatchActionMapVariable]
+
+
 #-------------PATCH ACTIONS-------------------
 class PatchAction(BaseModel): 
     action_type: str
@@ -240,6 +269,7 @@ SCHEMA_OUT = {
     "dictionary/dictionary_patch_v0.1.schema.json": DictionaryPatch,
     "kb/kb_v0.1.schema.json": KB,
     "kb/kb_patch_v0.1.schema.json": KBPatch,
+    "patch_actions/patch_actions_template_v0.1.schema.json": PatchActionsTemplate,
 }
 
 def write_schema(name: str, model: BaseModel, out_dir: Path) -> None:
