@@ -17,18 +17,18 @@ ARTIFACTS = {
         "input_version": "v0.1",
     },
     "kb": {
-        "input_path": "data/kb_v0.2.json",
+        "input_path": "data/kb_v0.1.json",
         "patch_path": str(PATCH_ROOT / "kb" / "patch_manual_addkbrule.json"),
         "input_version": "v0.1",
     },
     "template_base": {
-        "input_path": "data/template_base_v0.2.json",
+        "input_path": "data/template_base_v0.1.json",
         "patch_path": str(PATCH_ROOT / "template" / "manual_patch_upbasemeta.json"),
         "input_version": "v0.1",
     },
     "template": {
-        "input_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e_v0.1.json",
-        "patch_path": "mcp_server/patch/template_real/patch_1.json",
+        "input_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json",
+        "patch_path": "mcp_server/patch/template_real/patch_2.json",
     }
 }
 
@@ -254,17 +254,19 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     with open(input_path, "r", encoding="utf-8") as f:
         artifact = json.load(f)
 
+    dry_run_only = False # TEST
+
     dry_run_result = upsert_fn(
         path=input_path,
         patch=patch,
         dry_run=True,
     )
     preview = dry_run_result.get("preview")
-
+    
     diff = diff_fn(artifact, preview)
     no_change = (len(diff) == 0)
 
-    if not no_change:
+    if not no_change and not dry_run_only:
         commit_result = upsert_fn(
             path=input_path,
             patch=patch,
@@ -273,6 +275,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
         output_path = commit_result.get("output_path")
     else:
         output_path = input_path
+
 
     run_report = build_run_report(
         run_id=run_id,
@@ -283,9 +286,9 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
         artifact_type=artifact_type,
     )
 
-    run_report["execution"]["committed"] = (not no_change)
-    run_report["execution"]["status"] = "no_change" if no_change else "success"
-
+    run_report["execution"]["committed"] = (not no_change and not dry_run_only)
+    run_report["execution"]["status"] = "success" if (not dry_run_only and not no_change) else ("no_change" if no_change else "dry_run_only")
+    
     if analysis:
         run_report["analysis"] = analysis
         run_report["analysis"]["matching_path"] = matching_path
@@ -293,7 +296,6 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     report_path = run_dir / "run_report.json"
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(run_report, f, indent=2, ensure_ascii=False)
-
 
 if __name__ == "__main__":
     choose = int(input("1--> diz. 2--> kb. 3--> template. 4--> template_base: "))
