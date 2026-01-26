@@ -28,9 +28,8 @@ ARTIFACTS = {
     },
     "template": {
         "input_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json",
-        "patch_path": "mcp_server/patch/template_real/patch_2.json",
         "matching_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v0.1.json",
-        "patch_actions_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/patch_actions_v0.1.json",
+        "actions_path": "mcp_server/patch/template_real/manual_actions.json",
     }
 }
 
@@ -40,26 +39,39 @@ def generate_run_id() -> str:
     ts = datetime.now(TIMEZONE).strftime("%Y%m%d_%H%M%S")
     return f"run{ts}"
 
-def extract_matched_variables_from_patch_actions(pa: dict, min_conf: float = 0.9) -> list[dict]:
-    # estrae variabili NO_OP || confidence >= 0.9
+def extract_matched_variables_from_matching_report(mr: dict) -> list[dict]:
+    # estrae variabili matched
 
     out = []
-    for a in pa.get("actions", []):
-        if a.get("action_type") == "NO_OP" and (a.get("confidence") or 0.0) >= min_conf:
+    for item in mr.get("items", []):
+        if item.get("status") == "matched":
             out.append({
-                "section": a.get("section"),
-                "source_key": a.get("source_key"),
-                "description": a.get("normalized_text"),
-                "concept_id": a.get("concept_id"),
-                "confidence": a.get("confidence"),
-                "reason": a.get("reason"),
+                "section": item.get("section"),
+                "source_key": item.get("source_key"),
+                "concept_id": item.get("concept_id"),
+                "confidence": item.get("confidence"),
+                "normalized_text": item.get("evidence", {}).get("normalized_text"),
+                "reason": item.get("technical_reason"),
             })
     return out
  
-def extract_actions_from_patch_actions(pa: dict) -> list[dict]:
+def actions_to_template_patch(actions_payload: dict) -> dict:
     # estrae actions da patch_actions
 
-    return pa.get("actions", [])
+    ops = []
+    for a in actions_payload.get("actions", []):
+        ops.append({
+            "op": "set_fields",
+            "section": a["section"],
+            "source_key": a["source_key"],
+            "fields": a["patch"]["set_fields"],
+            "meta": {
+                "confidence": a.get("confidence"),
+                "reason": a.get("reason"),
+                "evidence": a.get("evidence"),
+            }
+        })
+    return {"target": "template", "operations": ops}
 
 def extract_analysis_from_matching_report(mr: dict) -> dict:
     # aggiunge nel report tutte le variabili che si riferiscono ad un concetto non ancora mappato
@@ -92,13 +104,9 @@ def extract_analysis_from_matching_report(mr: dict) -> dict:
                 "section": section,
                 "source_key": source_key,
                 "evidence": evidence,
-            })
-            # Proposta concetto basata su un unmapped
-            proposed.append({
-                "section": section,
-                "source_key": source_key,
-                "evidence": evidence,
-                "suggested_action": "dictionary.add_concept"
+                "suggested_action": "dictionary.add_concept",
+                "proposal_type": "candidate_only",
+                "requires_human_review": True
             })
     
     return {
@@ -231,6 +239,10 @@ def summarize_template_base_diff(before: dict, after: dict) -> list[str]:
 def build_run_report(run_id: str, input_path: str, output_path: str, patch_path: str, diff: list[str], artifact_type: str) -> dict:
     # costruzione del report
 
+    ops_count = None
+    if patch_path:
+        ops_count = len(json.load(open(patch_path, "r", encoding="utf-8")).get("operations", []))
+        
     return {
         "run_id": run_id,
         "timestamp": datetime.now(TIMEZONE).isoformat(),
@@ -241,7 +253,7 @@ def build_run_report(run_id: str, input_path: str, output_path: str, patch_path:
         },
         "patch": {
             "patch_path": patch_path,
-            "operations_count": len(json.load(open(patch_path, "r", encoding="utf-8")).get("operations", [])),
+            "operations_count": ops_count,
         },
         "execution": {
             "dry_run": True,
@@ -254,51 +266,64 @@ def build_run_report(run_id: str, input_path: str, output_path: str, patch_path:
     }
 
 def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
-    # esecuzione della run
-
     run_id = generate_run_id()
     run_dir = RUNS_ROOT / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
-    analysis = {}
-    actions = None
 
     input_path = cfg["input_path"]
-    patch_path = cfg["patch_path"]
+    patch_path = cfg.get("patch_path")
     matching_path = cfg.get("matching_path")
-    patch_actions_path = cfg.get("patch_actions_path")
+    actions_path = cfg.get("actions_path")
 
+    analysis = {}
+    actions_payload = None
+
+    # matching_report -> analysis + matched_variables
     if matching_path:
         with open(matching_path, "r", encoding="utf-8") as f:
             mr = json.load(f)
         ctx = MCPContext(repo_root=".")
         ctx.schema_validate("matching_report", mr)
         analysis = extract_analysis_from_matching_report(mr)
-    
-    if patch_actions_path:
-        with open(patch_actions_path, "r", encoding="utf-8") as f:
-            pa = json.load(f)
 
-    with open(patch_path, "r", encoding="utf-8") as f:
-        patch = json.load(f)
+    # template actions -> template_patch
+    template_patch = None
+    if artifact_type == "template" and actions_path:
+        with open(actions_path, "r", encoding="utf-8") as f:
+            actions_payload = json.load(f)
+
+        ctx = MCPContext(repo_root=".")
+        ctx.schema_validate("patch_actions_template", actions_payload)
+
+        template_patch = actions_to_template_patch(actions_payload)
+
+    # fallback: patch da file
+    if template_patch is None and patch_path:
+        with open(patch_path, "r", encoding="utf-8") as f:
+            template_patch = json.load(f)
+
+    if template_patch is None:
+        raise ValueError("template_patch_missing: provide actions_path or patch_path")
+
     with open(input_path, "r", encoding="utf-8") as f:
         artifact = json.load(f)
 
-    dry_run_only = False # TEST; True = No commit. False = Si commit
+    dry_run_only = False  # TEST
 
     dry_run_result = upsert_fn(
         path=input_path,
-        patch=patch,
+        patch=template_patch,
         dry_run=True,
     )
     preview = dry_run_result.get("preview")
-    
+
     diff = diff_fn(artifact, preview)
     no_change = (len(diff) == 0)
 
     if not no_change and not dry_run_only:
         commit_result = upsert_fn(
             path=input_path,
-            patch=patch,
+            patch=template_patch,
             dry_run=False,
         )
         output_path = commit_result.get("output_path")
@@ -309,24 +334,27 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
         run_id=run_id,
         input_path=input_path,
         output_path=output_path,
-        patch_path=patch_path,
+        patch_path=patch_path if patch_path else "",
         diff=diff,
         artifact_type=artifact_type,
     )
 
     run_report["execution"]["committed"] = (not no_change and not dry_run_only)
     run_report["execution"]["status"] = "success" if (not dry_run_only and not no_change) else ("no_change" if no_change else "dry_run_only")
-    
+
     if analysis:
         run_report["analysis"] = analysis
         run_report["analysis"]["matching_path"] = matching_path
+        run_report["matched_variables"] = extract_matched_variables_from_matching_report(mr)
 
-    run_report["matched_variables"] = extract_matched_variables_from_patch_actions(pa)
-    run_report["patch_actions_path"] = patch_actions_path
+    if actions_payload:
+        run_report["actions"] = actions_payload.get("actions", [])
+        run_report["actions_path"] = actions_path
 
     report_path = run_dir / "run_report.json"
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(run_report, f, indent=2, ensure_ascii=False)
+
 
 if __name__ == "__main__":
     choose = int(input("1--> diz. 2--> kb. 3--> template. 4--> template_base: "))

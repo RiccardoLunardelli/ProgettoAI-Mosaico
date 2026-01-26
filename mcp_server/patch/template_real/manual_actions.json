@@ -1,0 +1,35 @@
+{
+  "patch_actions_version": "v0.1",
+  "generated_at": "2026-01-26T12:00:00+01:00",
+  "actions": [
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read1",
+      "target": {
+        "concept_id": "temp_defrost",
+        "category": "measurement",
+        "labels": {
+          "it": "Temperatura sbrinamento",
+          "en": "Defrost temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId": "temp_defrost",
+          "Category": "measurement",
+          "Labels": [
+            { "Code": "it", "Description": "Temperatura sbrinamento" },
+            { "Code": "en", "Description": "Defrost temperature" }
+          ]
+        }
+      },
+      "confidence": 0.92,
+      "reason": "matching deterministico su sinonimi",
+      "evidence": {
+        "normalized_text": "temperatura sbrinamento",
+        "matched_terms": ["sbrinamento"]
+      }
+    }
+  ]
+}

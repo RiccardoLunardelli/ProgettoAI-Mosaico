@@ -19,6 +19,19 @@
           "additionalProperties": true,
           "title": "Fields",
           "type": "object"
+        },
+        "meta": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Meta"
         }
       },
       "required": [

@@ -9,6 +9,7 @@ class TemplatePatchSetFields(BaseModel):
     section: str 
     source_key: str 
     fields: Dict[str, Any]
+    meta: Optional[Dict[str, Any]] = None
 
 class TemplatePatch(BaseModel):
     target: Literal["template"]
@@ -41,7 +42,6 @@ class PatchActionsTemplate(BaseModel):
     patch_actions_version: str
     generated_at: str
     actions: List[PatchActionMapVariable]
-
 
 #-------------PATCH ACTIONS-------------------
 class PatchAction(BaseModel): 
