@@ -13,6 +13,7 @@ ARTIFACTS = {
     "dictionary": {
         "input_path": "data/dictionary_v0.1.json",
         "patch_path": str(PATCH_ROOT / "dictionary" / "manual_patch_upcat.json"),
+        "matching_path": "output_dir/matching_report_v0.1.json",
         "input_version": "v0.1",
     },
     "kb": {
@@ -23,7 +24,7 @@ ARTIFACTS = {
     "template_base": {
         "input_path": "data/template_base_v0.1.json",
         "patch_path": str(PATCH_ROOT / "template" / "manual_patch_upbasemeta.json"),
-        "input_version": "v1",
+        "input_version": "v0.1",
     }
 }
 
@@ -32,6 +33,52 @@ def generate_run_id() -> str:
 
     ts = datetime.now(TIMEZONE).strftime("%Y%m%d_%H%M%S")
     return f"run{ts}"
+
+def extract_analysis_from_matching_report(mr: dict) -> dict:
+    # aggiunge nel report tutte le variabili che si riferiscono ad un concetto non ancora mappato
+
+    ambiguous = []
+    unmapped = []
+    proposed = []
+
+    for item in  mr.get("items", []):
+        status = item.get("status")
+        source_key = item.get("source_key")
+        section = item.get("section")
+        confidence = item.get("confidence")
+        candidates = item.get("candidates", [])
+        evidence = item.get("evidence", {})
+
+        # -------AMBIGUI-----------
+        if status == "ambiguous":
+            ambiguous.append({
+                "section": section,
+                "source_key": source_key, 
+                "candidates": candidates,
+                "confidence": confidence,
+                "evidence": evidence,
+            })
+        
+        # ---------UNMAPPED-------------
+        if status == "unmapped":
+            unmapped.append({
+                "section": section,
+                "source_key": source_key,
+                "evidence": evidence,
+            })
+            # Proposta concetto basata su un unmapped
+            proposed.append({
+                "section": section,
+                "source_key": source_key,
+                "evidence": evidence,
+                "suggested_action": "dictionary.add_concept"
+            })
+    
+    return {
+        "ambiguous_matches": ambiguous,
+        "unmapped_terms": unmapped,
+        "proposed_concepts" : proposed
+    }
 
 def summarize_dictionary_diff(before: dict, after: dict) -> list[str]:
     before_entries = {e["concept_id"]: e for e in before.get("entries", [])}
@@ -159,9 +206,16 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     run_id = generate_run_id()
     run_dir = RUNS_ROOT / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
+    analysis = {}
 
     input_path = cfg["input_path"]
     patch_path = cfg["patch_path"]
+    matching_path = cfg.get("matching_path")
+
+    if matching_path:
+        with open(matching_path, "r", encoding="utf-8") as f:
+            mr = json.load(f)
+        analysis = extract_analysis_from_matching_report(mr)
 
     with open(patch_path, "r", encoding="utf-8") as f:
         patch = json.load(f)
@@ -192,6 +246,10 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
         diff=diff,
         artifact_type=artifact_type,
     )
+
+    if analysis:
+        run_report["analysis"] = analysis
+        run_report["analysis"]["matching_path"] = matching_path
 
     report_path = run_dir / "run_report.json"
     with open(report_path, "w", encoding="utf-8") as f:
