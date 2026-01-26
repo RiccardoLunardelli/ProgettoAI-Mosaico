@@ -15,6 +15,7 @@ ARTIFACTS = {
         "patch_path": str(PATCH_ROOT / "dictionary" / "manual_patch_upcat.json"),
         "matching_path": "output_dir/matching_report_v0.1.json",
         "input_version": "v0.1",
+        "template_base_path": "data/template_base_v0.1.json",
     },
     "kb": {
         "input_path": "data/kb_v0.1.json",
@@ -25,11 +26,14 @@ ARTIFACTS = {
         "input_path": "data/template_base_v0.1.json",
         "patch_path": str(PATCH_ROOT / "template" / "manual_patch_upbasemeta.json"),
         "input_version": "v0.1",
+        "template_base_path": "data/template_base_v0.1.json",
     },
     "template": {
         "input_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json",
         "matching_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v0.1.json",
         "actions_path": "mcp_server/patch/template_real/manual_actions.json",
+        "template_base_path": "data/template_base_v0.1.json",
+
     }
 }
 
@@ -38,6 +42,54 @@ def generate_run_id() -> str:
 
     ts = datetime.now(TIMEZONE).strftime("%Y%m%d_%H%M%S")
     return f"run{ts}"
+
+def load_template_base(path: str) -> dict:
+    # caricamento template base
+
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+def extract_concepts_from_template_base(tb: dict) -> dict:
+    # estrae concetti da template base {concept_id : category}
+
+    out = {}
+    for cat in tb.get("categories", []):
+        cat_id = cat.get("id")
+        for c in cat.get("concepts", []):
+            out[c.get("concept_id")] = cat_id
+    return out
+
+def extract_present_concepts(mr: dict | None, actions_payload: dict | None) -> set[str]:
+    # estrae i concetti che sono presenti
+
+    present = set()
+    if mr:
+        for item in mr.get("items", []):
+            if item.get("status") == "matched" and item.get("concept_id"):
+                present.add(item.get("concept_id"))
+    if actions_payload:
+        for a in actions_payload.get("actions", []):
+            target = a.get("target", {})
+            if target.get("concept_id"):
+                present.add(target.get("concept_id"))
+    return present
+
+def build_absent_concepts(template_base_path: str, mr: dict | None, actions_payload: dict | None) -> list[dict]:
+    # ritorna tutti i concetti che sono nel tb ma che non ci sono nel template di riferimento
+
+    tb = load_template_base(template_base_path)
+    expected = extract_concepts_from_template_base(tb)
+    present = extract_present_concepts(mr, actions_payload)
+
+    absent = []
+    for concept_id, category in expected.items():
+        if concept_id not in present:
+            absent.append({
+                "concept_id": concept_id,
+                "category": category,
+                "reason": "Nessuna read presente con descrizione compatibile",
+            })
+    return absent
 
 def extract_matched_variables_from_matching_report(mr: dict) -> list[dict]:
     # estrae variabili matched
@@ -274,6 +326,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     patch_path = cfg.get("patch_path")
     matching_path = cfg.get("matching_path")
     actions_path = cfg.get("actions_path")
+    template_base_path = cfg.get("template_base_path")
 
     analysis = {}
     actions_payload = None
@@ -350,6 +403,15 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     if actions_payload:
         run_report["actions"] = actions_payload.get("actions", [])
         run_report["actions_path"] = actions_path
+
+    if template_base_path:
+        run_report["absent_concepts"] = build_absent_concepts(
+            template_base_path=template_base_path,
+            mr=mr if matching_path else None,
+            actions_payload=actions_payload
+        )
+        run_report["template_base_path"] = template_base_path
+
 
     report_path = run_dir / "run_report.json"
     with open(report_path, "w", encoding="utf-8") as f:
