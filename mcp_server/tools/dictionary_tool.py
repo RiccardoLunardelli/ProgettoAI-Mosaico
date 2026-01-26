@@ -38,7 +38,7 @@ def _next_versioned_path(path: Path) -> Path:
 
     m = re.search(r"_v(\d+)\.(\d+)\.json$", path.name)
     if not m:
-        raise ValueError(f"Invalid versioned filename: {path.name}")
+        return path.with_name(path.stem + "_v0.1.json")
     major, minor = int(m.group(1)), int(m.group(2)) # 0.1 --> major = 0, minor= 1
     return path.with_name(path.name.replace(f"_v{major}.{minor}.json", f"_v{major}.{minor+1}.json"))
 

@@ -3,6 +3,17 @@ from typing import List, Optional, Dict, Any, Literal, Union
 import json
 from pathlib import Path
 
+#---------TEMPLATE REALE PATCH----------------------
+class TemplatePatchSetFields(BaseModel):
+    op: Literal["set_fields"]
+    section: str 
+    source_key: str 
+    fields: Dict[str, Any]
+
+class TemplatePatch(BaseModel):
+    target: Literal["template"]
+    operations: List[TemplatePatchSetFields]
+
 #-------------PATCH ACTIONS-------------------
 class PatchAction(BaseModel): 
     action_type: str
@@ -220,6 +231,7 @@ class KBPatch(BaseModel):
 
 # GENERAZIONI
 SCHEMA_OUT = {
+    "template/template_patch_v0.1.schema.json": TemplatePatch,
     "patch_actions/patch_actions_v0.1.schema.json": PatchActionsReport,
     "matching/matching_report_v0.1.schema.json": MatchingReport,
     "template_base/template_base_v0.1.schema.json": TemplateBase,

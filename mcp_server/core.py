@@ -19,6 +19,7 @@ class MCPContext:
         self._dry_run_hashes: Dict[str, bool] = {}
 
         self.schema_map = {
+            "template_patch": "template/template_patch_v0.1.schema.json",
             "patch_actions": "patch_actions/patch_actions_v0.1.schema.json",
             "matching_report": "matching/matching_report_v0.1.schema.json",
             "template_base": "template_base/template_base_v0.1.schema.json",

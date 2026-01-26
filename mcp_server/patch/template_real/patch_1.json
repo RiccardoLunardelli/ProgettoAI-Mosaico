@@ -1,0 +1,18 @@
+{
+  "target": "template",
+  "operations": [
+    {
+      "op": "set_fields",
+      "section": "ContinuosReads",
+      "source_key": "Read1",
+      "fields": {
+        "Category": "measurement",
+        "ConceptId": "temp_defrost",
+        "Labels": [
+          { "Code": "it", "Description": "Temperatura sbrinamento" },
+          { "Code": "en", "Description": "Defrost temperature" }
+        ]
+      }
+    }
+  ]
+}

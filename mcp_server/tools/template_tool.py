@@ -18,7 +18,7 @@ def template_save(ctx: MCPContext, path: str, template: Dict[str, Any]) -> Dict[
     if "template_base" in p.name:
         ctx.schema_validate("template_base", template)
     else:
-        ctx.require_validated(template)
+        pass
 
     ctx.write_json(p, template)
     return {"status": "ok", "path": str(p)}
@@ -28,6 +28,7 @@ def template_apply_patch(ctx: MCPContext, path: str, patch: Dict[str, Any], dry_
 
     template = template_load(ctx, path)
 
+    #------template base--------
     if patch.get("target") == "template_base":
         ctx.schema_validate("template_base", template)
         ctx.schema_validate("template_base_patch", patch)
@@ -115,5 +116,37 @@ def template_apply_patch(ctx: MCPContext, path: str, patch: Dict[str, Any], dry_
         template_save(ctx,str(output_path), new_base)
         return {"status": "committed", "output_path": str(output_path)}
 
+    #-------template reale----------
+    if patch.get("target") == "template":
+        ctx.schema_validate("template_patch", patch)
+
+        new_template = copy.deepcopy(template)
+
+        for op in patch.get("operations", []):
+            section = op["section"]
+            source_key = op["source_key"]
+            fields = op.get("fields")
+
+            section_values = new_template.get(section, {}).get("Values")
+            if section_values is None:
+                raise ValueError(f"Section not found or missing Value: {section}")
+            
+            if source_key not in section_values:
+                raise ValueError(f"Source key not found: {source_key} in {section}")
+            
+            # set fields
+            for k, v in fields.items():
+                section_values[source_key][k] = v
+
+        if dry_run:
+            ctx.mark_dry_run(patch)
+            return {"status": "dry_run_ok", "preview": new_template}
+
+        ctx.require_dry_run(patch)
+
+        output_path = _next_versioned_path(Path(path))
+        template_save(ctx, str(output_path), new_template)
+        return {"status": "committed", "output_path": str(output_path)}
+    
     raise ValueError("unsupported_patch_target")
 

@@ -1,0 +1,54 @@
+{
+  "$defs": {
+    "TemplatePatchSetFields": {
+      "properties": {
+        "op": {
+          "const": "set_fields",
+          "title": "Op",
+          "type": "string"
+        },
+        "section": {
+          "title": "Section",
+          "type": "string"
+        },
+        "source_key": {
+          "title": "Source Key",
+          "type": "string"
+        },
+        "fields": {
+          "additionalProperties": true,
+          "title": "Fields",
+          "type": "object"
+        }
+      },
+      "required": [
+        "op",
+        "section",
+        "source_key",
+        "fields"
+      ],
+      "title": "TemplatePatchSetFields",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "target": {
+      "const": "template",
+      "title": "Target",
+      "type": "string"
+    },
+    "operations": {
+      "items": {
+        "$ref": "#/$defs/TemplatePatchSetFields"
+      },
+      "title": "Operations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "target",
+    "operations"
+  ],
+  "title": "TemplatePatch",
+  "type": "object"
+}

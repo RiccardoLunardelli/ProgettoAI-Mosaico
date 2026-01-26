@@ -25,6 +25,10 @@ ARTIFACTS = {
         "input_path": "data/template_base_v0.1.json",
         "patch_path": str(PATCH_ROOT / "template" / "manual_patch_upbasemeta.json"),
         "input_version": "v0.1",
+    },
+    "template": {
+        "input_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json",
+        "patch_path": "mcp_server/patch/template_real/patch_1.json",
     }
 }
 
@@ -80,6 +84,31 @@ def extract_analysis_from_matching_report(mr: dict) -> dict:
         "unmapped_terms": unmapped,
         "proposed_concepts" : proposed
     }
+
+def summarize_template_real_diff(before: dict, after: dict) -> list[str]:
+    summary = []
+    for section, a_section in after.items():
+        if not isinstance(a_section, dict):
+            continue
+        a_values = a_section.get("Values")
+        b_values = before.get(section, {}).get("Values") if isinstance(before.get(section), dict) else None
+        if not isinstance(a_values, dict) or not isinstance(b_values, dict):
+            continue
+
+        for source_key, a_entry in a_values.items():
+            b_entry = b_values.get(source_key, {})
+            if not isinstance(a_entry, dict) or not isinstance(b_entry, dict):
+                continue
+
+            changed_fields = []
+            for k, v in a_entry.items():
+                if k not in b_entry or b_entry.get(k) != v:
+                    changed_fields.append(k)
+
+            if changed_fields:
+                summary.append(f"set_fields: {section}/{source_key} -> {', '.join(sorted(changed_fields))}")
+
+    return summary
 
 def summarize_dictionary_diff(before: dict, after: dict) -> list[str]:
     before_entries = {e["concept_id"]: e for e in before.get("entries", [])}
@@ -260,10 +289,12 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
 
 
 if __name__ == "__main__":
-    choose = int(input("1--> diz. 2--> kb. 3--> template: "))
+    choose = int(input("1--> diz. 2--> kb. 3--> template. 4--> template_base: "))
     if choose == 1:
         run_patch(ARTIFACTS["dictionary"], "dictionary", dictionary_upsert, summarize_dictionary_diff)
     elif choose == 2:   
         run_patch(ARTIFACTS["kb"],  "kb", kb_upsert_mapping, summarize_kb_diff)
     elif choose == 3:
+        run_patch(ARTIFACTS["template"], "template", template_apply_patch, summarize_template_real_diff)
+    elif choose == 4:
         run_patch(ARTIFACTS["template_base"], "template_base", template_apply_patch, summarize_template_base_diff)
