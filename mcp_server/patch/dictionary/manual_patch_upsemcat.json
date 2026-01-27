@@ -1,0 +1,10 @@
+{
+  "target": "dictionary",
+  "operations": [
+    {
+      "op": "update_semantic_category",
+      "concept_id": "temp_defrost",
+      "semantic_category": "pressione"
+    }
+  ]
+}

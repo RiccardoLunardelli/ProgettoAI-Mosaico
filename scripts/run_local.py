@@ -12,7 +12,7 @@ RUNS_ROOT = Path("runs")
 ARTIFACTS = {
     "dictionary": {
         "input_path": "data/dictionary_v0.1.json",
-        "patch_path": str(PATCH_ROOT / "dictionary" / "manual_patch_upcat.json"),
+        "patch_path": str(PATCH_ROOT / "dictionary" / "manual_patch_upsemcat.json"),
         "matching_path": "output_dir/matching_report_v0.1.json",
         "input_version": "v0.1",
         "template_base_path": "data/template_base_v0.1.json",
@@ -24,7 +24,7 @@ ARTIFACTS = {
     },
     "template_base": {
         "input_path": "data/template_base_v0.1.json",
-        "patch_path": str(PATCH_ROOT / "template" / "manual_patch_upbasemeta.json"),
+        "patch_path": str(PATCH_ROOT / "template" / "manual_patch_addbaseconc.json"),
         "input_version": "v0.1",
         "template_base_path": "data/template_base_v0.1.json",
     },
@@ -207,6 +207,12 @@ def summarize_dictionary_diff(before: dict, after: dict) -> list[str]:
         # update_category
         if b_entry.get("category") != a_entry.get("category"):
             summary.append(f"update_category: {concept_id} -> {a_entry.get('category')}")
+
+        # semantic_category diff
+        if b_entry.get("semantic_category") != a_entry.get("semantic_category"):
+            summary.append(
+                f"update_semantic_category: {concept_id} -> {a_entry.get('semantic_category')}"
+            )
 
         # synonyms diff
         b_syn = b_entry.get("synonyms", {})

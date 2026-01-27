@@ -5,6 +5,7 @@
       "op": "add_base_concept",
       "category_id": "measurement",
       "concept_id": "temp_probe",
+      "semantic_category": "temperature",
       "label": { "it": "Temperatura sonda", "en": "Probe temperature" },
       "description": "Temperatura rilevata da una sonda generica."
     }
