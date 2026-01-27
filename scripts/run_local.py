@@ -100,22 +100,67 @@ def extract_matched_variables_from_matching_report(mr: dict) -> list[dict]:
                 "section": item.get("section"),
                 "source_key": item.get("source_key"),
                 "concept_id": item.get("concept_id"),
+                "semantic_category": item.get("evidence", {}).get("semantic_category"),
                 "confidence": item.get("confidence"),
                 "normalized_text": item.get("evidence", {}).get("normalized_text"),
                 "reason": item.get("technical_reason"),
             })
     return out
- 
+
+def validate_actions_against_template_base(actions_payload: dict, template_base_path: str) -> list[str]:
+    # valida category + semantic_category contro il template base
+
+    tb = load_template_base(template_base_path)
+    canon = {}  # contiene tutti i concetti con categoria e categoria semantica del template base
+    for cat in tb.get("categories", []):
+        cat_id = cat.get("id")
+        for c in cat.get("concepts", []):
+            canon[c.get("concept_id")] = {
+                "category": cat_id,
+                "semantic_category": c.get("semantic_category"),
+            }
+    
+    errors = [] # contiene tutti i concetti, cateogira, categorie semantiche che non sono nel template base
+    for a in actions_payload.get("actions", []):
+        tgt = a.get("target", {})
+        cid = tgt.get("concept_id")
+        cat = tgt.get("category")
+        sem = tgt.get("semantic_category")
+
+        if cid not in canon:
+            errors.append(f"Unknown_concept: {cid}")
+            continue
+            
+        canon_cat = canon[cid].get("category")
+        canon_sem = canon[cid].get("semantic_category")
+
+        if cat != canon_cat:    # categoria actions != categoria template base
+            errors.append(f"category_mismatch: {cid} action={cat} canon={canon_cat}") 
+        if sem != canon_sem:    # categoria semantica actions != categoria semantica template base
+            errors.append(f"semantic_category_mismatch: {cid} action={sem} canon={canon_sem}")
+        
+    return errors
+
 def actions_to_template_patch(actions_payload: dict) -> dict:
     # estrae actions da patch_actions
 
     ops = []
     for a in actions_payload.get("actions", []):
+        set_fields = dict(a["patch"]["set_fields"])
+        target = a.get("target", {})
+
+        if target.get("concept_id"):
+            set_fields["ConceptId"] = target["concept_id"]
+        if target.get("category"):
+            set_fields["Category"] = target["category"]
+        if target.get("semantic_category"):
+            set_fields["SemanticCategory"] = target["semantic_category"]
+
         ops.append({
             "op": "set_fields",
             "section": a["section"],
             "source_key": a["source_key"],
-            "fields": a["patch"]["set_fields"],
+            "fields": set_fields,
             "meta": {
                 "confidence": a.get("confidence"),
                 "reason": a.get("reason"),
@@ -408,6 +453,9 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
         run_report["actions_path"] = actions_path
 
     if template_base_path:
+        errors = validate_actions_against_template_base(actions_payload, template_base_path)
+        if errors:
+            raise ValueError("; ".join(errors))
         run_report["absent_concepts"] = build_absent_concepts(
             template_base_path=template_base_path,
             mr=mr if matching_path else None,

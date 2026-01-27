@@ -90,6 +90,10 @@
           "title": "Category",
           "type": "string"
         },
+        "semantic_category": {
+          "title": "Semantic Category",
+          "type": "string"
+        },
         "labels": {
           "$ref": "#/$defs/PatchActionLabelPair"
         }
@@ -97,6 +101,7 @@
       "required": [
         "concept_id",
         "category",
+        "semantic_category",
         "labels"
       ],
       "title": "PatchActionTarget",

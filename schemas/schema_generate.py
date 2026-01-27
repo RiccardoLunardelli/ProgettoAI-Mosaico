@@ -23,6 +23,7 @@ class PatchActionLabelPair(BaseModel):
 class PatchActionTarget(BaseModel):
     concept_id: str
     category: str
+    semantic_category: str
     labels: PatchActionLabelPair
 
 class PatchActionPatch(BaseModel):
