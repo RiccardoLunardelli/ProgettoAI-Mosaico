@@ -1,7 +1,7 @@
 {
   "matching_version": "v0.1",
   "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-  "generated_at": "2026-01-21T10:54:07.901110+00:00",
+  "generated_at": "2026-01-27T08:29:11.869162+00:00",
   "items": [
     {
       "source_key": "Read0",
@@ -14,7 +14,8 @@
         "normalized_text": "temperatura di mandata",
         "matched_synonym": "temperatura di mandata",
         "dictionary_entry_id": "temp_delivery",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "temperature"
       }
     },
     {
@@ -28,7 +29,8 @@
         "normalized_text": "temperatura di sbrinamento",
         "matched_synonym": "temperatura di sbrinamento",
         "dictionary_entry_id": "temp_defrost",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "temperature"
       }
     },
     {
@@ -42,7 +44,8 @@
         "normalized_text": "temperatura di ripresa",
         "matched_synonym": "temperatura di ripresa",
         "dictionary_entry_id": "temp_return",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "temperature"
       }
     },
     {
@@ -56,7 +59,8 @@
         "normalized_text": "valore sonda p4 temperatura",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -70,7 +74,8 @@
         "normalized_text": "temperatura surriscaldamento",
         "matched_synonym": "temperatura surriscaldamento",
         "dictionary_entry_id": "superheat_temperature",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "temperature"
       }
     },
     {
@@ -84,7 +89,8 @@
         "normalized_text": "temperatura evaportatore satura",
         "matched_synonym": "temperatura evaportatore satura",
         "dictionary_entry_id": "temp_evaporator",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "temperature"
       }
     },
     {
@@ -98,7 +104,8 @@
         "normalized_text": "pressione evaporatore satura",
         "matched_synonym": "pressione evaporatore satura",
         "dictionary_entry_id": "pressure_suction",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "pressure"
       }
     },
     {
@@ -112,7 +119,8 @@
         "normalized_text": "valore sonda di visualizzazione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -126,7 +134,8 @@
         "normalized_text": "valore sonda di regolazione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -140,7 +149,8 @@
         "normalized_text": "valore sonda 1 defrost",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -154,7 +164,8 @@
         "normalized_text": "valore sonda 2 defrost",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -168,7 +179,8 @@
         "normalized_text": "valore sonda regolazione ventilatori",
         "matched_synonym": "ventilatori",
         "dictionary_entry_id": "state_fan",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "state"
       }
     },
     {
@@ -182,7 +194,8 @@
         "normalized_text": "surriscaldamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -196,7 +209,8 @@
         "normalized_text": "setpoint",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -210,7 +224,8 @@
         "normalized_text": "set operativo di superheating",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -224,7 +239,8 @@
         "normalized_text": "apertura valvola",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -238,7 +254,8 @@
         "normalized_text": "% uscita analogica write sole se tra=ual",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -252,7 +269,8 @@
         "normalized_text": "tempo mancante al prossimo sbrinamento 1=10 sec",
         "matched_synonym": "sbrinamento",
         "dictionary_entry_id": "state_defrost",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "state"
       }
     },
     {
@@ -266,7 +284,8 @@
         "normalized_text": "temperatura minima",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -280,7 +299,8 @@
         "normalized_text": "temperatura massima",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -294,7 +314,8 @@
         "normalized_text": "media % di on off par clt valvola o compressore",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -308,7 +329,8 @@
         "normalized_text": "valore pressione regolazione locale o remota relativa o assoluta",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -322,7 +344,8 @@
         "normalized_text": "valore sonda cablaggio caldo p4",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -336,7 +359,8 @@
         "normalized_text": "set di regolazione parametro set",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -350,7 +374,8 @@
         "normalized_text": "set di regolazione sh parametro sh",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -364,7 +389,8 @@
         "normalized_text": "set di regolazione supervisione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -378,7 +404,8 @@
         "normalized_text": "set di superheating supervisione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -392,7 +419,8 @@
         "normalized_text": "set dew point per funzione cavi caldi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -406,7 +434,8 @@
         "normalized_text": "ingresso digitale 1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -420,7 +449,8 @@
         "normalized_text": "ingresso digitale 2",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -434,7 +464,8 @@
         "normalized_text": "ingresso digitale 3",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -448,7 +479,8 @@
         "normalized_text": "uscita digitale sbrinamento resistenze",
         "matched_synonym": "sbrinamento",
         "dictionary_entry_id": "state_defrost",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "state"
       }
     },
     {
@@ -462,7 +494,8 @@
         "normalized_text": "uscita digitale allarme",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -476,7 +509,8 @@
         "normalized_text": "luci",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -490,7 +524,8 @@
         "normalized_text": "ventilatori",
         "matched_synonym": "ventilatori",
         "dictionary_entry_id": "state_fan",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "state"
       }
     },
     {
@@ -504,7 +539,8 @@
         "normalized_text": "uscita digitale ausiliario",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -518,7 +554,8 @@
         "normalized_text": "uscita digitale zona neutro",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -532,7 +569,8 @@
         "normalized_text": "compressori",
         "matched_synonym": "compressori",
         "dictionary_entry_id": "state_compressor",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "state"
       }
     },
     {
@@ -546,7 +584,8 @@
         "normalized_text": "uscita digitale rele on off",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -560,7 +599,8 @@
         "normalized_text": "uscita digitale anti surriscaldamento lieve",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -574,7 +614,8 @@
         "normalized_text": "stato",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -588,7 +629,8 @@
         "normalized_text": "sbrinamento",
         "matched_synonym": "sbrinamento",
         "dictionary_entry_id": "state_defrost",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "state"
       }
     },
     {
@@ -602,7 +644,8 @@
         "normalized_text": "stato sbrinamento ritardo avviamento attesa dsd",
         "matched_synonym": "sbrinamento",
         "dictionary_entry_id": "state_defrost",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "state"
       }
     },
     {
@@ -616,7 +659,8 @@
         "normalized_text": "stato sbrinamento manuale",
         "matched_synonym": "sbrinamento",
         "dictionary_entry_id": "state_defrost",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "state"
       }
     },
     {
@@ -630,7 +674,8 @@
         "normalized_text": "stato sbrinamento sincronizzato lan",
         "matched_synonym": "sbrinamento",
         "dictionary_entry_id": "state_defrost",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "state"
       }
     },
     {
@@ -644,7 +689,8 @@
         "normalized_text": "stato sbrinamento in gocciolamento",
         "matched_synonym": "sbrinamento",
         "dictionary_entry_id": "state_defrost",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "state"
       }
     },
     {
@@ -658,7 +704,8 @@
         "normalized_text": "stato sbrinamento in pausa attesa consenso di fine da lan",
         "matched_synonym": "sbrinamento",
         "dictionary_entry_id": "state_defrost",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "state"
       }
     },
     {
@@ -672,7 +719,8 @@
         "normalized_text": "ciclo continuo",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -686,7 +734,8 @@
         "normalized_text": "blocco tastiera",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -700,7 +749,8 @@
         "normalized_text": "tacitazione allarmi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -714,7 +764,8 @@
         "normalized_text": "master sbrinamento",
         "matched_synonym": "sbrinamento",
         "dictionary_entry_id": "state_defrost",
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": "state"
       }
     },
     {
@@ -728,7 +779,8 @@
         "normalized_text": "energy saving",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -742,7 +794,8 @@
         "normalized_text": "allarme fermata forzata con termostatazione attiva stp",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -756,7 +809,8 @@
         "normalized_text": "evento surriscaldamento fuori range",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -770,7 +824,8 @@
         "normalized_text": "evento surriscaldamento non disponibile",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -784,7 +839,8 @@
         "normalized_text": "evento surriscaldamento in errore",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -798,7 +854,8 @@
         "normalized_text": "evento power failure",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -812,7 +869,8 @@
         "normalized_text": "evento parametri modificati 0=no 1=si",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -826,7 +884,8 @@
         "normalized_text": "evento fine defrost in temperatura per time out 0=no 1=si",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -840,7 +899,8 @@
         "normalized_text": "evento regolazione attiva per 90 minuti dopo defrost 0=no 1=si",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -854,7 +914,8 @@
         "normalized_text": "stato ritardo avviamento compressore",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -868,7 +929,8 @@
         "normalized_text": "stato ritardo avviamento ventole",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -882,7 +944,8 @@
         "normalized_text": "funzione ventole umidità",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -896,7 +959,8 @@
         "normalized_text": "stato attività modbus 0=no 1=si",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -910,7 +974,8 @@
         "normalized_text": "stato funzione holiday",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -924,7 +989,8 @@
         "normalized_text": "evento valore pressione di regolazione non disponibile",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -938,7 +1004,8 @@
         "normalized_text": "allarme sonda pressione remota 4",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -952,7 +1019,8 @@
         "normalized_text": "allarme sonda p1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -966,7 +1034,8 @@
         "normalized_text": "allarme sonda p2",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -980,7 +1049,8 @@
         "normalized_text": "allarme sonda p3",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -994,7 +1064,8 @@
         "normalized_text": "allarme sonda p4",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1008,7 +1079,8 @@
         "normalized_text": "allarme sonda p5",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1022,7 +1094,8 @@
         "normalized_text": "allarme sonda p6",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1036,7 +1109,8 @@
         "normalized_text": "allarme orologio failure",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1050,7 +1124,8 @@
         "normalized_text": "allarme orologio rtc data lost",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1064,7 +1139,8 @@
         "normalized_text": "allarme di bassa temperatura sonda 1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1078,7 +1154,8 @@
         "normalized_text": "allarme di alta temperatura sonda 1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1092,7 +1169,8 @@
         "normalized_text": "allarme di bassa temperatura sbrinamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       },
       "candidates": [
         {
@@ -1116,7 +1194,8 @@
         "normalized_text": "allarme di alta temperatura sbrinamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       },
       "candidates": [
         {
@@ -1140,7 +1219,8 @@
         "normalized_text": "allarme di bassa temperatura ventole",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1154,7 +1234,8 @@
         "normalized_text": "allarme di alta temperatura ventole",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1168,7 +1249,8 @@
         "normalized_text": "allarme grave raggiungimento n max pause msn",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1182,7 +1264,8 @@
         "normalized_text": "allarme esterno",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1196,7 +1279,8 @@
         "normalized_text": "allarme grave",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1210,7 +1294,8 @@
         "normalized_text": "allarme pressostato 1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1224,7 +1309,8 @@
         "normalized_text": "porta",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1238,7 +1324,8 @@
         "normalized_text": "allarme di minimo surriscaldamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1252,7 +1339,8 @@
         "normalized_text": "allarme di massimo surriscaldamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1266,7 +1354,8 @@
         "normalized_text": "allarme di alta pressione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1280,7 +1369,8 @@
         "normalized_text": "allarme di bassa pressione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1294,7 +1384,8 @@
         "normalized_text": "allarme eeprom",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1308,7 +1399,8 @@
         "normalized_text": "allarme sonda pressione remota",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "measurement"
+        "category": "measurement",
+        "semantic_category": null
       }
     },
     {
@@ -1322,7 +1414,8 @@
         "normalized_text": "differenziale",
         "matched_synonym": "differenziale",
         "dictionary_entry_id": "hysteresis_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "temperature"
       }
     },
     {
@@ -1336,7 +1429,8 @@
         "normalized_text": "tempo integrale pi temperatura del banco",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1350,7 +1444,8 @@
         "normalized_text": "attivazione/disattivazione della regolazione continua",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1364,7 +1459,8 @@
         "normalized_text": "configurazione differenziale relativo/assoluto",
         "matched_synonym": "differenziale",
         "dictionary_entry_id": "hysteresis_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "temperature"
       }
     },
     {
@@ -1378,7 +1474,8 @@
         "normalized_text": "differenziale assoluto",
         "matched_synonym": "differenziale",
         "dictionary_entry_id": "hysteresis_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "temperature"
       }
     },
     {
@@ -1392,7 +1489,8 @@
         "normalized_text": "setpoint minimo",
         "matched_synonym": "setpoint",
         "dictionary_entry_id": "setpoint_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "setpoint"
       }
     },
     {
@@ -1406,7 +1504,8 @@
         "normalized_text": "setpoint massimo",
         "matched_synonym": "setpoint",
         "dictionary_entry_id": "setpoint_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "setpoint"
       }
     },
     {
@@ -1420,7 +1519,8 @@
         "normalized_text": "non usare",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1434,7 +1534,8 @@
         "normalized_text": "non usare",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1448,7 +1549,8 @@
         "normalized_text": "non usare",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1462,7 +1564,8 @@
         "normalized_text": "non usare",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1476,7 +1579,8 @@
         "normalized_text": "ritardo attivazione uscite all accensione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1490,7 +1594,8 @@
         "normalized_text": "ritardo antipendolazione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1504,7 +1609,8 @@
         "normalized_text": "durata ciclo continuo",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1518,7 +1624,8 @@
         "normalized_text": "setpoint per ciclo continuo",
         "matched_synonym": "setpoint",
         "dictionary_entry_id": "setpoint_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "setpoint"
       }
     },
     {
@@ -1532,7 +1639,8 @@
         "normalized_text": "tempo compressore on con sonda guasta",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1546,7 +1654,8 @@
         "normalized_text": "tempo compressore off con sonda guasta",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1560,7 +1669,8 @@
         "normalized_text": "tipo di regolazione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1574,7 +1684,8 @@
         "normalized_text": "unita di misura",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1588,7 +1699,8 @@
         "normalized_text": "modo di utilizzo della pressione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1602,7 +1714,8 @@
         "normalized_text": "unit di misura della pressione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1616,7 +1729,8 @@
         "normalized_text": "modo di visualizzazione della pressione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1630,7 +1744,8 @@
         "normalized_text": "risoluzione solo per c",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1644,7 +1759,8 @@
         "normalized_text": "visualizzazione di default",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1658,7 +1774,8 @@
         "normalized_text": "visualizzazione su x rep",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1672,7 +1789,8 @@
         "normalized_text": "ritardo visualizzazione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1686,7 +1804,8 @@
         "normalized_text": "sonda di regolazione a",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1700,7 +1819,8 @@
         "normalized_text": "sonda di regolazione b",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1714,7 +1834,8 @@
         "normalized_text": "percentuale sonda virtuale 100%=rpa 0%=rpb",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1728,7 +1849,8 @@
         "normalized_text": "tipo di gas",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1742,7 +1864,8 @@
         "normalized_text": "abilitazione surriscaldamento auto adattivo",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1756,7 +1879,8 @@
         "normalized_text": "superheat automatico",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1770,7 +1894,8 @@
         "normalized_text": "setpoint surriscaldamento",
         "matched_synonym": "setpoint",
         "dictionary_entry_id": "setpoint_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "setpoint"
       }
     },
     {
@@ -1784,7 +1909,8 @@
         "normalized_text": "controllo larghezza banda surriscaldamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1798,7 +1924,8 @@
         "normalized_text": "tempo minimo controllo surriscaldamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1812,7 +1939,8 @@
         "normalized_text": "limito minimo controllo apertura valvola",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1826,7 +1954,8 @@
         "normalized_text": "periodo di ciclo",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1840,7 +1969,8 @@
         "normalized_text": "banda proporzionale",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1854,7 +1984,8 @@
         "normalized_text": "offset di banda",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1868,7 +1999,8 @@
         "normalized_text": "tempo integrale",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1882,7 +2014,8 @@
         "normalized_text": "tempo derivato",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1896,7 +2029,8 @@
         "normalized_text": "percentuale di apertura in errore sonda",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1910,7 +2044,8 @@
         "normalized_text": "ritardo chiusura valvola dopo errore sonda 240 = on",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1924,7 +2059,8 @@
         "normalized_text": "percentuale di apertura durante la fase di start",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1938,7 +2074,8 @@
         "normalized_text": "durata funzione di start",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1952,7 +2089,8 @@
         "normalized_text": "percentuale di aperture dopo il defrost",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1966,7 +2104,8 @@
         "normalized_text": "durata funzione post defrost",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1980,7 +2119,8 @@
         "normalized_text": "massima percentuale di aperture della valvola",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -1994,7 +2134,8 @@
         "normalized_text": "ritardo disattivazione valvola dopo disattivazione consenso alla regolazione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2008,7 +2149,8 @@
         "normalized_text": "percentuale di apertura forzata 101=nu",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2022,7 +2164,8 @@
         "normalized_text": "valore di pressione a 4ma o a 0v vedi manuale",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2036,7 +2179,8 @@
         "normalized_text": "valore di pressione a 20ma o a 5v vedi manuale",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2050,7 +2194,8 @@
         "normalized_text": "limit inferiore di pressione per il calcolo del surriscaldamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2064,7 +2209,8 @@
         "normalized_text": "soglia massima pressione di aspirazione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2078,7 +2224,8 @@
         "normalized_text": "soglia minima pressione di aspirazione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2092,7 +2239,8 @@
         "normalized_text": "variazione di aperture durante le fasi di mop lop",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2106,7 +2254,8 @@
         "normalized_text": "allarme di massimo surriscaldamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2120,7 +2269,8 @@
         "normalized_text": "allarme di minimo surriscaldamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2134,7 +2284,8 @@
         "normalized_text": "isteresi rientro allarme di surriscaldamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2148,7 +2299,8 @@
         "normalized_text": "ritardo attivazione allarme di surriscaldamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2162,7 +2314,8 @@
         "normalized_text": "costante di fast recovery",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2176,7 +2329,8 @@
         "normalized_text": "filtro lettura pressione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2190,7 +2344,8 @@
         "normalized_text": "tempo di reazione 0=automatico",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2204,7 +2359,8 @@
         "normalized_text": "non usare",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2218,7 +2374,8 @@
         "normalized_text": "sonda di sbrinamento a",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2232,7 +2389,8 @@
         "normalized_text": "sonda di sbrinamento b",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2246,7 +2404,8 @@
         "normalized_text": "percentuale sonda sbrinamento virtuale 100=dpa 0 =dpb",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2260,7 +2419,8 @@
         "normalized_text": "tipo di sbrinamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2274,7 +2434,8 @@
         "normalized_text": "modalita di attivazione sbrinamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2288,7 +2449,8 @@
         "normalized_text": "attivazione impostazioni avanzate di sbrinamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2302,7 +2464,8 @@
         "normalized_text": "setpoint resistenze durante sbrinamento",
         "matched_synonym": "setpoint",
         "dictionary_entry_id": "setpoint_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "setpoint"
       }
     },
     {
@@ -2316,7 +2479,8 @@
         "normalized_text": "differenziale per le resistenze",
         "matched_synonym": "differenziale",
         "dictionary_entry_id": "hysteresis_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "temperature"
       }
     },
     {
@@ -2330,7 +2494,8 @@
         "normalized_text": "time out per sbrinamento termostatato",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2344,7 +2509,8 @@
         "normalized_text": "differenza sonde defrost per attivazione sbrinamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2358,7 +2524,8 @@
         "normalized_text": "ritardo prima dell attivazione sbrinamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2372,7 +2539,8 @@
         "normalized_text": "attivazione funzione sbrinamento con 2 sonde",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2386,7 +2554,8 @@
         "normalized_text": "temperatura di fine sbrinamento sonda a",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2400,7 +2569,8 @@
         "normalized_text": "temperatura di fine sbrinamento sonda b",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2414,7 +2584,8 @@
         "normalized_text": "intervallo fra gli sbrinamenti",
         "matched_synonym": "intervallo fra gli sbrinamenti",
         "dictionary_entry_id": "defrost_interval",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "time"
       }
     },
     {
@@ -2428,7 +2599,8 @@
         "normalized_text": "durata massima sbrinamento",
         "matched_synonym": "durata massima sbrinamento",
         "dictionary_entry_id": "defrost_duration",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "time"
       }
     },
     {
@@ -2442,7 +2614,8 @@
         "normalized_text": "partenza ritardata sbrinamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2456,7 +2629,8 @@
         "normalized_text": "visualizzazione durante lo sbrinamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2470,7 +2644,8 @@
         "normalized_text": "ritardo aggiornamento display dopo defrost",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2484,7 +2659,8 @@
         "normalized_text": "tempo di gocciolamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2498,7 +2674,8 @@
         "normalized_text": "sbrinamento all accensione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2512,7 +2689,8 @@
         "normalized_text": "ritardo attivazione sbrinamento dopo il ciclo continuo",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2526,7 +2704,8 @@
         "normalized_text": "ventole sonda a",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2540,7 +2719,8 @@
         "normalized_text": "ventole sonda b",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2554,7 +2734,8 @@
         "normalized_text": "percentuale sonda virtuale gestione ventole 100=fpa 0=fpb",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2568,7 +2749,8 @@
         "normalized_text": "modalita funzionamento ventole",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2582,7 +2764,8 @@
         "normalized_text": "funzione umidita funzionamento ventilatore",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2596,7 +2779,8 @@
         "normalized_text": "ritardo ventole dopo sbrinamento",
         "matched_synonym": "ritardo ventole dopo sbrinamento",
         "dictionary_entry_id": "fan_delay",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "time"
       }
     },
     {
@@ -2610,7 +2794,8 @@
         "normalized_text": "differenziale di temperatura per evitare la pendolazione delle ventole",
         "matched_synonym": "differenziale",
         "dictionary_entry_id": "hysteresis_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "temperature"
       }
     },
     {
@@ -2624,7 +2809,8 @@
         "normalized_text": "temperatura di fermo ventole",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2638,7 +2824,8 @@
         "normalized_text": "differenziale ripartenza ventole",
         "matched_synonym": "differenziale",
         "dictionary_entry_id": "hysteresis_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "temperature"
       }
     },
     {
@@ -2652,7 +2839,8 @@
         "normalized_text": "termostato ventole durante sbrinamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2666,7 +2854,8 @@
         "normalized_text": "tempo di attivazione ventole dopo sbrinamento senza compressori",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2680,7 +2869,8 @@
         "normalized_text": "ritardo ciclo ventilatori dopo spegnimento compressori",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2694,7 +2884,8 @@
         "normalized_text": "tempo ventole on",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2708,7 +2899,8 @@
         "normalized_text": "tempo ventole off",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2722,7 +2914,8 @@
         "normalized_text": "tipo di regolazione con uscita analogica",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2736,7 +2929,8 @@
         "normalized_text": "valore fisso per uscita analogica",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2750,7 +2944,8 @@
         "normalized_text": "valore di dew point di default",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2764,7 +2959,8 @@
         "normalized_text": "offset dew point/deffierenziale per la regolazione delle ventole",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2778,7 +2974,8 @@
         "normalized_text": "differenziale resistenze anti condensanti",
         "matched_synonym": "differenziale",
         "dictionary_entry_id": "hysteresis_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "temperature"
       }
     },
     {
@@ -2792,7 +2989,8 @@
         "normalized_text": "valore minimo uscita analogica",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2806,7 +3004,8 @@
         "normalized_text": "valore massimo uscita analogica",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2820,7 +3019,8 @@
         "normalized_text": "periodo di ciclo per resistenze anti condensanti/tempo attivazione ventole alla massima velocita",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2834,7 +3034,8 @@
         "normalized_text": "selezione sonda per allarme di temperatura",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2848,7 +3049,8 @@
         "normalized_text": "configurazione allarmi temperatura",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2862,7 +3064,8 @@
         "normalized_text": "soglia allarme di alta temperatura",
         "matched_synonym": "soglia allarme di alta temperatura",
         "dictionary_entry_id": "threshold_high_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "threshold"
       }
     },
     {
@@ -2876,7 +3079,8 @@
         "normalized_text": "soglia allarme di bassa temperatura",
         "matched_synonym": "soglia allarme di bassa temperatura",
         "dictionary_entry_id": "threshold_low_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "threshold"
       }
     },
     {
@@ -2890,7 +3094,8 @@
         "normalized_text": "differenziale rientro allarme temperatura",
         "matched_synonym": "differenziale",
         "dictionary_entry_id": "hysteresis_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "temperature"
       }
     },
     {
@@ -2904,7 +3109,8 @@
         "normalized_text": "ritardo allarme temperatura",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2918,7 +3124,8 @@
         "normalized_text": "soglia allarme di alta temperatura sonda sbrinamento",
         "matched_synonym": "soglia allarme di alta temperatura",
         "dictionary_entry_id": "threshold_high_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "threshold"
       }
     },
     {
@@ -2932,7 +3139,8 @@
         "normalized_text": "soglia allarme di bassa temperatura sonda sbrinamento",
         "matched_synonym": "soglia allarme di bassa temperatura",
         "dictionary_entry_id": "threshold_low_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "threshold"
       }
     },
     {
@@ -2946,7 +3154,8 @@
         "normalized_text": "differenziale rientro allarme temperatura sonda sbrinamento",
         "matched_synonym": "differenziale",
         "dictionary_entry_id": "hysteresis_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "temperature"
       }
     },
     {
@@ -2960,7 +3169,8 @@
         "normalized_text": "ritardo allarme di temperatura sonda sbrinamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -2974,7 +3184,8 @@
         "normalized_text": "soglia allarme di alta temperatura sonda ventole",
         "matched_synonym": "soglia allarme di alta temperatura",
         "dictionary_entry_id": "threshold_high_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "threshold"
       }
     },
     {
@@ -2988,7 +3199,8 @@
         "normalized_text": "soglia allarme di bassa temperatura sonda ventole",
         "matched_synonym": "soglia allarme di bassa temperatura",
         "dictionary_entry_id": "threshold_low_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "threshold"
       }
     },
     {
@@ -3002,7 +3214,8 @@
         "normalized_text": "differenziale rientro allarme temperatura sonda ventole",
         "matched_synonym": "differenziale",
         "dictionary_entry_id": "hysteresis_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "temperature"
       }
     },
     {
@@ -3016,7 +3229,8 @@
         "normalized_text": "ritardo allarme di temperatura sonda ventole",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3030,7 +3244,8 @@
         "normalized_text": "ritardo segnalazione allarmi di temperatura all accensione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3044,7 +3259,8 @@
         "normalized_text": "ritardo segnalazione allarmi dopo defrost",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3058,7 +3274,8 @@
         "normalized_text": "tempo di esclusione allarmi di temperatura dopo allarme porta aperta",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3072,7 +3289,8 @@
         "normalized_text": "intervallo di stop regolazione 0 = nu",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3086,7 +3304,8 @@
         "normalized_text": "durata pausa di regolazione",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3100,7 +3319,8 @@
         "normalized_text": "numero massimo pause regolazione 0 = nu",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3114,7 +3334,8 @@
         "normalized_text": "tacitazione rele allarme con pressione tasto",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3128,7 +3349,8 @@
         "normalized_text": "configurazione primo relè",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3142,7 +3364,8 @@
         "normalized_text": "configurazione secondo relè",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3156,7 +3379,8 @@
         "normalized_text": "configurazione terzo relè",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3170,7 +3394,8 @@
         "normalized_text": "configurazione quarto relè",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3184,7 +3409,8 @@
         "normalized_text": "configurazione quinto relè",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3198,7 +3424,8 @@
         "normalized_text": "configurazione sesto relè",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3212,7 +3439,8 @@
         "normalized_text": "configurazione uscita modulante",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3226,7 +3454,8 @@
         "normalized_text": "modalita di funzionamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3240,7 +3469,8 @@
         "normalized_text": "polarita rele allarme",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3254,7 +3484,8 @@
         "normalized_text": "uscita ausiliaria indipendente dallo stato di on/off",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3268,7 +3499,8 @@
         "normalized_text": "polarita ingresso digitale 1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3282,7 +3514,8 @@
         "normalized_text": "funzione ingresso digitale 1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3296,7 +3529,8 @@
         "normalized_text": "intervallo di tempo prima della segnalazione di allarme 1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3310,7 +3544,8 @@
         "normalized_text": "polarita ingresso digitale 2",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3324,7 +3559,8 @@
         "normalized_text": "funzione ingresso digitale 2",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3338,7 +3574,8 @@
         "normalized_text": "intervallo di tempo prima della segnalazione di allarme 2",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3352,7 +3589,8 @@
         "normalized_text": "polarita ingresso digitale 3",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3366,7 +3604,8 @@
         "normalized_text": "funzione ingresso digitale 3",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3380,7 +3619,8 @@
         "normalized_text": "intervallo di tempo prima della segnalazione di allarme 3",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3394,7 +3634,8 @@
         "normalized_text": "numero massimo interventi pressostato",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3408,7 +3649,8 @@
         "normalized_text": "stato compressore e ventole durante porta aperta",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3422,7 +3664,8 @@
         "normalized_text": "restart regolazione dopo allarme porta aperta doa",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3436,7 +3679,8 @@
         "normalized_text": "presenza schedina orologio",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3450,7 +3694,8 @@
         "normalized_text": "primo giorno settimanale festivo",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3464,7 +3709,8 @@
         "normalized_text": "secondo giorno settimanale festivo",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3478,7 +3724,8 @@
         "normalized_text": "terzo giorno settimanale festivo",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3492,7 +3739,8 @@
         "normalized_text": "orario di inizio ciclo energy saving feriale",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3506,7 +3754,8 @@
         "normalized_text": "durata ciclo energy saving feriale",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3520,7 +3769,8 @@
         "normalized_text": "orario di inizio ciclo energy saving festivo",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3534,7 +3784,8 @@
         "normalized_text": "durata ciclo energy saving festivo",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3548,7 +3799,8 @@
         "normalized_text": "incremento di temperatura durante ciclo di energy saving",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3562,7 +3814,8 @@
         "normalized_text": "orari di inizio del primo sbrinamento nei giorni feriali",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3576,7 +3829,8 @@
         "normalized_text": "orari di inizio del secondo sbrinamento nei giorni feriali",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3590,7 +3844,8 @@
         "normalized_text": "orari di inizio del terzo sbrinamento nei giorni feriali",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3604,7 +3859,8 @@
         "normalized_text": "orari di inizio del quarto sbrinamento nei giorni feriali",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3618,7 +3874,8 @@
         "normalized_text": "orari di inizio del quinto sbrinamento nei giorni feriali",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3632,7 +3889,8 @@
         "normalized_text": "orari di inizio del sesto sbrinamento nei giorni feriali",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3646,7 +3904,8 @@
         "normalized_text": "orari di inizio del primo sbrinamento nei giorni festivi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3660,7 +3919,8 @@
         "normalized_text": "orari di inizio del secondo sbrinamento nei giorni festivi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3674,7 +3934,8 @@
         "normalized_text": "orari di inizio del terzo sbrinamento nei giorni festivi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3688,7 +3949,8 @@
         "normalized_text": "orari di inizio del quarto sbrinamento nei giorni festivi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3702,7 +3964,8 @@
         "normalized_text": "orari di inizio del quinto sbrinamento nei giorni festivi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3716,7 +3979,8 @@
         "normalized_text": "orari di inizio del sesto sbrinamento nei giorni festivi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3730,7 +3994,8 @@
         "normalized_text": "durata massimo sbrinamento 1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3744,7 +4009,8 @@
         "normalized_text": "durata massimo sbrinamento 2",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3758,7 +4024,8 @@
         "normalized_text": "durata massimo sbrinamento 3",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3772,7 +4039,8 @@
         "normalized_text": "durata massimo sbrinamento 4",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3786,7 +4054,8 @@
         "normalized_text": "durata massimo sbrinamento 5",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3800,7 +4069,8 @@
         "normalized_text": "durata massimo sbrinamento 6",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3814,7 +4084,8 @@
         "normalized_text": "tempartura fine sbrinamento 1 sonda1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3828,7 +4099,8 @@
         "normalized_text": "tempartura fine sbrinamento 2 sonda1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3842,7 +4114,8 @@
         "normalized_text": "tempartura fine sbrinamento 3 sonda1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3856,7 +4129,8 @@
         "normalized_text": "tempartura fine sbrinamento 4 sonda1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3870,7 +4144,8 @@
         "normalized_text": "tempartura fine sbrinamento 5 sonda1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3884,7 +4159,8 @@
         "normalized_text": "tempartura fine sbrinamento 6 sonda1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3898,7 +4174,8 @@
         "normalized_text": "tempartura fine sbrinamento 1 sonda2",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3912,7 +4189,8 @@
         "normalized_text": "tempartura fine sbrinamento 2 sonda2",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3926,7 +4204,8 @@
         "normalized_text": "tempartura fine sbrinamento 3 sonda2",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3940,7 +4219,8 @@
         "normalized_text": "tempartura fine sbrinamento 4 sonda2",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3954,7 +4234,8 @@
         "normalized_text": "tempartura fine sbrinamento 5 sonda2",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3968,7 +4249,8 @@
         "normalized_text": "tempartura fine sbrinamento 6 sonda2",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3982,7 +4264,8 @@
         "normalized_text": "tempo di attivazione prima luce durante giorni lavorativi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -3996,7 +4279,8 @@
         "normalized_text": "tempo di attivazione seconda luce durante giorni lavorativi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4010,7 +4294,8 @@
         "normalized_text": "tempo di attivazione terza luce durante giorni lavorativi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4024,7 +4309,8 @@
         "normalized_text": "tempo di attivazione quarta luce durante giorni lavorativi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4038,7 +4324,8 @@
         "normalized_text": "tempo di attivazione quinta luce durante giorni lavorativi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4052,7 +4339,8 @@
         "normalized_text": "tempo di attivazione sesta luce durante giorni lavorativi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4066,7 +4354,8 @@
         "normalized_text": "tempo attivazione luci durante i giorni lavorativi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4080,7 +4369,8 @@
         "normalized_text": "tempo di attivazione prima luce durante giorni festivi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4094,7 +4384,8 @@
         "normalized_text": "tempo di attivazione seconda luce durante giorni festivi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4108,7 +4399,8 @@
         "normalized_text": "tempo di attivazione terza luce durante giorni festivi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4122,7 +4414,8 @@
         "normalized_text": "tempo di attivazione quarta luce durante giorni festivi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4136,7 +4429,8 @@
         "normalized_text": "tempo di attivazione quinta luce durante giorni festivi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4150,7 +4444,8 @@
         "normalized_text": "tempo di attivazione sesta luce durante giorni festivi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4164,7 +4459,8 @@
         "normalized_text": "tempo attivazione luci durante i giorni festivi",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4178,7 +4474,8 @@
         "normalized_text": "selezione sonda di energy saving",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4192,7 +4489,8 @@
         "normalized_text": "attivazione energy saving insieme a spegnimento luci",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4206,7 +4504,8 @@
         "normalized_text": "sincronizzazione sbrinamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4220,7 +4519,8 @@
         "normalized_text": "modalita di fine sbrinamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4234,7 +4534,8 @@
         "normalized_text": "sincronizzazione setpoint",
         "matched_synonym": "setpoint",
         "dictionary_entry_id": "setpoint_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "setpoint"
       }
     },
     {
@@ -4248,7 +4549,8 @@
         "normalized_text": "sincronizzazione display",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4262,7 +4564,8 @@
         "normalized_text": "sincronizzazione on/ff",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4276,7 +4579,8 @@
         "normalized_text": "sincronizzazione luci",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4290,7 +4594,8 @@
         "normalized_text": "sincronizzazione uscita ausiliaria",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4304,7 +4609,8 @@
         "normalized_text": "sincronizzazione funzionamento notturno",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4318,7 +4624,8 @@
         "normalized_text": "visualizzazione sonda remota",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4332,7 +4639,8 @@
         "normalized_text": "sonda di pressone remota",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4346,7 +4654,8 @@
         "normalized_text": "invio sonda p4 in lan",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4360,7 +4669,8 @@
         "normalized_text": "attivazione solenoide da richiesta lan",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4374,7 +4684,8 @@
         "normalized_text": "chiamata freddo in lan sempre abilitata",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4388,7 +4699,8 @@
         "normalized_text": "configurazione sonda 1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4402,7 +4714,8 @@
         "normalized_text": "calibrazione sonda 1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4416,7 +4729,8 @@
         "normalized_text": "configurazione sonda 2",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4430,7 +4744,8 @@
         "normalized_text": "calibrazione sonda 2",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4444,7 +4759,8 @@
         "normalized_text": "configurazione sonda 3",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4458,7 +4774,8 @@
         "normalized_text": "calibrazione sonda 3",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4472,7 +4789,8 @@
         "normalized_text": "configurazione sonda 4",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4486,7 +4804,8 @@
         "normalized_text": "calibrazione sonda 4",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4500,7 +4819,8 @@
         "normalized_text": "configurazione sonda 5",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4514,7 +4834,8 @@
         "normalized_text": "calibrazione sonda 5",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4528,7 +4849,8 @@
         "normalized_text": "configurazione sonda 6",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4542,7 +4864,8 @@
         "normalized_text": "calibrazione sonda 6",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4556,7 +4879,8 @@
         "normalized_text": "tempo massimo compressore in on con regolazione peo",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4570,7 +4894,8 @@
         "normalized_text": "indirizzo seriale",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4584,7 +4909,8 @@
         "normalized_text": "configurazione chiave di off",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4598,7 +4924,8 @@
         "normalized_text": "configurazione chiave di luci",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4612,7 +4939,8 @@
         "normalized_text": "configurazione chiave di sbrinamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4626,7 +4954,8 @@
         "normalized_text": "baudrate",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": null
       }
     },
     {
@@ -4640,7 +4969,8 @@
         "normalized_text": "setpoint",
         "matched_synonym": "setpoint",
         "dictionary_entry_id": "setpoint_temperature",
-        "category": "parameter"
+        "category": "parameter",
+        "semantic_category": "setpoint"
       }
     },
     {
@@ -4654,7 +4984,8 @@
         "normalized_text": "allarme sonda pressione remota 4",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -4668,7 +4999,8 @@
         "normalized_text": "allarme sonda p1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -4682,7 +5014,8 @@
         "normalized_text": "allarme sonda p2",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -4696,7 +5029,8 @@
         "normalized_text": "allarme sonda p3",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -4710,7 +5044,8 @@
         "normalized_text": "allarme sonda p4",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -4724,7 +5059,8 @@
         "normalized_text": "allarme sonda p5",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -4738,7 +5074,8 @@
         "normalized_text": "allarme sonda p6",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -4752,7 +5089,8 @@
         "normalized_text": "allarme orologio failure",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -4766,7 +5104,8 @@
         "normalized_text": "allarme orologio rtc data lost",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -4780,7 +5119,8 @@
         "normalized_text": "allarme di bassa temperatura sonda 1",
         "matched_synonym": "allarme di bassa temperatura",
         "dictionary_entry_id": "alarm_low_temperature",
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": "alarm"
       }
     },
     {
@@ -4794,7 +5134,8 @@
         "normalized_text": "allarme di alta temperatura sonda 1",
         "matched_synonym": "allarme di alta temperatura",
         "dictionary_entry_id": "alarm_high_temperature",
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": "alarm"
       }
     },
     {
@@ -4808,7 +5149,8 @@
         "normalized_text": "allarme di bassa temperatura sbrinamento",
         "matched_synonym": "allarme di bassa temperatura",
         "dictionary_entry_id": "alarm_low_temperature",
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": "alarm"
       }
     },
     {
@@ -4822,7 +5164,8 @@
         "normalized_text": "allarme di alta temperatura sbrinamento",
         "matched_synonym": "allarme di alta temperatura",
         "dictionary_entry_id": "alarm_high_temperature",
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": "alarm"
       }
     },
     {
@@ -4836,7 +5179,8 @@
         "normalized_text": "allarme di bassa temperatura ventole",
         "matched_synonym": "allarme di bassa temperatura",
         "dictionary_entry_id": "alarm_low_temperature",
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": "alarm"
       }
     },
     {
@@ -4850,7 +5194,8 @@
         "normalized_text": "allarme di alta temperatura ventole",
         "matched_synonym": "allarme di alta temperatura",
         "dictionary_entry_id": "alarm_high_temperature",
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": "alarm"
       }
     },
     {
@@ -4864,7 +5209,8 @@
         "normalized_text": "allarme grave raggiungimento n max pause msn",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -4878,7 +5224,8 @@
         "normalized_text": "allarme esterno",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -4892,7 +5239,8 @@
         "normalized_text": "allarme grave",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -4906,7 +5254,8 @@
         "normalized_text": "allarme pressostato 1",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -4920,7 +5269,8 @@
         "normalized_text": "allarme porta aperta",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -4934,7 +5284,8 @@
         "normalized_text": "allarme di minimo surriscaldamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -4948,7 +5299,8 @@
         "normalized_text": "allarme di massimo surriscaldamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -4962,7 +5314,8 @@
         "normalized_text": "allarme di alta pressione",
         "matched_synonym": "allarme di alta pressione",
         "dictionary_entry_id": "alarm_high_pressure",
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": "alarm"
       }
     },
     {
@@ -4976,7 +5329,8 @@
         "normalized_text": "allarme di bassa pressione",
         "matched_synonym": "allarme di bassa pressione",
         "dictionary_entry_id": "alarm_low_pressure",
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": "alarm"
       }
     },
     {
@@ -4990,7 +5344,8 @@
         "normalized_text": "allarme eeprom",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -5004,7 +5359,8 @@
         "normalized_text": "allarme sonda pressione remota",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -5018,7 +5374,8 @@
         "normalized_text": "off line",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "alarm"
+        "category": "alarm",
+        "semantic_category": null
       }
     },
     {
@@ -5032,7 +5389,8 @@
         "normalized_text": "accendi dispositivo",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "command"
+        "category": "command",
+        "semantic_category": null
       }
     },
     {
@@ -5046,7 +5404,8 @@
         "normalized_text": "spegni dispositivo",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "command"
+        "category": "command",
+        "semantic_category": null
       }
     },
     {
@@ -5060,7 +5419,8 @@
         "normalized_text": "sbrinamento",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "command"
+        "category": "command",
+        "semantic_category": null
       }
     },
     {
@@ -5074,7 +5434,8 @@
         "normalized_text": "luce on",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "command"
+        "category": "command",
+        "semantic_category": null
       }
     },
     {
@@ -5088,7 +5449,8 @@
         "normalized_text": "luci off",
         "matched_synonym": null,
         "dictionary_entry_id": null,
-        "category": "command"
+        "category": "command",
+        "semantic_category": null
       }
     }
   ]

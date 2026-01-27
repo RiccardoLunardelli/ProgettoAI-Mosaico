@@ -5,6 +5,7 @@
     {
       "concept_id": "temp_delivery",
       "category": "measurement",
+      "semantic_category": "temperature",
       "synonyms": { "it": ["temperatura di mandata", "mandata", "Sm"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -12,6 +13,7 @@
     {
       "concept_id": "temp_return",
       "category": "measurement",
+      "semantic_category": "temperature",
       "synonyms": { "it": ["temperatura di ripresa"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -19,13 +21,15 @@
     {
       "concept_id": "temp_ambient",
       "category": "measurement",
+      "semantic_category": "temperature",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
     },
     {
-      "concept_id": "superheat_temperature",   
+      "concept_id": "superheat_temperature",
       "category": "measurement",
+      "semantic_category": "temperature",
       "synonyms": { "it": ["temperatura di surriscaldamento", "temperatura surriscaldamento"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -33,6 +37,7 @@
     {
       "concept_id": "temp_evaporator",
       "category": "measurement",
+      "semantic_category": "temperature",
       "synonyms": { "it": ["temperatura evaportatore satura"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -40,6 +45,7 @@
     {
       "concept_id": "temp_condenser",
       "category": "measurement",
+      "semantic_category": "temperature",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -47,6 +53,7 @@
     {
       "concept_id": "temp_defrost",
       "category": "measurement",
+      "semantic_category": "temperature",
       "synonyms": { "it": ["temperatura di sbrinamento", "temperatura sbrinamento"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -54,6 +61,7 @@
     {
       "concept_id": "pressure_suction",
       "category": "measurement",
+      "semantic_category": "pressure",
       "synonyms": { "it": ["pressione evaporatore satura"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -61,6 +69,7 @@
     {
       "concept_id": "pressure_discharge",
       "category": "measurement",
+      "semantic_category": "pressure",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -68,6 +77,7 @@
     {
       "concept_id": "humidity",
       "category": "measurement",
+      "semantic_category": "humidity",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -75,6 +85,7 @@
     {
       "concept_id": "state_compressor",
       "category": "measurement",
+      "semantic_category": "state",
       "synonyms": { "it": ["compressori"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -82,6 +93,7 @@
     {
       "concept_id": "state_fan",
       "category": "measurement",
+      "semantic_category": "state",
       "synonyms": { "it": ["ventilatori"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -89,6 +101,7 @@
     {
       "concept_id": "state_defrost",
       "category": "measurement",
+      "semantic_category": "state",
       "synonyms": { "it": ["sbrinamento"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -96,6 +109,7 @@
     {
       "concept_id": "state_door_open",
       "category": "measurement",
+      "semantic_category": "state",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -104,6 +118,7 @@
     {
       "concept_id": "setpoint_temperature",
       "category": "parameter",
+      "semantic_category": "setpoint",
       "synonyms": { "it": ["setpoint", "set di regolazione parametro set"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -111,6 +126,7 @@
     {
       "concept_id": "hysteresis_temperature",
       "category": "parameter",
+      "semantic_category": "temperature",
       "synonyms": { "it": ["differenziale"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -118,6 +134,7 @@
     {
       "concept_id": "defrost_interval",
       "category": "parameter",
+      "semantic_category": "time",
       "synonyms": { "it": ["intervallo fra gli sbrinamenti"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -125,6 +142,7 @@
     {
       "concept_id": "defrost_duration",
       "category": "parameter",
+      "semantic_category": "time",
       "synonyms": { "it": ["durata massima sbrinamento"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -132,6 +150,7 @@
     {
       "concept_id": "fan_delay",
       "category": "parameter",
+      "semantic_category": "time",
       "synonyms": { "it": ["ritardo ventole dopo sbrinamento"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -139,6 +158,7 @@
     {
       "concept_id": "threshold_high_temperature",
       "category": "parameter",
+      "semantic_category": "threshold",
       "synonyms": { "it": ["temperatura massima", "soglia allarme di alta temperatura"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -146,6 +166,7 @@
     {
       "concept_id": "threshold_low_temperature",
       "category": "parameter",
+      "semantic_category": "threshold",
       "synonyms": { "it": ["temperatura minima", "soglia allarme di bassa temperatura"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -154,6 +175,7 @@
     {
       "concept_id": "alarm_high_temperature",
       "category": "alarm",
+      "semantic_category": "alarm",
       "synonyms": { "it": ["allarme di alta temperatura"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -161,6 +183,7 @@
     {
       "concept_id": "alarm_low_temperature",
       "category": "alarm",
+      "semantic_category": "alarm",
       "synonyms": { "it": ["allarme di bassa temperatura"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -168,14 +191,15 @@
     {
       "concept_id": "alarm_sensor_fault",
       "category": "alarm",
+      "semantic_category": "alarm",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
     },
-
     {
       "concept_id": "alarm_compressor_fault",
       "category": "alarm",
+      "semantic_category": "alarm",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -183,6 +207,7 @@
     {
       "concept_id": "alarm_defrost_failure",
       "category": "alarm",
+      "semantic_category": "alarm",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -190,6 +215,7 @@
     {
       "concept_id": "alarm_high_pressure",
       "category": "alarm",
+      "semantic_category": "alarm",
       "synonyms": { "it": ["allarme di alta pressione"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -197,6 +223,7 @@
     {
       "concept_id": "alarm_low_pressure",
       "category": "alarm",
+      "semantic_category": "alarm",
       "synonyms": { "it": ["allarme di bassa pressione"], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -204,6 +231,7 @@
     {
       "concept_id": "alarm_door_open",
       "category": "alarm",
+      "semantic_category": "alarm",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -212,6 +240,7 @@
     {
       "concept_id": "warning_high_temperature",
       "category": "warning",
+      "semantic_category": "warning",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -219,6 +248,7 @@
     {
       "concept_id": "warning_low_temperature",
       "category": "warning",
+      "semantic_category": "warning",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -226,6 +256,7 @@
     {
       "concept_id": "warning_maintenance",
       "category": "warning",
+      "semantic_category": "warning",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -233,6 +264,7 @@
     {
       "concept_id": "warning_sensor_drift",
       "category": "warning",
+      "semantic_category": "warning",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -241,6 +273,7 @@
     {
       "concept_id": "command_start_device",
       "category": "command",
+      "semantic_category": "command",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -248,6 +281,7 @@
     {
       "concept_id": "command_stop_device",
       "category": "command",
+      "semantic_category": "command",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -255,6 +289,7 @@
     {
       "concept_id": "command_start_defrost",
       "category": "command",
+      "semantic_category": "command",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -262,6 +297,7 @@
     {
       "concept_id": "command_stop_defrost",
       "category": "command",
+      "semantic_category": "command",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -269,6 +305,7 @@
     {
       "concept_id": "command_reset_alarm",
       "category": "command",
+      "semantic_category": "command",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -277,6 +314,7 @@
     {
       "concept_id": "delta_temperature",
       "category": "virtual_variable",
+      "semantic_category": "temperature",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -284,6 +322,7 @@
     {
       "concept_id": "count_defrost",
       "category": "virtual_variable",
+      "semantic_category": "count",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []
@@ -291,6 +330,7 @@
     {
       "concept_id": "runtime_hours",
       "category": "virtual_variable",
+      "semantic_category": "runtime",
       "synonyms": { "it": [], "en": [] },
       "abbreviations": [],
       "patterns": []

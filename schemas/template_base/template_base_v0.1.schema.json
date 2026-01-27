@@ -10,6 +10,10 @@
           "title": "Category",
           "type": "string"
         },
+        "semantic_category": {
+          "title": "Semantic Category",
+          "type": "string"
+        },
         "label": {
           "$ref": "#/$defs/ConceptLabel"
         },
@@ -21,6 +25,7 @@
       "required": [
         "concept_id",
         "category",
+        "semantic_category",
         "label",
         "description"
       ],

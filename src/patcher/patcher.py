@@ -31,6 +31,8 @@ def run_patch_actions(matching_path: str, output_path: str) -> None:
         status = item.get("status")
         confidence = item.get("confidence")
         normalized_text = item.get("evidence", {}).get("normalized_text")
+        semantic_category = item.get("evidence", {}).get("semantic_category")
+
 
         evidence_ref = f"{matching_path}#{source_key}"
 
@@ -40,6 +42,7 @@ def run_patch_actions(matching_path: str, output_path: str) -> None:
                 "action_type": "NO_OP",
                 "source_key": source_key,
                 "section": section,
+                "semantic_category": semantic_category,
                 "normalized_text": normalized_text,
                 "concept_id": item.get("concept_id"),
                 "confidence": confidence,
@@ -52,6 +55,7 @@ def run_patch_actions(matching_path: str, output_path: str) -> None:
                 "action_type": "REQUIRE_REVIEW",
                 "source_key": source_key,
                 "section": section,
+                "semantic_category": semantic_category,
                 "normalized_text": normalized_text,
                 "concept_id": item.get("concept_id"),
                 "confidence": confidence,
@@ -68,6 +72,7 @@ def run_patch_actions(matching_path: str, output_path: str) -> None:
                 "action_type": "REQUIRE_REVIEW",
                 "source_key": source_key,
                 "section": section,
+                "semantic_category": None,
                 "normalized_text": normalized_text,
                 "candidate_concepts": candidates,
                 "confidence": confidence,
@@ -83,6 +88,7 @@ def run_patch_actions(matching_path: str, output_path: str) -> None:
                 "action_type": "PROPOSE_CONCEPT",
                 "source_key": source_key,
                 "section": section,
+                "semantic_category": None,
                 "normalized_text": normalized_text,
                 "suggested_category": suggested_category,
                 "confidence": 0.0,
@@ -97,6 +103,7 @@ def run_patch_actions(matching_path: str, output_path: str) -> None:
                 "action_type": "NO_OP",
                 "source_key": source_key,
                 "section": section,
+                "semantic_category": None,
                 "reason": "salta_questa_variabile_disabilitata",
                 "evidence_ref": evidence_ref
             })

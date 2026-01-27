@@ -33,7 +33,6 @@ ARTIFACTS = {
         "matching_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v0.1.json",
         "actions_path": "mcp_server/patch/template_real/manual_actions.json",
         "template_base_path": "data/template_base_v0.1.json",
-
     }
 }
 
@@ -130,7 +129,6 @@ def extract_analysis_from_matching_report(mr: dict) -> dict:
 
     ambiguous = []
     unmapped = []
-    proposed = []
 
     for item in  mr.get("items", []):
         status = item.get("status")
@@ -165,7 +163,6 @@ def extract_analysis_from_matching_report(mr: dict) -> dict:
         "matching_version": mr.get("matching_version"),
         "ambiguous_matches": ambiguous,
         "unmapped_terms": unmapped,
-        "proposed_concepts" : proposed
     }
 
 def summarize_template_real_diff(before: dict, after: dict) -> list[str]:
@@ -361,7 +358,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     with open(input_path, "r", encoding="utf-8") as f:
         artifact = json.load(f)
 
-    dry_run_only = False  # TEST
+    dry_run_only = False  # TEST: True --> no commit (non scrive file versionato). False --> Si commit
 
     dry_run_result = upsert_fn(
         path=input_path,

@@ -44,13 +44,17 @@ def match_score(text: str, synonym: str) -> Optional[float]:
         return 0.6                                             # ex: text = "learning automatico e machine vision", synonym = "machine learning"
     return None
 
-def build_concept_index(template_base: Dict[str, Any]) -> Dict[str, str]:
-    # costruisce un dizionario con chiave = concept id e valore = category
+def build_concept_index(template_base: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
+    # costruisce un dizionario con chiave = concept id e valore = category, semantic_category
 
     index = {}
     for cat in template_base.get("categories", []):     # cat --> categoria
-        for c in cat.get("concepts", []):   # c --> concepts
-            index[c["concept_id"]] = c["category"] # salva sul dizionario ( concept_id : category)
+        cat_id = cat.get("id")
+        for c in cat.get("concepts", []):
+            index[c["concept_id"]] = {
+                "category": cat_id,
+                "semantic_category": c.get("semantic_category"),
+            }
     return index
 
 def extract_device_context(device_context_path: str, template_guid: str) -> Dict[str, Any]:
@@ -124,7 +128,8 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     "normalized_text": text,
                     "matched_synonym": None,
                     "dictionary_entry_id": None,
-                    "category": None
+                    "category": None,
+                    "semantic_category": None
                 }
             })
             continue
@@ -142,7 +147,8 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     "normalized_text": text,
                     "matched_synonym": None,
                     "dictionary_entry_id": None,
-                    "category": None
+                    "category": None,
+                    "semantic_category": None
                 }
             })
             continue
@@ -161,7 +167,8 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     "normalized_text": text,
                     "matched_synonym": None,
                     "dictionary_entry_id": None,
-                    "category": None
+                    "category": None,
+                    "semantic_category": None
                 }
             })
             continue
@@ -175,7 +182,10 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                 continue
             if entry.get("category") != expected_category:
                 continue
-            if concept_category.get(concept_id) != expected_category:
+            concept_info = concept_category.get(concept_id)
+            if not concept_info:
+                continue 
+            if concept_info.get("category") != expected_category:
                 continue
 
             # blacklist per scope (se presente)
@@ -198,7 +208,8 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                             "score": score,
                             "matched_synonym": syn_norm,
                             "dictionary_entry_id": concept_id,
-                            "category": expected_category
+                            "category": expected_category,
+                            "semantic_category": concept_info.get("semantic_category"),
                         })
         
         # nessun candidato compatibile
@@ -214,7 +225,8 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     "normalized_text": text,
                     "matched_synonym": None,
                     "dictionary_entry_id": None,
-                    "category": expected_category
+                    "category": expected_category,
+                    "semantic_category": None
                 }
             })
             continue
@@ -247,7 +259,8 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     "normalized_text": text,
                     "matched_synonym": top["matched_synonym"],
                     "dictionary_entry_id": top["dictionary_entry_id"],
-                    "category": top["category"]
+                    "category": top["category"],
+                    "semantic_category": top["semantic_category"]
                 }
             })
             continue
@@ -265,7 +278,8 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     "normalized_text": text,
                     "matched_synonym": top["matched_synonym"],
                     "dictionary_entry_id": top["dictionary_entry_id"],
-                    "category": top["category"]
+                    "category": top["category"],
+                    "semantic_category": top["semantic_category"]
                 }
             })
         else:
@@ -281,7 +295,8 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     "normalized_text": text,
                     "matched_synonym": None,
                     "dictionary_entry_id": None,
-                    "category": expected_category
+                    "category": expected_category,
+                    "semantic_category": None
                 },
                 "candidates": [
                     {"concept_id": c["concept_id"], "score": c["score"]}

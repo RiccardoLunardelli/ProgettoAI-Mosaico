@@ -10,6 +10,10 @@
           "title": "Category",
           "type": "string"
         },
+        "semantic_category": {
+          "title": "Semantic Category",
+          "type": "string"
+        },
         "synonyms": {
           "additionalProperties": {
             "items": {
@@ -38,6 +42,7 @@
       "required": [
         "concept_id",
         "category",
+        "semantic_category",
         "synonyms",
         "abbreviations",
         "patterns"

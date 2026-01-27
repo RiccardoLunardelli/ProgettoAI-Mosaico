@@ -18,6 +18,72 @@
       "title": "MatchingCandidate",
       "type": "object"
     },
+    "MatchingEvidence": {
+      "properties": {
+        "normalized_text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Normalized Text"
+        },
+        "matched_synonym": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Matched Synonym"
+        },
+        "dictionary_entry_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dictionary Entry Id"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Category"
+        },
+        "semantic_category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Semantic Category"
+        }
+      },
+      "title": "MatchingEvidence",
+      "type": "object"
+    },
     "MatchingItem": {
       "properties": {
         "source_key": {
@@ -69,9 +135,7 @@
           "title": "Confidence"
         },
         "evidence": {
-          "additionalProperties": true,
-          "title": "Evidence",
-          "type": "object"
+          "$ref": "#/$defs/MatchingEvidence"
         },
         "candidates": {
           "anyOf": [

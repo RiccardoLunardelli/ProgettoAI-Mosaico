@@ -48,6 +48,7 @@ class PatchAction(BaseModel):
     action_type: str
     source_key: str
     section: str 
+    semantic_category: Optional[str] = None
     normalized_text: Optional[str] = None
     concept_id: Optional[str] = None
     condifence: Optional[float] = None 
@@ -67,6 +68,13 @@ class MatchingCandidate(BaseModel):
     concept_id: str
     score: float 
 
+class MatchingEvidence(BaseModel):
+    normalized_text: Optional[str] = None
+    matched_synonym: Optional[str] = None
+    dictionary_entry_id: Optional[str] = None
+    category: Optional[str] = None
+    semantic_category: Optional[str] = None
+
 class MatchingItem(BaseModel):
     source_key: str
     section: str
@@ -74,7 +82,7 @@ class MatchingItem(BaseModel):
     technical_reason: Optional[str] = None
     concept_id: Optional[str] = None
     confidence: Optional[float] = None
-    evidence: Dict[str, Any]
+    evidence: MatchingEvidence
     candidates: Optional[List[MatchingCandidate]] = None
 
 class MatchingReport(BaseModel):
@@ -91,6 +99,7 @@ class ConceptLabel(BaseModel):
 class Concept(BaseModel):
     concept_id: str
     category: str
+    semantic_category: str
     label: ConceptLabel
     description: str
 
@@ -138,6 +147,7 @@ class DictionaryPatterns(BaseModel):
 class DictionaryEntry(BaseModel):
     concept_id: str
     category: str
+    semantic_category: str
     synonyms: Dict[str, List[str]]
     abbreviations: List[str]
     patterns: List[DictionaryPatterns]
