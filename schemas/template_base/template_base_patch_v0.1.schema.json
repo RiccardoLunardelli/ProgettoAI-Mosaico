@@ -29,6 +29,10 @@
           "title": "Category Id",
           "type": "string"
         },
+        "semantic_category": {
+          "title": "Semantic Category",
+          "type": "string"
+        },
         "concept_id": {
           "title": "Concept Id",
           "type": "string"
@@ -44,6 +48,7 @@
       "required": [
         "op",
         "category_id",
+        "semantic_category",
         "concept_id",
         "label",
         "description"
@@ -115,6 +120,18 @@
           ],
           "default": null,
           "title": "Category"
+        },
+        "semantic_category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Semantic Category"
         }
       },
       "required": [

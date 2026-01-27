@@ -84,6 +84,7 @@ def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
             new_entry = {
                 "concept_id": concept_id,
                 "category": op["category"],
+                "semantic_category": op["semantic_category"],
                 "synonyms": op.get("synonyms", {}),
                 "abbreviations": op.get("abbreviations", []),
                 "patterns": op.get("patterns", []),
@@ -156,6 +157,20 @@ def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
             for entry in entries:
                 if entry["concept_id"] == concept_id:
                     entry["category"] = category
+                    break
+        
+        #-------UPDATE SEMANTIC CATEGORY---------------
+        elif op["op"] == "update_semantic_category":
+            concept_id = op["concept_id"]
+            semantic_category = op["semantic_category"]
+
+            search_result = dictionary_search(ctx, str(p), None, None, concept_id)
+            if not search_result["results"]:
+                raise ValueError(f"Concept {concept_id} not found")
+            
+            for entry in entries:
+                if entry["concept_id"] == concept_id:
+                    entry["semantic_category"] = semantic_category
                     break
 
         else:

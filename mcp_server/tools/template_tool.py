@@ -66,6 +66,7 @@ def template_apply_patch(ctx: MCPContext, path: str, patch: Dict[str, Any], dry_
                 target_cat.setdefault("concepts", []).append({
                     "concept_id": concept_id,
                     "category": category_id,
+                    "semantic_category": op["semantic_category"],
                     "label": op["label"],
                     "description": op["description"],
                 })
@@ -88,6 +89,9 @@ def template_apply_patch(ctx: MCPContext, path: str, patch: Dict[str, Any], dry_
                     concept["label"] = op["label"]
                 if op.get("description") is not None:
                     concept["description"] = op["description"]
+                
+                if op.get("semantic_category") is not None:
+                    concept["semantic_category"] = op["semantic_category"]
 
                 if op.get("category") is not None and op["category"] != cat.get("id"):
                     target_cat = None
@@ -101,6 +105,7 @@ def template_apply_patch(ctx: MCPContext, path: str, patch: Dict[str, Any], dry_
                     cat["concepts"] = [c for c in cat.get("concepts", []) if c.get("concept_id") != concept_id]
                     concept["category"] = op["category"]
                     target_cat.setdefault("concepts", []).append(concept)
+
             
             else:
                 raise ValueError(f"Unsupported operation: {op['op']}")

@@ -39,6 +39,10 @@
           "title": "Category",
           "type": "string"
         },
+        "semantic_category": {
+          "title": "Semantic Category",
+          "type": "string"
+        },
         "synonyms": {
           "additionalProperties": {
             "items": {
@@ -67,7 +71,8 @@
       "required": [
         "op",
         "concept_id",
-        "category"
+        "category",
+        "semantic_category"
       ],
       "title": "DictionaryPatchAddConcept",
       "type": "object"
@@ -154,6 +159,30 @@
       "title": "DictionaryPatchUpdateCategory",
       "type": "object"
     },
+    "DictionaryPatchUpdateSemanticCategory": {
+      "properties": {
+        "op": {
+          "const": "update_semantic_category",
+          "title": "Op",
+          "type": "string"
+        },
+        "concept_id": {
+          "title": "Concept Id",
+          "type": "string"
+        },
+        "semantic_category": {
+          "title": "Semantic Category",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "concept_id",
+        "semantic_category"
+      ],
+      "title": "DictionaryPatchUpdateSemanticCategory",
+      "type": "object"
+    },
     "DictionaryPatchUpdateSynonym": {
       "properties": {
         "op": {
@@ -233,6 +262,9 @@
           },
           {
             "$ref": "#/$defs/DictionaryPatchUpdateCategory"
+          },
+          {
+            "$ref": "#/$defs/DictionaryPatchUpdateSemanticCategory"
           }
         ]
       },

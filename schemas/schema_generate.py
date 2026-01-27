@@ -116,6 +116,7 @@ class TemplateBase(BaseModel):
 class TemplateBasePatchAddConcept(BaseModel):
     op: Literal["add_base_concept"]
     category_id: str 
+    semantic_category: str
     concept_id: str 
     label: ConceptLabel
     description: str 
@@ -130,6 +131,7 @@ class TemplateBasePatchUpdateMetadata(BaseModel):
     label: Optional[ConceptLabel] = None 
     description: Optional[str] = None 
     category: Optional[str] = None 
+    semantic_category: Optional[str] = None
 
 class TemplateBasePatch(BaseModel):
     target: Literal["template_base"]
@@ -190,10 +192,16 @@ class DictionaryPatchUpdateCategory(BaseModel):
 class DictionaryPatchAddConcept(BaseModel):
     op: Literal["add_concept"]
     concept_id: str 
-    category: str 
+    category: str
+    semantic_category: str 
     synonyms: Dict[str, List[str]] = Field(default_factory=dict)
     abbreviations: List[str] = Field(default_factory=list)
     patterns: List[DictionaryPatterns] = Field(default_factory=list)
+
+class DictionaryPatchUpdateSemanticCategory(BaseModel):
+    op: Literal["update_semantic_category"]
+    concept_id: str 
+    semantic_category: str
 
 class DictionaryPatch(BaseModel):
     target: Literal["dictionary"]
@@ -205,6 +213,7 @@ class DictionaryPatch(BaseModel):
             DictionaryPatchAddAbbreviation,
             DictionaryPatchAddPattern,
             DictionaryPatchUpdateCategory,
+            DictionaryPatchUpdateSemanticCategory,
         ]
     ]
 
