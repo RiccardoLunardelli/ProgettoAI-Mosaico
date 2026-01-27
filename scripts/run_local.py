@@ -369,7 +369,7 @@ def validate_before_commit_template(ctx: MCPContext, actions_payload: dict, temp
     # schema-first
     ctx.schema_validate("patch_actions_template", actions_payload)
 
-    # coerenza
+    # coerenza con template base
     errors = validate_actions_against_template_base(actions_payload, template_base_path)
     if errors:
         return {"ok": False, "stage": "cannonical_validation", "errors": errors}
@@ -377,10 +377,10 @@ def validate_before_commit_template(ctx: MCPContext, actions_payload: dict, temp
     # conversione patch
     template_patch = actions_to_template_patch(actions_payload)
 
-    # dry-run
     with open(input_path, "r", encoding="utf-8") as f:
         artifact = json.load(f)
 
+    # dry-run
     dry_run_result = upsert_fn(path=input_path, patch=template_patch, dry_run=True)
     preview = dry_run_result.get("preview")
     diff = diff_fn(artifact, preview)
