@@ -33,6 +33,7 @@ ARTIFACTS = {
         "matching_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v0.1.json",
         "actions_path": "mcp_server/patch/template_real/manual_actions.json",
         "template_base_path": "data/template_base_v0.1.json",
+        "validate_only": True,
     }
 }
 
@@ -372,7 +373,7 @@ def validate_before_commit_template(ctx: MCPContext, actions_payload: dict, temp
     # coerenza con template base
     errors = validate_actions_against_template_base(actions_payload, template_base_path)
     if errors:
-        return {"ok": False, "stage": "cannonical_validation", "errors": errors}
+        return {"ok": False, "stage": "canonical_validation", "errors": errors}
     
     # conversione patch
     template_patch = actions_to_template_patch(actions_payload)
@@ -398,6 +399,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     matching_path = cfg.get("matching_path") # matchign report
     actions_path = cfg.get("actions_path")  # patch per template reale
     template_base_path = cfg.get("template_base_path") # template base
+    validate_only = cfg.get("validate_only", False) # true --> scrive solo report
 
     analysis = {}
     actions_payload = None
@@ -456,7 +458,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     # True --> no commit ; False --> si commit
     dry_run_only = False
 
-    # --- dry-run (reuse validator dry-run when available) ---
+    # dry run True --> no commit ; False --> si commit
     if validated_preview is not None and validated_diff is not None:
         preview = validated_preview
         diff = validated_diff
@@ -471,61 +473,101 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
 
     no_change = (len(diff) == 0)
 
-    # commit file con patch
-    if not no_change and not dry_run_only:
-        commit_result = upsert_fn(
-            path=input_path,
-            patch=template_patch,
-            dry_run=False,
-        )
-        output_path = commit_result.get("output_path")
-    else:
+    # validate_only = True --> produce report senza commit 
+    if validate_only:
         output_path = input_path
 
-    # run report
-    run_report = build_run_report(
-        run_id=run_id,
-        input_path=input_path,
-        output_path=output_path,
-        patch_path=patch_path if patch_path else "",
-        diff=diff,
-        artifact_type=artifact_type,
-    )
-
-    run_report["execution"]["committed"] = (not no_change and not dry_run_only)
-    run_report["execution"]["status"] = (
-        "success" if (not dry_run_only and not no_change)
-        else ("no_change" if no_change else "dry_run_only")
-    )
-
-    # Analysis da matching report
-    if analysis:
-        run_report["analysis"] = analysis
-        run_report["analysis"]["matching_path"] = matching_path
-
-    # estrae Matched variables da matching report
-    if mr:
-        run_report["matched_variables"] = extract_matched_variables_from_matching_report(mr)
-
-    # Actions
-    if actions_payload:
-        run_report["actions"] = actions_payload.get("actions", [])
-        run_report["actions_path"] = actions_path
-
-    # Absent concepts da template base
-    if template_base_path:
-        run_report["absent_concepts"] = build_absent_concepts(
-            template_base_path=template_base_path,
-            mr=mr,
-            actions_payload=actions_payload,
+        run_report = build_run_report(
+            run_id=run_id,
+            input_path=input_path,
+            output_path=output_path,
+            patch_path=patch_path if patch_path else "",
+            diff=diff,
+            artifact_type=artifact_type,
         )
-        run_report["template_base_path"] = template_base_path
+        run_report["execution"]["committed"] = False
+        run_report["execution"]["status"] = "validate_only"
 
-    # scrittura run report
-    report_path = run_dir / "run_report.json"
-    with open(report_path, "w", encoding="utf-8") as f:
-        json.dump(run_report, f, indent=2, ensure_ascii=False)
+        if analysis:
+            run_report["analysis"] = analysis
+            run_report["analysis"]["matching_path"] = matching_path
 
+        if mr:
+            run_report["matched_variables"] = extract_matched_variables_from_matching_report(mr)
+
+        if actions_payload:
+            run_report["actions"] = actions_payload.get("actions", [])
+            run_report["actions_path"] = actions_path
+
+        if template_base_path:
+            run_report["absent_concepts"] = build_absent_concepts(
+                template_base_path=template_base_path,
+                mr=mr,
+                actions_payload=actions_payload,
+            )
+            run_report["template_base_path"] = template_base_path
+
+        report_path = run_dir / "run_report.json"
+        with open(report_path, "w", encoding="utf-8") as f:
+            json.dump(run_report, f, indent=2, ensure_ascii=False)
+        return
+    
+    # validate_only = false --> produce report + esegue commit 
+    else:
+        # commit file con patch
+        if not no_change and not dry_run_only:
+            commit_result = upsert_fn(
+                path=input_path,
+                patch=template_patch,
+                dry_run=False,
+            )
+            output_path = commit_result.get("output_path")
+        else:
+            output_path = input_path
+
+        # run report
+        run_report = build_run_report(
+            run_id=run_id,
+            input_path=input_path,
+            output_path=output_path,
+            patch_path=patch_path if patch_path else "",
+            diff=diff,
+            artifact_type=artifact_type,
+        )
+
+        run_report["execution"]["committed"] = (not no_change and not dry_run_only)
+        run_report["execution"]["status"] = (
+            "success" if (not dry_run_only and not no_change)
+            else ("no_change" if no_change else "dry_run_only")
+        )
+
+        # Analysis da matching report
+        if analysis:
+            run_report["analysis"] = analysis
+            run_report["analysis"]["matching_path"] = matching_path
+
+        # estrae Matched variables da matching report
+        if mr:
+            run_report["matched_variables"] = extract_matched_variables_from_matching_report(mr)
+
+        # Actions
+        if actions_payload:
+            run_report["actions"] = actions_payload.get("actions", [])
+            run_report["actions_path"] = actions_path
+
+        # Absent concepts da template base
+        if template_base_path:
+            run_report["absent_concepts"] = build_absent_concepts(
+                template_base_path=template_base_path,
+                mr=mr,
+                actions_payload=actions_payload,
+            )
+            run_report["template_base_path"] = template_base_path
+
+        # scrittura run report
+        report_path = run_dir / "run_report.json"
+        with open(report_path, "w", encoding="utf-8") as f:
+            json.dump(run_report, f, indent=2, ensure_ascii=False)
 
 if __name__ == "__main__":
     choose = int(input("1--> diz. 2--> kb. 3--> template. 4--> template_base: "))
