@@ -5,12 +5,12 @@ import argparse
 
 SECTION_TO_CATEGORY = {
     "ContinuosReads": "measurement",
-    "ContinuousReads": "measurement",
     "Parameters": "parameter",
     "Alarms": "alarm",
     "Warnings": "warning",
     "Commands": "command",
     "VirtualVariables": "virtual_variable",
+    "DataloggerPen": "dataloggerpen"
 }
 
 def load_json(path: str) -> Any:

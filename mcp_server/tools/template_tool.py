@@ -139,7 +139,7 @@ def template_apply_patch(ctx: MCPContext, path: str, patch: Dict[str, Any], dry_
             if source_key not in section_values:
                 raise ValueError(f"Source key not found: {source_key} in {section}")
             
-            # set fields
+            # set fields --> aggiunge la patch di set_fields
             for k, v in fields.items():
                 section_values[source_key][k] = v
 

@@ -127,18 +127,16 @@ def validate_actions_against_template_base(actions_payload: dict, template_base_
         cat = tgt.get("category")
         sem = tgt.get("semantic_category")
 
-        if cid not in canon:
-            errors.append(f"Unknown_concept: {cid}")
+        info = canon.get(cid)
+        if not info:
+            errors.append(f"unknown_concept_id: {cid}")
             continue
-            
-        canon_cat = canon[cid].get("category")
-        canon_sem = canon[cid].get("semantic_category")
 
-        if cat != canon_cat:    # categoria actions != categoria template base
-            errors.append(f"category_mismatch: {cid} action={cat} canon={canon_cat}") 
-        if sem != canon_sem:    # categoria semantica actions != categoria semantica template base
-            errors.append(f"semantic_category_mismatch: {cid} action={sem} canon={canon_sem}")
-        
+        if cat != info.get("category"):
+            errors.append(f"category_mismatch: {cid} action={cat} canon={info.get('category')}")
+        if sem != info.get("semantic_category"):
+            errors.append(f"semantic_category_mismatch: {cid} action={sem} canon={info.get('semantic_category')}")
+
     return errors
 
 def actions_to_template_patch(actions_payload: dict) -> dict:
@@ -448,14 +446,16 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
         run_report["analysis"]["matching_path"] = matching_path
         run_report["matched_variables"] = extract_matched_variables_from_matching_report(mr)
 
+    if template_base_path and actions_payload:
+        errors = validate_actions_against_template_base(actions_payload, template_base_path)
+        if errors:
+            raise ValueError("; ".join(errors))
+
     if actions_payload:
         run_report["actions"] = actions_payload.get("actions", [])
         run_report["actions_path"] = actions_path
 
     if template_base_path:
-        errors = validate_actions_against_template_base(actions_payload, template_base_path)
-        if errors:
-            raise ValueError("; ".join(errors))
         run_report["absent_concepts"] = build_absent_concepts(
             template_base_path=template_base_path,
             mr=mr if matching_path else None,
