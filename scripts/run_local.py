@@ -1,6 +1,6 @@
 from mcp_server.server import dictionary_upsert, kb_upsert_mapping, template_apply_patch
 from mcp_server.core import MCPContext
-from src.validator.validator import validate_before_commit_template, validate_actions_against_template_base, actions_to_template_patch, load_template_base
+from src.validator.validator import validate_before_commit_template, validate_before_commit_generic, load_template_base, canonical_map
 
 import json
 from pathlib import Path
@@ -44,16 +44,6 @@ def generate_run_id() -> str:
     ts = datetime.now(TIMEZONE).strftime("%Y%m%d_%H%M%S")
     return f"run{ts}"
 
-def extract_concepts_from_template_base(tb: dict) -> dict:
-    # estrae concetti da template base {concept_id : category}
-
-    out = {}
-    for cat in tb.get("categories", []):
-        cat_id = cat.get("id")
-        for c in cat.get("concepts", []):
-            out[c.get("concept_id")] = cat_id
-    return out
-
 def extract_present_concepts(mr: dict | None, actions_payload: dict | None) -> set[str]:
     # estrae i concetti che sono presenti
 
@@ -70,18 +60,18 @@ def extract_present_concepts(mr: dict | None, actions_payload: dict | None) -> s
     return present
 
 def build_absent_concepts(template_base_path: str, mr: dict | None, actions_payload: dict | None) -> list[dict]:
-    # ritorna tutti i concetti che sono nel tb ma che non ci sono nel template di riferimento
+    # ritorna tutti i concetti che sono nel template base ma che non ci sono nel template di riferimento
 
-    tb = load_template_base(template_base_path)
-    expected = extract_concepts_from_template_base(tb)
+    canon = canonical_map(template_base_path)
     present = extract_present_concepts(mr, actions_payload)
 
     absent = []
-    for concept_id, category in expected.items():
+    for concept_id, info in canon.items():
         if concept_id not in present:
             absent.append({
                 "concept_id": concept_id,
-                "category": category,
+                "category": info.get("category"),
+                "semantic_category": info.get("semantic_category"),
                 "reason": "Nessuna read presente con descrizione compatibile",
             })
     return absent
@@ -300,7 +290,12 @@ def build_run_report(run_id: str, input_path: str, output_path: str, patch_path:
     }
 
 def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
-    # --- setup run ---
+    
+    GENERIC_VALIDATORS = {
+    "dictionary": "dictionary_patch",
+    "kb": "kb_patch",
+    "template_base": "template_base_patch",
+    }
     run_id = generate_run_id()
     run_dir = RUNS_ROOT / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -330,7 +325,14 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
 
     # patch da applicare
     template_patch = None
+
     validation_block = None
+    file_patch = None 
+
+    # se esiste, carica patch da file
+    if patch_path:
+        with open(patch_path, "r", encoding="utf-8") as f:
+            file_patch = json.load(f)
 
     # chiamata a validator per template reale
     if artifact_type == "template" and actions_path:
@@ -375,6 +377,32 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
         template_patch = v["patch"]
         validated_preview = v.get("preview")
         validated_diff = v.get("diff")
+
+    # chiamata a validator per kb | template base | dictionary
+    if artifact_type in GENERIC_VALIDATORS:
+        ctx = MCPContext(repo_root=".")
+        v = validate_before_commit_generic(
+            ctx=ctx,
+            schema_id=GENERIC_VALIDATORS[artifact_type],
+            patch_payload=file_patch,
+            input_path=input_path,
+            upsert_fn=upsert_fn,
+            diff_fn=diff_fn,
+            artifact_type=artifact_type,
+            template_base_path=template_base_path,
+        )
+        if not v["ok"]:
+            raise ValueError("; ".join(v.get("errors", [])))
+
+        template_patch = v["patch"]
+        validated_preview = v.get("preview")
+        validated_diff = v.get("diff")
+        validation_block = {
+            "status": "ok" if v["ok"] else "error",
+            "errors": v.get("errors", []),
+            "warnings": v.get("warnings", []),
+            "stage": v.get("stage"),
+        }
 
     if actions_payload:
         validation_block = {
