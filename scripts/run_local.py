@@ -5,6 +5,7 @@ from src.validator.validator import validate_before_commit_template, validate_be
 import json
 from pathlib import Path
 from datetime import datetime, timezone, timedelta
+import re
 
 TIMEZONE = timezone(timedelta(hours=1))
 PATCH_ROOT = Path("mcp_server/patch")
@@ -34,7 +35,7 @@ ARTIFACTS = {
         "matching_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v0.1.json",
         "actions_path": "mcp_server/patch/template_real/manual_actions.json",
         "template_base_path": "data/template_base_v0.1.json",
-        "validate_only": True,
+        "validate_only": None,
     }
 }
 
@@ -43,6 +44,22 @@ def generate_run_id() -> str:
 
     ts = datetime.now(TIMEZONE).strftime("%Y%m%d_%H%M%S")
     return f"run{ts}"
+
+def schema_version_from_path(schema_path: str) -> str:
+    # restituisce la versione dello schema
+
+    m = re.search(r"_v(\d+\.\d+)\.schema\.json$", schema_path)
+    return f"v{m.group(1)}" if m else None
+
+def build_schema_versions(ctx: MCPContext, used_schema_ids: list[str]) -> dict:
+    # ritorna le versioni di tutti gli schemi
+
+    out = {}
+    for sid in used_schema_ids:
+        path = ctx.schema_map.get(sid)
+        if path:
+            out[sid] = schema_version_from_path(path)
+    return out
 
 def extract_present_concepts(mr: dict | None, actions_payload: dict | None) -> set[str]:
     # estrae i concetti che sono presenti
@@ -260,33 +277,36 @@ def summarize_template_base_diff(before: dict, after: dict) -> list[str]:
 
     return summary
 
-def build_run_report(run_id: str, input_path: str, output_path: str, patch_path: str, diff: list[str], artifact_type: str) -> dict:
-    # costruzione del report
+def build_run_report(run_id: str, artifact_type: str, input_path: str, output_path: str, diff: list[str], 
+    schema_versions: dict, committed: bool, status: str, validation_block: dict | None, mr: dict | None,
+    dictionary_payload: dict | None,kb_payload: dict | None, template_base_path: str | None, template_base_version: str | None) -> dict:
 
-    ops_count = None
-    if patch_path:
-        ops_count = len(json.load(open(patch_path, "r", encoding="utf-8")).get("operations", []))
-        
     return {
+        "schema_versions": schema_versions,
         "run_id": run_id,
         "timestamp": datetime.now(TIMEZONE).isoformat(),
+        "template_guid": mr.get("template_guid") if mr else None,
+        "source_files": {
+            "template_path": input_path if artifact_type == "template" else None,
+            "dictionary_path": ARTIFACTS["dictionary"]["input_path"],
+            "dictionary_version": dictionary_payload.get("dictionary_version") if dictionary_payload else None,
+            "kb_path": ARTIFACTS["kb"]["input_path"],
+            "kb_version": kb_payload.get("kb_version") if kb_payload else None,
+            "template_base_path": template_base_path,
+            "template_base_version": template_base_version,
+        },
         "target": {
             "artifact_type": artifact_type,
             "input_path": input_path,
             "output_path": output_path,
         },
-        "patch": {
-            "patch_path": patch_path,
-            "operations_count": ops_count,
-        },
         "execution": {
             "dry_run": True,
-            "committed": True,
-            "status": "success",
+            "committed": committed,
+            "status": status,
         },
-        "diff_summary": {
-            "changed_paths": diff,
-        },
+        "validation": validation_block,
+        "diff_summary": {"changed_paths": diff},
     }
 
 def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
@@ -305,7 +325,6 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     matching_path = cfg.get("matching_path") # matchign report
     actions_path = cfg.get("actions_path")  # patch per template reale
     template_base_path = cfg.get("template_base_path") # template base
-    validate_only = cfg.get("validate_only", False) # true --> scrive solo report
 
     analysis = {}
     actions_payload = None
@@ -314,6 +333,12 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     # Sovrascritti da validator
     validated_preview = None
     validated_diff = None
+
+    # definizione validate only. True --> report senza commit; False --> report e commit
+    if artifact_type == "template" and cfg.get("validate_only") is None:
+        validate_only = True
+    else:
+        validate_only = cfg.get("validate_only", False)
 
     # carica e valida matching report
     if matching_path:
@@ -446,105 +471,93 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     no_change = (len(diff) == 0)
 
     # validate_only = True --> produce report senza commit 
-    if validate_only:
+    committed = False
+    status = "validate_only" if validate_only else ("no_change" if no_change else "success")
+
+    if not validate_only and not no_change and not dry_run_only:
+        commit_result = upsert_fn(
+            path=input_path,
+            patch=template_patch,
+            dry_run=False,
+        )
+        output_path = commit_result.get("output_path")
+        committed = True
+    else:
         output_path = input_path
 
-        run_report = build_run_report(
-            run_id=run_id,
-            input_path=input_path,
-            output_path=output_path,
-            patch_path=patch_path if patch_path else "",
-            diff=diff,
-            artifact_type=artifact_type,
-        )
-        
+    ctx = MCPContext(repo_root=".")
+    used_schema_ids = []
+
+    if artifact_type == "template":
+        used_schema_ids += ["patch_actions_template", "template_patch"]
+    if artifact_type == "dictionary":
+        used_schema_ids += ["dictionary_patch"]
+    if artifact_type == "kb":
+        used_schema_ids += ["kb_patch"]
+    if artifact_type == "template_base":
+        used_schema_ids += ["template_base_patch"]
+    if matching_path:
+        used_schema_ids += ["matching_report"]
+
+    schema_versions = build_schema_versions(ctx, used_schema_ids)
+
+    dict_payload = None 
+    kb_payload = None 
+    if "dictionary" in ARTIFACTS and ARTIFACTS["dictionary"].get("input_path"):
+        with open(ARTIFACTS["dictionary"]["input_path"], "r", encoding="utf-8") as f:
+            dict_payload = json.load(f)
+    if "kb" in ARTIFACTS and ARTIFACTS["kb"].get("input_path"):
+        with open(ARTIFACTS["kb"]["input_path"], "r", encoding="utf-8") as f:
+            kb_payload = json.load(f)
+
+    tb_version = None
+    if template_base_path:
+        tb_payload = load_template_base(template_base_path)
+        tb_version = tb_payload.get("template_base_version")
+
+    # build report
+    run_report = build_run_report(
+        run_id=run_id,
+        artifact_type=artifact_type,
+        input_path=input_path,
+        output_path=output_path,
+        diff=diff,
+        schema_versions=schema_versions,
+        committed=committed,
+        status=status,
+        validation_block=validation_block,
+        mr=mr,
+        dictionary_payload=dict_payload,
+        kb_payload=kb_payload,
+        template_base_path=template_base_path,
+        template_base_version=tb_version,
+    )
+
+    run_report["execution"]["committed"] = committed
+    run_report["execution"]["status"] = status
+
+    if validation_block:
         run_report["validation"] = validation_block
-
-        run_report["execution"]["committed"] = False
-        run_report["execution"]["status"] = "validate_only"
-
-        if analysis:
-            run_report["analysis"] = analysis
-            run_report["analysis"]["matching_path"] = matching_path
-
-        if mr:
-            run_report["matched_variables"] = extract_matched_variables_from_matching_report(mr)
-
-        if actions_payload:
-            run_report["actions"] = actions_payload.get("actions", [])
-            run_report["actions_path"] = actions_path
-
-        if template_base_path:
-            run_report["absent_concepts"] = build_absent_concepts(
-                template_base_path=template_base_path,
-                mr=mr,
-                actions_payload=actions_payload,
-            )
-            run_report["template_base_path"] = template_base_path
-
-        report_path = run_dir / "run_report.json"
-        with open(report_path, "w", encoding="utf-8") as f:
-            json.dump(run_report, f, indent=2, ensure_ascii=False)
-        return
-    
-    # validate_only = false --> produce report + esegue commit 
-    else:
-        # commit file con patch
-        if not no_change and not dry_run_only:
-            commit_result = upsert_fn(
-                path=input_path,
-                patch=template_patch,
-                dry_run=False,
-            )
-            output_path = commit_result.get("output_path")
-        else:
-            output_path = input_path
-
-        # run report
-        run_report = build_run_report(
-            run_id=run_id,
-            input_path=input_path,
-            output_path=output_path,
-            patch_path=patch_path if patch_path else "",
-            diff=diff,
-            artifact_type=artifact_type,
+    if analysis:
+        run_report["analysis"] = analysis
+        run_report["analysis"]["matching_path"] = matching_path
+    if mr:
+        run_report["matched_variables"] = extract_matched_variables_from_matching_report(mr)
+    if actions_payload:
+        run_report["actions"] = actions_payload.get("actions", [])
+        run_report["actions_path"] = actions_path
+    if template_base_path:
+        run_report["absent_concepts"] = build_absent_concepts(
+            template_base_path=template_base_path,
+            mr=mr,
+            actions_payload=actions_payload,
         )
 
-        run_report["validation"] = validation_block
+    # write report
+    report_path = run_dir / "run_report.json"
+    with open(report_path, "w", encoding="utf-8") as f:
+        json.dump(run_report, f, indent=2, ensure_ascii=False)
 
-        run_report["execution"]["committed"] = (not no_change and not dry_run_only)
-        run_report["execution"]["status"] = (
-            "success" if (not dry_run_only and not no_change)
-            else ("no_change" if no_change else "dry_run_only")
-        )
-
-        # Analysis da matching report
-        if analysis:
-            run_report["analysis"] = analysis
-            run_report["analysis"]["matching_path"] = matching_path
-
-        # estrae Matched variables da matching report
-        if mr:
-            run_report["matched_variables"] = extract_matched_variables_from_matching_report(mr)
-
-        # Actions
-        if actions_payload:
-            run_report["actions"] = actions_payload.get("actions", [])
-            run_report["actions_path"] = actions_path
-
-        # Absent concepts da template base
-        if template_base_path:
-            run_report["absent_concepts"] = build_absent_concepts(
-                template_base_path=template_base_path,
-                mr=mr,
-                actions_payload=actions_payload,
-            )
-            run_report["template_base_path"] = template_base_path
-
-        # scrittura run report
-        report_path = run_dir / "run_report.json"
-        with open(report_path, "w", encoding="utf-8") as f:
-            json.dump(run_report, f, indent=2, ensure_ascii=False)
 
 if __name__ == "__main__":
     choose = int(input("1--> diz. 2--> kb. 3--> template. 4--> template_base: "))
