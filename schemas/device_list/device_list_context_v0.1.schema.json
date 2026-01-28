@@ -1,0 +1,71 @@
+{
+  "$defs": {
+    "DeviceListContextItem": {
+      "additionalProperties": true,
+      "properties": {
+        "TemplateGUID": {
+          "title": "Templateguid",
+          "type": "string"
+        },
+        "IDPTD": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Idptd"
+        },
+        "type_fam_generated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Type Fam Generated"
+        },
+        "device_role_generated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Device Role Generated"
+        },
+        "enum_generated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Enum Generated"
+        }
+      },
+      "required": [
+        "TemplateGUID"
+      ],
+      "title": "DeviceListContextItem",
+      "type": "object"
+    }
+  },
+  "items": {
+    "$ref": "#/$defs/DeviceListContextItem"
+  },
+  "title": "DeviceListContext",
+  "type": "array"
+}

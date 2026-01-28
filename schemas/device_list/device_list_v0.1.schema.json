@@ -1,0 +1,71 @@
+{
+  "$defs": {
+    "DeviceListItem": {
+      "additionalProperties": true,
+      "properties": {
+        "TemplateGUID": {
+          "title": "Templateguid",
+          "type": "string"
+        },
+        "IDPTD": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Idptd"
+        },
+        "type_fam": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Type Fam"
+        },
+        "enum": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Enum"
+        },
+        "device_role": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Device Role"
+        }
+      },
+      "required": [
+        "TemplateGUID"
+      ],
+      "title": "DeviceListItem",
+      "type": "object"
+    }
+  },
+  "items": {
+    "$ref": "#/$defs/DeviceListItem"
+  },
+  "title": "DeviceList",
+  "type": "array"
+}

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, RootModel
 from typing import List, Optional, Dict, Any, Literal, Union
 import json
 from pathlib import Path
@@ -278,6 +278,31 @@ class KBPatch(BaseModel):
     target: Literal["kb"]
     operations: List[Union[KBPatchAddRule, KBPatchUpdateRule]]
 
+#---------DEVICE LIST--------------------
+class DeviceListItem(BaseModel):
+    TemplateGUID: str 
+    IDPTD: Optional[str] = None 
+    type_fam: Optional[str] = None 
+    enum: Optional[str] = None 
+    device_role: Optional[str] = None 
+
+    model_config = {"extra": "allow"}
+
+class DeviceList(RootModel[List[DeviceListItem]]):
+    pass
+
+class DeviceListContextItem(BaseModel):
+    TemplateGUID: str 
+    IDPTD: Optional[str] = None 
+    type_fam_generated: Optional[str] = None
+    device_role_generated: Optional[str] = None
+    enum_generated: Optional[str] = None
+
+    model_config = {"extra": "allow"}
+
+class DeviceListContext(RootModel[List[DeviceListContextItem]]):
+    pass
+
 # GENERAZIONI
 SCHEMA_OUT = {
     "template/template_patch_v0.1.schema.json": TemplatePatch,
@@ -290,6 +315,8 @@ SCHEMA_OUT = {
     "kb/kb_v0.1.schema.json": KB,
     "kb/kb_patch_v0.1.schema.json": KBPatch,
     "patch_actions/patch_actions_template_v0.1.schema.json": PatchActionsTemplate,
+    "device_list/device_list_v0.1.schema.json": DeviceList,
+    "device_list/device_list_context_v0.1.schema.json": DeviceListContext,
 }
 
 def write_schema(name: str, model: BaseModel, out_dir: Path) -> None:
