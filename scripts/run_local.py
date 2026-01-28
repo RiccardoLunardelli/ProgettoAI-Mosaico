@@ -480,7 +480,7 @@ def build_report_context(artifact_type, matching_path, template_base_path):
     kb_payload = None 
     if "dictionary" in ARTIFACTS and ARTIFACTS["dictionary"].get("input_path"):
         dict_payload = load_json(ARTIFACTS["dictionary"]["input_path"])
-    if "kb" in ARTIFACTS and ARTIFACTS["kb"].get("input-path"):
+    if "kb" in ARTIFACTS and ARTIFACTS["kb"].get("input_path"):
         kb_payload = load_json(ARTIFACTS["kb"]["input_path"])
 
     tb_version = None 
@@ -538,6 +538,23 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
         return
     
     artifact, preview, diff = compute_diff(input_path, template_patch, validated_preview, validated_diff, upsert_fn, diff_fn)
+
+    approve_commit = False 
+    print("\n--- DRY-RUN DIFF ---")
+    for d in diff:
+        print("-", d)
+
+    if actions_payload:
+        print("\n--- ACTIONS ---")
+        for a in actions_payload.get("actions", []):
+            print(f"- {a.get('type')} {a.get('section')}/{a.get('source_key')} -> {a.get('target', {}).get('concept_id')}")
+
+    response = input("Commit? (y/n): ").strip().lower()
+    approve_commit = (response == "y")
+
+    if not approve_commit:
+        validate_only = True
+
     output_path, committed, status, _ = apply_commit(input_path, template_patch, diff, validate_only, upsert_fn)
 
     schema_versions, dict_payload, kb_payload, tb_version = build_report_context(artifact_type, matching_path, template_base_path)
@@ -560,6 +577,17 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
         template_base_version=tb_version,
     )
 
+    if status == "validation_error":
+        policy_outcome = "rejected"
+    elif status == "validated_only":
+        policy_outcome = "needs_review"
+    elif status == "no_change":
+        policy_outcome = "no_change"
+    else:
+        policy_outcome = "approved"
+
+    run_report["policy_outcome"] = policy_outcome
+        
     if analysis:
         run_report["analysis"] = analysis
         run_report["analysis"]["matching_path"] = matching_path
