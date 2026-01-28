@@ -334,6 +334,10 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
         with open(patch_path, "r", encoding="utf-8") as f:
             file_patch = json.load(f)
 
+    # actions_path deve essere obbligatorio per i template reali
+    if artifact_type == "template" and not actions_path:
+        raise ValueError("actions_path_required_for_template")
+
     # chiamata a validator per template reale
     if artifact_type == "template" and actions_path:
         with open(actions_path, "r", encoding="utf-8") as f:
