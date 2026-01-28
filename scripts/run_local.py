@@ -1,6 +1,6 @@
 from mcp_server.server import dictionary_upsert, kb_upsert_mapping, template_apply_patch
 from mcp_server.core import MCPContext
-from src.validator.validator import validate_before_commit_template, validate_before_commit_generic, load_template_base, canonical_map
+from src.validator.validator import validate_before_commit_template, validate_before_commit_generic, canonical_map, load_json
 
 import json
 from pathlib import Path
@@ -23,21 +23,42 @@ ARTIFACTS = {
         "input_path": "data/kb_v0.1.json",
         "patch_path": str(PATCH_ROOT / "kb" / "patch_manual_addkbrule.json"),
         "input_version": "v0.1",
+        "matching_path": "output_dir/matching_report_v0.1.json",
     },
     "template_base": {
         "input_path": "data/template_base_v0.1.json",
         "patch_path": str(PATCH_ROOT / "template" / "manual_patch_addbaseconc.json"),
         "input_version": "v0.1",
         "template_base_path": "data/template_base_v0.1.json",
+        "matching_path": "output_dir/matching_report_v0.1.json",
     },
     "template": {
         "input_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json",
         "matching_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v0.1.json",
         "actions_path": "mcp_server/patch/template_real/manual_actions.json",
         "template_base_path": "data/template_base_v0.1.json",
-        "validate_only": None,
+        "validate_only": True, # true --> test; false --> scrive
     }
 }
+
+
+def get_template_guid(input_path: str, mr: dict | None) -> str:
+    # 1) da template reale
+    try:
+        with open(input_path, "r", encoding="utf-8") as f:
+            tpl = json.load(f)
+        if "TemplateGuid" in tpl:
+            return tpl["TemplateGuid"]
+        if "TemplateGUID" in tpl:
+            return tpl["TemplateGUID"]
+    except Exception:
+        pass
+
+    # 2) da matching_report
+    if mr and mr.get("template_guid"):
+        return mr["template_guid"]   
+       
+    raise ValueError("template_guid_missing")
 
 def generate_run_id() -> str:
     # genera id della run
@@ -277,7 +298,7 @@ def summarize_template_base_diff(before: dict, after: dict) -> list[str]:
 
     return summary
 
-def build_run_report(run_id: str, artifact_type: str, input_path: str, output_path: str, diff: list[str], 
+def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str, output_path: str, diff: list[str], 
     schema_versions: dict, committed: bool, status: str, validation_block: dict | None, mr: dict | None,
     dictionary_payload: dict | None,kb_payload: dict | None, template_base_path: str | None, template_base_version: str | None) -> dict:
 
@@ -285,7 +306,7 @@ def build_run_report(run_id: str, artifact_type: str, input_path: str, output_pa
         "schema_versions": schema_versions,
         "run_id": run_id,
         "timestamp": datetime.now(TIMEZONE).isoformat(),
-        "template_guid": mr.get("template_guid") if mr else None,
+        "template_guid": get_template_guid(input_path, mr),
         "source_files": {
             "template_path": input_path if artifact_type == "template" else None,
             "dictionary_path": ARTIFACTS["dictionary"]["input_path"],
@@ -301,7 +322,7 @@ def build_run_report(run_id: str, artifact_type: str, input_path: str, output_pa
             "output_path": output_path,
         },
         "execution": {
-            "dry_run": True,
+            "dry_run_performed": True,
             "committed": committed,
             "status": status,
         },
@@ -309,105 +330,71 @@ def build_run_report(run_id: str, artifact_type: str, input_path: str, output_pa
         "diff_summary": {"changed_paths": diff},
     }
 
-def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
-    
-    GENERIC_VALIDATORS = {
-    "dictionary": "dictionary_patch",
-    "kb": "kb_patch",
-    "template_base": "template_base_patch",
-    }
-    run_id = generate_run_id()
-    run_dir = RUNS_ROOT / run_id
-    run_dir.mkdir(parents=True, exist_ok=True)
+def load_matching(matching_path: str | None) -> tuple[dict | None, dict]:
+    # carica e valida matching report + genera analysis
 
-    input_path = cfg["input_path"]
-    patch_path = cfg.get("patch_path")  # patch manuali
-    matching_path = cfg.get("matching_path") # matchign report
-    actions_path = cfg.get("actions_path")  # patch per template reale
-    template_base_path = cfg.get("template_base_path") # template base
-
+    mr = None 
     analysis = {}
-    actions_payload = None
-    mr = None
-
-    # Sovrascritti da validator
-    validated_preview = None
-    validated_diff = None
-
-    # definizione validate only. True --> report senza commit; False --> report e commit
-    if artifact_type == "template" and cfg.get("validate_only") is None:
-        validate_only = True
-    else:
-        validate_only = cfg.get("validate_only", False)
-
-    # carica e valida matching report
     if matching_path:
-        with open(matching_path, "r", encoding="utf-8") as f: 
-            mr = json.load(f)
+        mr = load_json(matching_path)
         ctx = MCPContext(repo_root=".")
         ctx.schema_validate("matching_report", mr)
         analysis = extract_analysis_from_matching_report(mr)
+    return mr, analysis
 
-    # patch da applicare
-    template_patch = None
+def build_patch_and_validation(cfg: dict, artifact_type: str, upsert_fn, diff_fn):
+    # costruisce la patch 
 
-    validation_block = None
-    file_patch = None 
+    input_path = cfg["input_path"]
+    patch_path = cfg.get("patch_path")  # patch manuali
+    actions_path = cfg.get("actions_path")  # patch per template reale
+    template_base_path = cfg.get("template_base_path") # template base
 
-    # se esiste, carica patch da file
+    file_patch = None
     if patch_path:
-        with open(patch_path, "r", encoding="utf-8") as f:
-            file_patch = json.load(f)
+        file_patch = load_json(patch_path)
+    
+    template_patch = None 
+    validated_preview = None
+    validated_diff = None
+    validation_block = None
+    actions_payload = None
 
-    # actions_path deve essere obbligatorio per i template reali
-    if artifact_type == "template" and not actions_path:
-        raise ValueError("actions_path_required_for_template")
-
-    # chiamata a validator per template reale
+    # template actions
     if artifact_type == "template" and actions_path:
-        with open(actions_path, "r", encoding="utf-8") as f:
-            actions_payload = json.load(f)
+        actions_payload = load_json(actions_path)
 
         if not template_base_path:
             raise ValueError("template_base_missing")
-
+        
         ctx = MCPContext(repo_root=".")
         v = validate_before_commit_template(
-            ctx=ctx,
-            actions_payload=actions_payload,
-            template_base_path=template_base_path,
-            input_path=input_path,
-            upsert_fn=upsert_fn,
-            diff_fn=diff_fn,
+            ctx=ctx, 
+            actions_payload=actions_payload, 
+            template_base_path=template_base_path, 
+            input_path=input_path, 
+            upsert_fn=upsert_fn, 
+            diff_fn=diff_fn
         )
-        # crea report anche in caso di errore
-        if not v["ok"]:
-            run_report = build_run_report(
-            run_id=run_id,
-            input_path=input_path,
-            output_path=input_path,
-            patch_path=patch_path if patch_path else "",
-            diff=v.get("diff", []),
-            artifact_type=artifact_type,
-            )
-            run_report["execution"]["committed"] = False
-            run_report["execution"]["status"] = "validation_error"
-            run_report["validation"] = {
-                "status": "error",
-                "errors": v.get("errors", []),
-                "warnings": v.get("warnings", []),
-                "stage": v.get("stage"),
-            }
-            report_path = run_dir / "run_report.json"
-            with open(report_path, "w", encoding="utf-8") as f:
-                json.dump(run_report, f, indent=2, ensure_ascii=False)
-            return
 
+        if not v["ok"]:
+            return None, None, None, None, actions_payload, v
+        
         template_patch = v["patch"]
         validated_preview = v.get("preview")
         validated_diff = v.get("diff")
+        validation_block = {
+            "status": "ok",
+            "errors": v.get("errors", []),
+            "warnings": v.get("warnings", []),
+            "stage": v.get("stage"),
+        }
 
-    # chiamata a validator per kb | template base | dictionary
+    GENERIC_VALIDATORS = {
+        "dictionary": "dictionary_patch",
+        "kb": "kb_patch",
+        "template_base": "template_base_patch",
+    }
     if artifact_type in GENERIC_VALIDATORS:
         ctx = MCPContext(repo_root=".")
         v = validate_before_commit_generic(
@@ -433,90 +420,130 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
             "stage": v.get("stage"),
         }
 
-    if actions_payload:
-        validation_block = {
-            "status": "ok" if v["ok"] else "error",
-            "errors": v.get("errors", []),
-            "warnings": v.get("warnings", []),
-            "stage": v.get("stage"),
-        }
-
-    if template_patch is None and patch_path:
-        with open(patch_path, "r", encoding="utf-8") as f:
-            template_patch = json.load(f)
+    if template_patch is None and file_patch:
+        template_patch = file_patch
 
     if template_patch is None:
         raise ValueError("template_patch_missing: provide actions_path or patch_path")
 
-    # load del file in input
-    with open(input_path, "r", encoding="utf-8") as f:
-        artifact = json.load(f)
+    return template_patch, validation_block, validated_preview, validated_diff, actions_payload, None
 
-    # True --> no commit ; False --> si commit
-    dry_run_only = False
+def compute_diff(input_path, template_patch, validated_preview, validated_diff, upsert_fn, diff_fn):
+    # genera diff
 
-    # dry run
+    artifact = load_json(input_path)
+
     if validated_preview is not None and validated_diff is not None:
-        preview = validated_preview
-        diff = validated_diff
-    else:
-        dry_run_result = upsert_fn(
-            path=input_path,
-            patch=template_patch,
-            dry_run=True,
-        )
-        preview = dry_run_result.get("preview")
-        diff = diff_fn(artifact, preview)
+        return artifact, validated_preview, validated_diff
+
+    dry_run_result = upsert_fn(path=input_path, patch=template_patch, dry_run=True)
+    preview = dry_run_result.get("preview")
+    diff = diff_fn(artifact, preview)
+
+    return artifact, preview, diff
+
+def apply_commit(input_path, template_patch, diff, validate_only, upsert_fn):
+    # fa il commit nel caso che validate_only e no_change = False
 
     no_change = (len(diff) == 0)
+    committed = False 
+    status = "validated_only" if validate_only else ("no_change" if no_change else "success")
 
-    # validate_only = True --> produce report senza commit 
-    committed = False
-    status = "validate_only" if validate_only else ("no_change" if no_change else "success")
-
-    if not validate_only and not no_change and not dry_run_only:
-        commit_result = upsert_fn(
-            path=input_path,
-            patch=template_patch,
-            dry_run=False,
-        )
+    if not validate_only and not no_change:
+        commit_result = upsert_fn(path=input_path, patch=template_patch, dry_run=False)
         output_path = commit_result.get("output_path")
         committed = True
     else:
         output_path = input_path
+    
+    return output_path, committed, status, no_change
+
+def build_report_context(artifact_type, matching_path, template_base_path):
+    # salva le versioni degli schemi, dizionario / kb e la versione del template_base
 
     ctx = MCPContext(repo_root=".")
-    used_schema_ids = []
-
-    if artifact_type == "template":
-        used_schema_ids += ["patch_actions_template", "template_patch"]
-    if artifact_type == "dictionary":
-        used_schema_ids += ["dictionary_patch"]
-    if artifact_type == "kb":
-        used_schema_ids += ["kb_patch"]
-    if artifact_type == "template_base":
-        used_schema_ids += ["template_base_patch"]
+    used = []
     if matching_path:
-        used_schema_ids += ["matching_report"]
+        used.append("matching_report")
+    if artifact_type == "template":
+        used += ["patch_actions_template", "template_patch"]
+    if artifact_type == "dictionary":
+        used.append("dictionary_patch")
+    if artifact_type == "kb":
+        used.append("kb_patch")
+    if artifact_type == "template_base":
+        used.append("template_base_patch")
 
-    schema_versions = build_schema_versions(ctx, used_schema_ids)
+    schema_versions = build_schema_versions(ctx, used)
 
     dict_payload = None 
     kb_payload = None 
     if "dictionary" in ARTIFACTS and ARTIFACTS["dictionary"].get("input_path"):
-        with open(ARTIFACTS["dictionary"]["input_path"], "r", encoding="utf-8") as f:
-            dict_payload = json.load(f)
-    if "kb" in ARTIFACTS and ARTIFACTS["kb"].get("input_path"):
-        with open(ARTIFACTS["kb"]["input_path"], "r", encoding="utf-8") as f:
-            kb_payload = json.load(f)
+        dict_payload = load_json(ARTIFACTS["dictionary"]["input_path"])
+    if "kb" in ARTIFACTS and ARTIFACTS["kb"].get("input-path"):
+        kb_payload = load_json(ARTIFACTS["kb"]["input_path"])
 
-    tb_version = None
+    tb_version = None 
     if template_base_path:
-        tb_payload = load_template_base(template_base_path)
-        tb_version = tb_payload.get("template_base_version")
+        tb_version = load_json(template_base_path).get("template_base_version")
 
-    # build report
+    return schema_versions, dict_payload, kb_payload, tb_version
+
+def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
+    # orchestrator
+    
+    run_id = generate_run_id()
+    run_dir = RUNS_ROOT / run_id
+    run_dir.mkdir(parents=True, exist_ok=True)
+
+    input_path = cfg["input_path"]
+    matching_path = cfg.get("matching_path") # matchign report
+    actions_path = cfg.get("actions_path")  # patch per template reale
+    template_base_path = cfg.get("template_base_path") # template base
+    validate_only = cfg.get("validate_only", False)
+
+    if artifact_type == "template" and not actions_path:
+        raise ValueError("actions_path_required_for_template")
+    
+    mr, analysis = load_matching(matching_path)
+
+    template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = build_patch_and_validation(cfg, artifact_type, upsert_fn, diff_fn)
+
+    if validation_error:
+        run_report = build_run_report(
+            cfg=cfg,
+            run_id=run_id,
+            artifact_type=artifact_type,
+            input_path=input_path,
+            output_path=input_path,
+            diff=validation_error.get("diff", []),
+            schema_versions={},
+            committed=False,
+            status="validation_error",
+            validation_block={
+                "status": "error",
+                "errors": validation_error.get("errors", []),
+                "warnings": validation_error.get("warnings", []),
+                "stage": validation_error.get("stage"),
+            },
+            mr=mr,
+            dictionary_payload=None,
+            kb_payload=None,
+            template_base_path=template_base_path,
+            template_base_version=load_json(template_base_path).get("template_base_version") if template_base_path else None,
+        )
+        report_path = run_dir / "run_report.json"
+        with open(report_path, "w", encoding="utf-8") as f:
+            json.dump(run_report, f, indent=2, ensure_ascii=False)
+        return
+    
+    artifact, preview, diff = compute_diff(input_path, template_patch, validated_preview, validated_diff, upsert_fn, diff_fn)
+    output_path, committed, status, _ = apply_commit(input_path, template_patch, diff, validate_only, upsert_fn)
+
+    schema_versions, dict_payload, kb_payload, tb_version = build_report_context(artifact_type, matching_path, template_base_path)
+
     run_report = build_run_report(
+        cfg=cfg,
         run_id=run_id,
         artifact_type=artifact_type,
         input_path=input_path,
@@ -533,11 +560,6 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
         template_base_version=tb_version,
     )
 
-    run_report["execution"]["committed"] = committed
-    run_report["execution"]["status"] = status
-
-    if validation_block:
-        run_report["validation"] = validation_block
     if analysis:
         run_report["analysis"] = analysis
         run_report["analysis"]["matching_path"] = matching_path
@@ -553,7 +575,6 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
             actions_payload=actions_payload,
         )
 
-    # write report
     report_path = run_dir / "run_report.json"
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(run_report, f, indent=2, ensure_ascii=False)

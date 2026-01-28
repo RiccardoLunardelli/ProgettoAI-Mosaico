@@ -3,6 +3,11 @@ from typing import Any, Dict
 
 from mcp_server.core import MCPContext
 
+def load_json(path: str) -> dict:
+    # carica json 
+
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 # -----VALIDATOR PER KB | TAMPLATE BASE | DICTIONARY---------------
 def validate_before_commit_generic(ctx: MCPContext, schema_id: str, patch_payload: dict, input_path: str, upsert_fn, diff_fn, artifact_type: str, template_base_path: str | None) -> dict:
@@ -19,7 +24,7 @@ def validate_before_commit_generic(ctx: MCPContext, schema_id: str, patch_payloa
         if artifact_type == "template_base":
             # auto-coerenza
             errors = validate_template_base_semantic(artifact)
-            
+
         if errors:
             return {"ok": False, "stage": "canonical_validation", "errors": errors, "warnings": []}
 
@@ -34,16 +39,10 @@ def validate_before_commit_generic(ctx: MCPContext, schema_id: str, patch_payloa
     return {"ok": True, "stage": "validated", "errors": [], "warnings": warnings, "patch": patch_payload, "diff": diff, "preview": preview}
 
 #-------TEMPLATE---------
-def load_template_base(path: str) -> dict:
-    # caricamento template base
-
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
-
 def canonical_map(template_base_path: str) -> dict:
     # ritorna cateogia e categoria semantica di ogni concetto del template base
 
-    tb = load_template_base(template_base_path)
+    tb = load_json(template_base_path)
     out = {}
     for cat in tb.get("categories", []):
         cat_id = cat.get("id")
