@@ -1,5 +1,6 @@
 from mcp_server.server import dictionary_upsert, kb_upsert_mapping, template_apply_patch
 from mcp_server.core import MCPContext
+from src.validator.validator import validate_before_commit_template, validate_actions_against_template_base, actions_to_template_patch, load_template_base
 
 import json
 from pathlib import Path
@@ -42,12 +43,6 @@ def generate_run_id() -> str:
 
     ts = datetime.now(TIMEZONE).strftime("%Y%m%d_%H%M%S")
     return f"run{ts}"
-
-def load_template_base(path: str) -> dict:
-    # caricamento template base
-
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
 
 def extract_concepts_from_template_base(tb: dict) -> dict:
     # estrae concetti da template base {concept_id : category}
@@ -107,66 +102,6 @@ def extract_matched_variables_from_matching_report(mr: dict) -> list[dict]:
                 "reason": item.get("technical_reason"),
             })
     return out
-
-def validate_actions_against_template_base(actions_payload: dict, template_base_path: str) -> list[str]:
-    # valida category + semantic_category contro il template base
-
-    tb = load_template_base(template_base_path)
-    canon = {}  # contiene tutti i concetti con categoria e categoria semantica del template base
-    for cat in tb.get("categories", []):
-        cat_id = cat.get("id")
-        for c in cat.get("concepts", []):
-            canon[c.get("concept_id")] = {
-                "category": cat_id,
-                "semantic_category": c.get("semantic_category"),
-            }
-    
-    errors = [] # contiene tutti i concetti, cateogira, categorie semantiche che non sono nel template base
-    for a in actions_payload.get("actions", []):
-        tgt = a.get("target", {})
-        cid = tgt.get("concept_id")
-        cat = tgt.get("category")
-        sem = tgt.get("semantic_category")
-
-        info = canon.get(cid)
-        if not info:
-            errors.append(f"unknown_concept_id: {cid}")
-            continue
-
-        if cat != info.get("category"):
-            errors.append(f"category_mismatch: {cid} action={cat} canon={info.get('category')}")
-        if sem != info.get("semantic_category"):
-            errors.append(f"semantic_category_mismatch: {cid} action={sem} canon={info.get('semantic_category')}")
-
-    return errors
-
-def actions_to_template_patch(actions_payload: dict) -> dict:
-    # estrae actions da patch_actions
-
-    ops = []
-    for a in actions_payload.get("actions", []):
-        set_fields = dict(a["patch"]["set_fields"])
-        target = a.get("target", {})
-
-        if target.get("concept_id"):
-            set_fields["ConceptId"] = target["concept_id"]
-        if target.get("category"):
-            set_fields["Category"] = target["category"]
-        if target.get("semantic_category"):
-            set_fields["SemanticCategory"] = target["semantic_category"]
-
-        ops.append({
-            "op": "set_fields",
-            "section": a["section"],
-            "source_key": a["source_key"],
-            "fields": set_fields,
-            "meta": {
-                "confidence": a.get("confidence"),
-                "reason": a.get("reason"),
-                "evidence": a.get("evidence"),
-            }
-        })
-    return {"target": "template", "operations": ops}
 
 def extract_analysis_from_matching_report(mr: dict) -> dict:
     # aggiunge nel report tutte le variabili che si riferiscono ad un concetto non ancora mappato
@@ -364,30 +299,6 @@ def build_run_report(run_id: str, input_path: str, output_path: str, patch_path:
         },
     }
 
-def validate_before_commit_template(ctx: MCPContext, actions_payload: dict, template_base_path: str, input_path: str, upsert_fn, diff_fn) -> dict:
-    # VALIDATOR --> valida schema, coerenza, esegue dry run
-
-    # schema-first
-    ctx.schema_validate("patch_actions_template", actions_payload)
-
-    # coerenza con template base
-    errors = validate_actions_against_template_base(actions_payload, template_base_path)
-    if errors:
-        return {"ok": False, "stage": "canonical_validation", "errors": errors}
-    
-    # conversione patch
-    template_patch = actions_to_template_patch(actions_payload)
-
-    with open(input_path, "r", encoding="utf-8") as f:
-        artifact = json.load(f)
-
-    # dry-run
-    dry_run_result = upsert_fn(path=input_path, patch=template_patch, dry_run=True)
-    preview = dry_run_result.get("preview")
-    diff = diff_fn(artifact, preview)
-
-    return {"ok": True, "stage": "validated", "errors": [], "patch": template_patch, "diff": diff, "preview": preview}
-
 def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     # --- setup run ---
     run_id = generate_run_id()
@@ -419,6 +330,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
 
     # patch da applicare
     template_patch = None
+    validation_block = None
 
     # chiamata a validator per template reale
     if artifact_type == "template" and actions_path:
@@ -437,12 +349,40 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
             upsert_fn=upsert_fn,
             diff_fn=diff_fn,
         )
+        # crea report anche in caso di errore
         if not v["ok"]:
-            raise ValueError("; ".join(v.get("errors", [])))
+            run_report = build_run_report(
+            run_id=run_id,
+            input_path=input_path,
+            output_path=input_path,
+            patch_path=patch_path if patch_path else "",
+            diff=v.get("diff", []),
+            artifact_type=artifact_type,
+            )
+            run_report["execution"]["committed"] = False
+            run_report["execution"]["status"] = "validation_error"
+            run_report["validation"] = {
+                "status": "error",
+                "errors": v.get("errors", []),
+                "warnings": v.get("warnings", []),
+                "stage": v.get("stage"),
+            }
+            report_path = run_dir / "run_report.json"
+            with open(report_path, "w", encoding="utf-8") as f:
+                json.dump(run_report, f, indent=2, ensure_ascii=False)
+            return
 
         template_patch = v["patch"]
         validated_preview = v.get("preview")
         validated_diff = v.get("diff")
+
+    if actions_payload:
+        validation_block = {
+            "status": "ok" if v["ok"] else "error",
+            "errors": v.get("errors", []),
+            "warnings": v.get("warnings", []),
+            "stage": v.get("stage"),
+        }
 
     if template_patch is None and patch_path:
         with open(patch_path, "r", encoding="utf-8") as f:
@@ -458,7 +398,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     # True --> no commit ; False --> si commit
     dry_run_only = False
 
-    # dry run True --> no commit ; False --> si commit
+    # dry run
     if validated_preview is not None and validated_diff is not None:
         preview = validated_preview
         diff = validated_diff
@@ -485,6 +425,9 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
             diff=diff,
             artifact_type=artifact_type,
         )
+        
+        run_report["validation"] = validation_block
+
         run_report["execution"]["committed"] = False
         run_report["execution"]["status"] = "validate_only"
 
@@ -535,6 +478,8 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
             artifact_type=artifact_type,
         )
 
+        run_report["validation"] = validation_block
+
         run_report["execution"]["committed"] = (not no_change and not dry_run_only)
         run_report["execution"]["status"] = (
             "success" if (not dry_run_only and not no_change)
@@ -578,4 +523,4 @@ if __name__ == "__main__":
     elif choose == 3:
         run_patch(ARTIFACTS["template"], "template", template_apply_patch, summarize_template_real_diff)
     elif choose == 4:
-        run_patch(ARTIFACTS["template_base"], "template_base", template_apply_patch, summarize_template_base_diff)
+        run_patch(ARTIFACTS["template_base"], "template_base", template_apply_patch, summarize_template_base_diff)  
