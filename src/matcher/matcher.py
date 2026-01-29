@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 import argparse
 from rapidfuzz import fuzz
+from pathlib import Path
 
 FUZZY_T_HIGH = 0.90
 FUZZY_T_LOW = 0.80
@@ -18,11 +19,48 @@ SECTION_TO_CATEGORY = {
     "DataloggerPen": "dataloggerpen"
 }
 
+
 def load_json(path: str) -> Any:
     # carica il file json
 
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+def load_cache(path: str) -> dict:
+    # carica la cache (crea cartella/file se mancano)
+
+    p = Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        return load_json(path)
+    except Exception:
+        cache = {"matching_cache": {}, "normalized_cache": {}}
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(cache, f, ensure_ascii=False, indent=2)
+        return cache
+
+def save_cache(path: str, cache: dict) -> None:
+    # scrive la cache 
+
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(cache, f, ensure_ascii=False, indent=2)
+
+def build_cache_key(normalized_text: str, expected_category: str, template_guid: str, device_ctx: dict, versions: dict) -> str:
+    # costruzione chiave cache
+
+    parts= [
+        normalized_text or "",
+        expected_category or "",
+        template_guid or "",
+        device_ctx.get("type_fam") or "",
+        device_ctx.get("device_role") or "",
+        device_ctx.get("enum") or "",
+        device_ctx.get("device_id") or "",
+        versions.get("dictionary_version") or "",
+        versions.get("kb_version") or "",
+        versions.get("template_base_version") or ""
+    ]
+    return "|".join(parts)
 
 def iter_candidate_texts(entry: dict, template_base_index: dict, concept_id: str):
     # ritorna tuple (candidate_text, source_type)
@@ -125,6 +163,15 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
     template_base = load_json(template_base_path)
     dictionary = load_json(dictionary_path)
     kb = load_json(kb_path)
+    cache_path = "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/cache/matching_cache_v0.1.json"
+    cache = load_cache(cache_path)
+
+    # versioni artefatti
+    versions = {
+        "dictionary_version": dictionary.get("dictionary_version"),
+        "kb_version": kb.get("kb_version"),
+        "template_base_version": template_base.get("template_base_version")
+    }
 
     #costruzione indice {concept_id - category, semantic_category, label, description}
     concept_category = build_concept_index(template_base)
@@ -160,9 +207,15 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
         enabled = var.get("enabled", True)
         text = normalize_str(var.get("normalized_text"))
 
+         # Sezione non mappata --> no matching
+        expected_category = SECTION_TO_CATEGORY.get(section)
+
+        # se esiste gia un risultato con chiave nella cache, lo riusa
+        cache_key = build_cache_key(text, expected_category, template_guid, device_ctx, versions)
+
         # Variabile disabilitata --> no matching
         if enabled is False:
-            items.append({
+            result = {
                 "source_key": source_key,
                 "section": section,
                 "status": "skipped_disabled",
@@ -176,12 +229,14 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     "category": None,
                     "semantic_category": None
                 }
-            })
+            }
+            items.append(result)
+            cache["matching_cache"][cache_key] = result
             continue
 
         # Testo mancante / vuoto --> no matching
         if not text:
-            items.append({
+            result = {
                 "source_key": source_key,
                 "section": section,
                 "status": "skipped_invalid",
@@ -195,13 +250,18 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     "category": None,
                     "semantic_category": None
                 }
-            })
+            }
+            items.append(result)
+            cache["matching_cache"][cache_key] = result
             continue
 
-        # Sezione non mappata --> no matching
-        expected_category = SECTION_TO_CATEGORY.get(section)
+        cached = cache.get("matching_cache", {}).get(cache_key)
+        if cached:
+            items.append(cached)
+            continue
+
         if expected_category is None:
-            items.append({
+            result = {
                 "source_key": source_key,
                 "section": section,
                 "status": "unmapped",
@@ -215,7 +275,9 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     "category": None,
                     "semantic_category": None
                 }
-            })
+            }
+            items.append(result)
+            cache["matching_cache"][cache_key] = result
             continue
 
         # ricerca candidati nel dizionario
@@ -295,7 +357,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     })
 
             if not fuzzy_candidates:
-                items.append({
+                result = {
                     "source_key": source_key,
                     "section": section,
                     "status": "unmapped",
@@ -309,7 +371,9 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                         "category": expected_category,
                         "semantic_category": None
                     }
-                })
+                }
+                items.append(result)
+                cache["matching_cache"][cache_key] = result
                 continue
 
             fuzzy_candidates.sort(key=lambda c: (-c["score"], c["concept_id"]))
@@ -317,7 +381,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
             second = fuzzy_candidates[1] if len(fuzzy_candidates) > 1 else None
 
             if top["score"] >= FUZZY_T_HIGH and (second is None or (top["score"] - second["score"]) >= 0.10):
-                items.append({
+                result = {
                     "source_key": source_key,
                     "section": section,
                     "status": "matched",
@@ -332,9 +396,13 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                         "semantic_category": top["semantic_category"],
                         "match_source": top.get("match_source")
                     }
-                })
+                }
+                items.append(result)
+                cache["matching_cache"][cache_key] = result
+
+
             elif top["score"] >= FUZZY_T_LOW:
-                items.append({
+                result = {
                     "source_key": source_key,
                     "section": section,
                     "status": "ambiguous",
@@ -352,9 +420,12 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                         {"concept_id": c["concept_id"], "score": c["score"]}
                         for c in fuzzy_candidates[:5]
                     ]
-                })
+                }
+                items.append(result)
+                cache["matching_cache"][cache_key] = result
+
             else:
-                items.append({
+                result = {
                     "source_key": source_key,
                     "section": section,
                     "status": "unmapped",
@@ -368,7 +439,9 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                         "category": expected_category,
                         "semantic_category": None
                     }
-                })
+                }
+                items.append(result)
+                cache["matching_cache"][cache_key] = result
             continue
 
 
@@ -387,7 +460,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
         top = candidates[0]
         if len(candidates) == 1:
             reason = "exact_match" if top["score"] == 1.0 else "single_candidate_match"
-            items.append({
+            result = {
                 "source_key": source_key,
                 "section": section,
                 "status": "matched",
@@ -401,12 +474,14 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     "category": top["category"],
                     "semantic_category": top["semantic_category"]
                 }
-            })
+            }
+            items.append(result)
+            cache["matching_cache"][cache_key] = result
             continue
 
         second = candidates[1]
         if top["score"] >= 0.9 and (top["score"] - second["score"]) >= 0.15: # Auto-match
-            items.append({
+            result = {
                 "source_key": source_key,
                 "section": section,
                 "status": "matched",
@@ -420,10 +495,12 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     "category": top["category"],
                     "semantic_category": top["semantic_category"]
                 }
-            })
+            }
+            items.append(result)
+            cache["matching_cache"][cache_key] = result
         else:
             # Ambiguo
-            items.append({
+            result = {
                 "source_key": source_key,
                 "section": section,
                 "status": "ambiguous",
@@ -441,7 +518,9 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     {"concept_id": c["concept_id"], "score": c["score"]}
                     for c in candidates
                 ]
-            })
+            }
+            items.append(result)
+            cache["matching_cache"][cache_key] = result
     
     matched = [i for i in items if i.get("status") == "matched" and i.get("confidence") is not None]
     avg_conf = round(sum(i["confidence"] for i in matched) / len(matched), 4) if matched else None
@@ -465,6 +544,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
 
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
+    save_cache(cache_path, cache)
 
 if __name__ == "__main__":
 
