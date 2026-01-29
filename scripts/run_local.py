@@ -39,7 +39,7 @@ ARTIFACTS = {
         "template_base_path": "data/template_base_v0.1.json",
     },
     "device_list": {
-        "input_path": "pv_datas/pvs/263823_ALA/device_list.json",
+        "input_path": "pv_datas/pvs/263823_ALA/device_list_context_v0.2.json",
     },
 }
 
@@ -176,6 +176,69 @@ def extract_analysis_from_matching_report(mr: dict) -> dict:
         "ambiguous_matches": ambiguous,
         "unmapped_terms": unmapped,
     }
+
+def summarize_device_list_diff(before:dict, after: dict) -> list[str]:
+    if not isinstance(before, list) or not isinstance(after, list):
+        return []
+
+    def _key(item: dict, idx: int) -> str:
+        if not isinstance(item, dict):
+            return f"idx_{idx}"
+        return item.get("IDPTD") or item.get("ID") or f"idx_{idx}"
+
+    before_map = {_key(item, i): item for i, item in enumerate(before)}
+    after_map = {_key(item, i): item for i, item in enumerate(after)}
+
+    summary = []
+
+    added_keys = sorted(set(after_map) - set(before_map))
+    removed_keys = sorted(set(before_map) - set(after_map))
+    if added_keys:
+        summary.append(f"add_device: {', '.join(added_keys)}")
+    if removed_keys:
+        summary.append(f"remove_device: {', '.join(removed_keys)}")
+
+    common_keys = [k for k in after_map if k in before_map]
+    if not common_keys:
+        return summary
+
+    uniform_added_fields = None
+    uniform_only_added = True
+    per_item_updates = []
+
+    for k in common_keys:
+        b = before_map.get(k, {})
+        a = after_map.get(k, {})
+        if not isinstance(a, dict) or not isinstance(b, dict):
+            continue
+
+        b_keys = set(b.keys())
+        a_keys = set(a.keys())
+
+        added_fields = sorted(a_keys - b_keys)
+        removed_fields = sorted(b_keys - a_keys)
+        updated_fields = sorted([f for f in a_keys & b_keys if a.get(f) != b.get(f)])
+
+        if removed_fields or updated_fields:
+            uniform_only_added = False
+        if uniform_added_fields is None:
+            uniform_added_fields = added_fields
+        elif uniform_added_fields != added_fields:
+            uniform_only_added = False
+
+        if removed_fields:
+            per_item_updates.append(f"remove_fields: {k} -> {', '.join(removed_fields)}")
+        if updated_fields:
+            per_item_updates.append(f"update_fields: {k} -> {', '.join(updated_fields)}")
+        if added_fields and not uniform_only_added:
+            per_item_updates.append(f"add_fields: {k} -> {', '.join(added_fields)}")
+
+    if uniform_only_added and uniform_added_fields:
+        summary.append(f"add_fields_all: {', '.join(sorted(uniform_added_fields))}")
+        return summary
+
+    summary.extend(per_item_updates)
+    return summary
 
 def summarize_template_real_diff(before: dict, after: dict) -> list[str]:
     summary = []
@@ -626,10 +689,15 @@ def run_device_list(cfg: dict, validate) -> None:
     dry = device_list_enrich(path=input_path, dry_run=True)
     preview = dry.get("preview")
     output_path = dry.get("output_path")
+    diff = summarize_device_list_diff(load_json(input_path), preview)
+    no_change = (len(diff) == 0)
 
     if validate_only:
         committed = False
         status = "validate_only"
+    elif no_change:
+        committed = False 
+        status = "no_change"
     else:
         commit = device_list_enrich(path=input_path, dry_run=False)
         output_path = commit.get("output_path")
@@ -642,7 +710,7 @@ def run_device_list(cfg: dict, validate) -> None:
         artifact_type="device_list",
         input_path=input_path,
         output_path=output_path,
-        diff=[],  # puoi aggiungerlo dopo se vuoi
+        diff=diff, 
         schema_versions=build_schema_versions(MCPContext(repo_root="."), ["device_list", "device_list_context"]),
         committed=committed,
         status=status,
