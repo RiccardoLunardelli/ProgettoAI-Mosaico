@@ -39,7 +39,7 @@ ARTIFACTS = {
         "template_base_path": "data/template_base_v0.1.json",
     },
     "device_list": {
-        "input_path": "pv_datas/pvs/263823_ALA/device_list_context_v0.2.json",
+        "input_path": "pv_datas/pvs/263823_ALA/device_list_context_v0.1.json",
     },
 }
 
@@ -690,7 +690,13 @@ def run_device_list(cfg: dict, validate) -> None:
     preview = dry.get("preview")
     output_path = dry.get("output_path")
     diff = summarize_device_list_diff(load_json(input_path), preview)
-    no_change = (len(diff) == 0)
+    output_path, committed, status, no_change = apply_commit(
+        input_path=input_path,
+        template_patch=None,
+        diff=diff,
+        validate_only=validate_only,
+        upsert_fn=lambda path, patch, dry_run: device_list_enrich(path=path, dry_run=dry_run)
+    )
 
     if validate_only:
         committed = False
