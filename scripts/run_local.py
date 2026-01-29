@@ -1,4 +1,4 @@
-from mcp_server.server import dictionary_upsert, kb_upsert_mapping, template_apply_patch
+from mcp_server.server import dictionary_upsert, kb_upsert_mapping, template_apply_patch, device_list_enrich
 from mcp_server.core import MCPContext
 from src.validator.validator import validate_before_commit_template, validate_before_commit_generic, canonical_map, load_json
 
@@ -37,12 +37,14 @@ ARTIFACTS = {
         "matching_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v0.1.json",
         "actions_path": "mcp_server/patch/template_real/manual_actions.json",
         "template_base_path": "data/template_base_v0.1.json",
-        "validate_only": True, # true --> test; false --> scrive
-    }
+    },
+    "device_list": {
+        "input_path": "pv_datas/pvs/263823_ALA/device_list.json",
+    },
 }
 
 
-def get_template_guid(input_path: str, mr: dict | None) -> str:
+def get_template_guid(input_path: str, mr: dict | None, artifact_type) -> str:
     # 1) da template reale
     try:
         with open(input_path, "r", encoding="utf-8") as f:
@@ -56,7 +58,10 @@ def get_template_guid(input_path: str, mr: dict | None) -> str:
 
     # 2) da matching_report
     if mr and mr.get("template_guid"):
-        return mr["template_guid"]   
+        return mr["template_guid"]
+    
+    if artifact_type == "device_list":
+        return None
        
     raise ValueError("template_guid_missing")
 
@@ -306,7 +311,7 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
         "schema_versions": schema_versions,
         "run_id": run_id,
         "timestamp": datetime.now(TIMEZONE).isoformat(),
-        "template_guid": get_template_guid(input_path, mr),
+        "template_guid": get_template_guid(input_path, mr, artifact_type),
         "source_files": {
             "template_path": input_path if artifact_type == "template" else None,
             "dictionary_path": ARTIFACTS["dictionary"]["input_path"],
@@ -489,7 +494,7 @@ def build_report_context(artifact_type, matching_path, template_base_path):
 
     return schema_versions, dict_payload, kb_payload, tb_version
 
-def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
+def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> None:
     # orchestrator
     
     run_id = generate_run_id()
@@ -500,7 +505,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     matching_path = cfg.get("matching_path") # matchign report
     actions_path = cfg.get("actions_path")  # patch per template reale
     template_base_path = cfg.get("template_base_path") # template base
-    validate_only = cfg.get("validate_only", False)
+    validate_only = validate
 
     if artifact_type == "template" and not actions_path:
         raise ValueError("actions_path_required_for_template")
@@ -607,14 +612,67 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn) -> None:
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(run_report, f, indent=2, ensure_ascii=False)
 
+def run_device_list(cfg: dict, validate) -> None:
+    # run per device_list
+
+    run_id = generate_run_id()
+    run_dir = RUNS_ROOT / run_id
+    run_dir.mkdir(parents=True, exist_ok=True)
+
+    input_path = cfg["input_path"]
+    validate_only = validate
+
+    # dry-run
+    dry = device_list_enrich(path=input_path, dry_run=True)
+    preview = dry.get("preview")
+    output_path = dry.get("output_path")
+
+    if validate_only:
+        committed = False
+        status = "validate_only"
+    else:
+        commit = device_list_enrich(path=input_path, dry_run=False)
+        output_path = commit.get("output_path")
+        committed = True
+        status = "success"
+
+    run_report = build_run_report(
+        cfg=cfg,
+        run_id=run_id,
+        artifact_type="device_list",
+        input_path=input_path,
+        output_path=output_path,
+        diff=[],  # puoi aggiungerlo dopo se vuoi
+        schema_versions=build_schema_versions(MCPContext(repo_root="."), ["device_list", "device_list_context"]),
+        committed=committed,
+        status=status,
+        validation_block={"status": "ok", "errors": [], "warnings": []},
+        mr=None,
+        dictionary_payload=None,
+        kb_payload=None,
+        template_base_path=None,
+        template_base_version=None,
+    )
+
+    report_path = run_dir / "run_report.json"
+    with open(report_path, "w", encoding="utf-8") as f:
+        json.dump(run_report, f, indent=2, ensure_ascii=False)
+
 
 if __name__ == "__main__":
-    choose = int(input("1--> diz. 2--> kb. 3--> template. 4--> template_base: "))
+    choose = int(input("1--> diz. 2--> kb. 3--> template. 4--> template_base. 5--> device_list: "))
+    validate = input("Validate only? (y --> ONLY report /n --> Commit): ")
+    if validate == "y":
+        validate_only = True
+    else:
+        validate_only = False
     if choose == 1:
-        run_patch(ARTIFACTS["dictionary"], "dictionary", dictionary_upsert, summarize_dictionary_diff)
+        run_patch(ARTIFACTS["dictionary"], "dictionary", dictionary_upsert, summarize_dictionary_diff, validate_only)
     elif choose == 2:   
-        run_patch(ARTIFACTS["kb"],  "kb", kb_upsert_mapping, summarize_kb_diff)
+        run_patch(ARTIFACTS["kb"],  "kb", kb_upsert_mapping, summarize_kb_diff, validate_only)
     elif choose == 3:
-        run_patch(ARTIFACTS["template"], "template", template_apply_patch, summarize_template_real_diff)
+        run_patch(ARTIFACTS["template"], "template", template_apply_patch, summarize_template_real_diff, validate_only)
     elif choose == 4:
-        run_patch(ARTIFACTS["template_base"], "template_base", template_apply_patch, summarize_template_base_diff)  
+        run_patch(ARTIFACTS["template_base"], "template_base", template_apply_patch, summarize_template_base_diff, validate_only)  
+    elif choose == 5:
+        run_device_list(ARTIFACTS["device_list"], validate_only)

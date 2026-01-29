@@ -29,6 +29,8 @@ class MCPContext:
             "kb": "kb/kb_v0.1.schema.json",
             "kb_patch": "kb/kb_patch_v0.1.schema.json",
             "patch_actions_template": "patch_actions/patch_actions_template_v0.1.schema.json",
+            "device_list": "device_list/device_list_v0.1.schema.json",
+            "device_list_context": "device_list/device_list_context_v0.1.schema.json",
         }
     
     def ensure_within_root(self, path: str) -> Path:
