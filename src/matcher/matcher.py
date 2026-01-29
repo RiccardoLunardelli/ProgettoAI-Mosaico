@@ -140,6 +140,29 @@ def build_concept_index(template_base: Dict[str, Any]) -> Dict[str, Dict[str, An
             }
     return index
 
+def build_llm_context(text:str, expected_category: str, candidates: list, device_ctx: dict, versions: dict, template_guid: str, top_k: int = 5) -> dict:
+    # costruisce paylaod per llm
+
+    return {
+        "normalized_text": text,
+        "expected_category": expected_category,
+        "top_candidates": [
+            {"concept_id": c.get("concept_id"), "score": c.get("score"), "match_source": c.get("match_source")}
+            for c in (candidates[:top_k] if candidates else [])
+        ],
+        "device_ctx": {
+            "template_guid": template_guid,
+            "type_fam": device_ctx.get("type_fam"),
+            "device_role": device_ctx.get("device_role"),
+            "enum": device_ctx.get("enum")
+        },
+        "versions": {
+            "dictionary_version": versions.get("dictionary_version"),
+            "kb_version": versions.get("kb_version"),
+            "template_base_version": versions.get("template_base_version")
+        }
+    }
+
 def extract_device_context(device_context_path: str, template_guid: str) -> Dict[str, Any]:
     # estrae campi device_list_context
 
@@ -274,7 +297,16 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     "dictionary_entry_id": None,
                     "category": None,
                     "semantic_category": None
-                }
+                },
+                "llm_context": build_llm_context(
+                    text=text,
+                    expected_category=expected_category,
+                    candidates=[],
+                    device_ctx=device_ctx,
+                    versions=versions,
+                    template_guid=template_guid,
+                    top_k=5
+                ),
             }
             items.append(result)
             cache["matching_cache"][cache_key] = result
@@ -370,7 +402,16 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                         "dictionary_entry_id": None,
                         "category": expected_category,
                         "semantic_category": None
-                    }
+                    },
+                    "llm_context": build_llm_context(
+                        text=text,
+                        expected_category=expected_category,
+                        candidates=[],
+                        device_ctx=device_ctx,
+                        versions=versions,
+                        template_guid=template_guid,
+                        top_k=5
+                    ),
                 }
                 items.append(result)
                 cache["matching_cache"][cache_key] = result
@@ -419,7 +460,17 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     "candidates": [
                         {"concept_id": c["concept_id"], "score": c["score"]}
                         for c in fuzzy_candidates[:5]
-                    ]
+                    ],
+                    "llm_context": build_llm_context(
+                        text=text,
+                        expected_category=expected_category,
+                        candidates=fuzzy_candidates,
+                        device_ctx=device_ctx,
+                        versions=versions,
+                        template_guid=template_guid,
+                        top_k=5
+                    ),
+                    
                 }
                 items.append(result)
                 cache["matching_cache"][cache_key] = result
@@ -438,7 +489,16 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                         "dictionary_entry_id": None,
                         "category": expected_category,
                         "semantic_category": None
-                    }
+                    },
+                    "llm_context": build_llm_context(
+                        text=text,
+                        expected_category=expected_category,
+                        candidates=[],
+                        device_ctx=device_ctx,
+                        versions=versions,
+                        template_guid=template_guid,
+                        top_k=5
+                    ),
                 }
                 items.append(result)
                 cache["matching_cache"][cache_key] = result
@@ -517,7 +577,16 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                 "candidates": [
                     {"concept_id": c["concept_id"], "score": c["score"]}
                     for c in candidates
-                ]
+                ],
+                "llm_context": build_llm_context(
+                    text=text,
+                    expected_category=expected_category,
+                    candidates=candidates,
+                    device_ctx=device_ctx,
+                    versions=versions,
+                    template_guid=template_guid,
+                    top_k=5
+                ),
             }
             items.append(result)
             cache["matching_cache"][cache_key] = result
