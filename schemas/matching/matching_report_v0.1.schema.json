@@ -161,6 +161,51 @@
       ],
       "title": "MatchingItem",
       "type": "object"
+    },
+    "MatchingMetrics": {
+      "properties": {
+        "mapped_count": {
+          "title": "Mapped Count",
+          "type": "integer"
+        },
+        "ambiguous_count": {
+          "title": "Ambiguous Count",
+          "type": "integer"
+        },
+        "unmapped_count": {
+          "title": "Unmapped Count",
+          "type": "integer"
+        },
+        "avg_confidence": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Avg Confidence"
+        },
+        "llm_calls": {
+          "title": "Llm Calls",
+          "type": "integer"
+        },
+        "warnings_count": {
+          "title": "Warnings Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "mapped_count",
+        "ambiguous_count",
+        "unmapped_count",
+        "llm_calls",
+        "warnings_count"
+      ],
+      "title": "MatchingMetrics",
+      "type": "object"
     }
   },
   "properties": {
@@ -184,6 +229,9 @@
       "title": "Generated At",
       "type": "string"
     },
+    "metrics": {
+      "$ref": "#/$defs/MatchingMetrics"
+    },
     "items": {
       "items": {
         "$ref": "#/$defs/MatchingItem"
@@ -195,6 +243,7 @@
   "required": [
     "matching_version",
     "generated_at",
+    "metrics",
     "items"
   ],
   "title": "MatchingReport",

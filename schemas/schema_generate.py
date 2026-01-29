@@ -86,10 +86,19 @@ class MatchingItem(BaseModel):
     evidence: MatchingEvidence
     candidates: Optional[List[MatchingCandidate]] = None
 
+class MatchingMetrics(BaseModel):
+    mapped_count: int 
+    ambiguous_count: int 
+    unmapped_count: int 
+    avg_confidence: Optional[float] = None 
+    llm_calls: int 
+    warnings_count: int
+
 class MatchingReport(BaseModel):
     matching_version: str
     template_guid: Optional[str] = None
     generated_at: str
+    metrics: MatchingMetrics
     items: List[MatchingItem]
 
 # -----------TEMPLATE BASE -------------------

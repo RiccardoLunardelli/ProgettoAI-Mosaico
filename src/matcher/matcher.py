@@ -88,7 +88,7 @@ def match_score(text: str, synonym: str) -> Optional[float]:
     return None
 
 def build_concept_index(template_base: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
-    # costruisce un dizionario con chiave = concept id e valore = category, semantic_category
+    # costruisce un dizionario con chiave = concept id e valore = category, semantic_category,  label, description
 
     index = {}
     for cat in template_base.get("categories", []):     # cat --> categoria
@@ -126,7 +126,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
     dictionary = load_json(dictionary_path)
     kb = load_json(kb_path)
 
-    #costruzione indice {concept_id - category}
+    #costruzione indice {concept_id - category, semantic_category, label, description}
     concept_category = build_concept_index(template_base)
 
     #recupero contesto del device
@@ -234,9 +234,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                 continue
 
             # blacklist per scope (se presente)
-            is_blacklisted = any(
-                bl.get("scope_id") in scope_ids and bl.get("concept_id") == concept_id for bl in blacklist
-            )
+            is_blacklisted = any(bl.get("scope_id") in scope_ids and bl.get("concept_id") == concept_id for bl in blacklist)
             if is_blacklisted:
                 continue
 
@@ -379,9 +377,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
         for cand in candidates:
             cid = cand["concept_id"]
             prev = best_by_concept.get(cid)
-            if prev is None or cand["score"] > prev["score"] or (
-                cand["score"] == prev["score"] and cand["matched_synonym"] < prev["matched_synonym"]
-            ):
+            if prev is None or cand["score"] > prev["score"] or (cand["score"] == prev["score"] and cand["matched_synonym"] < prev["matched_synonym"]):
                 best_by_concept[cid] = cand
         candidates = list(best_by_concept.values())
         # determinismo: ordina per score desc, poi concept_id, poi matched_synonym
@@ -446,11 +442,24 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     for c in candidates
                 ]
             })
+    
+    matched = [i for i in items if i.get("status") == "matched" and i.get("confidence") is not None]
+    avg_conf = round(sum(i["confidence"] for i in matched) / len(matched), 4) if matched else None
 
+    metrics = {
+        "mapped_count": len([i for i in items if i.get("status") == "matched"]),
+        "ambiguous_count": len([i for i in items if i.get("status") == "ambiguous"]),
+        "unmapped_count": len([i for i in items if i.get("status") == "unmapped"]),
+        "avg_confidence": avg_conf,
+        "llm_calls": 0,
+        "warnings_count": 0
+    }
+    
     report = {
         "matching_version": "v0.1",
         "template_guid": template_guid,
         "generated_at": datetime.now(timezone.utc).isoformat(),
+        "metrics": metrics,
         "items": items
     }
 
