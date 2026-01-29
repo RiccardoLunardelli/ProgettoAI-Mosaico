@@ -39,7 +39,7 @@ ARTIFACTS = {
         "template_base_path": "data/template_base_v0.1.json",
     },
     "device_list": {
-        "input_path": "pv_datas/pvs/263823_ALA/device_list_context_v0.1.json",
+        "input_path": "pv_datas/pvs/262174_VIGODA_ALI/device_list.json",
     },
 }
 
@@ -709,7 +709,7 @@ def run_device_list(cfg: dict, validate) -> None:
         output_path = commit.get("output_path")
         committed = True
         status = "success"
-
+    
     run_report = build_run_report(
         cfg=cfg,
         run_id=run_id,

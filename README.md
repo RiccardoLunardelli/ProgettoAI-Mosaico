@@ -126,7 +126,7 @@ kb_v0.1.json
 Creazione matcher.py
 
 ###  PER ESEGUIRE MATCHER
-python3 matcher.py --normalized /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/normalized_template_v0.1.json --template_base /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/template_base_v0.1.json --dictionary /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionary_v0.1.json --kb /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/kb_v0.1.json --device_context /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/262174_VIGODA_ALI/device_list_context.json --output /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v0.1.json
+python3 matcher.py --normalized /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/normalized_template_v0.1.json --template_base /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/template_base_v0.1.json --dictionary /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionary_v0.1.json --kb /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/kb_v0.1.json --device_context /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/262174_VIGODA_ALI/device_list_context_v0.1.json --output /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v0.1.json
 
 ### Output
 matching_report_v0.1.json

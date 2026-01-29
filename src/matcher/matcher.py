@@ -2,6 +2,11 @@ import json
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 import argparse
+from rapidfuzz import fuzz
+
+FUZZY_T_HIGH = 0.90
+FUZZY_T_LOW = 0.80
+MIN_LEN_FOR_PARTIAL = 6
 
 SECTION_TO_CATEGORY = {
     "ContinuosReads": "measurement",
@@ -18,11 +23,49 @@ def load_json(path: str) -> Any:
 
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
-    
+
+def iter_candidate_texts(entry: dict, template_base_index: dict, concept_id: str):
+    # ritorna tuple (candidate_text, source_type)
+    for lang in ["it", "en"]:
+        for syn in entry.get("synonyms", {}).get(lang, []):
+            s = normalize_str(syn)
+            if s:
+                yield s, f"synonym_{lang}"
+
+    base = template_base_index.get(concept_id, {})
+    label = base.get("label")
+    if isinstance(label, dict):
+        for lang in ["it", "en"]:
+            s = normalize_str(label.get(lang))
+            if s:
+                yield s, f"template_base_label_{lang}"
+    else:
+        s = normalize_str(label)
+        if s:
+            yield s, "template_base_label"
+
+    desc = normalize_str(base.get("description"))
+    if desc:
+        yield desc, "template_base_description"
+
+def fuzzy_score(text:str, cand:str) -> float:
+    # ritorna score con fuzzy
+
+    if not text or not cand:
+        return 0.0 
+    r1 = fuzz.token_set_ratio(text, cand) / 100.0
+    r2 = fuzz.ratio(text, cand) / 100.0
+    if len(text) >= MIN_LEN_FOR_PARTIAL and len(cand) >= MIN_LEN_FOR_PARTIAL:
+        r3 = fuzz.partial_ratio(text, cand) / 100.0
+        return max(r1, r2, r3)
+    return max(r1, r2)
+
 def normalize_str(s: Optional[str]) -> Optional[str]:
     # normalizzazione togliendo spazi e mettendo tutto in minuscolo
 
     if s is None:
+        return None
+    if not isinstance(s, str):
         return None
     return s.strip().lower()
 
@@ -54,6 +97,8 @@ def build_concept_index(template_base: Dict[str, Any]) -> Dict[str, Dict[str, An
             index[c["concept_id"]] = {
                 "category": cat_id,
                 "semantic_category": c.get("semantic_category"),
+                "label": c.get("label"),
+                "description": c.get("description"),
             }
     return index
 
@@ -214,22 +259,120 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
         
         # nessun candidato compatibile
         if not candidates:
-            items.append({
-                "source_key": source_key,
-                "section": section,
-                "status": "unmapped",
-                "technical_reason": "no_dictionary_match",
-                "concept_id": None,
-                "confidence": None,
-                "evidence": {
-                    "normalized_text": text,
-                    "matched_synonym": None,
-                    "dictionary_entry_id": None,
-                    "category": expected_category,
-                    "semantic_category": None
-                }
-            })
+            # fallback fuzzy deterministico
+            fuzzy_candidates = []
+            for entry in dictionary.get("entries", []):
+                concept_id = entry.get("concept_id")
+                if concept_id not in concept_category:
+                    continue
+                if entry.get("category") != expected_category:
+                    continue
+                concept_info = concept_category.get(concept_id)
+                if not concept_info or concept_info.get("category") != expected_category:
+                    continue
+
+                is_blacklisted = any(bl.get("scope_id") in scope_ids and bl.get("concept_id") == concept_id for bl in blacklist)
+                if is_blacklisted:
+                    continue
+
+                best_score = 0.0
+                best_text = None
+                best_source = None
+                for cand_text, src_type in iter_candidate_texts(entry, concept_category, concept_id):
+                    score = fuzzy_score(text, cand_text)
+                    if score > best_score:
+                        best_score = score
+                        best_text = cand_text
+                        best_source = src_type
+
+                if best_score > 0:
+                    fuzzy_candidates.append({
+                        "concept_id": concept_id,
+                        "score": best_score,
+                        "matched_synonym": best_text,
+                        "dictionary_entry_id": concept_id,
+                        "category": expected_category,
+                        "semantic_category": concept_info.get("semantic_category"),
+                        "match_source": best_source
+                    })
+
+            if not fuzzy_candidates:
+                items.append({
+                    "source_key": source_key,
+                    "section": section,
+                    "status": "unmapped",
+                    "technical_reason": "no_dictionary_match",
+                    "concept_id": None,
+                    "confidence": None,
+                    "evidence": {
+                        "normalized_text": text,
+                        "matched_synonym": None,
+                        "dictionary_entry_id": None,
+                        "category": expected_category,
+                        "semantic_category": None
+                    }
+                })
+                continue
+
+            fuzzy_candidates.sort(key=lambda c: (-c["score"], c["concept_id"]))
+            top = fuzzy_candidates[0]
+            second = fuzzy_candidates[1] if len(fuzzy_candidates) > 1 else None
+
+            if top["score"] >= FUZZY_T_HIGH and (second is None or (top["score"] - second["score"]) >= 0.10):
+                items.append({
+                    "source_key": source_key,
+                    "section": section,
+                    "status": "matched",
+                    "technical_reason": "fuzzy_match",
+                    "concept_id": top["concept_id"],
+                    "confidence": top["score"],
+                    "evidence": {
+                        "normalized_text": text,
+                        "matched_synonym": top["matched_synonym"],
+                        "dictionary_entry_id": top["dictionary_entry_id"],
+                        "category": top["category"],
+                        "semantic_category": top["semantic_category"],
+                        "match_source": top.get("match_source")
+                    }
+                })
+            elif top["score"] >= FUZZY_T_LOW:
+                items.append({
+                    "source_key": source_key,
+                    "section": section,
+                    "status": "ambiguous",
+                    "technical_reason": "fuzzy_ambiguous",
+                    "concept_id": None,
+                    "confidence": None,
+                    "evidence": {
+                        "normalized_text": text,
+                        "matched_synonym": None,
+                        "dictionary_entry_id": None,
+                        "category": expected_category,
+                        "semantic_category": None
+                    },
+                    "candidates": [
+                        {"concept_id": c["concept_id"], "score": c["score"]}
+                        for c in fuzzy_candidates[:5]
+                    ]
+                })
+            else:
+                items.append({
+                    "source_key": source_key,
+                    "section": section,
+                    "status": "unmapped",
+                    "technical_reason": "fuzzy_below_threshold",
+                    "concept_id": None,
+                    "confidence": None,
+                    "evidence": {
+                        "normalized_text": text,
+                        "matched_synonym": None,
+                        "dictionary_entry_id": None,
+                        "category": expected_category,
+                        "semantic_category": None
+                    }
+                })
             continue
+
 
         # se piu sinonimi matchano -> score piu alto vince
         best_by_concept = {}

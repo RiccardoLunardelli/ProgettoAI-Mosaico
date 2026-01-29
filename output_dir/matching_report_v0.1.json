@@ -1,7 +1,7 @@
 {
   "matching_version": "v0.1",
   "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-  "generated_at": "2026-01-27T08:29:11.869162+00:00",
+  "generated_at": "2026-01-29T10:29:35.475101+00:00",
   "items": [
     {
       "source_key": "Read0",
@@ -52,7 +52,7 @@
       "source_key": "Read3",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -112,7 +112,7 @@
       "source_key": "Read7",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -127,7 +127,7 @@
       "source_key": "Read8",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -142,7 +142,7 @@
       "source_key": "Read9",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -157,7 +157,7 @@
       "source_key": "Read10",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -186,23 +186,24 @@
     {
       "source_key": "Read12",
       "section": "ContinuosReads",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
-      "concept_id": null,
-      "confidence": null,
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "superheat_temperature",
+      "confidence": 1.0,
       "evidence": {
         "normalized_text": "surriscaldamento",
-        "matched_synonym": null,
-        "dictionary_entry_id": null,
+        "matched_synonym": "temperatura di surriscaldamento",
+        "dictionary_entry_id": "superheat_temperature",
         "category": "measurement",
-        "semantic_category": null
+        "semantic_category": "temperature",
+        "match_source": "synonym_it"
       }
     },
     {
       "source_key": "Read13",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -217,7 +218,7 @@
       "source_key": "Read14",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -232,7 +233,7 @@
       "source_key": "Read15",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -247,7 +248,7 @@
       "source_key": "Read16",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -276,8 +277,8 @@
     {
       "source_key": "Read18",
       "section": "ContinuosReads",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -286,13 +287,35 @@
         "dictionary_entry_id": null,
         "category": "measurement",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "temp_delivery",
+          "score": 0.8571428571428572
+        },
+        {
+          "concept_id": "superheat_temperature",
+          "score": 0.8387096774193549
+        },
+        {
+          "concept_id": "temp_ambient",
+          "score": 0.8387096774193549
+        },
+        {
+          "concept_id": "temp_return",
+          "score": 0.8387096774193549
+        },
+        {
+          "concept_id": "temp_defrost",
+          "score": 0.8333333333333335
+        }
+      ]
     },
     {
       "source_key": "Read19",
       "section": "ContinuosReads",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -301,28 +324,51 @@
         "dictionary_entry_id": null,
         "category": "measurement",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "superheat_temperature",
+          "score": 0.8947368421052632
+        },
+        {
+          "concept_id": "temp_delivery",
+          "score": 0.8571428571428572
+        },
+        {
+          "concept_id": "temp_return",
+          "score": 0.8571428571428572
+        },
+        {
+          "concept_id": "temp_ambient",
+          "score": 0.8484848484848484
+        },
+        {
+          "concept_id": "temp_defrost",
+          "score": 0.8125
+        }
+      ]
     },
     {
       "source_key": "Read20",
       "section": "ContinuosReads",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
-      "concept_id": null,
-      "confidence": null,
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "state_compressor",
+      "confidence": 0.9090909090909091,
       "evidence": {
         "normalized_text": "media % di on off par clt valvola o compressore",
-        "matched_synonym": null,
-        "dictionary_entry_id": null,
+        "matched_synonym": "compressori",
+        "dictionary_entry_id": "state_compressor",
         "category": "measurement",
-        "semantic_category": null
+        "semantic_category": "state",
+        "match_source": "synonym_it"
       }
     },
     {
       "source_key": "Read21",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -337,7 +383,7 @@
       "source_key": "Read22",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -352,7 +398,7 @@
       "source_key": "Read23",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -367,7 +413,7 @@
       "source_key": "Read24",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -382,7 +428,7 @@
       "source_key": "Read25",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -397,7 +443,7 @@
       "source_key": "Read26",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -412,7 +458,7 @@
       "source_key": "Read27",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -427,7 +473,7 @@
       "source_key": "Read28",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -442,7 +488,7 @@
       "source_key": "Read29",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -457,7 +503,7 @@
       "source_key": "Read30",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -487,7 +533,7 @@
       "source_key": "Read32",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -502,7 +548,7 @@
       "source_key": "Read33",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -532,7 +578,7 @@
       "source_key": "Read35",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -547,7 +593,7 @@
       "source_key": "Read36",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -577,7 +623,7 @@
       "source_key": "Read38",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -592,7 +638,7 @@
       "source_key": "Read39",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -606,8 +652,8 @@
     {
       "source_key": "Read40",
       "section": "ContinuosReads",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -616,7 +662,29 @@
         "dictionary_entry_id": null,
         "category": "measurement",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "state_compressor",
+          "score": 1.0
+        },
+        {
+          "concept_id": "state_defrost",
+          "score": 1.0
+        },
+        {
+          "concept_id": "state_door_open",
+          "score": 1.0
+        },
+        {
+          "concept_id": "state_fan",
+          "score": 1.0
+        },
+        {
+          "concept_id": "temp_defrost",
+          "score": 0.33333333333333337
+        }
+      ]
     },
     {
       "source_key": "Read41",
@@ -712,7 +780,7 @@
       "source_key": "Read47",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -727,7 +795,7 @@
       "source_key": "Read48",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -742,7 +810,7 @@
       "source_key": "Read49",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -772,7 +840,7 @@
       "source_key": "Read51",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -787,7 +855,7 @@
       "source_key": "Read52",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -802,7 +870,7 @@
       "source_key": "Read53",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -817,7 +885,7 @@
       "source_key": "Read54",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -832,7 +900,7 @@
       "source_key": "Read55",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -847,7 +915,7 @@
       "source_key": "Read56",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -862,7 +930,7 @@
       "source_key": "Read57",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -876,8 +944,8 @@
     {
       "source_key": "Read58",
       "section": "ContinuosReads",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -886,13 +954,35 @@
         "dictionary_entry_id": null,
         "category": "measurement",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "temp_defrost",
+          "score": 0.8421052631578947
+        },
+        {
+          "concept_id": "state_defrost",
+          "score": 0.7692307692307692
+        },
+        {
+          "concept_id": "temp_ambient",
+          "score": 0.75
+        },
+        {
+          "concept_id": "temp_return",
+          "score": 0.7272727272727273
+        },
+        {
+          "concept_id": "temp_evaporator",
+          "score": 0.6956521739130435
+        }
+      ]
     },
     {
       "source_key": "Read59",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -906,23 +996,24 @@
     {
       "source_key": "Read60",
       "section": "ContinuosReads",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
-      "concept_id": null,
-      "confidence": null,
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "state_compressor",
+      "confidence": 1.0,
       "evidence": {
         "normalized_text": "stato ritardo avviamento compressore",
-        "matched_synonym": null,
-        "dictionary_entry_id": null,
+        "matched_synonym": "stato compressore",
+        "dictionary_entry_id": "state_compressor",
         "category": "measurement",
-        "semantic_category": null
+        "semantic_category": "state",
+        "match_source": "template_base_label_it"
       }
     },
     {
       "source_key": "Read61",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -936,23 +1027,24 @@
     {
       "source_key": "Read62",
       "section": "ContinuosReads",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
-      "concept_id": null,
-      "confidence": null,
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "humidity",
+      "confidence": 1.0,
       "evidence": {
         "normalized_text": "funzione ventole umidità",
-        "matched_synonym": null,
-        "dictionary_entry_id": null,
+        "matched_synonym": "umidità",
+        "dictionary_entry_id": "humidity",
         "category": "measurement",
-        "semantic_category": null
+        "semantic_category": "humidity",
+        "match_source": "template_base_label_it"
       }
     },
     {
       "source_key": "Read63",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -967,7 +1059,7 @@
       "source_key": "Read64",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -981,8 +1073,8 @@
     {
       "source_key": "Read65",
       "section": "ContinuosReads",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -991,13 +1083,35 @@
         "dictionary_entry_id": null,
         "category": "measurement",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "pressure_suction",
+          "score": 0.8333333333333335
+        },
+        {
+          "concept_id": "pressure_discharge",
+          "score": 0.75
+        },
+        {
+          "concept_id": "state_compressor",
+          "score": 0.6363636363636364
+        },
+        {
+          "concept_id": "state_fan",
+          "score": 0.6363636363636364
+        },
+        {
+          "concept_id": "temp_evaporator",
+          "score": 0.5128205128205128
+        }
+      ]
     },
     {
       "source_key": "Read66",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1012,7 +1126,7 @@
       "source_key": "Read67",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1027,7 +1141,7 @@
       "source_key": "Read68",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1042,7 +1156,7 @@
       "source_key": "Read69",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1057,7 +1171,7 @@
       "source_key": "Read70",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1072,7 +1186,7 @@
       "source_key": "Read71",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1087,7 +1201,7 @@
       "source_key": "Read72",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1102,7 +1216,7 @@
       "source_key": "Read73",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1117,7 +1231,7 @@
       "source_key": "Read74",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1132,7 +1246,7 @@
       "source_key": "Read75",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1147,7 +1261,7 @@
       "source_key": "Read76",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1211,8 +1325,8 @@
     {
       "source_key": "Read79",
       "section": "ContinuosReads",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1221,13 +1335,35 @@
         "dictionary_entry_id": null,
         "category": "measurement",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "temp_ambient",
+          "score": 0.8205128205128205
+        },
+        {
+          "concept_id": "temp_condenser",
+          "score": 0.7906976744186046
+        },
+        {
+          "concept_id": "temp_delivery",
+          "score": 0.7777777777777777
+        },
+        {
+          "concept_id": "temp_return",
+          "score": 0.7777777777777777
+        },
+        {
+          "concept_id": "temp_defrost",
+          "score": 0.7619047619047619
+        }
+      ]
     },
     {
       "source_key": "Read80",
       "section": "ContinuosReads",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1236,13 +1372,35 @@
         "dictionary_entry_id": null,
         "category": "measurement",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "temp_ambient",
+          "score": 0.8205128205128205
+        },
+        {
+          "concept_id": "temp_condenser",
+          "score": 0.7906976744186046
+        },
+        {
+          "concept_id": "temp_delivery",
+          "score": 0.7777777777777777
+        },
+        {
+          "concept_id": "temp_return",
+          "score": 0.7777777777777777
+        },
+        {
+          "concept_id": "temp_defrost",
+          "score": 0.7619047619047619
+        }
+      ]
     },
     {
       "source_key": "Read81",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1257,7 +1415,7 @@
       "source_key": "Read82",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1272,7 +1430,7 @@
       "source_key": "Read83",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1287,7 +1445,7 @@
       "source_key": "Read84",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1301,23 +1459,24 @@
     {
       "source_key": "Read85",
       "section": "ContinuosReads",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
-      "concept_id": null,
-      "confidence": null,
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "state_door_open",
+      "confidence": 1.0,
       "evidence": {
         "normalized_text": "porta",
-        "matched_synonym": null,
-        "dictionary_entry_id": null,
+        "matched_synonym": "porta aperta",
+        "dictionary_entry_id": "state_door_open",
         "category": "measurement",
-        "semantic_category": null
+        "semantic_category": "state",
+        "match_source": "template_base_label_it"
       }
     },
     {
       "source_key": "Read86",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1332,7 +1491,7 @@
       "source_key": "Read87",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1347,7 +1506,7 @@
       "source_key": "Read88",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1362,7 +1521,7 @@
       "source_key": "Read89",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1377,7 +1536,7 @@
       "source_key": "Read90",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1392,7 +1551,7 @@
       "source_key": "Read91",
       "section": "ContinuosReads",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1422,7 +1581,7 @@
       "source_key": "Param1",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1437,7 +1596,7 @@
       "source_key": "Param2",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1512,7 +1671,7 @@
       "source_key": "Param7",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1527,7 +1686,7 @@
       "source_key": "Param8",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1542,7 +1701,7 @@
       "source_key": "Param9",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1557,7 +1716,7 @@
       "source_key": "Param10",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1572,7 +1731,7 @@
       "source_key": "Param11",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1587,7 +1746,7 @@
       "source_key": "Param12",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1602,7 +1761,7 @@
       "source_key": "Param13",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1632,7 +1791,7 @@
       "source_key": "Param15",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1647,7 +1806,7 @@
       "source_key": "Param16",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1661,8 +1820,8 @@
     {
       "source_key": "Param17",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1671,13 +1830,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.8648648648648648
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.5789473684210527
+        },
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.5
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.4736842105263158
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.42105263157894735
+        }
+      ]
     },
     {
       "source_key": "Param18",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1692,7 +1873,7 @@
       "source_key": "Param19",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1707,7 +1888,7 @@
       "source_key": "Param20",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1722,7 +1903,7 @@
       "source_key": "Param21",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1737,7 +1918,7 @@
       "source_key": "Param22",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1752,7 +1933,7 @@
       "source_key": "Param23",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1767,7 +1948,7 @@
       "source_key": "Param24",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1782,7 +1963,7 @@
       "source_key": "Param25",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1796,8 +1977,8 @@
     {
       "source_key": "Param26",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1806,13 +1987,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.8372093023255813
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.55
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.5454545454545454
+        },
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.5
+        },
+        {
+          "concept_id": "threshold_high_temperature",
+          "score": 0.4705882352941176
+        }
+      ]
     },
     {
       "source_key": "Param27",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1821,13 +2024,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.8292682926829268
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.55
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.5454545454545454
+        },
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.5
+        },
+        {
+          "concept_id": "threshold_low_temperature",
+          "score": 0.4666666666666666
+        }
+      ]
     },
     {
       "source_key": "Param28",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1842,7 +2067,7 @@
       "source_key": "Param29",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1857,7 +2082,7 @@
       "source_key": "Param30",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1872,7 +2097,7 @@
       "source_key": "Param31",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1902,7 +2127,7 @@
       "source_key": "Param33",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1917,7 +2142,7 @@
       "source_key": "Param34",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1932,7 +2157,7 @@
       "source_key": "Param35",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1947,7 +2172,7 @@
       "source_key": "Param36",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1962,7 +2187,7 @@
       "source_key": "Param37",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1977,7 +2202,7 @@
       "source_key": "Param38",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -1992,7 +2217,7 @@
       "source_key": "Param39",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2007,7 +2232,7 @@
       "source_key": "Param40",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2022,7 +2247,7 @@
       "source_key": "Param41",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2037,7 +2262,7 @@
       "source_key": "Param42",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2052,7 +2277,7 @@
       "source_key": "Param43",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2067,7 +2292,7 @@
       "source_key": "Param44",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2082,7 +2307,7 @@
       "source_key": "Param45",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2097,7 +2322,7 @@
       "source_key": "Param46",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2112,7 +2337,7 @@
       "source_key": "Param47",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2127,7 +2352,7 @@
       "source_key": "Param48",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2142,7 +2367,7 @@
       "source_key": "Param49",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2157,7 +2382,7 @@
       "source_key": "Param50",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2172,7 +2397,7 @@
       "source_key": "Param51",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2187,7 +2412,7 @@
       "source_key": "Param52",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2202,7 +2427,7 @@
       "source_key": "Param53",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2217,7 +2442,7 @@
       "source_key": "Param54",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2232,7 +2457,7 @@
       "source_key": "Param55",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2247,7 +2472,7 @@
       "source_key": "Param56",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2262,7 +2487,7 @@
       "source_key": "Param57",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2277,7 +2502,7 @@
       "source_key": "Param58",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2292,7 +2517,7 @@
       "source_key": "Param59",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2307,7 +2532,7 @@
       "source_key": "Param60",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2322,7 +2547,7 @@
       "source_key": "Param61",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2337,7 +2562,7 @@
       "source_key": "Param62",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2352,7 +2577,7 @@
       "source_key": "Param63",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2366,8 +2591,8 @@
     {
       "source_key": "Param64",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2376,13 +2601,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.8
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.7428571428571429
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.717948717948718
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.55
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.5454545454545454
+        }
+      ]
     },
     {
       "source_key": "Param65",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2391,13 +2638,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.8
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.7428571428571429
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.717948717948718
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.55
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.5454545454545454
+        }
+      ]
     },
     {
       "source_key": "Param66",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2411,8 +2680,8 @@
     {
       "source_key": "Param67",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2421,13 +2690,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.8571428571428572
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.8484848484848484
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.75
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.5333333333333333
+        },
+        {
+          "concept_id": "threshold_low_temperature",
+          "score": 0.4736842105263158
+        }
+      ]
     },
     {
       "source_key": "Param68",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2436,13 +2727,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.8
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.736842105263158
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.696969696969697
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.5901639344262295
+        },
+        {
+          "concept_id": "threshold_high_temperature",
+          "score": 0.5217391304347826
+        }
+      ]
     },
     {
       "source_key": "Param69",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2451,7 +2764,29 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.8125
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.7017543859649122
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.6857142857142857
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.5416666666666667
+        },
+        {
+          "concept_id": "threshold_low_temperature",
+          "score": 0.5
+        }
+      ]
     },
     {
       "source_key": "Param70",
@@ -2487,7 +2822,7 @@
       "source_key": "Param72",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2501,8 +2836,8 @@
     {
       "source_key": "Param73",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2511,13 +2846,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.8695652173913043
+        },
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.8
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.736842105263158
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.6666666666666667
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.5660377358490566
+        }
+      ]
     },
     {
       "source_key": "Param74",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2526,13 +2883,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.8
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.7450980392156863
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.736842105263158
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.5660377358490566
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.4615384615384615
+        }
+      ]
     },
     {
       "source_key": "Param75",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2546,8 +2925,8 @@
     {
       "source_key": "Param76",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2556,13 +2935,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "threshold_low_temperature",
+          "score": 0.8125
+        },
+        {
+          "concept_id": "threshold_high_temperature",
+          "score": 0.7878787878787878
+        },
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.7586206896551724
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.7096774193548387
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.7096774193548387
+        }
+      ]
     },
     {
       "source_key": "Param77",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2571,7 +2972,29 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "threshold_low_temperature",
+          "score": 0.8125
+        },
+        {
+          "concept_id": "threshold_high_temperature",
+          "score": 0.7878787878787878
+        },
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.7586206896551724
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.7096774193548387
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.7096774193548387
+        }
+      ]
     },
     {
       "source_key": "Param78",
@@ -2606,23 +3029,24 @@
     {
       "source_key": "Param80",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
-      "concept_id": null,
-      "confidence": null,
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "defrost_duration",
+      "confidence": 0.9411764705882352,
       "evidence": {
         "normalized_text": "partenza ritardata sbrinamento",
-        "matched_synonym": null,
-        "dictionary_entry_id": null,
+        "matched_synonym": "durata sbrinamento",
+        "dictionary_entry_id": "defrost_duration",
         "category": "parameter",
-        "semantic_category": null
+        "semantic_category": "time",
+        "match_source": "template_base_label_it"
       }
     },
     {
       "source_key": "Param81",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2631,13 +3055,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.8
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.8
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.7307692307692308
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.5
+        },
+        {
+          "concept_id": "threshold_high_temperature",
+          "score": 0.4383561643835616
+        }
+      ]
     },
     {
       "source_key": "Param82",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2652,7 +3098,7 @@
       "source_key": "Param83",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2667,7 +3113,7 @@
       "source_key": "Param84",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2681,8 +3127,8 @@
     {
       "source_key": "Param85",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2691,13 +3137,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "fan_delay",
+          "score": 0.8571428571428571
+        },
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.7586206896551724
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.6818181818181819
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.53125
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.4615384615384615
+        }
+      ]
     },
     {
       "source_key": "Param86",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2712,7 +3180,7 @@
       "source_key": "Param87",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2727,7 +3195,7 @@
       "source_key": "Param88",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2742,7 +3210,7 @@
       "source_key": "Param89",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2757,7 +3225,7 @@
       "source_key": "Param90",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2801,8 +3269,8 @@
     {
       "source_key": "Param93",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2811,7 +3279,29 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "threshold_low_temperature",
+          "score": 0.8125
+        },
+        {
+          "concept_id": "threshold_high_temperature",
+          "score": 0.7878787878787878
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.7096774193548387
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.7096774193548387
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.6071428571428572
+        }
+      ]
     },
     {
       "source_key": "Param94",
@@ -2831,8 +3321,8 @@
     {
       "source_key": "Param95",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2841,13 +3331,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.8888888888888888
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.78125
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.7567567567567568
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.5283018867924528
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.48275862068965514
+        }
+      ]
     },
     {
       "source_key": "Param96",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2856,28 +3368,51 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "fan_delay",
+          "score": 0.8571428571428571
+        },
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.7586206896551724
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.6818181818181819
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.5333333333333333
+        },
+        {
+          "concept_id": "threshold_low_temperature",
+          "score": 0.5
+        }
+      ]
     },
     {
       "source_key": "Param97",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
-      "concept_id": null,
-      "confidence": null,
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "fan_delay",
+      "confidence": 1.0,
       "evidence": {
         "normalized_text": "ritardo ciclo ventilatori dopo spegnimento compressori",
-        "matched_synonym": null,
-        "dictionary_entry_id": null,
+        "matched_synonym": "ritardo ventilatori",
+        "dictionary_entry_id": "fan_delay",
         "category": "parameter",
-        "semantic_category": null
+        "semantic_category": "time",
+        "match_source": "template_base_label_it"
       }
     },
     {
       "source_key": "Param98",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2892,7 +3427,7 @@
       "source_key": "Param99",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2907,7 +3442,7 @@
       "source_key": "Param100",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2922,7 +3457,7 @@
       "source_key": "Param101",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2937,7 +3472,7 @@
       "source_key": "Param102",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2951,8 +3486,8 @@
     {
       "source_key": "Param103",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2961,7 +3496,29 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.8461538461538461
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.75
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.5555555555555556
+        },
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.5
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.5
+        }
+      ]
     },
     {
       "source_key": "Param104",
@@ -2982,7 +3539,7 @@
       "source_key": "Param105",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -2997,7 +3554,7 @@
       "source_key": "Param106",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3012,7 +3569,7 @@
       "source_key": "Param107",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3026,8 +3583,8 @@
     {
       "source_key": "Param108",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3036,13 +3593,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "threshold_high_temperature",
+          "score": 0.8070175438596492
+        },
+        {
+          "concept_id": "threshold_low_temperature",
+          "score": 0.7931034482758621
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.7894736842105263
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.7878787878787878
+        },
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.5217391304347826
+        }
+      ]
     },
     {
       "source_key": "Param109",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3051,7 +3630,29 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.8
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.7878787878787878
+        },
+        {
+          "concept_id": "threshold_low_temperature",
+          "score": 0.7586206896551724
+        },
+        {
+          "concept_id": "threshold_high_temperature",
+          "score": 0.7441860465116279
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.5517241379310345
+        }
+      ]
     },
     {
       "source_key": "Param110",
@@ -3101,8 +3702,8 @@
     {
       "source_key": "Param113",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3111,7 +3712,29 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "threshold_high_temperature",
+          "score": 0.826086956521739
+        },
+        {
+          "concept_id": "threshold_low_temperature",
+          "score": 0.826086956521739
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.8
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.7878787878787878
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.6875
+        }
+      ]
     },
     {
       "source_key": "Param114",
@@ -3161,8 +3784,8 @@
     {
       "source_key": "Param117",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3171,7 +3794,29 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.875
+        },
+        {
+          "concept_id": "threshold_high_temperature",
+          "score": 0.7857142857142857
+        },
+        {
+          "concept_id": "threshold_low_temperature",
+          "score": 0.7777777777777779
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.75
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.7450980392156863
+        }
+      ]
     },
     {
       "source_key": "Param118",
@@ -3222,7 +3867,7 @@
       "source_key": "Param121",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3237,7 +3882,7 @@
       "source_key": "Param122",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3252,7 +3897,7 @@
       "source_key": "Param123",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3267,7 +3912,7 @@
       "source_key": "Param124",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3282,7 +3927,7 @@
       "source_key": "Param125",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3297,7 +3942,7 @@
       "source_key": "Param126",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3312,7 +3957,7 @@
       "source_key": "Param127",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3327,7 +3972,7 @@
       "source_key": "Param128",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3342,7 +3987,7 @@
       "source_key": "Param129",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3357,7 +4002,7 @@
       "source_key": "Param130",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3372,7 +4017,7 @@
       "source_key": "Param131",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3387,7 +4032,7 @@
       "source_key": "Param132",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3402,7 +4047,7 @@
       "source_key": "Param133",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3417,7 +4062,7 @@
       "source_key": "Param134",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3432,7 +4077,7 @@
       "source_key": "Param135",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3447,7 +4092,7 @@
       "source_key": "Param136",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3462,7 +4107,7 @@
       "source_key": "Param137",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3477,7 +4122,7 @@
       "source_key": "Param138",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3492,7 +4137,7 @@
       "source_key": "Param139",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3507,7 +4152,7 @@
       "source_key": "Param140",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3522,7 +4167,7 @@
       "source_key": "Param141",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3537,7 +4182,7 @@
       "source_key": "Param142",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3552,7 +4197,7 @@
       "source_key": "Param143",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3567,7 +4212,7 @@
       "source_key": "Param144",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3582,7 +4227,7 @@
       "source_key": "Param145",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3597,7 +4242,7 @@
       "source_key": "Param146",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3612,7 +4257,7 @@
       "source_key": "Param147",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3627,7 +4272,7 @@
       "source_key": "Param148",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3642,7 +4287,7 @@
       "source_key": "Param149",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3657,7 +4302,7 @@
       "source_key": "Param150",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3672,7 +4317,7 @@
       "source_key": "Param151",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3687,7 +4332,7 @@
       "source_key": "Param152",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3702,7 +4347,7 @@
       "source_key": "Param153",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3717,7 +4362,7 @@
       "source_key": "Param154",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3732,7 +4377,7 @@
       "source_key": "Param155",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3747,7 +4392,7 @@
       "source_key": "Param156",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3762,7 +4407,7 @@
       "source_key": "Param157",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3777,7 +4422,7 @@
       "source_key": "Param158",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3791,8 +4436,8 @@
     {
       "source_key": "Param159",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3801,13 +4446,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.8
+        },
+        {
+          "concept_id": "threshold_low_temperature",
+          "score": 0.7586206896551724
+        },
+        {
+          "concept_id": "threshold_high_temperature",
+          "score": 0.7333333333333333
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.7096774193548387
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.5753424657534247
+        }
+      ]
     },
     {
       "source_key": "Param160",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3822,7 +4489,7 @@
       "source_key": "Param161",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3837,7 +4504,7 @@
       "source_key": "Param162",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3851,8 +4518,8 @@
     {
       "source_key": "Param163",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3861,13 +4528,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.8333333333333335
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.6363636363636364
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.6363636363636364
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.59375
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.53125
+        }
+      ]
     },
     {
       "source_key": "Param164",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3882,7 +4571,7 @@
       "source_key": "Param165",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3897,7 +4586,7 @@
       "source_key": "Param166",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3912,7 +4601,7 @@
       "source_key": "Param167",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3927,7 +4616,7 @@
       "source_key": "Param168",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3941,8 +4630,8 @@
     {
       "source_key": "Param169",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3951,13 +4640,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.8333333333333335
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.6363636363636364
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.59375
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.53125
+        },
+        {
+          "concept_id": "threshold_low_temperature",
+          "score": 0.4666666666666666
+        }
+      ]
     },
     {
       "source_key": "Param170",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3972,7 +4683,7 @@
       "source_key": "Param171",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -3986,98 +4697,104 @@
     {
       "source_key": "Param172",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
-      "concept_id": null,
-      "confidence": null,
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "defrost_duration",
+      "confidence": 1.0,
       "evidence": {
         "normalized_text": "durata massimo sbrinamento 1",
-        "matched_synonym": null,
-        "dictionary_entry_id": null,
+        "matched_synonym": "durata sbrinamento",
+        "dictionary_entry_id": "defrost_duration",
         "category": "parameter",
-        "semantic_category": null
+        "semantic_category": "time",
+        "match_source": "template_base_label_it"
       }
     },
     {
       "source_key": "Param173",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
-      "concept_id": null,
-      "confidence": null,
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "defrost_duration",
+      "confidence": 1.0,
       "evidence": {
         "normalized_text": "durata massimo sbrinamento 2",
-        "matched_synonym": null,
-        "dictionary_entry_id": null,
+        "matched_synonym": "durata sbrinamento",
+        "dictionary_entry_id": "defrost_duration",
         "category": "parameter",
-        "semantic_category": null
+        "semantic_category": "time",
+        "match_source": "template_base_label_it"
       }
     },
     {
       "source_key": "Param174",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
-      "concept_id": null,
-      "confidence": null,
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "defrost_duration",
+      "confidence": 1.0,
       "evidence": {
         "normalized_text": "durata massimo sbrinamento 3",
-        "matched_synonym": null,
-        "dictionary_entry_id": null,
+        "matched_synonym": "durata sbrinamento",
+        "dictionary_entry_id": "defrost_duration",
         "category": "parameter",
-        "semantic_category": null
+        "semantic_category": "time",
+        "match_source": "template_base_label_it"
       }
     },
     {
       "source_key": "Param175",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
-      "concept_id": null,
-      "confidence": null,
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "defrost_duration",
+      "confidence": 1.0,
       "evidence": {
         "normalized_text": "durata massimo sbrinamento 4",
-        "matched_synonym": null,
-        "dictionary_entry_id": null,
+        "matched_synonym": "durata sbrinamento",
+        "dictionary_entry_id": "defrost_duration",
         "category": "parameter",
-        "semantic_category": null
+        "semantic_category": "time",
+        "match_source": "template_base_label_it"
       }
     },
     {
       "source_key": "Param176",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
-      "concept_id": null,
-      "confidence": null,
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "defrost_duration",
+      "confidence": 1.0,
       "evidence": {
         "normalized_text": "durata massimo sbrinamento 5",
-        "matched_synonym": null,
-        "dictionary_entry_id": null,
+        "matched_synonym": "durata sbrinamento",
+        "dictionary_entry_id": "defrost_duration",
         "category": "parameter",
-        "semantic_category": null
+        "semantic_category": "time",
+        "match_source": "template_base_label_it"
       }
     },
     {
       "source_key": "Param177",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
-      "concept_id": null,
-      "confidence": null,
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "defrost_duration",
+      "confidence": 1.0,
       "evidence": {
         "normalized_text": "durata massimo sbrinamento 6",
-        "matched_synonym": null,
-        "dictionary_entry_id": null,
+        "matched_synonym": "durata sbrinamento",
+        "dictionary_entry_id": "defrost_duration",
         "category": "parameter",
-        "semantic_category": null
+        "semantic_category": "time",
+        "match_source": "template_base_label_it"
       }
     },
     {
       "source_key": "Param178",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4092,7 +4809,7 @@
       "source_key": "Param179",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4107,7 +4824,7 @@
       "source_key": "Param180",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4122,7 +4839,7 @@
       "source_key": "Param181",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4137,7 +4854,7 @@
       "source_key": "Param182",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4152,7 +4869,7 @@
       "source_key": "Param183",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4167,7 +4884,7 @@
       "source_key": "Param184",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4182,7 +4899,7 @@
       "source_key": "Param185",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4197,7 +4914,7 @@
       "source_key": "Param186",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4212,7 +4929,7 @@
       "source_key": "Param187",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4227,7 +4944,7 @@
       "source_key": "Param188",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4242,7 +4959,7 @@
       "source_key": "Param189",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4257,7 +4974,7 @@
       "source_key": "Param190",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4272,7 +4989,7 @@
       "source_key": "Param191",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4287,7 +5004,7 @@
       "source_key": "Param192",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4302,7 +5019,7 @@
       "source_key": "Param193",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4317,7 +5034,7 @@
       "source_key": "Param194",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4332,7 +5049,7 @@
       "source_key": "Param195",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4347,7 +5064,7 @@
       "source_key": "Param196",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4362,7 +5079,7 @@
       "source_key": "Param197",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4377,7 +5094,7 @@
       "source_key": "Param198",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4392,7 +5109,7 @@
       "source_key": "Param199",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4407,7 +5124,7 @@
       "source_key": "Param200",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4422,7 +5139,7 @@
       "source_key": "Param201",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4437,7 +5154,7 @@
       "source_key": "Param202",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4452,7 +5169,7 @@
       "source_key": "Param203",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4467,7 +5184,7 @@
       "source_key": "Param204",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4482,7 +5199,7 @@
       "source_key": "Param205",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4496,8 +5213,8 @@
     {
       "source_key": "Param206",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4506,13 +5223,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.8
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.736842105263158
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.6511627906976745
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.6071428571428572
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.4615384615384615
+        }
+      ]
     },
     {
       "source_key": "Param207",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4521,7 +5260,29 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.8
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.7567567567567568
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.6666666666666667
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.5357142857142857
+        },
+        {
+          "concept_id": "threshold_high_temperature",
+          "score": 0.5161290322580645
+        }
+      ]
     },
     {
       "source_key": "Param208",
@@ -4542,7 +5303,7 @@
       "source_key": "Param209",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4557,7 +5318,7 @@
       "source_key": "Param210",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4572,7 +5333,7 @@
       "source_key": "Param211",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4587,7 +5348,7 @@
       "source_key": "Param212",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4602,7 +5363,7 @@
       "source_key": "Param213",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4617,7 +5378,7 @@
       "source_key": "Param214",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4632,7 +5393,7 @@
       "source_key": "Param215",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4647,7 +5408,7 @@
       "source_key": "Param216",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4662,7 +5423,7 @@
       "source_key": "Param217",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4677,7 +5438,7 @@
       "source_key": "Param218",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4692,7 +5453,7 @@
       "source_key": "Param219",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4707,7 +5468,7 @@
       "source_key": "Param220",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4722,7 +5483,7 @@
       "source_key": "Param221",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4737,7 +5498,7 @@
       "source_key": "Param222",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4752,7 +5513,7 @@
       "source_key": "Param223",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4767,7 +5528,7 @@
       "source_key": "Param224",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4782,7 +5543,7 @@
       "source_key": "Param225",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4797,7 +5558,7 @@
       "source_key": "Param226",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4812,7 +5573,7 @@
       "source_key": "Param227",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4827,7 +5588,7 @@
       "source_key": "Param228",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4842,7 +5603,7 @@
       "source_key": "Param229",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4857,7 +5618,7 @@
       "source_key": "Param230",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4872,7 +5633,7 @@
       "source_key": "Param231",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4887,7 +5648,7 @@
       "source_key": "Param232",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4902,7 +5663,7 @@
       "source_key": "Param233",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4917,7 +5678,7 @@
       "source_key": "Param234",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4931,8 +5692,8 @@
     {
       "source_key": "Param235",
       "section": "Parameters",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4941,13 +5702,35 @@
         "dictionary_entry_id": null,
         "category": "parameter",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.8125
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.7058823529411764
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.6857142857142857
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.5416666666666667
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.4615384615384615
+        }
+      ]
     },
     {
       "source_key": "Param236",
       "section": "Parameters",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4976,8 +5759,8 @@
     {
       "source_key": "Alarm0",
       "section": "Alarms",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -4986,13 +5769,35 @@
         "dictionary_entry_id": null,
         "category": "alarm",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "alarm_high_pressure",
+          "score": 0.8717948717948718
+        },
+        {
+          "concept_id": "alarm_low_pressure",
+          "score": 0.8695652173913043
+        },
+        {
+          "concept_id": "alarm_sensor_fault",
+          "score": 0.7878787878787878
+        },
+        {
+          "concept_id": "alarm_compressor_fault",
+          "score": 0.7346938775510203
+        },
+        {
+          "concept_id": "alarm_door_open",
+          "score": 0.7222222222222221
+        }
+      ]
     },
     {
       "source_key": "Alarm1",
       "section": "Alarms",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5001,13 +5806,35 @@
         "dictionary_entry_id": null,
         "category": "alarm",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "alarm_sensor_fault",
+          "score": 0.896551724137931
+        },
+        {
+          "concept_id": "alarm_low_pressure",
+          "score": 0.7741935483870968
+        },
+        {
+          "concept_id": "alarm_door_open",
+          "score": 0.75
+        },
+        {
+          "concept_id": "alarm_high_pressure",
+          "score": 0.7407407407407408
+        },
+        {
+          "concept_id": "alarm_high_temperature",
+          "score": 0.7407407407407408
+        }
+      ]
     },
     {
       "source_key": "Alarm2",
       "section": "Alarms",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5016,13 +5843,35 @@
         "dictionary_entry_id": null,
         "category": "alarm",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "alarm_sensor_fault",
+          "score": 0.896551724137931
+        },
+        {
+          "concept_id": "alarm_low_pressure",
+          "score": 0.7741935483870968
+        },
+        {
+          "concept_id": "alarm_door_open",
+          "score": 0.75
+        },
+        {
+          "concept_id": "alarm_high_pressure",
+          "score": 0.7407407407407408
+        },
+        {
+          "concept_id": "alarm_high_temperature",
+          "score": 0.7407407407407408
+        }
+      ]
     },
     {
       "source_key": "Alarm3",
       "section": "Alarms",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5031,13 +5880,35 @@
         "dictionary_entry_id": null,
         "category": "alarm",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "alarm_sensor_fault",
+          "score": 0.896551724137931
+        },
+        {
+          "concept_id": "alarm_low_pressure",
+          "score": 0.7741935483870968
+        },
+        {
+          "concept_id": "alarm_door_open",
+          "score": 0.75
+        },
+        {
+          "concept_id": "alarm_high_pressure",
+          "score": 0.7407407407407408
+        },
+        {
+          "concept_id": "alarm_high_temperature",
+          "score": 0.7407407407407408
+        }
+      ]
     },
     {
       "source_key": "Alarm4",
       "section": "Alarms",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5046,13 +5917,35 @@
         "dictionary_entry_id": null,
         "category": "alarm",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "alarm_sensor_fault",
+          "score": 0.896551724137931
+        },
+        {
+          "concept_id": "alarm_low_pressure",
+          "score": 0.7741935483870968
+        },
+        {
+          "concept_id": "alarm_door_open",
+          "score": 0.75
+        },
+        {
+          "concept_id": "alarm_high_pressure",
+          "score": 0.7407407407407408
+        },
+        {
+          "concept_id": "alarm_high_temperature",
+          "score": 0.7407407407407408
+        }
+      ]
     },
     {
       "source_key": "Alarm5",
       "section": "Alarms",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5061,13 +5954,35 @@
         "dictionary_entry_id": null,
         "category": "alarm",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "alarm_sensor_fault",
+          "score": 0.896551724137931
+        },
+        {
+          "concept_id": "alarm_low_pressure",
+          "score": 0.7741935483870968
+        },
+        {
+          "concept_id": "alarm_door_open",
+          "score": 0.75
+        },
+        {
+          "concept_id": "alarm_high_pressure",
+          "score": 0.7407407407407408
+        },
+        {
+          "concept_id": "alarm_high_temperature",
+          "score": 0.7407407407407408
+        }
+      ]
     },
     {
       "source_key": "Alarm6",
       "section": "Alarms",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5076,13 +5991,35 @@
         "dictionary_entry_id": null,
         "category": "alarm",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "alarm_sensor_fault",
+          "score": 0.896551724137931
+        },
+        {
+          "concept_id": "alarm_low_pressure",
+          "score": 0.7741935483870968
+        },
+        {
+          "concept_id": "alarm_door_open",
+          "score": 0.75
+        },
+        {
+          "concept_id": "alarm_high_pressure",
+          "score": 0.7407407407407408
+        },
+        {
+          "concept_id": "alarm_high_temperature",
+          "score": 0.7407407407407408
+        }
+      ]
     },
     {
       "source_key": "Alarm7",
       "section": "Alarms",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5097,7 +6034,7 @@
       "source_key": "Alarm8",
       "section": "Alarms",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5202,7 +6139,7 @@
       "source_key": "Alarm15",
       "section": "Alarms",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5217,7 +6154,7 @@
       "source_key": "Alarm16",
       "section": "Alarms",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5231,8 +6168,8 @@
     {
       "source_key": "Alarm17",
       "section": "Alarms",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5241,13 +6178,35 @@
         "dictionary_entry_id": null,
         "category": "alarm",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "alarm_compressor_fault",
+          "score": 0.8333333333333335
+        },
+        {
+          "concept_id": "alarm_sensor_fault",
+          "score": 0.8333333333333335
+        },
+        {
+          "concept_id": "alarm_high_pressure",
+          "score": 0.8181818181818181
+        },
+        {
+          "concept_id": "alarm_high_temperature",
+          "score": 0.8181818181818181
+        },
+        {
+          "concept_id": "alarm_low_pressure",
+          "score": 0.782608695652174
+        }
+      ]
     },
     {
       "source_key": "Alarm18",
       "section": "Alarms",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5261,23 +6220,24 @@
     {
       "source_key": "Alarm19",
       "section": "Alarms",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
-      "concept_id": null,
-      "confidence": null,
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "alarm_door_open",
+      "confidence": 1.0,
       "evidence": {
         "normalized_text": "allarme porta aperta",
-        "matched_synonym": null,
-        "dictionary_entry_id": null,
+        "matched_synonym": "allarme porta aperta",
+        "dictionary_entry_id": "alarm_door_open",
         "category": "alarm",
-        "semantic_category": null
+        "semantic_category": "alarm",
+        "match_source": "template_base_label_it"
       }
     },
     {
       "source_key": "Alarm20",
       "section": "Alarms",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5292,7 +6252,7 @@
       "source_key": "Alarm21",
       "section": "Alarms",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5336,8 +6296,8 @@
     {
       "source_key": "Alarm24",
       "section": "Alarms",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5346,13 +6306,35 @@
         "dictionary_entry_id": null,
         "category": "alarm",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "alarm_door_open",
+          "score": 0.8333333333333335
+        },
+        {
+          "concept_id": "alarm_compressor_fault",
+          "score": 0.7272727272727273
+        },
+        {
+          "concept_id": "alarm_defrost_failure",
+          "score": 0.7272727272727273
+        },
+        {
+          "concept_id": "alarm_high_pressure",
+          "score": 0.7272727272727273
+        },
+        {
+          "concept_id": "alarm_high_temperature",
+          "score": 0.7272727272727273
+        }
+      ]
     },
     {
       "source_key": "Alarm25",
       "section": "Alarms",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5361,13 +6343,35 @@
         "dictionary_entry_id": null,
         "category": "alarm",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "alarm_high_pressure",
+          "score": 0.8717948717948718
+        },
+        {
+          "concept_id": "alarm_low_pressure",
+          "score": 0.8695652173913043
+        },
+        {
+          "concept_id": "alarm_sensor_fault",
+          "score": 0.7878787878787878
+        },
+        {
+          "concept_id": "alarm_compressor_fault",
+          "score": 0.7346938775510203
+        },
+        {
+          "concept_id": "alarm_door_open",
+          "score": 0.7222222222222221
+        }
+      ]
     },
     {
       "source_key": "StatusMessage",
       "section": "Alarms",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5382,7 +6386,7 @@
       "source_key": "Command0",
       "section": "Commands",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5396,8 +6400,8 @@
     {
       "source_key": "Command1",
       "section": "Commands",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5406,13 +6410,35 @@
         "dictionary_entry_id": null,
         "category": "command",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "command_start_device",
+          "score": 0.8125
+        },
+        {
+          "concept_id": "command_stop_device",
+          "score": 0.8
+        },
+        {
+          "concept_id": "command_stop_defrost",
+          "score": 0.48484848484848486
+        },
+        {
+          "concept_id": "command_start_defrost",
+          "score": 0.4117647058823529
+        },
+        {
+          "concept_id": "command_reset_alarm",
+          "score": 0.3703703703703704
+        }
+      ]
     },
     {
       "source_key": "Command2",
       "section": "Commands",
-      "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5421,13 +6447,35 @@
         "dictionary_entry_id": null,
         "category": "command",
         "semantic_category": null
-      }
+      },
+      "candidates": [
+        {
+          "concept_id": "command_start_defrost",
+          "score": 1.0
+        },
+        {
+          "concept_id": "command_stop_defrost",
+          "score": 1.0
+        },
+        {
+          "concept_id": "command_start_device",
+          "score": 0.4705882352941176
+        },
+        {
+          "concept_id": "command_stop_device",
+          "score": 0.4705882352941176
+        },
+        {
+          "concept_id": "command_reset_alarm",
+          "score": 0.375
+        }
+      ]
     },
     {
       "source_key": "Command3",
       "section": "Commands",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
@@ -5442,7 +6490,7 @@
       "source_key": "Command4",
       "section": "Commands",
       "status": "unmapped",
-      "technical_reason": "no_dictionary_match",
+      "technical_reason": "fuzzy_below_threshold",
       "concept_id": null,
       "confidence": null,
       "evidence": {
