@@ -1,5 +1,206 @@
 {
   "$defs": {
+    "LLMContext": {
+      "properties": {
+        "section": {
+          "title": "Section",
+          "type": "string"
+        },
+        "source_key": {
+          "title": "Source Key",
+          "type": "string"
+        },
+        "normalized_text": {
+          "title": "Normalized Text",
+          "type": "string"
+        },
+        "expected_category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expected Category"
+        },
+        "top_candidates": {
+          "items": {
+            "$ref": "#/$defs/LLMContextCandidate"
+          },
+          "title": "Top Candidates",
+          "type": "array"
+        },
+        "device_ctx": {
+          "$ref": "#/$defs/LLMContextDeviceCtx"
+        },
+        "versions": {
+          "$ref": "#/$defs/LLMContextVersions"
+        }
+      },
+      "required": [
+        "section",
+        "source_key",
+        "normalized_text",
+        "top_candidates",
+        "device_ctx",
+        "versions"
+      ],
+      "title": "LLMContext",
+      "type": "object"
+    },
+    "LLMContextCandidate": {
+      "properties": {
+        "concept_id": {
+          "title": "Concept Id",
+          "type": "string"
+        },
+        "score": {
+          "title": "Score",
+          "type": "number"
+        },
+        "match_source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Match Source"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Category"
+        },
+        "semantic_category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Semantic Category"
+        }
+      },
+      "required": [
+        "concept_id",
+        "score"
+      ],
+      "title": "LLMContextCandidate",
+      "type": "object"
+    },
+    "LLMContextDeviceCtx": {
+      "properties": {
+        "template_guid": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Template Guid"
+        },
+        "type_fam": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Type Fam"
+        },
+        "device_role": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Device Role"
+        },
+        "enum": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Enum"
+        }
+      },
+      "title": "LLMContextDeviceCtx",
+      "type": "object"
+    },
+    "LLMContextVersions": {
+      "properties": {
+        "dictionary_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dictionary Version"
+        },
+        "kb_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Kb Version"
+        },
+        "template_base_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Template Base Version"
+        }
+      },
+      "title": "LLMContextVersions",
+      "type": "object"
+    },
     "MatchingCandidate": {
       "properties": {
         "concept_id": {
@@ -151,6 +352,17 @@
           ],
           "default": null,
           "title": "Candidates"
+        },
+        "llm_context": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LLMContext"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "required": [

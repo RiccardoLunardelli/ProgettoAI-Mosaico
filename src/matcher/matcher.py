@@ -19,7 +19,7 @@ SECTION_TO_CATEGORY = {
     "DataloggerPen": "dataloggerpen"
 }
 
-
+# -----INPUT / OUTPUT / CACHE ---------
 def write_report(output_path: str, report: dict, cache_path: str, cache: dict) -> None:
     # scrive report sul file 
 
@@ -53,7 +53,7 @@ def build_versions(dictionary: dict, kb: dict, template_base: dict) -> dict:
     }
 
 def build_metrics(items: list) -> dict:
-    # calcola metriche sul matching
+    # calcola metriche, KPI sul matching
 
     matched = [i for i in items if i.get("status") == "matched" and i.get("confidence") is not None]
     avg_conf = round(sum(i["confidence"] for i in matched) / len(matched), 4) if matched else None
@@ -86,30 +86,6 @@ def save_cache(path: str, cache: dict) -> None:
     with open(path, "w", encoding="utf-8") as f:
         json.dump(cache, f, ensure_ascii=False, indent=2)
 
-def emit_result(items: list, cache: dict, cache_key: str, result: dict) -> None:
-    # aggiunge risultato a items e cache
-
-    items.append(result)
-    if cache_key:
-        cache["matching_cache"][cache_key] = result
-
-def resolve_scope_ids(kb: dict, template_guid: str, device_ctx: dict) -> set:
-    # ritorna scope_ids validi per il device
-
-    scope_ids = set()
-    for scope in kb.get("scopes", []):
-        match = scope.get("match", {})
-        if match.get("template_guid") == template_guid:
-            ok = True 
-            for k in ["type_fam", "device_role", "enum", "device_id"]:
-                if match.get(k) is not None and match.get(k) != device_ctx.get(k):
-                    ok = False
-                    break
-                if ok:
-                    scope_ids.add(scope.get("scope_id"))
-
-    return scope_ids
-
 def build_cache_key(normalized_text: str, expected_category: str, template_guid: str, device_ctx: dict, versions: dict) -> str:
     # costruzione chiave cache
 
@@ -126,6 +102,26 @@ def build_cache_key(normalized_text: str, expected_category: str, template_guid:
         versions.get("template_base_version") or ""
     ]
     return "|".join(parts)
+
+def emit_result(items: list, cache: dict, cache_key: str, result: dict) -> None:
+    # aggiunge risultato a items e cache
+
+    items.append(result)
+    if cache_key:
+        cache["matching_cache"][cache_key] = result
+
+#--------FUZZY--------
+def fuzzy_score(text:str, cand:str) -> float:
+    # ritorna score con fuzzy
+
+    if not text or not cand:
+        return 0.0 
+    r1 = fuzz.token_set_ratio(text, cand) / 100.0
+    r2 = fuzz.ratio(text, cand) / 100.0
+    if len(text) >= MIN_LEN_FOR_PARTIAL and len(cand) >= MIN_LEN_FOR_PARTIAL:
+        r3 = fuzz.partial_ratio(text, cand) / 100.0 # solo su stringhe lunghe
+        return max(r1, r2, r3)
+    return max(r1, r2)
 
 def iter_candidate_texts(entry: dict, template_base_index: dict, concept_id: str):
     # ritorna tuple (candidate_text, source_type)
@@ -151,19 +147,7 @@ def iter_candidate_texts(entry: dict, template_base_index: dict, concept_id: str
     desc = normalize_str(base.get("description"))
     if desc:
         yield desc, "template_base_description"
-
-def fuzzy_score(text:str, cand:str) -> float:
-    # ritorna score con fuzzy
-
-    if not text or not cand:
-        return 0.0 
-    r1 = fuzz.token_set_ratio(text, cand) / 100.0
-    r2 = fuzz.ratio(text, cand) / 100.0
-    if len(text) >= MIN_LEN_FOR_PARTIAL and len(cand) >= MIN_LEN_FOR_PARTIAL:
-        r3 = fuzz.partial_ratio(text, cand) / 100.0
-        return max(r1, r2, r3)
-    return max(r1, r2)
-
+#--------FUNZIONI LINGUISTICHE PER MATCH-------
 def normalize_str(s: Optional[str]) -> Optional[str]:
     # normalizzazione togliendo spazi e mettendo tutto in minuscolo
 
@@ -179,7 +163,7 @@ def tokenize(s: str) -> List[str]:
     return [t for t in s.split() if t]
 
 def match_score(text: str, synonym: str) -> Optional[float]:
-    # ritorna lo score
+    # DETERMINISTICO--> ritorna lo score
 
     if text == synonym: # uguali
         return 1.0
@@ -206,14 +190,24 @@ def build_concept_index(template_base: Dict[str, Any]) -> Dict[str, Dict[str, An
             }
     return index
 
-def build_llm_context(text:str, expected_category: str, candidates: list, device_ctx: dict, versions: dict, template_guid: str, top_k: int = 5) -> dict:
+#-------LLM----------
+def build_llm_context(section: str, source_key: str, text: str, expected_category: str, candidates: list,
+                      device_ctx: dict, versions: dict, template_guid: str, top_k: int = 5) -> dict:
     # costruisce paylaod per llm
 
     return {
+        "section": section,
+        "source_key": source_key,
         "normalized_text": text,
         "expected_category": expected_category,
         "top_candidates": [
-            {"concept_id": c.get("concept_id"), "score": c.get("score"), "match_source": c.get("match_source")}
+            {
+                "concept_id": c.get("concept_id"),
+                "score": c.get("score"),
+                "match_source": c.get("match_source"),
+                "category": c.get("category"),
+                "semantic_category": c.get("semantic_category"),
+            }
             for c in (candidates[:top_k] if candidates else [])
         ],
         "device_ctx": {
@@ -229,6 +223,7 @@ def build_llm_context(text:str, expected_category: str, candidates: list, device
         }
     }
 
+# ------DEVICE CONTEXT E KB SCOPE-------
 def extract_device_context(device_context_path: str, template_guid: str) -> Dict[str, Any]:
     # estrae campi device_list_context
 
@@ -244,8 +239,25 @@ def extract_device_context(device_context_path: str, template_guid: str) -> Dict
             }
     return {"template_guid": template_guid}
 
-def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: dict, concept_category: dict,
-                   dictionary: dict, scope_ids: set, blacklist: list, cache: dict) -> dict:
+def resolve_scope_ids(kb: dict, template_guid: str, device_ctx: dict) -> set:
+    # ritorna scope_ids validi per il device
+
+    scope_ids = set()
+    for scope in kb.get("scopes", []):
+        match = scope.get("match", {})
+        if match.get("template_guid") == template_guid:
+            ok = True 
+            for k in ["type_fam", "device_role", "enum", "device_id"]:
+                if match.get(k) is not None and match.get(k) != device_ctx.get(k):
+                    ok = False
+                    break
+                if ok:
+                    scope_ids.add(scope.get("scope_id"))
+
+    return scope_ids
+
+#------CORE-------
+def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: dict, concept_category: dict,dictionary: dict, scope_ids: set, blacklist: list, cache: dict) -> dict:
     # esegue il matching per una variabile
 
     section = var.get("section")
@@ -301,7 +313,7 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
             "source_key": source_key,
             "section": section,
             "status": "unmapped",
-            "technical_reason": "unkown_section",
+            "technical_reason": "unknown_section",
             "concept_id": None,
             "confidence": None,
             "evidence": {
@@ -334,7 +346,7 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
                 syn_norm = normalize_str(syn)
                 if not syn_norm:
                     continue
-                score = match_score(text, syn_norm)
+                score = match_score(text, syn_norm) # deterministico
                 if score is not None:
                     candidates.append({
                         "concept_id": concept_id,
@@ -346,7 +358,7 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
                     })
 
     if not candidates:
-        # fallback fuzzy
+        # FALLBACK FUZZY
         fuzzy_candidates = []
         for entry in dictionary.get("entries", []):
             concept_id = entry.get("concept_id")
@@ -398,7 +410,8 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
                     "category": expected_category,
                     "semantic_category": None
                 },
-                "llm_context": build_llm_context(text, expected_category, [], device_ctx, versions, template_guid, top_k=5)
+                "llm_context": build_llm_context(section=section, source_key=source_key, text=text, expected_category=expected_category,
+                                                 candidates=fuzzy_candidates, device_ctx=device_ctx, versions=versions, template_guid=template_guid, top_k=5)
             }
 
         fuzzy_candidates.sort(key=lambda c: (-c["score"], c["concept_id"]))
@@ -444,7 +457,8 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
                     {"concept_id": c["concept_id"], "score": c["score"]}
                     for c in fuzzy_candidates[:5]
                 ],
-                "llm_context": build_llm_context(text, expected_category, fuzzy_candidates, device_ctx, versions, template_guid, top_k=5)
+                "llm_context": build_llm_context(section=section, source_key=source_key, text=text, expected_category=expected_category,
+                                                 candidates=fuzzy_candidates, device_ctx=device_ctx, versions=versions, template_guid=template_guid, top_k=5)
             }
         else:
             return {
@@ -462,7 +476,8 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
                     "semantic_category": None,
                     "gap_top2": gap
                 },
-                "llm_context": build_llm_context(text, expected_category, fuzzy_candidates, device_ctx, versions, template_guid, top_k=5)
+                "llm_context": build_llm_context(section=section, source_key=source_key, text=text, expected_category=expected_category,
+                                                 candidates=fuzzy_candidates, device_ctx=device_ctx, versions=versions, template_guid=template_guid, top_k=5)
             }
 
     # deterministico: scegli top candidate
@@ -479,23 +494,53 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
 
     top = candidates[0]
     if len(candidates) == 1:
-        reason = "exact_match" if top["score"] == 1.0 else "single_candidate_match"
+        if top["score"] >= 0.9:
+            return {
+                "source_key": source_key,
+                "section": section,
+                "status": "matched",
+                "technical_reason": "exact_match",
+                "concept_id": top["concept_id"],
+                "confidence": top["score"],
+                "evidence": {
+                    "normalized_text": text,
+                    "matched_synonym": top["matched_synonym"],
+                    "dictionary_entry_id": top["dictionary_entry_id"],
+                    "category": top["category"],
+                    "semantic_category": top["semantic_category"]
+                }
+            }
+
+        # ambiguous se sotto soglia o fuzzy non risolve
         return {
             "source_key": source_key,
             "section": section,
-            "status": "matched",
-            "technical_reason": reason,
-            "concept_id": top["concept_id"],
-            "confidence": top["score"],
+            "status": "ambiguous",
+            "technical_reason": "low_confidence_single_candidate",
+            "concept_id": None,
+            "confidence": None,
             "evidence": {
                 "normalized_text": text,
-                "matched_synonym": top["matched_synonym"],
-                "dictionary_entry_id": top["dictionary_entry_id"],
-                "category": top["category"],
-                "semantic_category": top["semantic_category"]
-            }
+                "matched_synonym": None,
+                "dictionary_entry_id": None,
+                "category": expected_category,
+                "semantic_category": None
+            },
+            "candidates": [
+                {"concept_id": top["concept_id"], "score": top["score"]}
+            ],
+            "llm_context": build_llm_context(
+                section=section,
+                source_key=source_key,
+                text=text,
+                expected_category=expected_category,
+                candidates=candidates,
+                device_ctx=device_ctx,
+                versions=versions,
+                template_guid=template_guid,
+                top_k=5
+            )
         }
-
     second = candidates[1]
     if top["score"] >= 0.9 and (top["score"] - second["score"]) >= 0.15:
         return {
@@ -513,6 +558,7 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
                 "semantic_category": top["semantic_category"]
             }
         }
+
 
     return {
         "source_key": source_key,
@@ -532,17 +578,29 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
             {"concept_id": c["concept_id"], "score": c["score"]}
             for c in candidates
         ],
-        "llm_context": build_llm_context(text, expected_category, candidates, device_ctx, versions, template_guid, top_k=5)
+        "llm_context": build_llm_context(
+            section=section,
+            source_key=source_key,
+            text=text,
+            expected_category=expected_category,
+            candidates=candidates,
+            device_ctx=device_ctx,
+            versions=versions,
+            template_guid=template_guid,
+            top_k=5
+        )
     }
 
 def run_matching(normalized_path: str, template_base_path: str, dictionary_path: str, kb_path: str, device_context_path: str, output_path: str) -> None:
+    # orchestratore del matching
+    
     inputs = load_inputs(normalized_path, template_base_path, dictionary_path, kb_path)
     normalized = inputs["normalized"]
     template_base = inputs["template_base"]
     dictionary = inputs["dictionary"]
     kb = inputs["kb"]
 
-    cache_path = "cache/matching_cache_v0.1.json"
+    cache_path = "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/cache/matching_cache_v0.1.json"
     cache = load_cache(cache_path)
 
     versions = build_versions(dictionary, kb, template_base)

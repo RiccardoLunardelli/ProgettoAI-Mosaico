@@ -76,6 +76,33 @@ class MatchingEvidence(BaseModel):
     category: Optional[str] = None
     semantic_category: Optional[str] = None
 
+class LLMContextCandidate(BaseModel):
+    concept_id: str 
+    score: float
+    match_source: Optional[str] = None
+    category: Optional[str] = None
+    semantic_category: Optional[str] = None
+
+class LLMContextDeviceCtx(BaseModel):
+    template_guid: Optional[str] = None 
+    type_fam: Optional[str] = None 
+    device_role: Optional[str] = None 
+    enum: Optional[str] = None 
+
+class LLMContextVersions(BaseModel):
+    dictionary_version: Optional[str] = None 
+    kb_version: Optional[str] = None 
+    template_base_version: Optional[str] = None 
+
+class LLMContext(BaseModel):
+    section: str 
+    source_key: str
+    normalized_text: str 
+    expected_category: Optional[str] = None
+    top_candidates: List[LLMContextCandidate]
+    device_ctx: LLMContextDeviceCtx
+    versions: LLMContextVersions
+    
 class MatchingItem(BaseModel):
     source_key: str
     section: str
@@ -85,6 +112,7 @@ class MatchingItem(BaseModel):
     confidence: Optional[float] = None
     evidence: MatchingEvidence
     candidates: Optional[List[MatchingCandidate]] = None
+    llm_context: Optional[LLMContext] = None
 
 class MatchingMetrics(BaseModel):
     mapped_count: int 

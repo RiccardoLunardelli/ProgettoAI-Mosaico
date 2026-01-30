@@ -6,6 +6,8 @@ import json
 from pathlib import Path
 from datetime import datetime, timezone, timedelta
 import re
+import time 
+import requests
 
 TIMEZONE = timezone(timedelta(hours=1))
 PATCH_ROOT = Path("mcp_server/patch")
@@ -45,6 +47,8 @@ ARTIFACTS = {
 
 
 def get_template_guid(input_path: str, mr: dict | None, artifact_type) -> str:
+    # trova template guid
+
     # 1) da template reale
     try:
         with open(input_path, "r", encoding="utf-8") as f:
@@ -91,10 +95,12 @@ def extract_present_concepts(mr: dict | None, actions_payload: dict | None) -> s
     # estrae i concetti che sono presenti
 
     present = set()
+    # dal match 
     if mr:
         for item in mr.get("items", []):
             if item.get("status") == "matched" and item.get("concept_id"):
                 present.add(item.get("concept_id"))
+    # dalle actions
     if actions_payload:
         for a in actions_payload.get("actions", []):
             target = a.get("target", {})
@@ -137,8 +143,8 @@ def extract_matched_variables_from_matching_report(mr: dict) -> list[dict]:
     return out
 
 def extract_analysis_from_matching_report(mr: dict) -> dict:
-    # aggiunge nel report tutte le variabili che si riferiscono ad un concetto non ancora mappato
-
+    # aggiunge nel report tutte le variabili che si riferiscono ad un concetto non ancora mappato o ambiguo
+ 
     ambiguous = []
     unmapped = []
 
@@ -177,6 +183,152 @@ def extract_analysis_from_matching_report(mr: dict) -> dict:
         "unmapped_terms": unmapped,
     }
 
+#----------LLM-----------------
+def extract_llm_contexts(mr: dict) -> list[dict]:
+    # estrae i contesti LLM dal matching report che richiedono llm ( ambiguous , unmapped )
+
+    out = []
+    for item in mr.get("items", []):
+        if item.get("status") in ["ambiguous", "unmapped"]:
+            ctx = item.get("llm_context")
+            if ctx:
+                out.append(ctx)
+    return out
+
+def build_llm_prompt(llm_contexts: list[dict]) -> str:
+    # costruisce il prompt per llm
+
+    return (
+        "SYSTEM: You are a strict JSON generator for patch_actions_template.\n"
+        "OUTPUT MUST be valid JSON only. No extra text.\n"
+        "If unsure, output exactly: {\"patch_actions_version\":\"v0.1\",\"generated_at\":\"<ISO-8601>\",\"actions\":[]}\n\n"
+        "REQUIRED OUTPUT SHAPE (strict):\n"
+        "{\n"
+        "  \"patch_actions_version\": \"v0.1\",\n"
+        "  \"generated_at\": \"<ISO-8601>\",\n"
+        "  \"actions\": [\n"
+        "    {\n"
+        "      \"type\": \"map_variable\",\n"
+        "      \"section\": \"<SectionName>\",\n"
+        "      \"source_key\": \"<SourceKey>\",\n"
+        "      \"target\": {\n"
+        "        \"concept_id\": \"<concept_id>\",\n"
+        "        \"category\": \"<category>\",\n"
+        "        \"semantic_category\": \"<semantic_category>\",\n"
+        "        \"labels\": {\"it\": \"<label_it>\", \"en\": \"<label_en>\"}\n"
+        "      },\n"
+        "      \"patch\": {\n"
+        "        \"set_fields\": {\n"
+        "          \"ConceptId\": \"<concept_id>\",\n"
+        "          \"Category\": \"<category>\",\n"
+        "          \"SemanticCategory\": \"<semantic_category>\"\n"
+        "        }\n"
+        "      },\n"
+        "      \"confidence\": 0.0,\n"
+        "      \"reason\": \"<short reason>\",\n"
+        "      \"evidence\": {\n"
+        "        \"normalized_text\": \"<text>\",\n"
+        "        \"selected_candidate\": \"<concept_id>\",\n"
+        "        \"score\": 0.0\n"
+        "      }\n"
+        "    }\n"
+        "  ]\n"
+        "}\n\n"
+        "RULES:\n"
+        "1) Use ONLY concept_id from top_candidates.\n"
+        "2) Use section/source_key from the context item.\n"
+        "3) If top_candidates is empty or ambiguous -> skip (no action).\n"
+        "4) Do NOT output the input context.\n"
+        "5) labels.it and labels.en must always be present. If unknown, copy normalized_text into both.\n\n"
+        "INPUT llm_contexts:\n"
+        f"{json.dumps(llm_contexts, ensure_ascii=False)}\n"
+    )
+
+def ollama_generate_json(model: str, prompt: str) -> dict:
+    # genera json con ollama
+
+    url = "http://localhost:11434/api/generate"
+    payload = {
+        "model": model,
+        "prompt": prompt,
+        "format": "json",
+        "stream": False,
+        "options": {"temperature": 0, "top_p": 0.1}
+    }
+    r = requests.post(url, json=payload, timeout=120)
+    r.raise_for_status()
+    raw = r.json().get("response", "").strip()
+    return json.loads(raw)
+
+def chunk_list(items: list, size: int) -> list[list]:
+    # suddivide una lista in chunk di dimensione size
+
+    return [items[i:i + size] for i in range(0, len(items), size)]
+
+def llm_propose_actions(model: str, mr: dict, batch_size: int = 30) -> dict:
+    # genera proposte actions con llm. Produce patch actions + info 
+
+    llm_contexts = extract_llm_contexts(mr)
+    batches = chunk_list(llm_contexts, batch_size)
+
+    all_actions = []
+    all_dict_ops = []
+    attempts = []
+    total_latency = 0.0
+
+    for idx, batch in enumerate(batches):
+        prompt = build_llm_prompt(batch)
+        start = time.time()
+        output = ollama_generate_json(model, prompt)
+        latency = round(time.time() - start, 3)
+        total_latency += latency
+
+        attempts.append({
+            "batch_index": idx,
+            "batch_size": len(batch),
+            "latency_sec": latency,
+            "output": output
+        })
+
+        if isinstance(output, dict):
+            pa, dp = parse_llm_output(output)
+            if isinstance(pa, dict) and isinstance(pa.get("actions"), list):
+                all_actions.extend(pa["actions"])
+            if isinstance(dp, dict) and isinstance(dp.get("operations"), list):
+                all_dict_ops.extend(dp["operations"])
+
+    llm_attempt = {
+        "model": model,
+        "latency_sec": round(total_latency, 3),
+        "contexts_count": len(llm_contexts),
+        "batch_size": batch_size,
+        "batches": len(batches),
+        "attempts": attempts
+    }
+    
+    patch_actions = {"patch_actions_version": "v0.1","generated_at": datetime.now(timezone.utc).isoformat(), "actions": all_actions}
+    dictionary_patch = {"target": "dictionary", "operations": all_dict_ops}
+    return patch_actions, dictionary_patch, llm_attempt
+
+def parse_llm_output(output: dict) -> tuple[dict, dict]:
+    
+    if not isinstance(output, dict):
+        return {"patch_actions_version": "v0.1", "generated_at": datetime.now(timezone.utc).isoformat(), "actions": []}
+
+    patch_actions = output.get("patch_actions") if isinstance(output, dict) else None
+    if not isinstance(patch_actions, dict):
+        patch_actions = {"patch_actions_version": "v0.1", "generated_at": datetime.now(timezone.utc).isoformat(), "actions": []}
+
+    dictionary_patch = output.get("dictionary_patch") if isinstance(output, dict) else None
+    if not isinstance(dictionary_patch, dict):
+        dictionary_patch = {"target": "dictionary", "operations": []}
+
+    patch_actions.setdefault("patch_actions_version", "v0.1")
+    patch_actions.setdefault("generated_at", datetime.now(timezone.utc).isoformat())
+    patch_actions.setdefault("actions", [])
+    return patch_actions, dictionary_patch
+
+#---------DIFF-----------------
 def summarize_device_list_diff(before:dict, after: dict) -> list[str]:
     if not isinstance(before, list) or not isinstance(after, list):
         return []
@@ -366,9 +518,25 @@ def summarize_template_base_diff(before: dict, after: dict) -> list[str]:
 
     return summary
 
+def compute_diff(input_path, template_patch, validated_preview, validated_diff, upsert_fn, diff_fn):
+    # genera diff (dry-run se non validato)
+
+    artifact = load_json(input_path)
+
+    if validated_preview is not None and validated_diff is not None:
+        return artifact, validated_preview, validated_diff
+
+    dry_run_result = upsert_fn(path=input_path, patch=template_patch, dry_run=True)
+    preview = dry_run_result.get("preview")
+    diff = diff_fn(artifact, preview)
+
+    return artifact, preview, diff
+
+#-------REPORT--------
 def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str, output_path: str, diff: list[str], 
     schema_versions: dict, committed: bool, status: str, validation_block: dict | None, mr: dict | None,
     dictionary_payload: dict | None,kb_payload: dict | None, template_base_path: str | None, template_base_version: str | None) -> dict:
+    # raccoglie tutto, nornalizza e ritorna il report della run
 
     return {
         "schema_versions": schema_versions,
@@ -398,6 +566,60 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
         "diff_summary": {"changed_paths": diff},
     }
 
+#------BUILD PATCH ACTIONS------------
+def build_patch_actions_from_matching(mr: dict, output_path: str) -> dict:
+    actions = []
+    for item in mr.get("items", []):
+        status = item.get("status")
+        source_key = item.get("source_key")
+        section = item.get("section")
+        evidence = item.get("evidence", {})
+        confidence = item.get("confidence")
+        normalized_text = evidence.get("normalized_text")
+
+        if status == "matched" and confidence > 0.9:
+            actions.append({
+                "type": "map_variable",
+                "section": section,
+                "source_key": source_key,
+                "target": {
+                    "concept_id": item.get("concept_id"),
+                    "category": evidence.get("category"),
+                    "semantic_category": evidence.get("semantic_category"),
+                    "labels": {"it": normalized_text or "", "en": normalized_text or ""}
+                },
+                "patch": {
+                    "set_fields": {
+                        "ConceptId": item.get("concept_id"),
+                        "Category": evidence.get("category"),
+                        "SemanticCategory": evidence.get("semantic_category")
+                    }
+                },
+                "confidence": item.get("confidence") or 0.0,
+                "reason": item.get("technical_reason") or "matching_deterministico",
+                "evidence": {"normalized_text": normalized_text}
+            })
+
+        elif status == "ambiguous":
+            # non mappare: richiede review
+            continue
+
+        elif status == "unmapped":
+            # non mappare: possibile proposta dizionario
+            continue
+
+    patch_actions = {
+        "patch_actions_version": "v0.1",
+        "generated_at": datetime.now(TIMEZONE).isoformat(),
+        "actions": actions
+    }
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(patch_actions, f, ensure_ascii=False, indent=2)
+
+    return patch_actions
+
+#-------MATCHING REPORT + ANALYSIS-----------------
 def load_matching(matching_path: str | None) -> tuple[dict | None, dict]:
     # carica e valida matching report + genera analysis
 
@@ -410,13 +632,20 @@ def load_matching(matching_path: str | None) -> tuple[dict | None, dict]:
         analysis = extract_analysis_from_matching_report(mr)
     return mr, analysis
 
-def build_patch_and_validation(cfg: dict, artifact_type: str, upsert_fn, diff_fn):
-    # costruisce la patch 
+def build_patch_and_validation(cfg: dict, artifact_type: str, upsert_fn, diff_fn, actions_payload_override: dict | None = None):
+    # costruisce la patch. Decide se template_validation o generic_validation. Produce --> patch, preview, diff, validation_block
 
     input_path = cfg["input_path"]
     patch_path = cfg.get("patch_path")  # patch manuali
     actions_path = cfg.get("actions_path")  # patch per template reale
     template_base_path = cfg.get("template_base_path") # template base
+
+    if actions_payload_override is not None:
+        actions_payload = actions_payload_override
+    elif artifact_type == "template" and actions_path:
+        actions_payload = load_json(actions_path)
+    else:
+        actions_payload = None
 
     file_patch = None
     if patch_path:
@@ -426,12 +655,9 @@ def build_patch_and_validation(cfg: dict, artifact_type: str, upsert_fn, diff_fn
     validated_preview = None
     validated_diff = None
     validation_block = None
-    actions_payload = None
 
     # template actions
-    if artifact_type == "template" and actions_path:
-        actions_payload = load_json(actions_path)
-
+    if artifact_type == "template" and actions_payload is not None:
         if not template_base_path:
             raise ValueError("template_base_missing")
         
@@ -463,6 +689,7 @@ def build_patch_and_validation(cfg: dict, artifact_type: str, upsert_fn, diff_fn
         "kb": "kb_patch",
         "template_base": "template_base_patch",
     }
+    # generic
     if artifact_type in GENERIC_VALIDATORS:
         ctx = MCPContext(repo_root=".")
         v = validate_before_commit_generic(
@@ -495,20 +722,6 @@ def build_patch_and_validation(cfg: dict, artifact_type: str, upsert_fn, diff_fn
         raise ValueError("template_patch_missing: provide actions_path or patch_path")
 
     return template_patch, validation_block, validated_preview, validated_diff, actions_payload, None
-
-def compute_diff(input_path, template_patch, validated_preview, validated_diff, upsert_fn, diff_fn):
-    # genera diff
-
-    artifact = load_json(input_path)
-
-    if validated_preview is not None and validated_diff is not None:
-        return artifact, validated_preview, validated_diff
-
-    dry_run_result = upsert_fn(path=input_path, patch=template_patch, dry_run=True)
-    preview = dry_run_result.get("preview")
-    diff = diff_fn(artifact, preview)
-
-    return artifact, preview, diff
 
 def apply_commit(input_path, template_patch, diff, validate_only, upsert_fn):
     # fa il commit nel caso che validate_only e no_change = False
@@ -570,12 +783,27 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     template_base_path = cfg.get("template_base_path") # template base
     validate_only = validate
 
-    if artifact_type == "template" and not actions_path:
+    if artifact_type == "template" and not actions_path and not (cfg.get("use_llm") and validate_only):
         raise ValueError("actions_path_required_for_template")
     
-    mr, analysis = load_matching(matching_path)
+    mr, analysis = load_matching(matching_path) # carica matching report
 
-    template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = build_patch_and_validation(cfg, artifact_type, upsert_fn, diff_fn)
+    dict_patch = {"target": "dictionary", "operations": []}
+    use_llm = False 
+    llm_model = cfg.get("llm_model", "llama3.1:8b")
+    llm_attempt = None 
+    actions_payload_override = None 
+
+    if artifact_type == "template" and use_llm and validate_only:
+        patch_actions, dict_patch, llm_attempt = llm_propose_actions(llm_model, mr)
+        actions_payload_override = patch_actions
+    
+    if artifact_type == "template" and matching_path:
+        actions_out = "output_dir/patch_actions_v0.1.json"
+        build_patch_actions_from_matching(mr, actions_out)
+        cfg["actions_path"] = actions_out
+
+    template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = build_patch_and_validation(cfg, artifact_type, upsert_fn, diff_fn, actions_payload_override)
 
     if validation_error:
         run_report = build_run_report(
@@ -644,6 +872,10 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
         template_base_path=template_base_path,
         template_base_version=tb_version,
     )
+
+    if llm_attempt:
+        run_report["llm_attempt"] = llm_attempt
+        run_report["llm_dictionary_patch"] = dict_patch
 
     if status == "validation_error":
         policy_outcome = "rejected"
@@ -745,6 +977,9 @@ if __name__ == "__main__":
     elif choose == 2:   
         run_patch(ARTIFACTS["kb"],  "kb", kb_upsert_mapping, summarize_kb_diff, validate_only)
     elif choose == 3:
+        #use_llm = input("Usare LLM come proposer? (y/n): ").strip().lower() == "y"
+        #ARTIFACTS["template"]["use_llm"] = use_llm
+        ARTIFACTS["template"]["llm_model"] = "llama3.1:8b"
         run_patch(ARTIFACTS["template"], "template", template_apply_patch, summarize_template_real_diff, validate_only)
     elif choose == 4:
         run_patch(ARTIFACTS["template_base"], "template_base", template_apply_patch, summarize_template_base_diff, validate_only)  

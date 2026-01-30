@@ -62,7 +62,7 @@ def derive_enum(desc: str, type_fam: str):
     return None
 
 def device_list_enrich(ctx: MCPContext, path: str, dry_run: bool) -> Dict[str, Any]:
-    # validazione path
+    # validazione path e arricchimento device list
 
     p = ctx.ensure_within_root(path)
     device_list = ctx.read_json(p)
