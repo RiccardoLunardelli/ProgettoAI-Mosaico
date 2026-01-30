@@ -58,7 +58,7 @@ def build_metrics(items: list) -> dict:
     matched = [i for i in items if i.get("status") == "matched" and i.get("confidence") is not None]
     avg_conf = round(sum(i["confidence"] for i in matched) / len(matched), 4) if matched else None
 
-    metrics = {
+    return {
         "mapped_count": len([i for i in items if i.get("status") == "matched"]),
         "ambiguous_count": len([i for i in items if i.get("status") == "ambiguous"]),
         "unmapped_count": len([i for i in items if i.get("status") == "unmapped"]),
