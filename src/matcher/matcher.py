@@ -259,6 +259,7 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
     if cached:
         return cached
 
+    # ENABLE FALSE
     if enabled is False:
         return {
             "source_key": source_key,
@@ -276,6 +277,7 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
             }
         }
 
+    # TESTO MANCANTE
     if not text:
         return {
             "source_key": source_key,
@@ -293,6 +295,7 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
             }
         }
 
+    # CATEGORIA MANCANTE
     if expected_category is None:
         return {
             "source_key": source_key,
@@ -403,7 +406,7 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
         second = fuzzy_candidates[1] if len(fuzzy_candidates) > 1 else None
         gap = (top["score"] - second["score"]) if second is not None else None
 
-        if top["score"] >= FUZZY_T_HIGH and (second is None or (top["score"] - second["score"]) >= 0.10):
+        if top["score"] >= FUZZY_T_HIGH and (second is None or (gap >= 0.10)):
             return {
                 "source_key": source_key,
                 "section": section,
