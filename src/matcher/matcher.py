@@ -20,11 +20,52 @@ SECTION_TO_CATEGORY = {
 }
 
 
+def write_report(output_path: str, report: dict, cache_path: str, cache: dict) -> None:
+    # scrive report sul file 
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(report, f, ensure_ascii=False, indent=2)
+    save_cache(cache_path, cache)
+
 def load_json(path: str) -> Any:
     # carica il file json
 
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+def load_inputs(normalized_path: str, template_base_path: str, dictionary_path: str, kb_path: str) -> dict: 
+    # carica tutti gli input
+
+    return {
+        "normalized": load_json(normalized_path),
+        "template_base": load_json(template_base_path),
+        "dictionary": load_json(dictionary_path),
+        "kb": load_json(kb_path),
+    }
+
+def build_versions(dictionary: dict, kb: dict, template_base: dict) -> dict:
+    # artefatti con relativa versione
+
+    return {
+        "dictionary_version": dictionary.get("dictionary_version"),
+        "kb_version": kb.get("kb_version"),
+        "template_base_version": template_base.get("template_base_version")
+    }
+
+def build_metrics(items: list) -> dict:
+    # calcola metriche sul matching
+
+    matched = [i for i in items if i.get("status") == "matched" and i.get("confidence") is not None]
+    avg_conf = round(sum(i["confidence"] for i in matched) / len(matched), 4) if matched else None
+
+    metrics = {
+        "mapped_count": len([i for i in items if i.get("status") == "matched"]),
+        "ambiguous_count": len([i for i in items if i.get("status") == "ambiguous"]),
+        "unmapped_count": len([i for i in items if i.get("status") == "unmapped"]),
+        "avg_confidence": avg_conf,
+        "llm_calls": 0,
+        "warnings_count": 0
+    }
 
 def load_cache(path: str) -> dict:
     # carica la cache (crea cartella/file se mancano)
@@ -45,6 +86,30 @@ def save_cache(path: str, cache: dict) -> None:
     with open(path, "w", encoding="utf-8") as f:
         json.dump(cache, f, ensure_ascii=False, indent=2)
 
+def emit_result(items: list, cache: dict, cache_key: str, result: dict) -> None:
+    # aggiunge risultato a items e cache
+
+    items.append(result)
+    if cache_key:
+        cache["matching_cache"][cache_key] = result
+
+def resolve_scope_ids(kb: dict, template_guid: str, device_ctx: dict) -> set:
+    # ritorna scope_ids validi per il device
+
+    scope_ids = set()
+    for scope in kb.get("scopes", []):
+        match = scope.get("match", {})
+        if match.get("template_guid") == template_guid:
+            ok = True 
+            for k in ["type_fam", "device_role", "enum", "device_id"]:
+                if match.get(k) is not None and match.get(k) != device_ctx.get(k):
+                    ok = False
+                    break
+                if ok:
+                    scope_ids.add(scope.get("scope_id"))
+
+    return scope_ids
+
 def build_cache_key(normalized_text: str, expected_category: str, template_guid: str, device_ctx: dict, versions: dict) -> str:
     # costruzione chiave cache
 
@@ -64,6 +129,7 @@ def build_cache_key(normalized_text: str, expected_category: str, template_guid:
 
 def iter_candidate_texts(entry: dict, template_base_index: dict, concept_id: str):
     # ritorna tuple (candidate_text, source_type)
+
     for lang in ["it", "en"]:
         for syn in entry.get("synonyms", {}).get(lang, []):
             s = normalize_str(syn)
@@ -178,393 +244,148 @@ def extract_device_context(device_context_path: str, template_guid: str) -> Dict
             }
     return {"template_guid": template_guid}
 
-def run_matching(normalized_path: str, template_base_path: str, dictionary_path: str, kb_path: str, device_context_path: str, output_path: str) -> None:
-    # associa ogni variabile normalizzata a un concept_id del dizionario usando: categoria attesa, sinonimi, contesto del device, blacklist, punteggi del match
+def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: dict, concept_category: dict,
+                   dictionary: dict, scope_ids: set, blacklist: list, cache: dict) -> dict:
+    # esegue il matching per una variabile
 
-    #caricamento dei dati
-    normalized = load_json(normalized_path)
-    template_base = load_json(template_base_path)
-    dictionary = load_json(dictionary_path)
-    kb = load_json(kb_path)
-    cache_path = "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/cache/matching_cache_v0.1.json"
-    cache = load_cache(cache_path)
+    section = var.get("section")
+    source_key = var.get("source_key")
+    enabled = var.get("enabled", True)
+    text = normalize_str(var.get("normalized_text"))
+    expected_category = SECTION_TO_CATEGORY.get(section)
 
-    # versioni artefatti
-    versions = {
-        "dictionary_version": dictionary.get("dictionary_version"),
-        "kb_version": kb.get("kb_version"),
-        "template_base_version": template_base.get("template_base_version")
-    }
+    cache_key = build_cache_key(text, expected_category, template_guid, device_ctx, versions)
+    cached = cache.get("matching_cache", {}).get(cache_key)
+    if cached:
+        return cached
 
-    #costruzione indice {concept_id - category, semantic_category, label, description}
-    concept_category = build_concept_index(template_base)
-
-    #recupero contesto del device
-    template_guid  = normalized.get("template_guid")
-    device_ctx = extract_device_context(device_context_path, template_guid)
-
-    #calcolo degli scope validi --> scorre tutti gli scope nella KB
-    scope_ids = set()
-    for scope in kb.get("scopes", []):
-        match = scope.get("match", {})
-        # tiene solo quelli compatibili con il device
-        if match.get("template_guid") == template_guid:
-            ok = True
-            # verifica tutti i campi
-            for k in ["type_fam", "device_role", "enum", "device_id"]:
-                # se tutto combacia, aggiunge lo scope_id
-                if match.get(k) is not None and match.get(k) != device_ctx.get(k):
-                    ok = False
-                    break
-            if ok:
-                scope_ids.add(scope.get("scope_id"))
-
-    # Blacklist --> serve per escludere concetti vietati in certi scope
-    blacklist = kb.get("exceptions", {}).get("blacklist", [])
-
-    items = []
-    # var = variabile del dispositivo
-    for var in normalized.get("variables", []):
-        section = var.get("section")
-        source_key = var.get("source_key")
-        enabled = var.get("enabled", True)
-        text = normalize_str(var.get("normalized_text"))
-
-         # Sezione non mappata --> no matching
-        expected_category = SECTION_TO_CATEGORY.get(section)
-
-        # se esiste gia un risultato con chiave nella cache, lo riusa
-        cache_key = build_cache_key(text, expected_category, template_guid, device_ctx, versions)
-
-        # Variabile disabilitata --> no matching
-        if enabled is False:
-            result = {
-                "source_key": source_key,
-                "section": section,
-                "status": "skipped_disabled",
-                "technical_reason": "disabled_variable",
-                "concept_id": None,
-                "confidence": None,
-                "evidence": {
-                    "normalized_text": text,
-                    "matched_synonym": None,
-                    "dictionary_entry_id": None,
-                    "category": None,
-                    "semantic_category": None
-                }
+    if enabled is False:
+        return {
+            "source_key": source_key,
+            "section": section,
+            "status": "skipped_disabled",
+            "technical_reason": "disabled_variable",
+            "concept_id": None,
+            "confidence": None,
+            "evidence": {
+                "normalized_text": text,
+                "matched_synonym": None,
+                "dictionary_entry_id": None,
+                "category": None,
+                "semantic_category": None
             }
-            items.append(result)
-            cache["matching_cache"][cache_key] = result
-            continue
+        }
 
-        # Testo mancante / vuoto --> no matching
-        if not text:
-            result = {
-                "source_key": source_key,
-                "section": section,
-                "status": "skipped_invalid",
-                "technical_reason": "missing_normalized_text",
-                "concept_id": None,
-                "confidence": None,
-                "evidence": {
-                    "normalized_text": text,
-                    "matched_synonym": None,
-                    "dictionary_entry_id": None,
-                    "category": None,
-                    "semantic_category": None
-                }
+    if not text:
+        return {
+            "source_key": source_key,
+            "section": section,
+            "status": "skipped_invalid",
+            "technical_reason": "missing_normalized_text",
+            "concept_id": None,
+            "confidence": None,
+            "evidence": {
+                "normalized_text": text,
+                "matched_synonym": None,
+                "dictionary_entry_id": None,
+                "category": None,
+                "semantic_category": None
             }
-            items.append(result)
-            cache["matching_cache"][cache_key] = result
-            continue
+        }
 
-        cached = cache.get("matching_cache", {}).get(cache_key)
-        if cached:
-            items.append(cached)
-            continue
-
-        if expected_category is None:
-            result = {
-                "source_key": source_key,
-                "section": section,
-                "status": "unmapped",
-                "technical_reason": "unkown_section",
-                "concept_id": None,
-                "confidence": None,
-                "evidence": {
-                    "normalized_text": text,
-                    "matched_synonym": None,
-                    "dictionary_entry_id": None,
-                    "category": None,
-                    "semantic_category": None
-                },
-                "llm_context": build_llm_context(
-                    text=text,
-                    expected_category=expected_category,
-                    candidates=[],
-                    device_ctx=device_ctx,
-                    versions=versions,
-                    template_guid=template_guid,
-                    top_k=5
-                ),
+    if expected_category is None:
+        return {
+            "source_key": source_key,
+            "section": section,
+            "status": "unmapped",
+            "technical_reason": "unkown_section",
+            "concept_id": None,
+            "confidence": None,
+            "evidence": {
+                "normalized_text": text,
+                "matched_synonym": None,
+                "dictionary_entry_id": None,
+                "category": None,
+                "semantic_category": None
             }
-            items.append(result)
-            cache["matching_cache"][cache_key] = result
+        }
+
+    # deterministico su sinonimi
+    candidates = []
+    for entry in dictionary.get("entries", []):
+        concept_id = entry.get("concept_id")
+        if concept_id not in concept_category:
+            continue
+        if entry.get("category") != expected_category:
+            continue
+        concept_info = concept_category.get(concept_id)
+        if not concept_info or concept_info.get("category") != expected_category:
             continue
 
-        # ricerca candidati nel dizionario
-        candidates = []
+        is_blacklisted = any(bl.get("scope_id") in scope_ids and bl.get("concept_id") == concept_id for bl in blacklist)
+        if is_blacklisted:
+            continue
+
+        for lang in ["it", "en"]:
+            for syn in entry.get("synonyms", {}).get(lang, []):
+                syn_norm = normalize_str(syn)
+                if not syn_norm:
+                    continue
+                score = match_score(text, syn_norm)
+                if score is not None:
+                    candidates.append({
+                        "concept_id": concept_id,
+                        "score": score,
+                        "matched_synonym": syn_norm,
+                        "dictionary_entry_id": concept_id,
+                        "category": expected_category,
+                        "semantic_category": concept_info.get("semantic_category"),
+                    })
+
+    if not candidates:
+        # fallback fuzzy
+        fuzzy_candidates = []
         for entry in dictionary.get("entries", []):
             concept_id = entry.get("concept_id")
-            # scarta se: conceprt id non esiste, categoria diversa da quella attesa, incoerenza tra dizionario e template
             if concept_id not in concept_category:
                 continue
             if entry.get("category") != expected_category:
                 continue
             concept_info = concept_category.get(concept_id)
-            if not concept_info:
-                continue 
-            if concept_info.get("category") != expected_category:
+            if not concept_info or concept_info.get("category") != expected_category:
                 continue
 
-            # blacklist per scope (se presente)
             is_blacklisted = any(bl.get("scope_id") in scope_ids and bl.get("concept_id") == concept_id for bl in blacklist)
             if is_blacklisted:
                 continue
 
-            # matching sui sinonimi. Per ogni sinonimo: normalizza, calcola lo score, se match -> aggiunge candidato
-            for lang in ["it", "en"]:
-                for syn in entry.get("synonyms", {}).get(lang, []):
-                    syn_norm = normalize_str(syn)   
-                    if not syn_norm:
-                        continue
-                    score = match_score(text, syn_norm)
-                    if score is not None:
-                        candidates.append({
-                            "concept_id": concept_id,
-                            "score": score,
-                            "matched_synonym": syn_norm,
-                            "dictionary_entry_id": concept_id,
-                            "category": expected_category,
-                            "semantic_category": concept_info.get("semantic_category"),
-                        })
-        
-        # nessun candidato compatibile
-        if not candidates:
-            # fallback fuzzy deterministico
-            fuzzy_candidates = []
-            for entry in dictionary.get("entries", []):
-                concept_id = entry.get("concept_id")
-                if concept_id not in concept_category:
-                    continue
-                if entry.get("category") != expected_category:
-                    continue
-                concept_info = concept_category.get(concept_id)
-                if not concept_info or concept_info.get("category") != expected_category:
-                    continue
+            best_score = 0.0
+            best_text = None
+            best_source = None
+            for cand_text, src_type in iter_candidate_texts(entry, concept_category, concept_id):
+                score = fuzzy_score(text, cand_text)
+                if score > best_score:
+                    best_score = score
+                    best_text = cand_text
+                    best_source = src_type
 
-                is_blacklisted = any(bl.get("scope_id") in scope_ids and bl.get("concept_id") == concept_id for bl in blacklist)
-                if is_blacklisted:
-                    continue
+            if best_score > 0:
+                fuzzy_candidates.append({
+                    "concept_id": concept_id,
+                    "score": best_score,
+                    "matched_synonym": best_text,
+                    "dictionary_entry_id": concept_id,
+                    "category": expected_category,
+                    "semantic_category": concept_info.get("semantic_category"),
+                    "match_source": best_source
+                })
 
-                best_score = 0.0
-                best_text = None
-                best_source = None
-                for cand_text, src_type in iter_candidate_texts(entry, concept_category, concept_id):
-                    score = fuzzy_score(text, cand_text)
-                    if score > best_score:
-                        best_score = score
-                        best_text = cand_text
-                        best_source = src_type
-
-                if best_score > 0:
-                    fuzzy_candidates.append({
-                        "concept_id": concept_id,
-                        "score": best_score,
-                        "matched_synonym": best_text,
-                        "dictionary_entry_id": concept_id,
-                        "category": expected_category,
-                        "semantic_category": concept_info.get("semantic_category"),
-                        "match_source": best_source
-                    })
-
-            if not fuzzy_candidates:
-                result = {
-                    "source_key": source_key,
-                    "section": section,
-                    "status": "unmapped",
-                    "technical_reason": "no_dictionary_match",
-                    "concept_id": None,
-                    "confidence": None,
-                    "evidence": {
-                        "normalized_text": text,
-                        "matched_synonym": None,
-                        "dictionary_entry_id": None,
-                        "category": expected_category,
-                        "semantic_category": None
-                    },
-                    "llm_context": build_llm_context(
-                        text=text,
-                        expected_category=expected_category,
-                        candidates=[],
-                        device_ctx=device_ctx,
-                        versions=versions,
-                        template_guid=template_guid,
-                        top_k=5
-                    ),
-                }
-                items.append(result)
-                cache["matching_cache"][cache_key] = result
-                continue
-
-            fuzzy_candidates.sort(key=lambda c: (-c["score"], c["concept_id"]))
-            top = fuzzy_candidates[0]
-            second = fuzzy_candidates[1] if len(fuzzy_candidates) > 1 else None
-
-            if top["score"] >= FUZZY_T_HIGH and (second is None or (top["score"] - second["score"]) >= 0.10):
-                result = {
-                    "source_key": source_key,
-                    "section": section,
-                    "status": "matched",
-                    "technical_reason": "fuzzy_match",
-                    "concept_id": top["concept_id"],
-                    "confidence": top["score"],
-                    "evidence": {
-                        "normalized_text": text,
-                        "matched_synonym": top["matched_synonym"],
-                        "dictionary_entry_id": top["dictionary_entry_id"],
-                        "category": top["category"],
-                        "semantic_category": top["semantic_category"],
-                        "match_source": top.get("match_source")
-                    }
-                }
-                items.append(result)
-                cache["matching_cache"][cache_key] = result
-
-
-            elif top["score"] >= FUZZY_T_LOW:
-                result = {
-                    "source_key": source_key,
-                    "section": section,
-                    "status": "ambiguous",
-                    "technical_reason": "fuzzy_ambiguous",
-                    "concept_id": None,
-                    "confidence": None,
-                    "evidence": {
-                        "normalized_text": text,
-                        "matched_synonym": None,
-                        "dictionary_entry_id": None,
-                        "category": expected_category,
-                        "semantic_category": None
-                    },
-                    "candidates": [
-                        {"concept_id": c["concept_id"], "score": c["score"]}
-                        for c in fuzzy_candidates[:5]
-                    ],
-                    "llm_context": build_llm_context(
-                        text=text,
-                        expected_category=expected_category,
-                        candidates=fuzzy_candidates,
-                        device_ctx=device_ctx,
-                        versions=versions,
-                        template_guid=template_guid,
-                        top_k=5
-                    ),
-                    
-                }
-                items.append(result)
-                cache["matching_cache"][cache_key] = result
-
-            else:
-                result = {
-                    "source_key": source_key,
-                    "section": section,
-                    "status": "unmapped",
-                    "technical_reason": "fuzzy_below_threshold",
-                    "concept_id": None,
-                    "confidence": None,
-                    "evidence": {
-                        "normalized_text": text,
-                        "matched_synonym": None,
-                        "dictionary_entry_id": None,
-                        "category": expected_category,
-                        "semantic_category": None
-                    },
-                    "llm_context": build_llm_context(
-                        text=text,
-                        expected_category=expected_category,
-                        candidates=[],
-                        device_ctx=device_ctx,
-                        versions=versions,
-                        template_guid=template_guid,
-                        top_k=5
-                    ),
-                }
-                items.append(result)
-                cache["matching_cache"][cache_key] = result
-            continue
-
-
-        # se piu sinonimi matchano -> score piu alto vince
-        best_by_concept = {}
-        for cand in candidates:
-            cid = cand["concept_id"]
-            prev = best_by_concept.get(cid)
-            if prev is None or cand["score"] > prev["score"] or (cand["score"] == prev["score"] and cand["matched_synonym"] < prev["matched_synonym"]):
-                best_by_concept[cid] = cand
-        candidates = list(best_by_concept.values())
-        # determinismo: ordina per score desc, poi concept_id, poi matched_synonym
-        candidates.sort(key=lambda c: (-c["score"], c["concept_id"], c["matched_synonym"]))
-
-        # decisione di un candidato
-        top = candidates[0]
-        if len(candidates) == 1:
-            reason = "exact_match" if top["score"] == 1.0 else "single_candidate_match"
-            result = {
+        if not fuzzy_candidates:
+            return {
                 "source_key": source_key,
                 "section": section,
-                "status": "matched",
-                "technical_reason": reason,
-                "concept_id": top["concept_id"],
-                "confidence": top["score"],
-                "evidence": {
-                    "normalized_text": text,
-                    "matched_synonym": top["matched_synonym"],
-                    "dictionary_entry_id": top["dictionary_entry_id"],
-                    "category": top["category"],
-                    "semantic_category": top["semantic_category"]
-                }
-            }
-            items.append(result)
-            cache["matching_cache"][cache_key] = result
-            continue
-
-        second = candidates[1]
-        if top["score"] >= 0.9 and (top["score"] - second["score"]) >= 0.15: # Auto-match
-            result = {
-                "source_key": source_key,
-                "section": section,
-                "status": "matched",
-                "technical_reason": "top_score_dominant",
-                "concept_id": top["concept_id"],
-                "confidence": top["score"],
-                "evidence": {
-                    "normalized_text": text,
-                    "matched_synonym": top["matched_synonym"],
-                    "dictionary_entry_id": top["dictionary_entry_id"],
-                    "category": top["category"],
-                    "semantic_category": top["semantic_category"]
-                }
-            }
-            items.append(result)
-            cache["matching_cache"][cache_key] = result
-        else:
-            # Ambiguo
-            result = {
-                "source_key": source_key,
-                "section": section,
-                "status": "ambiguous",
-                "technical_reason": "multiple_candidates_no_dominance",
+                "status": "unmapped",
+                "technical_reason": "no_dictionary_match",
                 "concept_id": None,
                 "confidence": None,
                 "evidence": {
@@ -574,35 +395,185 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
                     "category": expected_category,
                     "semantic_category": None
                 },
+                "llm_context": build_llm_context(text, expected_category, [], device_ctx, versions, template_guid, top_k=5)
+            }
+
+        fuzzy_candidates.sort(key=lambda c: (-c["score"], c["concept_id"]))
+        top = fuzzy_candidates[0]
+        second = fuzzy_candidates[1] if len(fuzzy_candidates) > 1 else None
+        gap = (top["score"] - second["score"]) if second is not None else None
+
+        if top["score"] >= FUZZY_T_HIGH and (second is None or (top["score"] - second["score"]) >= 0.10):
+            return {
+                "source_key": source_key,
+                "section": section,
+                "status": "matched",
+                "technical_reason": "fuzzy_match",
+                "concept_id": top["concept_id"],
+                "confidence": top["score"],
+                "evidence": {
+                    "normalized_text": text,
+                    "matched_synonym": top["matched_synonym"],
+                    "dictionary_entry_id": top["dictionary_entry_id"],
+                    "category": top["category"],
+                    "semantic_category": top["semantic_category"],
+                    "match_source": top.get("match_source"),
+                    "gap_top2": gap
+                }
+            }
+        elif top["score"] >= FUZZY_T_LOW:
+            return {
+                "source_key": source_key,
+                "section": section,
+                "status": "ambiguous",
+                "technical_reason": "fuzzy_ambiguous",
+                "concept_id": None,
+                "confidence": None,
+                "evidence": {
+                    "normalized_text": text,
+                    "matched_synonym": None,
+                    "dictionary_entry_id": None,
+                    "category": expected_category,
+                    "semantic_category": None,
+                    "gap_top2": gap
+                },
                 "candidates": [
                     {"concept_id": c["concept_id"], "score": c["score"]}
-                    for c in candidates
+                    for c in fuzzy_candidates[:5]
                 ],
-                "llm_context": build_llm_context(
-                    text=text,
-                    expected_category=expected_category,
-                    candidates=candidates,
-                    device_ctx=device_ctx,
-                    versions=versions,
-                    template_guid=template_guid,
-                    top_k=5
-                ),
+                "llm_context": build_llm_context(text, expected_category, fuzzy_candidates, device_ctx, versions, template_guid, top_k=5)
             }
-            items.append(result)
-            cache["matching_cache"][cache_key] = result
-    
-    matched = [i for i in items if i.get("status") == "matched" and i.get("confidence") is not None]
-    avg_conf = round(sum(i["confidence"] for i in matched) / len(matched), 4) if matched else None
+        else:
+            return {
+                "source_key": source_key,
+                "section": section,
+                "status": "unmapped",
+                "technical_reason": "fuzzy_below_threshold",
+                "concept_id": None,
+                "confidence": None,
+                "evidence": {
+                    "normalized_text": text,
+                    "matched_synonym": None,
+                    "dictionary_entry_id": None,
+                    "category": expected_category,
+                    "semantic_category": None,
+                    "gap_top2": gap
+                },
+                "llm_context": build_llm_context(text, expected_category, fuzzy_candidates, device_ctx, versions, template_guid, top_k=5)
+            }
 
-    metrics = {
-        "mapped_count": len([i for i in items if i.get("status") == "matched"]),
-        "ambiguous_count": len([i for i in items if i.get("status") == "ambiguous"]),
-        "unmapped_count": len([i for i in items if i.get("status") == "unmapped"]),
-        "avg_confidence": avg_conf,
-        "llm_calls": 0,
-        "warnings_count": 0
+    # deterministico: scegli top candidate
+    best_by_concept = {}
+    for cand in candidates:
+        cid = cand["concept_id"]
+        prev = best_by_concept.get(cid)
+        if prev is None or cand["score"] > prev["score"] or (
+            cand["score"] == prev["score"] and cand["matched_synonym"] < prev["matched_synonym"]
+        ):
+            best_by_concept[cid] = cand
+    candidates = list(best_by_concept.values())
+    candidates.sort(key=lambda c: (-c["score"], c["concept_id"], c["matched_synonym"]))
+
+    top = candidates[0]
+    if len(candidates) == 1:
+        reason = "exact_match" if top["score"] == 1.0 else "single_candidate_match"
+        return {
+            "source_key": source_key,
+            "section": section,
+            "status": "matched",
+            "technical_reason": reason,
+            "concept_id": top["concept_id"],
+            "confidence": top["score"],
+            "evidence": {
+                "normalized_text": text,
+                "matched_synonym": top["matched_synonym"],
+                "dictionary_entry_id": top["dictionary_entry_id"],
+                "category": top["category"],
+                "semantic_category": top["semantic_category"]
+            }
+        }
+
+    second = candidates[1]
+    if top["score"] >= 0.9 and (top["score"] - second["score"]) >= 0.15:
+        return {
+            "source_key": source_key,
+            "section": section,
+            "status": "matched",
+            "technical_reason": "top_score_dominant",
+            "concept_id": top["concept_id"],
+            "confidence": top["score"],
+            "evidence": {
+                "normalized_text": text,
+                "matched_synonym": top["matched_synonym"],
+                "dictionary_entry_id": top["dictionary_entry_id"],
+                "category": top["category"],
+                "semantic_category": top["semantic_category"]
+            }
+        }
+
+    return {
+        "source_key": source_key,
+        "section": section,
+        "status": "ambiguous",
+        "technical_reason": "multiple_candidates_no_dominance",
+        "concept_id": None,
+        "confidence": None,
+        "evidence": {
+            "normalized_text": text,
+            "matched_synonym": None,
+            "dictionary_entry_id": None,
+            "category": expected_category,
+            "semantic_category": None
+        },
+        "candidates": [
+            {"concept_id": c["concept_id"], "score": c["score"]}
+            for c in candidates
+        ],
+        "llm_context": build_llm_context(text, expected_category, candidates, device_ctx, versions, template_guid, top_k=5)
     }
-    
+
+def run_matching(normalized_path: str, template_base_path: str, dictionary_path: str, kb_path: str, device_context_path: str, output_path: str) -> None:
+    inputs = load_inputs(normalized_path, template_base_path, dictionary_path, kb_path)
+    normalized = inputs["normalized"]
+    template_base = inputs["template_base"]
+    dictionary = inputs["dictionary"]
+    kb = inputs["kb"]
+
+    cache_path = "cache/matching_cache_v0.1.json"
+    cache = load_cache(cache_path)
+
+    versions = build_versions(dictionary, kb, template_base)
+    concept_category = build_concept_index(template_base)
+
+    template_guid = normalized.get("template_guid")
+    device_ctx = extract_device_context(device_context_path, template_guid)
+    scope_ids = resolve_scope_ids(kb, template_guid, device_ctx)
+
+    blacklist = kb.get("exceptions", {}).get("blacklist", [])
+
+    items = []
+    for var in normalized.get("variables", []):
+        result = match_variable(
+            var=var,
+            template_guid=template_guid,
+            device_ctx=device_ctx,
+            versions=versions,
+            concept_category=concept_category,
+            dictionary=dictionary,
+            scope_ids=scope_ids,
+            blacklist=blacklist,
+            cache=cache
+        )
+        cache_key = build_cache_key(
+            normalize_str(var.get("normalized_text")),
+            SECTION_TO_CATEGORY.get(var.get("section")),
+            template_guid,
+            device_ctx,
+            versions
+        )
+        emit_result(items, cache, cache_key, result)
+
+    metrics = build_metrics(items)
     report = {
         "matching_version": "v0.1",
         "template_guid": template_guid,
@@ -611,9 +582,8 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
         "items": items
     }
 
-    with open(output_path, "w", encoding="utf-8") as f:
-        json.dump(report, f, ensure_ascii=False, indent=2)
-    save_cache(cache_path, cache)
+    write_report(output_path, report, cache_path, cache)
+
 
 if __name__ == "__main__":
 
