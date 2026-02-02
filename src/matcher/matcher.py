@@ -410,8 +410,7 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
                     "category": expected_category,
                     "semantic_category": None
                 },
-                "llm_context": build_llm_context(section=section, source_key=source_key, text=text, expected_category=expected_category,
-                                                 candidates=fuzzy_candidates, device_ctx=device_ctx, versions=versions, template_guid=template_guid, top_k=5)
+                "suggested_action": "dictionary.suggest_or_upsert"
             }
 
         fuzzy_candidates.sort(key=lambda c: (-c["score"], c["concept_id"]))
@@ -474,10 +473,9 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
                     "dictionary_entry_id": None,
                     "category": expected_category,
                     "semantic_category": None,
-                    "gap_top2": gap
                 },
-                "llm_context": build_llm_context(section=section, source_key=source_key, text=text, expected_category=expected_category,
-                                                 candidates=fuzzy_candidates, device_ctx=device_ctx, versions=versions, template_guid=template_guid, top_k=5)
+                "suggested_action": "dictionary.suggest_or_upsert"
+
             }
 
     # deterministico: scegli top candidate

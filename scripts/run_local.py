@@ -199,20 +199,27 @@ def build_llm_prompt(llm_contexts: list[dict]) -> str:
     # costruisce il prompt per llm
 
     return (
-        "SYSTEM: You are a strict JSON generator for patch_actions_template.\n"
-        "OUTPUT MUST be valid JSON only. No extra text.\n"
-        "If unsure, output exactly: {\"patch_actions_version\":\"v0.1\",\"generated_at\":\"<ISO-8601>\",\"actions\":[]}\n\n"
-        "REQUIRED OUTPUT SHAPE (strict):\n"
+        "SYSTEM: You are a strict JSON generator.\n"
+        "Task: produce patch actions ONLY for ambiguous cases.\n"
+        "Do not output text explanations. Output JSON only.\n\n"
+
+        "IMPORTANT:\n"
+        "1) Use ONLY contexts that are ambiguous.\n"
+        "2) Use ONLY concept_id from top_candidates.\n"
+        "3) If no safe decision, skip the item.\n"
+        "4) If nothing is safe, return actions: [].\n\n"
+
+        "OUTPUT FORMAT (must match exactly):\n"
         "{\n"
         "  \"patch_actions_version\": \"v0.1\",\n"
         "  \"generated_at\": \"<ISO-8601>\",\n"
         "  \"actions\": [\n"
         "    {\n"
         "      \"type\": \"map_variable\",\n"
-        "      \"section\": \"<SectionName>\",\n"
-        "      \"source_key\": \"<SourceKey>\",\n"
+        "      \"section\": \"<section>\",\n"
+        "      \"source_key\": \"<source_key>\",\n"
         "      \"target\": {\n"
-        "        \"concept_id\": \"<concept_id>\",\n"
+        "        \"concept_id\": \"<concept_id from top_candidates>\",\n"
         "        \"category\": \"<category>\",\n"
         "        \"semantic_category\": \"<semantic_category>\",\n"
         "        \"labels\": {\"it\": \"<label_it>\", \"en\": \"<label_en>\"}\n"
@@ -225,22 +232,17 @@ def build_llm_prompt(llm_contexts: list[dict]) -> str:
         "        }\n"
         "      },\n"
         "      \"confidence\": 0.0,\n"
-        "      \"reason\": \"<short reason>\",\n"
+        "      \"reason\": \"ambiguous_resolution\",\n"
         "      \"evidence\": {\n"
-        "        \"normalized_text\": \"<text>\",\n"
+        "        \"normalized_text\": \"<normalized_text>\",\n"
         "        \"selected_candidate\": \"<concept_id>\",\n"
         "        \"score\": 0.0\n"
         "      }\n"
         "    }\n"
         "  ]\n"
         "}\n\n"
-        "RULES:\n"
-        "1) Use ONLY concept_id from top_candidates.\n"
-        "2) Use section/source_key from the context item.\n"
-        "3) If top_candidates is empty or ambiguous -> skip (no action).\n"
-        "4) Do NOT output the input context.\n"
-        "5) labels.it and labels.en must always be present. If unknown, copy normalized_text into both.\n\n"
-        "INPUT llm_contexts:\n"
+
+        "INPUT (ambiguous contexts only):\n"
         f"{json.dumps(llm_contexts, ensure_ascii=False)}\n"
     )
 
@@ -789,7 +791,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     mr, analysis = load_matching(matching_path) # carica matching report
 
     dict_patch = {"target": "dictionary", "operations": []}
-    use_llm = False 
+    use_llm = cfg.get("use_llm", False) 
     llm_model = cfg.get("llm_model", "llama3.1:8b")
     llm_attempt = None 
     actions_payload_override = None 
@@ -977,8 +979,8 @@ if __name__ == "__main__":
     elif choose == 2:   
         run_patch(ARTIFACTS["kb"],  "kb", kb_upsert_mapping, summarize_kb_diff, validate_only)
     elif choose == 3:
-        #use_llm = input("Usare LLM come proposer? (y/n): ").strip().lower() == "y"
-        #ARTIFACTS["template"]["use_llm"] = use_llm
+        use_llm = input("Usare LLM come proposer? (y/n): ").strip().lower() == "y"
+        ARTIFACTS["template"]["use_llm"] = use_llm
         ARTIFACTS["template"]["llm_model"] = "llama3.1:8b"
         run_patch(ARTIFACTS["template"], "template", template_apply_patch, summarize_template_real_diff, validate_only)
     elif choose == 4:
