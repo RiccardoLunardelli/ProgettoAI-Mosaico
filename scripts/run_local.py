@@ -188,10 +188,8 @@ def extract_llm_contexts(mr: dict) -> list[dict]:
 
     out = []
     for item in mr.get("items", []):
-        if item.get("status") in ["ambiguous", "unmapped"]:
-            ctx = item.get("llm_context")
-            if ctx:
-                out.append(ctx)
+        if item.get("status") == "ambiguous" and item.get("llm_context"):
+            out.append(item["llm_context"])
     return out
 
 def build_llm_prompt(llm_contexts: list[dict]) -> str:
@@ -266,8 +264,8 @@ def ollama_generate_json(model: str, prompt: str) -> dict:
         print("generate chunk")
         return json.loads(raw)
     except Exception:
-        return "ERROR_INVALID_JSON_OUTPUT_FROM_LLM"
-
+        return {"patch_actions_version": "v0.1", "generated_at": datetime.now(timezone.utc).isoformat(), "actions": []}
+    
 def chunk_list(items: list, size: int) -> list[list]:
     # suddivide una lista in chunk di dimensione size
 
@@ -277,6 +275,8 @@ def llm_propose_actions(model: str, mr: dict, batch_size: int = 5) -> dict:
     # genera proposte actions con llm. Produce patch actions + info 
 
     llm_contexts = extract_llm_contexts(mr)
+    if not llm_contexts:
+        return {"patch_actions_version": "v0.1","generated_at": datetime.now(timezone(timedelta(hours=1))).isoformat(), "actions": []}, {"target":"dictionary","operations":[]}, {"note":"skipped_no_ambiguous"}
     batches = chunk_list(llm_contexts, batch_size)
 
     all_actions = []
@@ -314,9 +314,12 @@ def llm_propose_actions(model: str, mr: dict, batch_size: int = 5) -> dict:
             "latency_sec": latency,
             "output": patch_actions
         })
+    print(f"[LLM] ambiguous={sum(1 for i in mr.get('items',[]) if i.get('status')=='ambiguous')}")
+    print(f"[LLM] contexts={len(llm_contexts)}")
+
     return patch_actions, dictionary_patch, llm_attempt
 
-def parse_llm_output(output: dict) -> tuple[dict, dict]:
+def parse_llm_output(output: dict) -> dict:
     
     if not isinstance(output, dict):
         return {"patch_actions_version": "v0.1", "generated_at": datetime.now(timezone.utc).isoformat(), "actions": []}
@@ -591,6 +594,9 @@ def build_patch_actions_from_matching(mr: dict, output_path: str) -> dict:
         confidence = item.get("confidence")
         normalized_text = evidence.get("normalized_text")
 
+        if status != "matched":
+            continue
+
         if status == "matched" and confidence > 0.9:
             actions.append({
                 "type": "map_variable",
@@ -802,22 +808,26 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     
     mr, analysis = load_matching(matching_path) # carica matching report
 
-    dict_patch = {"target": "dictionary", "operations": []}
-    use_llm = cfg.get("use_llm", False) 
+    # deterministico dalle match
+    actions_out = "output_dir/patch_actions_v0.1.json"
+    build_patch_actions_from_matching(mr, actions_out)
+    cfg["actions_path"] = actions_out
+
+    # se ambiguous --> llm
+    has_ambiguous = any(i.get("status") == "ambiguous" for i in mr.get("items", [])) if mr else False
+    use_llm = False 
+    llm_actions = None
     llm_model = cfg.get("llm_model", "llama3.1:8b")
-    llm_attempt = None 
-    actions_payload_override = None 
+    dict_patch = {"target": "dictionary", "operations": []}
+    llm_attempt = None
+    if has_ambiguous:
+        use_llm = input("Sono presenti ambiguità. Usare LLM? (y/n): ").strip().lower() == "y"
+        if use_llm:
+            print("Generating LLM proposed actions...")
+            llm_actions, _, llm_attempt = llm_propose_actions(llm_model, mr)
+            llm_actions = ensure_labels(llm_actions)
 
-    if artifact_type == "template" and use_llm and validate_only:
-        patch_actions, dict_patch, llm_attempt = llm_propose_actions(llm_model, mr)
-        actions_payload_override = ensure_labels(patch_actions)
-    
-    if artifact_type == "template" and matching_path:
-        actions_out = "output_dir/patch_actions_v0.1.json"
-        build_patch_actions_from_matching(mr, actions_out)
-        cfg["actions_path"] = actions_out
-
-    template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = build_patch_and_validation(cfg, artifact_type, upsert_fn, diff_fn, actions_payload_override)
+    template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = build_patch_and_validation(cfg, artifact_type, upsert_fn, diff_fn)
 
     if validation_error:
         run_report = build_run_report(
@@ -850,13 +860,19 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     artifact, preview, diff = compute_diff(input_path, template_patch, validated_preview, validated_diff, upsert_fn, diff_fn)
 
     approve_commit = False 
+    print("\n------ MATCH DETERMINISTICO ----------")
     print("\n--- DRY-RUN DIFF ---")
     for d in diff:
         print("-", d)
 
     if actions_payload:
-        print("\n--- ACTIONS ---")
+        print("\n--- ACTIONS (DETERMINISTICHE) ---")
         for a in actions_payload.get("actions", []):
+            print(f"- {a.get('type')} {a.get('section')}/{a.get('source_key')} -> {a.get('target', {}).get('concept_id')}")
+
+    if llm_attempt:
+        print("\n----------------LLM PROPOSED ACTIONS----------------")
+        for a in llm_actions.get("actions", []):
             print(f"- {a.get('type')} {a.get('section')}/{a.get('source_key')} -> {a.get('target', {}).get('concept_id')}")
 
     response = input("Commit? (y/n): ").strip().lower()
@@ -889,7 +905,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
 
     if llm_attempt:
         run_report["llm_attempt"] = llm_attempt
-        run_report["llm_dictionary_patch"] = dict_patch
+        run_report["llm_patch_actions"] = llm_actions
 
     if status == "validation_error":
         policy_outcome = "rejected"
@@ -991,9 +1007,6 @@ if __name__ == "__main__":
     elif choose == 2:   
         run_patch(ARTIFACTS["kb"],  "kb", kb_upsert_mapping, summarize_kb_diff, validate_only)
     elif choose == 3:
-        use_llm = input("Usare LLM come proposer? (y/n): ").strip().lower() == "y"
-        ARTIFACTS["template"]["use_llm"] = use_llm
-        ARTIFACTS["template"]["llm_model"] = "llama3.1:8b"
         run_patch(ARTIFACTS["template"], "template", template_apply_patch, summarize_template_real_diff, validate_only)
     elif choose == 4:
         run_patch(ARTIFACTS["template_base"], "template_base", template_apply_patch, summarize_template_base_diff, validate_only)  

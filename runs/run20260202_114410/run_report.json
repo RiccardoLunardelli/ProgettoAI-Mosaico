@@ -4,8 +4,8 @@
     "patch_actions_template": "v0.1",
     "template_patch": "v0.1"
   },
-  "run_id": "run20260202_104923",
-  "timestamp": "2026-02-02T10:51:33.861724+01:00",
+  "run_id": "run20260202_114410",
+  "timestamp": "2026-02-02T11:47:11.046426+01:00",
   "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
   "source_files": {
     "template_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json",
@@ -19,12 +19,12 @@
   "target": {
     "artifact_type": "template",
     "input_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json",
-    "output_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json"
+    "output_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e_v0.1.json"
   },
   "execution": {
     "dry_run_performed": true,
-    "committed": false,
-    "status": "validated_only"
+    "committed": true,
+    "status": "success"
   },
   "validation": {
     "status": "ok",
@@ -34,6 +34,8 @@
   },
   "diff_summary": {
     "changed_paths": [
+      "set_fields: ContinuosReads/Read11 -> Category, ConceptId, SemanticCategory",
+      "set_fields: ContinuosReads/Read17 -> Category, ConceptId, SemanticCategory",
       "set_fields: ContinuosReads/Read18 -> Category, ConceptId, SemanticCategory",
       "set_fields: ContinuosReads/Read19 -> Category, ConceptId, SemanticCategory",
       "set_fields: ContinuosReads/Read31 -> Category, ConceptId, SemanticCategory",
@@ -118,7 +120,7 @@
   },
   "llm_attempt": {
     "model": "llama3.1:8b",
-    "latency_sec": 108.95,
+    "latency_sec": 111.332,
     "contexts_count": 83,
     "batch_size": 5,
     "batches": 17,
@@ -126,11 +128,67 @@
       {
         "batch_index": 16,
         "batch_size": 3,
-        "latency_sec": 4.034,
+        "latency_sec": 4.035,
         "output": {
           "patch_actions_version": "v0.1",
-          "generated_at": "2026-02-02T10:51:12.130691+01:00",
+          "generated_at": "2026-02-02T11:46:04.131331+01:00",
           "actions": [
+            {
+              "type": "map_variable",
+              "section": "ContinuosReads",
+              "source_key": "Read11",
+              "target": {
+                "concept_id": "state_fan",
+                "category": "measurement",
+                "semantic_category": "state",
+                "labels": {
+                  "it": "valore sonda regolazione ventilatori",
+                  "en": "valore sonda regolazione ventilatori"
+                }
+              },
+              "patch": {
+                "set_fields": {
+                  "ConceptId": "state_fan",
+                  "Category": "measurement",
+                  "SemanticCategory": "state"
+                }
+              },
+              "confidence": 0.0,
+              "reason": "ambiguous_resolution",
+              "evidence": {
+                "normalized_text": "valore sonda regolazione ventilatori",
+                "selected_candidate": "state_fan",
+                "score": 0.0
+              }
+            },
+            {
+              "type": "map_variable",
+              "section": "ContinuosReads",
+              "source_key": "Read17",
+              "target": {
+                "concept_id": "state_defrost",
+                "category": "measurement",
+                "semantic_category": "state",
+                "labels": {
+                  "it": "tempo mancante al prossimo sbrinamento 1=10 sec",
+                  "en": "tempo mancante al prossimo sbrinamento 1=10 sec"
+                }
+              },
+              "patch": {
+                "set_fields": {
+                  "ConceptId": "state_defrost",
+                  "Category": "measurement",
+                  "SemanticCategory": "state"
+                }
+              },
+              "confidence": 0.0,
+              "reason": "ambiguous_resolution",
+              "evidence": {
+                "normalized_text": "tempo mancante al prossimo sbrinamento 1=10 sec",
+                "selected_candidate": "state_defrost",
+                "score": 0.0
+              }
+            },
             {
               "type": "map_variable",
               "section": "ContinuosReads",
@@ -140,8 +198,8 @@
                 "category": "measurement",
                 "semantic_category": "temperature",
                 "labels": {
-                  "it": "temperatura di consegna",
-                  "en": "delivery temperature"
+                  "it": "temperatura minima",
+                  "en": "temperatura minima"
                 }
               },
               "patch": {
@@ -151,12 +209,12 @@
                   "SemanticCategory": "temperature"
                 }
               },
-              "confidence": 0.8571428571428572,
+              "confidence": 0.0,
               "reason": "ambiguous_resolution",
               "evidence": {
                 "normalized_text": "temperatura minima",
                 "selected_candidate": "temp_delivery",
-                "score": 0.8571428571428572
+                "score": 0.0
               }
             },
             {
@@ -168,8 +226,8 @@
                 "category": "measurement",
                 "semantic_category": "temperature",
                 "labels": {
-                  "it": "temperatura di sovraffollamento",
-                  "en": "superheat temperature"
+                  "it": "temperatura massima",
+                  "en": "temperatura massima"
                 }
               },
               "patch": {
@@ -179,12 +237,12 @@
                   "SemanticCategory": "temperature"
                 }
               },
-              "confidence": 0.8947368421052632,
+              "confidence": 0.0,
               "reason": "ambiguous_resolution",
               "evidence": {
                 "normalized_text": "temperatura massima",
                 "selected_candidate": "superheat_temperature",
-                "score": 0.8947368421052632
+                "score": 0.0
               }
             },
             {
@@ -196,8 +254,8 @@
                 "category": "measurement",
                 "semantic_category": "state",
                 "labels": {
-                  "it": "sbrinamento",
-                  "en": "defrost"
+                  "it": "uscita digitale sbrinamento resistenze",
+                  "en": "uscita digitale sbrinamento resistenze"
                 }
               },
               "patch": {
@@ -207,12 +265,12 @@
                   "SemanticCategory": "state"
                 }
               },
-              "confidence": 0.7,
+              "confidence": 0.0,
               "reason": "ambiguous_resolution",
               "evidence": {
                 "normalized_text": "uscita digitale sbrinamento resistenze",
                 "selected_candidate": "state_defrost",
-                "score": 0.7
+                "score": 0.0
               }
             },
             {
@@ -504,8 +562,8 @@
                 "category": "measurement",
                 "semantic_category": "state",
                 "labels": {
-                  "it": "allarme di alta temperatura sbrinamento",
-                  "en": "allarme di alta temperatura sbrinamento"
+                  "it": "defrosta",
+                  "en": "defrost"
                 }
               },
               "patch": {
@@ -532,8 +590,8 @@
                 "category": "measurement",
                 "semantic_category": "temperature",
                 "labels": {
-                  "it": "allarme di bassa temperatura ventole",
-                  "en": "allarme di bassa temperatura ventole"
+                  "it": "temperatura ambiente",
+                  "en": "ambient temperature"
                 }
               },
               "patch": {
@@ -560,8 +618,8 @@
                 "category": "measurement",
                 "semantic_category": "temperature",
                 "labels": {
-                  "it": "allarme di alta temperatura ventole",
-                  "en": "allarme di alta temperatura ventole"
+                  "it": "temperatura ambiente",
+                  "en": "ambient temperature"
                 }
               },
               "patch": {
@@ -588,8 +646,8 @@
                 "category": "parameter",
                 "semantic_category": "temperature",
                 "labels": {
-                  "it": "configurazione differenziale relativo/assoluto",
-                  "en": "configurazione differenziale relativo/assoluto"
+                  "it": "temperatura di sospensione",
+                  "en": "suspension temperature"
                 }
               },
               "patch": {
@@ -616,8 +674,8 @@
                 "category": "parameter",
                 "semantic_category": "temperature",
                 "labels": {
-                  "it": "differenziale assoluto",
-                  "en": "differenziale assoluto"
+                  "it": "temperatura di sospensione",
+                  "en": "suspension temperature"
                 }
               },
               "patch": {
@@ -2376,11 +2434,2309 @@
       }
     ]
   },
-  "llm_dictionary_patch": {
-    "target": "dictionary",
-    "operations": []
+  "llm_patch_actions": {
+    "patch_actions_version": "v0.1",
+    "generated_at": "2026-02-02T11:46:04.131331+01:00",
+    "actions": [
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read11",
+        "target": {
+          "concept_id": "state_fan",
+          "category": "measurement",
+          "semantic_category": "state",
+          "labels": {
+            "it": "valore sonda regolazione ventilatori",
+            "en": "valore sonda regolazione ventilatori"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "state_fan",
+            "Category": "measurement",
+            "SemanticCategory": "state"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "valore sonda regolazione ventilatori",
+          "selected_candidate": "state_fan",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read17",
+        "target": {
+          "concept_id": "state_defrost",
+          "category": "measurement",
+          "semantic_category": "state",
+          "labels": {
+            "it": "tempo mancante al prossimo sbrinamento 1=10 sec",
+            "en": "tempo mancante al prossimo sbrinamento 1=10 sec"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "state_defrost",
+            "Category": "measurement",
+            "SemanticCategory": "state"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "tempo mancante al prossimo sbrinamento 1=10 sec",
+          "selected_candidate": "state_defrost",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read18",
+        "target": {
+          "concept_id": "temp_delivery",
+          "category": "measurement",
+          "semantic_category": "temperature",
+          "labels": {
+            "it": "temperatura minima",
+            "en": "temperatura minima"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "temp_delivery",
+            "Category": "measurement",
+            "SemanticCategory": "temperature"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "temperatura minima",
+          "selected_candidate": "temp_delivery",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read19",
+        "target": {
+          "concept_id": "superheat_temperature",
+          "category": "measurement",
+          "semantic_category": "temperature",
+          "labels": {
+            "it": "temperatura massima",
+            "en": "temperatura massima"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "superheat_temperature",
+            "Category": "measurement",
+            "SemanticCategory": "temperature"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "temperatura massima",
+          "selected_candidate": "superheat_temperature",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read31",
+        "target": {
+          "concept_id": "state_defrost",
+          "category": "measurement",
+          "semantic_category": "state",
+          "labels": {
+            "it": "uscita digitale sbrinamento resistenze",
+            "en": "uscita digitale sbrinamento resistenze"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "state_defrost",
+            "Category": "measurement",
+            "SemanticCategory": "state"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "uscita digitale sbrinamento resistenze",
+          "selected_candidate": "state_defrost",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read40",
+        "target": {
+          "concept_id": "state_compressor",
+          "category": "measurement",
+          "semantic_category": "state",
+          "labels": {
+            "it": "stato",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "state_compressor",
+            "Category": "measurement",
+            "SemanticCategory": "state"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "stato",
+          "selected_candidate": "state_compressor",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read42",
+        "target": {
+          "concept_id": "state_defrost",
+          "category": "measurement",
+          "semantic_category": "state",
+          "labels": {
+            "it": "",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "state_defrost",
+            "Category": "measurement",
+            "SemanticCategory": "state"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "stato sbrinamento ritardo avviamento attesa dsd",
+          "selected_candidate": "state_defrost",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read43",
+        "target": {
+          "concept_id": "state_defrost",
+          "category": "measurement",
+          "semantic_category": "state",
+          "labels": {
+            "it": "",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "state_defrost",
+            "Category": "measurement",
+            "SemanticCategory": "state"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "stato sbrinamento manuale",
+          "selected_candidate": "state_defrost",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read44",
+        "target": {
+          "concept_id": "state_defrost",
+          "category": "measurement",
+          "semantic_category": "state",
+          "labels": {
+            "it": "",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "state_defrost",
+            "Category": "measurement",
+            "SemanticCategory": "state"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "stato sbrinamento sincronizzato lan",
+          "selected_candidate": "state_defrost",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read45",
+        "target": {
+          "concept_id": "state_defrost",
+          "category": "measurement",
+          "semantic_category": "state",
+          "labels": {
+            "it": "",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "state_defrost",
+            "Category": "measurement",
+            "SemanticCategory": "state"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "stato sbrinamento in gocciolamento",
+          "selected_candidate": "state_defrost",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read46",
+        "target": {
+          "concept_id": "state_defrost",
+          "category": "measurement",
+          "semantic_category": "state",
+          "labels": {
+            "it": "sbrinamento",
+            "en": "defrost"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "state_defrost",
+            "Category": "measurement",
+            "SemanticCategory": "state"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "stato sbrinamento in pausa attesa consenso di fine da lan",
+          "selected_candidate": "state_defrost",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read50",
+        "target": {
+          "concept_id": "state_defrost",
+          "category": "measurement",
+          "semantic_category": "state",
+          "labels": {
+            "it": "sbrinamento",
+            "en": "defrost"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "state_defrost",
+            "Category": "measurement",
+            "SemanticCategory": "state"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "master sbrinamento",
+          "selected_candidate": "state_defrost",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read58",
+        "target": {
+          "concept_id": "temp_defrost",
+          "category": "measurement",
+          "semantic_category": "temperature",
+          "labels": {
+            "it": "defrost",
+            "en": "defrost"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "temp_defrost",
+            "Category": "measurement",
+            "SemanticCategory": "temperature"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "evento fine defrost in temperatura per time out 0=no 1=si",
+          "selected_candidate": "temp_defrost",
+          "score": 0.8421052631578947
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read65",
+        "target": {
+          "concept_id": "pressure_suction",
+          "category": "measurement",
+          "semantic_category": "pressure",
+          "labels": {
+            "it": "pressione di regolazione",
+            "en": "regulation pressure"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "pressure_suction",
+            "Category": "measurement",
+            "SemanticCategory": "pressure"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "evento valore pressione di regolazione non disponibile",
+          "selected_candidate": "pressure_suction",
+          "score": 0.8333333333333335
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read77",
+        "target": {
+          "concept_id": "state_defrost",
+          "category": "measurement",
+          "semantic_category": "state",
+          "labels": {
+            "it": "sbrinamento",
+            "en": "defrost"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "state_defrost",
+            "Category": "measurement",
+            "SemanticCategory": "state"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme di bassa temperatura sbrinamento",
+          "selected_candidate": "state_defrost",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read78",
+        "target": {
+          "concept_id": "state_defrost",
+          "category": "measurement",
+          "semantic_category": "state",
+          "labels": {
+            "it": "defrosta",
+            "en": "defrost"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "state_defrost",
+            "Category": "measurement",
+            "SemanticCategory": "state"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme di alta temperatura sbrinamento",
+          "selected_candidate": "state_defrost",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read79",
+        "target": {
+          "concept_id": "temp_ambient",
+          "category": "measurement",
+          "semantic_category": "temperature",
+          "labels": {
+            "it": "temperatura ambiente",
+            "en": "ambient temperature"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "temp_ambient",
+            "Category": "measurement",
+            "SemanticCategory": "temperature"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme di bassa temperatura ventole",
+          "selected_candidate": "temp_ambient",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "ContinuosReads",
+        "source_key": "Read80",
+        "target": {
+          "concept_id": "temp_ambient",
+          "category": "measurement",
+          "semantic_category": "temperature",
+          "labels": {
+            "it": "temperatura ambiente",
+            "en": "ambient temperature"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "temp_ambient",
+            "Category": "measurement",
+            "SemanticCategory": "temperature"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme di alta temperatura ventole",
+          "selected_candidate": "temp_ambient",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param3",
+        "target": {
+          "concept_id": "hysteresis_temperature",
+          "category": "parameter",
+          "semantic_category": "temperature",
+          "labels": {
+            "it": "temperatura di sospensione",
+            "en": "suspension temperature"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "hysteresis_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "temperature"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "configurazione differenziale relativo/assoluto",
+          "selected_candidate": "hysteresis_temperature",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param4",
+        "target": {
+          "concept_id": "hysteresis_temperature",
+          "category": "parameter",
+          "semantic_category": "temperature",
+          "labels": {
+            "it": "temperatura di sospensione",
+            "en": "suspension temperature"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "hysteresis_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "temperature"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "differenziale assoluto",
+          "selected_candidate": "hysteresis_temperature",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param5",
+        "target": {
+          "concept_id": "setpoint_temperature",
+          "category": "parameter",
+          "semantic_category": "setpoint",
+          "labels": {
+            "it": "setpoint minimo",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "setpoint_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "setpoint"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "setpoint minimo",
+          "selected_candidate": "setpoint_temperature",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param6",
+        "target": {
+          "concept_id": "setpoint_temperature",
+          "category": "parameter",
+          "semantic_category": "setpoint",
+          "labels": {
+            "it": "setpoint massimo",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "setpoint_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "setpoint"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "setpoint massimo",
+          "selected_candidate": "setpoint_temperature",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param14",
+        "target": {
+          "concept_id": "setpoint_temperature",
+          "category": "parameter",
+          "semantic_category": "setpoint",
+          "labels": {
+            "it": "setpoint per ciclo continuo",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "setpoint_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "setpoint"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "setpoint per ciclo continuo",
+          "selected_candidate": "setpoint_temperature",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param17",
+        "target": {
+          "concept_id": "setpoint_temperature",
+          "category": "parameter",
+          "semantic_category": "setpoint",
+          "labels": {
+            "it": "tipo di regolazione",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "setpoint_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "setpoint"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "tipo di regolazione",
+          "selected_candidate": "setpoint_temperature",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param26",
+        "target": {
+          "concept_id": "setpoint_temperature",
+          "category": "parameter",
+          "semantic_category": "setpoint",
+          "labels": {
+            "it": "sonda di regolazione a",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "setpoint_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "setpoint"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "sonda di regolazione a",
+          "selected_candidate": "setpoint_temperature",
+          "score": 0.0
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param27",
+        "target": {
+          "concept_id": "setpoint_temperature",
+          "category": "parameter",
+          "semantic_category": "setpoint",
+          "labels": {
+            "it": "sonda di regolazione b",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "setpoint_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "setpoint"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "sonda di regolazione b",
+          "selected_candidate": "setpoint_temperature",
+          "score": 0.8292682926829268
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param32",
+        "target": {
+          "concept_id": "setpoint_temperature",
+          "category": "parameter",
+          "semantic_category": "setpoint",
+          "labels": {
+            "it": "setpoint surriscaldamento",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "setpoint_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "setpoint"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "setpoint surriscaldamento",
+          "selected_candidate": "setpoint_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param64",
+        "target": {
+          "concept_id": "defrost_duration",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "sonda di sbrinamento a",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "defrost_duration",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "sonda di sbrinamento a",
+          "selected_candidate": "defrost_duration",
+          "score": 0.8
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param65",
+        "target": {
+          "concept_id": "defrost_duration",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "sonda di sbrinamento b",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "defrost_duration",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "sonda di sbrinamento b",
+          "selected_candidate": "defrost_duration",
+          "score": 0.8
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param67",
+        "target": {
+          "concept_id": "defrost_duration",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "tipo di sbrinamento",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "defrost_duration",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "tipo di sbrinamento",
+          "selected_candidate": "defrost_duration",
+          "score": 0.8571428571428572
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param68",
+        "target": {
+          "concept_id": "defrost_duration",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "modalita di attivazione sbrinamento",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "defrost_duration",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "modalita di attivazione sbrinamento",
+          "selected_candidate": "defrost_duration",
+          "score": 0.8
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param69",
+        "target": {
+          "concept_id": "defrost_duration",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "attivazione impostazioni avanzate di sbrinamento",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "defrost_duration",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "attivazione impostazioni avanzate di sbrinamento",
+          "selected_candidate": "defrost_duration",
+          "score": 0.8125
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param70",
+        "target": {
+          "concept_id": "setpoint_temperature",
+          "category": "parameter",
+          "semantic_category": "setpoint",
+          "labels": {
+            "it": "setpoint resistenze durante sbrinamento",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "setpoint_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "setpoint"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "setpoint resistenze durante sbrinamento",
+          "selected_candidate": "setpoint_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param71",
+        "target": {
+          "concept_id": "hysteresis_temperature",
+          "category": "parameter",
+          "semantic_category": "temperature",
+          "labels": {
+            "it": "differenziale per le resistenze",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "hysteresis_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "temperature"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "differenziale per le resistenze",
+          "selected_candidate": "hysteresis_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param73",
+        "target": {
+          "concept_id": "defrost_duration",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "differenza sonde defrost per attivazione sbrinamento",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "defrost_duration",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "differenza sonde defrost per attivazione sbrinamento",
+          "selected_candidate": "defrost_duration",
+          "score": 0.8
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param74",
+        "target": {
+          "concept_id": "defrost_duration",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "ritardo prima dell attivazione sbrinamento",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "defrost_duration",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "ritardo prima dell attivazione sbrinamento",
+          "selected_candidate": "defrost_duration",
+          "score": 0.8
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param76",
+        "target": {
+          "concept_id": "threshold_low_temperature",
+          "category": "parameter",
+          "semantic_category": "threshold",
+          "labels": {
+            "it": "temperatura di fine sbrinamento sonda a",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "threshold_low_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "threshold"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "temperatura di fine sbrinamento sonda a",
+          "selected_candidate": "threshold_low_temperature",
+          "score": 0.8125
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param77",
+        "target": {
+          "concept_id": "threshold_low_temperature",
+          "category": "parameter",
+          "semantic_category": "threshold",
+          "labels": {
+            "it": "temperatura di fine sbrinamento sonda b",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "threshold_low_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "threshold"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "temperatura di fine sbrinamento sonda b",
+          "selected_candidate": "threshold_low_temperature",
+          "score": 0.8125
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param81",
+        "target": {
+          "concept_id": "defrost_duration",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "visualizzazione durante lo sbrinamento",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "defrost_duration",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "visualizzazione durante lo sbrinamento",
+          "selected_candidate": "defrost_duration",
+          "score": 0.8
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param85",
+        "target": {
+          "concept_id": "fan_delay",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "ritardo attivazione sbrinamento dopo il ciclo continuo",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "fan_delay",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "ritardo attivazione sbrinamento dopo il ciclo continuo",
+          "selected_candidate": "fan_delay",
+          "score": 0.8571428571428571
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param92",
+        "target": {
+          "concept_id": "hysteresis_temperature",
+          "category": "parameter",
+          "semantic_category": "temperature",
+          "labels": {
+            "it": "differenziale di temperatura per evitare la pendolazione delle ventole",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "hysteresis_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "temperature"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "differenziale di temperatura per evitare la pendolazione delle ventole",
+          "selected_candidate": "hysteresis_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param93",
+        "target": {
+          "concept_id": "threshold_low_temperature",
+          "category": "parameter",
+          "semantic_category": "threshold",
+          "labels": {
+            "it": "temperatura di fermo ventole",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "threshold_low_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "threshold"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "temperatura di fermo ventole",
+          "selected_candidate": "threshold_low_temperature",
+          "score": 0.8125
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param94",
+        "target": {
+          "concept_id": "hysteresis_temperature",
+          "category": "parameter",
+          "semantic_category": "temperature",
+          "labels": {
+            "it": "differenziale ripartenza ventole",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "hysteresis_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "temperature"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "differenziale ripartenza ventole",
+          "selected_candidate": "hysteresis_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param95",
+        "target": {
+          "concept_id": "defrost_duration",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "termostato ventole durante sbrinamento",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "defrost_duration",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "termostato ventole durante sbrinamento",
+          "selected_candidate": "defrost_duration",
+          "score": 0.8888888888888888
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param96",
+        "target": {
+          "concept_id": "fan_delay",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "tempo di attivazione ventole dopo sbrinamento senza compressori",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "fan_delay",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "tempo di attivazione ventole dopo sbrinamento senza compressori",
+          "selected_candidate": "fan_delay",
+          "score": 0.8571428571428571
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param103",
+        "target": {
+          "concept_id": "hysteresis_temperature",
+          "category": "parameter",
+          "semantic_category": "temperature",
+          "labels": {
+            "it": "offset dew point/deffierenziale per la regolazione delle ventole",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "hysteresis_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "temperature"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "offset dew point/deffierenziale per la regolazione delle ventole",
+          "selected_candidate": "hysteresis_temperature",
+          "score": 0.8461538461538461
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param104",
+        "target": {
+          "concept_id": "hysteresis_temperature",
+          "category": "parameter",
+          "semantic_category": "temperature",
+          "labels": {
+            "it": "differenziale resistenze anti condensanti",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "hysteresis_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "temperature"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "differenziale resistenze anti condensanti",
+          "selected_candidate": "hysteresis_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param108",
+        "target": {
+          "concept_id": "threshold_high_temperature",
+          "category": "parameter",
+          "semantic_category": "threshold",
+          "labels": {
+            "it": "selezione sonda per allarme di temperatura",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "threshold_high_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "threshold"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "selezione sonda per allarme di temperatura",
+          "selected_candidate": "threshold_high_temperature",
+          "score": 0.8070175438596492
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param109",
+        "target": {
+          "concept_id": "hysteresis_temperature",
+          "category": "parameter",
+          "semantic_category": "temperature",
+          "labels": {
+            "it": "configurazione allarmi temperatura",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "hysteresis_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "temperature"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "configurazione allarmi temperatura",
+          "selected_candidate": "hysteresis_temperature",
+          "score": 0.8
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param112",
+        "target": {
+          "concept_id": "hysteresis_temperature",
+          "category": "parameter",
+          "semantic_category": "temperature",
+          "labels": {
+            "it": "differenziale rientro allarme temperatura",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "hysteresis_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "temperature"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "differenziale rientro allarme temperatura",
+          "selected_candidate": "hysteresis_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param113",
+        "target": {
+          "concept_id": "threshold_high_temperature",
+          "category": "parameter",
+          "semantic_category": "threshold",
+          "labels": {
+            "it": "soglia allarme di alta temperatura",
+            "en": "high alarm threshold"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "threshold_high_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "threshold"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "ritardo allarme temperatura",
+          "selected_candidate": "threshold_high_temperature",
+          "score": 0.826086956521739
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param114",
+        "target": {
+          "concept_id": "threshold_low_temperature",
+          "category": "parameter",
+          "semantic_category": "threshold",
+          "labels": {
+            "it": "soglia allarme di bassa temperatura",
+            "en": "low alarm threshold"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "threshold_low_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "threshold"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "soglia allarme di alta temperatura sonda sbrinamento",
+          "selected_candidate": "threshold_low_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param115",
+        "target": {
+          "concept_id": "hysteresis_temperature",
+          "category": "parameter",
+          "semantic_category": "temperature",
+          "labels": {
+            "it": "differenziale rientro allarme temperatura",
+            "en": "temperature hysteresis"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "hysteresis_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "temperature"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "soglia allarme di bassa temperatura sonda sbrinamento",
+          "selected_candidate": "hysteresis_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param117",
+        "target": {
+          "concept_id": "defrost_duration",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "ritardo allarme di temperatura",
+            "en": "temperature alarm delay"
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "defrost_duration",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "ritardo allarme di temperatura sonda sbrinamento",
+          "selected_candidate": "defrost_duration",
+          "score": 0.875
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param118",
+        "target": {
+          "concept_id": "threshold_high_temperature",
+          "category": "parameter",
+          "semantic_category": "threshold",
+          "labels": {
+            "it": "soglia allarme di alta temperatura sonda ventole",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "threshold_high_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "threshold"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "soglia allarme di alta temperatura sonda ventole",
+          "selected_candidate": "threshold_high_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param119",
+        "target": {
+          "concept_id": "threshold_low_temperature",
+          "category": "parameter",
+          "semantic_category": "threshold",
+          "labels": {
+            "it": "soglia allarme di bassa temperatura sonda ventole",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "threshold_low_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "threshold"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "soglia allarme di bassa temperatura sonda ventole",
+          "selected_candidate": "threshold_low_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param120",
+        "target": {
+          "concept_id": "hysteresis_temperature",
+          "category": "parameter",
+          "semantic_category": "temperature",
+          "labels": {
+            "it": "differenziale rientro allarme temperatura sonda ventole",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "hysteresis_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "temperature"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "differenziale rientro allarme temperatura sonda ventole",
+          "selected_candidate": "hysteresis_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param159",
+        "target": {
+          "concept_id": "setpoint_temperature",
+          "category": "parameter",
+          "semantic_category": "setpoint",
+          "labels": {
+            "it": "incremento di temperatura durante ciclo di energy saving",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "setpoint_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "setpoint"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "incremento di temperatura durante ciclo di energy saving",
+          "selected_candidate": "setpoint_temperature",
+          "score": 0.8
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param163",
+        "target": {
+          "concept_id": "defrost_duration",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "orari di inizio del quarto sbrinamento nei giorni feriali",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "defrost_duration",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "orari di inizio del quarto sbrinamento nei giorni feriali",
+          "selected_candidate": "defrost_duration",
+          "score": 0.8333333333333335
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param169",
+        "target": {
+          "concept_id": "defrost_duration",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "orari di inizio del quarto sbrinamento nei giorni festivi",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "defrost_duration",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "orari di inizio del quarto sbrinamento nei giorni festivi",
+          "selected_candidate": "defrost_duration",
+          "score": 0.8333333333333335
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param206",
+        "target": {
+          "concept_id": "defrost_duration",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "sincronizzazione sbrinamento",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "defrost_duration",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "sincronizzazione sbrinamento",
+          "selected_candidate": "defrost_duration",
+          "score": 0.8
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param207",
+        "target": {
+          "concept_id": "defrost_duration",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "modalita di fine sbrinamento",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "defrost_duration",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "modalita di fine sbrinamento",
+          "selected_candidate": "defrost_duration",
+          "score": 0.8
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param208",
+        "target": {
+          "concept_id": "setpoint_temperature",
+          "category": "parameter",
+          "semantic_category": "setpoint",
+          "labels": {
+            "it": "sincronizzazione setpoint",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "setpoint_temperature",
+            "Category": "parameter",
+            "SemanticCategory": "setpoint"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "sincronizzazione setpoint",
+          "selected_candidate": "setpoint_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Parameters",
+        "source_key": "Param235",
+        "target": {
+          "concept_id": "defrost_duration",
+          "category": "parameter",
+          "semantic_category": "time",
+          "labels": {
+            "it": "configurazione chiave di sbrinamento",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "defrost_duration",
+            "Category": "parameter",
+            "SemanticCategory": "time"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "configurazione chiave di sbrinamento",
+          "selected_candidate": "defrost_duration",
+          "score": 0.8125
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Alarms",
+        "source_key": "Alarm0",
+        "target": {
+          "concept_id": "alarm_high_pressure",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "labels": {
+            "it": "allarme sonda pressione remota 4",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "alarm_high_pressure",
+            "Category": "alarm",
+            "SemanticCategory": "alarm"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme sonda pressione remota 4",
+          "selected_candidate": "alarm_high_pressure",
+          "score": 0.8717948717948718
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Alarms",
+        "source_key": "Alarm1",
+        "target": {
+          "concept_id": "alarm_sensor_fault",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "labels": {
+            "it": "allarme sonda p1",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "alarm_sensor_fault",
+            "Category": "alarm",
+            "SemanticCategory": "alarm"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme sonda p1",
+          "selected_candidate": "alarm_sensor_fault",
+          "score": 0.896551724137931
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Alarms",
+        "source_key": "Alarm2",
+        "target": {
+          "concept_id": "alarm_sensor_fault",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "labels": {
+            "it": "allarme sonda p2",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "alarm_sensor_fault",
+            "Category": "alarm",
+            "SemanticCategory": "alarm"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme sonda p2",
+          "selected_candidate": "alarm_sensor_fault",
+          "score": 0.896551724137931
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Alarms",
+        "source_key": "Alarm3",
+        "target": {
+          "concept_id": "alarm_sensor_fault",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "labels": {
+            "it": "allarme sonda p3",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "alarm_sensor_fault",
+            "Category": "alarm",
+            "SemanticCategory": "alarm"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme sonda p3",
+          "selected_candidate": "alarm_sensor_fault",
+          "score": 0.896551724137931
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Alarms",
+        "source_key": "Alarm4",
+        "target": {
+          "concept_id": "alarm_sensor_fault",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "labels": {
+            "it": "allarme sonda p4",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "alarm_sensor_fault",
+            "Category": "alarm",
+            "SemanticCategory": "alarm"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme sonda p4",
+          "selected_candidate": "alarm_sensor_fault",
+          "score": 0.896551724137931
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Alarms",
+        "source_key": "Alarm5",
+        "target": {
+          "concept_id": "alarm_sensor_fault",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "labels": {
+            "it": "allarme sonda p5",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "alarm_sensor_fault",
+            "Category": "alarm",
+            "SemanticCategory": "alarm"
+          }
+        },
+        "confidence": 0.896551724137931,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme sonda p5",
+          "selected_candidate": "alarm_sensor_fault",
+          "score": 0.896551724137931
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Alarms",
+        "source_key": "Alarm6",
+        "target": {
+          "concept_id": "alarm_low_pressure",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "labels": {
+            "it": "allarme sonda p6",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "alarm_low_pressure",
+            "Category": "alarm",
+            "SemanticCategory": "alarm"
+          }
+        },
+        "confidence": 0.7741935483870968,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme sonda p6",
+          "selected_candidate": "alarm_low_pressure",
+          "score": 0.7741935483870968
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Alarms",
+        "source_key": "Alarm9",
+        "target": {
+          "concept_id": "alarm_low_temperature",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "labels": {
+            "it": "allarme di bassa temperatura sonda 1",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "alarm_low_temperature",
+            "Category": "alarm",
+            "SemanticCategory": "alarm"
+          }
+        },
+        "confidence": 0.7,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme di bassa temperatura sonda 1",
+          "selected_candidate": "alarm_low_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Alarms",
+        "source_key": "Alarm10",
+        "target": {
+          "concept_id": "alarm_high_temperature",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "labels": {
+            "it": "allarme di alta temperatura sonda 1",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "alarm_high_temperature",
+            "Category": "alarm",
+            "SemanticCategory": "alarm"
+          }
+        },
+        "confidence": 0.7,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme di alta temperatura sonda 1",
+          "selected_candidate": "alarm_high_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Alarms",
+        "source_key": "Alarm11",
+        "target": {
+          "concept_id": "alarm_low_temperature",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "labels": {
+            "it": "allarme di bassa temperatura sbrinamento",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "alarm_low_temperature",
+            "Category": "alarm",
+            "SemanticCategory": "alarm"
+          }
+        },
+        "confidence": 0.7,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme di bassa temperatura sbrinamento",
+          "selected_candidate": "alarm_low_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Alarms",
+        "source_key": "Alarm12",
+        "target": {
+          "concept_id": "alarm_high_temperature",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "labels": {
+            "it": "allarme di alta temperatura sbrinamento",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "alarm_high_temperature",
+            "Category": "alarm",
+            "SemanticCategory": "alarm"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme di alta temperatura sbrinamento",
+          "selected_candidate": "alarm_high_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Alarms",
+        "source_key": "Alarm13",
+        "target": {
+          "concept_id": "alarm_low_temperature",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "labels": {
+            "it": "allarme di bassa temperatura ventole",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "alarm_low_temperature",
+            "Category": "alarm",
+            "SemanticCategory": "alarm"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme di bassa temperatura ventole",
+          "selected_candidate": "alarm_low_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Alarms",
+        "source_key": "Alarm14",
+        "target": {
+          "concept_id": "alarm_high_temperature",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "labels": {
+            "it": "allarme di alta temperatura ventole",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "alarm_high_temperature",
+            "Category": "alarm",
+            "SemanticCategory": "alarm"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme di alta temperatura ventole",
+          "selected_candidate": "alarm_high_temperature",
+          "score": 0.7
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Alarms",
+        "source_key": "Alarm17",
+        "target": {
+          "concept_id": "alarm_compressor_fault",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "labels": {
+            "it": "allarme grave",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "alarm_compressor_fault",
+            "Category": "alarm",
+            "SemanticCategory": "alarm"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme grave",
+          "selected_candidate": "alarm_compressor_fault",
+          "score": 0.8333333333333335
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Alarms",
+        "source_key": "Alarm24",
+        "target": {
+          "concept_id": "alarm_door_open",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "labels": {
+            "it": "allarme eeprom",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "alarm_door_open",
+            "Category": "alarm",
+            "SemanticCategory": "alarm"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme eeprom",
+          "selected_candidate": "alarm_door_open",
+          "score": 0.8333333333333335
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Alarms",
+        "source_key": "Alarm25",
+        "target": {
+          "concept_id": "alarm_high_pressure",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "labels": {
+            "it": "allarme sonda pressione remota",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "alarm_high_pressure",
+            "Category": "alarm",
+            "SemanticCategory": "alarm"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "allarme sonda pressione remota",
+          "selected_candidate": "alarm_high_pressure",
+          "score": 0.8717948717948718
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Commands",
+        "source_key": "Command1",
+        "target": {
+          "concept_id": "command_start_device",
+          "category": "command",
+          "semantic_category": "command",
+          "labels": {
+            "it": "spegni dispositivo",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "command_start_device",
+            "Category": "command",
+            "SemanticCategory": "command"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "spegni dispositivo",
+          "selected_candidate": "command_start_device",
+          "score": 0.8125
+        }
+      },
+      {
+        "type": "map_variable",
+        "section": "Commands",
+        "source_key": "Command2",
+        "target": {
+          "concept_id": "command_start_defrost",
+          "category": "command",
+          "semantic_category": "command",
+          "labels": {
+            "it": "sbrinamento",
+            "en": ""
+          }
+        },
+        "patch": {
+          "set_fields": {
+            "ConceptId": "command_start_defrost",
+            "Category": "command",
+            "SemanticCategory": "command"
+          }
+        },
+        "confidence": 0.0,
+        "reason": "ambiguous_resolution",
+        "evidence": {
+          "normalized_text": "sbrinamento",
+          "selected_candidate": "command_start_defrost",
+          "score": 1.0
+        }
+      }
+    ]
   },
-  "policy_outcome": "needs_review",
+  "policy_outcome": "approved",
   "analysis": {
     "matching_version": "v0.1",
     "ambiguous_matches": [
@@ -7948,14 +10304,70 @@
     {
       "type": "map_variable",
       "section": "ContinuosReads",
+      "source_key": "Read11",
+      "target": {
+        "concept_id": "state_fan",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "valore sonda regolazione ventilatori",
+          "en": "valore sonda regolazione ventilatori"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId": "state_fan",
+          "Category": "measurement",
+          "SemanticCategory": "state"
+        }
+      },
+      "confidence": 0.0,
+      "reason": "ambiguous_resolution",
+      "evidence": {
+        "normalized_text": "valore sonda regolazione ventilatori",
+        "selected_candidate": "state_fan",
+        "score": 0.0
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read17",
+      "target": {
+        "concept_id": "state_defrost",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "tempo mancante al prossimo sbrinamento 1=10 sec",
+          "en": "tempo mancante al prossimo sbrinamento 1=10 sec"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId": "state_defrost",
+          "Category": "measurement",
+          "SemanticCategory": "state"
+        }
+      },
+      "confidence": 0.0,
+      "reason": "ambiguous_resolution",
+      "evidence": {
+        "normalized_text": "tempo mancante al prossimo sbrinamento 1=10 sec",
+        "selected_candidate": "state_defrost",
+        "score": 0.0
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
       "source_key": "Read18",
       "target": {
         "concept_id": "temp_delivery",
         "category": "measurement",
         "semantic_category": "temperature",
         "labels": {
-          "it": "temperatura di consegna",
-          "en": "delivery temperature"
+          "it": "temperatura minima",
+          "en": "temperatura minima"
         }
       },
       "patch": {
@@ -7965,12 +10377,12 @@
           "SemanticCategory": "temperature"
         }
       },
-      "confidence": 0.8571428571428572,
+      "confidence": 0.0,
       "reason": "ambiguous_resolution",
       "evidence": {
         "normalized_text": "temperatura minima",
         "selected_candidate": "temp_delivery",
-        "score": 0.8571428571428572
+        "score": 0.0
       }
     },
     {
@@ -7982,8 +10394,8 @@
         "category": "measurement",
         "semantic_category": "temperature",
         "labels": {
-          "it": "temperatura di sovraffollamento",
-          "en": "superheat temperature"
+          "it": "temperatura massima",
+          "en": "temperatura massima"
         }
       },
       "patch": {
@@ -7993,12 +10405,12 @@
           "SemanticCategory": "temperature"
         }
       },
-      "confidence": 0.8947368421052632,
+      "confidence": 0.0,
       "reason": "ambiguous_resolution",
       "evidence": {
         "normalized_text": "temperatura massima",
         "selected_candidate": "superheat_temperature",
-        "score": 0.8947368421052632
+        "score": 0.0
       }
     },
     {
@@ -8010,8 +10422,8 @@
         "category": "measurement",
         "semantic_category": "state",
         "labels": {
-          "it": "sbrinamento",
-          "en": "defrost"
+          "it": "uscita digitale sbrinamento resistenze",
+          "en": "uscita digitale sbrinamento resistenze"
         }
       },
       "patch": {
@@ -8021,12 +10433,12 @@
           "SemanticCategory": "state"
         }
       },
-      "confidence": 0.7,
+      "confidence": 0.0,
       "reason": "ambiguous_resolution",
       "evidence": {
         "normalized_text": "uscita digitale sbrinamento resistenze",
         "selected_candidate": "state_defrost",
-        "score": 0.7
+        "score": 0.0
       }
     },
     {
@@ -8318,8 +10730,8 @@
         "category": "measurement",
         "semantic_category": "state",
         "labels": {
-          "it": "allarme di alta temperatura sbrinamento",
-          "en": "allarme di alta temperatura sbrinamento"
+          "it": "defrosta",
+          "en": "defrost"
         }
       },
       "patch": {
@@ -8346,8 +10758,8 @@
         "category": "measurement",
         "semantic_category": "temperature",
         "labels": {
-          "it": "allarme di bassa temperatura ventole",
-          "en": "allarme di bassa temperatura ventole"
+          "it": "temperatura ambiente",
+          "en": "ambient temperature"
         }
       },
       "patch": {
@@ -8374,8 +10786,8 @@
         "category": "measurement",
         "semantic_category": "temperature",
         "labels": {
-          "it": "allarme di alta temperatura ventole",
-          "en": "allarme di alta temperatura ventole"
+          "it": "temperatura ambiente",
+          "en": "ambient temperature"
         }
       },
       "patch": {
@@ -8402,8 +10814,8 @@
         "category": "parameter",
         "semantic_category": "temperature",
         "labels": {
-          "it": "configurazione differenziale relativo/assoluto",
-          "en": "configurazione differenziale relativo/assoluto"
+          "it": "temperatura di sospensione",
+          "en": "suspension temperature"
         }
       },
       "patch": {
@@ -8430,8 +10842,8 @@
         "category": "parameter",
         "semantic_category": "temperature",
         "labels": {
-          "it": "differenziale assoluto",
-          "en": "differenziale assoluto"
+          "it": "temperatura di sospensione",
+          "en": "suspension temperature"
         }
       },
       "patch": {
