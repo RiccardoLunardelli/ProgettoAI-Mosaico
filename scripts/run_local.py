@@ -155,6 +155,7 @@ def extract_analysis_from_matching_report(mr: dict) -> dict:
         confidence = item.get("confidence")
         candidates = item.get("candidates", [])
         evidence = item.get("evidence", {})
+        suggested_action = item.get("suggested_action")
 
         # -------AMBIGUI-----------
         if status == "ambiguous":
@@ -172,9 +173,7 @@ def extract_analysis_from_matching_report(mr: dict) -> dict:
                 "section": section,
                 "source_key": source_key,
                 "evidence": evidence,
-                "suggested_action": "dictionary.add_concept",
-                "proposal_type": "candidate_only",
-                "requires_human_review": True
+                "suggested_action": suggested_action
             })
     
     return {
@@ -200,16 +199,12 @@ def build_llm_prompt(llm_contexts: list[dict]) -> str:
 
     return (
         "SYSTEM: You are a strict JSON generator.\n"
-        "Task: produce patch actions ONLY for ambiguous cases.\n"
-        "Do not output text explanations. Output JSON only.\n\n"
+        "You MUST output ONLY JSON with EXACTLY these top-level keys:\n"
+        "patch_actions_version, generated_at, actions\n"
+        "If you output any other key, the output will be discarded.\n"
+        "If unsure, return actions as empty list.\n\n"
 
-        "IMPORTANT:\n"
-        "1) Use ONLY contexts that are ambiguous.\n"
-        "2) Use ONLY concept_id from top_candidates.\n"
-        "3) If no safe decision, skip the item.\n"
-        "4) If nothing is safe, return actions: [].\n\n"
-
-        "OUTPUT FORMAT (must match exactly):\n"
+        "OUTPUT FORMAT (strict):\n"
         "{\n"
         "  \"patch_actions_version\": \"v0.1\",\n"
         "  \"generated_at\": \"<ISO-8601>\",\n"
@@ -242,7 +237,14 @@ def build_llm_prompt(llm_contexts: list[dict]) -> str:
         "  ]\n"
         "}\n\n"
 
-        "INPUT (ambiguous contexts only):\n"
+        "RULES:\n"
+        "1) Use ONLY ambiguous contexts.\n"
+        "2) Use ONLY concept_id from top_candidates.\n"
+        "3) If no safe decision, skip.\n"
+        "4) If nothing is safe, return actions: [].\n"
+        "5) Do NOT output any other keys (no sections/items/etc).\n\n"
+
+        "INPUT llm_contexts:\n"
         f"{json.dumps(llm_contexts, ensure_ascii=False)}\n"
     )
 
@@ -257,17 +259,21 @@ def ollama_generate_json(model: str, prompt: str) -> dict:
         "stream": False,
         "options": {"temperature": 0, "top_p": 0.1}
     }
-    r = requests.post(url, json=payload, timeout=120)
+    r = requests.post(url, json=payload, timeout=200)
     r.raise_for_status()
     raw = r.json().get("response", "").strip()
-    return json.loads(raw)
+    try: 
+        print("generate chunk")
+        return json.loads(raw)
+    except Exception:
+        return "ERROR_INVALID_JSON_OUTPUT_FROM_LLM"
 
 def chunk_list(items: list, size: int) -> list[list]:
     # suddivide una lista in chunk di dimensione size
 
     return [items[i:i + size] for i in range(0, len(items), size)]
 
-def llm_propose_actions(model: str, mr: dict, batch_size: int = 30) -> dict:
+def llm_propose_actions(model: str, mr: dict, batch_size: int = 5) -> dict:
     # genera proposte actions con llm. Produce patch actions + info 
 
     llm_contexts = extract_llm_contexts(mr)
@@ -285,19 +291,10 @@ def llm_propose_actions(model: str, mr: dict, batch_size: int = 30) -> dict:
         latency = round(time.time() - start, 3)
         total_latency += latency
 
-        attempts.append({
-            "batch_index": idx,
-            "batch_size": len(batch),
-            "latency_sec": latency,
-            "output": output
-        })
-
         if isinstance(output, dict):
-            pa, dp = parse_llm_output(output)
+            pa = parse_llm_output(output)
             if isinstance(pa, dict) and isinstance(pa.get("actions"), list):
                 all_actions.extend(pa["actions"])
-            if isinstance(dp, dict) and isinstance(dp.get("operations"), list):
-                all_dict_ops.extend(dp["operations"])
 
     llm_attempt = {
         "model": model,
@@ -308,8 +305,15 @@ def llm_propose_actions(model: str, mr: dict, batch_size: int = 30) -> dict:
         "attempts": attempts
     }
     
-    patch_actions = {"patch_actions_version": "v0.1","generated_at": datetime.now(timezone.utc).isoformat(), "actions": all_actions}
+    patch_actions = {"patch_actions_version": "v0.1","generated_at": datetime.now(timezone(timedelta(hours=1))).isoformat(), "actions": all_actions}
     dictionary_patch = {"target": "dictionary", "operations": all_dict_ops}
+    print(f"LLM OUTPUT: {patch_actions}")
+    attempts.append({
+            "batch_index": idx,
+            "batch_size": len(batch),
+            "latency_sec": latency,
+            "output": patch_actions
+        })
     return patch_actions, dictionary_patch, llm_attempt
 
 def parse_llm_output(output: dict) -> tuple[dict, dict]:
@@ -317,18 +321,26 @@ def parse_llm_output(output: dict) -> tuple[dict, dict]:
     if not isinstance(output, dict):
         return {"patch_actions_version": "v0.1", "generated_at": datetime.now(timezone.utc).isoformat(), "actions": []}
 
-    patch_actions = output.get("patch_actions") if isinstance(output, dict) else None
-    if not isinstance(patch_actions, dict):
-        patch_actions = {"patch_actions_version": "v0.1", "generated_at": datetime.now(timezone.utc).isoformat(), "actions": []}
+    allowed = {"patch_actions_version", "generated_at", "actions"}
+    if set(output.keys()) != allowed:
+        return {"patch_actions_version": "v0.1", "generated_at": datetime.now(timezone.utc).isoformat(), "actions": []}
 
-    dictionary_patch = output.get("dictionary_patch") if isinstance(output, dict) else None
-    if not isinstance(dictionary_patch, dict):
-        dictionary_patch = {"target": "dictionary", "operations": []}
+    if not isinstance(output.get("actions"), list):
+        return {"patch_actions_version": "v0.1", "generated_at": datetime.now(timezone.utc).isoformat(), "actions": []}
 
-    patch_actions.setdefault("patch_actions_version", "v0.1")
-    patch_actions.setdefault("generated_at", datetime.now(timezone.utc).isoformat())
-    patch_actions.setdefault("actions", [])
-    return patch_actions, dictionary_patch
+    output.setdefault("patch_actions_version", "v0.1")
+    output.setdefault("generated_at", datetime.now(timezone.utc).isoformat())
+    return output
+
+def ensure_labels(actions_payload: dict) -> dict:
+    actions = actions_payload.get("actions", [])
+    for a in actions:
+        tgt = a.get("target", {})
+        if "labels" not in tgt or not isinstance(tgt.get("labels"), dict):
+            text = a.get("evidence", {}).get("normalized_text", "") or ""
+            tgt["labels"] = {"it": text, "en": text}
+            a["target"] = tgt
+    return actions_payload
 
 #---------DIFF-----------------
 def summarize_device_list_diff(before:dict, after: dict) -> list[str]:
@@ -798,7 +810,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
 
     if artifact_type == "template" and use_llm and validate_only:
         patch_actions, dict_patch, llm_attempt = llm_propose_actions(llm_model, mr)
-        actions_payload_override = patch_actions
+        actions_payload_override = ensure_labels(patch_actions)
     
     if artifact_type == "template" and matching_path:
         actions_out = "output_dir/patch_actions_v0.1.json"

@@ -63,7 +63,6 @@ def build_metrics(items: list) -> dict:
         "ambiguous_count": len([i for i in items if i.get("status") == "ambiguous"]),
         "unmapped_count": len([i for i in items if i.get("status") == "unmapped"]),
         "avg_confidence": avg_conf,
-        "llm_calls": 0,
         "warnings_count": 0
     }
 
