@@ -197,10 +197,16 @@ def build_llm_prompt(llm_contexts: list[dict]) -> str:
 
     return (
         "SYSTEM: You are a strict JSON generator.\n"
-        "You MUST output ONLY JSON with EXACTLY these top-level keys:\n"
-        "patch_actions_version, generated_at, actions\n"
-        "If you output any other key, the output will be discarded.\n"
-        "If unsure, return actions as empty list.\n\n"
+        "You must resolve ONLY ambiguous items using evidence. No guesses.\n"
+        "Output JSON only, no extra text.\n\n"
+                            
+        "DECISION RULES:\n"
+        "1) Choose a concept only if the description clearly matches the candidate meaning.\n"
+        "2) If top candidates are generic or the text is short/ambiguous, SKIP the item.\n"
+        "3) Use ONLY concept_id from top_candidates.\n"
+        "4) Use top_candidates scores as evidence, but do NOT copy them blindly.\n"
+        "5) Confidence must reflect your certainty: high only if the text clearly matches.\n"
+        "6) If not confident (confidence < 0.90), DO NOT output an action.\n\n"
 
         "OUTPUT FORMAT (strict):\n"
         "{\n"
@@ -212,7 +218,7 @@ def build_llm_prompt(llm_contexts: list[dict]) -> str:
         "      \"section\": \"<section>\",\n"
         "      \"source_key\": \"<source_key>\",\n"
         "      \"target\": {\n"
-        "        \"concept_id\": \"<concept_id from top_candidates>\",\n"
+        "        \"concept_id\": \"<concept_id>\",\n"
         "        \"category\": \"<category>\",\n"
         "        \"semantic_category\": \"<semantic_category>\",\n"
         "        \"labels\": {\"it\": \"<label_it>\", \"en\": \"<label_en>\"}\n"
@@ -225,7 +231,7 @@ def build_llm_prompt(llm_contexts: list[dict]) -> str:
         "        }\n"
         "      },\n"
         "      \"confidence\": 0.0,\n"
-        "      \"reason\": \"ambiguous_resolution\",\n"
+        "      \"reason\": \"clear_match\",\n"
         "      \"evidence\": {\n"
         "        \"normalized_text\": \"<normalized_text>\",\n"
         "        \"selected_candidate\": \"<concept_id>\",\n"
@@ -235,16 +241,25 @@ def build_llm_prompt(llm_contexts: list[dict]) -> str:
         "  ]\n"
         "}\n\n"
 
-        "RULES:\n"
-        "1) Use ONLY ambiguous contexts.\n"
-        "2) Use ONLY concept_id from top_candidates.\n"
-        "3) If no safe decision, skip.\n"
-        "4) If nothing is safe, return actions: [].\n"
-        "5) Do NOT output any other keys (no sections/items/etc).\n\n"
+        "IMPORTANT:\n"
+        "- If you are unsure, output actions: [].\n"
+        "- Only create actions when the text meaning clearly matches the candidate.\n\n"
 
         "INPUT llm_contexts:\n"
         f"{json.dumps(llm_contexts, ensure_ascii=False)}\n"
     )
+
+def filter_low_confidence(actions_payload: dict, threshold: float = 0.9) -> dict:
+    # filtra le azioni con confidence bassa
+
+    actions = actions_payload.get("actions", [])
+    filtered = []
+    for a in actions:
+        confidence = a.get("confidence")
+        if isinstance(confidence, (int, float)) and confidence >= threshold:
+            filtered.append(a)
+    actions_payload["actions"] = filtered
+    return actions_payload
 
 def ollama_generate_json(model: str, prompt: str) -> dict:
     # genera json con ollama
@@ -271,7 +286,7 @@ def chunk_list(items: list, size: int) -> list[list]:
 
     return [items[i:i + size] for i in range(0, len(items), size)]
 
-def llm_propose_actions(model: str, mr: dict, batch_size: int = 5) -> dict:
+def llm_propose_actions(model: str, mr: dict, batch_size: int = 3) -> dict:
     # genera proposte actions con llm. Produce patch actions + info 
 
     llm_contexts = extract_llm_contexts(mr)
@@ -833,6 +848,8 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
             llm_actions, _, llm_attempt = llm_propose_actions(llm_model, mr)
             llm_actions = ensure_labels(llm_actions)
 
+            llm_actions = filter_low_confidence(llm_actions, threshold=0.9)
+
     template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = build_patch_and_validation(cfg, artifact_type, upsert_fn, diff_fn)
 
     if validation_error:
@@ -880,7 +897,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     if llm_attempt:
         print("\n----------------LLM PROPOSED ACTIONS----------------")
         for a in llm_actions.get("actions", []):
-            print(f"- {a.get('type')} {a.get('section')}/{a.get('source_key')} -> {a.get('target', {}).get('concept_id')}")
+            print(f"- {a.get('type')} {a.get('section')}/{a.get('source_key')}/{a.get('evidence').get('normalized_text')} -> {a.get('target', {}).get('concept_id')} | Confidence: {a.get('confidence')}")
 
     response = input("Commit? (y/n): ").strip().lower()
     approve_commit = (response == "y")
