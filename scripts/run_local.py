@@ -295,6 +295,12 @@ def llm_propose_actions(model: str, mr: dict, batch_size: int = 5) -> dict:
             pa = parse_llm_output(output)
             if isinstance(pa, dict) and isinstance(pa.get("actions"), list):
                 all_actions.extend(pa["actions"])
+            
+        attempts.append({
+            "batch_index": idx,
+            "batch_size": len(batch),
+            "latency_sec": latency
+        })
 
     llm_attempt = {
         "model": model,
@@ -308,12 +314,6 @@ def llm_propose_actions(model: str, mr: dict, batch_size: int = 5) -> dict:
     patch_actions = {"patch_actions_version": "v0.1","generated_at": datetime.now(timezone(timedelta(hours=1))).isoformat(), "actions": all_actions}
     dictionary_patch = {"target": "dictionary", "operations": all_dict_ops}
     print(f"LLM OUTPUT: {patch_actions}")
-    attempts.append({
-            "batch_index": idx,
-            "batch_size": len(batch),
-            "latency_sec": latency,
-            "output": patch_actions
-        })
     print(f"[LLM] ambiguous={sum(1 for i in mr.get('items',[]) if i.get('status')=='ambiguous')}")
     print(f"[LLM] contexts={len(llm_contexts)}")
 
@@ -552,7 +552,8 @@ def compute_diff(input_path, template_patch, validated_preview, validated_diff, 
 #-------REPORT--------
 def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str, output_path: str, diff: list[str], 
     schema_versions: dict, committed: bool, status: str, validation_block: dict | None, mr: dict | None,
-    dictionary_payload: dict | None,kb_payload: dict | None, template_base_path: str | None, template_base_version: str | None) -> dict:
+    dictionary_payload: dict | None,kb_payload: dict | None, template_base_path: str | None, template_base_version: str | None,
+    llm_attempt: dict | None) -> dict:
     # raccoglie tutto, nornalizza e ritorna il report della run
 
     return {
@@ -568,6 +569,13 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
             "kb_version": kb_payload.get("kb_version") if kb_payload else None,
             "template_base_path": template_base_path,
             "template_base_version": template_base_version,
+        },
+        "metrics": {
+            "matched_count": len([item for item in mr.get("items", []) if item.get("status") == "matched"]) if mr else 0,
+            "ambiguous_count": len([item for item in mr.get("items", []) if item.get("status") == "ambiguous"]) if mr else 0,
+            "unmapped_count": len([item for item in mr.get("items", []) if item.get("status") == "unmapped"]) if mr else 0,
+            "llm_calls": llm_attempt.get("batches", 0) if llm_attempt else 0,
+            "warnings_count": len(validation_block.get("warnings", [])) if validation_block else 0,
         },
         "target": {
             "artifact_type": artifact_type,
@@ -621,7 +629,7 @@ def build_patch_actions_from_matching(mr: dict, output_path: str) -> dict:
             })
 
         elif status == "ambiguous":
-            # non mappare: richiede review
+            # fallback LLM
             continue
 
         elif status == "unmapped":
@@ -851,6 +859,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
             kb_payload=None,
             template_base_path=template_base_path,
             template_base_version=load_json(template_base_path).get("template_base_version") if template_base_path else None,
+            llm_attempt=llm_attempt,
         )
         report_path = run_dir / "run_report.json"
         with open(report_path, "w", encoding="utf-8") as f:
@@ -901,6 +910,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
         kb_payload=kb_payload,
         template_base_path=template_base_path,
         template_base_version=tb_version,
+        llm_attempt=llm_attempt,
     )
 
     if llm_attempt:
@@ -1004,7 +1014,7 @@ if __name__ == "__main__":
         validate_only = False
     if choose == 1:
         run_patch(ARTIFACTS["dictionary"], "dictionary", dictionary_upsert, summarize_dictionary_diff, validate_only)
-    elif choose == 2:   
+    elif choose == 2: 
         run_patch(ARTIFACTS["kb"],  "kb", kb_upsert_mapping, summarize_kb_diff, validate_only)
     elif choose == 3:
         run_patch(ARTIFACTS["template"], "template", template_apply_patch, summarize_template_real_diff, validate_only)
