@@ -314,8 +314,6 @@ def llm_propose_actions(model: str, mr: dict, batch_size: int = 5) -> dict:
     patch_actions = {"patch_actions_version": "v0.1","generated_at": datetime.now(timezone(timedelta(hours=1))).isoformat(), "actions": all_actions}
     dictionary_patch = {"target": "dictionary", "operations": all_dict_ops}
     print(f"LLM OUTPUT: {patch_actions}")
-    print(f"[LLM] ambiguous={sum(1 for i in mr.get('items',[]) if i.get('status')=='ambiguous')}")
-    print(f"[LLM] contexts={len(llm_contexts)}")
 
     return patch_actions, dictionary_patch, llm_attempt
 
@@ -914,7 +912,6 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     )
 
     if llm_attempt:
-        run_report["llm_attempt"] = llm_attempt
         run_report["llm_patch_actions"] = llm_actions
 
     if status == "validation_error":
