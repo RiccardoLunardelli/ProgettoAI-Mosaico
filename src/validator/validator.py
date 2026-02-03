@@ -86,12 +86,12 @@ def actions_to_template_patch(actions_payload: dict) -> dict:
         target = a.get("target", {})
 
         if target.get("concept_id"):
-            set_fields["ConceptId"] = target["concept_id"]
+            set_fields["ConceptId_Patch"] = target["concept_id"]
         if target.get("category"):
-            set_fields["Category"] = target["category"]
+            set_fields["Category_Patch"] = target["category"]
         if target.get("semantic_category"):
-            set_fields["SemanticCategory"] = target["semantic_category"]
-
+            set_fields["SemanticCategory_Patch"] = target["semantic_category"]
+            
         ops.append({
             "op": "set_fields",
             "section": a["section"],

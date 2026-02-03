@@ -1,6 +1,6 @@
 {
   "patch_actions_version": "v0.1",
-  "generated_at": "2026-02-03T10:37:02.324504+01:00",
+  "generated_at": "2026-02-03T13:54:30.170742+01:00",
   "actions": [
     {
       "type": "map_variable",
@@ -17,9 +17,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "temp_delivery",
-          "Category": "measurement",
-          "SemanticCategory": "temperature"
+          "ConceptId_Patch": "temp_delivery",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "temperature"
         }
       },
       "confidence": 1.0,
@@ -43,9 +43,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "temp_defrost",
-          "Category": "measurement",
-          "SemanticCategory": "temperature"
+          "ConceptId_Patch": "temp_defrost",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "temperature"
         }
       },
       "confidence": 1.0,
@@ -69,9 +69,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "temp_return",
-          "Category": "measurement",
-          "SemanticCategory": "temperature"
+          "ConceptId_Patch": "temp_return",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "temperature"
         }
       },
       "confidence": 1.0,
@@ -95,9 +95,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "superheat_temperature",
-          "Category": "measurement",
-          "SemanticCategory": "temperature"
+          "ConceptId_Patch": "superheat_temperature",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "temperature"
         }
       },
       "confidence": 1.0,
@@ -121,9 +121,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "temp_evaporator",
-          "Category": "measurement",
-          "SemanticCategory": "temperature"
+          "ConceptId_Patch": "temp_evaporator",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "temperature"
         }
       },
       "confidence": 1.0,
@@ -147,9 +147,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "pressure_suction",
-          "Category": "measurement",
-          "SemanticCategory": "pressure"
+          "ConceptId_Patch": "pressure_suction",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "pressure"
         }
       },
       "confidence": 1.0,
@@ -173,9 +173,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "superheat_temperature",
-          "Category": "measurement",
-          "SemanticCategory": "temperature"
+          "ConceptId_Patch": "superheat_temperature",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "temperature"
         }
       },
       "confidence": 1.0,
@@ -199,9 +199,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "state_compressor",
-          "Category": "measurement",
-          "SemanticCategory": "state"
+          "ConceptId_Patch": "state_compressor",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
         }
       },
       "confidence": 0.9090909090909091,
@@ -225,9 +225,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "state_fan",
-          "Category": "measurement",
-          "SemanticCategory": "state"
+          "ConceptId_Patch": "state_fan",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
         }
       },
       "confidence": 1.0,
@@ -251,9 +251,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "state_compressor",
-          "Category": "measurement",
-          "SemanticCategory": "state"
+          "ConceptId_Patch": "state_compressor",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
         }
       },
       "confidence": 1.0,
@@ -277,9 +277,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "state_defrost",
-          "Category": "measurement",
-          "SemanticCategory": "state"
+          "ConceptId_Patch": "state_defrost",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
         }
       },
       "confidence": 1.0,
@@ -303,9 +303,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "state_compressor",
-          "Category": "measurement",
-          "SemanticCategory": "state"
+          "ConceptId_Patch": "state_compressor",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
         }
       },
       "confidence": 1.0,
@@ -329,9 +329,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "humidity",
-          "Category": "measurement",
-          "SemanticCategory": "humidity"
+          "ConceptId_Patch": "humidity",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "humidity"
         }
       },
       "confidence": 1.0,
@@ -355,9 +355,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "state_door_open",
-          "Category": "measurement",
-          "SemanticCategory": "state"
+          "ConceptId_Patch": "state_door_open",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
         }
       },
       "confidence": 1.0,
@@ -381,9 +381,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "hysteresis_temperature",
-          "Category": "parameter",
-          "SemanticCategory": "temperature"
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
         }
       },
       "confidence": 1.0,
@@ -407,9 +407,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "defrost_interval",
-          "Category": "parameter",
-          "SemanticCategory": "time"
+          "ConceptId_Patch": "defrost_interval",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "time"
         }
       },
       "confidence": 1.0,
@@ -433,9 +433,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "defrost_duration",
-          "Category": "parameter",
-          "SemanticCategory": "time"
+          "ConceptId_Patch": "defrost_duration",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "time"
         }
       },
       "confidence": 1.0,
@@ -459,9 +459,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "defrost_duration",
-          "Category": "parameter",
-          "SemanticCategory": "time"
+          "ConceptId_Patch": "defrost_duration",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "time"
         }
       },
       "confidence": 0.9411764705882352,
@@ -485,9 +485,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "fan_delay",
-          "Category": "parameter",
-          "SemanticCategory": "time"
+          "ConceptId_Patch": "fan_delay",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "time"
         }
       },
       "confidence": 1.0,
@@ -511,9 +511,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "fan_delay",
-          "Category": "parameter",
-          "SemanticCategory": "time"
+          "ConceptId_Patch": "fan_delay",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "time"
         }
       },
       "confidence": 1.0,
@@ -537,9 +537,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "threshold_high_temperature",
-          "Category": "parameter",
-          "SemanticCategory": "threshold"
+          "ConceptId_Patch": "threshold_high_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "threshold"
         }
       },
       "confidence": 1.0,
@@ -563,9 +563,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "threshold_low_temperature",
-          "Category": "parameter",
-          "SemanticCategory": "threshold"
+          "ConceptId_Patch": "threshold_low_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "threshold"
         }
       },
       "confidence": 1.0,
@@ -589,9 +589,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "defrost_duration",
-          "Category": "parameter",
-          "SemanticCategory": "time"
+          "ConceptId_Patch": "defrost_duration",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "time"
         }
       },
       "confidence": 1.0,
@@ -615,9 +615,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "defrost_duration",
-          "Category": "parameter",
-          "SemanticCategory": "time"
+          "ConceptId_Patch": "defrost_duration",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "time"
         }
       },
       "confidence": 1.0,
@@ -641,9 +641,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "defrost_duration",
-          "Category": "parameter",
-          "SemanticCategory": "time"
+          "ConceptId_Patch": "defrost_duration",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "time"
         }
       },
       "confidence": 1.0,
@@ -667,9 +667,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "defrost_duration",
-          "Category": "parameter",
-          "SemanticCategory": "time"
+          "ConceptId_Patch": "defrost_duration",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "time"
         }
       },
       "confidence": 1.0,
@@ -693,9 +693,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "defrost_duration",
-          "Category": "parameter",
-          "SemanticCategory": "time"
+          "ConceptId_Patch": "defrost_duration",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "time"
         }
       },
       "confidence": 1.0,
@@ -719,9 +719,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "defrost_duration",
-          "Category": "parameter",
-          "SemanticCategory": "time"
+          "ConceptId_Patch": "defrost_duration",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "time"
         }
       },
       "confidence": 1.0,
@@ -745,9 +745,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "setpoint_temperature",
-          "Category": "parameter",
-          "SemanticCategory": "setpoint"
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
         }
       },
       "confidence": 1.0,
@@ -771,9 +771,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "alarm_door_open",
-          "Category": "alarm",
-          "SemanticCategory": "alarm"
+          "ConceptId_Patch": "alarm_door_open",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
         }
       },
       "confidence": 1.0,
@@ -797,9 +797,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "alarm_high_pressure",
-          "Category": "alarm",
-          "SemanticCategory": "alarm"
+          "ConceptId_Patch": "alarm_high_pressure",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
         }
       },
       "confidence": 1.0,
@@ -823,9 +823,9 @@
       },
       "patch": {
         "set_fields": {
-          "ConceptId": "alarm_low_pressure",
-          "Category": "alarm",
-          "SemanticCategory": "alarm"
+          "ConceptId_Patch": "alarm_low_pressure",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
         }
       },
       "confidence": 1.0,

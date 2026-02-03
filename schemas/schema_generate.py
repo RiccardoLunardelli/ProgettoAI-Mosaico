@@ -43,7 +43,7 @@ class PatchActionsTemplate(BaseModel):
     patch_actions_version: str
     generated_at: str
     actions: List[PatchActionMapVariable]
-3
+
 #-------------PATCH ACTIONS-------------------
 class PatchAction(BaseModel): 
     action_type: str

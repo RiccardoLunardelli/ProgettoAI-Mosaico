@@ -15,33 +15,33 @@ RUNS_ROOT = Path("runs")
 
 ARTIFACTS = {
     "dictionary": {
-        "input_path": "data/dictionary_v0.1.json",
+        "input_path": "",
         "patch_path": str(PATCH_ROOT / "dictionary" / "manual_patch_upsemcat.json"),
         "matching_path": "output_dir/matching_report_v0.1.json",
         "input_version": "v0.1",
         "template_base_path": "data/template_base_v0.1.json",
     },
     "kb": {
-        "input_path": "data/kb_v0.1.json",
+        "input_path": "",
         "patch_path": str(PATCH_ROOT / "kb" / "patch_manual_addkbrule.json"),
         "input_version": "v0.1",
         "matching_path": "output_dir/matching_report_v0.1.json",
     },
     "template_base": {
-        "input_path": "data/template_base_v0.1.json",
+        "input_path": "",
         "patch_path": str(PATCH_ROOT / "template" / "manual_patch_addbaseconc.json"),
         "input_version": "v0.1",
         "template_base_path": "data/template_base_v0.1.json",
         "matching_path": "output_dir/matching_report_v0.1.json",
     },
     "template": {
-        "input_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json",
+        "input_path": "",
         "matching_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v0.1.json",
         "actions_path": "mcp_server/patch/template_real/manual_actions.json",
         "template_base_path": "data/template_base_v0.1.json",
     },
     "device_list": {
-        "input_path": "pv_datas/pvs/262174_VIGODA_ALI/device_list.json",
+        "input_path": "",
     },
 }
 
@@ -234,9 +234,9 @@ def build_llm_prompt(llm_contexts: list[dict]) -> str:
         "      },\n"
         "      \"patch\": {\n"
         "        \"set_fields\": {\n"
-        "          \"ConceptId\": \"<concept_id>\",\n"
-        "          \"Category\": \"<category>\",\n"
-        "          \"SemanticCategory\": \"<semantic_category>\"\n"
+        "          \"ConceptId_Patch\": \"<concept_id>\",\n"
+        "          \"Category_Patch\": \"<category>\",\n"
+        "          \"SemanticCategory_Patch\": \"<semantic_category>\"\n"
         "        }\n"
         "      },\n"
         "      \"confidence\": 0.0,\n"
@@ -674,9 +674,9 @@ def build_patch_actions_from_matching(mr: dict, output_path: str) -> dict:
                 },
                 "patch": {
                     "set_fields": {
-                        "ConceptId": item.get("concept_id"),
-                        "Category": evidence.get("category"),
-                        "SemanticCategory": evidence.get("semantic_category")
+                        "ConceptId_Patch": item.get("concept_id"),
+                        "Category_Patch": evidence.get("category"),
+                        "SemanticCategory_Patch": evidence.get("semantic_category")
                     }
                 },
                 "confidence": item.get("confidence") or 0.0,
@@ -866,16 +866,18 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     actions_path = cfg.get("actions_path")  # patch per template reale
     template_base_path = cfg.get("template_base_path") # template base
     validate_only = validate
-
-    if artifact_type == "template" and not actions_path and not (cfg.get("use_llm") and validate_only):
-        raise ValueError("actions_path_required_for_template")
     
     mr, analysis = load_matching(matching_path) # carica matching report
 
     # deterministico dalle match
     actions_out = "output_dir/patch_actions_v0.1.json"
-    build_patch_actions_from_matching(mr, actions_out)
-    cfg["actions_path"] = actions_out
+    if not cfg.get("manual_actions_path"):
+        build_patch_actions_from_matching(mr, actions_out)
+        cfg["actions_path"] = actions_out
+    else:
+        cfg["actions_path"] = cfg.get("manual_actions_path")
+
+    manual_mode = bool(cfg.get("manual_actions_path"))
 
     # se ambiguous --> llm
     has_ambiguous = any(i.get("status") == "ambiguous" for i in mr.get("items", [])) if mr else False
@@ -884,7 +886,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     llm_model = cfg.get("llm_model", "llama3.1:8b")
     dict_patch = {"target": "dictionary", "operations": []}
     llm_attempt = None
-    if has_ambiguous:
+    if has_ambiguous and not manual_mode:
         use_llm = input("Sono presenti ambiguità. Usare LLM? (y/n): ").strip().lower() == "y"
         if use_llm:
             print("Generating LLM proposed actions...")
@@ -894,6 +896,13 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
             llm_actions = filter_low_confidence(llm_actions, threshold=0.9)
             llm_contexts = extract_llm_contexts(mr)
             llm_actions = filter_by_candidate_gap(llm_actions, llm_contexts, min_gap=0.10)
+
+            llm_actions_path = run_dir / "llm_patch_actions.json"
+            with open(llm_actions_path, "w", encoding="utf-8") as f:
+                json.dump(llm_actions, f, indent=2, ensure_ascii=False)
+    
+    if manual_mode:
+        print("Manual mode: skipping LLM proposed actions.")
 
     template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = build_patch_and_validation(cfg, artifact_type, upsert_fn, diff_fn)
 
@@ -943,9 +952,16 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
         print("\n----------------LLM PROPOSED ACTIONS----------------")
         for a in llm_actions.get("actions", []):
             print(f"- {a.get('type')} {a.get('section')}/{a.get('source_key')}/{a.get('evidence').get('normalized_text')} -> {a.get('target', {}).get('concept_id')} | Confidence: {a.get('confidence')}")
+        print(f"Patch LLM file: {llm_actions_path}")
 
-    response = input("Commit? (y/n): ").strip().lower()
-    approve_commit = (response == "y")
+    if not validate_only:
+        approve_commit = True 
+    else:
+        response = input("Commit? (y/n): ").strip().lower()
+        approve_commit = (response == "y")
+
+    if validate_only:
+        approve_commit = False 
 
     if not approve_commit:
         validate_only = True
@@ -975,6 +991,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
 
     if llm_attempt:
         run_report["llm_patch_actions"] = llm_actions
+        run_report["llm_patch_actions_path"] = str(llm_actions_path) if llm_actions_path else None
 
     if status == "validation_error":
         policy_outcome = "rejected"
@@ -1066,18 +1083,28 @@ def run_device_list(cfg: dict, validate) -> None:
 
 if __name__ == "__main__":
     choose = int(input("1--> diz. 2--> kb. 3--> template. 4--> template_base. 5--> device_list: "))
+    input_file = input("Percorso file template: ").strip()
     validate = input("Validate only? (y --> ONLY report /n --> Commit): ")
     if validate == "y":
         validate_only = True
     else:
         validate_only = False
     if choose == 1:
+        ARTIFACTS["dictionary"]["input_path"] = input_file
         run_patch(ARTIFACTS["dictionary"], "dictionary", dictionary_upsert, summarize_dictionary_diff, validate_only)
     elif choose == 2: 
+        ARTIFACTS["kb"]["input_path"] = input_file
         run_patch(ARTIFACTS["kb"],  "kb", kb_upsert_mapping, summarize_kb_diff, validate_only)
     elif choose == 3:
+        ARTIFACTS["template"]["input_path"] = input_file
+        manual = input("Usare patch manuali? (y/n): ").strip().lower() == "y"
+        if manual:
+            manual_actions_path = input("Percorso patch manuali (json): ").strip()
+            ARTIFACTS["template"]["manual_actions_path"] = manual_actions_path
         run_patch(ARTIFACTS["template"], "template", template_apply_patch, summarize_template_real_diff, validate_only)
     elif choose == 4:
+        ARTIFACTS["template_base"]["input_path"] = input_file
         run_patch(ARTIFACTS["template_base"], "template_base", template_apply_patch, summarize_template_base_diff, validate_only)  
     elif choose == 5:
+        ARTIFACTS["device_list"]["input_path"] = input_file
         run_device_list(ARTIFACTS["device_list"], validate_only)
