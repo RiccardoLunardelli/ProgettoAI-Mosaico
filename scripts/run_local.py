@@ -609,7 +609,7 @@ def compute_diff(input_path, template_patch, validated_preview, validated_diff, 
 def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str, output_path: str, diff: list[str], 
     schema_versions: dict, committed: bool, status: str, validation_block: dict | None, mr: dict | None,
     dictionary_payload: dict | None,kb_payload: dict | None, template_base_path: str | None, template_base_version: str | None,
-    llm_attempt: dict | None) -> dict:
+    llm_attempt: dict | None, actions_payload: dict | None) -> dict:
     # raccoglie tutto, nornalizza e ritorna il report della run
 
     return {
@@ -627,9 +627,9 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
             "template_base_version": template_base_version,
         },
         "metrics": {
-            "matched_count": len([item for item in mr.get("items", []) if item.get("status") == "matched"]) if mr else 0,
-            "ambiguous_count": len([item for item in mr.get("items", []) if item.get("status") == "ambiguous"]) if mr else 0,
-            "unmapped_count": len([item for item in mr.get("items", []) if item.get("status") == "unmapped"]) if mr else 0,
+            "matched_count": compute_metrics(mr, actions_payload).get("matched_count"),
+            "ambiguous_count": compute_metrics(mr, actions_payload).get("ambiguous_count"),
+            "unmapped_count": compute_metrics(mr, actions_payload).get("unmapped_count"),
             "llm_calls": llm_attempt.get("batches", 0) if llm_attempt else 0,
             "warnings_count": len(validation_block.get("warnings", [])) if validation_block else 0,
         },
@@ -645,6 +645,42 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
         },
         "validation": validation_block,
         "diff_summary": {"changed_paths": diff},
+    }
+
+def compute_metrics(mr: dict | None, actions_payload: dict | None) -> dict:
+    # calcola metriche base
+
+    actions = actions_payload.get("actions", []) if actions_payload else []
+
+    matched_from_mr = 0
+    matched_keys_from_mr = set()
+    if mr:
+        for item in mr.get("items", []):
+            if item.get("status") == "matched":
+                matched_from_mr += 1
+                matched_keys_from_mr.add((item.get("section"), item.get("source_key")))
+
+    manual_keys = {
+        (a.get("section"), a.get("source_key")) for a in actions
+    }
+
+    extra_manual = len([k for k in manual_keys if k not in matched_keys_from_mr])
+
+    ambiguous = 0
+    unmapped = 0
+    if mr:
+        for item in mr.get("items", []):
+            key = (item.get("section"), item.get("source_key"))
+            if key in manual_keys:
+                continue
+            if item.get("status") == "ambiguous":
+                ambiguous += 1
+            elif item.get("status") == "unmapped":
+                unmapped += 1
+    return {
+        "matched_count": matched_from_mr + extra_manual,
+        "ambiguous_count": ambiguous,
+        "unmapped_count": unmapped,
     }
 
 #------BUILD PATCH ACTIONS------------
@@ -929,6 +965,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
             template_base_path=template_base_path,
             template_base_version=load_json(template_base_path).get("template_base_version") if template_base_path else None,
             llm_attempt=llm_attempt,
+            actions_payload=actions_payload,
         )
         report_path = run_dir / "run_report.json"
         with open(report_path, "w", encoding="utf-8") as f:
@@ -987,6 +1024,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
         template_base_path=template_base_path,
         template_base_version=tb_version,
         llm_attempt=llm_attempt,
+        actions_payload=actions_payload
     )
 
     if llm_attempt:
