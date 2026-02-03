@@ -400,10 +400,6 @@
           "default": null,
           "title": "Avg Confidence"
         },
-        "llm_calls": {
-          "title": "Llm Calls",
-          "type": "integer"
-        },
         "warnings_count": {
           "title": "Warnings Count",
           "type": "integer"
@@ -413,7 +409,6 @@
         "mapped_count",
         "ambiguous_count",
         "unmapped_count",
-        "llm_calls",
         "warnings_count"
       ],
       "title": "MatchingMetrics",

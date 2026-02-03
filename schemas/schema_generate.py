@@ -43,7 +43,7 @@ class PatchActionsTemplate(BaseModel):
     patch_actions_version: str
     generated_at: str
     actions: List[PatchActionMapVariable]
-
+3
 #-------------PATCH ACTIONS-------------------
 class PatchAction(BaseModel): 
     action_type: str
@@ -118,8 +118,7 @@ class MatchingMetrics(BaseModel):
     mapped_count: int 
     ambiguous_count: int 
     unmapped_count: int 
-    avg_confidence: Optional[float] = None 
-    llm_calls: int 
+    avg_confidence: Optional[float] = None  
     warnings_count: int
 
 class MatchingReport(BaseModel):

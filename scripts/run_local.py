@@ -201,12 +201,21 @@ def build_llm_prompt(llm_contexts: list[dict]) -> str:
         "Output JSON only, no extra text.\n\n"
                             
         "DECISION RULES:\n"
-        "1) Choose a concept only if the description clearly matches the candidate meaning.\n"
-        "2) If top candidates are generic or the text is short/ambiguous, SKIP the item.\n"
-        "3) Use ONLY concept_id from top_candidates.\n"
-        "4) Use top_candidates scores as evidence, but do NOT copy them blindly.\n"
-        "5) Confidence must reflect your certainty: high only if the text clearly matches.\n"
-        "6) If not confident (confidence < 0.90), DO NOT output an action.\n\n"
+        "1) You may create an action ONLY for the top_candidate in llm_contexts.\n"
+        "2) Do not invent new concepts. If top_candidate is not semantically compatible, SKIP.\n"
+        "3) Require explicit semantic compatibility, not generic similarity.\n"
+        "4) If wording could map to multiple concepts, SKIP.\n"
+        "5) If unsure, actions: [].\n\n"
+
+        "CONFIDENCE RULES:\n"
+        "- Start from top_candidate.score as the base.\n"
+        "- You may increase confidence above 0.90 ONLY if meaning is clearly compatible.\n"
+        "- If meaning is not clearly compatible or generic, keep confidence equal to top_candidate.score or lower.\n"
+        "- Never set confidence to 1.0 unless the text is explicit and unambiguous.\n\n"
+
+        "TEXT LENGTH RULE:\n"
+        "- If normalized_text has fewer than 2 tokens, you MUST NOT set confidence to 1.0.\n"
+        "- If normalized_text has fewer than 3 tokens, confidence MUST be <= 0.95.\n\n"
 
         "OUTPUT FORMAT (strict):\n"
         "{\n"
@@ -258,6 +267,40 @@ def filter_low_confidence(actions_payload: dict, threshold: float = 0.9) -> dict
         confidence = a.get("confidence")
         if isinstance(confidence, (int, float)) and confidence >= threshold:
             filtered.append(a)
+    actions_payload["actions"] = filtered
+    return actions_payload
+
+def filter_by_candidate_gap(actions_payload: dict, llm_contexts: list[dict], min_gap: float = 0.10) -> dict:
+    # filtra le azioni con gap troppo basso tra i top candidates
+
+    context_map = {}
+    for ctx in llm_contexts or []:
+        key = (ctx.get("section"), ctx.get("source_key"))
+        context_map[key] = ctx.get("top_candidates", [])
+
+    actions = actions_payload.get("actions", [])
+    filtered = []
+    for a in actions:
+        key = (a.get("section"), a.get("source_key"))
+        candidates = context_map.get(key, [])
+        if not candidates:
+            continue
+
+        top = candidates[0] if candidates else {}
+        top_id = top.get("concept_id")
+        if top_id and a.get("target", {}).get("concept_id") != top_id:
+            continue
+
+        if len(candidates) >= 2:
+            top_score = candidates[0].get("score")
+            second_score = candidates[1].get("score")
+            if not isinstance(top_score, (int, float)) or not isinstance(second_score, (int, float)):
+                continue
+            if (top_score - second_score) < min_gap:
+                continue
+
+        filtered.append(a)
+
     actions_payload["actions"] = filtered
     return actions_payload
 
@@ -849,6 +892,8 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
             llm_actions = ensure_labels(llm_actions)
 
             llm_actions = filter_low_confidence(llm_actions, threshold=0.9)
+            llm_contexts = extract_llm_contexts(mr)
+            llm_actions = filter_by_candidate_gap(llm_actions, llm_contexts, min_gap=0.10)
 
     template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = build_patch_and_validation(cfg, artifact_type, upsert_fn, diff_fn)
 
