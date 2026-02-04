@@ -1,4 +1,4 @@
-from mcp_server.server import dictionary_upsert, kb_upsert_mapping, template_apply_patch, device_list_enrich
+from mcp_server.server import dictionary_upsert, kb_upsert_mapping, template_apply_patch, device_list_enrich, dictionary_bulk_suggest
 from mcp_server.core import MCPContext
 from src.validator.validator import validate_before_commit_template, validate_before_commit_generic, canonical_map, load_json
 
@@ -672,7 +672,7 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
             "schema_versions": schema_versions,
             "run_id": run_id,
             "timestamp": datetime.now(TIMEZONE).isoformat(),
-            "template_guid": get_template_guid(input_path, mr, artifact_type) if artifact_type == "template" else None,
+            "template_guid": None,
             "source_files": {
                 "dictionary_path": input_path,
                 "dictionary_version": dictionary_payload.get("dictionary_version") if dictionary_payload else None,
@@ -690,6 +690,30 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
             "validation": validation_block,
             "diff_summary": {"changed_paths": diff},
         }
+    elif artifact_type == "kb":
+        pass
+    elif artifact_type == "device_list":
+         return {
+        "schema_versions": build_schema_versions(MCPContext(repo_root="."), ["device_list", "device_list_context"]),
+        "run_id": run_id,
+        "timestamp": datetime.now(TIMEZONE).isoformat(),
+        "template_guid": None,
+        "source_files": {
+            "device_list_path": input_path,
+        },
+        "target": {
+            "artifact_type":artifact_type,
+            "input_path": input_path,
+            "output_path": output_path,
+        },
+        "execution": {
+            "dry_run_performed": True,
+            "committed": committed,
+            "status": status,
+        },
+        "validation": {"status": "ok", "errors": [], "warnings": []},
+        "diff_summary": {"changed_paths": diff},
+    }
 
 def compute_metrics(mr: dict | None, actions_payload: dict | None) -> dict:
     # calcola metriche base
@@ -728,7 +752,6 @@ def compute_metrics(mr: dict | None, actions_payload: dict | None) -> dict:
     }
 
 #------BUILD PATCH ACTIONS------------
-
 #-----TEMPLATE-------
 def build_patch_actions_from_matching(mr: dict, output_path: str) -> dict:
     actions = []
@@ -796,11 +819,9 @@ def build_dictionary_patch_from_run_report(run_report_path: list[str], dictionar
     
     # usa solo UNMAPPED, AMBIGUOUS
     ambiguous = []
-    unmapped = []
     for r in reports:
         analysis = r.get("analysis", {})
         ambiguous.extend(analysis.get("ambiguous_matches", []))
-        unmapped.extend(analysis.get("unmapped_terms", []))
 
     dictionary = load_json(dictionary_path)
     existing_synonyms = {}
@@ -841,15 +862,29 @@ def build_dictionary_patch_from_run_report(run_report_path: list[str], dictionar
         
         # ADD SYN
         _add({"op": "add_synonym", "concept_id": concept_id, "lang": "it", "value": text})
-    
-    #---UNMAPPED----
-    for item in unmapped:
-        text = (item.get("evidence", {}).get("normalized_text")or "").strip()
-        if not text:
-            continue
 
     return {"target": "dictionary", "operations": operations}
 
+def build_dictionary_suggestions_from_run_report(run_report_paths: list[str], dictionary_path: str) -> dict:
+    reports = [load_json(p) for p in run_report_paths]
+
+    unmapped = []
+    for r in reports:
+        analysis = r.get("analysis", [])
+        unmapped.extend(analysis.get("unmapped_terms", []))
+
+    terms = []
+    for item in unmapped:
+        text = (item.get("evidence", {}).get("normalized_text") or "").strip()
+        if text:
+            terms.append(text)
+
+    ctx = MCPContext(repo_root=".")
+    return dictionary_bulk_suggest(terms=terms, path=dictionary_path)
+
+#----TEMPLATE BASE------
+def build_template_base_patch() -> dict:
+    pass
 
 #-------MATCHING REPORT + ANALYSIS-----------------
 def load_matching(matching_path: str | None) -> tuple[dict | None, dict]:
@@ -1199,7 +1234,6 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(run_report, f, indent=2, ensure_ascii=False)
 
-
 def run_device_list(cfg: dict, validate) -> None:
     # run per device_list
 
@@ -1251,6 +1285,8 @@ def run_device_list(cfg: dict, validate) -> None:
         kb_payload=None,
         template_base_path=None,
         template_base_version=None,
+        llm_attempt=None,
+        actions_payload=None
     )
 
     report_path = run_dir / "run_report.json"
@@ -1266,7 +1302,8 @@ if __name__ == "__main__":
         validate_only = True
     else:
         validate_only = False
-    if choose == 1:
+    # dizionario
+    if choose == 1: 
         ARTIFACTS["dictionary"]["input_path"] = input_file
         # run report lettura
         manual = input("Patch manuale o da run report? (m/r): ").strip().lower()
@@ -1286,10 +1323,18 @@ if __name__ == "__main__":
             ARTIFACTS["dictionary"]["patch_path"] = out_path
             print("Patch dizionario salvata in:", out_path)
 
+            suggestions = build_dictionary_suggestions_from_run_report(run_report_paths, input_file)
+            out_path = "output_dir/dictionary_suggestions.json"
+            with open(out_path, "w", encoding="utf-8") as f:
+                json.dump(suggestions, f, indent=2, ensure_ascii=False)
+            print(f"Suggestions saved: {out_path}")
+
         run_patch(ARTIFACTS["dictionary"], "dictionary", dictionary_upsert, summarize_dictionary_diff, validate_only)
+    # kb
     elif choose == 2: 
         ARTIFACTS["kb"]["input_path"] = input_file
         run_patch(ARTIFACTS["kb"],  "kb", kb_upsert_mapping, summarize_kb_diff, validate_only)
+    # template
     elif choose == 3:
         ARTIFACTS["template"]["input_path"] = input_file
         manual = input("Usare patch manuali? (y/n): ").strip().lower() == "y"
@@ -1297,9 +1342,11 @@ if __name__ == "__main__":
             manual_actions_path = input("Percorso patch manuali (json): ").strip()
             ARTIFACTS["template"]["manual_actions_path"] = manual_actions_path
         run_patch(ARTIFACTS["template"], "template", template_apply_patch, summarize_template_real_diff, validate_only)
+    # template base
     elif choose == 4:
         ARTIFACTS["template_base"]["input_path"] = input_file
         run_patch(ARTIFACTS["template_base"], "template_base", template_apply_patch, summarize_template_base_diff, validate_only)  
+    # device list
     elif choose == 5:
         ARTIFACTS["device_list"]["input_path"] = input_file
         run_device_list(ARTIFACTS["device_list"], validate_only)

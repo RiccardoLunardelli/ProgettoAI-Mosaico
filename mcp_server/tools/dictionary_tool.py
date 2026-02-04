@@ -188,6 +188,66 @@ def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
 
     return {"status": "committed", "output_path": str(output_path)}
 
-def dictionary_bulk_suggest(ctx: MCPContext, terms: List[str]) -> Dict[str, Any]:
+def dictionary_bulk_suggest(ctx: MCPContext, terms: List[str], path: str | None = None) -> Dict[str, Any]:
     # suggerimento
-    return {"suggestions": []}
+    if not terms: 
+        return {"suggestions": []}
+    
+    dictionary_path = path or "data/dictionary_v0.1.json"
+    p = ctx.ensure_within_root(dictionary_path)
+    dictionary = ctx.read_json(p)
+
+    suggestions = []
+    entries = dictionary.get("entries", [])
+
+    for term in terms:
+        t = (term or "").strip().lower()
+        if not t:
+            continue 
+
+        hits = []
+        for e in entries:
+            cid = e.get("concept_id")
+
+            #synonyms
+            for lang, syns in (e.get("synonyms") or {}).items():
+                for syn in syns:
+                    if syn and syn in t:
+                        hits.append({
+                            "concept_id": cid,
+                            "match_type": "synonym",
+                            "matched_value": syn,
+                            "confidence": 0.7  
+                        })
+                        
+            # abbreviations
+            for abbr in e.get("abbreviations") or []:
+                if abbr and abbr in t:
+                    hits.append({
+                        "concept_id": cid,
+                        "match_type": "abbreviation",
+                        "matched_value": abbr,
+                        "confidence": 0.6
+                    })
+
+            # patterns
+            for ptn in e.get("patterns") or []:
+                regex = ptn.get("regex")
+                if regex:
+                    try:
+                        if re.search(regex, t):
+                            hits.append({
+                                "concept_id": cid,
+                                "match_type": "pattern",
+                                "matched_value": regex,
+                                "confidence": 0.5
+                            })
+                    except re.error:
+                        pass
+
+        suggestions.append({"term": term, "candidates": hits})
+
+    return {"suggestions": suggestions}
+    
+    
+
