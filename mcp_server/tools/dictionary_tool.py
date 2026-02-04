@@ -188,7 +188,7 @@ def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
 
     return {"status": "committed", "output_path": str(output_path)}
 
-def dictionary_bulk_suggest(ctx: MCPContext, terms: List[str], path: str | None = None) -> Dict[str, Any]:
+def dictionary_bulk_suggest(ctx: MCPContext, terms: List[str], path: str | None = None, expected_category: str | None = None) -> Dict[str, Any]:
     # suggerimento
     if not terms: 
         return {"suggestions": []}
@@ -208,6 +208,10 @@ def dictionary_bulk_suggest(ctx: MCPContext, terms: List[str], path: str | None 
         hits = []
         for e in entries:
             cid = e.get("concept_id")
+            cat = e.get("category")
+
+            if expected_category and cat != expected_category:
+                continue
 
             #synonyms
             for lang, syns in (e.get("synonyms") or {}).items():

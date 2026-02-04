@@ -37,8 +37,8 @@ def dictionary_upsert(path: str, patch: dict, dry_run: bool) -> dict:
     return dictionary_tool.dictionary_upsert(ctx, path, patch, dry_run)
 
 @mcp.tool()
-def dictionary_bulk_suggest(terms: list, path: str | None = None) -> dict:
-    return dictionary_tool.dictionary_bulk_suggest(ctx, terms, path)
+def dictionary_bulk_suggest(terms: list, path: str | None = None, expected_category: str | None = None) -> dict:
+    return dictionary_tool.dictionary_bulk_suggest(ctx, terms, path, expected_category)
 
 # -------------KNOWLEDGE BASE------------------------
 @mcp.tool()

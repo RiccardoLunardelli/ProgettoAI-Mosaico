@@ -274,6 +274,7 @@ class KBMapping(BaseModel):
     concept_id: str
     reason: str
     evidence: str
+    semantic_category: str
 
 class KBExceptions(BaseModel):
     blacklist: List[Dict[str, Any]]
@@ -300,6 +301,7 @@ class KBPatchAddRule(BaseModel):
     concept_id: str 
     reason: str 
     evidence: str
+    semantic_category: str
 
 class KBPatchUpdateRule(BaseModel):
     op: Literal["update_kb_rule"]

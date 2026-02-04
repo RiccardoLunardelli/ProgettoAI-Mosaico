@@ -3,12 +3,13 @@
   "operations": [
     {
       "op": "update_kb_rule",
-      "scope_id": "tpl_028d14de_tn",
+      "scope_id": "P01T04D01_028d14de-71dc-6e64-9587-c7111a39793e",
       "source_type": "ContinuosRead",
       "source_key": "Read101",
       "concept_id": "temp_delivery",
       "reason": "correction_after_review",
-      "evidence": "manual_patch_update"
+      "evidence": "manual_patch_update",
+      "semantic_category": "temperature"
     }
   ]
 }

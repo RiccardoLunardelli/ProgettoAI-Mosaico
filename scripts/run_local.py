@@ -16,20 +16,20 @@ RUNS_ROOT = Path("runs")
 ARTIFACTS = {
     "dictionary": {
         "input_path": "",
-        "patch_path":"",
+        "patch_path":"/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/mcp_server/patch/dictionary/manual_patch_addabr.json",
         "matching_path": "output_dir/matching_report_v0.1.json",
         "input_version": "v0.1",
         "template_base_path": "data/template_base_v0.1.json",
     },
     "kb": {
         "input_path": "",
-        "patch_path": str(PATCH_ROOT / "kb" / "patch_manual_addkbrule.json"),
+        "patch_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/mcp_server/patch/kb/patch_manual_addkbrule.json",
         "input_version": "v0.1",
         "matching_path": "output_dir/matching_report_v0.1.json",
     },
     "template_base": {
         "input_path": "",
-        "patch_path": str(PATCH_ROOT / "template" / "manual_patch_addbaseconc.json"),
+        "patch_path": "",
         "input_version": "v0.1",
         "template_base_path": "data/template_base_v0.1.json",
         "matching_path": "output_dir/matching_report_v0.1.json",
@@ -669,7 +669,7 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
         }
     elif artifact_type == "dictionary":
         return {
-            "schema_versions": schema_versions,
+            "schema_versions": build_schema_versions(MCPContext(repo_root="."), ["dictionary", "dictionary_patch"]),
             "run_id": run_id,
             "timestamp": datetime.now(TIMEZONE).isoformat(),
             "template_guid": None,
@@ -691,7 +691,51 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
             "diff_summary": {"changed_paths": diff},
         }
     elif artifact_type == "kb":
-        pass
+        return {
+        "schema_versions": build_schema_versions(MCPContext(repo_root="."), ["kb", "kb_patch"]),
+        "run_id": run_id,
+        "timestamp": datetime.now(TIMEZONE).isoformat(),
+        "template_guid": None,
+        "source_files": {
+           "kb_path": input_path,
+            "kb_version": kb_payload.get("kb_version") if kb_payload else None,
+        },
+        "target": {
+            "artifact_type":artifact_type,
+            "input_path": input_path,
+            "output_path": output_path,
+        },
+        "execution": {
+            "dry_run_performed": True,
+            "committed": committed,
+            "status": status,
+        },
+        "validation": {"status": "ok", "errors": [], "warnings": []},
+        "diff_summary": {"changed_paths": diff},
+    }
+    elif artifact_type == "template_base":
+        return {
+        "schema_versions": build_schema_versions(MCPContext(repo_root="."), ["template_base", "template_base_patch"]),
+        "run_id": run_id,
+        "timestamp": datetime.now(TIMEZONE).isoformat(),
+        "template_guid": None,
+        "source_files": {
+           "template_base_path": input_path,
+            "template_base_version": template_base_version,
+        },
+        "target": {
+            "artifact_type":artifact_type,
+            "input_path": input_path,
+            "output_path": output_path,
+        },
+        "execution": {
+            "dry_run_performed": True,
+            "committed": committed,
+            "status": status,
+        },
+        "validation": {"status": "ok", "errors": [], "warnings": []},
+        "diff_summary": {"changed_paths": diff},
+    }
     elif artifact_type == "device_list":
          return {
         "schema_versions": build_schema_versions(MCPContext(repo_root="."), ["device_list", "device_list_context"]),
@@ -870,20 +914,31 @@ def build_dictionary_suggestions_from_run_report(run_report_paths: list[str], di
 
     unmapped = []
     for r in reports:
-        analysis = r.get("analysis", [])
+        analysis = r.get("analysis", {})
         unmapped.extend(analysis.get("unmapped_terms", []))
 
-    terms = []
+    # raggruppa per categoria
+    terms_by_category = {}
     for item in unmapped:
         text = (item.get("evidence", {}).get("normalized_text") or "").strip()
-        if text:
-            terms.append(text)
+        category = item.get("evidence", {}).get("category")
+        if not text or not category:
+            continue
+        terms_by_category.setdefault(category, []).append(text)
 
-    ctx = MCPContext(repo_root=".")
-    return dictionary_bulk_suggest(terms=terms, path=dictionary_path)
+
+    suggestions = []
+    for category, terms in terms_by_category.items():
+        result = dictionary_bulk_suggest(terms=terms, path=dictionary_path, expected_category=category)
+        suggestions.append({
+            "category": category,
+            "suggestions": result.get("suggestions", [])
+        })
+
+    return suggestions
 
 #----TEMPLATE BASE------
-def build_template_base_patch() -> dict:
+def build_template_base_patch_from_suggestion(suggestions_path: str, output_path: str) -> dict:
     pass
 
 #-------MATCHING REPORT + ANALYSIS-----------------
@@ -1333,18 +1388,26 @@ if __name__ == "__main__":
     # kb
     elif choose == 2: 
         ARTIFACTS["kb"]["input_path"] = input_file
+        manual = input("Usare patch manuali? (y/n): ").strip().lower() == "y"
+        if manual:
+            manual_actions_path = input("Percorso patch manuali: ").strip()
+            ARTIFACTS["kb"]["patch_path"] = manual_actions_path
         run_patch(ARTIFACTS["kb"],  "kb", kb_upsert_mapping, summarize_kb_diff, validate_only)
     # template
     elif choose == 3:
         ARTIFACTS["template"]["input_path"] = input_file
         manual = input("Usare patch manuali? (y/n): ").strip().lower() == "y"
         if manual:
-            manual_actions_path = input("Percorso patch manuali (json): ").strip()
+            manual_actions_path = input("Percorso patch manuali: ").strip()
             ARTIFACTS["template"]["manual_actions_path"] = manual_actions_path
         run_patch(ARTIFACTS["template"], "template", template_apply_patch, summarize_template_real_diff, validate_only)
     # template base
     elif choose == 4:
         ARTIFACTS["template_base"]["input_path"] = input_file
+        manual = input("Usare patch manuali? (y/n): ").strip().lower() == "y"
+        if manual:
+            manual_actions_path = input("Percorso patch manuali: ").strip()
+            ARTIFACTS["template_base"]["patch_path"] = manual_actions_path
         run_patch(ARTIFACTS["template_base"], "template_base", template_apply_patch, summarize_template_base_diff, validate_only)  
     # device list
     elif choose == 5:

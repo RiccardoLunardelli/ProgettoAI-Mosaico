@@ -223,13 +223,16 @@ def build_llm_context(section: str, source_key: str, text: str, expected_categor
     }
 
 # ------DEVICE CONTEXT E KB SCOPE-------
-def extract_device_context(device_context_path: str, template_guid: str) -> Dict[str, Any]:
+def extract_device_context(device_context_path: str, template_guid: str, device_id: str | None = None) -> Dict[str, Any]:
     # estrae campi device_list_context
 
     ctx = load_json(device_context_path)
     for item in ctx:
-        if item.get("TemplateGUID") == template_guid:
-            return {
+        if item.get("TemplateGUID") != template_guid:
+            continue
+        if device_id and item.get("IDPTD") != device_id:
+            continue
+        return {
                 "template_guid": template_guid,
                 "device_id": item.get("IDPTD"),
                 "type_fam": item.get("type_fam_generated"),
@@ -244,23 +247,54 @@ def resolve_scope_ids(kb: dict, template_guid: str, device_ctx: dict) -> set:
     scope_ids = set()
     for scope in kb.get("scopes", []):
         match = scope.get("match", {})
-        if match.get("template_guid") == template_guid:
-            ok = True 
-            for k in ["type_fam", "device_role", "enum", "device_id"]:
-                if match.get(k) is not None and match.get(k) != device_ctx.get(k):
-                    ok = False
-                    break
-                if ok:
-                    scope_ids.add(scope.get("scope_id"))
-
+        if match.get("template_guid") != template_guid:
+            continue
+        # richiede device_id
+        if not match.get("device_id"):
+            continue
+        if match.get("device_id") != device_ctx.get("device_id"):
+            continue
+        # opzionale: verifica anche type_fam/role/enum se presenti
+        ok = True
+        for k in ["type_fam", "device_role", "enum"]:
+            if match.get(k) is not None and match.get(k) != device_ctx.get(k):
+                ok = False
+                break
+        if ok:
+            scope_ids.add(scope.get("scope_id"))
     return scope_ids
 
 #------CORE-------
-def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: dict, concept_category: dict,dictionary: dict, scope_ids: set, blacklist: list, cache: dict) -> dict:
+def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: dict, concept_category: dict,dictionary: dict, scope_ids: set, blacklist: list, cache: dict, kb_mapping: list) -> dict:
     # esegue il matching per una variabile
 
     section = var.get("section")
     source_key = var.get("source_key")
+
+    # KB mapping
+    for m in kb_mapping:
+        if m.get("scope_id") not in scope_ids:
+            continue 
+        if m.get("source_type") != section:
+            continue 
+        if m.get("source_key") != source_key:
+            continue 
+        return {
+            "source_key": source_key,
+            "section": section,
+            "status": "matched",
+            "technical_reason": "kb_mapping",
+            "concept_id": m.get("concept_id"),
+            "confidence": 1.0,
+            "evidence": {
+                "normalized_text": var.get("normalized_text"),
+                "matched_synonym": None,
+                "dictionary_entry_id": None,
+                "category": SECTION_TO_CATEGORY.get(section),
+                "semantic_category": m.get("semantic_category")
+            }
+        }
+
     enabled = var.get("enabled", True)
     text = normalize_str(var.get("normalized_text"))
     expected_category = SECTION_TO_CATEGORY.get(section)
@@ -489,6 +523,7 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
     candidates = list(best_by_concept.values())
     candidates.sort(key=lambda c: (-c["score"], c["concept_id"], c["matched_synonym"]))
 
+
     top = candidates[0]
     if len(candidates) == 1:
         if top["score"] >= 0.9:
@@ -587,6 +622,7 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
             top_k=5
         )
     }
+    
 
 def run_matching(normalized_path: str, template_base_path: str, dictionary_path: str, kb_path: str, device_context_path: str, output_path: str) -> None:
     # orchestratore del matching
@@ -604,9 +640,16 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
     concept_category = build_concept_index(template_base)
 
     template_guid = normalized.get("template_guid")
-    device_ctx = extract_device_context(device_context_path, template_guid)
+    device_id = None
+    for v in normalized.get("variables", []):
+        if v.get("device_id"):
+            device_id = v.get("device_id")
+            break
+    device_ctx = extract_device_context(device_context_path, template_guid, device_id)
     scope_ids = resolve_scope_ids(kb, template_guid, device_ctx)
 
+
+    kb_mapping = kb.get("mappings", [])
     blacklist = kb.get("exceptions", {}).get("blacklist", [])
 
     items = []
@@ -620,7 +663,8 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
             dictionary=dictionary,
             scope_ids=scope_ids,
             blacklist=blacklist,
-            cache=cache
+            cache=cache,
+            kb_mapping = kb_mapping
         )
         cache_key = build_cache_key(
             normalize_str(var.get("normalized_text")),

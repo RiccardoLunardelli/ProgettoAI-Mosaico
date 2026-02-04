@@ -27,6 +27,7 @@ class VariableNormalized(BaseModel):
     type: Optional[int] = None
     enabled: bool
     evidence_fields: EvidenceFields
+    device_id: Optional[str] = None
 
 class DataloggerPenEntry(BaseModel):
     # Supporto per DatallogerPen (non usata per matching, solo evidenza)
@@ -85,6 +86,15 @@ def cleanup_measurement(value: Optional[str]) -> Optional[str]:
     value = value.replace("Â°", "°")
     value = value.replace("Â", "")
     return value
+
+def extract_device_id_from_name(name: Optional[str]) -> Optional[str]:
+    # es: "Read0_P02T04D01" -> "P02T04D01"
+
+    if not isinstance(name, str):
+        return None
+    m = re.search(r"_([A-Z]\d{2}T\d{2}D\d{2})$", name)
+    return m.group(1) if m else None
+
 
 def empty_to_none(value: Optional[str]) -> Optional[str]:
     # converte stringhe vuote a None
@@ -151,6 +161,8 @@ def build_variable(section_name: str, source_key: str, extracted: Dict[str, Any]
     for key in EVIDENCE_KEYS:
         if key in extracted and extracted[key] is not None:
             evidence[key] = extracted[key]
+    
+    device_id = extract_device_id_from_name(extracted.get("Name"))
 
     return VariableNormalized(
         section=section_name,
@@ -161,6 +173,7 @@ def build_variable(section_name: str, source_key: str, extracted: Dict[str, Any]
         type=extracted.get("Type"),
         enabled=enabled,
         evidence_fields=EvidenceFields(**evidence),
+        device_id=device_id
     )
 
 def normalize_template(raw_template: Dict[str, Any], schema: Dict[str, Any]) -> NormalizedTemplate:

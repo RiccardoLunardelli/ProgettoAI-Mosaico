@@ -41,6 +41,7 @@ def kb_upsert_mapping(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
                 "concept_id": op["concept_id"],
                 "reason": op["reason"],
                 "evidence": op["evidence"],
+                "semantic_category": op["semantic_category"]
             })
         
         # -------UPDATE KB RULE------------
@@ -58,6 +59,9 @@ def kb_upsert_mapping(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
                         m["reason"] = op["reason"]
                     if op.get("evidence") is not None:
                         m["evidence"] = op["evidence"]
+                    if op.get("semantic_category") is not None:
+                        m["semantic_category"] = op["semantic_category"]
+
                     updated = True
                     break 
             if not updated:

@@ -58,6 +58,10 @@
         "evidence": {
           "title": "Evidence",
           "type": "string"
+        },
+        "semantic_category": {
+          "title": "Semantic Category",
+          "type": "string"
         }
       },
       "required": [
@@ -66,7 +70,8 @@
         "source_key",
         "concept_id",
         "reason",
-        "evidence"
+        "evidence",
+        "semantic_category"
       ],
       "title": "KBMapping",
       "type": "object"
