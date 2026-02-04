@@ -5,6 +5,7 @@
       "op": "add_concept",
       "concept_id": "temp_probe_p4",
       "category": "measurement",
+      "semantic_category": "temperature_probe_value",
       "synonyms": {
         "it": ["valore sonda p4 temperatura"],
         "en": []
@@ -12,10 +13,5 @@
       "abbreviations": [],
       "patterns": []
     }
-  ],
-  "metadata": {
-    "approved_by": "human",
-    "reason": "Approved PROPOSE_CONCEPT from patch_actions",
-    "source": "patch_actions.json"
-  }
+  ]
 }

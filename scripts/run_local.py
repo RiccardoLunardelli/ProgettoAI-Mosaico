@@ -16,7 +16,7 @@ RUNS_ROOT = Path("runs")
 ARTIFACTS = {
     "dictionary": {
         "input_path": "",
-        "patch_path": str(PATCH_ROOT / "dictionary" / "manual_patch_upsemcat.json"),
+        "patch_path": str(PATCH_ROOT / "dictionary" / "manual_patch_addconc.json"),
         "matching_path": "output_dir/matching_report_v0.1.json",
         "input_version": "v0.1",
         "template_base_path": "data/template_base_v0.1.json",
@@ -612,40 +612,64 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
     llm_attempt: dict | None, actions_payload: dict | None) -> dict:
     # raccoglie tutto, nornalizza e ritorna il report della run
 
-    return {
-        "schema_versions": schema_versions,
-        "run_id": run_id,
-        "timestamp": datetime.now(TIMEZONE).isoformat(),
-        "template_guid": get_template_guid(input_path, mr, artifact_type),
-        "source_files": {
-            "template_path": input_path if artifact_type == "template" else None,
-            "dictionary_path": ARTIFACTS["dictionary"]["input_path"],
-            "dictionary_version": dictionary_payload.get("dictionary_version") if dictionary_payload else None,
-            "kb_path": ARTIFACTS["kb"]["input_path"],
-            "kb_version": kb_payload.get("kb_version") if kb_payload else None,
-            "template_base_path": template_base_path,
-            "template_base_version": template_base_version,
-        },
-        "metrics": {
-            "matched_count": compute_metrics(mr, actions_payload).get("matched_count"),
-            "ambiguous_count": compute_metrics(mr, actions_payload).get("ambiguous_count"),
-            "unmapped_count": compute_metrics(mr, actions_payload).get("unmapped_count"),
-            "llm_calls": llm_attempt.get("batches", 0) if llm_attempt else 0,
-            "warnings_count": len(validation_block.get("warnings", [])) if validation_block else 0,
-        },
-        "target": {
-            "artifact_type": artifact_type,
-            "input_path": input_path,
-            "output_path": output_path,
-        },
-        "execution": {
-            "dry_run_performed": True,
-            "committed": committed,
-            "status": status,
-        },
-        "validation": validation_block,
-        "diff_summary": {"changed_paths": diff},
-    }
+    if artifact_type == "template":
+        return {
+            "schema_versions": schema_versions,
+            "run_id": run_id,
+            "timestamp": datetime.now(TIMEZONE).isoformat(),
+            "template_guid": get_template_guid(input_path, mr, artifact_type),
+            "source_files": {
+                "template_path": input_path if artifact_type == "template" else None,
+                "dictionary_path": ARTIFACTS["dictionary"]["input_path"],
+                "dictionary_version": dictionary_payload.get("dictionary_version") if dictionary_payload else None,
+                "kb_path": ARTIFACTS["kb"]["input_path"],
+                "kb_version": kb_payload.get("kb_version") if kb_payload else None,
+                "template_base_path": template_base_path,
+                "template_base_version": template_base_version,
+            },
+            "metrics": {
+                "matched_count": compute_metrics(mr, actions_payload).get("matched_count"),
+                "ambiguous_count": compute_metrics(mr, actions_payload).get("ambiguous_count"),
+                "unmapped_count": compute_metrics(mr, actions_payload).get("unmapped_count"),
+                "llm_calls": llm_attempt.get("batches", 0) if llm_attempt else 0,
+                "warnings_count": len(validation_block.get("warnings", [])) if validation_block else 0,
+            },
+            "target": {
+                "artifact_type": artifact_type,
+                "input_path": input_path,
+                "output_path": output_path,
+            },
+            "execution": {
+                "dry_run_performed": True,
+                "committed": committed,
+                "status": status,
+            },
+            "validation": validation_block,
+            "diff_summary": {"changed_paths": diff},
+        }
+    elif artifact_type == "dictionary":
+        return {
+            "schema_versions": schema_versions,
+            "run_id": run_id,
+            "timestamp": datetime.now(TIMEZONE).isoformat(),
+            "template_guid": get_template_guid(input_path, mr, artifact_type),
+            "source_files": {
+                "dictionary_path": input_path,
+                "dictionary_version": dictionary_payload.get("dictionary_version") if dictionary_payload else None,
+            },
+            "target": {
+                "artifact_type": artifact_type,
+                "input_path": input_path,
+                "output_path": output_path,
+            },
+            "execution": {
+                "dry_run_performed": True,
+                "committed": committed,
+                "status": status,
+            },
+            "validation": validation_block,
+            "diff_summary": {"changed_paths": diff},
+        }
 
 def compute_metrics(mr: dict | None, actions_payload: dict | None) -> dict:
     # calcola metriche base
@@ -905,6 +929,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     
     mr, analysis = load_matching(matching_path) # carica matching report
 
+
     # deterministico dalle match
     actions_out = "output_dir/patch_actions_v0.1.json"
     if not cfg.get("manual_actions_path"):
@@ -922,20 +947,21 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     llm_model = cfg.get("llm_model", "llama3.1:8b")
     dict_patch = {"target": "dictionary", "operations": []}
     llm_attempt = None
-    if has_ambiguous and not manual_mode:
-        use_llm = input("Sono presenti ambiguità. Usare LLM? (y/n): ").strip().lower() == "y"
-        if use_llm:
-            print("Generating LLM proposed actions...")
-            llm_actions, _, llm_attempt = llm_propose_actions(llm_model, mr)
-            llm_actions = ensure_labels(llm_actions)
+    if artifact_type == "template":
+        if has_ambiguous and not manual_mode:
+            use_llm = input("Sono presenti ambiguità. Usare LLM? (y/n): ").strip().lower() == "y"
+            if use_llm:
+                print("Generating LLM proposed actions...")
+                llm_actions, _, llm_attempt = llm_propose_actions(llm_model, mr)
+                llm_actions = ensure_labels(llm_actions)
 
-            llm_actions = filter_low_confidence(llm_actions, threshold=0.9)
-            llm_contexts = extract_llm_contexts(mr)
-            llm_actions = filter_by_candidate_gap(llm_actions, llm_contexts, min_gap=0.10)
+                llm_actions = filter_low_confidence(llm_actions, threshold=0.9)
+                llm_contexts = extract_llm_contexts(mr)
+                llm_actions = filter_by_candidate_gap(llm_actions, llm_contexts, min_gap=0.10)
 
-            llm_actions_path = run_dir / "llm_patch_actions.json"
-            with open(llm_actions_path, "w", encoding="utf-8") as f:
-                json.dump(llm_actions, f, indent=2, ensure_ascii=False)
+                llm_actions_path = run_dir / "llm_patch_actions.json"
+                with open(llm_actions_path, "w", encoding="utf-8") as f:
+                    json.dump(llm_actions, f, indent=2, ensure_ascii=False)
     
     if manual_mode:
         print("Manual mode: skipping LLM proposed actions.")
@@ -994,11 +1020,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     if not validate_only:
         approve_commit = True 
     else:
-        response = input("Commit? (y/n): ").strip().lower()
-        approve_commit = (response == "y")
-
-    if validate_only:
-        approve_commit = False 
+        approve_commit = False
 
     if not approve_commit:
         validate_only = True
@@ -1121,7 +1143,7 @@ def run_device_list(cfg: dict, validate) -> None:
 
 if __name__ == "__main__":
     choose = int(input("1--> diz. 2--> kb. 3--> template. 4--> template_base. 5--> device_list: "))
-    input_file = input("Percorso file template: ").strip()
+    input_file = input("Percorso file input: ").strip()
     validate = input("Validate only? (y --> ONLY report /n --> Commit): ")
     if validate == "y":
         validate_only = True

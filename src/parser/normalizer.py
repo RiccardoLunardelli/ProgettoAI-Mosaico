@@ -180,13 +180,13 @@ def normalize_template(raw_template: Dict[str, Any], schema: Dict[str, Any]) -> 
 
         data = resolve_path(raw_template, path) 
 
-        if value_type == "scalar": 
+        if value_type == "scalar": # per template guid
             if name == "TemplateGuid":
                 template_guid = data
                 support.TemplateGuid = data
             continue
 
-        if value_type == "keyed_map":
+        if value_type == "keyed_map": # per le variabili
             if not isinstance(data, dict):
                 data = {}
 
