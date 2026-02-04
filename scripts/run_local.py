@@ -16,7 +16,7 @@ RUNS_ROOT = Path("runs")
 ARTIFACTS = {
     "dictionary": {
         "input_path": "",
-        "patch_path": str(PATCH_ROOT / "dictionary" / "manual_patch_addconc.json"),
+        "patch_path":"",
         "matching_path": "output_dir/matching_report_v0.1.json",
         "input_version": "v0.1",
         "template_base_path": "data/template_base_v0.1.json",
@@ -183,6 +183,8 @@ def extract_analysis_from_matching_report(mr: dict) -> dict:
     }
 
 #----------LLM-----------------
+
+#-----TEMPLATE-----
 def extract_llm_contexts(mr: dict) -> list[dict]:
     # estrae i contesti LLM dal matching report che richiedono llm ( ambiguous , unmapped )
 
@@ -400,6 +402,24 @@ def ensure_labels(actions_payload: dict) -> dict:
             tgt["labels"] = {"it": text, "en": text}
             a["target"] = tgt
     return actions_payload
+
+#-----DICTIONARY-----
+def build_llm_dictionary_prompt(analysis: dict) -> str:
+    return (
+        "SYSTEM: You are a strict JSON generator.\n"
+        "You propose ONLY dictionary patch operations.\n"
+        "Use ONLY ambiguous_matches and unmapped_terms.\n"
+        "No guesses. If unsure, operations: [].\n\n"
+        "OUTPUT FORMAT (strict):\n"
+        "{\n"
+        "  \"target\": \"dictionary\",\n"
+        "  \"operations\": [\n"
+        "    {\"op\": \"add_synonym\", \"concept_id\": \"...\", \"lang\": \"it\", \"value\": \"...\"}\n"
+        "  ]\n"
+        "}\n\n"
+        "INPUT:\n"
+        f"{json.dumps(analysis, ensure_ascii=False)}\n"
+    )
 
 #---------DIFF-----------------
 def summarize_device_list_diff(before:dict, after: dict) -> list[str]:
@@ -652,7 +672,7 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
             "schema_versions": schema_versions,
             "run_id": run_id,
             "timestamp": datetime.now(TIMEZONE).isoformat(),
-            "template_guid": get_template_guid(input_path, mr, artifact_type),
+            "template_guid": get_template_guid(input_path, mr, artifact_type) if artifact_type == "template" else None,
             "source_files": {
                 "dictionary_path": input_path,
                 "dictionary_version": dictionary_payload.get("dictionary_version") if dictionary_payload else None,
@@ -708,6 +728,8 @@ def compute_metrics(mr: dict | None, actions_payload: dict | None) -> dict:
     }
 
 #------BUILD PATCH ACTIONS------------
+
+#-----TEMPLATE-------
 def build_patch_actions_from_matching(mr: dict, output_path: str) -> dict:
     actions = []
     for item in mr.get("items", []):
@@ -762,6 +784,72 @@ def build_patch_actions_from_matching(mr: dict, output_path: str) -> dict:
         json.dump(patch_actions, f, ensure_ascii=False, indent=2)
 
     return patch_actions
+
+#-----DICTIONARY------
+def build_dictionary_patch_from_run_report(run_report_path: list[str], dictionary_path: str) -> dict:
+    # costruisce patch per dizionario da run report
+
+    reports = []
+    for p in run_report_path:
+        r = load_json(p)
+        reports.append(r)
+    
+    # usa solo UNMAPPED, AMBIGUOUS
+    ambiguous = []
+    unmapped = []
+    for r in reports:
+        analysis = r.get("analysis", {})
+        ambiguous.extend(analysis.get("ambiguous_matches", []))
+        unmapped.extend(analysis.get("unmapped_terms", []))
+
+    dictionary = load_json(dictionary_path)
+    existing_synonyms = {}
+    exisisting_abbr = {}
+    for e in dictionary.get("entries", []):
+        cid = e.get("concept_id")
+        existing_synonyms[cid] = e.get("synonyms", {})
+        exisisting_abbr[cid] = set(e.get("abbreviations", []))
+    
+    operations= []
+    seen_concepts = set()
+
+    def _add(op):
+        key = tuple(sorted(op.items()))
+        if key not in seen_concepts:
+            operations.append(op)
+            seen_concepts.add(key)
+
+    #----AMBIGUOUS----
+    for item in ambiguous:
+        candidates = item.get("candidates", [])
+        if len(candidates) != 1:
+            continue
+
+        concept_id = candidates[0].get("concept_id")
+        text = (item.get("evidence", {}).get("normalized_text")or "").strip()
+        if not concept_id or not text:
+            continue 
+        
+        # ADD ABBR 
+        tokens = [t for t in text.split() if t]
+        if len(tokens) < 2:
+            # troppo corto per essere un sinonimo valido
+            if 2 <= len(text) <= 3:
+                if text not in exisisting_abbr.get(concept_id, set()):
+                    _add({"op": "add_abbreviation", "concept_id": concept_id, "value": text})
+            continue
+        
+        # ADD SYN
+        _add({"op": "add_synonym", "concept_id": concept_id, "lang": "it", "value": text})
+    
+    #---UNMAPPED----
+    for item in unmapped:
+        text = (item.get("evidence", {}).get("normalized_text")or "").strip()
+        if not text:
+            continue
+
+    return {"target": "dictionary", "operations": operations}
+
 
 #-------MATCHING REPORT + ANALYSIS-----------------
 def load_matching(matching_path: str | None) -> tuple[dict | None, dict]:
@@ -915,22 +1003,72 @@ def build_report_context(artifact_type, matching_path, template_base_path):
     return schema_versions, dict_payload, kb_payload, tb_version
 
 def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> None:
-    # orchestrator
-    
     run_id = generate_run_id()
     run_dir = RUNS_ROOT / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
 
     input_path = cfg["input_path"]
-    matching_path = cfg.get("matching_path") # matchign report
-    actions_path = cfg.get("actions_path")  # patch per template reale
-    template_base_path = cfg.get("template_base_path") # template base
+    matching_path = cfg.get("matching_path")
+    actions_path = cfg.get("actions_path")
+    template_base_path = cfg.get("template_base_path")
     validate_only = validate
-    
-    mr, analysis = load_matching(matching_path) # carica matching report
 
+    # ---- GENERIC FLOW (dictionary / kb / template_base) ----
+    if artifact_type in {"dictionary", "kb", "template_base"}:
+        template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = build_patch_and_validation(cfg, artifact_type, upsert_fn, diff_fn)
 
-    # deterministico dalle match
+        if validation_error:
+            run_report = build_run_report(
+                cfg=cfg, run_id=run_id, artifact_type=artifact_type,
+                input_path=input_path, output_path=input_path,
+                diff=validation_error.get("diff", []),
+                schema_versions={}, committed=False, status="validation_error",
+                validation_block={
+                    "status": "error",
+                    "errors": validation_error.get("errors", []),
+                    "warnings": validation_error.get("warnings", []),
+                    "stage": validation_error.get("stage"),
+                },
+                mr=None, dictionary_payload=None, kb_payload=None,
+                template_base_path=template_base_path,
+                template_base_version=load_json(template_base_path).get("template_base_version") if template_base_path else None,
+                llm_attempt=None, actions_payload=actions_payload
+            )
+            report_path = run_dir / "run_report.json"
+            with open(report_path, "w", encoding="utf-8") as f:
+                json.dump(run_report, f, indent=2, ensure_ascii=False)
+            return
+
+        artifact, preview, diff = compute_diff(input_path, template_patch, validated_preview, validated_diff, upsert_fn, diff_fn)
+
+        if not validate_only:
+            approve_commit = True
+        else:
+            approve_commit = False
+
+        if not approve_commit:
+            validate_only = True
+
+        output_path, committed, status, _ = apply_commit(input_path, template_patch, diff, validate_only, upsert_fn)
+        schema_versions, dict_payload, kb_payload, tb_version = build_report_context(artifact_type, None, template_base_path)
+
+        run_report = build_run_report(
+            cfg=cfg, run_id=run_id, artifact_type=artifact_type,
+            input_path=input_path, output_path=output_path, diff=diff,
+            schema_versions=schema_versions, committed=committed, status=status,
+            validation_block=validation_block, mr=None,
+            dictionary_payload=dict_payload, kb_payload=kb_payload,
+            template_base_path=template_base_path, template_base_version=tb_version,
+            llm_attempt=None, actions_payload=actions_payload
+        )
+        report_path = run_dir / "run_report.json"
+        with open(report_path, "w", encoding="utf-8") as f:
+            json.dump(run_report, f, indent=2, ensure_ascii=False)
+        return
+
+    # ---- TEMPLATE FLOW ----
+    mr, analysis = load_matching(matching_path)
+
     actions_out = "output_dir/patch_actions_v0.1.json"
     if not cfg.get("manual_actions_path"):
         build_patch_actions_from_matching(mr, actions_out)
@@ -940,67 +1078,54 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
 
     manual_mode = bool(cfg.get("manual_actions_path"))
 
-    # se ambiguous --> llm
     has_ambiguous = any(i.get("status") == "ambiguous" for i in mr.get("items", [])) if mr else False
-    use_llm = False 
     llm_actions = None
     llm_model = cfg.get("llm_model", "llama3.1:8b")
-    dict_patch = {"target": "dictionary", "operations": []}
     llm_attempt = None
-    if artifact_type == "template":
-        if has_ambiguous and not manual_mode:
-            use_llm = input("Sono presenti ambiguità. Usare LLM? (y/n): ").strip().lower() == "y"
-            if use_llm:
-                print("Generating LLM proposed actions...")
-                llm_actions, _, llm_attempt = llm_propose_actions(llm_model, mr)
-                llm_actions = ensure_labels(llm_actions)
 
-                llm_actions = filter_low_confidence(llm_actions, threshold=0.9)
-                llm_contexts = extract_llm_contexts(mr)
-                llm_actions = filter_by_candidate_gap(llm_actions, llm_contexts, min_gap=0.10)
+    if has_ambiguous and not manual_mode:
+        use_llm = input("Sono presenti ambiguità. Usare LLM? (y/n): ").strip().lower() == "y"
+        if use_llm:
+            print("Generating LLM proposed actions...")
+            llm_actions, _, llm_attempt = llm_propose_actions(llm_model, mr)
+            llm_actions = ensure_labels(llm_actions)
+            llm_actions = filter_low_confidence(llm_actions, threshold=0.9)
+            llm_contexts = extract_llm_contexts(mr)
+            llm_actions = filter_by_candidate_gap(llm_actions, llm_contexts, min_gap=0.10)
 
-                llm_actions_path = run_dir / "llm_patch_actions.json"
-                with open(llm_actions_path, "w", encoding="utf-8") as f:
-                    json.dump(llm_actions, f, indent=2, ensure_ascii=False)
-    
-    if manual_mode:
+            llm_actions_path = run_dir / "llm_patch_actions.json"
+            with open(llm_actions_path, "w", encoding="utf-8") as f:
+                json.dump(llm_actions, f, indent=2, ensure_ascii=False)
+    elif manual_mode:
         print("Manual mode: skipping LLM proposed actions.")
 
-    template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = build_patch_and_validation(cfg, artifact_type, upsert_fn, diff_fn)
+    template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = \
+        build_patch_and_validation(cfg, artifact_type, upsert_fn, diff_fn)
 
     if validation_error:
         run_report = build_run_report(
-            cfg=cfg,
-            run_id=run_id,
-            artifact_type=artifact_type,
-            input_path=input_path,
-            output_path=input_path,
+            cfg=cfg, run_id=run_id, artifact_type=artifact_type,
+            input_path=input_path, output_path=input_path,
             diff=validation_error.get("diff", []),
-            schema_versions={},
-            committed=False,
-            status="validation_error",
+            schema_versions={}, committed=False, status="validation_error",
             validation_block={
                 "status": "error",
                 "errors": validation_error.get("errors", []),
                 "warnings": validation_error.get("warnings", []),
                 "stage": validation_error.get("stage"),
             },
-            mr=mr,
-            dictionary_payload=None,
-            kb_payload=None,
+            mr=mr, dictionary_payload=None, kb_payload=None,
             template_base_path=template_base_path,
             template_base_version=load_json(template_base_path).get("template_base_version") if template_base_path else None,
-            llm_attempt=llm_attempt,
-            actions_payload=actions_payload,
+            llm_attempt=llm_attempt, actions_payload=actions_payload
         )
         report_path = run_dir / "run_report.json"
         with open(report_path, "w", encoding="utf-8") as f:
             json.dump(run_report, f, indent=2, ensure_ascii=False)
         return
-    
+
     artifact, preview, diff = compute_diff(input_path, template_patch, validated_preview, validated_diff, upsert_fn, diff_fn)
 
-    approve_commit = False 
     print("\n------ MATCH DETERMINISTICO ----------")
     print("\n--- DRY-RUN DIFF ---")
     for d in diff:
@@ -1017,8 +1142,9 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
             print(f"- {a.get('type')} {a.get('section')}/{a.get('source_key')}/{a.get('evidence').get('normalized_text')} -> {a.get('target', {}).get('concept_id')} | Confidence: {a.get('confidence')}")
         print(f"Patch LLM file: {llm_actions_path}")
 
+    # auto-commit se validate_only False
     if not validate_only:
-        approve_commit = True 
+        approve_commit = True
     else:
         approve_commit = False
 
@@ -1030,23 +1156,13 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     schema_versions, dict_payload, kb_payload, tb_version = build_report_context(artifact_type, matching_path, template_base_path)
 
     run_report = build_run_report(
-        cfg=cfg,
-        run_id=run_id,
-        artifact_type=artifact_type,
-        input_path=input_path,
-        output_path=output_path,
-        diff=diff,
-        schema_versions=schema_versions,
-        committed=committed,
-        status=status,
-        validation_block=validation_block,
-        mr=mr,
-        dictionary_payload=dict_payload,
-        kb_payload=kb_payload,
-        template_base_path=template_base_path,
-        template_base_version=tb_version,
-        llm_attempt=llm_attempt,
-        actions_payload=actions_payload
+        cfg=cfg, run_id=run_id, artifact_type=artifact_type,
+        input_path=input_path, output_path=output_path, diff=diff,
+        schema_versions=schema_versions, committed=committed, status=status,
+        validation_block=validation_block, mr=mr,
+        dictionary_payload=dict_payload, kb_payload=kb_payload,
+        template_base_path=template_base_path, template_base_version=tb_version,
+        llm_attempt=llm_attempt, actions_payload=actions_payload
     )
 
     if llm_attempt:
@@ -1063,7 +1179,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
         policy_outcome = "approved"
 
     run_report["policy_outcome"] = policy_outcome
-        
+
     if analysis:
         run_report["analysis"] = analysis
         run_report["analysis"]["matching_path"] = matching_path
@@ -1082,6 +1198,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     report_path = run_dir / "run_report.json"
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(run_report, f, indent=2, ensure_ascii=False)
+
 
 def run_device_list(cfg: dict, validate) -> None:
     # run per device_list
@@ -1151,6 +1268,24 @@ if __name__ == "__main__":
         validate_only = False
     if choose == 1:
         ARTIFACTS["dictionary"]["input_path"] = input_file
+        # run report lettura
+        manual = input("Patch manuale o da run report? (m/r): ").strip().lower()
+        if manual == "m":
+            patch_path = input("Percorso patch manuale (json): ").strip()
+            ARTIFACTS["dictionary"]["patch_path"] = patch_path
+        else:
+            run_report_input = input("Run report path: ").strip()
+            run_report_paths = [p.strip() for p in run_report_input.split(",") if p.strip()]
+
+            # build patch del dizionario
+            patch = build_dictionary_patch_from_run_report(run_report_paths, input_file) 
+            out_path = "output_dir/dictionary_patch.json"
+            ARTIFACTS["dictionary"]["patch_path"] = out_path
+            with open(out_path, "w", encoding="utf-8") as f:
+                json.dump(patch, f, ensure_ascii=False, indent=2)
+            ARTIFACTS["dictionary"]["patch_path"] = out_path
+            print("Patch dizionario salvata in:", out_path)
+
         run_patch(ARTIFACTS["dictionary"], "dictionary", dictionary_upsert, summarize_dictionary_diff, validate_only)
     elif choose == 2: 
         ARTIFACTS["kb"]["input_path"] = input_file
