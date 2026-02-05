@@ -248,12 +248,26 @@ Riferimento al concetto canonico del Template Base.
 ---
 
 ### `category`
+Categoria (coerente con il Template Base).
+
+---
+
+### `semantic_category`
 Categoria semantica (coerente con il Template Base).
 
 ---
 
 ### `synonyms`
 Sinonimi testuali espliciti, divisi per lingua.
+
+---
+
+### `abbreviations`
+Abbreviazioni.
+
+---
+
+### `patterns`
 
 ---
 
