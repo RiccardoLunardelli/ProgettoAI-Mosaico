@@ -180,3 +180,81 @@ Ogni concetto del Template Base include tipicamente:
   Descrizione funzionale del concetto
 
 ---
+
+# STEP 3: CREAZIONE DIZIONARIO
+## Scopo
+Il **Dizionario** è il componente che collega il linguaggio reale, rumoroso e non standardizzato dei template
+(sinonimi, abbreviazioni, varianti linguistiche, pattern testuali) ai **concetti canonici** definiti nel Template Base.
+
+Serve a rispondere alla domanda:
+> “Quando nei template compare questo testo, a quale concetto stiamo probabilmente facendo riferimento?”
+
+Il dizionario è il **cuore del matching deterministico**.
+
+---
+
+## Principi chiave
+- Il dizionario **non è generato automaticamente**
+- È **arricchito nel tempo**, run dopo run
+- È **versionato e auditabile**
+- È indipendente dai template reali
+- È indipendente dal matching engine (niente logica procedurale)
+
+---
+
+## Input
+- Template Base (Step 2)
+- Analisi dei template reali normalizzati (Step 1)
+- Output dei run precedenti:
+  - `unmapped_terms`
+  - `ambiguous_matches`
+- Conoscenza di dominio
+
+---
+
+## Output
+**File:** `dictionary.json`  
+Artefatto versionato (`dictionary_vX.Y.json`).
+
+---
+
+## Ruolo del dizionario
+- Riceve testo **normalizzato**
+- Fornisce:
+  - candidati di concept
+  - segnali deterministici forti
+- Riduce:
+  - ambiguità
+  - chiamate LLM
+  - variabilità nel tempo
+
+---
+
+## Struttura concettuale
+
+Il dizionario è una **lista di entry**, ognuna collegata a un `concept_id`
+(definito nel Template Base).
+
+Ogni entry descrive **come un concetto può apparire nei template reali**.
+
+---
+
+
+## Campi principali di una entry
+
+### `concept_id`
+Riferimento al concetto canonico del Template Base.
+
+---
+
+### `category`
+Categoria semantica (coerente con il Template Base).
+
+---
+
+### `synonyms`
+Sinonimi testuali espliciti, divisi per lingua.
+
+---
+
+# STEP 4: CREAZIONE KNOWLEDGE BASE
