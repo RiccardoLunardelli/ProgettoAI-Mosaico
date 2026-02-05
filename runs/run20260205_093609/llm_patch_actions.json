@@ -1,0 +1,314 @@
+{
+  "patch_actions_version": "v0.1",
+  "generated_at": "2026-02-05T09:39:27.024160+01:00",
+  "actions": [
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param3",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "temperatura di isteresi",
+          "en": "hysteresis temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "configurazione differenziale relativo/assoluto",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param5",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "setpoint minimo",
+          "en": "minimum setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "setpoint minimo",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param69",
+      "target": {
+        "concept_id": "defrost_duration",
+        "category": "parameter",
+        "semantic_category": "time",
+        "labels": {
+          "it": "attivazione impostazioni avanzate di sbrinamento",
+          "en": "defrost duration"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "defrost_duration",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "time"
+        }
+      },
+      "confidence": 0.9,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "attivazione impostazioni avanzate di sbrinamento",
+        "selected_candidate": "defrost_duration",
+        "score": 0.8125
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param114",
+      "target": {
+        "concept_id": "threshold_high_temperature",
+        "category": "parameter",
+        "semantic_category": "threshold",
+        "labels": {
+          "it": "soglia allarme di alta temperatura",
+          "en": "high temperature alarm threshold"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "threshold_high_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "threshold"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "soglia allarme di alta temperatura sonda sbrinamento",
+        "selected_candidate": "threshold_high_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param115",
+      "target": {
+        "concept_id": "threshold_low_temperature",
+        "category": "parameter",
+        "semantic_category": "threshold",
+        "labels": {
+          "it": "soglia allarme di bassa temperatura",
+          "en": "low temperature alarm threshold"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "threshold_low_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "threshold"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "soglia allarme di bassa temperatura sonda sbrinamento",
+        "selected_candidate": "threshold_low_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param116",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "differenziale rientro allarme temperatura",
+          "en": "temperature hysteresis alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "differenziale rientro allarme temperatura sonda sbrinamento",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm9",
+      "target": {
+        "concept_id": "alarm_low_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme di bassa temperatura sonda 1",
+          "en": "low temperature alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_low_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "allarme di bassa temperatura sonda 1",
+        "selected_candidate": "alarm_low_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm10",
+      "target": {
+        "concept_id": "alarm_high_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme di alta temperatura sonda 1",
+          "en": "high temperature alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "allarme di alta temperatura sonda 1",
+        "selected_candidate": "alarm_high_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm12",
+      "target": {
+        "concept_id": "alarm_high_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme di alta temperatura sbrinamento",
+          "en": "high temperature alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "allarme di alta temperatura sbrinamento",
+        "selected_candidate": "alarm_high_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm13",
+      "target": {
+        "concept_id": "alarm_low_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme di bassa temperatura ventole",
+          "en": "low temperature alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_low_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "allarme di bassa temperatura ventole",
+        "selected_candidate": "alarm_low_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm14",
+      "target": {
+        "concept_id": "alarm_high_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme di alta temperatura ventole",
+          "en": "high temperature alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "allarme di alta temperatura ventole",
+        "selected_candidate": "alarm_high_temperature",
+        "score": 0.7
+      }
+    }
+  ]
+}

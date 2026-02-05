@@ -95,7 +95,6 @@ def extract_device_id_from_name(name: Optional[str]) -> Optional[str]:
     m = re.search(r"_([A-Z]\d{2}T\d{2}D\d{2})$", name)
     return m.group(1) if m else None
 
-
 def empty_to_none(value: Optional[str]) -> Optional[str]:
     # converte stringhe vuote a None
 

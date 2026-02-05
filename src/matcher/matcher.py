@@ -295,7 +295,7 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
             }
         }
 
-    enabled = var.get("enabled", True)
+    enabled = var.get("enabled", True)  # normalized 
     text = normalize_str(var.get("normalized_text"))
     expected_category = SECTION_TO_CATEGORY.get(section)
 
@@ -446,7 +446,7 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
                 "suggested_action": "dictionary.suggest_or_upsert"
             }
 
-        fuzzy_candidates.sort(key=lambda c: (-c["score"], c["concept_id"]))
+        fuzzy_candidates.sort(key=lambda c: (-c["score"], c["concept_id"])) # ordinamento decresente per score
         top = fuzzy_candidates[0]
         second = fuzzy_candidates[1] if len(fuzzy_candidates) > 1 else None
         gap = (top["score"] - second["score"]) if second is not None else None
@@ -516,9 +516,7 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
     for cand in candidates:
         cid = cand["concept_id"]
         prev = best_by_concept.get(cid)
-        if prev is None or cand["score"] > prev["score"] or (
-            cand["score"] == prev["score"] and cand["matched_synonym"] < prev["matched_synonym"]
-        ):
+        if prev is None or cand["score"] > prev["score"] or (cand["score"] == prev["score"] and cand["matched_synonym"] < prev["matched_synonym"]):
             best_by_concept[cid] = cand
     candidates = list(best_by_concept.values())
     candidates.sort(key=lambda c: (-c["score"], c["concept_id"], c["matched_synonym"]))
