@@ -93,3 +93,90 @@ Questa fase:
 ---
 
 # STEP 2: CREAZIONE TEMPLATE BASE
+## Scopo
+Il **Template Base** rappresenta il riferimento **canonico e stabile** del dominio.
+Non è un template operativo da caricare sui supervisori, ma un **modello semantico di riferimento** che definisce:
+- quali concetti esistono
+- come sono categorizzati
+- quali metadati standard devono avere
+
+Serve come **ancora semantica** per:
+- il matching delle variabili dei template reali
+- la validazione delle decisioni
+- la coerenza nel tempo del sistema
+
+---
+
+## Principi chiave
+- Il Template Base **non viene generato automaticamente**
+- È **costruito e curato manualmente**
+- Evoluzione **controllata e versionata**
+- Deve essere **stabile** rispetto ai template reali
+- Non contiene riferimenti a ReadX / ParamX / registri PLC
+
+---
+
+## Input
+- Analisi dei template reali osservati
+- Categorie semantiche definite a priori
+
+---
+
+## Output
+**File:** `template_base.json`
+
+Artefatto versionato e immutabile per ogni release.
+
+---
+
+## Struttura concettuale
+
+Il Template Base è organizzato in:
+- **Categorie**
+- **Concetti**
+
+### Categoria
+Una categoria rappresenta un grande gruppo semantico.
+
+Esempi:
+- `measurement`
+- `parameter`
+- `alarm`
+- `warning`
+- `command`
+- `virtual_variable`
+
+---
+
+### Concetto
+Un concetto rappresenta **univocamente un significato fisico o logico**, indipendente da:
+- vendor
+- lingua
+- abbreviazioni
+- implementazione PLC
+
+Ogni concetto deve essere:
+- semanticamente atomico
+- riconoscibile nel mondo reale
+- stabile nel tempo
+
+---
+
+
+## Campi principali di un concetto
+
+Ogni concetto del Template Base include tipicamente:
+
+- `concept_id`  
+  Identificatore canonico univoco (snake_case)
+
+- `category`  
+  Categoria di appartenenza
+
+- `label`  
+  Etichette leggibili (multilingua)
+
+- `description`  
+  Descrizione funzionale del concetto
+
+---
