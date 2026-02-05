@@ -146,6 +146,7 @@ def iter_candidate_texts(entry: dict, template_base_index: dict, concept_id: str
     desc = normalize_str(base.get("description"))
     if desc:
         yield desc, "template_base_description"
+
 #--------FUNZIONI LINGUISTICHE PER MATCH-------
 def normalize_str(s: Optional[str]) -> Optional[str]:
     # normalizzazione togliendo spazi e mettendo tutto in minuscolo
@@ -189,7 +190,7 @@ def build_concept_index(template_base: Dict[str, Any]) -> Dict[str, Dict[str, An
             }
     return index
 
-#-------LLM----------
+#-------LLM CONTEXT----------
 def build_llm_context(section: str, source_key: str, text: str, expected_category: str, candidates: list,
                       device_ctx: dict, versions: dict, template_guid: str, top_k: int = 5) -> dict:
     # costruisce paylaod per llm

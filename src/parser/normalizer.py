@@ -188,9 +188,9 @@ def normalize_template(raw_template: Dict[str, Any], schema: Dict[str, Any]) -> 
         name = section["name"]  # ContinuosRead | Parameter etc..
         role = section["role"]  # support_only | core
         path = section["path"]  # $.ContinuosRead.Values | $.Parameters.Values etc..
-        value_type = section["value_type"]  # scalar | keyed_map | 
+        value_type = section["value_type"]  # scalar | keyed_map 
 
-        data = resolve_path(raw_template, path) 
+        data = resolve_path(raw_template, path)     # risolve path tipo $.
 
         if value_type == "scalar": # per template guid
             if name == "TemplateGuid":

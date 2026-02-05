@@ -4,11 +4,11 @@
     "patch_actions_template": "v0.1",
     "template_patch": "v0.1"
   },
-  "run_id": "run20260205_093609",
-  "timestamp": "2026-02-05T09:39:27.042100+01:00",
+  "run_id": "run20260205_114213",
+  "timestamp": "2026-02-05T11:42:17.341487+01:00",
   "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
   "source_files": {
-    "template_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e_v0.2.json",
+    "template_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json",
     "dictionary_path": "",
     "dictionary_version": null,
     "kb_path": "",
@@ -20,346 +20,62 @@
     "matched_count": 32,
     "ambiguous_count": 83,
     "unmapped_count": 247,
-    "llm_calls": 28,
-    "warnings_count": 1
+    "llm_calls": 0,
+    "warnings_count": 0
   },
   "target": {
     "artifact_type": "template",
-    "input_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e_v0.2.json",
-    "output_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e_v0.2.json"
+    "input_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json",
+    "output_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e_v0.1.json"
   },
   "execution": {
     "dry_run_performed": true,
-    "committed": false,
-    "status": "no_change"
+    "committed": true,
+    "status": "success"
   },
   "validation": {
     "status": "ok",
     "errors": [],
-    "warnings": [
-      "no_change_after_dry_run"
-    ],
+    "warnings": [],
     "stage": "validated"
   },
   "diff_summary": {
-    "changed_paths": []
-  },
-  "llm_patch_actions": {
-    "patch_actions_version": "v0.1",
-    "generated_at": "2026-02-05T09:39:27.024160+01:00",
-    "actions": [
-      {
-        "type": "map_variable",
-        "section": "Parameters",
-        "source_key": "Param3",
-        "target": {
-          "concept_id": "hysteresis_temperature",
-          "category": "parameter",
-          "semantic_category": "temperature",
-          "labels": {
-            "it": "temperatura di isteresi",
-            "en": "hysteresis temperature"
-          }
-        },
-        "patch": {
-          "set_fields": {
-            "ConceptId_Patch": "hysteresis_temperature",
-            "Category_Patch": "parameter",
-            "SemanticCategory_Patch": "temperature"
-          }
-        },
-        "confidence": 0.95,
-        "reason": "clear_match",
-        "evidence": {
-          "normalized_text": "configurazione differenziale relativo/assoluto",
-          "selected_candidate": "hysteresis_temperature",
-          "score": 0.7
-        }
-      },
-      {
-        "type": "map_variable",
-        "section": "Parameters",
-        "source_key": "Param5",
-        "target": {
-          "concept_id": "setpoint_temperature",
-          "category": "parameter",
-          "semantic_category": "setpoint",
-          "labels": {
-            "it": "setpoint minimo",
-            "en": "minimum setpoint"
-          }
-        },
-        "patch": {
-          "set_fields": {
-            "ConceptId_Patch": "setpoint_temperature",
-            "Category_Patch": "parameter",
-            "SemanticCategory_Patch": "setpoint"
-          }
-        },
-        "confidence": 0.95,
-        "reason": "clear_match",
-        "evidence": {
-          "normalized_text": "setpoint minimo",
-          "selected_candidate": "setpoint_temperature",
-          "score": 0.7
-        }
-      },
-      {
-        "type": "map_variable",
-        "section": "Parameters",
-        "source_key": "Param69",
-        "target": {
-          "concept_id": "defrost_duration",
-          "category": "parameter",
-          "semantic_category": "time",
-          "labels": {
-            "it": "attivazione impostazioni avanzate di sbrinamento",
-            "en": "defrost duration"
-          }
-        },
-        "patch": {
-          "set_fields": {
-            "ConceptId_Patch": "defrost_duration",
-            "Category_Patch": "parameter",
-            "SemanticCategory_Patch": "time"
-          }
-        },
-        "confidence": 0.9,
-        "reason": "clear_match",
-        "evidence": {
-          "normalized_text": "attivazione impostazioni avanzate di sbrinamento",
-          "selected_candidate": "defrost_duration",
-          "score": 0.8125
-        }
-      },
-      {
-        "type": "map_variable",
-        "section": "Parameters",
-        "source_key": "Param114",
-        "target": {
-          "concept_id": "threshold_high_temperature",
-          "category": "parameter",
-          "semantic_category": "threshold",
-          "labels": {
-            "it": "soglia allarme di alta temperatura",
-            "en": "high temperature alarm threshold"
-          }
-        },
-        "patch": {
-          "set_fields": {
-            "ConceptId_Patch": "threshold_high_temperature",
-            "Category_Patch": "parameter",
-            "SemanticCategory_Patch": "threshold"
-          }
-        },
-        "confidence": 0.95,
-        "reason": "clear_match",
-        "evidence": {
-          "normalized_text": "soglia allarme di alta temperatura sonda sbrinamento",
-          "selected_candidate": "threshold_high_temperature",
-          "score": 0.7
-        }
-      },
-      {
-        "type": "map_variable",
-        "section": "Parameters",
-        "source_key": "Param115",
-        "target": {
-          "concept_id": "threshold_low_temperature",
-          "category": "parameter",
-          "semantic_category": "threshold",
-          "labels": {
-            "it": "soglia allarme di bassa temperatura",
-            "en": "low temperature alarm threshold"
-          }
-        },
-        "patch": {
-          "set_fields": {
-            "ConceptId_Patch": "threshold_low_temperature",
-            "Category_Patch": "parameter",
-            "SemanticCategory_Patch": "threshold"
-          }
-        },
-        "confidence": 0.95,
-        "reason": "clear_match",
-        "evidence": {
-          "normalized_text": "soglia allarme di bassa temperatura sonda sbrinamento",
-          "selected_candidate": "threshold_low_temperature",
-          "score": 0.7
-        }
-      },
-      {
-        "type": "map_variable",
-        "section": "Parameters",
-        "source_key": "Param116",
-        "target": {
-          "concept_id": "hysteresis_temperature",
-          "category": "parameter",
-          "semantic_category": "temperature",
-          "labels": {
-            "it": "differenziale rientro allarme temperatura",
-            "en": "temperature hysteresis alarm"
-          }
-        },
-        "patch": {
-          "set_fields": {
-            "ConceptId_Patch": "hysteresis_temperature",
-            "Category_Patch": "parameter",
-            "SemanticCategory_Patch": "temperature"
-          }
-        },
-        "confidence": 0.95,
-        "reason": "clear_match",
-        "evidence": {
-          "normalized_text": "differenziale rientro allarme temperatura sonda sbrinamento",
-          "selected_candidate": "hysteresis_temperature",
-          "score": 0.7
-        }
-      },
-      {
-        "type": "map_variable",
-        "section": "Alarms",
-        "source_key": "Alarm9",
-        "target": {
-          "concept_id": "alarm_low_temperature",
-          "category": "alarm",
-          "semantic_category": "alarm",
-          "labels": {
-            "it": "allarme di bassa temperatura sonda 1",
-            "en": "low temperature alarm"
-          }
-        },
-        "patch": {
-          "set_fields": {
-            "ConceptId_Patch": "alarm_low_temperature",
-            "Category_Patch": "alarm",
-            "SemanticCategory_Patch": "alarm"
-          }
-        },
-        "confidence": 0.95,
-        "reason": "clear_match",
-        "evidence": {
-          "normalized_text": "allarme di bassa temperatura sonda 1",
-          "selected_candidate": "alarm_low_temperature",
-          "score": 0.7
-        }
-      },
-      {
-        "type": "map_variable",
-        "section": "Alarms",
-        "source_key": "Alarm10",
-        "target": {
-          "concept_id": "alarm_high_temperature",
-          "category": "alarm",
-          "semantic_category": "alarm",
-          "labels": {
-            "it": "allarme di alta temperatura sonda 1",
-            "en": "high temperature alarm"
-          }
-        },
-        "patch": {
-          "set_fields": {
-            "ConceptId_Patch": "alarm_high_temperature",
-            "Category_Patch": "alarm",
-            "SemanticCategory_Patch": "alarm"
-          }
-        },
-        "confidence": 0.95,
-        "reason": "clear_match",
-        "evidence": {
-          "normalized_text": "allarme di alta temperatura sonda 1",
-          "selected_candidate": "alarm_high_temperature",
-          "score": 0.7
-        }
-      },
-      {
-        "type": "map_variable",
-        "section": "Alarms",
-        "source_key": "Alarm12",
-        "target": {
-          "concept_id": "alarm_high_temperature",
-          "category": "alarm",
-          "semantic_category": "alarm",
-          "labels": {
-            "it": "allarme di alta temperatura sbrinamento",
-            "en": "high temperature alarm"
-          }
-        },
-        "patch": {
-          "set_fields": {
-            "ConceptId_Patch": "alarm_high_temperature",
-            "Category_Patch": "alarm",
-            "SemanticCategory_Patch": "alarm"
-          }
-        },
-        "confidence": 0.95,
-        "reason": "clear_match",
-        "evidence": {
-          "normalized_text": "allarme di alta temperatura sbrinamento",
-          "selected_candidate": "alarm_high_temperature",
-          "score": 0.7
-        }
-      },
-      {
-        "type": "map_variable",
-        "section": "Alarms",
-        "source_key": "Alarm13",
-        "target": {
-          "concept_id": "alarm_low_temperature",
-          "category": "alarm",
-          "semantic_category": "alarm",
-          "labels": {
-            "it": "allarme di bassa temperatura ventole",
-            "en": "low temperature alarm"
-          }
-        },
-        "patch": {
-          "set_fields": {
-            "ConceptId_Patch": "alarm_low_temperature",
-            "Category_Patch": "alarm",
-            "SemanticCategory_Patch": "alarm"
-          }
-        },
-        "confidence": 0.95,
-        "reason": "clear_match",
-        "evidence": {
-          "normalized_text": "allarme di bassa temperatura ventole",
-          "selected_candidate": "alarm_low_temperature",
-          "score": 0.7
-        }
-      },
-      {
-        "type": "map_variable",
-        "section": "Alarms",
-        "source_key": "Alarm14",
-        "target": {
-          "concept_id": "alarm_high_temperature",
-          "category": "alarm",
-          "semantic_category": "alarm",
-          "labels": {
-            "it": "allarme di alta temperatura ventole",
-            "en": "high temperature alarm"
-          }
-        },
-        "patch": {
-          "set_fields": {
-            "ConceptId_Patch": "alarm_high_temperature",
-            "Category_Patch": "alarm",
-            "SemanticCategory_Patch": "alarm"
-          }
-        },
-        "confidence": 0.95,
-        "reason": "clear_match",
-        "evidence": {
-          "normalized_text": "allarme di alta temperatura ventole",
-          "selected_candidate": "alarm_high_temperature",
-          "score": 0.7
-        }
-      }
+    "changed_paths": [
+      "set_fields: ContinuosReads/Read0 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read1 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read2 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read4 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read5 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read6 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read12 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read20 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read34 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read37 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read41 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read60 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read62 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read85 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Parameters/Param0 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Parameters/Param78 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Parameters/Param79 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Parameters/Param80 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Parameters/Param91 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Parameters/Param97 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Parameters/Param110 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Parameters/Param111 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Parameters/Param172 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Parameters/Param173 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Parameters/Param174 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Parameters/Param175 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Parameters/Param176 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Parameters/Param177 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Parameters/Param237 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Alarms/Alarm19 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Alarms/Alarm22 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Alarms/Alarm23 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch"
     ]
   },
-  "llm_patch_actions_path": "runs/run20260205_093609/llm_patch_actions.json",
-  "policy_outcome": "no_change",
+  "policy_outcome": "approved",
   "analysis": {
     "matching_version": "v0.1",
     "ambiguous_matches": [
