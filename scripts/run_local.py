@@ -12,6 +12,7 @@ import requests
 TIMEZONE = timezone(timedelta(hours=1))
 PATCH_ROOT = Path("mcp_server/patch")
 RUNS_ROOT = Path("runs")
+ollama_call_count = 0
 
 ARTIFACTS = {
     "dictionary": {
@@ -309,6 +310,9 @@ def filter_by_candidate_gap(actions_payload: dict, llm_contexts: list[dict], min
 def ollama_generate_json(model: str, prompt: str) -> dict:
     # genera json con ollama
 
+    global ollama_call_count 
+    ollama_call_count += 1
+
     url = "http://localhost:11434/api/generate"
     payload = {
         "model": model,
@@ -321,7 +325,7 @@ def ollama_generate_json(model: str, prompt: str) -> dict:
     r.raise_for_status()
     raw = r.json().get("response", "").strip()
     try: 
-        print("generate chunk")
+        print(f"chiamata LLM {ollama_call_count}")
         return json.loads(raw)
     except Exception:
         return {"patch_actions_version": "v0.1", "generated_at": datetime.now(timezone.utc).isoformat(), "actions": []}
@@ -651,7 +655,7 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
                 "matched_count": compute_metrics(mr, actions_payload).get("matched_count"),
                 "ambiguous_count": compute_metrics(mr, actions_payload).get("ambiguous_count"),
                 "unmapped_count": compute_metrics(mr, actions_payload).get("unmapped_count"),
-                "llm_calls": llm_attempt.get("batches", 0) if llm_attempt else 0,
+                "llm_calls": ollama_call_count,
                 "warnings_count": len(validation_block.get("warnings", [])) if validation_block else 0,
             },
             "target": {
