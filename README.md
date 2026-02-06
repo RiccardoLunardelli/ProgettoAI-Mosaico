@@ -272,3 +272,29 @@ Abbreviazioni.
 ---
 
 # STEP 4: CREAZIONE KNOWLEDGE BASE
+## Scopo
+La **Knowledge Base (KB)** fornisce **contesto operativo e memoria storica** al sistema.
+Non descrive *cosa* è un concetto (Template Base) né *come* viene espresso (Dizionario), ma
+**in quali condizioni un concetto è più probabile, meno probabile o prioritario**.
+
+Serve a ridurre ambiguità, aumentare determinismo e migliorare la qualità del matching nel tempo.
+
+---
+
+## Input 
+- Device list del supervisore
+- Conoscenza regole esplicitate dal punto vendita
+
+---
+
+## Output
+**File:** `kb.json`  
+
+---
+
+## Ruolo della Knowledge Base
+Fornire il **contesto lavorativo** in cui stiamo lavorando, conoscendo **se esplicitato** dal punto vendita, le variabili a cosa corrispondono
+
+---
+
+# STEP 5: MATCHING 
