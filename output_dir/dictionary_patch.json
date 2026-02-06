@@ -3,63 +3,81 @@
   "operations": [
     {
       "op": "add_synonym",
-      "concept_id": "state_fan",
+      "concept_id": "state_defrost",
       "lang": "it",
-      "value": "valore sonda regolazione ventilatori"
+      "value": "prima sonda di sbrinamento"
     },
     {
       "op": "add_synonym",
       "concept_id": "state_defrost",
       "lang": "it",
-      "value": "tempo mancante al prossimo sbrinamento 1=10 sec"
+      "value": "seconda sonda di sbrinamento"
     },
     {
       "op": "add_synonym",
       "concept_id": "state_defrost",
       "lang": "it",
-      "value": "uscita digitale sbrinamento resistenze"
+      "value": "tempo mancante per il prossimo sbrinamento"
     },
     {
       "op": "add_synonym",
       "concept_id": "state_defrost",
       "lang": "it",
-      "value": "stato sbrinamento ritardo avviamento attesa dsd"
+      "value": "sbrinamento su richiesta temp riferimento"
     },
     {
       "op": "add_synonym",
       "concept_id": "state_defrost",
       "lang": "it",
-      "value": "stato sbrinamento manuale"
+      "value": "fine sbrinamento d i stato"
     },
     {
       "op": "add_synonym",
       "concept_id": "state_defrost",
       "lang": "it",
-      "value": "stato sbrinamento sincronizzato lan"
+      "value": "richiesta di sbrinamento automatico"
     },
     {
       "op": "add_synonym",
       "concept_id": "state_defrost",
       "lang": "it",
-      "value": "stato sbrinamento in gocciolamento"
+      "value": "stato del ritardo di avvio dello sbrinamento"
     },
     {
       "op": "add_synonym",
       "concept_id": "state_defrost",
       "lang": "it",
-      "value": "stato sbrinamento in pausa attesa consenso di fine da lan"
+      "value": "sbrinamento attivo"
     },
     {
       "op": "add_synonym",
       "concept_id": "state_defrost",
       "lang": "it",
-      "value": "master sbrinamento"
+      "value": "sbrinamento interrotto"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_defrost",
+      "lang": "it",
+      "value": "sbrinamento sincronizzato"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_defrost",
+      "lang": "it",
+      "value": "fine dello sbrinamento"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "temp_delivery",
+      "lang": "it",
+      "value": "sonda mandata in allarme"
     },
     {
       "op": "add_synonym",
       "concept_id": "hysteresis_temperature",
       "lang": "it",
-      "value": "configurazione differenziale relativo/assoluto"
+      "value": "configurazione differenziale relativa/assoluta"
     },
     {
       "op": "add_synonym",
@@ -83,127 +101,115 @@
       "op": "add_synonym",
       "concept_id": "setpoint_temperature",
       "lang": "it",
-      "value": "setpoint per ciclo continuo"
-    },
-    {
-      "op": "add_synonym",
-      "concept_id": "setpoint_temperature",
-      "lang": "it",
-      "value": "setpoint surriscaldamento"
-    },
-    {
-      "op": "add_synonym",
-      "concept_id": "setpoint_temperature",
-      "lang": "it",
-      "value": "setpoint resistenze durante sbrinamento"
+      "value": "setpoint ciclo continuo"
     },
     {
       "op": "add_synonym",
       "concept_id": "hysteresis_temperature",
       "lang": "it",
-      "value": "differenziale per le resistenze"
+      "value": "differenziale per riscaldatore"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "defrost_duration",
+      "lang": "it",
+      "value": "durata massima dello sbrinamento"
     },
     {
       "op": "add_synonym",
       "concept_id": "hysteresis_temperature",
       "lang": "it",
-      "value": "differenziale di temperatura per evitare la pendolazione delle ventole"
+      "value": "differenziale di temperatura per evitare cicli brevi dei ventilatori"
     },
     {
       "op": "add_synonym",
       "concept_id": "hysteresis_temperature",
       "lang": "it",
-      "value": "differenziale ripartenza ventole"
+      "value": "differenziale per ventilatore/offset per riscaldatore antisudore"
     },
     {
       "op": "add_synonym",
       "concept_id": "hysteresis_temperature",
       "lang": "it",
-      "value": "differenziale resistenze anti condensanti"
+      "value": "differenziale per allarme temperatura"
     },
     {
       "op": "add_synonym",
       "concept_id": "hysteresis_temperature",
       "lang": "it",
-      "value": "differenziale rientro allarme temperatura"
+      "value": "differenziale per allarme temperatura 2"
     },
     {
       "op": "add_synonym",
-      "concept_id": "threshold_high_temperature",
+      "concept_id": "defrost_duration",
       "lang": "it",
-      "value": "soglia allarme di alta temperatura sonda sbrinamento"
+      "value": "primo sbrinamento durata massima"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "defrost_duration",
+      "lang": "it",
+      "value": "secondo sbrinamento durata massima"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "defrost_duration",
+      "lang": "it",
+      "value": "terzo sbrinamento durata massima"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "defrost_duration",
+      "lang": "it",
+      "value": "quarto sbrinamento durata massima"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "defrost_duration",
+      "lang": "it",
+      "value": "quinto sbrinamento durata massima"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "defrost_duration",
+      "lang": "it",
+      "value": "sesto sbrinamento durata massima"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "sbrinamento su richiesta differenziale di avvio dello sbrinamento"
     },
     {
       "op": "add_synonym",
       "concept_id": "threshold_low_temperature",
       "lang": "it",
-      "value": "soglia allarme di bassa temperatura sonda sbrinamento"
+      "value": "sbrinamento su richiesta temperatura minima della batteria per attivare uno sbrinamento"
     },
     {
       "op": "add_synonym",
       "concept_id": "hysteresis_temperature",
       "lang": "it",
-      "value": "differenziale rientro allarme temperatura sonda sbrinamento"
-    },
-    {
-      "op": "add_synonym",
-      "concept_id": "threshold_high_temperature",
-      "lang": "it",
-      "value": "soglia allarme di alta temperatura sonda ventole"
-    },
-    {
-      "op": "add_synonym",
-      "concept_id": "threshold_low_temperature",
-      "lang": "it",
-      "value": "soglia allarme di bassa temperatura sonda ventole"
-    },
-    {
-      "op": "add_synonym",
-      "concept_id": "hysteresis_temperature",
-      "lang": "it",
-      "value": "differenziale rientro allarme temperatura sonda ventole"
-    },
-    {
-      "op": "add_synonym",
-      "concept_id": "setpoint_temperature",
-      "lang": "it",
-      "value": "sincronizzazione setpoint"
-    },
-    {
-      "op": "add_synonym",
-      "concept_id": "alarm_low_temperature",
-      "lang": "it",
-      "value": "allarme di bassa temperatura sonda 1"
+      "value": "differenziale per basso surriscaldamento"
     },
     {
       "op": "add_synonym",
       "concept_id": "alarm_high_temperature",
       "lang": "it",
-      "value": "allarme di alta temperatura sonda 1"
+      "value": "1 allarme di alta temperatura"
     },
     {
       "op": "add_synonym",
       "concept_id": "alarm_low_temperature",
       "lang": "it",
-      "value": "allarme di bassa temperatura sbrinamento"
+      "value": "2 allarme di bassa temperatura"
     },
     {
       "op": "add_synonym",
       "concept_id": "alarm_high_temperature",
       "lang": "it",
-      "value": "allarme di alta temperatura sbrinamento"
-    },
-    {
-      "op": "add_synonym",
-      "concept_id": "alarm_low_temperature",
-      "lang": "it",
-      "value": "allarme di bassa temperatura ventole"
-    },
-    {
-      "op": "add_synonym",
-      "concept_id": "alarm_high_temperature",
-      "lang": "it",
-      "value": "allarme di alta temperatura ventole"
+      "value": "2 allarme di alta temperatura"
     }
   ]
 }

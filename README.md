@@ -426,6 +426,15 @@ Schema utilizzato come **output ufficiale dell’LLM proposer**:
 - patch da applicare
 - confidence, reason, evidence obbligatorie
 
+### Device List
+Definisce il formato raw della device list del supervisore.
+
+### Device List Patch
+  - `type_fam_generated`
+  - `device_role_generated`
+  - `enum_generated`
+
+
 ### `write_schema(name, model, out_dir)`
 - Converte un modello Pydantic in JSON Schema
 - Crea directory se assente
@@ -826,4 +835,396 @@ Arricchisce la device_list del supervisore producendo un `device_list_context` c
 
 ---
 
-# STEP 8: 
+# STEP 8: PATCH ACTIONS & PATCH ENGINE
+
+## Scopo
+Questo step descrive **come una decisione di matching diventa una modifica reale**, in modo
+controllato, validato e auditabile.
+
+Il sistema **non riscrive mai direttamente i file**:
+produce **PatchActions**, le valida, le simula (dry-run) e solo dopo,
+se approvate, le applica creando **nuove versioni**.
+
+---
+
+## Concetti fondamentali
+
+### PatchActions
+Le PatchActions rappresentano **decisioni atomiche**, non esecuzioni.
+
+Ogni azione:
+- è esplicita
+- è spiegabile
+- è validabile
+- è reversibile
+
+---
+
+### Tipologie di PatchActions
+
+#### PatchActionsTemplate (eseguibile)
+È il **formato ufficiale prodotto dal matching / LLM proposer**.
+
+Caratteristiche:
+- target semantico (concept_id, category, semantic_category)
+- patch dichiarativa (`set_fields`)
+- confidence
+- reason
+- evidence
+
+È l’unico formato accettato per modificare i template reali.
+
+---
+
+## Flusso Patch Engine 
+
+1. Raccolta PatchActions
+2. Validazione schema
+3. Validazione canonica
+4. Conversione in patch eseguibile
+5. Dry-run
+6. Diff
+7. Commit (opzionale)
+8. Run report
+
+---
+
+
+## Origine delle PatchActions
+
+Le PatchActions possono provenire da:
+- matching deterministico (confidence alta)
+- LLM (solo come proposer)
+- patch manuali (operatore umano)
+
+In tutti i casi:
+- **nessuna PatchAction viene applicata senza validazione**
+
+---
+
+## Validazione (validator.py)
+
+### Schema-first
+Ogni payload viene validato contro lo schema:
+- `patch_actions_template`
+
+Se lo schema non è valido → **blocco immediato**.
+
+### Validazione canonica
+Le azioni vengono validate contro il Template Base:
+
+Controlli effettuati:
+- `concept_id` esiste
+- `category` coerente
+- `semantic_category` coerente
+
+Errori tipici:
+- `unknown_concept_id`
+- `category_mismatch`
+- `semantic_category_mismatch`
+
+### Conversione PatchActions → TemplatePatch
+Le PatchActions vengono convertite in una patch eseguibile per il template reale:
+
+- `map_variable` → `set_fields`
+- inserimento metadati:
+  - confidence
+  - reason
+  - evidence
+
+## Dry-run obbligatorio
+
+Prima di qualunque commit:
+- la patch viene applicata in **preview**
+- viene calcolato un diff strutturato
+
+Se il diff è vuoto:
+- viene emesso un warning `no_change_after_dry_run`
+
+## Commit
+
+Il commit:
+- è possibile solo se il dry-run è stato eseguito
+- crea una **nuova versione del file**
+- non modifica mai il file originale
+
+## Codice
+**File:** `run_local.py`
+
+---
+
+## Funzioni di utilità
+
+### `get_template_guid(input_path, mr, artifact_type)`
+Risale al `template_guid` a partire dal template reale o dal matching report.
+
+### `generate_run_id()`
+Genera l’ID univoco della run.
+
+### `schema_version_from_path(schema_path)`
+Estrae la versione dallo schema a partire dal nome del file.
+
+### `build_schema_versions(ctx, used_schema_ids)`
+Costruisce la mappa `schema_id → versione` usata nella run.
+
+### `extract_present_concepts(mr, actions_payload)`
+Elenca i concept presenti (derivati da matching e patch actions).
+
+### `build_absent_concepts(template_base_path, mr, actions_payload)`
+Calcola i concetti del Template Base assenti nel template reale.
+
+### `extract_matched_variables_from_matching_report(mr)`
+Estrae solo le variabili con stato `matched` dal matching report.
+
+### `extract_analysis_from_matching_report(mr)`
+Costruisce la sezione di analisi (`ambiguous` + `unmapped`) dal matching report.
+
+---
+
+## LLM (proposer)
+
+### `extract_llm_contexts(mr)`
+Raccoglie i contesti LLM dagli item ambigui.
+
+### `build_llm_prompt(llm_contexts)`
+Genera il prompt **JSON-only** per l’LLM.
+
+### `filter_low_confidence(actions_payload, threshold=0.9)`
+Filtra le azioni LLM con confidence inferiore alla soglia.
+
+### `filter_by_candidate_gap(actions_payload, llm_contexts, min_gap=0.10)`
+Filtra le azioni LLM con gap top/second insufficiente.
+
+### `ollama_generate_json(model, prompt)`
+Invoca Ollama e parsea l’output JSON.
+
+### `chunk_list(items, size)`
+Divide una lista in batch.
+
+### `llm_propose_actions(model, mr, batch_size=3)`
+Genera proposte LLM, tracciando tentativi e latenza.
+
+### `parse_llm_output(output)`
+Valida la struttura JSON prodotta dall’LLM (chiavi consentite).
+
+### `ensure_labels(actions_payload)`
+Garantisce la presenza delle label `it/en` nei target LLM.
+
+### `build_llm_dictionary_prompt(analysis)`
+Prompt per proposte di patch al dizionario (non usato nel flow base).
+
+---
+
+## Diff helpers
+
+### `summarize_device_list_diff(before, after)`
+Diff compatto per `device_list`.
+
+### `summarize_template_real_diff(before, after)`
+Diff compatto per template reale (`set_fields`).
+
+### `summarize_dictionary_diff(before, after)`
+Diff compatto per dizionario.
+
+### `summarize_kb_diff(before, after)`
+Diff compatto per KB mappings.
+
+### `summarize_template_base_diff(before, after)`
+Diff compatto per Template Base.
+
+### `compute_diff(input_path, template_patch, validated_preview, validated_diff, upsert_fn, diff_fn)`
+Esegue il dry-run (se necessario) e calcola il diff.
+
+---
+
+## Run report
+
+### `build_run_report(...)`
+Costruisce il `run_report.json` per ogni artifact.
+
+### `compute_metrics(mr, actions_payload)`
+Calcola metriche base:
+- matched
+- ambiguous
+- unmapped
+
+---
+
+## Patch actions
+
+### `build_patch_actions_from_matching(mr, output_path)`
+Converte i match deterministici in PatchActions e salva il JSON.
+
+---
+
+## Dictionary helper
+
+### `build_dictionary_patch_from_run_report(run_report_path, dictionary_path)`
+Genera patch dizionario dagli `ambiguous` con singolo candidato.
+
+### `build_dictionary_suggestions_from_run_report(run_report_paths, dictionary_path)`
+Genera suggestions a partire dagli `unmapped_terms`.
+
+---
+
+## Matching / Analysis load
+
+### `load_matching(matching_path)`
+Carica e valida il matching report, producendo la sezione di analysis.
+
+---
+
+## Validazione & patch build
+
+### `build_patch_and_validation(cfg, artifact_type, upsert_fn, diff_fn, actions_payload_override=None)`
+Valida il payload, genera la patch, il preview e il blocco di validazione.
+
+### `apply_commit(input_path, template_patch, diff, validate_only, upsert_fn)`
+Esegue il commit se consentito, altrimenti resta in modalità validate-only.
+
+### `build_report_context(artifact_type, matching_path, template_base_path)`
+Raccoglie versioni schema e payload degli artefatti coinvolti nella run.
+
+---
+
+## Runner principali
+
+### `run_patch(cfg, artifact_type, upsert_fn, diff_fn, validate)`
+Orchestratore per:
+- template
+- dizionario
+- knowledge base
+- template base
+
+### `run_device_list(cfg, validate)`
+Orchestratore per `device_list` con supporto dry-run / commit.
+
+---
+
+# STEP 9: FLUSSO END TO END
+
+## Scopo
+Descrivere il flusso completo, dalla normalizzazione fino al report finale,
+con punti di controllo deterministici e auditabili.
+
+## Flusso operativo
+1. Normalizzazione template reale → `normalized_template.json`  
+2. Matching deterministico + fuzzy → `matching_report_v0.1.json`  
+3. Generazione PatchActions deterministiche (solo confidence alta)  
+4. (Opzionale) LLM proposer su item ambigui  
+5. Validazione schema e validazione canonica  
+6. Dry-run + diff  
+7. Commit versionato (se `validate_only = False`)  
+8. Produzione `run_report.json`
+
+---
+
+# STEP 10: RUN REPORT & AUDIT
+
+## Scopo
+Il `run_report.json` è il **registro auditabile** della run:
+- cosa è stato deciso
+- cosa è stato applicato
+- con quali evidenze
+
+---
+
+## Contenuti principali
+
+### Identità e versioni
+- `run_id`
+- `timestamp`
+- `schema_versions`
+- versioni di dizionario, KB e template base
+
+### Target
+- `artifact_type`
+- `input_path`
+- `output_path`
+
+### Metrics
+- `matched_count`
+- `ambiguous_count`
+- `unmapped_count`
+- `llm_calls`
+- `warnings_count`
+
+### Execution
+- `dry_run_performed`
+- `committed`
+- `status`
+
+### Diff summary
+- `diff_summary.changed_paths`
+
+### Sezioni analitiche (template)
+- `analysis` (ambiguous_matches, unmapped_terms)
+- `matched_variables`
+- `actions` (azioni deterministiche applicate o validate)
+- `llm_patch_actions` (solo proposta, se LLM usato)
+- `absent_concepts`
+
+---
+
+# STEP 11: LLM RUOLO
+
+## Principio
+L’LLM **non è mai esecutore**: è un proposer controllato.
+
+---
+
+## Quando viene chiamato
+Solo se:
+- esistono item con `status == "ambiguous"`
+- non si è in modalità manuale
+- l’utente autorizza l’uso dell’LLM
+
+---
+
+## Output richiesto
+Formato **schema-first** (`patch_actions_template`) e **solo JSON**.
+
+Il prompt impone:
+- nessuna invenzione
+- uso esclusivo del `top_candidate`
+- azioni vuote se non sicuro
+
+---
+
+## Guardrail post-LLM
+Le azioni proposte vengono filtrate secondo:
+- `confidence >= 0.90`
+- `gap top/second >= 0.10`
+- target coerente con il `top_candidate`
+
+---
+
+## Risultato
+L’output LLM:
+- viene salvato in `llm_patch_actions.json`
+- viene incluso nel `run_report`
+- **non viene applicato automaticamente**
+
+---
+
+# LIBRERIE PYTHON UTILIZZATE
+
+## Core Python
+- `json`
+- `pathlib`
+- `datetime`
+- `re`
+- `time`
+
+## Validazione e schema
+- `pydantic`
+- `jsonschema`
+
+## Matching & fuzzy
+- `rapidfuzz`
+
+## Tooling MCP
+- `mcp` (FastMCP)
+
+## Networking
+- `requests` (chiamate a Ollama)
