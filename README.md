@@ -435,8 +435,6 @@ Artefatto intermedio, non eseguibile, che contiene:
 
 ### Core Matching
 
-### Core Matching
-
 **`match_variable(...)`**  
 Funzione centrale che esegue il matching di una singola variabile.
 
