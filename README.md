@@ -1,3 +1,7 @@
+# Progetto MCP
+
+![Python](https://img.shields.io/badge/python-3.12+-blue?logo=python)
+
 # STEP 1: NORMALIZZAZIONE
 
 ## Scopo
