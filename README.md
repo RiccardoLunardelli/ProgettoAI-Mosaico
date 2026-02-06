@@ -298,3 +298,161 @@ Fornire il **contesto lavorativo** in cui stiamo lavorando, conoscendo **se espl
 ---
 
 # STEP 5: MATCHING 
+## Scopo
+Il **Matching** è la fase in cui le variabili normalizzate vengono **messe in relazione** con i concetti del Template Base,
+utilizzando in modo ordinato e controllato:
+- Dizionario
+- Knowledge Base
+- Regole deterministiche
+- Fuzzy matching
+
+L’obiettivo non è “indovinare”, ma **produrre candidati motivati**, con confidenza ed evidenza esplicita.
+
+---
+
+## Principi chiave
+- **Deterministic-first**
+- **Fuzzy** nel caso di fallback
+- Matching **non distruttivo**
+- Ogni decisione deve essere **spiegabile**
+- Nessuna modifica diretta ai template
+
+---
+
+## Input
+- `normalized_template.json` (Step 1)
+- `template_base.json` (Step 2)
+- `dictionary.json` (Step 3)
+- `knowledge_base.json` (Step 4)
+- `device_context.json` (device_list arricchita)
+
+---
+
+## Output
+**File:** `matching_result.json`
+
+Artefatto intermedio, non eseguibile, che contiene:
+- match sicuri
+- match ambigui
+- termini non riconosciuti
+
+---
+
+## Codice
+**File:** `matcher.py`
+
+### Costanti principali
+- `FUZZY_T_HIGH` → soglia match sicuro fuzzy
+- `FUZZY_T_LOW` → soglia match ambiguo fuzzy
+- `MIN_LEN_FOR_PARTIAL` → lunghezza minima per `partial_ratio`
+- `SECTION_TO_CATEGORY` → mapping sezione → categoria semantica attesa
+
+### Funzioni I/O e orchestrazione
+
+- **`load_json(path)`**  
+  Carica un file JSON da disco.
+
+- **`load_inputs(...)`**  
+  Carica tutti gli input necessari al matching.
+
+- **`write_report(output_path, report, cache_path, cache)`**  
+  Scrive il report finale e aggiorna la cache.
+
+- **`run_matching(...)`**  
+  Orchestratore principale:
+  - prepara contesto
+  - itera sulle variabili
+  - raccoglie risultati
+  - calcola metriche
+  - genera output finale
+
+### Cache
+
+- **`load_cache(path)` / `save_cache(path, cache)`**  
+  Gestione cache persistente dei risultati di matching.
+
+- **`build_cache_key(...)`**  
+  Costruisce una chiave deterministica basata su:
+  - testo normalizzato
+  - categoria attesa
+  - template_guid
+  - contesto device
+  - versioni di dizionario / KB / template base
+
+- **`emit_result(items, cache, cache_key, result)`**  
+  Aggiunge il risultato sia alla lista che alla cache.
+
+### Funzioni linguistiche
+- **`normalize_str(s)`**  
+  Normalizzazione leggera: rimozione spazi + lowercase.
+
+- **`tokenize(s)`**  
+  Tokenizzazione semplice basata su spazi.
+
+### Template Base indexing
+- **`build_concept_index(template_base)`**  
+  Costruisce un indice:
+  ```text
+  concept_id → { category, semantic_category, label, description }
+
+- **`match_score(text, synonym)`**  
+  Matching deterministico:
+  - match esatto → `1.0`
+  - sinonimo contenuto → `0.7`
+  - match per token → `0.6`
+  - altrimenti `None`
+
+### Fuzzy matching
+- **`fuzzy_score(text, cand)`**  
+  Calcola score fuzzy usando `rapidfuzz`:
+  - `token_set_ratio`
+  - `ratio`
+  - `partial_ratio` (solo per stringhe sufficientemente lunghe)
+
+- **`iter_candidate_texts(entry, template_base_index, concept_id)`**  
+  Genera i testi candidati per il fuzzy matching:
+  - sinonimi del dizionario
+  - label del template base
+  - descrizione del template base
+
+### Knowledge Base e contesto device
+- **`extract_device_context(device_context_path, template_guid, device_id)`**
+  Estrae il contesto del device (vendor/famiglia/ruolo).
+
+- **`resolve_scope_ids(kb, template_guid, device_ctx)`**
+  Determina gli scope KB validi per il device corrente.
+
+### LLM context
+- **`build_llm_context(...)`**
+  Costruisce un payload strutturato per l’LLM contenente:
+  - variabile
+  - testo normalizzato
+  - candidati principali
+  - contesto device
+  - versioni degli artefatti
+
+⚠️ L’LLM non viene invocato qui, ma solo preparato come contesto.
+
+### Core Matching
+- **`match_variable(...)`**
+  Funzione centrale che esegue il matching di una singola variabile.
+  Ordine delle operazioni:
+  1. Override da KB mapping (match deterministico forte)
+  2. Cache lookup
+  3. Skip variabili disabilitate o invalide
+  4. Matching deterministico su sinonimi
+  5. Fallback fuzzy
+  6. Classificazione risultato:
+    - `matched`
+    - `ambiguous`
+    - `unmapped`
+    - `skipped_`
+  Ogni risultato include:
+  - `technical_reason`
+  - `confidence` (se applicabile)
+  - `evidence`
+  - `llm_context` (solo se ambiguo)
+
+---
+
+## MCP Server
