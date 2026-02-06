@@ -297,7 +297,120 @@ Fornire il **contesto lavorativo** in cui stiamo lavorando, conoscendo **se espl
 
 ---
 
-# STEP 5: MATCHING 
+# STEP 5: CREAZIONE DEGLI SCHEMI (SCHEMA-FIRST)
+
+## Scopo
+Questo step definisce e genera **tutti gli schemi JSON ufficiali** del progetto, utilizzati per la validazione
+rigorosa di:
+- input
+- output
+- patch
+- report
+- artefatti versionati
+
+Gli schemi rappresentano il **contratto formale** tra:
+- pipeline deterministica
+- MCP Server
+- eventuale LLM (proposer)
+
+Nessun payload può essere salvato o applicato se **non valida contro uno schema**.
+
+---
+
+## Principi
+- Schema-first design
+- Validazione obbligatoria prima di ogni commit
+- Contratti stabili e versionati
+- Unico punto di verità strutturale
+- Nessuna ambiguità di formato
+
+---
+
+## Flusso
+1. Definizione dei modelli dati tramite Pydantic
+2. Generazione automatica degli JSON Schema
+3. Salvataggio degli schemi nel repository
+4. Utilizzo degli schemi da parte del MCP Server per la validazione
+
+---
+
+## Input
+- Modelli Pydantic che rappresentano:
+  - Template Base
+  - Dizionario
+  - Knowledge Base
+  - Matching Report
+  - Patch
+  - PatchActions
+  - Device List
+
+---
+
+## Output
+Directory `schemas/` contenente gli schemi JSON versionati
+
+---
+
+## Codice
+**File:** `schema_generate.py`
+
+### Template Base
+Definisce:
+- categorie
+- concetti
+- label multilingua
+- descrizioni
+- semantic_category
+
+### Dizionario
+Definisce:
+- concept_id
+- category
+- semantic_category
+- synonyms
+- abbreviations
+- patterns
+
+### Knowledge Base
+Definisce:
+- scopes
+- mapping contestuali
+- blacklist
+- audit
+- riferimenti a versioni di dizionario e template base
+
+### Matching Report
+Definisce:
+- risultati per variabile
+- stato (`matched / ambiguous / unmapped / skipped`)
+- confidence
+- evidence
+- contesto LLM (se presente)
+- metriche aggregate
+
+### PatchActionsTemplate
+Schema utilizzato come **output ufficiale dell’LLM proposer**:
+- azioni atomiche
+- target semantico
+- patch da applicare
+- confidence, reason, evidence obbligatorie
+
+### `write_schema(name, model, out_dir)`
+- Converte un modello Pydantic in JSON Schema
+- Crea directory se assente
+- Scrive schema formattato e leggibile
+
+---
+
+## Regole
+- Ogni payload persistito deve essere validato contro uno schema
+- Nessun commit senza validazione
+- Nessun uso di schema “impliciti”
+- Gli schemi sono parte integrante della governance del sistema
+
+---
+
+# STEP 6: MATCHING 
 ## Scopo
 Il **Matching** è la fase in cui le variabili normalizzate vengono **messe in relazione** con i concetti del Template Base,
 utilizzando in modo ordinato e controllato:
@@ -460,7 +573,7 @@ Funzione centrale che esegue il matching di una singola variabile.
   
 ---
 
-# STEP 6: MCP Server
+# STEP 7: MCP Server
 ## Scopo
 L’**MCP Server** è il *gatekeeper* del progetto: espone tool controllati per leggere/scrivere file, validare payload
 contro JSON Schema e applicare patch in modo **sicuro**, **auditabile** e **versionato**.
@@ -682,4 +795,4 @@ Arricchisce la device_list del supervisore producendo un `device_list_context` c
 
 ---
 
-# STEP 7
+# STEP 8: 
