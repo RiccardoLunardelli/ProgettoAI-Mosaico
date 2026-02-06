@@ -460,4 +460,226 @@ Funzione centrale che esegue il matching di una singola variabile.
   
 ---
 
-## MCP Server
+# STEP 6: MCP Server
+## Scopo
+L’**MCP Server** è il *gatekeeper* del progetto: espone tool controllati per leggere/scrivere file, validare payload
+contro JSON Schema e applicare patch in modo **sicuro**, **auditabile** e **versionato**.
+
+Il server rende l’integrazione con un agente (LLM o orchestratore) possibile senza permettere:
+- scritture arbitrarie su filesystem
+- commit senza dry-run
+- salvataggi di payload non validati
+- modifiche in-place (versioning non distruttivo)
+
+---
+
+## Codice
+- `core.py`
+- `server.py`
+- `tools/template_tool.py`
+- `tools/schema_tool.py`
+- `tools/dictionary_tool.py`
+- `tools/kb_tool.py`
+- `tools/device_list_tool.py`
+
+---
+
+## Concetti chiave
+
+### MCPContext (core del server)
+Classe centrale che implementa:
+- guardrail filesystem (allowlist repo_root)
+- read/write JSON
+- schema validation (jsonschema)
+- meccanismo dry-run → commit
+- diff JSON per audit/debug
+- mappa schema_id → file schema
+
+---
+
+## File: core.py
+
+### Classi
+- **`MCPError`**  
+  Eccezione custom usata per errori controllati del server.
+
+- **`MCPContext(repo_root)`**  
+  Contesto di esecuzione che gestisce sicurezza e invarianti.
+
+### Funzioni / metodi principali
+
+- **`ensure_within_root(path)`**  
+  Impone una allowlist sul filesystem: il server può operare solo dentro `repo_root`.
+
+- **`read_json(path)`**  
+  Lettura JSON da file.
+
+- **`write_json(path, payload)`**  
+  Scrittura JSON su file.
+
+- **`hash_payload(payload)`**  
+  Calcola SHA-256 del payload (json canonicalizzato) per tracking di validazione/dry-run.
+
+- **`schema_get(schema_id)`**  
+  Carica lo schema JSON associato a `schema_id` tramite `schema_map`.
+
+- **`schema_validate(schema_id, payload)`**  
+  Valida un payload contro lo schema JSON; registra l’hash in `_validated_hashes`.
+
+- **`mark_dry_run(patch_actions)`**  
+  Registra l’hash di un payload come “dry-run eseguito”.
+
+- **`require_dry_run(patch_actions)`**  
+  Impedisce commit se il payload non è stato marcato in precedenza con `mark_dry_run`.
+
+- **`require_validated(payload)`**  
+  Impedisce salvataggio se il payload non è stato validato contro uno schema.
+
+- **`diff_json(a, b, prefix="")`**  
+  Produce una lista di differenze “leggibili” tra due strutture JSON.
+
+---
+
+## File: server.py
+
+### Definizione server MCP
+Il server usa `FastMCP` e registra tool che delegano ai moduli in `tools/*`.
+
+Tool esposti:
+- `template_load`
+- `template_save`
+- `template_apply_patch`
+- `schema_get`
+- `schema_validate`
+- `dictionary_search`
+- `dictionary_upsert`
+- `dictionary_bulk_suggest`
+- `kb_load`
+- `kb_save`
+- `kb_upsert_mapping`
+- `device_list_enrich`
+
+---
+
+## Tool: template_tool.py
+
+### Funzioni
+- **`template_load(ctx, path)`**  
+  Legge un template JSON in modo sicuro (guardrail path).
+
+- **`template_save(ctx, path, template)`**  
+  Scrive un template JSON.  
+  Se è un template base, valida prima contro schema `template_base`.
+
+- **`template_apply_patch(ctx, path, patch, dry_run)`**  
+  Applica patch con due target:
+  - `target="template_base"` → operazioni su Template Base
+  - `target="template"` → operazioni su template reale (`set_fields`)
+
+  Comportamento:
+  - valida template e patch con JSON schema
+  - costruisce `preview` (deepcopy)
+  - se `dry_run=True`: marca dry-run e ritorna preview
+  - se commit: richiede dry-run precedente, valida output, salva in versione incrementata (`_v0.x`)
+
+Operazioni Template Base supportate:
+- `add_base_concept`
+- `remove_base_concept`
+- `update_base_metadata`
+
+Operazioni Template reale supportate:
+- patch per variabile: `(section, source_key) -> fields` (set_fields)
+
+---
+
+## Tool: schema_tool.py
+
+- **`schema_get(ctx, schema_id)`**  
+  Ritorna lo schema JSON associato.
+
+- **`schema_validate(ctx, schema_id, payload)`**  
+  Valida payload contro schema JSON.
+
+---
+
+## Tool: dictionary_tool.py
+
+- **`dictionary_search(ctx, path, text, lang, concept_id)`**  
+  Ricerca:
+  - per `concept_id` (diretta)
+  - oppure per `text + lang` dentro i sinonimi
+
+- **`dictionary_upsert(ctx, path, patch, dry_run)`**  
+  Applica patch al dizionario in modo versionato:
+  - valida dizionario e patch
+  - crea preview
+  - dry-run / commit con `_next_versioned_path`
+
+Operazioni supportate:
+- `add_synonym`
+- `add_concept`
+- `update_synonym`
+- `add_abbreviation`
+- `add_pattern`
+- `update_category`
+- `update_semantic_category`
+
+- **`dictionary_bulk_suggest(ctx, terms, path=None, expected_category=None)`**  
+  Dato un set di termini, produce candidati basati su:
+  - contains su synonyms
+  - contains su abbreviations
+  - match su patterns (regex)
+
+- **`_next_versioned_path(path)`**  
+  Incrementa versioni del file: `_v0.1.json` → `_v0.2.json`.
+
+---
+
+## Tool: kb_tool.py
+
+### Funzioni
+- **`kb_load(ctx, path)`**  
+  Lettura KB.
+
+- **`kb_save(ctx, path, versioned)`**  
+  Salvataggio KB: richiede che il payload sia stato validato (`require_validated`).
+
+- **`kb_upsert_mapping(ctx, path, patch, dry_run)`**  
+  Patch versionata per regole KB (mappings):
+  - valida KB e patch
+  - crea preview
+  - applica operazioni
+  - dry-run / commit in nuova versione
+
+Operazioni supportate:
+- `add_kb_rule`
+- `update_kb_rule`
+
+---
+
+
+## Tool: device_list_tool.py
+
+### Scopo
+Arricchisce la device_list del supervisore producendo un `device_list_context` con campi derivati.
+
+### Funzioni
+- **`derive_device_role(desc)`**  
+  Deriva `device_role_generated` da parole chiave (CENTRALE, CELLA, BANCO, ecc.).
+
+- **`derive_type_fam(desc)`**  
+  Deriva `type_fam_generated` (TN/BT/TN-BT/other) tramite regole e regex.
+
+- **`derive_enum(desc, type_fam)`**  
+  Placeholder: regola non ancora definita.
+
+- **`device_list_enrich(ctx, path, dry_run)`**  
+  - valida input `device_list`
+  - arricchisce ogni item con `*_generated`
+  - valida output contro schema `device_list_context`
+  - salva versionato (o crea `device_list_context_v0.1.json` se input è `device_list.json`)
+  - dry-run / commit con guardrail
+
+---
+
+# STEP 7
