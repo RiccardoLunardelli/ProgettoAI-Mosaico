@@ -434,25 +434,28 @@ Artefatto intermedio, non eseguibile, che contiene:
 ⚠️ L’LLM non viene invocato qui, ma solo preparato come contesto.
 
 ### Core Matching
-- **`match_variable(...)`**
+
+- **`match_variable(...)`**  
   Funzione centrale che esegue il matching di una singola variabile.
-  Ordine delle operazioni:
+
+  **Ordine delle operazioni:**
   1. Override da KB mapping (match deterministico forte)
   2. Cache lookup
   3. Skip variabili disabilitate o invalide
   4. Matching deterministico su sinonimi
   5. Fallback fuzzy
-  6. Classificazione risultato:
-    - `matched`
-    - `ambiguous`
-    - `unmapped`
-    - `skipped_`
-  Ogni risultato include:
+
+  **Classificazione risultato:**
+  - `matched`
+  - `ambiguous`
+  - `unmapped`
+  - `skipped_`
+
+  **Ogni risultato include:**
   - `technical_reason`
   - `confidence` (se applicabile)
   - `evidence`
   - `llm_context` (solo se ambiguo)
-
 ---
 
 ## MCP Server
