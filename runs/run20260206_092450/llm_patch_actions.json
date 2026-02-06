@@ -1,0 +1,4234 @@
+{
+  "patch_actions_version": "v0.1",
+  "generated_at": "2026-02-06T09:33:41.032509+01:00",
+  "actions": [
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read365",
+      "target": {
+        "concept_id": "state_compressor",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "stato compressore",
+          "en": "compressor state"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_compressor",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "compressori l1 accesi per partenza compressori l2",
+        "selected_candidate": "state_compressor",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read366",
+      "target": {
+        "concept_id": "state_compressor",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "stato compressore",
+          "en": "compressor state"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_compressor",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 compressori spenti per guasto compressori l1",
+        "selected_candidate": "state_compressor",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read533",
+      "target": {
+        "concept_id": "state_compressor",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "stato compressore",
+          "en": "compressor state"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_compressor",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme inverter compressori",
+        "selected_candidate": "state_compressor",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read65",
+      "target": {
+        "concept_id": "state_fan",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "ventilatori",
+          "en": "fans"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_fan",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme generico ventilatori",
+        "selected_candidate": "state_fan",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read544",
+      "target": {
+        "concept_id": "state_compressor",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "stato del relè per la configurazione di linea di compressori 1",
+          "en": "compressor state"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_compressor",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 stato del relè per la configurazione di linea di compressori 1",
+        "selected_candidate": "state_compressor",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read556",
+      "target": {
+        "concept_id": "state_compressor",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "stato del relè per la configurazione di linea di compressori 7",
+          "en": "compressor state"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_compressor",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 stato del relè per la configurazione di linea di compressori 7",
+        "selected_candidate": "state_compressor",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read560",
+      "target": {
+        "concept_id": "state_compressor",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "stato compressore",
+          "en": "compressor state"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_compressor",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 stato del relè per la configurazione di linea di compressori 9",
+        "selected_candidate": "state_compressor",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read38",
+      "target": {
+        "concept_id": "state_fan",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "stato ventilatore",
+          "en": "fan state"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_fan",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme sovraccarico comune ventilatori",
+        "selected_candidate": "state_fan",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read415",
+      "target": {
+        "concept_id": "state_fan",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "stato ventilatore",
+          "en": "fan state"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_fan",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 abilita forzatura ventilatori per allarme perdita refrigerante",
+        "selected_candidate": "state_fan",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read537",
+      "target": {
+        "concept_id": "state_fan",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "ventilatori",
+          "en": "fans"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_fan",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 forza ventilatori per allarme perdita refrigerante",
+        "selected_candidate": "state_fan",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read536",
+      "target": {
+        "concept_id": "state_fan",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "ventilatori",
+          "en": "fans"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_fan",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme inverter ventilatori",
+        "selected_candidate": "state_fan",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read748",
+      "target": {
+        "concept_id": "state_compressor",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "compressori",
+          "en": "compressors"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_compressor",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 compressori in attesa per evitare avviamenti simultanei",
+        "selected_candidate": "state_compressor",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read747",
+      "target": {
+        "concept_id": "state_compressor",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "stato compressore",
+          "en": "compressor state"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_compressor",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 compressori in attesa per evitare avviamenti simultanei",
+        "selected_candidate": "state_compressor",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read545",
+      "target": {
+        "concept_id": "state_compressor",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "stato relè",
+          "en": "relay state"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_compressor",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 stato del relè per la configurazione di linea di compressori 1",
+        "selected_candidate": "state_compressor",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read557",
+      "target": {
+        "concept_id": "state_compressor",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "stato relè",
+          "en": "relay state"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_compressor",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 stato del relè per la configurazione di linea di compressori 7",
+        "selected_candidate": "state_compressor",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read534",
+      "target": {
+        "concept_id": "state_fan",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "ventilatore",
+          "en": "fan"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_fan",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 percentuale attivazione inverter ventilatori",
+        "selected_candidate": "state_fan",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read667",
+      "target": {
+        "concept_id": "state_compressor",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "compressore",
+          "en": "compressor"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_compressor",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 potenza attuale compressori",
+        "selected_candidate": "state_compressor",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read669",
+      "target": {
+        "concept_id": "state_fan",
+        "category": "measurement",
+        "semantic_category": "state",
+        "labels": {
+          "it": "ventilatore",
+          "en": "fan"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "state_fan",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "state"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 potenza attuale ventilatori",
+        "selected_candidate": "state_fan",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param176",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 abilita compensazione setpoint di aspirazione",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param174",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 abilita compensazione setpoint di aspirazione",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param141",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 abilita compensazione setpoint hpv da ain",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param541",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 abilitazione setpoint condensazione flottante",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param177",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 abilita compensazione setpoint aspirazione",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param175",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 abilita compensazione setpoint condensazione",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param605",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 setpoint modulante calcolato per regolazione compressione parallela",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param359",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "Temperatura di isteresi",
+          "en": "Hysteresis temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 differenziale pumpdown",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param72",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "Temperatura di isteresi",
+          "en": "Hysteresis temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 differenziale allarme alta pressione di aspirazione",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param74",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "temperatura di isteresi",
+          "en": "hysteresis temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 differenziale di allarme bassa pressione di aspirazione",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param190",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di aspirazione",
+          "en": "Aspiration setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 setpoint di aspirazione flottante",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param545",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di aspirazione",
+          "en": "Aspiration setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 setpoint di aspirazione",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param24",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 floating suction minimo setpoint",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param22",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 floating suction massimosetpoint",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param550",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 setpoint gas cooler",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param376",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "temperatura di isteresi",
+          "en": "hysteresis temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 differenziale zona incremento per la regolazione compressori",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param374",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "temperatura di isteresi",
+          "en": "hysteresis temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 differenziale zona decremento regolazione compressori",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param213",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "temperatura di isteresi",
+          "en": "hysteresis temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 recupero calore differenziale regolazionep i valvola di by pass gascooler con bypass consentito",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param288",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 mininmo setpoint hpv con recupero calore attivo",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param281",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 massimo setpoint hpv con recupero calore attivo",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param73",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "Temperatura di isteresi",
+          "en": "Hysteresis temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 differenziale allarme alta pressione di aspirazione",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param191",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di aspirazione",
+          "en": "Aspiration setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 setpoint di aspirazione flottante",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param546",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di aspirazione",
+          "en": "Aspiration setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 setpoint di aspirazione",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param25",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 floating suction minimo setpoint",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param23",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 floating suction massimo setpoint",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param542",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 setpoint recupero calore 1",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param369",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 recupero calore 1 setpoint regolazione p i pompa",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param543",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di regolazione",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 recupero calore 2 setpoint di regolazione",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param370",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint regolazione",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 recupero calore 2 setpoint regolazione p i pompa",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param218",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint minimo",
+          "en": "Minimum temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 setpoint minimo valvola hpv",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param204",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "termostato generico 1 setpoint",
+          "en": "generic thermostat 1 setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "termostato generico 1 setpoint",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param206",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "termostato generico 2 setpoint",
+          "en": "generic thermostat 2 setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "termostato generico 2 setpoint",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param210",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "termostato generico 4 setpoint",
+          "en": "generic thermostat 4 setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "termostato generico 4 setpoint",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param212",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "termostato generico 5 setpoint",
+          "en": "generic thermostat 5 setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "termostato generico 5 setpoint",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param211",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "termostato generico 5 differenziale",
+          "en": "hysteresis temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "termostato generico 5 differenziale",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param200",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "modulante generico 1 setpoint",
+          "en": "setpoint temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "modulante generico 1 setpoint",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param199",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "modulante generico 1 differenziale",
+          "en": "hysteresis temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "modulante generico 1 differenziale",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param588",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint Temperatura",
+          "en": "Setpoint Temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 offset compensazione setpoint compressori da ingresso digitale",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param590",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint Temperatura",
+          "en": "Setpoint Temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 offset compensazione setpoint ventilatori da ingresso digitale",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param589",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint Temperatura",
+          "en": "Setpoint Temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 offset compensazione setpoint compressori da ingresso digitale",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param71",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "temperatura di isteresi",
+          "en": "hysteresis temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 differenziale allarme alta temperatura olio comune",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param332",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "temperatura di isteresi",
+          "en": "hysteresis temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 differenziale allarme bassa temperatura olio",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param225",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "temperatura di isteresi",
+          "en": "hysteresis temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 recupero calore differenziale sulla regolazione per disabilitare il bypass del gas cooler",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param331",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "temperatura di isteresi",
+          "en": "hysteresis temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 differenziale allarme bassa temperatura olio",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param598",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 recupero calore massimo setpoint modulante bypass gas cooler",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param615",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "massima variazione istantanea del setpoint modulante per il compressore parallelo",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param595",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 recupero calore minima richiesta per calcolo setpoint modulante bypass gas cooler",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param596",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint Temperatura",
+          "en": "Setpoint Temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 recupero calore massima richiesta per calcolo setpoint modulante bypass gas cooler",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param597",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint Temperatura",
+          "en": "Setpoint Temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 recupero calore minimo setpoint modulante bypass gas cooler",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param544",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 recupero di calore setpoint temperatura",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param549",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint attuale",
+          "en": "Current setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 setpoint attuale condensazione flottante",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param547",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di aspirazione",
+          "en": "Inlet setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 offset aggiunto al setpoint aspirazione con regolazione su sonda pressione di backup",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param548",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint Temperatura",
+          "en": "Setpoint Temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 offset aggiunto al setpoint aspirazione con regolazione su sonda pressione di backup",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param608",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 compressione parallela massimo setpoint per calcolo setpoint modulante",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param69",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "Temperatura di isteresi",
+          "en": "Hysteresis temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 differenziale allarme temperatura compressore parallelo",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param219",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint di temperatura",
+          "en": "Temperature setpoint"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "recupero calore hpv minimum setpoint work delta",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param283",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "Setpoint Temperatura",
+          "en": "Setpoint Temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 recupero calore tempo per portare il setpoint hpv al minimo valore richiesto con recupero in funzione",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param612",
+      "target": {
+        "concept_id": "hysteresis_temperature",
+        "category": "parameter",
+        "semantic_category": "temperature",
+        "labels": {
+          "it": "Temperatura di isteresi",
+          "en": "Hysteresis Temperature"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "hysteresis_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "differenziale per attivazione rprv con compressori off in caso di alta pressione ricevitore",
+        "selected_candidate": "hysteresis_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param54",
+      "target": {
+        "concept_id": "fan_delay",
+        "category": "parameter",
+        "semantic_category": "time",
+        "labels": {
+          "it": "Ritardo del ventilatore",
+          "en": "Fan Delay"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "fan_delay",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "time"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 ritardo prevent",
+        "selected_candidate": "fan_delay",
+        "score": 0.8
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param617",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "minima frequenza inverter",
+          "en": "minimum frequency inverter"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "minima frequenza inverter per consentire la variazione del setpoint modulante per il compressore parallelo",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param31",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "tempo incremento setpoint rprv",
+          "en": "time increase setpoint rprv"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "tempo incremento setpoint rprv per accensione compressore parallelo",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Parameters",
+      "source_key": "Param30",
+      "target": {
+        "concept_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint",
+        "labels": {
+          "it": "tempo decremento setpoint rprv",
+          "en": "time decrease setpoint rprv"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "setpoint_temperature",
+          "Category_Patch": "parameter",
+          "SemanticCategory_Patch": "setpoint"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "tempo decremento setpoint rprv per spegnimento compressore parallelo",
+        "selected_candidate": "setpoint_temperature",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm6",
+      "target": {
+        "concept_id": "alarm_high_pressure",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme alta pressione di condensazione",
+          "en": "high pressure alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_pressure",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.9,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme alta pressione di condensazione",
+        "selected_candidate": "alarm_high_pressure",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm7",
+      "target": {
+        "concept_id": "alarm_high_pressure",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme alta pressione di scarico",
+          "en": "high discharge pressure alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_pressure",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.9,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme alta pressione di scarico",
+        "selected_candidate": "alarm_high_pressure",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm8",
+      "target": {
+        "concept_id": "alarm_high_pressure",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme alta pressione di scarico",
+          "en": "high discharge pressure alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_pressure",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.9,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme alta pressione di scarico",
+        "selected_candidate": "alarm_high_pressure",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm19",
+      "target": {
+        "concept_id": "alarm_low_pressure",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "bassa pressione di aspirazione",
+          "en": "low aspiration pressure"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_low_pressure",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.9,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme bassa pressione di aspirazione",
+        "selected_candidate": "alarm_low_pressure",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm20",
+      "target": {
+        "concept_id": "alarm_low_pressure",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "bassa pressione di aspirazione",
+          "en": "low aspiration pressure"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_low_pressure",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.9,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme bassa pressione di aspirazione",
+        "selected_candidate": "alarm_low_pressure",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm27",
+      "target": {
+        "concept_id": "alarm_high_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "alta temperatura di scarico compressore parallelo",
+          "en": "high exhaust temperature of parallel compressor"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "allarme alta temperatura di scarico compressore parallelo",
+        "selected_candidate": "alarm_high_temperature",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm65",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "compressore",
+          "en": "compressor"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme generico compressore 11",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm66",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "compressore",
+          "en": "compressor"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme generico compressore 12",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm67",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "compressore",
+          "en": "compressor"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme generico compressore 12",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm146",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme olio compressore 11",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm147",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme olio compressore 12",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm148",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme olio compressore 12",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm149",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme olio compressore 1",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm150",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme olio compressore 1",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm151",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme olio compressore 2",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm152",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme olio compressore 2",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm153",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme olio compressore 3",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm154",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme olio compressore 3",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm158",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme olio compressore 5",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm159",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme olio compressore 6",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm160",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme olio compressore 6",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm161",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme olio compressore 7",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm162",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme olio compressore 7",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm163",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme olio compressore 8",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm164",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme olio compressore 8",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm165",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme olio compressore 9",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm166",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme olio compressore",
+          "en": "compressor oil alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme olio compressore 9",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm171",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore",
+          "en": "compressor fault alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme sovraccarico compressore 11",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm172",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore",
+          "en": "compressor fault alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme sovraccarico compressore 11",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm173",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore",
+          "en": "compressor fault alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme sovraccarico compressore 12",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm174",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "sovraccarico compressore",
+          "en": "compressor overload"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme sovraccarico compressore 12",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm175",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "sovraccarico compressore",
+          "en": "compressor overload"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme sovraccarico compressore 1",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm176",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "sovraccarico compressore",
+          "en": "compressor overload"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme sovraccarico compressore 1",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm177",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore",
+          "en": "compressor fault alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme sovraccarico compressore 2",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm178",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore",
+          "en": "compressor fault alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme sovraccarico compressore 2",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm179",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore",
+          "en": "compressor fault alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme sovraccarico compressore 3",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm180",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore",
+          "en": "compressor overload alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme sovraccarico compressore 3",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm181",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore",
+          "en": "compressor overload alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme sovraccarico compressore 4",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm182",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore",
+          "en": "compressor overload alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme sovraccarico compressore 4",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm183",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore 5",
+          "en": "compressor overload alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme sovraccarico compressore 5",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm184",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore 5",
+          "en": "compressor overload alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme sovraccarico compressore 5",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm185",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore 6",
+          "en": "compressor overload alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.9,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme sovraccarico compressore 6",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm186",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore",
+          "en": "compressor overload alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme sovraccarico compressore 6",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm187",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore",
+          "en": "compressor overload alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme sovraccarico compressore 7",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm188",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore",
+          "en": "compressor overload alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme sovraccarico compressore 7",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm189",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore",
+          "en": "compressor overload alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme sovraccarico compressore 8",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm190",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore",
+          "en": "compressor overload alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme sovraccarico compressore 8",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm191",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme sovraccarico compressore",
+          "en": "compressor overload alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme sovraccarico compressore 9",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm219",
+      "target": {
+        "concept_id": "alarm_high_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme alta temperatura",
+          "en": "high temperature alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme alta temperatura di scarico compressore 1",
+        "selected_candidate": "alarm_high_temperature",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm220",
+      "target": {
+        "concept_id": "alarm_high_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme alta temperatura",
+          "en": "high temperature alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme alta temperatura di scarico compressore 1",
+        "selected_candidate": "alarm_high_temperature",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm221",
+      "target": {
+        "concept_id": "alarm_high_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme alta temperatura di scarico compressore 2",
+          "en": "high temperature alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme alta temperatura di scarico compressore 2",
+        "selected_candidate": "alarm_high_temperature",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm222",
+      "target": {
+        "concept_id": "alarm_high_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme alta temperatura di scarico compressore 2",
+          "en": "high temperature alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme alta temperatura di scarico compressore 2",
+        "selected_candidate": "alarm_high_temperature",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm223",
+      "target": {
+        "concept_id": "alarm_high_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme alta temperatura di scarico compressore 3",
+          "en": "high temperature alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.9,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme alta temperatura di scarico compressore 3",
+        "selected_candidate": "alarm_high_temperature",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm224",
+      "target": {
+        "concept_id": "alarm_high_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme alta temperatura di scarico compressore",
+          "en": "high temperature alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme alta temperatura di scarico compressore 3",
+        "selected_candidate": "alarm_high_temperature",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm225",
+      "target": {
+        "concept_id": "alarm_high_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme alta temperatura di scarico compressore",
+          "en": "high temperature alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme alta temperatura di scarico compressore 4",
+        "selected_candidate": "alarm_high_temperature",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm226",
+      "target": {
+        "concept_id": "alarm_high_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme alta temperatura di scarico compressore",
+          "en": "high temperature alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme alta temperatura di scarico compressore 4",
+        "selected_candidate": "alarm_high_temperature",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm227",
+      "target": {
+        "concept_id": "alarm_high_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme alta temperatura di scarico compressore",
+          "en": "high temperature alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme alta temperatura di scarico compressore 5",
+        "selected_candidate": "alarm_high_temperature",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm228",
+      "target": {
+        "concept_id": "alarm_high_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme alta temperatura di scarico compressore",
+          "en": "high temperature alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme alta temperatura di scarico compressore 5",
+        "selected_candidate": "alarm_high_temperature",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm229",
+      "target": {
+        "concept_id": "alarm_high_temperature",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme alta temperatura di scarico compressore",
+          "en": "high temperature alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_temperature",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme alta temperatura di scarico compressore 6",
+        "selected_candidate": "alarm_high_temperature",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm248",
+      "target": {
+        "concept_id": "alarm_high_pressure",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme di alta pressione di condensazione",
+          "en": "high pressure alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_high_pressure",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme di alta pressione di condensazione",
+        "selected_candidate": "alarm_high_pressure",
+        "score": 0.7
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm251",
+      "target": {
+        "concept_id": "alarm_low_pressure",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme bassa pressione di condensazione",
+          "en": "low pressure alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_low_pressure",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.9,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme bassa pressione di condensazione",
+        "selected_candidate": "alarm_low_pressure",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm15",
+      "target": {
+        "concept_id": "alarm_low_pressure",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme bassa pressione di condensazione",
+          "en": "low pressure alarm"
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_low_pressure",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.9,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme bassa pressione di condensazione",
+        "selected_candidate": "alarm_low_pressure",
+        "score": 0.6
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm275",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme livello olio compressore",
+          "en": ""
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme livello olio compressore 2",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm276",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme livello olio compressore",
+          "en": ""
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme livello olio compressore 2",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm277",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme livello olio compressore",
+          "en": ""
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme livello olio compressore 3",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm278",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme livello olio compressore",
+          "en": ""
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme livello olio compressore 3",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm279",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme livello olio compressore",
+          "en": ""
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme livello olio compressore 4",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm280",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme livello olio compressore",
+          "en": ""
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme livello olio compressore 4",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm281",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme livello olio compressore 5",
+          "en": ""
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme livello olio compressore 5",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm282",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme livello olio compressore 5",
+          "en": ""
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.95,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l2 allarme livello olio compressore 5",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    },
+    {
+      "type": "map_variable",
+      "section": "Alarms",
+      "source_key": "Alarm283",
+      "target": {
+        "concept_id": "alarm_compressor_fault",
+        "category": "alarm",
+        "semantic_category": "alarm",
+        "labels": {
+          "it": "allarme livello olio compressore 6",
+          "en": ""
+        }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "alarm_compressor_fault",
+          "Category_Patch": "alarm",
+          "SemanticCategory_Patch": "alarm"
+        }
+      },
+      "confidence": 0.9,
+      "reason": "clear_match",
+      "evidence": {
+        "normalized_text": "l1 allarme livello olio compressore 6",
+        "selected_candidate": "alarm_compressor_fault",
+        "score": 0.8444444444444444
+      }
+    }
+  ]
+}

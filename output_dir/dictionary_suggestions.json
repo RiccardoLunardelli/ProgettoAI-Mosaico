@@ -3,1035 +3,243 @@
     "category": "measurement",
     "suggestions": [
       {
-        "term": "l2 allarme sonda di pressione",
+        "term": "valore sonda p4 temperatura",
         "candidates": []
       },
       {
-        "term": "allarme valvola hpv da ingresso digitale",
+        "term": "valore sonda di visualizzazione",
         "candidates": []
       },
       {
-        "term": "allarme generico 1",
+        "term": "valore sonda di regolazione",
         "candidates": []
       },
       {
-        "term": "l1 recupero calore 1 stato ingresso digitale",
+        "term": "valore sonda 1 defrost",
         "candidates": []
       },
       {
-        "term": "allarme generico 1 da scheda plan 2",
+        "term": "valore sonda 2 defrost",
         "candidates": []
       },
       {
-        "term": "allarme generico 2 da scheda plan 2",
+        "term": "setpoint",
         "candidates": []
       },
       {
-        "term": "allarme generico 1 da scheda plan 3",
+        "term": "set operativo di superheating",
         "candidates": []
       },
       {
-        "term": "allarme generico 2 da scheda plan 3",
+        "term": "apertura valvola",
         "candidates": []
       },
       {
-        "term": "alarm wrong configuration of expansion board",
+        "term": "% uscita analogica write sole se tra=ual",
         "candidates": []
       },
       {
-        "term": "allarme generico 2",
+        "term": "valore pressione regolazione locale o remota relativa o assoluta",
         "candidates": []
       },
       {
-        "term": "l1 allarme chillbooster",
+        "term": "valore sonda cablaggio caldo p4",
         "candidates": []
       },
       {
-        "term": "l2 avviso prevent alta pressione",
+        "term": "set di regolazione parametro set",
         "candidates": []
       },
       {
-        "term": "l1 avviso prevent alta pressione",
+        "term": "set di regolazione sh parametro sh",
         "candidates": []
       },
       {
-        "term": "l1 high temperature prevent warning",
+        "term": "set di regolazione supervisione",
         "candidates": []
       },
       {
-        "term": "l2 high temperature prevent warning",
+        "term": "set di superheating supervisione",
         "candidates": []
       },
       {
-        "term": "prevent ht lock l1",
+        "term": "set dew point per funzione cavi caldi",
         "candidates": []
       },
       {
-        "term": "prevent ht lock l2 mst",
+        "term": "ingresso digitale 1",
         "candidates": []
       },
       {
-        "term": "l1 recupero calore 2 stato ingresso digitale",
+        "term": "ingresso digitale 2",
         "candidates": []
       },
       {
-        "term": "l2 allarme chillbooster",
+        "term": "ingresso digitale 3",
         "candidates": []
       },
       {
-        "term": "l1 uscita termostato generica funzione a da scheda plan 2",
+        "term": "uscita digitale allarme",
         "candidates": []
       },
       {
-        "term": "l1 uscita termostato generica funzione a da scheda plan 3",
+        "term": "luci",
         "candidates": []
       },
       {
-        "term": "l1 uscita termostato generica funzione b da scheda plan 2",
+        "term": "uscita digitale ausiliario",
         "candidates": []
       },
       {
-        "term": "l1 uscita termostato generica funzione b da scheda plan 3",
+        "term": "uscita digitale zona neutro",
         "candidates": []
       },
       {
-        "term": "l1 uscita termostato generica funzione c da scheda plan 2",
+        "term": "uscita digitale rele on off",
         "candidates": []
       },
       {
-        "term": "l1 uscita termostato generica funzione c da scheda plan 3",
+        "term": "uscita digitale anti surriscaldamento lieve",
         "candidates": []
       },
       {
-        "term": "l1 uscita termostato generica funzione d da scheda plan 2",
+        "term": "ciclo continuo",
         "candidates": []
       },
       {
-        "term": "l1 uscita termostato generica funzione d da scheda plan 3",
+        "term": "blocco tastiera",
         "candidates": []
       },
       {
-        "term": "l1 recupero calore 1 stato flussostato",
+        "term": "tacitazione allarmi",
         "candidates": []
       },
       {
-        "term": "l1 uscita termostato generica funzione e da scheda plan 2",
+        "term": "energy saving",
         "candidates": []
       },
       {
-        "term": "l1 uscita termostato generica funzione e da scheda plan 3",
+        "term": "allarme fermata forzata con termostatazione attiva stp",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica termostato a da scheda plan 2",
+        "term": "evento surriscaldamento fuori range",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica termostato b da scheda plan 2",
+        "term": "evento surriscaldamento non disponibile",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica termostato c da scheda plan 2",
+        "term": "evento surriscaldamento in errore",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica termostato d da scheda plan 2",
+        "term": "evento power failure",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica termostato e da scheda plan 2",
+        "term": "evento parametri modificati 0=no 1=si",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica termostato a da scheda plan 3",
+        "term": "evento regolazione attiva per 90 minuti dopo defrost 0=no 1=si",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica termostato b da scheda plan 3",
+        "term": "stato ritardo avviamento ventole",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica termostato c da scheda plan 3",
+        "term": "stato attività modbus 0=no 1=si",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica termostato d da scheda plan 3",
+        "term": "stato funzione holiday",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica termostato e da scheda plan 3",
+        "term": "allarme sonda pressione remota 4",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica modulante 1 da scheda plan 2",
+        "term": "allarme sonda p1",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica modulante 2 da scheda plan 2",
+        "term": "allarme sonda p2",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica modulante 1 da scheda plan 3",
+        "term": "allarme sonda p3",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica modulante 2 da scheda plan 3",
+        "term": "allarme sonda p4",
         "candidates": []
       },
       {
-        "term": "l1 allarme plan",
+        "term": "allarme sonda p5",
         "candidates": []
       },
       {
-        "term": "l1 allarme sonda di pressione gas cooler",
+        "term": "allarme sonda p6",
         "candidates": []
       },
       {
-        "term": "l1 allarme sonda di temperatura scarico",
+        "term": "allarme orologio failure",
         "candidates": []
       },
       {
-        "term": "l1 allarme sonda di temperatura esterna",
+        "term": "allarme orologio rtc data lost",
         "candidates": []
       },
       {
-        "term": "l1 allarme sonda temperatura gas cooler bypassato rotta o disconnessa",
+        "term": "allarme di bassa temperatura sonda 1",
         "candidates": []
       },
       {
-        "term": "l1 allarme olio comune",
+        "term": "allarme di alta temperatura sonda 1",
         "candidates": []
       },
       {
-        "term": "l1 allarme di alta temperatura dell olio comune",
+        "term": "allarme grave raggiungimento n max pause msn",
         "candidates": []
       },
       {
-        "term": "l1 allarme livello liquido",
+        "term": "allarme esterno",
         "candidates": []
       },
       {
-        "term": "l1 allarme alta pressione ricevitore",
+        "term": "allarme grave",
         "candidates": []
       },
       {
-        "term": "l1 allarme sonda pressione di scarico",
+        "term": "allarme pressostato 1",
         "candidates": []
       },
       {
-        "term": "l1 prevenzione alta pressione",
+        "term": "allarme di minimo surriscaldamento",
         "candidates": []
       },
       {
-        "term": "l1 allarme bassa pressione di condensazione",
+        "term": "allarme di massimo surriscaldamento",
         "candidates": []
       },
       {
-        "term": "l1 allarme livello co2",
+        "term": "allarme di alta pressione",
         "candidates": []
       },
       {
-        "term": "l1 stato",
+        "term": "allarme di bassa pressione",
         "candidates": []
       },
       {
-        "term": "l1 regolazione aspirazione zona neutra regolazione in zona di stand by",
+        "term": "allarme eeprom",
         "candidates": []
       },
       {
-        "term": "l1 allarme alta pressione condensazione da pressostato",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme temperatura olio comune",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 1",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione a",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione b",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione c",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione d",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato ingresso digitale generico 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato ingresso digitale generico 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato ingresso digitale generico 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato ingresso digitale generico 4",
-        "candidates": []
-      },
-      {
-        "term": "l1 alta pressione gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme flussostato recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme flussostato recupero calore 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato sottoraffreddamento",
-        "candidates": []
-      },
-      {
-        "term": "l1 funzione anti rumore condensazione attiva",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda di temperatura aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda temperatura di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme di alta temperatura dell olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme livello liquido",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme alta pressione condensazione da pressostato",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda pressione riserva olio rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l2 stato",
-        "candidates": []
-      },
-      {
-        "term": "allarme scheda di espansione offline",
-        "candidates": []
-      },
-      {
-        "term": "l1 funzione anti ritorno liquido attiva",
-        "candidates": []
-      },
-      {
-        "term": "l2 funzione anti ritorno liquido attiva",
-        "candidates": []
-      },
-      {
-        "term": "allarme valvola rprv da ingresso digitale",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato funzione generica 5",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato ingresso digitale generico 5",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore bypass del gascooler in corso",
-        "candidates": []
-      },
-      {
-        "term": "richiesta di effettuare le azioni per incrementare la pressione del gas cooler e consentire il recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme perdita refrigerante",
-        "candidates": []
-      },
-      {
-        "term": "l2 prevenzione alta pressione",
-        "candidates": []
-      },
-      {
-        "term": "allarme driver evd offline",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato recupero calore 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato separatore olio",
-        "candidates": []
-      },
-      {
-        "term": "livello minimo separatore olio",
-        "candidates": []
-      },
-      {
-        "term": "livello massimo separatore olio",
-        "candidates": []
-      },
-      {
-        "term": "procedura di chiusura valvola hpv in corso",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme alta pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme bassa/alta pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l2 stato separatore olio",
-        "candidates": []
-      },
-      {
-        "term": "l2 livello minimo separatore olio",
-        "candidates": []
-      },
-      {
-        "term": "l2 livello maximum separatore olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilita valvola differenziale olio",
-        "candidates": []
-      },
-      {
-        "term": "pressione uscita gas cooler troppo alta/bassa rispetto al setpoint attuale",
-        "candidates": []
-      },
-      {
-        "term": "rprv open and feedback difference is high",
-        "candidates": []
-      },
-      {
-        "term": "hpv open and feedback difference is high",
-        "candidates": []
-      },
-      {
-        "term": "l2 temperatura olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme bassa pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme alta pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 bassa pressione gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda di backup condensazione rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "utilizza sonda di aspirazione l1 come sonda di condesazione l2",
-        "candidates": []
-      },
-      {
-        "term": "l2 manutenzione chillbooster richiesta",
-        "candidates": []
-      },
-      {
-        "term": "l1 manutenzione chillbooster richiesta",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 attiva",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda temperatura di scarico rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme di manutenzione chilllbooster",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato chillbooster",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme livello liquido",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme bassa pressione da comune",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme perdita categorizzato come grave",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda di by pass per recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda regolazione recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore allarme sonda rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore probe alarm",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda regolazione recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme di alta pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 stato pompa",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme bassa pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda regolazione recupero calore 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda regolazione recupero calore 2",
-        "candidates": []
-      },
-      {
-        "term": "allarme pressione gas cooler troppo bassa per consentire il recupero di calore 1",
-        "candidates": []
-      },
-      {
-        "term": "allarme pressione gas cooler troppo bassa per consentire il recupero di calore 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme alta temperatura acqua in uscita recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme alta temperatura acqua in uscita recupero calore 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 allarme temperatura scarico rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme di manutenzione chilllbooster",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda di pressione condensazione di backup rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda recupero di calore",
-        "candidates": []
-      },
-      {
-        "term": "l2 stato chillbooster",
-        "candidates": []
-      },
-      {
-        "term": "l1 mst stato separatore olio",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda pressione condensazione rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda di pressione condensazione rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l2 funzione anti rumore condensazione attiva",
-        "candidates": []
-      },
-      {
-        "term": "allarme temperatura di scarico heat reclaim",
-        "candidates": []
-      },
-      {
-        "term": "al di cmp parall mst",
-        "candidates": []
-      },
-      {
-        "term": "al low rec press cmp parall ms",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme alta pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme bassa pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "prack in modalità manuale o automatica",
-        "candidates": []
-      },
-      {
-        "term": "al temp hr shr2 l1 mst",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda temperatura di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore defrost carico extra attivo",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato livello liquido",
-        "candidates": []
-      },
-      {
-        "term": "l2 stato livello liquido",
-        "candidates": []
-      },
-      {
-        "term": "funzione carico extra attivo",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme rtc",
-        "candidates": []
-      },
-      {
-        "term": "l1 aspirazione setpoint di lavoro",
-        "candidates": []
-      },
-      {
-        "term": "l1 pressione gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura satura di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura olio comune",
-        "candidates": []
-      },
-      {
-        "term": "apertura valvola rprv",
-        "candidates": []
-      },
-      {
-        "term": "sepoint attuale regolazione valvola hpv",
-        "candidates": []
-      },
-      {
-        "term": "apertura valvola hpv",
-        "candidates": []
-      },
-      {
-        "term": "feedback apertura valvola hpv",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda generica 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda generica 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda generica 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda generica 4",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda generica 5",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura uscita gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 pressione olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura gas cooler by passato",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura liquido da sonda principale o di backup",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 richiesta attuale",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 richiesta attuale",
-        "candidates": []
-      },
-      {
-        "term": "l2 temperatura satura di aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 setpoint di lavoro aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 temperatura satura di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 temperatura dell olio comune",
-        "candidates": []
-      },
-      {
-        "term": "pressione ricevitore",
-        "candidates": []
-      },
-      {
-        "term": "l2 pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 temperatura liquido",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore offset aggiunto al setpoint di regolazione valvola hpv per recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura regolazione recupero calore 2 uscita acqua",
-        "candidates": []
-      },
-      {
-        "term": "l2 pressione olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 temperatura acqua in ingresso",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura regolazione recupero calore 1 uscita acqua",
-        "candidates": []
-      },
-      {
-        "term": "l1 gradino di incremento/decremento set hpv",
-        "candidates": []
-      },
-      {
-        "term": "l1 compensazione attuale su set hpv",
-        "candidates": []
-      },
-      {
-        "term": "minimo setpoint attuale regolazione hpv",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore segnale uscita modulante carico extra",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore velocità fissa richiesta per carico extra attivo",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore segnale 0 100 0% per valvola 3 vie bypass gascooler",
-        "candidates": []
-      },
-      {
-        "term": "l2 pressione/temperatura satura di aspirazione per prevent",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 e 2 richiesta totale",
-        "candidates": []
-      },
-      {
-        "term": "l1 pressione di condensazione da sonda di backup",
-        "candidates": []
-      },
-      {
-        "term": "l2 pressione di condensazione da sonda di backup",
-        "candidates": []
-      },
-      {
-        "term": "act rprv setpoint",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 segnale esterno regolazione 0 10v",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato unità",
-        "candidates": []
-      },
-      {
-        "term": "l1 prossimo dispositivo che sarà attivato",
-        "candidates": []
-      },
-      {
-        "term": "l1 prossimo dispositivo che verrà spento",
-        "candidates": []
-      },
-      {
-        "term": "l2 prossimo dispositivo che sarà attivato",
-        "candidates": []
-      },
-      {
-        "term": "l2 prossimo dispositivo che verrà spento",
-        "candidates": []
-      },
-      {
-        "term": "versione software",
-        "candidates": []
-      },
-      {
-        "term": "posizione valvola a",
-        "candidates": []
-      },
-      {
-        "term": "posizione valvola b",
-        "candidates": []
-      },
-      {
-        "term": "l2 stato unità",
-        "candidates": []
-      },
-      {
-        "term": "ritardo allarme alta pressione ricevitore",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione del gas cooler in pressione",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo di attesa tra 2 gradini per compensazione ste hpv",
-        "candidates": []
-      },
-      {
-        "term": "stato modulazione generica 1",
-        "candidates": []
-      },
-      {
-        "term": "stato modulazione generica 2",
-        "candidates": []
-      },
-      {
-        "term": "stato modulazione generica 1 funzione attiva nella scheda 2",
-        "candidates": []
-      },
-      {
-        "term": "stato modulazione generica 2 funzione attiva nella scheda 3",
-        "candidates": []
-      },
-      {
-        "term": "stato modulazione generica 1 funzione attiva nella scheda 3",
-        "candidates": []
-      },
-      {
-        "term": "stato modulazione generica 2 funzione attiva nella scheda 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 richiesta recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 segnale 0 100 0% attivazione pompa",
-        "candidates": []
-      },
-      {
-        "term": "unità di misura",
-        "candidates": []
-      },
-      {
-        "term": "l1 setpoint hpv da raggiungere con recupero calore attivo proporzionale alla richiesta",
-        "candidates": []
-      },
-      {
-        "term": "l1 setpoint gas cooler da raggiungere con recupero calore attivo proporzionale alla richiesta",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione valvola hpv setpoint attuale",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 uscita analogica",
-        "candidates": []
-      },
-      {
-        "term": "hpv compensation value 0 100",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 uscita analogica",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 segnale modulante 0 100 0% pompa",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore stato azioni fatte per consentire il recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "actual setpoint calculated by the alghoritm",
-        "candidates": []
-      },
-      {
-        "term": "hpv compensation value 0 100",
-        "candidates": []
-      },
-      {
-        "term": "rich compr par da regol p i",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola rprv percentuale di apertura della valvola con sonda di pressione del ricevitore rotta",
-        "candidates": []
-      },
-      {
-        "term": "l1 setpoint gas cooler attuale",
-        "candidates": []
-      },
-      {
-        "term": "l1 setpoint di aspirazione per la zona neutra",
-        "candidates": []
-      },
-      {
-        "term": "l2 setpoint di aspirazione per la zona neutra",
-        "candidates": []
-      },
-      {
-        "term": "l2 variabile di regolazione intercooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda di compensazione gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l2 pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura ingresso gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura tra scambiatori recopero calore 1 e 2",
-        "candidates": []
-      },
-      {
-        "term": "s4 valore della sonda",
-        "candidates": []
-      },
-      {
-        "term": "s3 valore della sonda",
-        "candidates": []
-      },
-      {
-        "term": "s2 valore della sonda",
-        "candidates": []
-      },
-      {
-        "term": "s1 valore della sonda",
-        "candidates": []
-      },
-      {
-        "term": "apertura valvola rprv da segnale di feedback",
-        "candidates": []
-      },
-      {
-        "term": "apertura valvola b",
-        "candidates": []
-      },
-      {
-        "term": "apertura valvola a",
-        "candidates": []
-      },
-      {
-        "term": "l1 tipo refrigerante condensazione",
-        "candidates": []
-      },
-      {
-        "term": "stato eev valvola b",
-        "candidates": []
-      },
-      {
-        "term": "l2 regolazione intercooler in pressione",
-        "candidates": []
-      },
-      {
-        "term": "l2 tipo di regolazione intercooler",
+        "term": "allarme sonda pressione remota",
         "candidates": []
       }
     ]
@@ -1040,1875 +248,707 @@
     "category": "parameter",
     "suggestions": [
       {
-        "term": "abilita forzatura off compressori per alta pressione ricevitore",
+        "term": "tempo integrale pi temperatura del banco",
         "candidates": []
       },
       {
-        "term": "l1 compressori di tipo regolazione",
+        "term": "attivazione/disattivazione della regolazione continua",
         "candidates": []
       },
       {
-        "term": "l1 recupero calore 1 consenso accensione da supervisore",
+        "term": "non usare",
         "candidates": []
       },
       {
-        "term": "l1 abilita modulazione richiesta a dispositivo modulante all interno della zon a neutra solo per compressore 1",
+        "term": "non usare",
         "candidates": []
       },
       {
-        "term": "l1 avviso inverter compressori categorizzato come grave",
+        "term": "non usare",
         "candidates": []
       },
       {
-        "term": "l1 dss inibisci spunti contemporanei tra compressori l1 l2",
+        "term": "non usare",
         "candidates": []
       },
       {
-        "term": "l1 abilita gestione consenso attivazione recupero calore 1 e 2 da supervisione",
+        "term": "ritardo attivazione uscite all accensione",
         "candidates": []
       },
       {
-        "term": "l2 forzatura uscita digitale",
+        "term": "ritardo antipendolazione",
         "candidates": []
       },
       {
-        "term": "l2 compressori di tipo regolazione",
+        "term": "durata ciclo continuo",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione aspirazione flottante",
+        "term": "tempo compressore on con sonda guasta",
         "candidates": []
       },
       {
-        "term": "l2 abilita modulazione richiesta a dispositivo modulante all interno della zon a neutra solo per compressore 1",
+        "term": "tempo compressore off con sonda guasta",
         "candidates": []
       },
       {
-        "term": "abilita accensione compressori l1 per attivazione compressori su l2",
+        "term": "unita di misura",
         "candidates": []
       },
       {
-        "term": "abilita spegnimento compressori l2 per guasto su compressori l1",
+        "term": "modo di utilizzo della pressione",
         "candidates": []
       },
       {
-        "term": "l1 recupero calore abilita bybass del gas cooler",
+        "term": "unit di misura della pressione",
         "candidates": []
       },
       {
-        "term": "l1 recupero calore 2 consenso accensione da supervisore",
+        "term": "modo di visualizzazione della pressione",
         "candidates": []
       },
       {
-        "term": "l1 attiva recupero calore come prevenzione alta pressione gas cooler",
+        "term": "risoluzione solo per c",
         "candidates": []
       },
       {
-        "term": "l1 abilita recupero calore 2",
+        "term": "visualizzazione di default",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione eco",
+        "term": "visualizzazione su x rep",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione eco",
+        "term": "ritardo visualizzazione",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione tempo integrale condensazione",
+        "term": "percentuale sonda virtuale 100%=rpa 0%=rpb",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione compressore 1",
+        "term": "tipo di gas",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione compressore 10",
+        "term": "abilitazione surriscaldamento auto adattivo",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione compressore 11",
+        "term": "superheat automatico",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione compressore 12",
+        "term": "controllo larghezza banda surriscaldamento",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione compressore 2",
+        "term": "tempo minimo controllo surriscaldamento",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione compressore 3",
+        "term": "limito minimo controllo apertura valvola",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione compressore 4",
+        "term": "periodo di ciclo",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione compressore 5",
+        "term": "banda proporzionale",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione compressore 6",
+        "term": "offset di banda",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione compressore 7",
+        "term": "tempo integrale",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione compressore 8",
+        "term": "tempo derivato",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione compressore 9",
+        "term": "percentuale di apertura in errore sonda",
         "candidates": []
       },
       {
-        "term": "l1 attiva iniezione di liquido",
+        "term": "ritardo chiusura valvola dopo errore sonda 240 = on",
         "candidates": []
       },
       {
-        "term": "linea di aspirazione 2 è gestito in questa scheda",
+        "term": "percentuale di apertura durante la fase di start",
         "candidates": []
       },
       {
-        "term": "l2 regolazione ventilatori in zona neutra",
+        "term": "durata funzione di start",
         "candidates": []
       },
       {
-        "term": "l2 avviso inverter compressori categorizzato come grave",
+        "term": "percentuale di aperture dopo il defrost",
         "candidates": []
       },
       {
-        "term": "l2 recupero calore fascia orarias independent from plant closing time",
+        "term": "durata funzione post defrost",
         "candidates": []
       },
       {
-        "term": "l2 attiva eco",
+        "term": "massima percentuale di aperture della valvola",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione tempo integrale aspirazione",
+        "term": "ritardo disattivazione valvola dopo disattivazione consenso alla regolazione",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione recupero calore 1",
+        "term": "percentuale di apertura forzata 101=nu",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione aspirazione tempo integrale",
+        "term": "valore di pressione a 4ma o a 0v vedi manuale",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione compressore 1",
+        "term": "valore di pressione a 20ma o a 5v vedi manuale",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione compressore 2",
+        "term": "limit inferiore di pressione per il calcolo del surriscaldamento",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione compressore 3",
+        "term": "soglia massima pressione di aspirazione",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione compressore 4",
+        "term": "soglia minima pressione di aspirazione",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione compressore 5",
+        "term": "variazione di aperture durante le fasi di mop lop",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione compressore 6",
+        "term": "allarme di massimo surriscaldamento",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione compressore 7",
+        "term": "allarme di minimo surriscaldamento",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione compressore 8",
+        "term": "isteresi rientro allarme di surriscaldamento",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione compressore 9",
+        "term": "ritardo attivazione allarme di surriscaldamento",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione compressore 10",
+        "term": "costante di fast recovery",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione compressore 11",
+        "term": "filtro lettura pressione",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione compressore 12",
+        "term": "tempo di reazione 0=automatico",
         "candidates": []
       },
       {
-        "term": "l2 attiva iniezione di liquido",
+        "term": "non usare",
         "candidates": []
       },
       {
-        "term": "tipo reset allarme alta pressione ricevitore manuale o automatico",
+        "term": "percentuale sonda sbrinamento virtuale 100=dpa 0 =dpb",
         "candidates": []
       },
       {
-        "term": "forzatura uscita digitale",
+        "term": "time out per sbrinamento termostatato",
         "candidates": []
       },
       {
-        "term": "abilita simulazione sonde",
+        "term": "attivazione funzione sbrinamento con 2 sonde",
         "candidates": []
       },
       {
-        "term": "l1 abilita funzionamento chillbooster",
+        "term": "ritardo aggiornamento display dopo defrost",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione ventilatore 1",
+        "term": "tempo di gocciolamento",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione ventilatore 10",
+        "term": "sbrinamento all accensione",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione ventilatore 11",
+        "term": "ventole sonda a",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione ventilatore 12",
+        "term": "ventole sonda b",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione ventilatore 13",
+        "term": "percentuale sonda virtuale gestione ventole 100=fpa 0=fpb",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione ventilatore 14",
+        "term": "modalita funzionamento ventole",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione ventilatore 15",
+        "term": "funzione umidita funzionamento ventilatore",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione ventilatore 16",
+        "term": "tempo ventole on",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione ventilatore 2",
+        "term": "tempo ventole off",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione ventilatore 3",
+        "term": "tipo di regolazione con uscita analogica",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione ventilatore 4",
+        "term": "valore fisso per uscita analogica",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione ventilatore 5",
+        "term": "valore di dew point di default",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione ventilatore 6",
+        "term": "valore minimo uscita analogica",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione ventilatore7",
+        "term": "valore massimo uscita analogica",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione ventilatore 8",
+        "term": "periodo di ciclo per resistenze anti condensanti/tempo attivazione ventole alla massima velocita",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione ventilatore 9",
+        "term": "ritardo allarme di temperatura sonda ventole",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione prevent alta pressione condensazione",
+        "term": "ritardo segnalazione allarmi di temperatura all accensione",
         "candidates": []
       },
       {
-        "term": "livello olio compressore parallelo",
+        "term": "ritardo segnalazione allarmi dopo defrost",
         "candidates": []
       },
       {
-        "term": "abilita soglia minima dss",
+        "term": "tempo di esclusione allarmi di temperatura dopo allarme porta aperta",
         "candidates": []
       },
       {
-        "term": "oil injection compressor 1",
+        "term": "intervallo di stop regolazione 0 = nu",
         "candidates": []
       },
       {
-        "term": "l2 abilita recupero calore come hp prevenire",
+        "term": "durata pausa di regolazione",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione prevent alta pressione condensazione",
+        "term": "numero massimo pause regolazione 0 = nu",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione ventilatore 1",
+        "term": "tacitazione rele allarme con pressione tasto",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione ventilatore 2",
+        "term": "configurazione primo relè",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione ventilatore 3",
+        "term": "configurazione secondo relè",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione ventilatore 4",
+        "term": "configurazione terzo relè",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione ventilatore 5",
+        "term": "configurazione quarto relè",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione ventilatore 6",
+        "term": "configurazione quinto relè",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione ventilatore7",
+        "term": "configurazione sesto relè",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione ventilatore 8",
+        "term": "configurazione uscita modulante",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione ventilatore 9",
+        "term": "modalita di funzionamento",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione ventilatore 10",
+        "term": "polarita rele allarme",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione ventilatore 11",
+        "term": "uscita ausiliaria indipendente dallo stato di on/off",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione ventilatore 12",
+        "term": "polarita ingresso digitale 1",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione ventilatore 13",
+        "term": "funzione ingresso digitale 1",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione ventilatore 14",
+        "term": "intervallo di tempo prima della segnalazione di allarme 1",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione ventilatore 15",
+        "term": "polarita ingresso digitale 2",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione ventilatore 16",
+        "term": "funzione ingresso digitale 2",
         "candidates": []
       },
       {
-        "term": "l2 abilita funzionamento chillbooster",
+        "term": "intervallo di tempo prima della segnalazione di allarme 2",
         "candidates": []
       },
       {
-        "term": "l2 attivazione recupero calore da supervisor",
+        "term": "polarita ingresso digitale 3",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione azione integrale regolazione condensazione",
+        "term": "funzione ingresso digitale 3",
         "candidates": []
       },
       {
-        "term": "l1 regolazione ventilatori in zona neutra",
+        "term": "intervallo di tempo prima della segnalazione di allarme 3",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione spegnimento forzato",
+        "term": "numero massimo interventi pressostato",
         "candidates": []
       },
       {
-        "term": "l2 abilitazione spegnimento forzato",
+        "term": "stato compressore e ventole durante porta aperta",
         "candidates": []
       },
       {
-        "term": "l1 abilita controllo livello olio",
+        "term": "restart regolazione dopo allarme porta aperta doa",
         "candidates": []
       },
       {
-        "term": "l1 abilita procedura sanitaria per il chillbooster",
+        "term": "presenza schedina orologio",
         "candidates": []
       },
       {
-        "term": "l1 attiva recupero calore come hp prevenire",
+        "term": "primo giorno settimanale festivo",
         "candidates": []
       },
       {
-        "term": "l1 abilita pump down allo spegnimento",
+        "term": "secondo giorno settimanale festivo",
         "candidates": []
       },
       {
-        "term": "l2 abilita pump down allo spegnimento",
+        "term": "terzo giorno settimanale festivo",
         "candidates": []
       },
       {
-        "term": "l1 abilita on/off da supervisore",
+        "term": "orario di inizio ciclo energy saving feriale",
         "candidates": []
       },
       {
-        "term": "l2 abilita on/off da supervisore",
+        "term": "durata ciclo energy saving feriale",
         "candidates": []
       },
       {
-        "term": "l1 recupero calore fascia orarias independent from plant closing time",
+        "term": "orario di inizio ciclo energy saving festivo",
         "candidates": []
       },
       {
-        "term": "forza chiusura rprv con compressori off",
+        "term": "durata ciclo energy saving festivo",
         "candidates": []
       },
       {
-        "term": "l1 recupero calore abilita verifica fine azione precedente",
+        "term": "orari di inizio del primo sbrinamento nei giorni feriali",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica modulante 1",
+        "term": "orari di inizio del secondo sbrinamento nei giorni feriali",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica modulante 2",
+        "term": "orari di inizio del terzo sbrinamento nei giorni feriali",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica termostato a",
+        "term": "orari di inizio del quinto sbrinamento nei giorni feriali",
         "candidates": []
       },
       {
-        "term": "l1 attivare termostato funzioni generico b",
+        "term": "orari di inizio del sesto sbrinamento nei giorni feriali",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica termostato c",
+        "term": "orari di inizio del primo sbrinamento nei giorni festivi",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica termostato d",
+        "term": "orari di inizio del secondo sbrinamento nei giorni festivi",
         "candidates": []
       },
       {
-        "term": "l1 abilitazione funzione generica termostato e",
+        "term": "orari di inizio del terzo sbrinamento nei giorni festivi",
         "candidates": []
       },
       {
-        "term": "l2 chillbooster enable santary procedure",
+        "term": "orari di inizio del quinto sbrinamento nei giorni festivi",
         "candidates": []
       },
       {
-        "term": "funzioni generiche abilitazione fascia oraria 1",
+        "term": "orari di inizio del sesto sbrinamento nei giorni festivi",
         "candidates": []
       },
       {
-        "term": "funzioni generiche abilitazione fascia oraria 2",
+        "term": "tempartura fine sbrinamento 1 sonda1",
         "candidates": []
       },
       {
-        "term": "funzioni generiche abilitazione fascia oraria 3",
+        "term": "tempartura fine sbrinamento 2 sonda1",
         "candidates": []
       },
       {
-        "term": "funzioni generiche abilitazione fascia oraria 4",
+        "term": "tempartura fine sbrinamento 3 sonda1",
         "candidates": []
       },
       {
-        "term": "l1 compressori abilitazione fascia oraria",
+        "term": "tempartura fine sbrinamento 4 sonda1",
         "candidates": []
       },
       {
-        "term": "l2 compressori abilitazione fascia oraria",
+        "term": "tempartura fine sbrinamento 5 sonda1",
         "candidates": []
       },
       {
-        "term": "l1 ventilatori abilitazione fascia oraria 1",
+        "term": "tempartura fine sbrinamento 6 sonda1",
         "candidates": []
       },
       {
-        "term": "l2 ventilatori abilitazione fascia oraria 1",
+        "term": "tempartura fine sbrinamento 1 sonda2",
         "candidates": []
       },
       {
-        "term": "l1 compressori abilitazione fascia oraria 2",
+        "term": "tempartura fine sbrinamento 2 sonda2",
         "candidates": []
       },
       {
-        "term": "l2 compressori abilitazione fascia oraria 2",
+        "term": "tempartura fine sbrinamento 3 sonda2",
         "candidates": []
       },
       {
-        "term": "l1 ventilatori abilitazione fascia oraria 2",
+        "term": "tempartura fine sbrinamento 4 sonda2",
         "candidates": []
       },
       {
-        "term": "l2 ventilatori abilitazione fascia oraria 2",
+        "term": "tempartura fine sbrinamento 5 sonda2",
         "candidates": []
       },
       {
-        "term": "l1 compressori abilitazione fascia oraria 3",
+        "term": "tempartura fine sbrinamento 6 sonda2",
         "candidates": []
       },
       {
-        "term": "l2 compressori abilitazione fascia oraria 3",
+        "term": "tempo di attivazione prima luce durante giorni lavorativi",
         "candidates": []
       },
       {
-        "term": "l1 ventilatori abilitazione fascia oraria 3",
+        "term": "tempo di attivazione seconda luce durante giorni lavorativi",
         "candidates": []
       },
       {
-        "term": "l2 ventilatori abilitazione fascia oraria 3",
+        "term": "tempo di attivazione terza luce durante giorni lavorativi",
         "candidates": []
       },
       {
-        "term": "l1 compressori abilitazione fascia oraria 4",
+        "term": "tempo di attivazione quarta luce durante giorni lavorativi",
         "candidates": []
       },
       {
-        "term": "l2 compressori abilitazione fascia oraria 4",
+        "term": "tempo di attivazione quinta luce durante giorni lavorativi",
         "candidates": []
       },
       {
-        "term": "l1 ventilatori abilitazione fascia oraria 4",
+        "term": "tempo di attivazione sesta luce durante giorni lavorativi",
         "candidates": []
       },
       {
-        "term": "l2 ventilatori abilitazione fascia oraria 4",
+        "term": "tempo attivazione luci durante i giorni lavorativi",
         "candidates": []
       },
       {
-        "term": "l2 chillbooster enable santary procedure",
+        "term": "tempo di attivazione prima luce durante giorni festivi",
         "candidates": []
       },
       {
-        "term": "l1 soglia di allarme bassa pressione di scarico",
+        "term": "tempo di attivazione seconda luce durante giorni festivi",
         "candidates": []
       },
       {
-        "term": "l1 ritardo allarme bassa pressione di scarico",
+        "term": "tempo di attivazione terza luce durante giorni festivi",
         "candidates": []
       },
       {
-        "term": "l1 soglia di allarme di alta pressione di aspirazione",
+        "term": "tempo di attivazione quarta luce durante giorni festivi",
         "candidates": []
       },
       {
-        "term": "l1 soglia di allarme bassa pressione di aspirazione",
+        "term": "tempo di attivazione quinta luce durante giorni festivi",
         "candidates": []
       },
       {
-        "term": "l1 soglia allarme alta pressione di condensazione",
+        "term": "tempo di attivazione sesta luce durante giorni festivi",
         "candidates": []
       },
       {
-        "term": "l1 soglia allarme bassa pressione di condensazione",
+        "term": "tempo attivazione luci durante i giorni festivi",
         "candidates": []
       },
       {
-        "term": "l1 recupero calore passo di incremento offset valvola hpv con richiesta presente di recupero calore",
+        "term": "selezione sonda di energy saving",
         "candidates": []
       },
       {
-        "term": "l1 offset condensazione flottante",
+        "term": "attivazione energy saving insieme a spegnimento luci",
         "candidates": []
       },
       {
-        "term": "l1 recupero calore passo di incremento offset ventilatori gas cooler con richiesta presente di recupero calore",
+        "term": "sincronizzazione display",
         "candidates": []
       },
       {
-        "term": "l1 cut off ventilatori",
+        "term": "sincronizzazione on/ff",
         "candidates": []
       },
       {
-        "term": "l1 recupero calore massimo offset ventilatori gas cooler con richiesta presente di recupero calore",
+        "term": "sincronizzazione luci",
         "candidates": []
       },
       {
-        "term": "l1 valvola rprv percentuale di apertura in pre posizionamento",
+        "term": "sincronizzazione uscita ausiliaria",
         "candidates": []
       },
       {
-        "term": "condenser pressure prevent threshold",
+        "term": "sincronizzazione funzionamento notturno",
         "candidates": []
       },
       {
-        "term": "l1 valvola rprv minima percentuale di apertura con sistema spento",
+        "term": "visualizzazione sonda remota",
         "candidates": []
       },
       {
-        "term": "l1 valvola rprv minima percentuale di apertura con sistema acceso",
+        "term": "sonda di pressone remota",
         "candidates": []
       },
       {
-        "term": "l1 regolazion valvola hpv coefficiente m1",
+        "term": "invio sonda p4 in lan",
         "candidates": []
       },
       {
-        "term": "l1 regolazione valvola hpv temperatura t12",
+        "term": "attivazione solenoide da richiesta lan",
         "candidates": []
       },
       {
-        "term": "l1 regolazione valvola hpv temperatura t100",
+        "term": "chiamata freddo in lan sempre abilitata",
         "candidates": []
       },
       {
-        "term": "l1 soglia di allarme surriscaldamento",
+        "term": "configurazione sonda 1",
         "candidates": []
       },
       {
-        "term": "l1 hpv regolazione valvola pressione critica",
+        "term": "calibrazione sonda 1",
         "candidates": []
       },
       {
-        "term": "l1 hpv regolazione valvola pressione massima",
+        "term": "configurazione sonda 2",
         "candidates": []
       },
       {
-        "term": "l1 regolazione valvola hpv pressione p100",
+        "term": "calibrazione sonda 2",
         "candidates": []
       },
       {
-        "term": "l1 delta massimo ammissibile per l aspirazione flottante",
+        "term": "configurazione sonda 3",
         "candidates": []
       },
       {
-        "term": "l1 valvola hpv percentuale di apertura con sicurezze attive",
+        "term": "calibrazione sonda 3",
         "candidates": []
       },
       {
-        "term": "l1 valvola hpv percentuale minima di apertura con sistema acceso",
+        "term": "configurazione sonda 4",
         "candidates": []
       },
       {
-        "term": "l1 soglia alta pressione ricevitore per attivare sicurezze con azioni su valvola hpv",
+        "term": "calibrazione sonda 4",
         "candidates": []
       },
       {
-        "term": "l1 massima pressione ricevitore",
+        "term": "configurazione sonda 5",
         "candidates": []
       },
       {
-        "term": "l1 delta di temperatura per la regolazione gas cooler con sonda di regolazione rotta",
+        "term": "calibrazione sonda 5",
         "candidates": []
       },
       {
-        "term": "l1 valvola hpv percentuale massima apertura",
+        "term": "configurazione sonda 6",
         "candidates": []
       },
       {
-        "term": "l1 regolazione valvola hpv temperatura t23",
+        "term": "calibrazione sonda 6",
         "candidates": []
       },
       {
-        "term": "l1 regolazione valvola hpv delta sottoraffreddamento corrispondente a t23",
+        "term": "tempo massimo compressore in on con regolazione peo",
         "candidates": []
       },
       {
-        "term": "l1 valvola hpv massima variazione percentuale apertura valvola per secondo",
+        "term": "indirizzo seriale",
         "candidates": []
       },
       {
-        "term": "l1 valvola hpv percentuale minima di apertura con sistema spento",
+        "term": "configurazione chiave di off",
         "candidates": []
       },
       {
-        "term": "l1 valvola hpv percentuale di apertura in pre posizionamento",
+        "term": "configurazione chiave di luci",
         "candidates": []
       },
       {
-        "term": "l1 soglia bassa pressione ricevitore per attivare sicurezze con azioni su valvola hpv",
-        "candidates": []
-      },
-      {
-        "term": "l1 pressione minima del ricevitore",
-        "candidates": []
-      },
-      {
-        "term": "l1 soglia per valvola di scarico olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 max differenza tra posizione hpv e feedback",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme feedback hpv",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia di allarme di alta pressione di aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia di allarme bassa pressione di aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 offset condensazione flottante in modalitc transcritica",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia di allarme surriscaldamento",
-        "candidates": []
-      },
-      {
-        "term": "l1 soglia di allarme alta pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia allarme bassa pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia allarme alta pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 pressure prevent offset to switch the pressure control from the discharge pressue to gas cooler pressure",
-        "candidates": []
-      },
-      {
-        "term": "offset valvola rprv per attivazione compressore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "l2 delta massimo ammissibile per l aspirazione flottante",
-        "candidates": []
-      },
-      {
-        "term": "l1 min temperature tgc for gas cooler bypass",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore soglia sulla regolazione per disabilitare il bypass del gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 percentuale di richiesta per attivazione recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 percentuale di richiesta per disattivazione recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 percentuale di richiesta per attivazione recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero di calore 2 soglia chiusura valvola",
-        "candidates": []
-      },
-      {
-        "term": "soglia allarme alta pressione ricevitore",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore minima velocità pompa con recupero calore 1 attivo",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia per valvola di scarico olio",
-        "candidates": []
-      },
-      {
-        "term": "l2 recupero calore minima velocità pompa con recupero calore 2 attivo",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore velocità fissa richiesta con defrost attivo sul carico extra",
-        "candidates": []
-      },
-      {
-        "term": "l1 chillbooster tempo di procedura sanitaria",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore velocità fissa richiesta con carico extra attivo",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore sogli attivazione carico extra",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia allarme alta pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore sogli disattivazione carico extra",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore percentuale di bypass gas cooler minima per attivazione carico extra",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia prevent alta pressione condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore percentuale di bypass gas cooler per disattivazione carico extra",
-        "candidates": []
-      },
-      {
-        "term": "l2 offset condensazione flottante",
-        "candidates": []
-      },
-      {
-        "term": "l2 cutoff venitlatori",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia allarme bassa pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "offset valvola rprv per disattivazione compressore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "compressore parallelo soglia per valvola di scarico olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 guadagno proporzionale per regolazione p i su temperatura acqua in uscita",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo di allarme alta pressione di aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo di allarme bassa pressione di aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme alta pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme bassa pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme basso surriscaldamento",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo ripartenza compressori dopo blackout",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 guadagno proporzionale per regolazione p i su temperatura acqua in uscita",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori zona neutra tempo minimo di attivazione completa",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori zona neutra tempo massimo di attivazione completa",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori zona neutra tempo minimo di disattivazione completa",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori zona neutra tempo massimo di disattivazione completao",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo minimo di on del compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo minimo di off del compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo di load up compressori",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo minimo tra due accensioni successive compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 minimo tempo di on compressore sotto inverter",
-        "candidates": []
-      },
-      {
-        "term": "l1 minimo tempo di off compressore sotto inverter",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 tempo di attesa attivazione recupero calore per consentire il ricircolo dell acqua",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo minimo tra attivazioni di parzializzazioni",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 minimo tempo tra due attivazione del recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatore inverter tempo incremento",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatore inverter tempo decremento",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione zona neutra gas cooler minimo tempo raggiungimento richiesta attivazione al 100%",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione zona neutra gas cooler massimo tempo raggiungimento richiesta attivazione al 100%",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione zona neutra gas cooler minimo tempo raggiungimento richiesta spegnimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione zona neutra gas cooler massimo tempo raggiungimento richiesta spegnimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 durata procedura speed up",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo integrale di regolazione pi compressori",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo integrale per regolazione p i valvola rprv",
-        "candidates": []
-      },
-      {
-        "term": "l1 attivazione minima ventilatore modulante",
-        "candidates": []
-      },
-      {
-        "term": "l1 attivazione massima del ventilatore modulante",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme alta pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo integrale di regolazione valvola hpv",
-        "candidates": []
-      },
-      {
-        "term": "l1 band per la regolazione valvola p i hpv",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola hpv tempo di apertura in pre posizionamento",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola rprv tempo di apertura pre posizionamento",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo minimo tra due accensioni successive compressore sotto inverter",
-        "candidates": []
-      },
-      {
-        "term": "l1 banda per regolazione p i valvola rprv",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 minimo tempo tra due attivazione del recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo valvola di scarico olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 tipo di rotazione compressori",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola rprv massima percentuale di apertura",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo per passare dalla potenza minima alla massima per il compressore modulante",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo per passare dalla potenza max alla min per il compressore modulante",
-        "candidates": []
-      },
-      {
-        "term": "l1 minima frequenza inverter compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 massima frequenza inverter compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 ritardo attivazione recupero calore dopo partenza pompa",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 ritardo attivazione recuepro calore da partenza pompa",
-        "candidates": []
-      },
-      {
-        "term": "l1 soglia per lo spegnimento forzato",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia per lo spegnimento forzato",
-        "candidates": []
-      },
-      {
-        "term": "l1 selezione modalità olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l2 oil level valve management opening time",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 tempo integrale per regolazione p i su temperatura acqua in uscita",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 tempo integrale per regolazione p i su temperatura acqua in uscita",
-        "candidates": []
-      },
-      {
-        "term": "l2 oil level valve management closing time",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme alta pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme bassa pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 tipo refrigerante aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 massimo numero di pulsazioni solenoide olio",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo minimo tra due accensioni successive compressore sotto inverter",
-        "candidates": []
-      },
-      {
-        "term": "l1 oil level valve management opening time",
-        "candidates": []
-      },
-      {
-        "term": "l1 oil level valve management closing time",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme alta pressione di aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme bassa pressione di aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 massimo numero di pulsazioni valvola olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo inizio pulsazioni olio",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme basso surriscaldamento",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo ripartenza compressori dopo blackout",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo aspirazione flottante",
-        "candidates": []
-      },
-      {
-        "term": "l1 minimo tempo chiusura valvola olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori zona neutra tempo minimo di attivazione completa",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori zona neutra tempo massimo di attivazione completa",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori zona neutra tempo minimo di disattivazione completa",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori zona neutra tempo massimo di disattivazione completa",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo minimo di on del compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo minimo di off del compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo di load up compressori",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo minimo tra due accensioni successive compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 minimo tempo chiusura valvola olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l2 minimo tempo di on compressore sotto inverter",
-        "candidates": []
-      },
-      {
-        "term": "l2 minimo tempo di off compressore sotto inverter",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo minimo tra attivazioni di parzializzazioni",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo valutazione minimo livello olio",
-        "candidates": []
-      },
-      {
-        "term": "soglia di apertura valvola rprv per attivazione compresore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "ritardo in attivazione del compressore parallelo dopo la valutazione della percentuale di apertura della valvola rprv",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 tipo di segnale di regolazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 tipo di segnale di regolazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 tipo di rotazione compressori",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo integrale di regolazione pi compressori",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo per passare dalla potenza minima alla massima per il compressore modulante",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo per passare dalla potenza max alla min per il compressore modulante",
-        "candidates": []
-      },
-      {
-        "term": "l2 minima frequenza inverter compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 massima frequenza inverter compressore",
-        "candidates": []
-      },
-      {
-        "term": "banda per la regolazione del compressore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "tempo derivativo per la regolazione del compressore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "l2 tipo refrigerante aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "tempo integrale per la regolazione del compressore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "tempo di attesa prima di forzare rprv chiusa con compressori off",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore tempo di valutazione temperatura gas cooler bypassato per consentirne il bypass",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 ritardo in spegnimento pompa dopo disattivazione recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore tempo tra due incrementi di offset valvola hpv con richiesta presente di recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore tempo tra due incrementi di offset ventilatori gas cooler con richiesta presente di recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo valutazione minimo livello olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore guadagno proporzionale per regolazione p i bypass gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore tempo integrale regolazione p i valvola di by pass gascooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 livello olio comune tempo di on attivazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 livello olio comune tempo di off attivazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 livello olio comune tempo di on disattivazione",
-        "candidates": []
-      },
-      {
-        "term": "tempo minimo tra due accensioni successive compressore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme tipo 1 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme tipo 2 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme tipo 3 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme tipo 4 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme tipo 5 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme tipo 6 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme tipo 7 compressore",
-        "candidates": []
-      },
-      {
-        "term": "dss ritardo di valutazione prima di accendere i compressori della linea 1 per allarme compressori linea 2",
-        "candidates": []
-      },
-      {
-        "term": "dss ritardo di valutazione prima di spegnere i compressori della linea 2 per allarme compressori linea 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo segnalazione allarme perdita refrigerante",
-        "candidates": []
-      },
-      {
-        "term": "l1 livello olio comune tempo di off disattivazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo valvola di scarico olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 guadagno proporzionale regolazione p i pompa",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme tipo 1 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme tipo 2 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme tipo 3 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme tipo 4 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme tipo 5 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme tipo 6 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme tipo 7 compressore",
-        "candidates": []
-      },
-      {
-        "term": "oil pulsing minimum activation times",
-        "candidates": []
-      },
-      {
-        "term": "tempo minimo di on compressore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "compressore parallelo oil level valve management opening time",
-        "candidates": []
-      },
-      {
-        "term": "compressore parallelo oil level valve management closing time",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 tempo integrale per regolazione p i della pompa",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 guadagno proporzionale regolazione p i pompa",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme bassa pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 massimo numero di allarmi flussostato prima di passare a manuale",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 tempo di attesa prima di resettare l allarme flussostato",
-        "candidates": []
-      },
-      {
-        "term": "l1 porta seriale a cui è connesso il supervisore",
-        "candidates": []
-      },
-      {
-        "term": "l2 porta seriale a cui è connesso il supervisore",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme alta pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 tempo integrale regolazione p i pompa",
-        "candidates": []
-      },
-      {
-        "term": "l1 chillbooster tempo di forzatura dei ventilatori alla massima potenza",
-        "candidates": []
-      },
-      {
-        "term": "l2 chillbooster tempo di forzatura dei ventilatori alla massima potenza",
-        "candidates": []
-      },
-      {
-        "term": "l1 chilbooster durata procedura sanitaria",
-        "candidates": []
-      },
-      {
-        "term": "l2 regolazione zona neutra gas cooler minimo tempo raggiungimento richiesta attivazione al 100%",
-        "candidates": []
-      },
-      {
-        "term": "l2 regolazione zona neutra gas cooler massimo tempo raggiungimento richiesta spegnimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 attivazione minima ventilatore modulante",
-        "candidates": []
-      },
-      {
-        "term": "l2 regolazione zona neutra gas cooler massimo tempo raggiungimento richiesta attivazione al 100%",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo per passare dalla massima alla minima potenza per il compressore parallelo modulante",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo per passare dalla minima alla massima potenza per il compressore parallelo modulante",
-        "candidates": []
-      },
-      {
-        "term": "l2 regolazione zona neutra gas cooler minimo tempo raggiungimento richiesta spegnimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 massima attivazione ventilatore modulante",
-        "candidates": []
-      },
-      {
-        "term": "l2 speed up durata procedura",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo integrale di linea di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 tipo refrigerante condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo di load up dolce compressori",
-        "candidates": []
-      },
-      {
-        "term": "contatore funzionamento minuti solenoide olio compressore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme bassa pressione del ricevitore",
-        "candidates": []
-      },
-      {
-        "term": "compressore parallelo ritardo valvola di scarico olio",
-        "candidates": []
-      },
-      {
-        "term": "maximum variation",
-        "candidates": []
-      },
-      {
-        "term": "hr delay on hr circ pump",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 tempo di attesa prima di resettare l allarme flussostato",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 massimo numero di allarmi flussostato prima di passare a manuale",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 ritardo allarme flussostato",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore tempo valutazione by pass",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori ora fine fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori ora fine fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori ora fine fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori ora fine fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche ora fine fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori ora fine fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori ora fine fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori ora fine fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori ora fine fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche ora fine fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori ora fine fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori ora fine fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori ora fine fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori ora fine fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche ora fine fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori ora fine fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori ora fine fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori ora fine fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori ora fine fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche ora fine fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori minuto fine fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori minuto fine fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori minuto fine fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori minuto fine fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche minuto fine fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori minuto fine fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori minuto fine fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori minuto fine fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche minuto fine fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori minuto fine fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori minuto fine fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori minuto fine fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori minuto fine fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche minuto fine fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori minuto fine fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori minuto fine fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori minuto fine fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori minuto fine fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche minuto fine fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori minuto fine fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori ora inizio fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori ora inizio fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori ora inizio fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori ora inizio fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche ora inizio fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori ora inizio fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori ora inizio fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori ora inizio fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori ora inizio fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche ora inizio fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori ora inizio fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori ora inizio fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori ora inizio fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori ora inizio fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche ora inizio fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori ora inizio fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori ora inizio fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori ora inizio fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori ora inizio fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche ora inizio fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori minuto inizio fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori minuto inizio fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori minuto inizio fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori minuto inizio fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche minuto inizio fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori minuto inizio fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori minuto inizio fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori minuto inizio fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori minuto inizio fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche minuto inizio fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori minuto inizio fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori minuto inizio fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori minuto inizio fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori minuto inizio fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche minuto inizio fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori minuto inizio fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori minuto inizio fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori minuto inizio fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori minuto inizio fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche minuto inizio fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressori scheduler weekday",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressori scheduler weekday",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatori scheduler weekday",
-        "candidates": []
-      },
-      {
-        "term": "l2 ventilatori scheduler weekday",
-        "candidates": []
-      },
-      {
-        "term": "dummy",
+        "term": "baudrate",
         "candidates": []
       }
     ]
@@ -2917,291 +957,31 @@
     "category": "alarm",
     "suggestions": [
       {
-        "term": "l1 allarme livello co2",
+        "term": "allarme orologio failure",
         "candidates": []
       },
       {
-        "term": "al di cmp parall mst",
+        "term": "allarme orologio rtc data lost",
         "candidates": []
       },
       {
-        "term": "l1 allarme flussostato recupero calore 2",
+        "term": "allarme grave raggiungimento n max pause msn",
         "candidates": []
       },
       {
-        "term": "l1 allarme flussostato recupero calore 1",
+        "term": "allarme esterno",
         "candidates": []
       },
       {
-        "term": "l1 allarme perdita refrigerante",
+        "term": "allarme pressostato 1",
         "candidates": []
       },
       {
-        "term": "l1 allarme perdita categorizzato come grave",
+        "term": "allarme di minimo surriscaldamento",
         "candidates": []
       },
       {
-        "term": "l2 allarme livello liquido",
-        "candidates": []
-      },
-      {
-        "term": "al low rec press cmp parall ms",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme olio comune",
-        "candidates": []
-      },
-      {
-        "term": "al temp hr shr2 l1 mst",
-        "candidates": []
-      },
-      {
-        "term": "alarm wrong configuration of expansion board",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme rtc",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sovraccarico comune ventilatori",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sovraccarico comune ventilatori",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 10",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 11",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 12",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 13",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 14",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 15",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 16",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 4",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 5",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 6",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 7",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 8",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 9",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme generico ventilatori",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 1",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 2",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 1",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 1 da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 1 da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 2",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 2 da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 2 da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme surriscaldamento",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme surriscaldamento",
-        "candidates": []
-      },
-      {
-        "term": "allarme scheda di espansione offline",
-        "candidates": []
-      },
-      {
-        "term": "l2 temperatura olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda di backup condensazione rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore allarme sonda rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore probe alarm",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda regolazione recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda regolazione recupero calore 2",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda recupero di calore",
-        "candidates": []
-      },
-      {
-        "term": "pressione uscita gas cooler troppo alta/bassa rispetto al setpoint attuale",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme plan",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme plan connessione mancante con la scheda di compressione parallela",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme chillbooster",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme chillbooster",
-        "candidates": []
-      },
-      {
-        "term": "allarme driver evd offline",
-        "candidates": []
-      },
-      {
-        "term": "allarme valvola hpv da ingresso digitale",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme inverter compressori",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme inverter ventilatori",
-        "candidates": []
-      },
-      {
-        "term": "prevent ht lock l1",
-        "candidates": []
-      },
-      {
-        "term": "prevent ht lock l2 mst",
-        "candidates": []
-      },
-      {
-        "term": "allarme valvola rprv da ingresso digitale",
-        "candidates": []
-      },
-      {
-        "term": "hpv open and feedback difference is high",
-        "candidates": []
-      },
-      {
-        "term": "rprv open and feedback difference is high",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme livello liquido",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme livello liquido",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme di manutenzione chilllbooster",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme di manutenzione chilllbooster",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda di by pass per recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda regolazione recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda regolazione recupero calore 2",
+        "term": "allarme di massimo surriscaldamento",
         "candidates": []
       },
       {
@@ -3211,130 +991,18 @@
     ]
   },
   {
-    "category": "warning",
+    "category": "command",
     "suggestions": [
       {
-        "term": "l1 manutenzione chillbooster richiesta",
+        "term": "accendi dispositivo",
         "candidates": []
       },
       {
-        "term": "l2 manutenzione chillbooster richiesta",
+        "term": "luce on",
         "candidates": []
       },
       {
-        "term": "l1 avviso di compressore 10",
-        "candidates": []
-      },
-      {
-        "term": "l2 avviso di compressore 10",
-        "candidates": []
-      },
-      {
-        "term": "l1 avviso di compressore 11",
-        "candidates": []
-      },
-      {
-        "term": "l2 avviso di compressore 11",
-        "candidates": []
-      },
-      {
-        "term": "l1 avviso di compressore 12",
-        "candidates": []
-      },
-      {
-        "term": "l2 avviso di compressore 12",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressore 1 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressore 1 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressore 2 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressore 2 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressor 3 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressor 3 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressor 4 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressor 4 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressor 5 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressor 5 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressore 6 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressore 6 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 avviso di compressore 7",
-        "candidates": []
-      },
-      {
-        "term": "l2 avviso di compressore 7",
-        "candidates": []
-      },
-      {
-        "term": "l1 avviso di compressore 8",
-        "candidates": []
-      },
-      {
-        "term": "l2 avviso di compressore 8",
-        "candidates": []
-      },
-      {
-        "term": "l1 avviso di compressore 9",
-        "candidates": []
-      },
-      {
-        "term": "l2 avviso di compressore 9",
-        "candidates": []
-      },
-      {
-        "term": "l1 avviso inverter compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 avviso prevent alta pressione",
-        "candidates": []
-      },
-      {
-        "term": "l2 avviso prevent alta pressione",
-        "candidates": []
-      },
-      {
-        "term": "l1 prevenzione alta pressione",
-        "candidates": []
-      },
-      {
-        "term": "l2 prevenzione alta pressione",
+        "term": "luci off",
         "candidates": []
       }
     ]

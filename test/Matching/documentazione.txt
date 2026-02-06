@@ -1,0 +1,76 @@
+INPUT
+- knowledge base
+- template base 
+- dizionario
+- template normalizzato
+
+OUTPUT DESIDERATO
+file matching_report-json che contiene tutti i vari matching avvenuti tra le variabili del template normalizzato (che sono esattamanete uguali a quelle
+del template reale), con i concetti del dizionario. 
+
+per fare questo usiamo lo script matcher.py
+
+MATCHING TESTATI PER TEMPLATE:
+b5a8de99-f8fc-3f7d-5bed-1780e59a7c65.json --> "metrics": {
+                                                        "mapped_count": 0,
+                                                        "ambiguous_count": 0,
+                                                        "unmapped_count": 798,
+                                                        "avg_confidence": null,
+                                                        "warnings_count": 0
+                                                    },
+1e14c88b-12d9-523c-c481-0d0fdba8b193.json --> "metrics": {
+                                                            "mapped_count": 595,
+                                                            "ambiguous_count": 355,
+                                                            "unmapped_count": 830,
+                                                            "avg_confidence": 0.9348,
+                                                            "warnings_count": 0
+                                                        },
+2addc81d-511a-afef-ba88-b58477155e22.json --> "metrics": {
+                                                            "mapped_count": 33,
+                                                            "ambiguous_count": 83,
+                                                            "unmapped_count": 247,
+                                                            "avg_confidence": 0.9937,
+                                                            "warnings_count": 0
+                                                        },
+2b8a5ede-db60-56eb-7fdd-d2ec4c9fdd46.json -->  "metrics": {
+                                                            "mapped_count": 14,
+                                                            "ambiguous_count": 20,
+                                                            "unmapped_count": 175,
+                                                            "avg_confidence": 0.9294,
+                                                            "warnings_count": 0
+                                                        },
+3a80c574-ba78-c61b-e58e-59789e40e1c0.json -->  "metrics": {
+                                                            "mapped_count": 13,
+                                                            "ambiguous_count": 42,
+                                                            "unmapped_count": 103,
+                                                            "avg_confidence": 0.9894,
+                                                            "warnings_count": 0
+                                                        },
+3f4599c8-cd20-634a-b35c-760833ab47e5.json -->   "metrics": {
+                                                            "mapped_count": 13,
+                                                            "ambiguous_count": 30,
+                                                            "unmapped_count": 567,
+                                                            "avg_confidence": 0.953,
+                                                            "warnings_count": 0
+                                                        },
+15365236-df47-217e-4561-29e86ca85c5d.json -->   "metrics": {
+                                                            "mapped_count": 0,
+                                                            "ambiguous_count": 5,
+                                                            "unmapped_count": 198,
+                                                            "avg_confidence": null,
+                                                            "warnings_count": 0
+                                                        },
+e1c11fc8-4a14-ba55-efe4-21dcda99b1c8.json -->   "metrics": {
+                                                            "mapped_count": 0,
+                                                            "ambiguous_count": 0,
+                                                            "unmapped_count": 89,
+                                                            "avg_confidence": null,
+                                                            "warnings_count": 0
+                                                        },
+028d14de-71dc-6e64-9587-c7111a39793e --> "metrics": {
+                                                    "mapped_count": 32,
+                                                    "ambiguous_count": 83,
+                                                    "unmapped_count": 247,
+                                                    "avg_confidence": 0.9953,
+                                                    "warnings_count": 0
+                                                },

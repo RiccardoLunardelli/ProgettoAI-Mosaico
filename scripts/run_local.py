@@ -313,7 +313,7 @@ def ollama_generate_json(model: str, prompt: str) -> dict:
     global ollama_call_count 
     ollama_call_count += 1
 
-    url = "http://localhost:11434/api/generate"
+    url = "http://127.0.0.1:11434/api/generate"
     payload = {
         "model": model,
         "prompt": prompt,
@@ -409,6 +409,7 @@ def ensure_labels(actions_payload: dict) -> dict:
 
 #-----DICTIONARY-----
 def build_llm_dictionary_prompt(analysis: dict) -> str:
+    # -- da usare nel caso proposer anche poer dictionary --
     return (
         "SYSTEM: You are a strict JSON generator.\n"
         "You propose ONLY dictionary patch operations.\n"
@@ -802,6 +803,8 @@ def compute_metrics(mr: dict | None, actions_payload: dict | None) -> dict:
 #------BUILD PATCH ACTIONS------------
 #-----TEMPLATE-------
 def build_patch_actions_from_matching(mr: dict, output_path: str) -> dict:
+    # costruisce le patch dal matching report
+
     actions = []
     for item in mr.get("items", []):
         status = item.get("status")

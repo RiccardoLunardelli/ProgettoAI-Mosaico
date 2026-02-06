@@ -1,0 +1,19 @@
+INPUT
+- studio template reale
+- schema che decide quali sezione campi bisogna normalizzare
+
+OUTPUT DESIDERATO
+- file normalized_template.json che contiene tutti i campi e sezioni desiderate con testo e udm normalizzate.
+
+Per fare questo usiamo lo script normalizer.py
+
+TEMPLATE TESTATI:
+1e14c88b-12d9-523c-c481-0d0fdba8b193.json --> ok 
+2addc81d-511a-afef-ba88-b58477155e22.json --> ok
+2b8a5ede-db60-56eb-7fdd-d2ec4c9fdd46.json --> ok
+3a80c574-ba78-c61b-e58e-59789e40e1c0.json --> ok
+3f4599c8-cd20-634a-b35c-760833ab47e5.json --> ok 
+15365236-df47-217e-4561-29e86ca85c5d.json --> ok ma non ha ReadX = Outxpy --> da testare 
+e1c11fc8-4a14-ba55-efe4-21dcda99b1c8.json --> ok ma non ha ReadX = CReadx
+b5a8de99-f8fc-3f7d-5bed-1780e59a7c65.json --> ok ma non ha ReadX = DigitalOutput
+028d14de-71dc-6e64-9587-c7111a39793e.json --> ok

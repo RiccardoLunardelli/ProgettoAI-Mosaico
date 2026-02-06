@@ -11,6 +11,8 @@ def load_json(path: str) -> dict:
 
 # -----VALIDATOR PER KB | TAMPLATE BASE | DICTIONARY---------------
 def validate_before_commit_generic(ctx: MCPContext, schema_id: str, patch_payload: dict, input_path: str, upsert_fn, diff_fn, artifact_type: str, template_base_path: str | None) -> dict:
+    # valida lo schema, controlli su dizionario(concetti) e template base(categoria semantica) e genera diff
+
     ctx.schema_validate(schema_id, patch_payload)
 
     with open(input_path, "r", encoding="utf-8") as f:

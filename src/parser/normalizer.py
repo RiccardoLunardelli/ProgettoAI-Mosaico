@@ -3,6 +3,7 @@ import json
 import re
 from datetime import datetime, timezone, timedelta
 from typing import Any, Dict, List, Optional
+from pathlib import Path
 
 from pydantic import BaseModel, Field
 
@@ -229,20 +230,24 @@ def normalize_template(raw_template: Dict[str, Any], schema: Dict[str, Any]) -> 
 def main() -> None:
     # Entry point --> carica input, normalizza e screive output
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--template", required=True)
-    parser.add_argument("--schema", required=True)
-    parser.add_argument("--output", required=True)
-    args = parser.parse_args()
+    template_path = input("Template path: ").strip()
+    schema_path = input("Schema path: ").strip()
+    output_dir = input("Output dir: ").strip()
 
-    raw_template = load_json(args.template)
-    schema = load_json(args.schema)
+    raw_template = load_json(template_path)
+    schema = load_json(schema_path)
 
     normalized = normalize_template(raw_template, schema)
     payload = model_dump(normalized)
 
-    with open(args.output, "w", encoding="utf-8") as f:
+    out_dir = Path(output_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    output_path = out_dir / "normalized_template_v0.1.json"
+
+    with open(output_path, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
+
+    print(f"Normalized template saved: {output_path}")
 
 if __name__ == "__main__":
     main()

@@ -115,8 +115,8 @@ def fuzzy_score(text:str, cand:str) -> float:
 
     if not text or not cand:
         return 0.0 
-    r1 = fuzz.token_set_ratio(text, cand) / 100.0
-    r2 = fuzz.ratio(text, cand) / 100.0
+    r1 = fuzz.token_set_ratio(text, cand) / 100.0 # confronto semantico
+    r2 = fuzz.ratio(text, cand) / 100.0 # confronto delle parole
     if len(text) >= MIN_LEN_FOR_PARTIAL and len(cand) >= MIN_LEN_FOR_PARTIAL:
         r3 = fuzz.partial_ratio(text, cand) / 100.0 # solo su stringhe lunghe
         return max(r1, r2, r3)
@@ -391,8 +391,8 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
                         "semantic_category": concept_info.get("semantic_category"),
                     })
 
+    # se fallisce deterministico e non trova candidati --> FALLBACK FUZZY
     if not candidates:
-        # FALLBACK FUZZY
         fuzzy_candidates = []
         for entry in dictionary.get("entries", []):
             concept_id = entry.get("concept_id")
@@ -688,20 +688,24 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--normalized", required=True)
-    parser.add_argument("--template_base", required=True)
-    parser.add_argument("--dictionary", required=True)
-    parser.add_argument("--kb", required=True)
-    parser.add_argument("--device_context", required=True)
-    parser.add_argument("--output", required=True)
-    args = parser.parse_args()
+    normalized_path = input("Normalized template path: ").strip()
+    template_base_path = input("Template base path: ").strip()
+    dictionary_path = input("Dictionary path: ").strip()
+    kb_path = input("KB path: ").strip()
+    device_context_path = input("Device context path: ").strip()
+    output_dir = input("Output dir: ").strip()
+
+    out_dir = Path(output_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    output_path = out_dir / "matching_report_v0.1.json"
 
     run_matching(
-        normalized_path=args.normalized,
-        template_base_path=args.template_base,
-        dictionary_path=args.dictionary,
-        kb_path=args.kb,
-        device_context_path=args.device_context,
-        output_path=args.output,
+        normalized_path=normalized_path,
+        template_base_path=template_base_path,
+        dictionary_path=dictionary_path,
+        kb_path=kb_path,
+        device_context_path=device_context_path,
+        output_path=str(output_path),
     )
+
+    print(f"Matching report saved: {output_path}")

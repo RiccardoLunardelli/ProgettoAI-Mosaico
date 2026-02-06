@@ -20,17 +20,7 @@ def write_json(path: Path, payload: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
-def run_pipeline(
-    template_path: str,
-    dictionary_path: str,
-    kb_path: str,
-    template_base_path: str,
-    device_context_path: str,
-    schema_tipo_path: str,
-    output_dir: str,
-    validate_only: bool,
-    llm_model: str | None,
-) -> None:
+def run_pipeline(template_path: str, dictionary_path: str, kb_path: str, template_base_path: str, device_context_path: str, schema_tipo_path: str, output_dir: str, llm_model: str | None,) -> None:
     out_dir = Path(output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -61,24 +51,12 @@ def run_pipeline(
 
     # dopo run_matching(...)
     decide_and_run_patch(
-        template_path=template_path,
-        dictionary_path=dictionary_path,
-        kb_path=kb_path,
         template_base_path=template_base_path,
         matching_path=str(matching_path),
-        validate_only=validate_only,
         llm_model=llm_model or "llama3.1:8b",
     )
 
-def decide_and_run_patch(
-    template_path: str,
-    dictionary_path: str,
-    kb_path: str,
-    template_base_path: str,
-    matching_path: str,
-    validate_only: bool,
-    llm_model: str,
-):
+def decide_and_run_patch(template_base_path: str, matching_path: str, llm_model: str):
     while True:
         choice = input("1--> diz. 2--> kb. 3--> template. 4--> template_base. 5--> device_list. exit: ").strip().lower()
         if choice == "exit":
@@ -87,11 +65,14 @@ def decide_and_run_patch(
             print("scelta non valida")
             continue
 
+        validate_only = input("Validate only? (y/n): ").strip().lower() == "y"
+        input_file = input("Percorso file input: ").strip()
+
         choose = int(choice)
         if choose == 1:
             manual = input("Patch manuale o da run report? (m/r): ").strip().lower()
             cfg = dict(ARTIFACTS["dictionary"])
-            cfg["input_path"] = dictionary_path
+            cfg["input_path"] = input_file
 
             if manual == "m":
                 patch_path = input("Percorso patch manuale (json): ").strip()
@@ -99,14 +80,14 @@ def decide_and_run_patch(
             else:
                 run_report_input = input("Run report path: ").strip()
                 run_report_paths = [p.strip() for p in run_report_input.split(",") if p.strip()]
-                patch = build_dictionary_patch_from_run_report(run_report_paths, dictionary_path)
+                patch = build_dictionary_patch_from_run_report(run_report_paths, input_file)
                 out_path = "output_dir/dictionary_patch.json"
                 with open(out_path, "w", encoding="utf-8") as f:
                     json.dump(patch, f, ensure_ascii=False, indent=2)
                 cfg["patch_path"] = out_path
                 print("Patch dizionario salvata in:", out_path)
 
-                suggestions = build_dictionary_suggestions_from_run_report(run_report_paths, dictionary_path)
+                suggestions = build_dictionary_suggestions_from_run_report(run_report_paths, input_file)
                 out_path = "output_dir/dictionary_suggestions.json"
                 with open(out_path, "w", encoding="utf-8") as f:
                     json.dump(suggestions, f, indent=2, ensure_ascii=False)
@@ -116,7 +97,7 @@ def decide_and_run_patch(
 
         elif choose == 2:
             cfg = dict(ARTIFACTS["kb"])
-            cfg["input_path"] = kb_path
+            cfg["input_path"] = input_file
             manual = input("Usare patch manuali? (y/n): ").strip().lower() == "y"
             if manual:
                 manual_actions_path = input("Percorso patch manuali: ").strip()
@@ -125,7 +106,7 @@ def decide_and_run_patch(
 
         elif choose == 3:
             cfg = dict(ARTIFACTS["template"])
-            cfg["input_path"] = template_path
+            cfg["input_path"] = input_file
             cfg["matching_path"] = matching_path
             cfg["template_base_path"] = template_base_path
             cfg["llm_model"] = llm_model
@@ -137,11 +118,13 @@ def decide_and_run_patch(
 
         elif choose == 4:
             cfg = dict(ARTIFACTS["template_base"])
-            cfg["input_path"] = template_base_path
+            cfg["input_path"] = input_file
             manual = input("Usare patch manuali? (y/n): ").strip().lower() == "y"
-            if manual:
-                manual_actions_path = input("Percorso patch manuali: ").strip()
-                cfg["patch_path"] = manual_actions_path
+            if not manual:
+                print("Template base: serve patch manuale. Skip.")
+                continue  # oppure return
+            manual_actions_path = input("Percorso patch manuali: ").strip()
+            cfg["patch_path"] = manual_actions_path
             run_patch(cfg, "template_base", template_apply_patch, summarize_template_base_diff, validate_only)
 
         elif choose == 5:
@@ -157,7 +140,6 @@ def main() -> None:
     device_context_path = input("Device context path: ").strip()
     schema_tipo_path = input("Schema tipo path [schemas/schema_tipo_v0.1.json]: ").strip() or "schemas/schema_tipo_v0.1.json"
     output_dir = input("Output dir [output_dir]: ").strip() or "output_dir"
-    validate_only = input("Validate only? (y/n): ").strip().lower() == "y"
     llm_model = input("LLM model [llama3.1:8b]: ").strip() or "llama3.1:8b"
 
     run_pipeline(
@@ -168,7 +150,6 @@ def main() -> None:
         device_context_path=device_context_path,
         schema_tipo_path=schema_tipo_path,
         output_dir=output_dir,
-        validate_only=validate_only,
         llm_model=llm_model,
     )
 
