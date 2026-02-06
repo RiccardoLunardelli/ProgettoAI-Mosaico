@@ -435,23 +435,23 @@ Artefatto intermedio, non eseguibile, che contiene:
 
 ### Core Matching
 
-**`match_variable(...)`**  
+- **`match_variable(...)`**  
 Funzione centrale che esegue il matching di una singola variabile.
 
-**Ordine delle operazioni:**
+- **Ordine delle operazioni:**
 1. Override da KB mapping (match deterministico forte)
 2. Cache lookup
 3. Skip variabili disabilitate o invalide
 4. Matching deterministico su sinonimi
 5. Fallback fuzzy
 
-**Classificazione risultato:**
+- **Classificazione risultato:**
 - `matched`
 - `ambiguous`
 - `unmapped`
 - `skipped_`
 
-**Ogni risultato include:**
+- **Ogni risultato include:**
 - `technical_reason`
 - `confidence` (se applicabile)
 - `evidence`
