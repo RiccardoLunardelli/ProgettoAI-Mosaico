@@ -354,6 +354,15 @@ Directory `schemas/` contenente gli schemi JSON versionati
 ## Codice
 **File:** `schema_generate.py`
 
+
+
+### Template reale Patch 
+  - target `template`
+  - operazioni `set_fields`
+  - sezione e `source_key`
+  - campi da aggiornare
+
+
 ### Template Base
 Definisce:
 - categorie
@@ -361,6 +370,12 @@ Definisce:
 - label multilingua
 - descrizioni
 - semantic_category
+
+### Template Base Patch
+Definisce le operazioni consentite sul Template Base:
+  - `add_base_concept`
+  - `remove_base_concept`
+  - `update_base_metadata`  
 
 ### Dizionario
 Definisce:
@@ -371,6 +386,16 @@ Definisce:
 - abbreviations
 - patterns
 
+### Dizionario Patch
+Definisce le operazioni consentite sul dizionario:
+  - `add_concept`
+  - `add_synonym`
+  - `update_synonym`
+  - `add_abbreviation`
+  - `add_pattern`
+  - `update_category`
+  - `update_semantic_category`
+
 ### Knowledge Base
 Definisce:
 - scopes
@@ -379,11 +404,17 @@ Definisce:
 - audit
 - riferimenti a versioni di dizionario e template base
 
+### Knowledge Base Patch
+Definisce le operazioni consentite sulla Knowledge Base:
+  - `add_kb_rule`
+  - `update_kb_rule`
+
 ### Matching Report
 Definisce:
 - risultati per variabile
 - stato (`matched / ambiguous / unmapped / skipped`)
 - confidence
+- technical_reason
 - evidence
 - contesto LLM (se presente)
 - metriche aggregate
