@@ -177,6 +177,9 @@ Ogni concetto del Template Base include tipicamente:
 - `category`  
   Categoria di appartenenza
 
+- `semantic_category`  
+  Categoria semantica
+
 - `label`  
   Etichette leggibili (multilingua)
 
