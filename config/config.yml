@@ -3,7 +3,7 @@ paths:
   dictionary: "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionary_v0.1.json"
   kb: "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/kb_v0.1.json"
   template_base: "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/template_base_v0.1.json"
-  device_context: "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/262174_VIGODA_ALI/device_list_context_v0.1.json"
+  device_context: ""
   schema_tipo: "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/schemas/schema_tipo_v0.1.json"
   output_dir: "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir"
 llm:

@@ -1,0 +1,34 @@
+roles: 
+  centrale: ["CENTRALE"]
+  cella: ["CELLA", "ANTICELLA"]
+  vasca: ["VASCA"]
+  banco: ["BANCO", "RETROBANCO", "ISOLA", "VETRINA", "MURALE"]
+  sonda_umidita_temperatura: [" "]
+  rilevatore_co2: ["RILEVATORE GAS CO2"]
+
+
+type_fam:
+  TN: ["TN"]
+  BT: ["BT"]
+  TN/BT: ["TN/BT", "BT/TN"]
+
+enum_map:
+  centrale: { any: "4" }
+  cella: { TN: "0", BT: "1" }
+  banco: { TN: "2", BT: "3" }
+  vasca: { TN: "5", BT: "6" }
+  sonda_umidita_temperatura: { any: "7" }
+  rilevatore_co2: { any: "8" }
+  other: { any: "99" }
+
+enum: 
+  "0" : CELLA_TN
+  "1" : CELLA_BT
+  "2" : BANCO_TN
+  "3" : BANCO_BT
+  "4" : CENTRALE
+  "5" : VASCA_TN
+  "6" : VASCA_BT
+  "7" : SONDA UMIDITA E TEMPERATURA AMBIENTE
+  "8" : RILEVATORE CO2 GAS REFRIGERANTE
+  "99" : ALTRO

@@ -1,7 +1,7 @@
 {
   "matching_version": "v0.1",
   "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-  "generated_at": "2026-02-09T08:37:22.156233+00:00",
+  "generated_at": "2026-02-09T10:07:06.173700+01:00",
   "metrics": {
     "mapped_count": 32,
     "ambiguous_count": 83,
@@ -216,8 +216,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -344,8 +344,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -436,8 +436,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -528,8 +528,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -752,8 +752,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -970,8 +970,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -1032,8 +1032,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -1079,8 +1079,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -1126,8 +1126,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -1173,8 +1173,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -1220,8 +1220,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -1315,8 +1315,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -1519,8 +1519,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -1709,8 +1709,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -1943,8 +1943,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -2001,8 +2001,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -2093,8 +2093,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -2185,8 +2185,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -2456,8 +2456,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -2503,8 +2503,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -2550,8 +2550,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -2597,8 +2597,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -2756,8 +2756,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -2880,8 +2880,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -3100,8 +3100,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -3192,8 +3192,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -3303,8 +3303,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -3891,8 +3891,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -3983,8 +3983,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -4091,8 +4091,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -4183,8 +4183,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -4275,8 +4275,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -4322,8 +4322,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -4369,8 +4369,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -4477,8 +4477,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -4569,8 +4569,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -4677,8 +4677,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -4769,8 +4769,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -4908,8 +4908,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -5048,8 +5048,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -5190,8 +5190,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -5282,8 +5282,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -5329,8 +5329,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -5421,8 +5421,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -5513,8 +5513,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -5702,8 +5702,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -5749,8 +5749,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -5889,8 +5889,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -5981,8 +5981,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -6058,8 +6058,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -6150,8 +6150,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -6197,8 +6197,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -6244,8 +6244,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -6291,8 +6291,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -6383,8 +6383,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -6430,8 +6430,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -6477,8 +6477,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -6524,8 +6524,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -7224,8 +7224,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -7364,8 +7364,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -7536,8 +7536,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -8210,8 +8210,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -8302,8 +8302,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -8349,8 +8349,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -8857,8 +8857,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -8980,8 +8980,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -9072,8 +9072,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -9164,8 +9164,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -9256,8 +9256,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -9348,8 +9348,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -9440,8 +9440,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -9532,8 +9532,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -9611,8 +9611,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -9658,8 +9658,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -9705,8 +9705,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -9752,8 +9752,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -9799,8 +9799,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -9846,8 +9846,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -9970,8 +9970,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -10157,8 +10157,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -10249,8 +10249,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -10373,8 +10373,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {
@@ -10465,8 +10465,8 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": "TN",
-          "device_role": "basin",
+          "type_fam": null,
+          "device_role": null,
           "enum": null
         },
         "versions": {

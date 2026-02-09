@@ -4,59 +4,75 @@ import json
 from pathlib import Path 
 from .dictionary_tool import _next_versioned_path
 import re
+import yaml
 
-def derive_device_role(desc: str):
+RULES_PATH = "config/device_list_rules.yml"
+
+def load_rules(path: str) -> dict:
+    # apre file yml
+
+    with open(path, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+def _match_any(desc_upper: str, keywords: list[str]) -> bool:
+    # ritorna True se la keywords che gli viene passata è contenuta nella descrizione
+
+    return any(k in desc_upper for k in keywords or [])
+
+def derive_device_role(desc: str, rules: dict):
     # assegna ruolo device_role_generated
     
     if not desc:
         return None
     d = desc.upper()
 
-    if "CENTRALE" in d or "BOOSTER" in d:
-        return "central_unit"
-    if "CELLA" in d:
-        return "cold_room"
-    if "VASCA" in d:
-        return "basin"
-    if "ISOLA" in d:
-        return "island"
-    if "BANCO" in d or "RETROBANCO" in d:
-        return "counter"
-    if "MURALE" in d or "VETRINA" in d:
-        return "display_case"
-    return None
+    roles = rules.get("roles", {})
+    if _match_any(d, roles.get("centrale", [])):
+        return "centrale"
+    if _match_any(d, roles.get("cella", [])):
+        return "cella"
+    if _match_any(d, roles.get("vasca", [])):
+        return "vasca"
+    if _match_any(d, roles.get("banco", [])):
+        return "banco"
+    
+    tf = derive_type_fam(desc, rules)
+    if tf in {"TN", "BT"}:
+        return "banco"
 
-def derive_type_fam(desc: str):
+    return "other"
+
+def derive_type_fam(desc: str, rules: dict):
     # assegna famiglia TN / BT / null a type_fam_generated
 
     if not desc:
         return None
     d = desc.upper()
 
-    # TN/BT esplicito in qualunque ordine
-    if "TN/BT" in d or "BT/TN" in d:
+    tf = rules.get("type_fam", {})
+    if _match_any(d, tf.get("TN/BT", [])):
         return "TN/BT"
-
-    # cattura TN o BT ovunque, anche in 02TNS2 / 29BTM / BT43
-    has_tn = bool(re.search(r"TN", d))
-    has_bt = bool(re.search(r"BT", d))
-
-    if has_tn and has_bt:
+    if _match_any(d, tf.get("BT/TN", [])):
         return "TN/BT"
-    if has_tn:
+    if _match_any(d, tf.get("TN", [])):
         return "TN"
-    if has_bt:
+    if _match_any(d, tf.get("BT", [])):
         return "BT"
-
-    if any(k in d for k in ["MURALE","CELLA","ANTICELLA","BANCO","VASCA","RETROBANCO"]):
-        return "TN"
 
     return "other"
 
-def derive_enum(desc: str, type_fam: str):
+def derive_enum(role: str, type_fam: str, rules: dict):
     # manca da definire la regola enum
 
-    return None
+    enum_map = rules.get("enum_map", {})
+    if not role:
+        return 99
+
+    role_map = enum_map.get(role, {})
+    if "any" in role_map:
+        return role_map["any"]
+
+    return role_map.get(type_fam, 99)
 
 def device_list_enrich(ctx: MCPContext, path: str, dry_run: bool) -> Dict[str, Any]:
     # validazione path e arricchimento device list
@@ -65,12 +81,14 @@ def device_list_enrich(ctx: MCPContext, path: str, dry_run: bool) -> Dict[str, A
     device_list = ctx.read_json(p)
     ctx.schema_validate("device_list", device_list)
 
+    rules = load_rules(RULES_PATH)
+
     enriched = []
     for item in device_list:
         desc = item.get("Description") or ""
-        type_fam = derive_type_fam(desc)
-        device_role = derive_device_role(desc)
-        enum = derive_enum(desc, type_fam)
+        type_fam = derive_type_fam(desc, rules)
+        device_role = derive_device_role(desc, rules)
+        enum = derive_enum(device_role, type_fam, rules)
 
         out = dict(item)
         out["type_fam_generated"] = type_fam

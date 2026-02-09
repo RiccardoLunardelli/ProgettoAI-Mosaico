@@ -1,5 +1,5 @@
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from typing import Any, Dict, List, Optional
 import argparse
 from rapidfuzz import fuzz
@@ -678,7 +678,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
     report = {
         "matching_version": "v0.1",
         "template_guid": template_guid,
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "generated_at": datetime.now(timezone(timedelta(hours=1))).isoformat(),
         "metrics": metrics,
         "items": items
     }
