@@ -212,10 +212,6 @@ Il dizionario è il **cuore del matching deterministico**.
 ## Input
 - Template Base (Step 2)
 - Analisi dei template reali normalizzati (Step 1)
-- Output dei run precedenti:
-  - `unmapped_terms`
-  - `ambiguous_matches`
-- Conoscenza di dominio
 
 ---
 
