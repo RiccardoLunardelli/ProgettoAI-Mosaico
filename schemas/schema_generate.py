@@ -149,7 +149,7 @@ class TemplateBase(BaseModel):
     template_base_version: str
     categories: List[TemplateBaseCategory]
 
-#----------TEMPLATE PATCH--------------------
+#----------TEMPLATE BASE PATCH--------------------
 class TemplateBasePatchAddConcept(BaseModel):
     op: Literal["add_base_concept"]
     category_id: str 

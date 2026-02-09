@@ -52,7 +52,7 @@ class MCPContext:
         path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
     def hash_payload(self, payload: Any) -> str:
-        # hash per validazione
+        # SHA del payload per validazione
 
         raw = json.dumps(payload, sort_keys=True, ensure_ascii=False).encode("utf-8")
         return hashlib.sha256(raw).hexdigest()

@@ -28,7 +28,7 @@ def kb_upsert_mapping(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
     ctx.schema_validate("kb", kb)
     ctx.schema_validate("kb_patch", patch)
 
-    new_kb = copy.deepcopy(kb)
+    new_kb = copy.deepcopy(kb) # preview
     mappings = new_kb.setdefault("mappings", [])
 
     for op in patch.get("operations", []):

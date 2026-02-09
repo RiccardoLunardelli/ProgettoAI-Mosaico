@@ -51,7 +51,7 @@ def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
     ctx.schema_validate("dictionary", dictionary)
     ctx.schema_validate("dictionary_patch", patch)
 
-    new_dict = copy.deepcopy(dictionary)
+    new_dict = copy.deepcopy(dictionary) # preview
     entries = new_dict.setdefault("entries", [])
 
     for op in patch.get("operations", []):
@@ -190,6 +190,7 @@ def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
 
 def dictionary_bulk_suggest(ctx: MCPContext, terms: List[str], path: str | None = None, expected_category: str | None = None) -> Dict[str, Any]:
     # suggerimento
+    
     if not terms: 
         return {"suggestions": []}
     

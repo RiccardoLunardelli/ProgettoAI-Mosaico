@@ -33,7 +33,7 @@ def template_apply_patch(ctx: MCPContext, path: str, patch: Dict[str, Any], dry_
         ctx.schema_validate("template_base", template)
         ctx.schema_validate("template_base_patch", patch)
 
-        new_base = copy.deepcopy(template)
+        new_base = copy.deepcopy(template) # preview
         categories = new_base.setdefault("categories", [])
 
         def find_concept(concept_id: str):
@@ -125,7 +125,7 @@ def template_apply_patch(ctx: MCPContext, path: str, patch: Dict[str, Any], dry_
     if patch.get("target") == "template":
         ctx.schema_validate("template_patch", patch)
 
-        new_template = copy.deepcopy(template)
+        new_template = copy.deepcopy(template) # preview
 
         for op in patch.get("operations", []):
             section = op["section"]
