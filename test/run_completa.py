@@ -1,6 +1,7 @@
 import argparse
 import json
 from pathlib import Path
+import yaml
 
 from src.parser.normalizer import load_json, normalize_template, model_dump
 from src.matcher.matcher import run_matching
@@ -15,6 +16,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+def load_config(path: str) -> dict:
+    # apre file yml
+
+    with open(path, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
 
 def write_json(path: Path, payload: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -133,14 +139,20 @@ def decide_and_run_patch(template_base_path: str, matching_path: str, llm_model:
             run_device_list(cfg, validate_only)
 
 def main() -> None:
-    template_path = input("Template path: ").strip()
-    dictionary_path = input("Dictionary path: ").strip()
-    kb_path = input("KB path: ").strip()
-    template_base_path = input("Template base path: ").strip()
-    device_context_path = input("Device context path: ").strip()
-    schema_tipo_path = input("Schema tipo path [schemas/schema_tipo_v0.1.json]: ").strip() or "schemas/schema_tipo_v0.1.json"
-    output_dir = input("Output dir [output_dir]: ").strip() or "output_dir"
-    llm_model = input("LLM model [llama3.1:8b]: ").strip() or "llama3.1:8b"
+    cfg_path = input("Path file di configurazione[config.yml]: ").strip()
+    cfg = load_config(cfg_path)
+
+    paths = cfg.get("paths", {})
+    llm = cfg.get("llm", {})
+
+    template_path = input("Template path: ").strip() or paths.get("template")
+    dictionary_path = input("Dictionary path: ").strip() or paths.get("dictionary")
+    kb_path = input("KB path: ").strip() or paths.get("kb")
+    template_base_path = input("Template base path: ").strip() or paths.get("template_base")
+    device_context_path = input("Device context path: ").strip() or paths.get("device_context")
+    schema_tipo_path = input("Schema tipo path [schemas/schema_tipo_v0.1.json]: ").strip() or paths.get("schema_tipo") or "schemas/schema_tipo_v0.1.json"
+    output_dir = input("Output dir [output_dir]: ").strip() or paths.get("output_dir") or "output_dir"
+    llm_model = input("LLM model [llama3.1:8b]: ").strip() or llm.get("model") or "llama3.1:8b"
 
     run_pipeline(
         template_path=template_path,

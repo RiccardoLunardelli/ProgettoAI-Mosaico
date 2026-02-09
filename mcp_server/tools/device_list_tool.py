@@ -33,9 +33,6 @@ def derive_type_fam(desc: str):
         return None
     d = desc.upper()
 
-    if "INVERTER" in d:
-        return "other"
-
     # TN/BT esplicito in qualunque ordine
     if "TN/BT" in d or "BT/TN" in d:
         return "TN/BT"
@@ -54,7 +51,7 @@ def derive_type_fam(desc: str):
     if any(k in d for k in ["MURALE","CELLA","ANTICELLA","BANCO","VASCA","RETROBANCO"]):
         return "TN"
 
-    return None
+    return "other"
 
 def derive_enum(desc: str, type_fam: str):
     # manca da definire la regola enum
