@@ -96,17 +96,25 @@ def device_list_enrich(ctx: MCPContext, path: str, dry_run: bool) -> Dict[str, A
     ctx.schema_validate("device_list", device_list)
 
     rules = load_rules(RULES_PATH)
+    centrale = set()
+    template_guid = False
 
     enriched = []
     for item in device_list:
         desc = item.get("Description") or ""
         device_role = derive_device_role(desc, rules)
+        # controllo per dispositivo 'centrale'
+        if device_role == "centrale":
+            centrale.add(desc)
+        # controllo templateGuid
+        if not item.get("TemplateGUID"):
+            template_guid = True
+        # controllo per dispositivo 'other
         if device_role != "other":
             type_fam = derive_type_fam(desc, rules)
         else:
             type_fam = "other"
         enum = derive_enum(device_role, type_fam, rules, desc)
-        template_guid = True if item.get("TemplateGUID") else False
 
         out = dict(item)
         out["type_fam_generated"] = type_fam
@@ -123,10 +131,13 @@ def device_list_enrich(ctx: MCPContext, path: str, dry_run: bool) -> Dict[str, A
 
     if dry_run:
         ctx.mark_dry_run(enriched)
-        if template_guid is False:
+        if centrale:
+            for desc in centrale:
+                print(f"Richiesta revisione umana per dispositivo 'centrale': {desc}")
+
+        if template_guid:
             print("WARNING: TemplateGUID mancante!")
         return {"status": "dry_run_ok", "preview": enriched, "output_path": str(out_path)}
-
 
     ctx.require_dry_run(enriched)
     ctx.write_json(out_path, enriched)
