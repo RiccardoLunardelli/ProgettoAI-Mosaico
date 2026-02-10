@@ -27,6 +27,8 @@ def derive_device_role(desc: str, rules: dict):
     d = desc.upper()
 
     roles = rules.get("roles", {})
+    if _match_any(d, roles.get("no_matching_terms", [])):
+        return "other"
     if _match_any(d, roles.get("centrale", [])):
         return "centrale"
     if _match_any(d, roles.get("cella", [])):
@@ -35,6 +37,10 @@ def derive_device_role(desc: str, rules: dict):
         return "vasca"
     if _match_any(d, roles.get("banco", [])):
         return "banco"
+    if _match_any(d, roles.get("sonda_umidita_temperatura", [])):
+        return "sonda umidita e temperatura ambiente"
+    if _match_any(d, roles.get("rilevatore_co2", [])):
+        return "rilevatore co2 gas refrigerante"
     
     tf = derive_type_fam(desc, rules)
     if tf in {"TN", "BT"}:
@@ -61,18 +67,26 @@ def derive_type_fam(desc: str, rules: dict):
 
     return "other"
 
-def derive_enum(role: str, type_fam: str, rules: dict):
+def derive_enum(role: str, type_fam: str, rules: dict, desc: str = ""):
     # manca da definire la regola enum
+
+    d = (desc or "").upper()
+
+    roles = rules.get("roles", {})
+    if _match_any(d, roles.get("sonda_umidita_temperatura", [])):
+        return "7"
+    if _match_any(d, roles.get("rilevatore_co2", [])):
+        return "8"
 
     enum_map = rules.get("enum_map", {})
     if not role:
-        return 99
+        return "99"
 
     role_map = enum_map.get(role, {})
     if "any" in role_map:
         return role_map["any"]
 
-    return role_map.get(type_fam, 99)
+    return role_map.get(type_fam, "99")
 
 def device_list_enrich(ctx: MCPContext, path: str, dry_run: bool) -> Dict[str, Any]:
     # validazione path e arricchimento device list
@@ -86,9 +100,12 @@ def device_list_enrich(ctx: MCPContext, path: str, dry_run: bool) -> Dict[str, A
     enriched = []
     for item in device_list:
         desc = item.get("Description") or ""
-        type_fam = derive_type_fam(desc, rules)
         device_role = derive_device_role(desc, rules)
-        enum = derive_enum(device_role, type_fam, rules)
+        if device_role != "other":
+            type_fam = derive_type_fam(desc, rules)
+        else:
+            type_fam = "other"
+        enum = derive_enum(device_role, type_fam, rules, desc)
 
         out = dict(item)
         out["type_fam_generated"] = type_fam

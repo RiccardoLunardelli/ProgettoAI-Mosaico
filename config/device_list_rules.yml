@@ -2,13 +2,14 @@ roles:
   centrale: ["CENTRALE"]
   cella: ["CELLA", "ANTICELLA"]
   vasca: ["VASCA"]
-  banco: ["BANCO", "RETROBANCO", "ISOLA", "VETRINA", "MURALE"]
-  sonda_umidita_temperatura: [" "]
-  rilevatore_co2: ["RILEVATORE GAS CO2"]
+  banco: ["BANCO", "RETROBANCO", "ISOLA", "VETRINA", "MURALE", "MURALS"]
+  sonda_umidita_temperatura: ["UMIDITA' TEMPERATURA", "UMIDITA E TEMP", "TEMP./UR%", "TEMPERATURA UMIDITA"]
+  rilevatore_co2: ["RILEVATORE GAS CO2", "SENSORE FUGA CO2", "RILEVATORE GAS REFRIGERANTE"]
+  no_matching_terms: ["INVERTER", "ANALIZZATORE", "UTENZE", "SOTTORAFFREDDAMENTO LIQUIDA"]
 
 
 type_fam:
-  TN: ["TN"]
+  TN: ["TN", "SA/FO", "O/F", "SA/LA" , "CARNE", "CARNI", "POLLI", "MITILI"]
   BT: ["BT"]
   TN/BT: ["TN/BT", "BT/TN"]
 
