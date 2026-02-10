@@ -77,7 +77,7 @@ def resolve_path(data: Any, path: str) -> Any:
         cur = cur[part]
     return cur
 
-def cleanup_measurement(value: Optional[str]) -> Optional[str]:
+def cleanup_text(value: Optional[str]) -> Optional[str]:
     # Normalizzazione misure errate (es. "Â°C" -> "°C").
 
     if not isinstance(value, str):
@@ -86,6 +86,10 @@ def cleanup_measurement(value: Optional[str]) -> Optional[str]:
     value = value.replace("Â°F", "°F")
     value = value.replace("Â°", "°")
     value = value.replace("Â", "")
+    value = value.replace("Â°", "°")
+    value = value.replace("Ã ", "à")
+    value = value.replace("Ã¨", "è")
+    value = value.replace("Ã¹", "ù")
     return value
 
 def extract_device_id_from_name(name: Optional[str]) -> Optional[str]:
@@ -103,23 +107,12 @@ def empty_to_none(value: Optional[str]) -> Optional[str]:
         return None
     return value
 
-def cleanup_text_encoding(value: Optional[str]) -> Optional[str]:
-    # corregge encoding errati prima della normalizzazione
-
-    if not isinstance(value, str):
-        return value
-    value = value.replace("Â°", "°")
-    value = value.replace("Ã ", "à")
-    value = value.replace("Ã¨", "è")
-    value = value.replace("Ã¹", "ù")
-    return value
-
 def normalize_text(text: Optional[str]) -> Optional[str]:
     # Normalizzazione testo
 
     if text is None:
         return None
-    text = cleanup_text_encoding(text)
+    text = cleanup_text(text)
     txt = text.lower().strip()
     txt = re.sub(r"[^\w\s%=/]", " ", txt, flags=re.UNICODE)
     txt = txt.replace("_", " ")
@@ -145,7 +138,7 @@ def apply_normalizations(extracted: Dict[str, Any], normalizations: Dict[str, An
             extracted[field] = parse_json_field(extracted[field])
     if normalizations.get("measurement_cleanup"):
         if "Measurement" in extracted:
-            extracted["Measurement"] = cleanup_measurement(extracted["Measurement"])
+            extracted["Measurement"] = cleanup_text(extracted["Measurement"])
             extracted["Measurement"] = empty_to_none(extracted["Measurement"])
     return extracted
 

@@ -3,7 +3,7 @@
 ---
 
 ## 0. Visione Generale
-- `/doc/00_overview/README.md`
+- `/doc/00_overview/README.md` 
 - Sintesi del progetto: problema, soluzione e principi.
 
 ## 1. Normalizzazione
