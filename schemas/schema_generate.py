@@ -318,7 +318,6 @@ class KBPatch(BaseModel):
 
 #---------DEVICE LIST--------------------
 class DeviceListItem(BaseModel):
-    TemplateGUID: str 
     IDPTD: Optional[str] = None 
     type_fam: Optional[str] = None 
     enum: Optional[str] = None 
@@ -329,8 +328,7 @@ class DeviceListItem(BaseModel):
 class DeviceList(RootModel[List[DeviceListItem]]):
     pass
 
-class DeviceListContextItem(BaseModel):
-    TemplateGUID: str 
+class DeviceListContextItem(BaseModel): 
     IDPTD: Optional[str] = None 
     type_fam_generated: Optional[str] = None
     device_role_generated: Optional[str] = None

@@ -3,10 +3,6 @@
     "DeviceListContextItem": {
       "additionalProperties": true,
       "properties": {
-        "TemplateGUID": {
-          "title": "Templateguid",
-          "type": "string"
-        },
         "IDPTD": {
           "anyOf": [
             {
@@ -56,9 +52,6 @@
           "title": "Enum Generated"
         }
       },
-      "required": [
-        "TemplateGUID"
-      ],
       "title": "DeviceListContextItem",
       "type": "object"
     }

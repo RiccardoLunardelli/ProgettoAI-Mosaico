@@ -106,6 +106,7 @@ def device_list_enrich(ctx: MCPContext, path: str, dry_run: bool) -> Dict[str, A
         else:
             type_fam = "other"
         enum = derive_enum(device_role, type_fam, rules, desc)
+        template_guid = True if item.get("TemplateGUID") else False
 
         out = dict(item)
         out["type_fam_generated"] = type_fam
@@ -122,7 +123,10 @@ def device_list_enrich(ctx: MCPContext, path: str, dry_run: bool) -> Dict[str, A
 
     if dry_run:
         ctx.mark_dry_run(enriched)
+        if template_guid is False:
+            print("WARNING: TemplateGUID mancante!")
         return {"status": "dry_run_ok", "preview": enriched, "output_path": str(out_path)}
+
 
     ctx.require_dry_run(enriched)
     ctx.write_json(out_path, enriched)

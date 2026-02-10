@@ -3,10 +3,6 @@
     "DeviceListItem": {
       "additionalProperties": true,
       "properties": {
-        "TemplateGUID": {
-          "title": "Templateguid",
-          "type": "string"
-        },
         "IDPTD": {
           "anyOf": [
             {
@@ -56,9 +52,6 @@
           "title": "Device Role"
         }
       },
-      "required": [
-        "TemplateGUID"
-      ],
       "title": "DeviceListItem",
       "type": "object"
     }
