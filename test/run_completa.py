@@ -135,7 +135,7 @@ def decide_and_run_patch(template_base_path: str, matching_path: str, llm_model:
 
         elif choose == 5:
             cfg = dict(ARTIFACTS["device_list"])
-            cfg["input_path"] = input("Percorso device_list: ").strip()
+            cfg["input_path"] = input_file
             run_device_list(cfg, validate_only)
 
 def main() -> None:
