@@ -62,10 +62,6 @@
 - `/doc/14_governance/README.md`
 - Regole di aggiornamento per dizionario/KB/template base.
 
-## 15. Test & Quality
-- `/doc/15_test_quality/README.md`
-- Strategia test, regressioni, KPI.
-
-## 16. Architettura
+## 15. Architettura
 - `/doc/16_architettura/README.md`
 - Architettura completa del progetto.
