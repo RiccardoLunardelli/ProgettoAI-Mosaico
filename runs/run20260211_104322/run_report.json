@@ -1,0 +1,32 @@
+{
+  "schema_versions": {
+    "device_list": "v0.1",
+    "device_list_context": "v0.1"
+  },
+  "run_id": "run20260211_104322",
+  "timestamp": "2026-02-11T10:43:22.852702+01:00",
+  "template_guid": null,
+  "source_files": {
+    "device_list_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/263823_CORDEN/device_list.json"
+  },
+  "target": {
+    "artifact_type": "device_list",
+    "input_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/263823_CORDEN/device_list.json",
+    "output_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/263823_CORDEN/device_list_context_v0.1.json"
+  },
+  "execution": {
+    "dry_run_performed": true,
+    "committed": true,
+    "status": "success"
+  },
+  "validation": {
+    "status": "ok",
+    "errors": [],
+    "warnings": []
+  },
+  "diff_summary": {
+    "changed_paths": [
+      "add_fields_all: device_role_generated, enum_generated, type_fam_generated"
+    ]
+  }
+}

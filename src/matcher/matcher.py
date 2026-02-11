@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Optional
 import argparse
 from rapidfuzz import fuzz
 from pathlib import Path
+from ..parser.normalizer import load_json
 
 FUZZY_T_HIGH = 0.90
 FUZZY_T_LOW = 0.80
@@ -26,12 +27,6 @@ def write_report(output_path: str, report: dict, cache_path: str, cache: dict) -
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
     save_cache(cache_path, cache)
-
-def load_json(path: str) -> Any:
-    # carica il file json
-
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
 
 def load_inputs(normalized_path: str, template_base_path: str, dictionary_path: str, kb_path: str) -> dict: 
     # carica tutti gli input
