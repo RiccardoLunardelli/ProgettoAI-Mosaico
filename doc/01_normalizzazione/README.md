@@ -12,7 +12,7 @@ Questa fase:
 ---
 
 ## Flusso
-1. Lettura template e schema  
+1. Lettura template reale e schema  
 2. Estrazione guidata dai path JSON  
 3. Normalizzazione dei campi testuali  
 4. Produzione di un output strutturato e versionato  
@@ -21,7 +21,7 @@ Questa fase:
 
 ## Input
 - **Template reale del supervisore**  
-  Sezioni tipiche: `Read / Parameters / Alarms / Warnings / Commands / VirtualVariables / DataLoggerPen`
+  Sezioni tipiche: `ContinuousReads / Parameters / Alarms / Warnings / Commands / VirtualVariables / DataLoggerPen`
 - **Schema di normalizzazione (schema-driven)**  
   Definisce sezioni e campi da estrarre
 
@@ -45,7 +45,7 @@ Questa fase:
   Risolve path JSON (es. `$.ContinuosRead.Values`).
 
 - **`cleanup_text(value)`**  
-  Normalizza unità di misura (es. `"Â°C"` → `"°C"`).
+  Normalizza unità di misura e testo (es. `"Â°C"` → `"°C"`).
 
 - **`extract_device_id_from_name(name)`**  
   Estrae ID logico dal nome (es. `Read0_P02T04D01` → `P02T04D01`).
@@ -92,5 +92,3 @@ Questa fase:
 - Normalizzazione idempotente  
 - Stesso input → stesso output  
 - Ogni trasformazione è spiegabile  
-
----
