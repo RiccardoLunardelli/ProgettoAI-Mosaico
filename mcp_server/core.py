@@ -19,18 +19,18 @@ class MCPContext:
         self._dry_run_hashes: Dict[str, bool] = {}
 
         self.schema_map = {
-            "template_patch": "template/template_patch_v0.1.schema.json",
-            "patch_actions": "patch_actions/patch_actions_v0.1.schema.json",
-            "matching_report": "matching/matching_report_v0.1.schema.json",
-            "template_base": "template_base/template_base_v0.1.schema.json",
-            "template_base_patch": "template_base/template_base_patch_v0.1.schema.json",
-            "dictionary": "dictionary/dictionary_v0.1.schema.json",
-            "dictionary_patch": "dictionary/dictionary_patch_v0.1.schema.json",
-            "kb": "kb/kb_v0.1.schema.json",
-            "kb_patch": "kb/kb_patch_v0.1.schema.json",
-            "patch_actions_template": "patch_actions/patch_actions_template_v0.1.schema.json",
-            "device_list": "device_list/device_list_v0.1.schema.json",
-            "device_list_context": "device_list/device_list_context_v0.1.schema.json",
+            "template_patch": "template/template_patch_v0.1.schema.json", # schema target, op per template reale
+            "patch_actions": "patch_actions/patch_actions_v0.1.schema.json", # schema per patch actions nel report
+            "matching_report": "matching/matching_report_v0.1.schema.json", # schema per matching report
+            "template_base": "template_base/template_base_v0.1.schema.json", # schema template base
+            "template_base_patch": "template_base/template_base_patch_v0.1.schema.json", # schema patch per template base
+            "dictionary": "dictionary/dictionary_v0.1.schema.json", # schema dict
+            "dictionary_patch": "dictionary/dictionary_patch_v0.1.schema.json", # schema patch per dict
+            "kb": "kb/kb_v0.1.schema.json", # schema kb
+            "kb_patch": "kb/kb_patch_v0.1.schema.json", # schema patch per kb
+            "patch_actions_template": "patch_actions/patch_actions_template_v0.1.schema.json", # schema patch per template reale
+            "device_list": "device_list/device_list_v0.1.schema.json",# schema di device list
+            "device_list_context": "device_list/device_list_context_v0.1.schema.json", # schema device list enriched
         }
     
     def ensure_within_root(self, path: str) -> Path:
