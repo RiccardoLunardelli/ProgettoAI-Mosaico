@@ -1,13 +1,8 @@
 import json 
 from typing import Any, Dict 
+from ..parser.normalizer import load_json
 
 from mcp_server.core import MCPContext
-
-def load_json(path: str) -> dict:
-    # carica json 
-
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
 
 # -----VALIDATOR PER KB | TAMPLATE BASE | DICTIONARY---------------
 def validate_before_commit_generic(ctx: MCPContext, schema_id: str, patch_payload: dict, input_path: str, upsert_fn, diff_fn, artifact_type: str, template_base_path: str | None) -> dict:
