@@ -296,7 +296,7 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
     expected_category = SECTION_TO_CATEGORY.get(section)
 
     cache_key = build_cache_key(text, expected_category, template_guid, device_ctx, versions)
-    cached = cache.get("matching_cache", {}).get(cache_key)
+    cached = cache.get("matching_cache", {}).get(cache_key) # lookup nella cache 
     if cached:
         return cached
 
@@ -628,19 +628,19 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
     kb = inputs["kb"]
 
     cache_path = "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/cache/matching_cache_v0.1.json"
-    cache = load_cache(cache_path)
+    cache = load_cache(cache_path) # carica la cache
 
-    versions = build_versions(dictionary, kb, template_base)
-    concept_category = build_concept_index(template_base)
+    versions = build_versions(dictionary, kb, template_base) # ritorna le versioni 
+    concept_category = build_concept_index(template_base) # costruisce indice: concept_id = cateogyr, sem_cat,...
 
     template_guid = normalized.get("template_guid")
     device_id = None
-    for v in normalized.get("variables", []):
+    for v in normalized.get("variables", []): # cicla nelle variabili del template normalizzato
         if v.get("device_id"):
             device_id = v.get("device_id")
             break
-    device_ctx = extract_device_context(device_context_path, template_guid, device_id)
-    scope_ids = resolve_scope_ids(kb, template_guid, device_ctx)
+    device_ctx = extract_device_context(device_context_path, template_guid, device_id) # ritorna contesto del dispositivo
+    scope_ids = resolve_scope_ids(kb, template_guid, device_ctx) # trova scope nella kb del dispositivo
 
 
     kb_mapping = kb.get("mappings", [])
@@ -648,7 +648,7 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
 
     items = []
     for var in normalized.get("variables", []):
-        result = match_variable(
+        result = match_variable( # match di ogni variabile del template normalizzato
             var=var,
             template_guid=template_guid,
             device_ctx=device_ctx,
@@ -660,14 +660,14 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
             cache=cache,
             kb_mapping = kb_mapping
         )
-        cache_key = build_cache_key(
+        cache_key = build_cache_key( # costruisce la chiave della cache
             normalize_str(var.get("normalized_text")),
             SECTION_TO_CATEGORY.get(var.get("section")),
             template_guid,
             device_ctx,
             versions
         )
-        emit_result(items, cache, cache_key, result)
+        emit_result(items, cache, cache_key, result) # salva risultato del matching 
 
     metrics = build_metrics(items)
     report = {
