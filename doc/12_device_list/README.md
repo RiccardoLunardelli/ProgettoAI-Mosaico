@@ -30,6 +30,20 @@ Contiene:
 
 ---
 
+# Enum
+0 : CELLA_TN
+1 : CELLA_BT
+2 : BANCO_TN
+3 : BANCO_BT	
+4 : CENTRALE
+5 : VASCA_TN
+6 : VASCA_BT
+7 : SONDA UMIDITA E TEMPERATURA AMBIENTE
+8 : RILEVATORE CO2 GAS REFRIGERANTE
+99 : ALTRO
+
+---
+
 ## Logica di derivazione
 1. **Ruolo**
    - `cella/vasca` solo se esplicite in descrizione
