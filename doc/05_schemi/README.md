@@ -35,18 +35,18 @@ Directory `schemas/` contenente gli schemi versionati.
 ---
 
 ## Schemi principali
-- Template Reale Patch: schema che definisce target e operazioni che verranno fatte al template reale.
-- Template Base: schema che definisce la struttura del template base.
-- Template Base Patch: schema che definisce struttura delle Patch applicate a Template base.
-- Dizionario: schema che definisce la struttura del dizionario.  
-- Dizionario Patch: schema che definisce struttura delle Patch applicate al Dizionario.
-- Knowledge Base: schema che definisce la struttura della Knowledge Base.   
-- Knowledge Base Patch: schema che definisce struttura delle Patch applicate a Knwoledge Base.  
-- Matching Report: schema che definisce la struttura del matching report.  
-- PatchActionsTemplate: schema che definisce la struttura delle Patch da applicare al template reale.
-- Patch Actions: schema che definisce la struttura delle Patch nel report.
-- Device List: schema che definisce struttura e campi principali che deve contenere Device List.
-- Device List Context: schema che definisce la struttura del Device List arricchito.  
+- **Template Reale Patch:** schema che definisce target e operazioni che verranno fatte al template reale.
+- **Template Base:** schema che definisce la struttura del template base.
+- **Template Base Patch:** schema che definisce struttura delle Patch applicate a Template base.
+- **Dizionario:** schema che definisce la struttura del dizionario.  
+- **Dizionario Patch:** schema che definisce struttura delle Patch applicate al Dizionario.
+- **Knowledge Base:** schema che definisce la struttura della Knowledge Base.   
+- **Knowledge Base Patch:** schema che definisce struttura delle Patch applicate a Knwoledge Base.  
+- **Matching Report:** schema che definisce la struttura del matching report.  
+- **PatchActionsTemplate:** schema che definisce la struttura delle Patch da applicare al template reale.
+- **Patch Actions:** schema che definisce la struttura delle Patch nel report.
+- **Device List:** schema che definisce struttura e campi principali che deve contenere Device List.
+- **Device List Context:** schema che definisce la struttura del Device List arricchito.  
 
 ---
 
