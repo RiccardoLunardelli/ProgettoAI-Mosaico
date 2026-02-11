@@ -32,18 +32,18 @@ Classe centrale che implementa:
 ---
 
 ## Tool esposti
-- `template_load`
-- `template_save`
-- `template_apply_patch`
-- `schema_get`
-- `schema_validate`
-- `dictionary_search`
-- `dictionary_upsert`
-- `dictionary_bulk_suggest`
-- `kb_load`
-- `kb_save`
-- `kb_upsert_mapping`
-- `device_list_enrich`
+- `template_load`: Legge Template da disco.
+- `template_save`: Salva Template nel disco
+- `template_apply_patch`: Applica patch a Template / Template Base.
+- `schema_get`: Restituisce lo schema JSON associato.
+- `schema_validate`: Valida payload contro lo schema JSON.
+- `dictionary_search`: Cerca nel dizionario per id concetto e testo nei sinonimi.
+- `dictionary_upsert`: Inserisce/aggiorna i concetti del dizionario.
+- `dictionary_bulk_suggest`: Genera suggerimenti di nuovi concetti.
+- `kb_load`: Legge Knowledge Base da disco.
+- `kb_save`: Salva Knowledge Base nel disco.
+- `kb_upsert_mapping`: Aggiunge/Aggiorna una regola alla Knowledge Base.
+- `device_list_enrich`: Arricchisce la device list con campi derivati.
 
 ---
 
