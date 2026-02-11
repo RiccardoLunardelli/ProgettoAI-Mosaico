@@ -2,6 +2,8 @@
 
 ---
 
+### Funzioni
+
 - **`schema_get(ctx, schema_id)`**  
   Ritorna lo schema JSON associato.
 
