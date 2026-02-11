@@ -40,8 +40,6 @@ spiega cosa è stato deciso, cosa è stato applicato e con quali evidenze.
 ### Diff summary
 - `diff_summary.changed_paths`
 
----
-
 ## Sezioni analitiche (template)
 - `analysis`  
   - `ambiguous_matches`
