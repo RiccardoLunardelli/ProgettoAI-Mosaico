@@ -1,8 +1,11 @@
 # Validator
 
+**File:** `src/validator/validator.py`
 Scopo: validare schema e coerenza canonica, creare patch eseguibili e preview.
 
-### Funzioni principali (validator.py)
+---
+
+### Funzioni 
 
 - **`validate_before_commit_generic(...)`**  
   Valida patch generiche (dizionario/KB/template_base):

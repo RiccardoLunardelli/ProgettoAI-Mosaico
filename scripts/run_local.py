@@ -110,7 +110,7 @@ def extract_present_concepts(mr: dict | None, actions_payload: dict | None) -> s
     return present
 
 def build_absent_concepts(template_base_path: str, mr: dict | None, actions_payload: dict | None) -> list[dict]:
-    # ritorna tutti i concetti che sono nel template base ma che non ci sono nel template di riferimento
+    # ritorna tutti i concetti che sono nel template base ma che non ci sono nelle patch e/o nel matching
 
     canon = canonical_map(template_base_path)
     present = extract_present_concepts(mr, actions_payload)
@@ -406,25 +406,6 @@ def ensure_labels(actions_payload: dict) -> dict:
             tgt["labels"] = {"it": text, "en": text}
             a["target"] = tgt
     return actions_payload
-
-#-----DICTIONARY-----
-def build_llm_dictionary_prompt(analysis: dict) -> str:
-    # -- da usare nel caso proposer anche poer dictionary --
-    return (
-        "SYSTEM: You are a strict JSON generator.\n"
-        "You propose ONLY dictionary patch operations.\n"
-        "Use ONLY ambiguous_matches and unmapped_terms.\n"
-        "No guesses. If unsure, operations: [].\n\n"
-        "OUTPUT FORMAT (strict):\n"
-        "{\n"
-        "  \"target\": \"dictionary\",\n"
-        "  \"operations\": [\n"
-        "    {\"op\": \"add_synonym\", \"concept_id\": \"...\", \"lang\": \"it\", \"value\": \"...\"}\n"
-        "  ]\n"
-        "}\n\n"
-        "INPUT:\n"
-        f"{json.dumps(analysis, ensure_ascii=False)}\n"
-    )
 
 #---------DIFF-----------------
 def summarize_device_list_diff(before:dict, after: dict) -> list[str]:
