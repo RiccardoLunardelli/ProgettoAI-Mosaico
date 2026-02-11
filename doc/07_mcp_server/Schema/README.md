@@ -1,5 +1,9 @@
 # Schema Tool
 
+## Scopo 
+
+Validare lo schema corretto contro il payload in azione, così da garatnire il principio di schema-first.
+
 ---
 
 ### Funzioni

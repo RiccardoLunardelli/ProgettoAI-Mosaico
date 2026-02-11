@@ -1,5 +1,9 @@
 # Template Tool
 
+## Scopo
+
+Arricchire/aggiornare concetti nel caso del dizionario base. Arricchire invece nel caso del Template reale con concetto, cateogira e cateogira semantica per ogni variabile 'matchata'.
+
 ---
 
 ### Funzioni

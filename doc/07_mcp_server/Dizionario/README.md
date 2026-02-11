@@ -1,5 +1,9 @@
 # Dizionario Tool
 
+## Scopo
+
+Inserire/aggiornare concetti nel dizionario e generare suggerimenti di nuovi concetti per aggiornare il dizionario.
+
 ---
 ### Funzioni
 

@@ -1,5 +1,8 @@
 # Knowledge Base Tool
 
+## Scopo
+
+Aggiungere/Aggiornare una o più regole della knowledge base.
 ---
 
 ### Funzioni
