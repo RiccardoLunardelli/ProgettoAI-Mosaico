@@ -6,46 +6,28 @@ Rappresentazione del flusso completo del sistema ad alto livello attraverso uno 
 
 ## Schema ad alto livello
 ```mermaid
-flowchart LR
-  classDef core fill:#f6f8fa,stroke:#333,stroke-width:1px;
-  classDef flow fill:#e8f1ff,stroke:#1f4e79,stroke-width:1px;
-  classDef gate fill:#fff4e6,stroke:#a35a00,stroke-width:1px;
-  classDef llm fill:#f0fff4,stroke:#2f855a,stroke-width:1px;
-  classDef out fill:#fefcbf,stroke:#975a16,stroke-width:1px;
+flowchart TD
+  classDef plain fill:#ffffff,stroke:#000000,color:#000000,stroke-width:1px;
 
-  subgraph INPUTS
-    A["Template Reale (PLC JSON)<br/>Device List<br/>Template Base (canonico)<br/>Dizionario (versionato)<br/>Knowledge Base (versionata)<br/>config.yml + device_list_rules.yml"]
-  end
-
-  subgraph PIPELINE
-    B["NORMALIZATION LAYER<br/>parser/normalizer.py -> NormalizedTemplate"]
-    C["MATCHING ENGINE<br/>matcher.py<br/>KB override • Cache • Deterministic • Fuzzy • Ambiguous→llm_context<br/>OUTPUT: matching_report_v0.1.json"]
-    E["ORCHESTRATOR<br/>run_local.py<br/>load+validate MR • build PatchActions • filter confidence/gap • commit decision"]
-  end
-
-  subgraph SERVICES
-    D["MCP SERVER<br/>schema • patch • guardrail"]
-    G["VALIDATOR<br/>schema-first • canonical validation • dry-run + diff"]
-    F["LLM PROPOSER<br/>llama3.1:8b"]
-  end
-
-  subgraph OUTPUTS
-    H["Versioned Outputs<br/>template/dict/kb/etc."]
-    I["run_report.json<br/>schema_versions • metrics • diff_summary • policy_outcome"]
-  end
+  A["**INPUTS**<br/>Template Reale (PLC JSON)<br/>Device List<br/>Template Base (canonico)<br/>Dizionario (versionato)<br/>Knowledge Base (versionata)<br/>config.yml + device_list_rules.yml"]
+  B["**NORMALIZATION LAYER**<br/>parser/normalizer.py -> NormalizedTemplate<br/>(schema-driven extraction + cleanup testo/misure)"]
+  C["**MATCHING ENGINE (matcher.py)**<br/>1) KB override (scope-aware)<br/>2) Cache<br/>3) Deterministic dictionary match<br/>4) Fuzzy fallback (threshold + gap)<br/>5) Ambiguous -> llm_context<br/>OUTPUT: matching_report_v0.1.json"]
+  D["**MCP SERVER**<br/>(server_mcp.py)"]
+  E["**ORCHESTRATOR**<br/>(run_local.py)<br/>load + validate MR<br/>build deterministic PatchActions<br/>optional LLM propose<br/>filter confidence/gap<br/>commit decision"]
+  F["**LLM PROPOSER**<br/>(llama3.1:8b)"]
+  G["**VALIDATOR**<br/>(validator.py)<br/>schema-first<br/>canonical validation<br/>dry-run + diff<br/>enforce governance"]
+  H["**RUN REPORT**<br/>(run_report.json)<br/>schema_versions<br/>metrics<br/>diff_summary<br/>policy_outcome<br/>matched_variables, actions, absent_concepts"]
+  I["**VERSIONED OUTPUTS**<br/>(template/dict/kb/etc.)<br/>_v0.1 → _v0.2"]
 
   A --> B --> C --> E
+  C -->|matching_report_v0.1.json| E
   E <--> D
   E <--> F
   E --> G
-  G --> H
-  G --> I
+  E --> H
+  E --> I
 
-  class A core
-  class B,C,E flow
-  class D,G gate
-  class F llm
-  class H,I out
+  class A,B,C,D,E,F,G,H,I plain
  ```
 
 ## Note
