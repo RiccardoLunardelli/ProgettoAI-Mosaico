@@ -33,6 +33,12 @@ Questa fase:
 
 ---
 
+## Esempio normalizzazione
+
+Per vedere un esempio di una normalizzazione: `test/README.md`
+
+---
+
 ## Codice
 **File:** `normalizer.py`
 
