@@ -925,10 +925,6 @@ def build_dictionary_suggestions_from_run_report(run_report_paths: list[str], di
 
     return suggestions
 
-#----TEMPLATE BASE------
-def build_template_base_patch_from_suggestion(suggestions_path: str, output_path: str) -> dict:
-    pass
-
 #-------MATCHING REPORT + ANALYSIS-----------------
 def load_matching(matching_path: str | None) -> tuple[dict | None, dict]:
     # carica e valida matching report + genera analysis
@@ -942,6 +938,7 @@ def load_matching(matching_path: str | None) -> tuple[dict | None, dict]:
         analysis = extract_analysis_from_matching_report(mr)
     return mr, analysis
 
+#---------VALIDAZIONE E PATCH BUILD----------------
 def build_patch_and_validation(cfg: dict, artifact_type: str, upsert_fn, diff_fn, actions_payload_override: dict | None = None):
     # costruisce la patch. Decide se template_validation o generic_validation. Produce --> patch, preview, diff, validation_block
 
@@ -1080,6 +1077,7 @@ def build_report_context(artifact_type, matching_path, template_base_path):
 
     return schema_versions, dict_payload, kb_payload, tb_version
 
+#--------------RUN-----------------------
 def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> None:
     run_id = generate_run_id()
     run_dir = RUNS_ROOT / run_id
@@ -1345,7 +1343,7 @@ if __name__ == "__main__":
         validate_only = True
     else:
         validate_only = False
-    # dizionario
+    # dizionario  
     if choose == 1: 
         ARTIFACTS["dictionary"]["input_path"] = input_file
         # run report lettura
