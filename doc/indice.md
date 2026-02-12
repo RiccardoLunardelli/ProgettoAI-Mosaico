@@ -63,5 +63,9 @@
 - Regole di aggiornamento per dizionario/KB/template base.
 
 ## 15. Architettura
-- `/doc/16_architettura/README.md`
+- `/doc/15_architettura/README.md`
 - Architettura completa del progetto.
+
+## 16. Framework 
+- `/doc/16_framework/README.md`
+- Librerie utilizzate con relative versioni
