@@ -69,3 +69,7 @@ Documentazione in `orchestratore/README.md`
 Scopo: validare PatchActions e patch generiche contro schema e Template Base, costruire
 patch eseguibili e preview per dry‑run.
 Documentazione in `validator/README.md` 
+
+## Esempio
+
+Esempio applicazione patch: `test/README.md`
