@@ -6,8 +6,6 @@ Elenco delle librerie utilizzate nel progetto (con versione).
 
 ## Core
 
-![Python](https://img.shields.io/badge/python-3.12+-blue?logo=python)
-
 - **Python** `>= 3.12`
 
 Il progetto è sviluppato e testato su Python 3.12.s
