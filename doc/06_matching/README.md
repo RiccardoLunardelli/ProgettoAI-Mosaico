@@ -37,6 +37,10 @@ Contiene:
 - **ambiguous:** variabili che non sono state matchate ma che hanno un candidato con confidence minore di 0.9 oppure piu candidati ma la differenza di confidence tra i due è minore di 0.15.
 - **unmapped:** variabili che non sono state matchate per assenza di candidati trovati nel dizionario.
 
+## Esempio
+
+Esempio di un matching report: `test/README.md`
+
 ---
 
 ## Codice
