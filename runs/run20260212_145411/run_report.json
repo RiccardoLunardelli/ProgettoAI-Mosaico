@@ -1,0 +1,30 @@
+{
+  "schema_versions": {
+    "device_list": "v0.1",
+    "device_list_context": "v0.1"
+  },
+  "run_id": "run20260212_145411",
+  "timestamp": "2026-02-12T14:54:11.524336+01:00",
+  "template_guid": null,
+  "source_files": {
+    "device_list_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/101096_FABRIC/device_list_context_v0.1.json"
+  },
+  "target": {
+    "artifact_type": "device_list",
+    "input_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/101096_FABRIC/device_list_context_v0.1.json",
+    "output_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/101096_FABRIC/device_list_context_v0.1.json"
+  },
+  "execution": {
+    "dry_run_performed": true,
+    "committed": false,
+    "status": "no_change"
+  },
+  "validation": {
+    "status": "ok",
+    "errors": [],
+    "warnings": []
+  },
+  "diff_summary": {
+    "changed_paths": []
+  }
+}

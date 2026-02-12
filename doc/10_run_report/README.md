@@ -41,12 +41,12 @@ spiega cosa è stato deciso, cosa è stato applicato e con quali evidenze.
 - `diff_summary.changed_paths`
 
 ## Sezioni analitiche (template)
+- `llm_patch_actions` (solo proposta)
 - `analysis`  
   - `ambiguous_matches`
   - `unmapped_terms`
 - `matched_variables`
 - `actions` (deterministiche)
-- `llm_patch_actions` (solo proposta)
 - `absent_concepts`
 
 ---
