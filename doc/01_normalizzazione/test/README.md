@@ -32,7 +32,6 @@ Esempio per una variabile:
 ## Esempio Template normalizzato
 
 Esempio per una variabile:
--
 ```json
 {
       "section": "ContinuosReads",
