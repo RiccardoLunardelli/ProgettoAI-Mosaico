@@ -21,11 +21,7 @@ flowchart TD
   E <--> D
   E <--> F
   E --> G --> H
-
-
-
-
-
+ ```
 
 ## Note
 - L’LLM non applica patch: è solo proposer.
