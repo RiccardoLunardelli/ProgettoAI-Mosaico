@@ -7,20 +7,21 @@ Rappresentazione del flusso completo del sistema ad alto livello attraverso uno 
 ## Schema ad alto livello
 ```mermaid
 flowchart TD
-  A["INPUTS\nTemplate Reale (PLC JSON)\nDevice List\nTemplate Base (canonico)\nDizionario (versionato)\nKnowledge Base (versionata)\nconfig.yml + device_list_rules.yml"]
-  B["NORMALIZATION LAYER\nparser/normalizer.py -> NormalizedTemplate\n(schema-driven extraction + cleanup testo/misure)"]
-  C["MATCHING ENGINE (matcher.py)\n1) KB override (scope-aware)\n2) Cache\n3) Deterministic dictionary match\n4) Fuzzy fallback (threshold + gap)\n5) Ambiguous -> llm_context\nOUTPUT: matching_report_v0.1.json"]
-  D["MCP SERVER\n(server_mcp.py)"]
-  E["ORCHESTRATOR\n(run_local.py)\nload + validate MR\nbuild deterministic PatchActions\noptional LLM propose\nfilter confidence/gap\ncommit decision"]
+  A["INPUTS<br/>Template Reale (PLC JSON)<br/>Device List<br/>Template Base (canonico)<br/>Dizionario (versionato)<br/>Knowledge Base (versionata)<br/>config.yml + device_list_rules.yml"]
+  B["NORMALIZATION LAYER<br/>parser/normalizer.py -> NormalizedTemplate<br/>(schema-driven extraction + cleanup testo/misure)"]
+  C["MATCHING ENGINE (matcher.py)<br/>1) KB override (scope-aware)<br/>2) Cache<br/>3) Deterministic dictionary match<br/>4) Fuzzy fallback (threshold + gap)<br/>5) Ambiguous -> llm_context<br/>OUTPUT: matching_report_v0.1.json"]
+  D["MCP SERVER<br/>(server_mcp.py)"]
+  E["ORCHESTRATOR<br/>(run_local.py)<br/>load + validate MR<br/>build deterministic PatchActions<br/>optional LLM propose<br/>filter confidence/gap<br/>commit decision"]
   F["LLM Proposer"]
-  G["VALIDATOR\n(validator.py)\nschema-first\ncanonical validation\ndry-run + diff\nenforce governance"]
-  H["OUTPUTS\nArtefatto versionato (_v0.1 -> _v0.2)\nrun_report.json includes:\nschema_versions\nmetrics (matched/ambiguous/unmapped, llm_calls, warnings)\ndiff_summary\npolicy_outcome (approved / needs_review / no_change / rejected)\nmatched_variables, actions, absent_concepts"]
+  G["VALIDATOR<br/>(validator.py)<br/>schema-first<br/>canonical validation<br/>dry-run + diff<br/>enforce governance"]
+  H["OUTPUTS<br/>Artefatto versionato (_v0.1 -> _v0.2)<br/>run_report.json includes:<br/>schema_versions<br/>metrics (matched/ambiguous/unmapped, llm_calls, warnings)<br/>diff_summary<br/>policy_outcome (approved / needs_review / no_change / rejected)<br/>matched_variables, actions, absent_concepts"]
 
   A --> B --> C --> E
   C -->|matching_report_v0.1.json| E
   E <--> D
   E <--> F
   E --> G --> H
+
  ```
 
 ## Note
