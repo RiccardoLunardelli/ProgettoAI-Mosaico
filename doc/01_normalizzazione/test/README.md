@@ -11,27 +11,30 @@
 ## Esempio Template reale input
 
 Esempio per una variabile:
-- "Read302": {
-                "Enable": true,
-                "MultiLanguageDescription": "{\"it\":\"Stato compressore parallelo\"}",
-                "TroubleSettings": "[]",
-                "Name": "Read302_P02T01D01",
-                "Alias": "Read302",
-                "Description": "Stato compressore parallelo",
-                "Type": 0,
-                "Measurement": "",
-                "ShowIndexPage": false,
-                "HTMLViewEnable": 1,
-                "HTMLViewCategory": "{\"it\":\"Compressore Parallelo\",\"en\":\"Parallel Compressor\"}",
-                "HTMLViewIndexPosition": 200,
-                "HTMLMaskValue": ""
-            },
-
+```json
+"Read302": {
+  "Enable": true,
+  "MultiLanguageDescription": "{\"it\":\"Stato compressore parallelo\"}",
+  "TroubleSettings": "[]",
+  "Name": "Read302_P02T01D01",
+  "Alias": "Read302",
+  "Description": "Stato compressore parallelo",
+  "Type": 0,
+  "Measurement": "",
+  "ShowIndexPage": false,
+  "HTMLViewEnable": 1,
+  "HTMLViewCategory": "{\"it\":\"Compressore Parallelo\",\"en\":\"Parallel Compressor\"}",
+  "HTMLViewIndexPosition": 200,
+  "HTMLMaskValue": ""
+}
+```
 
 ## Esempio Template normalizzato
 
 Esempio per una variabile:
-- {
+-
+```json
+{
       "section": "ContinuosReads",
       "source_key": "Read302",
       "raw_text": "Stato compressore parallelo",
@@ -51,3 +54,4 @@ Esempio per una variabile:
       },
       "device_id": "P02T01D01"
     },
+```
