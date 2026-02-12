@@ -44,3 +44,7 @@ Descrivere la pipeline completa, dall’input reale fino al report finale.
 - `matching_report.json`
 - `patch_actions.json`
 - `run_report.json`
+
+## Funzionamento completo
+
+Esempio del funzionamento completo del sistema: `test/README.md`

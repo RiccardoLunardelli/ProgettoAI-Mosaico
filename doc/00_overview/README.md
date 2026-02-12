@@ -1,7 +1,7 @@
 # 0. Visione Generale
 
 ## Sintesi
-Semantic AI Mapper è un sistema locale che normalizza e arricchisce template reali di supervisori di refrigerazione,
+Semantic AI Mapper è un sistema che normalizza e arricchisce template reali di supervisori di refrigerazione,
 riconducendo variabili eterogenee a un modello semantico stabile, auditabile e versionato.
 
 ---

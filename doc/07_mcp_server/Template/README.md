@@ -2,7 +2,7 @@
 
 ## Scopo
 
-Arricchire/aggiornare concetti nel caso del dizionario base. Arricchire invece nel caso del Template reale con concetto, cateogira e categoria semantica per ogni variabile 'matchata'.
+Arricchire/aggiornare concetti nel caso del Template base. Arricchire invece nel caso del Template reale con concetto, categoria e categoria semantica per ogni variabile 'matchata'.
 
 ---
 

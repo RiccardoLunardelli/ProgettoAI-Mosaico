@@ -2,7 +2,7 @@
 
 ## Scopo 
 
-Validare lo schema corretto contro il payload in azione, così da garatnire il principio di schema-first.
+Validare il payload in azione contro lo schema, così da garantire il principio di schema-first.
 
 ---
 

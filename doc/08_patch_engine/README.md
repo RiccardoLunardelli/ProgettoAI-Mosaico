@@ -25,18 +25,149 @@ Ogni azione è:
 
 ### PatchActionsTemplate (eseguibile)
 Formato ufficiale prodotto da matching / LLM proposer.
+```json
+{
+  "patch_actions_version": "v0.1",
+  "generated_at": "2026-02-12T10:00:00+01:00",
+  "actions": [
+    {
+      "type": "map_variable",
+      "section": "ContinuosReads",
+      "source_key": "Read302",
+      "target": {
+        "concept_id": "temp_delivery",
+        "category": "measurement",
+        "semantic_category": "temperature",
+        "labels": { "it": "Temperatura mandata", "en": "Delivery temperature" }
+      },
+      "patch": {
+        "set_fields": {
+          "ConceptId_Patch": "temp_delivery",
+          "Category_Patch": "measurement",
+          "SemanticCategory_Patch": "temperature"
+        }
+      },
+      "confidence": 0.92,
+      "reason": "matching_deterministico",
+      "evidence": { "normalized_text": "temp mandata sm" }
+    }
+  ]
+}
+```
+
+Formato Patch eseguibile dal server:
+```json
+{
+  "target": "template",
+  "operations": [
+    {
+      "op": "set_fields",
+      "section": "ContinuosReads",
+      "source_key": "Read302",
+      "fields": {
+        "ConceptId_Patch": "temp_delivery",
+        "Category_Patch": "measurement",
+        "SemanticCategory_Patch": "temperature"
+      },
+      "meta": {
+        "confidence": 0.92,
+        "reason": "matching_deterministico",
+        "evidence": { "normalized_text": "temp mandata sm" }
+      }
+    }
+  ]
+}
+
+```
 
 Caratteristiche:
 - target semantico (`concept_id`, `category`, `semantic_category`)
 - patch dichiarativa (`set_fields`)
 - `confidence`, `reason`, `evidence`
 
+### Patch Dizionario (dictionary_patch) - Manuali
+Formato patch per aggiornare il dizionario.
+```json
+{
+  "target": "dictionary",
+  "operations": [
+    { "op": "add_synonym", "concept_id": "temp_delivery", "lang": "it", "value": "mandata" },
+    { "op": "add_abbreviation", "concept_id": "temp_delivery", "value": "sm" }
+  ]
+}
+
+```
+
+Operazioni:
+- `add_concept`
+- `add_synonym`
+- `update_synonym`
+- `add_abbreviation`
+- `add_pattern`
+- `update_category`
+- `update_semantic_category`
+
+---
+
+### Patch Knowledge Base (kb_patch) - Manuali
+Formato patch per aggiornare mapping e regole KB.
+
+```json
+{
+  "target": "kb",
+  "operations": [
+    {
+      "op": "add_kb_rule",
+      "scope_id": "P02T01D01__template_guid",
+      "source_type": "ContinuosReads",
+      "source_key": "Read302",
+      "concept_id": "temp_delivery",
+      "reason": "override_vendor",
+      "evidence": { "note": "mapping confermato" },
+      "semantic_category": "temperature",
+    }
+  ]
+}
+
+
+```
+
+Operazioni:
+- `add_kb_rule`
+- `update_kb_rule`
+
+---
+
+### Patch Template Base (template_base_patch) - Manuali
+Formato patch per aggiornare il Template Base.
+
+```json
+{
+  "target": "template_base",
+  "operations": [
+    {
+      "op": "add_base_concept",
+      "category_id": "measurement",
+      "concept_id": "temp_delivery",
+      "semantic_category": "temperature",
+      "label": { "it": "Temperatura mandata", "en": "Delivery temperature" },
+      "description": "Temperatura di mandata"
+    }
+  ]
+}
+
+```
+
+Operazioni:
+- `add_base_concept`
+- `remove_base_concept`
+- `update_base_metadata`
 ---
 
 ## Flusso Patch Engine
 1. Raccolta PatchActions  
 2. Validazione schema  
-3. Validazione canonica (Template Base)  
+3. Validazione canonica con Template Base 
 4. Conversione in patch eseguibile  
 5. Dry‑run  
 6. Diff  
