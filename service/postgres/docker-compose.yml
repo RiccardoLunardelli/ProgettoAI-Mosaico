@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  semantic_pg:
+    image: postgres:16
+    container_name: semantic_pg
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: semantic_ai_mapper
+      POSTGRES_USER: semantic_user
+      POSTGRES_PASSWORD: semantic_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - semantic_pgdata:/var/lib/postgresql/data
+
+volumes:
+  semantic_pgdata:
