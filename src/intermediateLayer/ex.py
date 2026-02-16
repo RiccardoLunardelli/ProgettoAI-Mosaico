@@ -1,10 +1,10 @@
 from uuid import UUID
 import json
-from src.intermediateLayer.postgres_repository import PostgresRunRepository
+from src.intermediateLayer.postgres_repository import RunRepository
 
 dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
 
-repo = PostgresRunRepository(dsn)
+repo = RunRepository(dsn)
 """
 with open("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/runs/run20260216_143121/run_report.json", "r", encoding="utf-8") as f:
     run_report = json.load(f)

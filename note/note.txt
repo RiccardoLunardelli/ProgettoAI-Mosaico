@@ -15,3 +15,22 @@ uv run alembic init alembic --> inizializza cartella aggiugendo dipendende per A
 alembic revision -m "Create table" --> comando per creare migrazione [ va fatto dentro migrations ]
 uv run alembic upgrade head --> invia utlima migrazione
 alembic history --> mostra commit fatti
+
+
+## PER DB
+UsersRepository
+
+create_user(user: UserCreate) -> UUID
+get_user(user_id: UUID) -> dict
+get_user_by_email(email: str) -> dict
+list_users(filters: dict) -> list[dict]
+delete_user(user_id: UUID) -> None (se lo vuoi)
+update_user_name(user_id: UUID, name: str | None) -> None (opzionale)
+BatchesRepository
+
+create_batch(user_id: UUID, total_runs: int, status: str) -> UUID
+get_batch(batch_id: UUID) -> dict
+list_batches(filters: dict) -> list[dict]
+update_batch_status(batch_id: UUID, status: str) -> None
+increment_completed_runs(batch_id: UUID, delta: int = 1) -> None
+delete_batch(batch_id: UUID) -> None (opzionale)

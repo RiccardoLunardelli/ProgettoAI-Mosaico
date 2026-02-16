@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Dict, List 
+from typing import Any, Dict, List, Optional
 from uuid import UUID 
 
 import psycopg2
@@ -9,7 +9,9 @@ import json
 
 from .mapping import extract_run_row
 
-class PostgresRunRepository():
+class RunRepository():
+    # classe per run
+
     def __init__(self, dsn: str) -> None:
         self._dsn = dsn
 
@@ -133,3 +135,27 @@ class PostgresRunRepository():
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
                 cur.execute(sql, (run_id,))
+
+class UsersRepository():
+    # classe per users
+
+    def __init__(self, dsn: str) -> None:
+        self._dsn = dsn
+    
+    def create_user(self, user_id: UUID, email: str, name: Optional[str]) -> None:
+        # creazione user
+
+        sql = """
+        INSERT INTO users (id, email, name)
+        VALUES (%s, %s, %s)
+        """
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (str(user_id), email, name))
+            
+            
+
+class BatchesRepository():
+    # classe per batches 
+
+    pass
