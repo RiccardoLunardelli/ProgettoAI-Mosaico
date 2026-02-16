@@ -14,5 +14,14 @@ services:
     volumes:
       - semantic_pgdata:/var/lib/postgresql/data
 
+  metabase:
+    image: metabase/metabase:latest
+    container_name: semantic_metabase
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - semantic_pg
+
 volumes:
   semantic_pgdata:
