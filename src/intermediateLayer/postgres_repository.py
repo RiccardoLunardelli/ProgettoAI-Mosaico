@@ -125,3 +125,11 @@ class PostgresRunRepository():
             "run_b": report_b, 
             "metrics_diff": metrics_diff
         }
+
+    def delete_run(self, run_id: str) -> None:
+        # delete di una run da runs
+
+        sql = "DELETE FROM runs WHERE run_id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (run_id,))
