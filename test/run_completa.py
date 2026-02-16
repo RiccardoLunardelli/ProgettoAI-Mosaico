@@ -149,14 +149,17 @@ def main() -> None:
     dictionary_path = input("Dictionary path: ").strip() or paths.get("dictionary")
     kb_path = input("KB path: ").strip() or paths.get("kb")
     template_base_path = input("Template base path: ").strip() or paths.get("template_base")
-    device_context_path =  ask_for_device_list=input("Device list path[inserisci quello da arricchire se non è presente]: ").strip()  or paths.get("device_context")
+    ask_for_device_list = input("Device list path[inserisci quello da arricchire se non è presente]: ").strip()
+
     if ask_for_device_list:
         cfg = dict(ARTIFACTS["device_list"])
         cfg["input_path"] = ask_for_device_list
         validate_only = False
         run_device_list(cfg, validate_only)
         print("Device list arricchito generato")
-        device_context_path = input("Device list Path: ")
+        device_context_path = input("Device list Path: ").strip()
+    else:
+        device_context_path = paths.get("device_context")
     schema_tipo_path = input("Schema tipo path [schemas/schema_tipo_v0.1.json]: ").strip() or paths.get("schema_tipo") or "schemas/schema_tipo_v0.1.json"
     output_dir = input("Output dir [output_dir]: ").strip() or paths.get("output_dir") or "output_dir"
     llm_model = input("LLM model [llama3.1:8b]: ").strip() or llm.get("model") or "llama3.1:8b"

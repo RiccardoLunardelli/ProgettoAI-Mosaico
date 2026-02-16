@@ -696,7 +696,7 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
             "committed": committed,
             "status": status,
         },
-        "validation": {"status": "ok", "errors": [], "warnings": []},
+        "validation": validation_block,
         "diff_summary": {"changed_paths": diff},
     }
     elif artifact_type == "template_base":
@@ -719,7 +719,7 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
             "committed": committed,
             "status": status,
         },
-        "validation": {"status": "ok", "errors": [], "warnings": []},
+        "validation": validation_block,
         "diff_summary": {"changed_paths": diff},
     }
     elif artifact_type == "device_list":
@@ -741,7 +741,7 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
             "committed": committed,
             "status": status,
         },
-        "validation": {"status": "ok", "errors": [], "warnings": []},
+        "validation": validation_block,
         "diff_summary": {"changed_paths": diff},
     }
 

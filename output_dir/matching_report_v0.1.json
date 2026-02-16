@@ -1,7 +1,7 @@
 {
   "matching_version": "v0.1",
   "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-  "generated_at": "2026-02-12T14:54:16.621585+01:00",
+  "generated_at": "2026-02-16T14:30:54.373332+01:00",
   "metrics": {
     "mapped_count": 32,
     "ambiguous_count": 83,
@@ -216,9 +216,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -344,9 +344,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -436,9 +436,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -528,9 +528,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -752,9 +752,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -970,9 +970,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -1032,9 +1032,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -1079,9 +1079,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -1126,9 +1126,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -1173,9 +1173,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -1220,9 +1220,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -1315,9 +1315,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -1519,9 +1519,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -1709,9 +1709,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -1943,9 +1943,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -2001,9 +2001,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -2093,9 +2093,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -2185,9 +2185,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -2456,9 +2456,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -2503,9 +2503,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -2550,9 +2550,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -2597,9 +2597,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -2756,9 +2756,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -2880,9 +2880,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -3100,9 +3100,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -3192,9 +3192,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -3303,9 +3303,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -3891,9 +3891,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -3983,9 +3983,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -4091,9 +4091,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -4183,9 +4183,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -4275,9 +4275,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -4322,9 +4322,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -4369,9 +4369,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -4477,9 +4477,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -4569,9 +4569,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -4677,9 +4677,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -4769,9 +4769,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -4908,9 +4908,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -5048,9 +5048,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -5190,9 +5190,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -5282,9 +5282,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -5329,9 +5329,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -5421,9 +5421,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -5513,9 +5513,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -5702,9 +5702,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -5749,9 +5749,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -5889,9 +5889,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -5981,9 +5981,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -6058,9 +6058,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -6150,9 +6150,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -6197,9 +6197,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -6244,9 +6244,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -6291,9 +6291,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -6383,9 +6383,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -6430,9 +6430,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -6477,9 +6477,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -6524,9 +6524,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -7224,9 +7224,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -7364,9 +7364,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -7536,9 +7536,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -8210,9 +8210,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -8302,9 +8302,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -8349,9 +8349,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -8857,9 +8857,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -8980,9 +8980,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -9072,9 +9072,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -9164,9 +9164,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -9256,9 +9256,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -9348,9 +9348,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -9440,9 +9440,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -9532,9 +9532,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -9611,9 +9611,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -9658,9 +9658,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -9705,9 +9705,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -9752,9 +9752,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -9799,9 +9799,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -9846,9 +9846,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -9970,9 +9970,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -10157,9 +10157,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -10249,9 +10249,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -10373,9 +10373,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
@@ -10465,9 +10465,9 @@
         ],
         "device_ctx": {
           "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",
-          "type_fam": null,
-          "device_role": null,
-          "enum": null
+          "type_fam": "TN",
+          "device_role": "vasca",
+          "enum": "5"
         },
         "versions": {
           "dictionary_version": "0.1",
