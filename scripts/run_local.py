@@ -1,6 +1,6 @@
 from mcp_server.server import dictionary_upsert, kb_upsert_mapping, template_apply_patch, device_list_enrich, dictionary_bulk_suggest
 from mcp_server.core import MCPContext
-from src.validator.validator import validate_before_commit_template, validate_before_commit_generic, canonical_map, load_json
+from src.validator.validator import validate_before_commit_template, validate_before_commit_generic, canonical_map, load_json 
 
 import json
 from pathlib import Path
@@ -81,6 +81,19 @@ def schema_version_from_path(schema_path: str) -> str:
 
     m = re.search(r"_v(\d+\.\d+)\.schema\.json$", schema_path)
     return f"v{m.group(1)}" if m else None
+
+def extract_device_list_version(path: str) -> str:
+    # estrae versione device list dal nome del file 
+
+    name = Path(path).name
+
+    if name == "device_list.json":
+        return "0.0"
+    
+    m = re.search(r"device_list_context_v(\d+\.\d+)\.json$", name)
+    if m:
+        return m.group(1)
+    return None
 
 def build_schema_versions(ctx: MCPContext, used_schema_ids: list[str]) -> dict:
     # ritorna le versioni di tutti gli schemi
@@ -655,7 +668,7 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
         }
     elif artifact_type == "dictionary":
         return {
-            "schema_versions": build_schema_versions(MCPContext(repo_root="."), ["dictionary", "dictionary_patch"]),
+            "schema_versions":schema_versions,
             "run_id": run_id,
             "timestamp": datetime.now(TIMEZONE).isoformat(),
             "template_guid": None,
@@ -678,7 +691,7 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
         }
     elif artifact_type == "kb":
         return {
-        "schema_versions": build_schema_versions(MCPContext(repo_root="."), ["kb", "kb_patch"]),
+        "schema_versions": schema_versions,
         "run_id": run_id,
         "timestamp": datetime.now(TIMEZONE).isoformat(),
         "template_guid": None,
@@ -701,7 +714,7 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
     }
     elif artifact_type == "template_base":
         return {
-        "schema_versions": build_schema_versions(MCPContext(repo_root="."), ["template_base", "template_base_patch"]),
+        "schema_versions": schema_versions,
         "run_id": run_id,
         "timestamp": datetime.now(TIMEZONE).isoformat(),
         "template_guid": None,
@@ -724,7 +737,7 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
     }
     elif artifact_type == "device_list":
          return {
-        "schema_versions": build_schema_versions(MCPContext(repo_root="."), ["device_list", "device_list_context"]),
+        "schema_versions": schema_versions,
         "run_id": run_id,
         "timestamp": datetime.now(TIMEZONE).isoformat(),
         "template_guid": None,
@@ -1077,17 +1090,20 @@ def build_report_context(artifact_type, matching_path, template_base_path):
 
     return schema_versions, dict_payload, kb_payload, tb_version
 
-def build_artifact_versions(artifact_type: str, dict_payload: dict | None, kb_payload: dict | None, template_base_version: str | None, device_list_payload: dict | None = None) -> dict:
+def build_artifact_versions(artifact_type: str, dict_payload: dict | None, kb_payload: dict | None, template_base_version: str | None, device_list_payload: dict | list | None = None) -> dict:
     # costuisce versioni artefatti per schema versions
 
     dict_v = dict_payload.get("dictionary_version") if dict_payload else None
     kb_v = kb_payload.get("kb_version") if kb_payload else None
     tb_v = template_base_version
-    dl_v = device_list_payload.get("device_list_version") if device_list_payload else None
+    
+    dl_v = None
+    if isinstance(device_list_payload, dict):
+        dl_v = device_list_payload.get("device_list_version")
 
     if artifact_type == "template":
         return {
-            "dictionary_versions": dict_v,
+            "dictionary_version": dict_v,
             "kb_version": kb_v,
             "template_base_version": tb_v
         }
@@ -1100,7 +1116,6 @@ def build_artifact_versions(artifact_type: str, dict_payload: dict | None, kb_pa
     if artifact_type == "device_list":
         return {"device_list_version": dl_v}
     return {}
-
 
 #--------------RUN-----------------------
 def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> None:
@@ -1338,15 +1353,11 @@ def run_device_list(cfg: dict, validate) -> None:
         committed = True
         status = "success"
     
-    device_payload = load_json(output_path) if output_path else load_json(input_path)
-
-    schema_versions = build_artifact_versions(
-        "device_list",
-        dict_payload=None,
-        kb_payload=None,
-        template_base_version=None,
-        device_list_payload=device_payload,
-    )
+    device_list_version = extract_device_list_version(output_path or input_path)
+    
+    schema_versions = {
+        "device_list_version": device_list_version
+    }
 
     
     run_report = build_run_report(

@@ -58,8 +58,11 @@ def run_pipeline(template_path: str, dictionary_path: str, kb_path: str, templat
 
     # dopo run_matching(...)
     decide_and_run_patch(
+        dictionary_path=dictionary_path,
+        kb_path=kb_path,
         template_base_path=template_base_path,
         matching_path=str(matching_path),
+        device_context_path=device_context_path,
         llm_model=llm_model or "llama3.1:8b",
         user_class=user_class,
         batch_class=batch_class,
@@ -68,7 +71,7 @@ def run_pipeline(template_path: str, dictionary_path: str, kb_path: str, templat
         batch_id=batch_id
     )
 
-def decide_and_run_patch(template_base_path: str, matching_path: str, llm_model: str, user_class: UsersRepository, batch_class: BatchesRepository, run_class: RunRepository, user_id: UUID, batch_id: UUID):
+def decide_and_run_patch(dictionary_path: str, kb_path:str, template_base_path: str, matching_path: str, device_context_path: str, llm_model: str, user_class: UsersRepository, batch_class: BatchesRepository, run_class: RunRepository, user_id: UUID, batch_id: UUID):
     while True:
         choice = input("1--> diz. 2--> kb. 3--> template. 4--> template_base. 5--> device_list. exit: ").strip().lower()
         if choice == "exit":
@@ -81,6 +84,10 @@ def decide_and_run_patch(template_base_path: str, matching_path: str, llm_model:
         input_file = input("Percorso file input: ").strip()
 
         choose = int(choice)
+        ARTIFACTS["dictionary"]["input_path"] = dictionary_path
+        ARTIFACTS["kb"]["input_path"] = kb_path
+        ARTIFACTS["template_base"]["input_path"] = template_base_path
+        ARTIFACTS["device_list"]["input_path"] = device_context_path
         if choose == 1:
             manual = input("Patch manuale o da run report? (m/r): ").strip().lower()
             cfg = dict(ARTIFACTS["dictionary"])
