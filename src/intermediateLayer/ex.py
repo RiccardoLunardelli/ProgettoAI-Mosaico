@@ -19,7 +19,7 @@ repo.save_run(
     batch_id=UUID("22222222-2222-2222-2222-222222222222"),
 )
 """
-
+"""
 # saved = repo.get_run(run_report["run_id"])
 # saved = repo.get_run("run20260216_143121") # ritorna report completo 
 # print(saved)
@@ -46,7 +46,7 @@ user_id = "d875ceed-5219-41f7-bc38-bb069f7514d7"
 #--------BATCH---------
 
 batch_id = uuid4()
-user = user_id
+#user = user_id
 created_at_batch = datetime.now(timezone(timedelta(hours=1))).isoformat()
 total_runs = 10
 completed_runs = 0
@@ -57,5 +57,12 @@ batch_id = "9b6d62b0-ae8c-4492-9b3b-8b048f4760b9"
 #search_batch = batch.get_batch(batch_id=batch_id)
 #print(search_batch)
 #status_batch = batch.update_batch_status(batch_id=batch_id, status="stopped")
-increment = batch.increment_completed_runs(batch_id=batch_id, delta=+1)
+#increment = batch.increment_completed_runs(batch_id=batch_id, delta=+1)
 #batch.delete_batch(batch_id=batch_id)
+"""
+
+## -------------TRONCATE-----------------------
+
+repo.truncate_runs()
+batch.truncate_batches()
+user.truncate_users()

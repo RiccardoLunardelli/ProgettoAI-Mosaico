@@ -90,6 +90,14 @@ class RunRepository():
             with conn.cursor() as cur:
                 cur.execute(sql, (run_id,))
 
+    def truncate_runs(self) -> None:
+        # tronca la tabella delle runs
+
+        sql = "TRUNCATE table runs CASCADE"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql)
+
 class UsersRepository():
     # classe per users
 
@@ -146,6 +154,14 @@ class UsersRepository():
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
                 cur.execute(sql, (str(user_id),))
+
+    def truncate_users(self) -> None:
+        # tronca la tabella degli users
+
+        sql = "TRUNCATE TABLE users CASCADE"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql)
 
 class BatchesRepository():
     # classe per batches 
@@ -221,3 +237,11 @@ class BatchesRepository():
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
                 cur.execute(sql, (str(batch_id),))
+
+    def truncate_batches(self) -> None:
+        # tronca la tabelle batches
+
+        sql = "TRUNCATE TABLE batches CASCADE"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql)
