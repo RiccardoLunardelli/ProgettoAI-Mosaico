@@ -22,10 +22,10 @@ def extract_run_row(report: Dict[str, Any]) -> Dict[str, Any]:
     committed = _get_nested(report, ["execution", "committed"])
     dry_run = _get_nested(report, ["execution", "dry_run_performed"])
 
-    dictionary_version = _get_nested(report, ["source_files", "dictionary_version"])
-    kb_version = _get_nested(report, ["source_files", "kb_version"])
-    template_base_version = _get_nested(report, ["source_files", "template_base_version"])
-    device_list_version = _get_nested(report, ["source_files", "device_list"])
+    dictionary_version = _get_nested(report, ["schema_versions", "dictionary_version"])
+    kb_version = _get_nested(report, ["schema_versions", "kb_version"])
+    template_base_version = _get_nested(report, ["schema_versions", "template_base_version"])
+    device_list_version = _get_nested(report, ["schema_versions", "device_list_version"])
 
     metrics = report.get("metrics") or {}
     mapped_count = metrics.get("matched_count")

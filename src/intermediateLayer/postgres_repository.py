@@ -6,6 +6,7 @@ from uuid import UUID
 import psycopg2
 import psycopg2.extras 
 import json
+from datetime import datetime
 
 from .mapping import extract_run_row
 
@@ -58,53 +59,6 @@ class RunRepository():
                 if row is None:
                     raise KeyError(f"run_id not found: {run_id}")
                 return row["report"]
-        
-    def list_runs(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
-        # ritorna una lista di run report
-
-        where = []
-        params: List[Any] = []
-
-        def add(clause: str, value: Any) -> None: 
-            where.append(clause)
-            params.append(value)
-        
-        if "user_id" in filters:
-            add("user_id = %s", filters["user_id"])
-        if "batch_id" in filters:
-            add("batch_id = %s", filters["batch_id"])
-        if "artifact_type" in filters:
-            add("artifact_type = %s", filters["artifact_type"])
-        if "status" in filters:
-            add("status = %s", filters["status"])
-        if "dictionary_version" in filters:
-            add("dictionary_version = %s", filters["dictionary_version"])
-        if "kb_version" in filters:
-            add("kb_version = %s", filters["kb_version"])
-        if "template_base_version" in filters:
-            add("template_base_version = %s", filters["template_base_version"])
-        if "device_list_version" in filters:
-            add("device_list_version = %s", filters["device_list_version"])
-        if "committed" in filters:
-            add("committed = %s", filters["committed"])
-        if "dry_run_performed" in filters:
-            add("dry_run_performed = %s", filters["dry_run_performed"])
-        if "created_from" in filters:
-            add("created_at >= %s", filters["created_from"])
-        if "created_to" in filters:
-            add("created_at <= %s", filters["created_to"])
-
-        sql = "SELECT report FROM runs"
-        if where:
-            sql += " WHERE " + " AND ".join(where)
-        sql += " ORDER BY created_at DESC"
-
-        with psycopg2.connect(self._dsn) as conn:
-            psycopg2.extras.register_default_jsonb(conn, loads=lambda x: x)
-            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
-                cur.execute(sql, params)
-                rows = cur.fetchall()
-                return [row["report"] for row in rows]
             
     def compare_run(self, run_id_a: str, run_id_b: str) -> Dict[str, Any]:
         # confronta due run 
@@ -142,20 +96,128 @@ class UsersRepository():
     def __init__(self, dsn: str) -> None:
         self._dsn = dsn
     
-    def create_user(self, user_id: UUID, email: str, name: Optional[str]) -> None:
+    def create_user(self, user_id: UUID, email: str, name: Optional[str], created_at: datetime) -> None:
         # creazione user
 
         sql = """
-        INSERT INTO users (id, email, name)
-        VALUES (%s, %s, %s)
+        INSERT INTO users (id, email, name, created_at)
+        VALUES (%s, %s, %s, %s)
         """
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
-                cur.execute(sql, (str(user_id), email, name))
-            
-            
+                cur.execute(sql, (str(user_id), email, name, created_at))
+
+    def get_user(self, user_id: UUID) -> Dict[str, Any]:
+        # ritorna user con certo id
+
+        sql = "SELECT id, email, name, created_at FROM users WHERE id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute(sql, (str(user_id),))
+                row = cur.fetchone()
+                if row is None:
+                    raise KeyError(f"user_id not found: {user_id}")
+                return dict(row)
+
+    def get_user_by_email(self, email: str) -> Dict[str, Any]:
+        # ritorna user con certa mail
+
+        sql = "SELECT id, email, name, created_at FROM users WHERE email = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute(sql, (email, ))
+                row = cur.fetchone()
+                if row is None:
+                    raise KeyError(f"email not found: {email}")
+                return dict(row)
+
+    def update_user_name(self, user_id: UUID, name: Optional[str]) -> None:
+        # aggiorna nome di un user   
+
+        sql = "UPDATE users SET name = %s WHERE id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (name, str(user_id)))
+
+    def delete_user(self, user_id: UUID) -> None:
+        # elimina user da tabella
+
+        sql = "DELETE FROM users WHERE id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (str(user_id),))
 
 class BatchesRepository():
     # classe per batches 
 
-    pass
+    def __init__(self, dsn: str) -> None:
+        self._dsn = dsn
+    
+    def _validate_and_status(self, total_runs: int, completed_runs: int) -> str:
+        # valida stato rispetto a confronto tra total_runs e completed_runs
+
+        if completed_runs > total_runs:
+            raise ValueError("completed runs cannot be greater than total runs")
+        if completed_runs == total_runs:
+            return "completed"
+        return "running"
+
+    def create_batch(self, batch_id: UUID, user_id: UUID, created_at: datetime, status: str, total_runs: int, completed_runs: int) -> None:
+        # crea batch
+        
+        sql = """
+        INSERT INTO batches (id, user_id, created_at, status, total_runs, completed_runs)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        """
+        params = (str(batch_id), str(user_id), created_at, status, total_runs, completed_runs)
+
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, params)
+
+    def get_batch(self, batch_id: UUID) -> Dict[str, Any]:
+        # ritorna batch di un certo id
+
+        sql = "SELECT id, user_id, created_at, status, total_runs, completed_runs FROM batches WHERE id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute(sql, (str(batch_id),))
+                row = cur.fetchone()
+                if row is None:
+                    raise KeyError(f"batch_id not found: {batch_id}")
+                return dict(row)
+    
+    def update_batch_status(self, batch_id: UUID, status: Optional[str]) -> None:
+        # aggiorna lo stato del batch
+
+        sql = "UPDATE batches SET status = %s WHERE id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (status, str(batch_id)))
+    
+    def increment_completed_runs(self, batch_id: UUID, delta: int = 1) -> None:
+        # incrementa run completate 
+
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute("SELECT total_runs, completed_runs FROM batches WHERE id = %s", (str(batch_id),))
+                row = cur.fetchone()
+                if row is None:
+                    raise KeyError(f"batch_id not found: {batch_id}")
+
+                total_runs, completed_runs = row
+                new_completed = completed_runs + delta 
+                new_status = self._validate_and_status(total_runs, new_completed)
+
+                cur.execute(
+                    "UPDATE batches SET completed_runs = %s, status = %s WHERE id = %s",
+                    (new_completed, new_status, str(batch_id)),
+                )
+
+    def delete_batch(self, batch_id: UUID) -> None:
+        # elimina batch da tabella
+
+        sql = "DELETE FROM batches WHERE id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (str(batch_id),))

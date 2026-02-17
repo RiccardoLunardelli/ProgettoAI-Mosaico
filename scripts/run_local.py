@@ -1077,6 +1077,31 @@ def build_report_context(artifact_type, matching_path, template_base_path):
 
     return schema_versions, dict_payload, kb_payload, tb_version
 
+def build_artifact_versions(artifact_type: str, dict_payload: dict | None, kb_payload: dict | None, template_base_version: str | None, device_list_payload: dict | None = None) -> dict:
+    # costuisce versioni artefatti per schema versions
+
+    dict_v = dict_payload.get("dictionary_version") if dict_payload else None
+    kb_v = kb_payload.get("kb_version") if kb_payload else None
+    tb_v = template_base_version
+    dl_v = device_list_payload.get("device_list_version") if device_list_payload else None
+
+    if artifact_type == "template":
+        return {
+            "dictionary_versions": dict_v,
+            "kb_version": kb_v,
+            "template_base_version": tb_v
+        }
+    if artifact_type == "dictionary":
+        return {"dictionary_version": dict_v}
+    if artifact_type == "kb":
+        return {"kb_version": kb_v}
+    if artifact_type == "template_base":
+        return {"template_base_version": tb_v}
+    if artifact_type == "device_list":
+        return {"device_list_version": dl_v}
+    return {}
+
+
 #--------------RUN-----------------------
 def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> None:
     run_id = generate_run_id()
@@ -1113,7 +1138,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
             report_path = run_dir / "run_report.json"
             with open(report_path, "w", encoding="utf-8") as f:
                 json.dump(run_report, f, indent=2, ensure_ascii=False)
-            return
+            return report_path
 
         artifact, preview, diff = compute_diff(input_path, template_patch, validated_preview, validated_diff, upsert_fn, diff_fn)
 
@@ -1127,6 +1152,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
 
         output_path, committed, status, _ = apply_commit(input_path, template_patch, diff, validate_only, upsert_fn)
         schema_versions, dict_payload, kb_payload, tb_version = build_report_context(artifact_type, None, template_base_path)
+        schema_versions = build_artifact_versions(artifact_type, dict_payload=dict_payload, kb_payload=kb_payload, template_base_version=tb_version)
 
         run_report = build_run_report(
             cfg=cfg, run_id=run_id, artifact_type=artifact_type,
@@ -1140,7 +1166,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
         report_path = run_dir / "run_report.json"
         with open(report_path, "w", encoding="utf-8") as f:
             json.dump(run_report, f, indent=2, ensure_ascii=False)
-        return
+        return report_path
 
     # ---- TEMPLATE FLOW ----
     mr, analysis = load_matching(matching_path)
@@ -1230,6 +1256,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     output_path, committed, status, _ = apply_commit(input_path, template_patch, diff, validate_only, upsert_fn)
 
     schema_versions, dict_payload, kb_payload, tb_version = build_report_context(artifact_type, matching_path, template_base_path)
+    schema_versions = build_artifact_versions(artifact_type, dict_payload=dict_payload, kb_payload=kb_payload, template_base_version=tb_version)
 
     run_report = build_run_report(
         cfg=cfg, run_id=run_id, artifact_type=artifact_type,
@@ -1274,6 +1301,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     report_path = run_dir / "run_report.json"
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(run_report, f, indent=2, ensure_ascii=False)
+    return report_path
 
 def run_device_list(cfg: dict, validate) -> None:
     # run per device_list
@@ -1310,6 +1338,17 @@ def run_device_list(cfg: dict, validate) -> None:
         committed = True
         status = "success"
     
+    device_payload = load_json(output_path) if output_path else load_json(input_path)
+
+    schema_versions = build_artifact_versions(
+        "device_list",
+        dict_payload=None,
+        kb_payload=None,
+        template_base_version=None,
+        device_list_payload=device_payload,
+    )
+
+    
     run_report = build_run_report(
         cfg=cfg,
         run_id=run_id,
@@ -1317,7 +1356,7 @@ def run_device_list(cfg: dict, validate) -> None:
         input_path=input_path,
         output_path=output_path,
         diff=diff, 
-        schema_versions=build_schema_versions(MCPContext(repo_root="."), ["device_list", "device_list_context"]),
+        schema_versions=schema_versions,
         committed=committed,
         status=status,
         validation_block={"status": "ok", "errors": [], "warnings": []},
@@ -1333,6 +1372,7 @@ def run_device_list(cfg: dict, validate) -> None:
     report_path = run_dir / "run_report.json"
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(run_report, f, indent=2, ensure_ascii=False)
+    return report_path
 
 
 if __name__ == "__main__":

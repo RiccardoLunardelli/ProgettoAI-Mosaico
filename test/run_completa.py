@@ -2,6 +2,9 @@ import argparse
 import json
 from pathlib import Path
 import yaml
+from uuid import uuid4, UUID
+from datetime import datetime, timezone, timedelta
+import sys
 
 from src.parser.normalizer import load_json, normalize_template, model_dump
 from src.matcher.matcher import run_matching
@@ -9,9 +12,7 @@ from scripts.run_local import run_patch
 from mcp_server.server import template_apply_patch, dictionary_upsert, kb_upsert_mapping
 from scripts.run_local import summarize_template_real_diff, summarize_dictionary_diff,summarize_kb_diff,summarize_template_base_diff, run_device_list, \
                                 ARTIFACTS, build_dictionary_patch_from_run_report, build_dictionary_suggestions_from_run_report
-
-import sys
-from pathlib import Path
+from src.intermediateLayer.postgres_repository import RunRepository, UsersRepository, BatchesRepository
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -26,7 +27,7 @@ def write_json(path: Path, payload: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
-def run_pipeline(template_path: str, dictionary_path: str, kb_path: str, template_base_path: str, device_context_path: str, schema_tipo_path: str, output_dir: str, llm_model: str | None,) -> None:
+def run_pipeline(template_path: str, dictionary_path: str, kb_path: str, template_base_path: str, device_context_path: str, schema_tipo_path: str, output_dir: str, llm_model: str | None, user_class: UsersRepository, batch_class: BatchesRepository, run_class: RunRepository, user_id: UUID, batch_id: UUID) -> None:
     out_dir = Path(output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -60,9 +61,14 @@ def run_pipeline(template_path: str, dictionary_path: str, kb_path: str, templat
         template_base_path=template_base_path,
         matching_path=str(matching_path),
         llm_model=llm_model or "llama3.1:8b",
+        user_class=user_class,
+        batch_class=batch_class,
+        run_class=run_class,
+        user_id=user_id,
+        batch_id=batch_id
     )
 
-def decide_and_run_patch(template_base_path: str, matching_path: str, llm_model: str):
+def decide_and_run_patch(template_base_path: str, matching_path: str, llm_model: str, user_class: UsersRepository, batch_class: BatchesRepository, run_class: RunRepository, user_id: UUID, batch_id: UUID):
     while True:
         choice = input("1--> diz. 2--> kb. 3--> template. 4--> template_base. 5--> device_list. exit: ").strip().lower()
         if choice == "exit":
@@ -99,7 +105,11 @@ def decide_and_run_patch(template_base_path: str, matching_path: str, llm_model:
                     json.dump(suggestions, f, indent=2, ensure_ascii=False)
                 print(f"Suggestions saved: {out_path}")
 
-            run_patch(cfg, "dictionary", dictionary_upsert, summarize_dictionary_diff, validate_only)
+            report_path = run_patch(cfg, "dictionary", dictionary_upsert, summarize_dictionary_diff, validate_only)
+            if report_path:
+                run_report = load_json(str(report_path))
+                run_class.save_run(run_report=run_report, user_id=user_id, batch_id=batch_id)
+                batch_class.increment_completed_runs(batch_id=batch_id)
 
         elif choose == 2:
             cfg = dict(ARTIFACTS["kb"])
@@ -108,7 +118,11 @@ def decide_and_run_patch(template_base_path: str, matching_path: str, llm_model:
             if manual:
                 manual_actions_path = input("Percorso patch manuali: ").strip()
                 cfg["patch_path"] = manual_actions_path
-            run_patch(cfg, "kb", kb_upsert_mapping, summarize_kb_diff, validate_only)
+            report_path = run_patch(cfg, "kb", kb_upsert_mapping, summarize_kb_diff, validate_only)
+            if report_path:
+                run_report = load_json(str(report_path))
+                run_class.save_run(run_report=run_report, user_id=user_id, batch_id=batch_id)
+                batch_class.increment_completed_runs(batch_id=batch_id)
 
         elif choose == 3:
             cfg = dict(ARTIFACTS["template"])
@@ -120,7 +134,11 @@ def decide_and_run_patch(template_base_path: str, matching_path: str, llm_model:
             if manual:
                 manual_actions_path = input("Percorso patch manuali: ").strip()
                 cfg["manual_actions_path"] = manual_actions_path
-            run_patch(cfg, "template", template_apply_patch, summarize_template_real_diff, validate_only)
+            report_path = run_patch(cfg, "template", template_apply_patch, summarize_template_real_diff, validate_only)
+            if report_path:
+                run_report = load_json(str(report_path))
+                run_class.save_run(run_report=run_report, user_id=user_id, batch_id=batch_id)
+                batch_class.increment_completed_runs(batch_id=batch_id)
 
         elif choose == 4:
             cfg = dict(ARTIFACTS["template_base"])
@@ -131,14 +149,42 @@ def decide_and_run_patch(template_base_path: str, matching_path: str, llm_model:
                 continue  # oppure return
             manual_actions_path = input("Percorso patch manuali: ").strip()
             cfg["patch_path"] = manual_actions_path
-            run_patch(cfg, "template_base", template_apply_patch, summarize_template_base_diff, validate_only)
+            report_path = run_patch(cfg, "template_base", template_apply_patch, summarize_template_base_diff, validate_only)
+            if report_path:
+                run_report = load_json(str(report_path))
+                run_class.save_run(run_report=run_report, user_id=user_id, batch_id=batch_id)
+                batch_class.increment_completed_runs(batch_id=batch_id)
 
         elif choose == 5:
             cfg = dict(ARTIFACTS["device_list"])
             cfg["input_path"] = input_file
-            run_device_list(cfg, validate_only)
+            report_path = run_device_list(cfg, validate_only)
+            if report_path:
+                run_report = load_json(str(report_path))
+                run_class.save_run(run_report=run_report, user_id=user_id, batch_id=batch_id)
+                batch_class.increment_completed_runs(batch_id=batch_id)
 
 def main() -> None:
+    print("-----WELCOME------")
+    username = input("Insert your name: ") # parametro name per user
+    email= input("Insert your mail: ") # parametro mail per user
+    
+    dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
+
+    run = RunRepository(dsn)
+    user = UsersRepository(dsn)
+    batch = BatchesRepository(dsn)
+
+    user_id = uuid4()
+    created_at_user = datetime.now(timezone(timedelta(hours=1))).isoformat()
+    user.create_user(user_id=user_id, email=email, name=username, created_at=created_at_user)
+
+    total_runs = int(input("Run totali da eseguire: "))
+    batch_id = uuid4()
+    created_at_batch = datetime.now(timezone(timedelta(hours=1))).isoformat()
+    status = batch._validate_and_status(total_runs=total_runs, completed_runs=0)
+    batch.create_batch(batch_id=batch_id, user_id=user_id, created_at=created_at_batch, status=status, total_runs=total_runs, completed_runs=0)
+
     cfg_path = input("Path file di configurazione[config.yml]: ").strip() or "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/config/config.yml"
     cfg = load_config(cfg_path)
 
@@ -173,6 +219,11 @@ def main() -> None:
         schema_tipo_path=schema_tipo_path,
         output_dir=output_dir,
         llm_model=llm_model,
+        user_class=user,
+        batch_class=batch,
+        run_class=run,
+        user_id=user_id,
+        batch_id=batch_id
     )
 
 
