@@ -23,5 +23,20 @@ services:
     depends_on:
       - semantic_pg
 
+  grafana:
+    image: grafana/grafana:11.1.0
+    container_name: semantic_grafana
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    depends_on:
+      - semantic_pg
+    volumes:
+      - grafana_data:/var/lib/grafana
+
 volumes:
   semantic_pgdata:
+  grafana_data:
