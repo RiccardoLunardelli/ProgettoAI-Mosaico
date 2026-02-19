@@ -63,6 +63,8 @@ batch_id = "9b6d62b0-ae8c-4492-9b3b-8b048f4760b9"
 
 ## -------------TRONCATE-----------------------
 
-repo.truncate_runs()
-batch.truncate_batches()
-user.truncate_users()
+#repo.truncate_runs()
+#batch.truncate_batches()
+#user.truncate_users()
+
+repo.delete_run("run20260219_091337")

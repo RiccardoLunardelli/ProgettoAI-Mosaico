@@ -333,6 +333,9 @@ def ollama_generate_json(model: str, prompt: str) -> dict:
     }
     r = requests.post(url, json=payload, timeout=200)
     r.raise_for_status()
+    data = r.json()
+    keys = ["total_duration", "load_duration", "prompt_eval_count", "prompt_eval_duration", "eval_count", "eval_duration"]
+    print("OLLAMA_METRICS:", {k: data.get(k) for k in keys})
     raw = r.json().get("response", "").strip()
     try: 
         print(f"chiamata LLM {ollama_call_count}")
@@ -382,7 +385,8 @@ def llm_propose_actions(model: str, mr: dict, batch_size: int = 3) -> dict:
         "contexts_count": len(llm_contexts),
         "batch_size": batch_size,
         "batches": len(batches),
-        "attempts": attempts
+        "attempts": attempts,
+        "avg_latency_sec": round(total_latency / len(attempts), 3) if attempts else 0.0,
     }
     
     patch_actions = {"patch_actions_version": "v0.1","generated_at": datetime.now(timezone(timedelta(hours=1))).isoformat(), "actions": all_actions}
@@ -416,6 +420,34 @@ def ensure_labels(actions_payload: dict) -> dict:
             tgt["labels"] = {"it": text, "en": text}
             a["target"] = tgt
     return actions_payload
+
+def merge_actions_dedup(primary: dict, secondary: dict) -> dict:
+    # tiene le azioni di primary, aggiunge solo quelle di secondary che non duplicano (section, source_key)
+    if not primary:
+        return secondary or {"patch_actions_version": "v0.1", "generated_at": datetime.now(TIMEZONE).isoformat(), "actions": []}
+    if not secondary:
+        return primary
+
+    out = {
+        "patch_actions_version": primary.get("patch_actions_version", "v0.1"),
+        "generated_at": primary.get("generated_at", datetime.now(TIMEZONE).isoformat()),
+        "actions": []
+    }
+
+    seen = set()
+    for a in primary.get("actions", []):
+        key = (a.get("section"), a.get("source_key"))
+        seen.add(key)
+        out["actions"].append(a)
+
+    for a in secondary.get("actions", []):
+        key = (a.get("section"), a.get("source_key"))
+        if key in seen:
+            continue
+        out["actions"].append(a)
+
+    return out
+
 
 #---------DIFF-----------------
 def summarize_device_list_diff(before:dict, after: dict) -> list[str]:
@@ -648,6 +680,8 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
                 "ambiguous_count": compute_metrics(mr, actions_payload).get("ambiguous_count"),
                 "unmapped_count": compute_metrics(mr, actions_payload).get("unmapped_count"),
                 "llm_calls": ollama_call_count,
+                "llm_latency_total_sec": llm_attempt.get("latency_sec") if llm_attempt else 0.0,
+                "llm_latency_avg_sec": llm_attempt.get("avg_latency_sec") if llm_attempt else 0.0,
                 "warnings_count": len(validation_block.get("warnings", [])) if validation_block else 0,
             },
             "target": {
@@ -1189,6 +1223,8 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
         cfg["actions_path"] = actions_out
     else:
         cfg["actions_path"] = cfg.get("manual_actions_path")
+    
+    actions_payload = load_json(cfg["actions_path"])
 
     manual_mode = bool(cfg.get("manual_actions_path"))
 
@@ -1210,11 +1246,22 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
             llm_actions_path = run_dir / "llm_patch_actions.json"
             with open(llm_actions_path, "w", encoding="utf-8") as f:
                 json.dump(llm_actions, f, indent=2, ensure_ascii=False)
+
+            llm_apply_actions = None
+            apply_llm = input("Generate patch LLM: applicarle? (y/n): ").strip().lower() == "y"
+            if apply_llm:
+                llm_path = input("Percorso patch LLM (default: appena generate): ").strip()
+                if not llm_path:
+                    llm_path = str(llm_actions_path)
+                llm_apply_actions = load_json(llm_path)
     elif manual_mode:
         print("Manual mode: skipping LLM proposed actions.")
 
+    if llm_apply_actions:
+        actions_payload = merge_actions_dedup(actions_payload, llm_apply_actions)
+
     template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = \
-        build_patch_and_validation(cfg, artifact_type, upsert_fn, diff_fn)
+        build_patch_and_validation(cfg, artifact_type, upsert_fn, diff_fn, actions_payload_override=actions_payload)
 
     if validation_error:
         run_report = build_run_report(
