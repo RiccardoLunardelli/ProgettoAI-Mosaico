@@ -70,13 +70,13 @@ NOTE:
 Se ambiguous_pre == 0, metti 0 o None per evitare divisione per zero.
 
 ambiguita risolte:
-ambiguous_resolved = ambiguous_pre - ambiguous_post 
+ambiguous_resolved = ambiguous_pre - ambiguous_count 
 
 tasso utilià LLM:
 ambiguity_resolution_rate = ambiguous_resolved / ambiguous_pre
 
 incremento matched:
-matched_gain = matched_post - matched_pre
+matched_gain = matched_count - matched_pre
 
 qualità modello:
 llm_quality = count(patch_applicate) / count(patch_proposte)

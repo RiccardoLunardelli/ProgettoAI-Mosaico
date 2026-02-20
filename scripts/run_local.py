@@ -334,12 +334,18 @@ def ollama_generate_json(model: str, prompt: str) -> dict:
     r = requests.post(url, json=payload, timeout=200)
     r.raise_for_status()
     data = r.json()
-    keys = ["total_duration", "load_duration", "prompt_eval_count", "prompt_eval_duration", "eval_count", "eval_duration"]
-    print("OLLAMA_METRICS:", {k: data.get(k) for k in keys})
+    metrics = {
+        "total_duration": data.get("total_duration"),   # tempo totale (nanosecondi)
+        "load_duration": data.get("load_duration"),     # tempo caricamente modello (nanosecondi)
+        "prompt_eval_count": data.get("prompt_eval_count"),  # token del prompt
+        "prompt_eval_duration": data.get("prompt_eval_duration"), # tempo per processare il prompt (nanosecondi)
+        "eval_count": data.get("eval_count"),   # token generati da LLM
+        "eval_duration": data.get("eval_duration")  # tempo generazione risposta LLM (nanosecondi)
+    }
     raw = r.json().get("response", "").strip()
     try: 
         print(f"chiamata LLM {ollama_call_count}")
-        return json.loads(raw)
+        return json.loads(raw), metrics
     except Exception:
         return {"patch_actions_version": "v0.1", "generated_at": datetime.now(timezone.utc).isoformat(), "actions": []}
     
@@ -349,7 +355,7 @@ def chunk_list(items: list, size: int) -> list[list]:
     return [items[i:i + size] for i in range(0, len(items), size)]
 
 def llm_propose_actions(model: str, mr: dict, batch_size: int = 3) -> dict:
-    # genera proposte actions con llm. Produce patch actions + info 
+    # genera proposte actions con LLM e metriche LLM. Produce patch actions + info 
 
     llm_contexts = extract_llm_contexts(mr)
     if not llm_contexts:
@@ -359,14 +365,24 @@ def llm_propose_actions(model: str, mr: dict, batch_size: int = 3) -> dict:
     all_actions = []
     all_dict_ops = []
     attempts = []
-    total_latency = 0.0
+    totals = {
+            "total_duration": 0,
+            "load_duration": 0,
+            "prompt_eval_count": 0,
+            "prompt_eval_duration": 0,
+            "eval_count": 0,
+            "eval_duration": 0,
+        }
 
     for idx, batch in enumerate(batches):
         prompt = build_llm_prompt(batch)
-        start = time.time()
-        output = ollama_generate_json(model, prompt)
-        latency = round(time.time() - start, 3)
-        total_latency += latency
+        output, call_metrics = ollama_generate_json(model, prompt)
+
+        if call_metrics:    # metriche fornite da Ollama per ogni chiamata
+            for k in totals:
+                v = call_metrics.get(k)
+                if isinstance(v, (int, float)):
+                    totals[k] += v
 
         if isinstance(output, dict):
             pa = parse_llm_output(output)
@@ -376,17 +392,45 @@ def llm_propose_actions(model: str, mr: dict, batch_size: int = 3) -> dict:
         attempts.append({
             "batch_index": idx,
             "batch_size": len(batch),
-            "latency_sec": latency
         })
+    
+    # ----TEMPO--------
+    # normalizzazione: ns -> s
+    total_duration_sec = totals["total_duration"] / 1e9 if totals["total_duration"] else 0.0
+    prompt_eval_duration_sec = totals["prompt_eval_duration"] / 1e9 if totals["prompt_eval_duration"] else 0.0
+    eval_duration_sec = totals["eval_duration"] / 1e9 if totals["eval_duration"] else 0.0
+
+    # tokens
+    llm_total_tokens = totals["prompt_eval_count"] + totals["eval_count"]
+    llm_prompt_total_tokens = totals["prompt_eval_count"]
+    llm_generate_total_tokens = totals["eval_count"]
+
+    # ----EFFICIENZA------
+    # velocità generazionale 
+    llm_generate_tokens_per_sec = llm_generate_total_tokens / eval_duration_sec if eval_duration_sec > 0 else 0.0
+
+    # velocità valutazione prompt
+    llm_prompt_tokens_per_sec = llm_prompt_total_tokens / prompt_eval_duration_sec if prompt_eval_duration_sec > 0 else 0.0
+
+    # costo computazionale: secondi per 1k tokens
+    llm_sec_per_1k_tokens = total_duration_sec / (llm_total_tokens/1000) if llm_total_tokens > 0 else 0.0
 
     llm_attempt = {
         "model": model,
-        "latency_sec": round(total_latency, 3),
         "contexts_count": len(llm_contexts),
         "batch_size": batch_size,
         "batches": len(batches),
         "attempts": attempts,
-        "avg_latency_sec": round(total_latency / len(attempts), 3) if attempts else 0.0,
+        "llm_total_sec" : round(total_duration_sec, 3),
+        "llm_avg_sec": round(total_duration_sec / len(attempts), 3) if attempts else 0.0,
+        "llm_prompt_total_tokens": llm_prompt_total_tokens, # tokens totali dei prompt
+        "llm_generate_total_tokens": llm_generate_total_tokens, # tokens totali delle risposte del modello
+        "llm_total_tokens": llm_total_tokens, # tokens totali
+        "llm_prompt_time_total_sec": round(prompt_eval_duration_sec, 3),  # tempo totale per processare prompt
+        "llm_generate_time_total_sec": round(eval_duration_sec, 3), # tempo totale per generazioni risposte
+        "llm_generate_tokens_per_sec": round(llm_generate_tokens_per_sec, 3), # velocita generazionale
+        "llm_prompt_tokens_per_sec": round(llm_prompt_tokens_per_sec, 3),   # velocita valutazione prompt
+        "llm_sec_per_1k_tokens": round(llm_sec_per_1k_tokens, 3),   # secondi per 1k tokens
     }
     
     patch_actions = {"patch_actions_version": "v0.1","generated_at": datetime.now(timezone(timedelta(hours=1))).isoformat(), "actions": all_actions}
@@ -448,6 +492,14 @@ def merge_actions_dedup(primary: dict, secondary: dict) -> dict:
 
     return out
 
+def count_llm_applied(actions_payload: dict, llm_actions: dict) -> int:
+    # conta le azioni applicate
+
+    if not actions_payload or not llm_actions:
+        return 0
+    llm_keys = {(a.get("section"), a.get("source_key")) for a in llm_actions.get("actions", [])}
+    applied_keys = {(a.get("section"), a.get("source_key")) for a in actions_payload.get("actions", [])}
+    return len(llm_keys & applied_keys)
 
 #---------DIFF-----------------
 def summarize_device_list_diff(before:dict, after: dict) -> list[str]:
@@ -661,6 +713,16 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
     # raccoglie tutto, nornalizza e ritorna il report della run
 
     if artifact_type == "template":
+        ambiguous_pre = compute_metrics(mr, None).get("ambiguous_count")
+        ambiguous_post = compute_metrics(mr, actions_payload).get("ambiguous_count")
+        matched_pre = compute_metrics(mr, None).get("matched_count")
+        matched_post = compute_metrics(mr, actions_payload).get("matched_count")
+
+        # --EFFICACIA-----
+        ambiguous_resolved = ambiguous_pre - ambiguous_post # ambiguità risolte
+        ambiguity_resolution_rate = ambiguous_resolved / ambiguous_pre if ambiguous_pre else 0.0 # tasso utilià LLM
+        matched_gain = matched_post - matched_pre # incremento matched
+        resolved_per_1k_tokens = ambiguous_resolved / (llm_attempt.get("llm_total_tokens")/1000) if llm_attempt and llm_attempt.get("llm_total_tokens") else 0.0
         return {
             "schema_versions": schema_versions,
             "run_id": run_id,
@@ -676,12 +738,37 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
                 "template_base_version": template_base_version,
             },
             "metrics": {
-                "matched_count": compute_metrics(mr, actions_payload).get("matched_count"),
-                "ambiguous_count": compute_metrics(mr, actions_payload).get("ambiguous_count"),
+                "matched_count_matching_report": matched_pre,
+                "ambiguous_count_matching_report": ambiguous_pre,
+                "unmapped_count_matching_report": compute_metrics(mr, None).get("unmapped_count"),
+                "matched_count": matched_post,
+                "ambiguous_count": ambiguous_post,
                 "unmapped_count": compute_metrics(mr, actions_payload).get("unmapped_count"),
+
+                "ambiguous_resolved": ambiguous_resolved,
+                "ambiguity_resolution_rate": round(ambiguity_resolution_rate, 2),
+                "matched_gain": matched_gain,
+                "resolved_per_1k_tokens": round(resolved_per_1k_tokens, 2),
+                
                 "llm_calls": ollama_call_count,
-                "llm_latency_total_sec": llm_attempt.get("latency_sec") if llm_attempt else 0.0,
-                "llm_latency_avg_sec": llm_attempt.get("avg_latency_sec") if llm_attempt else 0.0,
+                "llm_total_sec": llm_attempt.get("llm_total_sec") if llm_attempt else 0.0,
+                "llm_avg_sec": llm_attempt.get("llm_avg_sec") if llm_attempt else 0.0,
+
+                "llm_prompt_total_tokens": llm_attempt.get("llm_prompt_total_tokens") if llm_attempt else 0,
+                "llm_generate_total_tokens": llm_attempt.get("llm_generate_total_tokens") if llm_attempt else 0,
+                "llm_total_tokens": llm_attempt.get("llm_total_tokens") if llm_attempt else 0,
+                
+                "llm_prompt_time_total_sec": llm_attempt.get("llm_prompt_time_total_sec") if llm_attempt else 0.0,
+                "llm_generate_time_total_sec": llm_attempt.get("llm_generate_time_total_sec") if llm_attempt else 0.0,
+                
+                "llm_generate_tokens_per_sec": llm_attempt.get("llm_generate_tokens_per_sec") if llm_attempt else 0.0,
+                "llm_prompt_tokens_per_sec": llm_attempt.get("llm_prompt_tokens_per_sec") if llm_attempt else 0.0,
+                "llm_sec_per_1k_tokens": llm_attempt.get("llm_sec_per_1k_tokens") if llm_attempt else 0.0,
+
+                "llm_patch_proposed": llm_attempt.get("llm_patch_proposed") if llm_attempt else 0,
+                "llm_patch_applied": llm_attempt.get("llm_patch_applied") if llm_attempt else 0,
+                "llm_quality": round((llm_attempt.get("llm_patch_applied") / llm_attempt.get("llm_patch_proposed")) if llm_attempt and llm_attempt.get("llm_patch_proposed") else 0.0, 3),
+
                 "warnings_count": len(validation_block.get("warnings", [])) if validation_block else 0,
             },
             "target": {
@@ -1232,6 +1319,10 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     llm_actions = None
     llm_model = cfg.get("llm_model", "llama3.1:8b")
     llm_attempt = None
+    llm_apply_actions = None
+    llm_proposed_count = 0
+    llm_applied_count = 0
+
 
     if has_ambiguous and not manual_mode:
         use_llm = input("Sono presenti ambiguità. Usare LLM? (y/n): ").strip().lower() == "y"
@@ -1242,12 +1333,12 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
             llm_actions = filter_low_confidence(llm_actions, threshold=0.9)
             llm_contexts = extract_llm_contexts(mr)
             llm_actions = filter_by_candidate_gap(llm_actions, llm_contexts, min_gap=0.10)
+            llm_proposed_count = len(llm_actions.get("actions", []))
 
             llm_actions_path = run_dir / "llm_patch_actions.json"
             with open(llm_actions_path, "w", encoding="utf-8") as f:
                 json.dump(llm_actions, f, indent=2, ensure_ascii=False)
 
-            llm_apply_actions = None
             apply_llm = input("Generate patch LLM: applicarle? (y/n): ").strip().lower() == "y"
             if apply_llm:
                 llm_path = input("Percorso patch LLM (default: appena generate): ").strip()
@@ -1259,7 +1350,14 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
 
     if llm_apply_actions:
         actions_payload = merge_actions_dedup(actions_payload, llm_apply_actions)
+        llm_applied_count = count_llm_applied(actions_payload, llm_actions)
 
+    if llm_attempt is None:
+        llm_attempt = {}
+
+    llm_attempt["llm_patch_proposed"] = llm_proposed_count
+    llm_attempt["llm_patch_applied"] = llm_applied_count
+   
     template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = \
         build_patch_and_validation(cfg, artifact_type, upsert_fn, diff_fn, actions_payload_override=actions_payload)
 
