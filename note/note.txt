@@ -16,6 +16,8 @@ alembic revision -m "Create table" --> comando per creare migrazione [ va fatto 
 uv run alembic upgrade head --> invia utlima migrazione
 alembic history --> mostra commit fatti
 
+## ESEGUIRE SERVER BACKEND API
+PYTHONPATH=/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP uvicorn backend_api.server_api:app --reload
 ------------------------------------------------------------------------------------------------------------------------------------
 ## METRICHE PER LLM
 

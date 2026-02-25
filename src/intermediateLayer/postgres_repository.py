@@ -47,6 +47,16 @@ class RunRepository():
             with conn.cursor() as cur:
                 cur.execute(sql, params)
     
+    def get_all_run_ids(self) -> List[str]:
+        # ritorna tutti i run_id presenti nel db
+
+        sql = "SELECT run_id FROM runs ORDER BY created_at DESC"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql)
+                rows = cur.fetchall()
+        return [r[0] for r in rows]
+
     def get_run(self, run_id: str) -> Dict[str, Any]:
         # ritorna il run report dal run_id
 

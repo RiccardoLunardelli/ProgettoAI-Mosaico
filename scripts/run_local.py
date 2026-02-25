@@ -11,7 +11,7 @@ import time
 import requests
 
 TIMEZONE = timezone(timedelta(hours=1))
-PATCH_ROOT = Path("mcp_server/patch")
+PATCH_ROOT = Path("mcp_server/patch") 
 RUNS_ROOT = Path("runs")
 ollama_call_count = 0
 
@@ -20,7 +20,7 @@ ARTIFACTS = {
         "input_path": "",
         "patch_path":"/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/mcp_server/patch/dictionary/manual_patch_addabr.json",
         "matching_path": "output_dir/matching_report_v0.1.json",
-        "template_base_path": "data/template_base_v0.1.json",
+        "template_base_path": "data//template_base/template_base_v0.1.json",
     },
     "kb": {
         "input_path": "",
@@ -30,14 +30,14 @@ ARTIFACTS = {
     "template_base": {
         "input_path": "",
         "patch_path": "",
-        "template_base_path": "data/template_base_v0.1.json",
+        "template_base_path": "data//template_base/template_base_v0.1.json",
         "matching_path": "output_dir/matching_report_v0.1.json",
     },
     "template": {
         "input_path": "",
         "matching_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v0.1.json",
         "actions_path": "mcp_server/patch/template_real/manual_actions.json",
-        "template_base_path": "data/template_base_v0.1.json",
+        "template_base_path": "data//template_base/template_base_v0.1.json",
     },
     "device_list": {
         "input_path": "",
@@ -1231,13 +1231,14 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     llm_actions = None
     llm_model = cfg.get("llm_model", "llama3.1:8b")
     llm_attempt = None
+    llm_actions_path = None
     llm_apply_actions = None
     llm_proposed_count = 0
     llm_applied_count = 0
 
 
     if has_ambiguous and not manual_mode:
-        use_llm = input("Sono presenti ambiguità. Usare LLM? (y/n): ").strip().lower() == "y"
+        use_llm = cfg.get("use_llm", False)
         if use_llm:
             print("Generating LLM proposed actions...")
             llm_actions, _, llm_attempt = llm_propose_actions(llm_model, mr)
@@ -1307,7 +1308,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
         for a in actions_payload.get("actions", []):
             print(f"- {a.get('type')} {a.get('section')}/{a.get('source_key')} -> {a.get('target', {}).get('concept_id')}")
 
-    if llm_attempt:
+    if llm_attempt and llm_actions:
         print("\n----------------LLM PROPOSED ACTIONS----------------")
         for a in llm_actions.get("actions", []):
             print(f"- {a.get('type')} {a.get('section')}/{a.get('source_key')}/{a.get('evidence').get('normalized_text')} -> {a.get('target', {}).get('concept_id')} | Confidence: {a.get('confidence')}")
