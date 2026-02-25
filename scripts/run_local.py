@@ -384,7 +384,6 @@ def llm_propose_actions(model: str, mr: dict, batch_size: int = 3) -> dict:
         })
     
     # ----TEMPO--------
-    # normalizzazione: ns -> s
     totals = aggregate_ollama_metrics(call_metrics_list) # ritorna total_duration_sec, prompt_eval_duration_sec, eval_duration_sec, load_duration_sec
     time_metrics = compute_time_metrics(len(attempts), totals) # ritorna llm_total_sec, llm_avg_sec, llm_calls, llm_load_sec
 
