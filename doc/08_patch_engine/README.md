@@ -190,7 +190,7 @@ In tutti i casi:
 ## Script coinvolti
 
 ### Orchestratore
-**File:** `scripts/run_local.py`  
+**File:** `scripts/orchestrator.py`  
 Scopo: orchestrarе l’intero flusso di validazione, dry‑run e commit, generare il `run_report.json`
 e applicare le policy (dry‑run obbligatorio, schema‑first, patch‑based).
 Documentazione in `orchestratore/README.md` 

@@ -7,7 +7,7 @@ Descrivere come eseguire il progetto in locale e quali parametri configurare.
 
 ## Script principali
 - **`test/run_completa.py`** → pipeline completa interattiva  
-- **`scripts/run_local.py`** → orchestratore patch e validazioni  
+- **`scripts/orchestrator.py`** → orchestratore patch e validazioni  
 - **`src/matcher/matcher.py`** → matching engine  
 - **`src/parser/normalizer.py`** → normalizzazione  
 

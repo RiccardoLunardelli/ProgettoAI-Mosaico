@@ -3,7 +3,7 @@
 ## Flusso
 
 1. **Avvio orchestratore**
-   - `python3 -m scripts.run_local`
+   - `python3 -m scripts.orchestrator`
 
 2. **Scelta operazione**
    - `1--> diz. 2--> kb. 3--> template. 4--> template_base. 5--> device_list:`

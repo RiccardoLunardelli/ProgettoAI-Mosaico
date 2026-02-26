@@ -69,7 +69,17 @@ class RunRepository():
                 if row is None:
                     raise KeyError(f"run_id not found: {run_id}")
                 return row["report"]
-            
+
+    def get_run_id_by_user_id(self, user_id: str) -> List[str]:
+        # ritorna tutte le run di uno user
+
+        sql =  "SELECT run_id FROM runs WHERE user_id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (user_id,))
+                row = cur.fetchall()
+            return [r[0] for r in row]
+
     def compare_run(self, run_id_a: str, run_id_b: str) -> Dict[str, Any]:
         # confronta due run 
 

@@ -25,7 +25,7 @@ Questo progetto crea un livello semantico stabile, basato su:
 ---
 
 ## Architettura (in breve)
-- `run_local.py`: orchestratore del flusso
+- `orchestrator.py`: orchestratore del flusso
 - `mcp_server`: gatekeeper per validazioni, patch, I/O sicuro
 - `matcher.py`: matching deterministico + fuzzy
 - LLM: solo fallback per ambiguità (mai commit automatico)

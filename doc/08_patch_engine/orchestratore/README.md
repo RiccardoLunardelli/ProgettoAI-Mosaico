@@ -1,6 +1,6 @@
 # Orchestratore 
 
-**File:** `scripts/run_local.py`  
+**File:** `scripts/orchestrator.py`  
 Scopo: orchestrare patch, validazione, dry‑run, commit e generare `run_report.json`.
 
 ---

@@ -220,6 +220,16 @@ def normalize_template(raw_template: Dict[str, Any], schema: Dict[str, Any]) -> 
         support_only=support,
     )
 
+def normalization(template_path: str, schema_tipo_path: str) -> Dict[str, Any]:
+    # normalizzazione 
+    
+    raw_template = load_json(template_path)
+    schema = load_json(schema_tipo_path)
+    normalized = normalize_template(raw_template, schema)
+    normalized_payload = model_dump(normalized)
+
+    return normalized_payload
+
 def main() -> None:
     # Entry point --> carica input, normalizza e screive output
 

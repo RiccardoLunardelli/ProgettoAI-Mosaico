@@ -39,7 +39,7 @@ Il sistema introduce:
 ---
 
 ## Architettura in breve..
-- **Orchestratore** (`run_local.py`): flusso, policy, report
+- **Orchestratore** (`orchestrator.py`): flusso, policy, report
 - **MCP Server**: validazione, patch, guardrail
 - **Matching Engine**: deterministico + fuzzy
 - **LLM Proposer**: solo su ambigui, senza auto‑commit

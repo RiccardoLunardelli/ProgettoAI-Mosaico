@@ -8,9 +8,9 @@ import sys
 
 from src.parser.normalizer import load_json, normalize_template, model_dump
 from src.matcher.matcher import run_matching
-from scripts.run_local import run_patch
+from scripts.orchestrator import run_patch
 from mcp_server.server import template_apply_patch, dictionary_upsert, kb_upsert_mapping
-from scripts.run_local import summarize_template_real_diff, summarize_dictionary_diff,summarize_kb_diff,summarize_template_base_diff, run_device_list, \
+from scripts.orchestrator import summarize_template_real_diff, summarize_dictionary_diff,summarize_kb_diff,summarize_template_base_diff, run_device_list, \
                                 ARTIFACTS, build_dictionary_patch_from_run_report, build_dictionary_suggestions_from_run_report
 from src.intermediateLayer.postgres_repository import RunRepository, UsersRepository, BatchesRepository
 
