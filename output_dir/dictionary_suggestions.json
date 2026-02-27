@@ -3,243 +3,51 @@
     "category": "measurement",
     "suggestions": [
       {
-        "term": "valore sonda p4 temperatura",
+        "term": "trasduttore aspirazione",
         "candidates": []
       },
       {
-        "term": "valore sonda di visualizzazione",
+        "term": "reg num 514",
         "candidates": []
       },
       {
-        "term": "valore sonda di regolazione",
+        "term": "reg num 515",
         "candidates": []
       },
       {
-        "term": "valore sonda 1 defrost",
+        "term": "reg num 516",
         "candidates": []
       },
       {
-        "term": "valore sonda 2 defrost",
+        "term": "reg num 2048",
         "candidates": []
       },
       {
-        "term": "setpoint",
+        "term": "reg num 2049",
         "candidates": []
       },
       {
-        "term": "set operativo di superheating",
+        "term": "reg num 2050",
         "candidates": []
       },
       {
-        "term": "apertura valvola",
+        "term": "reg num 1280",
         "candidates": []
       },
       {
-        "term": "% uscita analogica write sole se tra=ual",
+        "term": "reg num 257",
         "candidates": []
       },
       {
-        "term": "valore pressione regolazione locale o remota relativa o assoluta",
+        "term": "reg num 259",
         "candidates": []
       },
       {
-        "term": "valore sonda cablaggio caldo p4",
+        "term": "reg num 3328",
         "candidates": []
       },
       {
-        "term": "set di regolazione parametro set",
-        "candidates": []
-      },
-      {
-        "term": "set di regolazione sh parametro sh",
-        "candidates": []
-      },
-      {
-        "term": "set di regolazione supervisione",
-        "candidates": []
-      },
-      {
-        "term": "set di superheating supervisione",
-        "candidates": []
-      },
-      {
-        "term": "set dew point per funzione cavi caldi",
-        "candidates": []
-      },
-      {
-        "term": "ingresso digitale 1",
-        "candidates": []
-      },
-      {
-        "term": "ingresso digitale 2",
-        "candidates": []
-      },
-      {
-        "term": "ingresso digitale 3",
-        "candidates": []
-      },
-      {
-        "term": "uscita digitale allarme",
-        "candidates": []
-      },
-      {
-        "term": "luci",
-        "candidates": []
-      },
-      {
-        "term": "uscita digitale ausiliario",
-        "candidates": []
-      },
-      {
-        "term": "uscita digitale zona neutro",
-        "candidates": []
-      },
-      {
-        "term": "uscita digitale rele on off",
-        "candidates": []
-      },
-      {
-        "term": "uscita digitale anti surriscaldamento lieve",
-        "candidates": []
-      },
-      {
-        "term": "ciclo continuo",
-        "candidates": []
-      },
-      {
-        "term": "blocco tastiera",
-        "candidates": []
-      },
-      {
-        "term": "tacitazione allarmi",
-        "candidates": []
-      },
-      {
-        "term": "energy saving",
-        "candidates": []
-      },
-      {
-        "term": "allarme fermata forzata con termostatazione attiva stp",
-        "candidates": []
-      },
-      {
-        "term": "evento surriscaldamento fuori range",
-        "candidates": []
-      },
-      {
-        "term": "evento surriscaldamento non disponibile",
-        "candidates": []
-      },
-      {
-        "term": "evento surriscaldamento in errore",
-        "candidates": []
-      },
-      {
-        "term": "evento power failure",
-        "candidates": []
-      },
-      {
-        "term": "evento parametri modificati 0=no 1=si",
-        "candidates": []
-      },
-      {
-        "term": "evento regolazione attiva per 90 minuti dopo defrost 0=no 1=si",
-        "candidates": []
-      },
-      {
-        "term": "stato ritardo avviamento ventole",
-        "candidates": []
-      },
-      {
-        "term": "stato attività modbus 0=no 1=si",
-        "candidates": []
-      },
-      {
-        "term": "stato funzione holiday",
-        "candidates": []
-      },
-      {
-        "term": "allarme sonda pressione remota 4",
-        "candidates": []
-      },
-      {
-        "term": "allarme sonda p1",
-        "candidates": []
-      },
-      {
-        "term": "allarme sonda p2",
-        "candidates": []
-      },
-      {
-        "term": "allarme sonda p3",
-        "candidates": []
-      },
-      {
-        "term": "allarme sonda p4",
-        "candidates": []
-      },
-      {
-        "term": "allarme sonda p5",
-        "candidates": []
-      },
-      {
-        "term": "allarme sonda p6",
-        "candidates": []
-      },
-      {
-        "term": "allarme orologio failure",
-        "candidates": []
-      },
-      {
-        "term": "allarme orologio rtc data lost",
-        "candidates": []
-      },
-      {
-        "term": "allarme di bassa temperatura sonda 1",
-        "candidates": []
-      },
-      {
-        "term": "allarme di alta temperatura sonda 1",
-        "candidates": []
-      },
-      {
-        "term": "allarme grave raggiungimento n max pause msn",
-        "candidates": []
-      },
-      {
-        "term": "allarme esterno",
-        "candidates": []
-      },
-      {
-        "term": "allarme grave",
-        "candidates": []
-      },
-      {
-        "term": "allarme pressostato 1",
-        "candidates": []
-      },
-      {
-        "term": "allarme di minimo surriscaldamento",
-        "candidates": []
-      },
-      {
-        "term": "allarme di massimo surriscaldamento",
-        "candidates": []
-      },
-      {
-        "term": "allarme di alta pressione",
-        "candidates": []
-      },
-      {
-        "term": "allarme di bassa pressione",
-        "candidates": []
-      },
-      {
-        "term": "allarme eeprom",
-        "candidates": []
-      },
-      {
-        "term": "allarme sonda pressione remota",
+        "term": "reg num 3329",
         "candidates": []
       }
     ]
@@ -248,111 +56,275 @@
     "category": "parameter",
     "suggestions": [
       {
-        "term": "tempo integrale pi temperatura del banco",
+        "term": "configurazione carico 1",
         "candidates": []
       },
       {
-        "term": "attivazione/disattivazione della regolazione continua",
+        "term": "configurazione carico 2",
         "candidates": []
       },
       {
-        "term": "non usare",
+        "term": "configurazione carico 3",
         "candidates": []
       },
       {
-        "term": "non usare",
+        "term": "configurazione carico 4",
         "candidates": []
       },
       {
-        "term": "non usare",
+        "term": "configurazione carico 5",
         "candidates": []
       },
       {
-        "term": "non usare",
+        "term": "configurazione carico 6",
         "candidates": []
       },
       {
-        "term": "ritardo attivazione uscite all accensione",
+        "term": "tipo di compressore",
         "candidates": []
       },
       {
-        "term": "ritardo antipendolazione",
+        "term": "polarita uscita valvola",
         "candidates": []
       },
       {
-        "term": "durata ciclo continuo",
+        "term": "potenza del compressore 1",
         "candidates": []
       },
       {
-        "term": "tempo compressore on con sonda guasta",
+        "term": "potenza del compressore 2",
         "candidates": []
       },
       {
-        "term": "tempo compressore off con sonda guasta",
+        "term": "potenza del compressore 3",
         "candidates": []
       },
       {
-        "term": "unita di misura",
+        "term": "potenza del compressore 4",
         "candidates": []
       },
       {
-        "term": "modo di utilizzo della pressione",
+        "term": "potenza del compressore 5",
         "candidates": []
       },
       {
-        "term": "unit di misura della pressione",
+        "term": "potenza del compressore 6",
         "candidates": []
       },
       {
-        "term": "modo di visualizzazione della pressione",
+        "term": "tipo di freon",
         "candidates": []
       },
       {
-        "term": "risoluzione solo per c",
+        "term": "tipo di regolazione zona neutra o banda proporzionale",
         "candidates": []
       },
       {
-        "term": "visualizzazione di default",
+        "term": "tipo di regolazione freddo / caldo",
         "candidates": []
       },
       {
-        "term": "visualizzazione su x rep",
+        "term": "tipo di sequenza del compressore",
         "candidates": []
       },
       {
-        "term": "ritardo visualizzazione",
+        "term": "tipo di sequenza della ventola",
         "candidates": []
       },
       {
-        "term": "percentuale sonda virtuale 100%=rpa 0%=rpb",
+        "term": "tipo di sonda p1",
         "candidates": []
       },
       {
-        "term": "tipo di gas",
+        "term": "lettura 4ma",
         "candidates": []
       },
       {
-        "term": "abilitazione surriscaldamento auto adattivo",
+        "term": "lettura 20ma",
         "candidates": []
       },
       {
-        "term": "superheat automatico",
+        "term": "calibrazione della sonda",
         "candidates": []
       },
       {
-        "term": "controllo larghezza banda surriscaldamento",
+        "term": "presenza sonda p2",
         "candidates": []
       },
       {
-        "term": "tempo minimo controllo surriscaldamento",
+        "term": "tipo di sonda p2",
         "candidates": []
       },
       {
-        "term": "limito minimo controllo apertura valvola",
+        "term": "lettura 4ma ventola",
         "candidates": []
       },
       {
-        "term": "periodo di ciclo",
+        "term": "lettura 20ma ventola",
+        "candidates": []
+      },
+      {
+        "term": "calibrazione della sonda ventola",
+        "candidates": []
+      },
+      {
+        "term": "polarita interruttore a bassa pressione",
+        "candidates": []
+      },
+      {
+        "term": "polarita dell interruttore di alta pressione",
+        "candidates": []
+      },
+      {
+        "term": "polarita d ingresso digitale configurabile",
+        "candidates": []
+      },
+      {
+        "term": "funzione di ingresso digitale configurabile",
+        "candidates": []
+      },
+      {
+        "term": "ritardo dell ingresso digitale configurabile",
+        "candidates": []
+      },
+      {
+        "term": "ripristino manuale per allarme compressore / ventilatore",
+        "candidates": []
+      },
+      {
+        "term": "visualizzazione dell unita di misura",
+        "candidates": []
+      },
+      {
+        "term": "risoluzione c",
+        "candidates": []
+      },
+      {
+        "term": "visualizzazione predefinita sul display inferiore",
+        "candidates": []
+      },
+      {
+        "term": "formato sonda visualizzata sul display inferiore",
+        "candidates": []
+      },
+      {
+        "term": "modalita di visualizzazione della pressione",
+        "candidates": []
+      },
+      {
+        "term": "banda proporzionale per la regolazione dei compressori",
+        "candidates": []
+      },
+      {
+        "term": "regolazione per il risparmio energetico dei compressori",
+        "candidates": []
+      },
+      {
+        "term": "ritardo minimo tra 2 accensioni dello stesso compressore",
+        "candidates": []
+      },
+      {
+        "term": "ritardo tra lo spegnimento e l accensione dello stesso compressore",
+        "candidates": []
+      },
+      {
+        "term": "tempo di ritardo tra l inserimento di due carichi diversi",
+        "candidates": []
+      },
+      {
+        "term": "tempo di ritardo tra lo spegnimento di due diversi compressori",
+        "candidates": []
+      },
+      {
+        "term": "tempo minimo in cui uno stage rimane on",
+        "candidates": []
+      },
+      {
+        "term": "tempo massimo in cui uno stage rimane acceso",
+        "candidates": []
+      },
+      {
+        "term": "param48",
+        "candidates": []
+      },
+      {
+        "term": "param49",
+        "candidates": []
+      },
+      {
+        "term": "ritardo all accensione",
+        "candidates": []
+      },
+      {
+        "term": "banda proporzionale per la regolazione della ventola",
+        "candidates": []
+      },
+      {
+        "term": "tempo di ritardo tra l inserimento di due diverse ventole",
+        "candidates": []
+      },
+      {
+        "term": "tempo di ritardo tra lo spegnimento di due diverse ventole",
+        "candidates": []
+      },
+      {
+        "term": "ritardo sonda di allarme all accensione",
+        "candidates": []
+      },
+      {
+        "term": "limite inferiore per allarme pressione compressori",
+        "candidates": []
+      },
+      {
+        "term": "limite superiore per allarme pressione compressori",
+        "candidates": []
+      },
+      {
+        "term": "ritardo allarme pressione / temperatura compressori",
+        "candidates": []
+      },
+      {
+        "term": "regolazione allarme ore lavoro",
+        "candidates": []
+      },
+      {
+        "term": "attivazioni massime del pressostato",
+        "candidates": []
+      },
+      {
+        "term": "tempo di attivazione del pressostato",
+        "candidates": []
+      },
+      {
+        "term": "compressori on con sonda guasta",
+        "candidates": []
+      },
+      {
+        "term": "potenza utilizzata con errori",
+        "candidates": []
+      },
+      {
+        "term": "set allarme bassa pressione",
+        "candidates": []
+      },
+      {
+        "term": "set allarme alta pressione",
+        "candidates": []
+      },
+      {
+        "term": "ritardo allarme pressione",
+        "candidates": []
+      },
+      {
+        "term": "attivazioni massime del pressostato del ventilatore",
+        "candidates": []
+      },
+      {
+        "term": "tempo di attivazione del pressostato della ventola",
+        "candidates": []
+      },
+      {
+        "term": "ventola accesa con sonda guasta",
         "candidates": []
       },
       {
@@ -360,595 +332,103 @@
         "candidates": []
       },
       {
-        "term": "offset di banda",
+        "term": "modalita di lavoro dell uscita analogica",
         "candidates": []
       },
       {
-        "term": "tempo integrale",
+        "term": "sonda per uscita analogica",
         "candidates": []
       },
       {
-        "term": "tempo derivato",
+        "term": "limite inferiore della scala per l uscita analogica",
         "candidates": []
       },
       {
-        "term": "percentuale di apertura in errore sonda",
+        "term": "limite superiore della scala per uscita analogica",
         "candidates": []
       },
       {
-        "term": "ritardo chiusura valvola dopo errore sonda 240 = on",
+        "term": "valore minimo dell uscita analogica",
         "candidates": []
       },
       {
-        "term": "percentuale di apertura durante la fase di start",
+        "term": "valore uscita analogica dopo accensione compressore",
         "candidates": []
       },
       {
-        "term": "durata funzione di start",
+        "term": "valore uscita analogica dopo spegnimento compressore",
         "candidates": []
       },
       {
-        "term": "percentuale di aperture dopo il defrost",
+        "term": "percentuale di uscita analogica in caso di guasto della sonda",
         "candidates": []
       },
       {
-        "term": "durata funzione post defrost",
+        "term": "ritardo tra l uscita dalla zona neutra e l inizio della regolazione",
         "candidates": []
       },
       {
-        "term": "massima percentuale di aperture della valvola",
+        "term": "tempo di innalzamento dell uscita analogica da a0m a 20ma",
         "candidates": []
       },
       {
-        "term": "ritardo disattivazione valvola dopo disattivazione consenso alla regolazione",
+        "term": "tempo di permanenza dell uscita analogica prima dell attivazione di un altra uscita",
         "candidates": []
       },
       {
-        "term": "percentuale di apertura forzata 101=nu",
+        "term": "ritardo tra l uscita dalla zona neutra e l inizio della riduzione dell uscita analogica",
         "candidates": []
       },
       {
-        "term": "valore di pressione a 4ma o a 0v vedi manuale",
+        "term": "tempo di caduta dell uscita analogica",
         "candidates": []
       },
       {
-        "term": "valore di pressione a 20ma o a 5v vedi manuale",
+        "term": "tempo di permanenza dell uscita analogica prima della disattivazione di un uscita",
         "candidates": []
       },
       {
-        "term": "limit inferiore di pressione per il calcolo del surriscaldamento",
+        "term": "attivazione dell uscita trigger",
         "candidates": []
       },
       {
-        "term": "soglia massima pressione di aspirazione",
+        "term": "sonda per uscita trigger",
         "candidates": []
       },
       {
-        "term": "soglia minima pressione di aspirazione",
+        "term": "limite inferiore della scala per l uscita trigger",
         "candidates": []
       },
       {
-        "term": "variazione di aperture durante le fasi di mop lop",
+        "term": "limite scala superiore per l uscita trigger",
         "candidates": []
       },
       {
-        "term": "allarme di massimo surriscaldamento",
+        "term": "valore minimo dell uscita trigger",
         "candidates": []
       },
       {
-        "term": "allarme di minimo surriscaldamento",
+        "term": "percentuale di uscita trigger in caso di errore della sonda",
         "candidates": []
       },
       {
-        "term": "isteresi rientro allarme di surriscaldamento",
+        "term": "silenziamento relè di allarme",
         "candidates": []
       },
       {
-        "term": "ritardo attivazione allarme di surriscaldamento",
+        "term": "relè di allarme di polarita",
         "candidates": []
       },
       {
-        "term": "costante di fast recovery",
+        "term": "funzione off abilitata",
         "candidates": []
       },
       {
-        "term": "filtro lettura pressione",
+        "term": "indirizzo seriale compressori",
         "candidates": []
       },
       {
-        "term": "tempo di reazione 0=automatico",
-        "candidates": []
-      },
-      {
-        "term": "non usare",
-        "candidates": []
-      },
-      {
-        "term": "percentuale sonda sbrinamento virtuale 100=dpa 0 =dpb",
-        "candidates": []
-      },
-      {
-        "term": "time out per sbrinamento termostatato",
-        "candidates": []
-      },
-      {
-        "term": "attivazione funzione sbrinamento con 2 sonde",
-        "candidates": []
-      },
-      {
-        "term": "ritardo aggiornamento display dopo defrost",
-        "candidates": []
-      },
-      {
-        "term": "tempo di gocciolamento",
-        "candidates": []
-      },
-      {
-        "term": "sbrinamento all accensione",
-        "candidates": []
-      },
-      {
-        "term": "ventole sonda a",
-        "candidates": []
-      },
-      {
-        "term": "ventole sonda b",
-        "candidates": []
-      },
-      {
-        "term": "percentuale sonda virtuale gestione ventole 100=fpa 0=fpb",
-        "candidates": []
-      },
-      {
-        "term": "modalita funzionamento ventole",
-        "candidates": []
-      },
-      {
-        "term": "funzione umidita funzionamento ventilatore",
-        "candidates": []
-      },
-      {
-        "term": "tempo ventole on",
-        "candidates": []
-      },
-      {
-        "term": "tempo ventole off",
-        "candidates": []
-      },
-      {
-        "term": "tipo di regolazione con uscita analogica",
-        "candidates": []
-      },
-      {
-        "term": "valore fisso per uscita analogica",
-        "candidates": []
-      },
-      {
-        "term": "valore di dew point di default",
-        "candidates": []
-      },
-      {
-        "term": "valore minimo uscita analogica",
-        "candidates": []
-      },
-      {
-        "term": "valore massimo uscita analogica",
-        "candidates": []
-      },
-      {
-        "term": "periodo di ciclo per resistenze anti condensanti/tempo attivazione ventole alla massima velocita",
-        "candidates": []
-      },
-      {
-        "term": "ritardo allarme di temperatura sonda ventole",
-        "candidates": []
-      },
-      {
-        "term": "ritardo segnalazione allarmi di temperatura all accensione",
-        "candidates": []
-      },
-      {
-        "term": "ritardo segnalazione allarmi dopo defrost",
-        "candidates": []
-      },
-      {
-        "term": "tempo di esclusione allarmi di temperatura dopo allarme porta aperta",
-        "candidates": []
-      },
-      {
-        "term": "intervallo di stop regolazione 0 = nu",
-        "candidates": []
-      },
-      {
-        "term": "durata pausa di regolazione",
-        "candidates": []
-      },
-      {
-        "term": "numero massimo pause regolazione 0 = nu",
-        "candidates": []
-      },
-      {
-        "term": "tacitazione rele allarme con pressione tasto",
-        "candidates": []
-      },
-      {
-        "term": "configurazione primo relè",
-        "candidates": []
-      },
-      {
-        "term": "configurazione secondo relè",
-        "candidates": []
-      },
-      {
-        "term": "configurazione terzo relè",
-        "candidates": []
-      },
-      {
-        "term": "configurazione quarto relè",
-        "candidates": []
-      },
-      {
-        "term": "configurazione quinto relè",
-        "candidates": []
-      },
-      {
-        "term": "configurazione sesto relè",
-        "candidates": []
-      },
-      {
-        "term": "configurazione uscita modulante",
-        "candidates": []
-      },
-      {
-        "term": "modalita di funzionamento",
-        "candidates": []
-      },
-      {
-        "term": "polarita rele allarme",
-        "candidates": []
-      },
-      {
-        "term": "uscita ausiliaria indipendente dallo stato di on/off",
-        "candidates": []
-      },
-      {
-        "term": "polarita ingresso digitale 1",
-        "candidates": []
-      },
-      {
-        "term": "funzione ingresso digitale 1",
-        "candidates": []
-      },
-      {
-        "term": "intervallo di tempo prima della segnalazione di allarme 1",
-        "candidates": []
-      },
-      {
-        "term": "polarita ingresso digitale 2",
-        "candidates": []
-      },
-      {
-        "term": "funzione ingresso digitale 2",
-        "candidates": []
-      },
-      {
-        "term": "intervallo di tempo prima della segnalazione di allarme 2",
-        "candidates": []
-      },
-      {
-        "term": "polarita ingresso digitale 3",
-        "candidates": []
-      },
-      {
-        "term": "funzione ingresso digitale 3",
-        "candidates": []
-      },
-      {
-        "term": "intervallo di tempo prima della segnalazione di allarme 3",
-        "candidates": []
-      },
-      {
-        "term": "numero massimo interventi pressostato",
-        "candidates": []
-      },
-      {
-        "term": "stato compressore e ventole durante porta aperta",
-        "candidates": []
-      },
-      {
-        "term": "restart regolazione dopo allarme porta aperta doa",
-        "candidates": []
-      },
-      {
-        "term": "presenza schedina orologio",
-        "candidates": []
-      },
-      {
-        "term": "primo giorno settimanale festivo",
-        "candidates": []
-      },
-      {
-        "term": "secondo giorno settimanale festivo",
-        "candidates": []
-      },
-      {
-        "term": "terzo giorno settimanale festivo",
-        "candidates": []
-      },
-      {
-        "term": "orario di inizio ciclo energy saving feriale",
-        "candidates": []
-      },
-      {
-        "term": "durata ciclo energy saving feriale",
-        "candidates": []
-      },
-      {
-        "term": "orario di inizio ciclo energy saving festivo",
-        "candidates": []
-      },
-      {
-        "term": "durata ciclo energy saving festivo",
-        "candidates": []
-      },
-      {
-        "term": "orari di inizio del primo sbrinamento nei giorni feriali",
-        "candidates": []
-      },
-      {
-        "term": "orari di inizio del secondo sbrinamento nei giorni feriali",
-        "candidates": []
-      },
-      {
-        "term": "orari di inizio del terzo sbrinamento nei giorni feriali",
-        "candidates": []
-      },
-      {
-        "term": "orari di inizio del quinto sbrinamento nei giorni feriali",
-        "candidates": []
-      },
-      {
-        "term": "orari di inizio del sesto sbrinamento nei giorni feriali",
-        "candidates": []
-      },
-      {
-        "term": "orari di inizio del primo sbrinamento nei giorni festivi",
-        "candidates": []
-      },
-      {
-        "term": "orari di inizio del secondo sbrinamento nei giorni festivi",
-        "candidates": []
-      },
-      {
-        "term": "orari di inizio del terzo sbrinamento nei giorni festivi",
-        "candidates": []
-      },
-      {
-        "term": "orari di inizio del quinto sbrinamento nei giorni festivi",
-        "candidates": []
-      },
-      {
-        "term": "orari di inizio del sesto sbrinamento nei giorni festivi",
-        "candidates": []
-      },
-      {
-        "term": "tempartura fine sbrinamento 1 sonda1",
-        "candidates": []
-      },
-      {
-        "term": "tempartura fine sbrinamento 2 sonda1",
-        "candidates": []
-      },
-      {
-        "term": "tempartura fine sbrinamento 3 sonda1",
-        "candidates": []
-      },
-      {
-        "term": "tempartura fine sbrinamento 4 sonda1",
-        "candidates": []
-      },
-      {
-        "term": "tempartura fine sbrinamento 5 sonda1",
-        "candidates": []
-      },
-      {
-        "term": "tempartura fine sbrinamento 6 sonda1",
-        "candidates": []
-      },
-      {
-        "term": "tempartura fine sbrinamento 1 sonda2",
-        "candidates": []
-      },
-      {
-        "term": "tempartura fine sbrinamento 2 sonda2",
-        "candidates": []
-      },
-      {
-        "term": "tempartura fine sbrinamento 3 sonda2",
-        "candidates": []
-      },
-      {
-        "term": "tempartura fine sbrinamento 4 sonda2",
-        "candidates": []
-      },
-      {
-        "term": "tempartura fine sbrinamento 5 sonda2",
-        "candidates": []
-      },
-      {
-        "term": "tempartura fine sbrinamento 6 sonda2",
-        "candidates": []
-      },
-      {
-        "term": "tempo di attivazione prima luce durante giorni lavorativi",
-        "candidates": []
-      },
-      {
-        "term": "tempo di attivazione seconda luce durante giorni lavorativi",
-        "candidates": []
-      },
-      {
-        "term": "tempo di attivazione terza luce durante giorni lavorativi",
-        "candidates": []
-      },
-      {
-        "term": "tempo di attivazione quarta luce durante giorni lavorativi",
-        "candidates": []
-      },
-      {
-        "term": "tempo di attivazione quinta luce durante giorni lavorativi",
-        "candidates": []
-      },
-      {
-        "term": "tempo di attivazione sesta luce durante giorni lavorativi",
-        "candidates": []
-      },
-      {
-        "term": "tempo attivazione luci durante i giorni lavorativi",
-        "candidates": []
-      },
-      {
-        "term": "tempo di attivazione prima luce durante giorni festivi",
-        "candidates": []
-      },
-      {
-        "term": "tempo di attivazione seconda luce durante giorni festivi",
-        "candidates": []
-      },
-      {
-        "term": "tempo di attivazione terza luce durante giorni festivi",
-        "candidates": []
-      },
-      {
-        "term": "tempo di attivazione quarta luce durante giorni festivi",
-        "candidates": []
-      },
-      {
-        "term": "tempo di attivazione quinta luce durante giorni festivi",
-        "candidates": []
-      },
-      {
-        "term": "tempo di attivazione sesta luce durante giorni festivi",
-        "candidates": []
-      },
-      {
-        "term": "tempo attivazione luci durante i giorni festivi",
-        "candidates": []
-      },
-      {
-        "term": "selezione sonda di energy saving",
-        "candidates": []
-      },
-      {
-        "term": "attivazione energy saving insieme a spegnimento luci",
-        "candidates": []
-      },
-      {
-        "term": "sincronizzazione display",
-        "candidates": []
-      },
-      {
-        "term": "sincronizzazione on/ff",
-        "candidates": []
-      },
-      {
-        "term": "sincronizzazione luci",
-        "candidates": []
-      },
-      {
-        "term": "sincronizzazione uscita ausiliaria",
-        "candidates": []
-      },
-      {
-        "term": "sincronizzazione funzionamento notturno",
-        "candidates": []
-      },
-      {
-        "term": "visualizzazione sonda remota",
-        "candidates": []
-      },
-      {
-        "term": "sonda di pressone remota",
-        "candidates": []
-      },
-      {
-        "term": "invio sonda p4 in lan",
-        "candidates": []
-      },
-      {
-        "term": "attivazione solenoide da richiesta lan",
-        "candidates": []
-      },
-      {
-        "term": "chiamata freddo in lan sempre abilitata",
-        "candidates": []
-      },
-      {
-        "term": "configurazione sonda 1",
-        "candidates": []
-      },
-      {
-        "term": "calibrazione sonda 1",
-        "candidates": []
-      },
-      {
-        "term": "configurazione sonda 2",
-        "candidates": []
-      },
-      {
-        "term": "calibrazione sonda 2",
-        "candidates": []
-      },
-      {
-        "term": "configurazione sonda 3",
-        "candidates": []
-      },
-      {
-        "term": "calibrazione sonda 3",
-        "candidates": []
-      },
-      {
-        "term": "configurazione sonda 4",
-        "candidates": []
-      },
-      {
-        "term": "calibrazione sonda 4",
-        "candidates": []
-      },
-      {
-        "term": "configurazione sonda 5",
-        "candidates": []
-      },
-      {
-        "term": "calibrazione sonda 5",
-        "candidates": []
-      },
-      {
-        "term": "configurazione sonda 6",
-        "candidates": []
-      },
-      {
-        "term": "calibrazione sonda 6",
-        "candidates": []
-      },
-      {
-        "term": "tempo massimo compressore in on con regolazione peo",
-        "candidates": []
-      },
-      {
-        "term": "indirizzo seriale",
-        "candidates": []
-      },
-      {
-        "term": "configurazione chiave di off",
-        "candidates": []
-      },
-      {
-        "term": "configurazione chiave di luci",
-        "candidates": []
-      },
-      {
-        "term": "baudrate",
+        "term": "indirizzo seriale ventola",
         "candidates": []
       }
     ]
@@ -957,31 +437,43 @@
     "category": "alarm",
     "suggestions": [
       {
-        "term": "allarme orologio failure",
+        "term": "errore sonda 1",
         "candidates": []
       },
       {
-        "term": "allarme orologio rtc data lost",
+        "term": "errore sonda 2",
         "candidates": []
       },
       {
-        "term": "allarme grave raggiungimento n max pause msn",
+        "term": "allarme livello liquido",
         "candidates": []
       },
       {
-        "term": "allarme esterno",
+        "term": "errore eeprom",
         "candidates": []
       },
       {
-        "term": "allarme pressostato 1",
+        "term": "manuntenzione compressore 1",
         "candidates": []
       },
       {
-        "term": "allarme di minimo surriscaldamento",
+        "term": "manuntenzione compressore 2",
         "candidates": []
       },
       {
-        "term": "allarme di massimo surriscaldamento",
+        "term": "manuntenzione compressore 3",
+        "candidates": []
+      },
+      {
+        "term": "manuntenzione compressore 4",
+        "candidates": []
+      },
+      {
+        "term": "manuntenzione compressore 5",
+        "candidates": []
+      },
+      {
+        "term": "manuntenzione compressore 6",
         "candidates": []
       },
       {
@@ -994,15 +486,23 @@
     "category": "command",
     "suggestions": [
       {
-        "term": "accendi dispositivo",
+        "term": "tastiera bloccata",
         "candidates": []
       },
       {
-        "term": "luce on",
+        "term": "tastiera sbloccata",
         "candidates": []
       },
       {
-        "term": "luci off",
+        "term": "allarme muto",
+        "candidates": []
+      },
+      {
+        "term": "energy saving on",
+        "candidates": []
+      },
+      {
+        "term": "energy saving off",
         "candidates": []
       }
     ]
