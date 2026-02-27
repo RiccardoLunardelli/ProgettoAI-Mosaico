@@ -5,7 +5,7 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 import json
 
-from scripts.orchestrator import run_template_pipeline, run_patch, ARTIFACTS, summarize_dictionary_diff, build_dictionary_patch_from_run_report, build_dictionary_suggestions_from_run_report, dictionary_upsert
+from scripts.orchestrator import run_template_pipeline, run_patch, ARTIFACTS, summarize_dictionary_diff, build_dictionary_patch_from_run_report, build_dictionary_suggestions_from_run_report, dictionary_upsert, kb_upsert_mapping, summarize_kb_diff
 from src.validator.validator import load_json
 from src.intermediateLayer.postgres_repository import RunRepository, UsersRepository, BatchesRepository
 from mcp_server.tools.dictionary_tool import _next_versioned_path
@@ -37,6 +37,11 @@ class RunDictionaryRequest(BaseModel):
 class DictionaryEditRequest(BaseModel):
     dictionary_name: str 
     dictionary_json: dict
+
+class RunKbRequest(BaseModel):
+    kb_name: str 
+    validate_only: bool = True 
+    patch_json: dict
 
 
 app = FastAPI()
@@ -220,6 +225,7 @@ def run_template(payload: RunTemplateRequest):
         "ambiguous_count": ambiguous_count
     }
 
+# run dizionario
 @app.post("/run/dictionary")
 def run_dictionary(payload: RunDictionaryRequest):
     input_path = DICTIONARIES_DIR / payload.dictionary_name
@@ -280,6 +286,7 @@ def run_dictionary(payload: RunDictionaryRequest):
     else:
         raise HTTPException(status_code=400, detail="mode must be run_report or manual")
 
+# modifica json editor inline dizionario
 @app.post("/dictionary/edit")
 def edit_dictionary(payload: DictionaryEditRequest):
     input_path = DICTIONARIES_DIR / payload.dictionary_name
@@ -291,3 +298,30 @@ def edit_dictionary(payload: DictionaryEditRequest):
 
     new_path.write_text(json.dumps(payload.dictionary_json, ensure_ascii=False, indent=2), encoding="utf-8")
     return {"status": "ok", "new_file": str(new_path)}   
+
+# run kb
+@app.post("/run/kb")
+def run_kb(payload: RunKbRequest):
+    input_path = KB_DIR / payload.kb_name
+    if not input_path.exists():
+        raise HTTPException(status_code=404, detail="Kb file not exists!")
+
+    cfg = dict(ARTIFACTS["kb"])
+    cfg["input_path"] = str(input_path)
+
+    out_dir = Path("output_dir")
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    patch_path = out_dir / "kb_patch.json"
+    patch_path.write_text(json.dumps(payload.patch_json, ensure_ascii=False, indent=2), encoding="utf-8")
+    cfg["patch_path"] = str(patch_path)
+
+    report_path = run_patch(cfg, "kb", kb_upsert_mapping, summarize_kb_diff, payload.validate_only)
+
+    report = load_json(str(report_path))
+    return {
+        "status": "ok",
+        "run_id": report.get("run_id"),
+        "report_path": str(report_path)
+    }
+
