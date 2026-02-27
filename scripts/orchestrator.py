@@ -945,7 +945,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
         )
         report_path = run_dir / "run_report.json"
         with open(report_path, "w", encoding="utf-8") as f:
-            json.dump(run_report, f, indent=2, ensure_ascii=False)
+            json.dump(run_report, f, indent=2, ensure_ascii=False, default=str)
         return report_path
 
     # ---- TEMPLATE FLOW ----
@@ -1118,6 +1118,8 @@ def run_device_list(cfg: dict, validate) -> None:
     input_path = cfg["input_path"]
     validate_only = validate
 
+    commit = None
+
     # dry-run
     dry = device_list_enrich(path=input_path, dry_run=True)
     preview = dry.get("preview")
@@ -1149,7 +1151,12 @@ def run_device_list(cfg: dict, validate) -> None:
         "device_list_version": device_list_version
     }
 
-    
+    warnings = None
+    if commit and commit.get("warning"):
+        warnings = commit.get("warning")
+    elif dry and dry.get("warning"):
+        warnings = dry.get("warning")
+
     run_report = build_run_report(
         cfg=cfg,
         run_id=run_id,
@@ -1160,7 +1167,7 @@ def run_device_list(cfg: dict, validate) -> None:
         schema_versions=schema_versions,
         committed=committed,
         status=status,
-        validation_block={"status": "ok", "errors": [], "warnings": []},
+        validation_block = {"status": "ok", "errors": [], "warnings": warnings},
         mr=None,
         dictionary_payload=None,
         kb_payload=None,
@@ -1172,7 +1179,7 @@ def run_device_list(cfg: dict, validate) -> None:
 
     report_path = run_dir / "run_report.json"
     with open(report_path, "w", encoding="utf-8") as f:
-        json.dump(run_report, f, indent=2, ensure_ascii=False)
+        json.dump(run_report, f, indent=2, ensure_ascii=False, default=str)
     return report_path
 
 def run_template_pipeline(template_path: str, validate_only: bool, use_llm: bool, config_path: str="config/config.yml"):

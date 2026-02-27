@@ -129,16 +129,25 @@ def device_list_enrich(ctx: MCPContext, path: str, dry_run: bool) -> Dict[str, A
     else:
         out_path = _next_versioned_path(p)
 
+    warnings = []
+
     if dry_run:
         ctx.mark_dry_run(enriched)
         if centrale:
             for desc in centrale:
-                print(f"Richiesta revisione umana per dispositivo 'centrale': {desc}")
+                warning = f"Richiesta revisione umana per dispositivo 'centrale': {desc}"
+                warnings.append(warning)
+                print(warning)
 
         if template_guid:
             print("WARNING: TemplateGUID mancante!")
-        return {"status": "dry_run_ok", "preview": enriched, "output_path": str(out_path)}
+        return {"status": "dry_run_ok", "preview": enriched, "output_path": str(out_path),"warning": warnings if warnings else None}
 
     ctx.require_dry_run(enriched)
     ctx.write_json(out_path, enriched)
-    return {"status": "committed", "output_path": str(out_path)}
+    return {
+        "status": "dry_run_ok",
+        "preview": enriched,
+        "output_path": str(out_path),
+        "warning": warnings if warnings else None
+    }

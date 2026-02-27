@@ -4,8 +4,9 @@ from uuid import uuid4
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 import json
+from  typing import Any
 
-from scripts.orchestrator import run_template_pipeline, run_patch, ARTIFACTS, summarize_dictionary_diff, build_dictionary_patch_from_run_report, build_dictionary_suggestions_from_run_report, dictionary_upsert, kb_upsert_mapping, summarize_kb_diff
+from scripts.orchestrator import run_template_pipeline, run_patch, ARTIFACTS, summarize_dictionary_diff, build_dictionary_patch_from_run_report, build_dictionary_suggestions_from_run_report, dictionary_upsert, kb_upsert_mapping, summarize_kb_diff, template_apply_patch, summarize_template_base_diff, run_device_list
 from src.validator.validator import load_json
 from src.intermediateLayer.postgres_repository import RunRepository, UsersRepository, BatchesRepository
 from mcp_server.tools.dictionary_tool import _next_versioned_path
@@ -43,6 +44,24 @@ class RunKbRequest(BaseModel):
     validate_only: bool = True 
     patch_json: dict
 
+class KbEditRequest(BaseModel):
+    kb_name: str
+    kb_json: dict
+
+class RunTemplateBaseRequest(BaseModel):
+    template_base_name: str 
+    validate_only: bool = True 
+    patch_json: dict
+
+class TemplateBaseEditRequest(BaseModel):
+    template_base_name: str 
+    template_base_json: dict
+
+class RunDeviceListRequest(BaseModel):
+    store: str
+    device_list_name: str
+    validate_only: bool = True 
+
 
 app = FastAPI()
 
@@ -56,7 +75,6 @@ dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password h
 runClass = RunRepository(dsn)
 userClass = UsersRepository(dsn)
 batchClass = BatchesRepository(dsn)
-
 user_id = None
 batch_id = None
 
@@ -79,6 +97,54 @@ def get_file_of_artifact(name: str | None, store: str | None, dl: str | None,  a
     if store: 
         return {"store": store, "name": dl, "content": content}
     return {"name": name, "content": content}
+
+def editor_json_inline(file_name, file_json, file_dir, artifact):
+    # modifica json direttamente da editor
+
+    input_path = file_dir / file_name
+    if not input_path.exists():
+        raise HTTPException(status_code=404, detail=f"{artifact} file not exists!")
+    
+    old_path = input_path
+    new_path = _next_versioned_path(old_path)
+    new_path.write_text(json.dumps(file_json, ensure_ascii=False, indent=2), encoding="utf-8")
+    return {"status": "ok", "new_file": str(new_path)}
+
+def apply_patch(file_name: str | None, store: str | None, patch_json: dict | None, upsert: Any | None, summarize: Any | None, file_dir, artifact: str, patch_file_name: str | None, validate_only: bool):
+    # applica le patch
+
+    if artifact != "device_list":
+        input_path = file_dir / file_name
+        if not input_path.exists():
+            raise HTTPException(status_code=404, detail=f"{file_name} file not exists!")
+        
+        cfg = dict(ARTIFACTS[artifact])
+        cfg["input_path"] = input_path
+
+        out_dir = Path("output_dir")
+        out_dir.mkdir(parents=True, exist_ok=True)
+
+        patch_path = out_dir / patch_file_name
+        patch_path.write_text(json.dumps(patch_json, ensure_ascii=False, indent=2), encoding="utf-8")
+        cfg["patch_path"] = str(patch_path)
+
+        report_path = run_patch(cfg, artifact, upsert, summarize, validate_only)
+        report = load_json(str(report_path))
+
+        return {"status": "ok", "run_id": report.get("run_id"), "report_path": str(report_path)}
+    else:
+        input_path = file_dir / store / file_name
+        if not input_path.exists():
+            raise HTTPException(status_code=404, detail=f"{file_name} not exists")
+
+        cfg = dict(ARTIFACTS[artifact])
+        cfg["input_path"] = input_path
+
+        report_path = run_device_list(cfg, validate_only)
+
+        report = load_json(str(report_path))
+        return {"status": "ok", "run_id": report.get("run_id"), "report_path": str(report_path), "warning": report.get("validation", {}).get("warnings")}
+
 
 #-----ENDOPOINT-------
 @app.get("/")
@@ -289,39 +355,29 @@ def run_dictionary(payload: RunDictionaryRequest):
 # modifica json editor inline dizionario
 @app.post("/dictionary/edit")
 def edit_dictionary(payload: DictionaryEditRequest):
-    input_path = DICTIONARIES_DIR / payload.dictionary_name
-    if not input_path.exists():
-        raise HTTPException(status_code=404, detail="dictionary not found!")
-
-    old_path = input_path
-    new_path = _next_versioned_path(old_path)
-
-    new_path.write_text(json.dumps(payload.dictionary_json, ensure_ascii=False, indent=2), encoding="utf-8")
-    return {"status": "ok", "new_file": str(new_path)}   
+    return editor_json_inline(payload.dictionary_name, payload.dictionary_json, DICTIONARIES_DIR, "dictionary") 
 
 # run kb
 @app.post("/run/kb")
 def run_kb(payload: RunKbRequest):
-    input_path = KB_DIR / payload.kb_name
-    if not input_path.exists():
-        raise HTTPException(status_code=404, detail="Kb file not exists!")
+    return apply_patch(payload.kb_name, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, KB_DIR, "kb", "kb_patch.json", payload.validate_only)
 
-    cfg = dict(ARTIFACTS["kb"])
-    cfg["input_path"] = str(input_path)
+# modifica json editor inline kb
+@app.post("/kb/edit")
+def edit_kb(payload: KbEditRequest):
+    return editor_json_inline(payload.kb_name, payload.kb_json, KB_DIR, "kb")
 
-    out_dir = Path("output_dir")
-    out_dir.mkdir(parents=True, exist_ok=True)
+# run template base
+@app.post("/run/template_base")
+def run_template_base(payload: RunTemplateBaseRequest):
+    return apply_patch(payload.template_base_name, payload.patch_json, template_apply_patch, summarize_template_base_diff, TEMPLATE_BASE_DIR, "template_base", "template_base_patch.json", payload.validate_only)
 
-    patch_path = out_dir / "kb_patch.json"
-    patch_path.write_text(json.dumps(payload.patch_json, ensure_ascii=False, indent=2), encoding="utf-8")
-    cfg["patch_path"] = str(patch_path)
+# modifica json editor inline template base
+@app.post("/template_base/edit")
+def edit_template_base(payload: TemplateBaseEditRequest):
+    return editor_json_inline(payload.template_base_name, payload.template_base_json, TEMPLATE_BASE_DIR, "template_base")
 
-    report_path = run_patch(cfg, "kb", kb_upsert_mapping, summarize_kb_diff, payload.validate_only)
-
-    report = load_json(str(report_path))
-    return {
-        "status": "ok",
-        "run_id": report.get("run_id"),
-        "report_path": str(report_path)
-    }
-
+# run device list
+@app.post("/run/device_list")
+def run_deviceList(payload: RunDeviceListRequest):
+    return apply_patch(payload.device_list_name, payload.store, None, None, None, PVS_DIR, "device_list", None, payload.validate_only)
