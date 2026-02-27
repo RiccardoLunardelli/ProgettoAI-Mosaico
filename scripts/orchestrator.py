@@ -931,6 +931,14 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
             validate_only = True
 
         output_path, committed, status, _ = apply_commit(input_path, template_patch, diff, validate_only, upsert_fn)
+        if artifact_type == "dictionary":
+            ARTIFACTS["dictionary"]["input_path"] = output_path
+        elif artifact_type == "kb":
+            ARTIFACTS["kb"]["input_path"] = output_path
+        elif artifact_type == "template_base":
+            template_base_path = output_path
+            ARTIFACTS["template_base"]["input_path"] = output_path
+
         schema_versions, dict_payload, kb_payload, tb_version = build_report_context(artifact_type, None, template_base_path)
         schema_versions = build_artifact_versions(artifact_type, dict_payload=dict_payload, kb_payload=kb_payload, template_base_version=tb_version)
 

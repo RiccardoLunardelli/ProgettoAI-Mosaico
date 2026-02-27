@@ -42,6 +42,11 @@ def _next_versioned_path(path: Path) -> Path:
     major, minor = int(m.group(1)), int(m.group(2)) # 0.1 --> major = 0, minor= 1
     return path.with_name(path.name.replace(f"_v{major}.{minor}.json", f"_v{major}.{minor+1}.json"))
 
+def _extract_version_from_path(path: Path) -> str | None:
+    m = re.search(r"_v(\d+\.\d+)\.json$", path.name)
+    return m.group(1) if m else None
+
+
 def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) -> Dict:
     # Inserisce/aggiorna una entry nel dizionario
 
@@ -184,6 +189,8 @@ def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
     ctx.schema_validate("dictionary", new_dict)
 
     output_path = _next_versioned_path(p)
+    new_dict["dictionary_version"] = _extract_version_from_path(output_path)
+
     ctx.write_json(output_path, new_dict)
 
     return {"status": "committed", "output_path": str(output_path)}

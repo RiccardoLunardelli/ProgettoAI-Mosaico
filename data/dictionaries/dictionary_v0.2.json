@@ -1,5 +1,5 @@
 {
-  "dictionary_version": "0.1",
+  "dictionary_version": "0.2",
   "language": [
     "it",
     "en"
@@ -85,7 +85,7 @@
     {
       "concept_id": "temp_defrost",
       "category": "measurement",
-      "semantic_category": "temperature",
+      "semantic_category": "pressione",
       "synonyms": {
         "it": [
           "temperatura di sbrinamento",
@@ -501,21 +501,6 @@
         "en": []
       },
       "abbreviations": [],
-      "patterns": []
-    },
-    {
-      "concept_id": "prova",
-      "category": "prova",
-      "semantic_category": "prova",
-      "synonyms": {
-        "it": [
-          "provetta"
-        ],
-        "en": []
-      },
-      "abbreviations": [
-        "pr"
-      ],
       "patterns": []
     }
   ]

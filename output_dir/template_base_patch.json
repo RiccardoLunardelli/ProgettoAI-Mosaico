@@ -4,13 +4,13 @@
     {
       "op": "add_base_concept",
       "category_id": "measurement",
-      "concept_id": "temp_probe",
-      "semantic_category": "temperature",
+      "concept_id": "prova temperatura 45",
+      "semantic_category": "456",
       "label": {
-        "it": "Temperatura sonda",
+        "it": "Temperatura provaaa",
         "en": "Probe temperature"
       },
-      "description": "Temperatura rilevata da una sonda generica."
+      "description": "Temperatura provad."
     }
   ]
 }

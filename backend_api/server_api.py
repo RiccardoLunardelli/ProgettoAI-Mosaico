@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, UUID4
 from uuid import uuid4
 from datetime import datetime, timezone, timedelta

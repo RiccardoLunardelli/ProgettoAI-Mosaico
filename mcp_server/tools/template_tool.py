@@ -1,7 +1,7 @@
 from typing import Any, Dict
 from ..core import MCPContext
 import copy
-from .dictionary_tool import _next_versioned_path
+from .dictionary_tool import _next_versioned_path, _extract_version_from_path
 from pathlib import Path
 
 def template_load(ctx: MCPContext, path: str) -> Dict:
@@ -118,6 +118,7 @@ def template_apply_patch(ctx: MCPContext, path: str, patch: Dict[str, Any], dry_
         ctx.schema_validate("template_base", new_base)
 
         output_path = _next_versioned_path(Path(path))
+        new_base["template_base_version"] = _extract_version_from_path(output_path)
         template_save(ctx,str(output_path), new_base)
         return {"status": "committed", "output_path": str(output_path)}
 

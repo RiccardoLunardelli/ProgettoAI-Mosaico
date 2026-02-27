@@ -2,9 +2,9 @@
   "target": "dictionary",
   "operations": [
     {
-      "op": "add_abbreviation",
+      "op": "update_semantic_category",
       "concept_id": "temp_defrost",
-      "value": "TD"
+      "semantic_category": "pressione"
     }
   ]
 }

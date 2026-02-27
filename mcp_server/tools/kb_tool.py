@@ -3,7 +3,7 @@ import copy
 import re
 from pathlib import Path
 from ..core import MCPContext
-from .dictionary_tool import _next_versioned_path
+from .dictionary_tool import _next_versioned_path, _extract_version_from_path
 
 def kb_load(ctx: MCPContext, path: str) -> Dict:
     # lettura file json della Knowledge Base
@@ -74,8 +74,10 @@ def kb_upsert_mapping(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
         return {"status": "dry_run_ok", "preview": new_kb}
 
     ctx.require_dry_run(patch)
-    ctx.schema_validate("kb", new_kb)
 
     output_path = _next_versioned_path(p)
+    new_kb["kb_version"] = _extract_version_from_path(output_path)
+    
+    ctx.schema_validate("kb", new_kb)
     kb_save(ctx, str(output_path), new_kb)
     return {"status": "committed", "output_path": str(output_path)}
