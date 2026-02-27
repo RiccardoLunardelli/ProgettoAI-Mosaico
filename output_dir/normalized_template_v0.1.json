@@ -1,2987 +1,595 @@
 {
-  "template_guid": "5c2667d5-dfc6-18f5-0b17-420c90dfb858",
+  "template_guid": "42a94bad-6251-3975-2e59-cf740465103c",
   "schema_tipo_version": "v0.1",
-  "generated_at": "2026-02-27T14:01:31.011521+01:00",
+  "generated_at": "2026-02-27T15:20:12.481096+01:00",
   "variables": [
     {
       "section": "ContinuosReads",
       "source_key": "Read0",
-      "raw_text": "Trasduttore aspirazione",
-      "normalized_text": "trasduttore aspirazione",
-      "measurement": "bar",
-      "type": 3,
+      "raw_text": "Numero di Fasi",
+      "normalized_text": "numero di fasi",
+      "measurement": null,
+      "type": 4,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Read0_P02T01D01",
+        "Name": "Read0_P05T01D01",
         "Alias": "Read0",
         "MultiLanguageDescription": {
-          "it": "Trasduttore aspirazione",
-          "en": "Suction probe"
+          "en": "Numero di Fasi",
+          "it": "Numero di Fasi"
         },
         "Label": null,
         "Category": null,
         "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
       "section": "ContinuosReads",
       "source_key": "Read1",
-      "raw_text": "Sonda mandata",
-      "normalized_text": "sonda mandata",
-      "measurement": "°C",
-      "type": 3,
+      "raw_text": "Numero di Cavi",
+      "normalized_text": "numero di cavi",
+      "measurement": null,
+      "type": 4,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Read1_P02T01D01",
+        "Name": "Read1_P05T01D01",
         "Alias": "Read1",
         "MultiLanguageDescription": {
-          "it": "Sonda mandata",
-          "en": "Delivery probe"
+          "en": "Numero di Cavi",
+          "it": "Numero di Cavi"
         },
         "Label": null,
         "Category": null,
         "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
       "section": "ContinuosReads",
-      "source_key": "Reg_Num_514",
-      "raw_text": "Reg_Num_514",
-      "normalized_text": "reg num 514",
+      "source_key": "Read2",
+      "raw_text": "Tipo di Sistema (Potenza)",
+      "normalized_text": "tipo di sistema potenza",
       "measurement": null,
-      "type": 3,
+      "type": 4,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Reg_Num_514_P02T01D01",
-        "Alias": "Reg_Num_514",
+        "Name": "Read2_P05T01D01",
+        "Alias": "Read2",
         "MultiLanguageDescription": {
-          "it": "Reg_Num_514",
-          "en": "Reg_Num_514"
+          "en": "Tipo di Sistema (Potenza)",
+          "it": "Tipo di Sistema (Potenza)"
         },
         "Label": null,
         "Category": null,
         "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
       "section": "ContinuosReads",
-      "source_key": "Reg_Num_515",
-      "raw_text": "Reg_Num_515",
-      "normalized_text": "reg num 515",
-      "measurement": null,
-      "type": 3,
+      "source_key": "Read3",
+      "raw_text": "Frequenza Nominale",
+      "normalized_text": "frequenza nominale",
+      "measurement": "Hz",
+      "type": 4,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Reg_Num_515_P02T01D01",
-        "Alias": "Reg_Num_515",
+        "Name": "Read3_P05T01D01",
+        "Alias": "Read3",
         "MultiLanguageDescription": {
-          "it": "Reg_Num_515",
-          "en": "Reg_Num_515"
+          "en": "Frequenza Nominale",
+          "it": "Frequenza Nominale"
         },
         "Label": null,
         "Category": null,
         "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
       "section": "ContinuosReads",
-      "source_key": "Reg_Num_516",
-      "raw_text": "Reg_Num_516",
-      "normalized_text": "reg num 516",
-      "measurement": null,
-      "type": 3,
+      "source_key": "Read4",
+      "raw_text": "Corrente L1",
+      "normalized_text": "corrente l1",
+      "measurement": "A",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Reg_Num_516_P02T01D01",
-        "Alias": "Reg_Num_516",
+        "Name": "Read4_P05T01D01",
+        "Alias": "Read4",
         "MultiLanguageDescription": {
-          "it": "Reg_Num_516",
-          "en": "Reg_Num_516"
+          "en": "Corrente L1",
+          "it": "Corrente L1"
         },
         "Label": null,
         "Category": null,
         "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
       "section": "ContinuosReads",
-      "source_key": "Reg_Num_2048",
-      "raw_text": "Reg_Num_2048",
-      "normalized_text": "reg num 2048",
-      "measurement": null,
-      "type": 3,
+      "source_key": "Read5",
+      "raw_text": "Corrente L2",
+      "normalized_text": "corrente l2",
+      "measurement": "A",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Reg_Num_2048_P02T01D01",
-        "Alias": "Reg_Num_2048",
+        "Name": "Read5_P05T01D01",
+        "Alias": "Read5",
         "MultiLanguageDescription": {
-          "it": "Reg_Num_2048",
-          "en": "Reg_Num_2048"
+          "en": "Corrente L2",
+          "it": "Corrente L2"
         },
         "Label": null,
         "Category": null,
         "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
       "section": "ContinuosReads",
-      "source_key": "Reg_Num_2049",
-      "raw_text": "Reg_Num_2049",
-      "normalized_text": "reg num 2049",
-      "measurement": null,
-      "type": 3,
+      "source_key": "Read6",
+      "raw_text": "Corrente L3",
+      "normalized_text": "corrente l3",
+      "measurement": "A",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Reg_Num_2049_P02T01D01",
-        "Alias": "Reg_Num_2049",
+        "Name": "Read6_P05T01D01",
+        "Alias": "Read6",
         "MultiLanguageDescription": {
-          "it": "Reg_Num_2049",
-          "en": "Reg_Num_2049"
+          "en": "Corrente L3",
+          "it": "Corrente L3"
         },
         "Label": null,
         "Category": null,
         "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
       "section": "ContinuosReads",
-      "source_key": "Reg_Num_2050",
-      "raw_text": "Reg_Num_2050",
-      "normalized_text": "reg num 2050",
-      "measurement": null,
-      "type": 3,
+      "source_key": "Read7",
+      "raw_text": "Corrente Media",
+      "normalized_text": "corrente media",
+      "measurement": "A",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Reg_Num_2050_P02T01D01",
-        "Alias": "Reg_Num_2050",
+        "Name": "Read7_P05T01D01",
+        "Alias": "Read7",
         "MultiLanguageDescription": {
-          "it": "Reg_Num_2050",
-          "en": "Reg_Num_2050"
+          "en": "Corrente Media",
+          "it": "Corrente Media"
         },
         "Label": null,
         "Category": null,
         "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
       "section": "ContinuosReads",
-      "source_key": "Reg_Num_1280",
-      "raw_text": "Reg_Num_1280",
-      "normalized_text": "reg num 1280",
-      "measurement": null,
-      "type": 3,
+      "source_key": "Read8",
+      "raw_text": "Tensione L1-L2",
+      "normalized_text": "tensione l1 l2",
+      "measurement": "V",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Reg_Num_1280_P02T01D01",
-        "Alias": "Reg_Num_1280",
+        "Name": "Read8_P05T01D01",
+        "Alias": "Read8",
         "MultiLanguageDescription": {
-          "it": "Reg_Num_1280",
-          "en": "Reg_Num_1280"
+          "en": "Tensione L1-L2",
+          "it": "Tensione L1-L2"
         },
         "Label": null,
         "Category": null,
         "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
       "section": "ContinuosReads",
-      "source_key": "Reg_Num_257",
-      "raw_text": "Reg_Num_257",
-      "normalized_text": "reg num 257",
-      "measurement": null,
-      "type": 3,
+      "source_key": "Read9",
+      "raw_text": "Tensione L2-L3",
+      "normalized_text": "tensione l2 l3",
+      "measurement": "V",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Reg_Num_257_P02T01D01",
-        "Alias": "Reg_Num_257",
+        "Name": "Read9_P05T01D01",
+        "Alias": "Read9",
         "MultiLanguageDescription": {
-          "it": "Reg_Num_257",
-          "en": "Reg_Num_257"
+          "en": "Tensione L2-L3",
+          "it": "Tensione L2-L3"
         },
         "Label": null,
         "Category": null,
         "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
       "section": "ContinuosReads",
-      "source_key": "Reg_Num_259",
-      "raw_text": "Reg_Num_259",
-      "normalized_text": "reg num 259",
-      "measurement": null,
-      "type": 3,
+      "source_key": "Read10",
+      "raw_text": "Tensione L3-L1",
+      "normalized_text": "tensione l3 l1",
+      "measurement": "V",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Reg_Num_259_P02T01D01",
-        "Alias": "Reg_Num_259",
+        "Name": "Read10_P05T01D01",
+        "Alias": "Read10",
         "MultiLanguageDescription": {
-          "it": "Reg_Num_259",
-          "en": "Reg_Num_259"
+          "en": "Tensione L3-L1",
+          "it": "Tensione L3-L1"
         },
         "Label": null,
         "Category": null,
         "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
       "section": "ContinuosReads",
-      "source_key": "Reg_Num_3328",
-      "raw_text": "Reg_Num_3328",
-      "normalized_text": "reg num 3328",
-      "measurement": null,
-      "type": 3,
+      "source_key": "Read11",
+      "raw_text": "Tensione L–L Media",
+      "normalized_text": "tensione l l media",
+      "measurement": "V",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Reg_Num_3328_P02T01D01",
-        "Alias": "Reg_Num_3328",
+        "Name": "Read11_P05T01D01",
+        "Alias": "Read11",
         "MultiLanguageDescription": {
-          "it": "Reg_Num_3328",
-          "en": "Reg_Num_3328"
+          "en": "Tensione L–L Media",
+          "it": "Tensione L–L Media"
         },
         "Label": null,
         "Category": null,
         "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
       "section": "ContinuosReads",
-      "source_key": "Reg_Num_3329",
-      "raw_text": "Reg_Num_3329",
-      "normalized_text": "reg num 3329",
-      "measurement": null,
-      "type": 3,
+      "source_key": "Read12",
+      "raw_text": "Tensione L1-N",
+      "normalized_text": "tensione l1 n",
+      "measurement": "V",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Reg_Num_3329_P02T01D01",
-        "Alias": "Reg_Num_3329",
+        "Name": "Read12_P05T01D01",
+        "Alias": "Read12",
         "MultiLanguageDescription": {
-          "it": "Reg_Num_3329",
-          "en": "Reg_Num_3329"
+          "en": "Tensione L1-N",
+          "it": "Tensione L1-N"
         },
         "Label": null,
         "Category": null,
         "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
-      "section": "Parameters",
-      "source_key": "Param0",
-      "raw_text": "Configurazione Carico 1",
-      "normalized_text": "configurazione carico 1",
-      "measurement": null,
-      "type": 3,
+      "section": "ContinuosReads",
+      "source_key": "Read13",
+      "raw_text": "Tensione L2-N",
+      "normalized_text": "tensione l2 n",
+      "measurement": "V",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Param0_P02T01D01",
-        "Alias": "Param0",
+        "Name": "Read13_P05T01D01",
+        "Alias": "Read13",
         "MultiLanguageDescription": {
-          "it": "Configurazione Carico 1",
-          "en": "Load Configuration 1"
-        },
-        "Label": "OA1",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param1",
-      "raw_text": "Configurazione Carico 2",
-      "normalized_text": "configurazione carico 2",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param1_P02T01D01",
-        "Alias": "Param1",
-        "MultiLanguageDescription": {
-          "it": "Configurazione Carico 2",
-          "en": "Load Configuration 2"
-        },
-        "Label": "OA2",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param2",
-      "raw_text": "Configurazione Carico 3",
-      "normalized_text": "configurazione carico 3",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param2_P02T01D01",
-        "Alias": "Param2",
-        "MultiLanguageDescription": {
-          "it": "Configurazione Carico 3",
-          "en": "Load Configuration 3"
-        },
-        "Label": "OA3",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param3",
-      "raw_text": "Configurazione Carico 4",
-      "normalized_text": "configurazione carico 4",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param3_P02T01D01",
-        "Alias": "Param3",
-        "MultiLanguageDescription": {
-          "it": "Configurazione Carico 4",
-          "en": "Load Configuration 4"
-        },
-        "Label": "OA4",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param4",
-      "raw_text": "Configurazione Carico 5",
-      "normalized_text": "configurazione carico 5",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param4_P02T01D01",
-        "Alias": "Param4",
-        "MultiLanguageDescription": {
-          "it": "Configurazione Carico 5",
-          "en": "Load Configuration 5"
-        },
-        "Label": "OA5",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param5",
-      "raw_text": "Configurazione Carico 6",
-      "normalized_text": "configurazione carico 6",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param5_P02T01D01",
-        "Alias": "Param5",
-        "MultiLanguageDescription": {
-          "it": "Configurazione Carico 6",
-          "en": "Load Configuration 6"
-        },
-        "Label": "OA6",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param6",
-      "raw_text": "Tipo di compressore",
-      "normalized_text": "tipo di compressore",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param6_P02T01D01",
-        "Alias": "Param6",
-        "MultiLanguageDescription": {
-          "it": "Tipo di compressore",
-          "en": "Compressor type"
-        },
-        "Label": "CtyP",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param7",
-      "raw_text": "Polarita' uscita valvola",
-      "normalized_text": "polarita uscita valvola",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param7_P02T01D01",
-        "Alias": "Param7",
-        "MultiLanguageDescription": {
-          "it": "Polarita' uscita valvola",
-          "en": "Valve output polarity"
-        },
-        "Label": "StP",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param8",
-      "raw_text": "Potenza del compressore 1",
-      "normalized_text": "potenza del compressore 1",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param8_P02T01D01",
-        "Alias": "Param8",
-        "MultiLanguageDescription": {
-          "it": "Potenza del compressore 1",
-          "en": "Compressor power 1"
-        },
-        "Label": "PC1",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param9",
-      "raw_text": "Potenza del compressore 2",
-      "normalized_text": "potenza del compressore 2",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param9_P02T01D01",
-        "Alias": "Param9",
-        "MultiLanguageDescription": {
-          "it": "Potenza del compressore 2",
-          "en": "Compressor power 2"
-        },
-        "Label": "PC2",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param10",
-      "raw_text": "Potenza del compressore 3",
-      "normalized_text": "potenza del compressore 3",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param10_P02T01D01",
-        "Alias": "Param10",
-        "MultiLanguageDescription": {
-          "it": "Potenza del compressore 3",
-          "en": "Compressor power 3"
-        },
-        "Label": "PC3",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param11",
-      "raw_text": "Potenza del compressore 4",
-      "normalized_text": "potenza del compressore 4",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param11_P02T01D01",
-        "Alias": "Param11",
-        "MultiLanguageDescription": {
-          "it": "Potenza del compressore 4",
-          "en": "Compressor power 4"
-        },
-        "Label": "PC4",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param12",
-      "raw_text": "Potenza del compressore 5",
-      "normalized_text": "potenza del compressore 5",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param12_P02T01D01",
-        "Alias": "Param12",
-        "MultiLanguageDescription": {
-          "it": "Potenza del compressore 5",
-          "en": "Compressor power 5"
-        },
-        "Label": "PC5",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param13",
-      "raw_text": "Potenza del compressore 6",
-      "normalized_text": "potenza del compressore 6",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param13_P02T01D01",
-        "Alias": "Param13",
-        "MultiLanguageDescription": {
-          "it": "Potenza del compressore 6",
-          "en": "Compressor power 6"
-        },
-        "Label": "PC6",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param14",
-      "raw_text": "Tipo di Freon",
-      "normalized_text": "tipo di freon",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param14_P02T01D01",
-        "Alias": "Param14",
-        "MultiLanguageDescription": {
-          "it": "Tipo di Freon",
-          "en": "Freon type"
-        },
-        "Label": "FtyP",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param15",
-      "raw_text": "Tipo di regolazione: zona neutra o banda proporzionale",
-      "normalized_text": "tipo di regolazione zona neutra o banda proporzionale",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param15_P02T01D01",
-        "Alias": "Param15",
-        "MultiLanguageDescription": {
-          "it": "Tipo di regolazione: zona neutra o banda proporzionale",
-          "en": "Type of regulation: neutral zone or proportional band"
-        },
-        "Label": "rty",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param16",
-      "raw_text": "Tipo di regolazione: freddo / caldo",
-      "normalized_text": "tipo di regolazione freddo / caldo",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param16_P02T01D01",
-        "Alias": "Param16",
-        "MultiLanguageDescription": {
-          "it": "Tipo di regolazione: freddo / caldo",
-          "en": "Adjustment type: cold / hot"
-        },
-        "Label": "CH",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param17",
-      "raw_text": "Tipo di sequenza del compressore",
-      "normalized_text": "tipo di sequenza del compressore",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param17_P02T01D01",
-        "Alias": "Param17",
-        "MultiLanguageDescription": {
-          "it": "Tipo di sequenza del compressore",
-          "en": "Type of compressor sequence"
-        },
-        "Label": "Sty",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param18",
-      "raw_text": "Tipo di sequenza della ventola",
-      "normalized_text": "tipo di sequenza della ventola",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param18_P02T01D01",
-        "Alias": "Param18",
-        "MultiLanguageDescription": {
-          "it": "Tipo di sequenza della ventola",
-          "en": "Fan sequence type"
-        },
-        "Label": "rot",
-        "Category": "{\"it\":\"Configurazione Ventole\",\"en\":\"Fan configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param19",
-      "raw_text": "Tipo di sonda P1",
-      "normalized_text": "tipo di sonda p1",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param19_P02T01D01",
-        "Alias": "Param19",
-        "MultiLanguageDescription": {
-          "it": "Tipo di sonda P1",
-          "en": "Type of probe P1"
-        },
-        "Label": "PbC",
-        "Category": "{\"it\":\"Sonde\",\"en\":\"Probes\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param20",
-      "raw_text": "Lettura 4mA",
-      "normalized_text": "lettura 4ma",
-      "measurement": "bar/PSI",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param20_P02T01D01",
-        "Alias": "Param20",
-        "MultiLanguageDescription": {
-          "it": "Lettura 4mA",
-          "en": "4mA reading"
-        },
-        "Label": "PA04",
-        "Category": "{\"it\":\"Sonde\",\"en\":\"Probes\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param21",
-      "raw_text": "Lettura 20mA",
-      "normalized_text": "lettura 20ma",
-      "measurement": "bar/PSI",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param21_P02T01D01",
-        "Alias": "Param21",
-        "MultiLanguageDescription": {
-          "it": "Lettura 20mA",
-          "en": "20mA reading"
-        },
-        "Label": "PA20",
-        "Category": "{\"it\":\"Sonde\",\"en\":\"Probes\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param22",
-      "raw_text": "Calibrazione della sonda",
-      "normalized_text": "calibrazione della sonda",
-      "measurement": "°C/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param22_P02T01D01",
-        "Alias": "Param22",
-        "MultiLanguageDescription": {
-          "it": "Calibrazione della sonda",
-          "en": "Probe calibration"
-        },
-        "Label": "CAL",
-        "Category": "{\"it\":\"Sonde\",\"en\":\"Probes\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param23",
-      "raw_text": "Presenza sonda P2",
-      "normalized_text": "presenza sonda p2",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param23_P02T01D01",
-        "Alias": "Param23",
-        "MultiLanguageDescription": {
-          "it": "Presenza sonda P2",
-          "en": "Presence of probe P2"
-        },
-        "Label": "P2P",
-        "Category": "{\"it\":\"Sonde\",\"en\":\"Probes\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param24",
-      "raw_text": "Tipo di sonda P2",
-      "normalized_text": "tipo di sonda p2",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param24_P02T01D01",
-        "Alias": "Param24",
-        "MultiLanguageDescription": {
-          "it": "Tipo di sonda P2",
-          "en": "Type of probe P2"
-        },
-        "Label": "PbC2",
-        "Category": "{\"it\":\"Sonde\",\"en\":\"Probes\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param25",
-      "raw_text": "Lettura 4mA (ventola)",
-      "normalized_text": "lettura 4ma ventola",
-      "measurement": "bar/PSI",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param25_P02T01D01",
-        "Alias": "Param25",
-        "MultiLanguageDescription": {
-          "it": "Lettura 4mA (ventola)",
-          "en": "4mA reading (fan)"
-        },
-        "Label": "FA04",
-        "Category": "{\"it\":\"Sonde\",\"en\":\"Probes\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param26",
-      "raw_text": "Lettura 20mA (ventola)",
-      "normalized_text": "lettura 20ma ventola",
-      "measurement": "bar/PSI",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param26_P02T01D01",
-        "Alias": "Param26",
-        "MultiLanguageDescription": {
-          "it": "Lettura 20mA (ventola)",
-          "en": "20mA reading (fan)"
-        },
-        "Label": "FA20",
-        "Category": "{\"it\":\"Sonde\",\"en\":\"Probes\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param27",
-      "raw_text": "Calibrazione della sonda (ventola)",
-      "normalized_text": "calibrazione della sonda ventola",
-      "measurement": "°C/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param27_P02T01D01",
-        "Alias": "Param27",
-        "MultiLanguageDescription": {
-          "it": "Calibrazione della sonda (ventola)",
-          "en": "Probe calibration (fan)"
-        },
-        "Label": "FCAL",
-        "Category": "{\"it\":\"Sonde\",\"en\":\"Probes\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param28",
-      "raw_text": "Polarita' interruttore a bassa pressione",
-      "normalized_text": "polarita interruttore a bassa pressione",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param28_P02T01D01",
-        "Alias": "Param28",
-        "MultiLanguageDescription": {
-          "it": "Polarita' interruttore a bassa pressione",
-          "en": "Low pressure switch polarity"
-        },
-        "Label": "SEP",
-        "Category": "{\"it\":\"Ingresso Digitale\",\"en\":\"Digital input\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param29",
-      "raw_text": "Polarita' dell'interruttore di alta pressione",
-      "normalized_text": "polarita dell interruttore di alta pressione",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param29_P02T01D01",
-        "Alias": "Param29",
-        "MultiLanguageDescription": {
-          "it": "Polarita' dell'interruttore di alta pressione",
-          "en": "Polarity of the high pressure switch"
-        },
-        "Label": "HPP",
-        "Category": "{\"it\":\"Ingresso Digitale\",\"en\":\"Digital input\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param30",
-      "raw_text": "Polarita' d'ingresso digitale configurabile",
-      "normalized_text": "polarita d ingresso digitale configurabile",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param30_P02T01D01",
-        "Alias": "Param30",
-        "MultiLanguageDescription": {
-          "it": "Polarita' d'ingresso digitale configurabile",
-          "en": "Configurable digital input polarity"
-        },
-        "Label": "i1C",
-        "Category": "{\"it\":\"Ingresso Digitale\",\"en\":\"Digital input\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param31",
-      "raw_text": "Funzione di ingresso digitale configurabile",
-      "normalized_text": "funzione di ingresso digitale configurabile",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param31_P02T01D01",
-        "Alias": "Param31",
-        "MultiLanguageDescription": {
-          "it": "Funzione di ingresso digitale configurabile",
-          "en": "Configurable digital input function"
-        },
-        "Label": "i1F",
-        "Category": "{\"it\":\"Ingresso Digitale\",\"en\":\"Digital input\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param32",
-      "raw_text": "Ritardo dell'ingresso digitale configurabile",
-      "normalized_text": "ritardo dell ingresso digitale configurabile",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param32_P02T01D01",
-        "Alias": "Param32",
-        "MultiLanguageDescription": {
-          "it": "Ritardo dell'ingresso digitale configurabile",
-          "en": "Configurable digital input delay"
-        },
-        "Label": "did",
-        "Category": "{\"it\":\"Ingresso Digitale\",\"en\":\"Digital input\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param33",
-      "raw_text": "Polarita' dell'ingresso allarme compressori e ventilatori",
-      "normalized_text": "polarita dell ingresso allarme compressori e ventilatori",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param33_P02T01D01",
-        "Alias": "Param33",
-        "MultiLanguageDescription": {
-          "it": "Polarita' dell'ingresso allarme compressori e ventilatori",
-          "en": "Polarity of the compressors and fans alarm input"
-        },
-        "Label": "ALIP",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param34",
-      "raw_text": "Ripristino manuale per allarme compressore / ventilatore",
-      "normalized_text": "ripristino manuale per allarme compressore / ventilatore",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param34_P02T01D01",
-        "Alias": "Param34",
-        "MultiLanguageDescription": {
-          "it": "Ripristino manuale per allarme compressore / ventilatore",
-          "en": "Manual reset for compressor / fan alarm"
-        },
-        "Label": "ALMr",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param35",
-      "raw_text": "Visualizzazione dell'unita' di misura",
-      "normalized_text": "visualizzazione dell unita di misura",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param35_P02T01D01",
-        "Alias": "Param35",
-        "MultiLanguageDescription": {
-          "it": "Visualizzazione dell'unita' di misura",
-          "en": "Display of the measurement unit"
-        },
-        "Label": "dEU",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param36",
-      "raw_text": "Risoluzione (Â°C)",
-      "normalized_text": "risoluzione c",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param36_P02T01D01",
-        "Alias": "Param36",
-        "MultiLanguageDescription": {
-          "it": "Risoluzione (Â°C)",
-          "en": "Resolution (Â° C)"
-        },
-        "Label": "rES",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param37",
-      "raw_text": "Visualizzazione predefinita sul display inferiore  ",
-      "normalized_text": "visualizzazione predefinita sul display inferiore",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param37_P02T01D01",
-        "Alias": "Param37",
-        "MultiLanguageDescription": {
-          "it": "Visualizzazione predefinita sul display inferiore  ",
-          "en": "Default view on the lower display"
-        },
-        "Label": "dSP2",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param38",
-      "raw_text": "Formato sonda visualizzata sul display inferiore",
-      "normalized_text": "formato sonda visualizzata sul display inferiore",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param38_P02T01D01",
-        "Alias": "Param38",
-        "MultiLanguageDescription": {
-          "it": "Formato sonda visualizzata sul display inferiore",
-          "en": "Probe format shown on the lower display"
-        },
-        "Label": "dEU2",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param39",
-      "raw_text": "Modalita' di visualizzazione della pressione",
-      "normalized_text": "modalita di visualizzazione della pressione",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param39_P02T01D01",
-        "Alias": "Param39",
-        "MultiLanguageDescription": {
-          "it": "Modalita' di visualizzazione della pressione",
-          "en": "Pressure display mode"
-        },
-        "Label": "rELP",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param40",
-      "raw_text": "Banda proporzionale per la regolazione dei compressori",
-      "normalized_text": "banda proporzionale per la regolazione dei compressori",
-      "measurement": "°C/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param40_P02T01D01",
-        "Alias": "Param40",
-        "MultiLanguageDescription": {
-          "it": "Banda proporzionale per la regolazione dei compressori",
-          "en": "Proportional band for compressor regulation"
-        },
-        "Label": "Pdb",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param41",
-      "raw_text": "Regolazione per il risparmio energetico dei compressori",
-      "normalized_text": "regolazione per il risparmio energetico dei compressori",
-      "measurement": "bar/°C/PSI/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param41_P02T01D01",
-        "Alias": "Param41",
-        "MultiLanguageDescription": {
-          "it": "Regolazione per il risparmio energetico dei compressori",
-          "en": "Energy saving adjustment of the compressors"
-        },
-        "Label": "ESC",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param42",
-      "raw_text": "Ritardo minimo tra 2 accensioni dello stesso compressore",
-      "normalized_text": "ritardo minimo tra 2 accensioni dello stesso compressore",
-      "measurement": "min",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param42_P02T01D01",
-        "Alias": "Param42",
-        "MultiLanguageDescription": {
-          "it": "Ritardo minimo tra 2 accensioni dello stesso compressore",
-          "en": "Minimum delay between 2 starts of the same compressor"
-        },
-        "Label": "OnOn",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param43",
-      "raw_text": "Ritardo tra lo spegnimento e l'accensione dello stesso compressore",
-      "normalized_text": "ritardo tra lo spegnimento e l accensione dello stesso compressore",
-      "measurement": "min",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param43_P02T01D01",
-        "Alias": "Param43",
-        "MultiLanguageDescription": {
-          "it": "Ritardo tra lo spegnimento e l'accensione dello stesso compressore",
-          "en": "Delay between switching off and switching on of the same compressor"
-        },
-        "Label": "OFOn",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param44",
-      "raw_text": "Tempo di ritardo tra l'inserimento di due carichi diversi",
-      "normalized_text": "tempo di ritardo tra l inserimento di due carichi diversi",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param44_P02T01D01",
-        "Alias": "Param44",
-        "MultiLanguageDescription": {
-          "it": "Tempo di ritardo tra l'inserimento di due carichi diversi",
-          "en": "Delay time between the insertion of two different loads"
-        },
-        "Label": "don",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param45",
-      "raw_text": "Tempo di ritardo tra lo spegnimento di due diversi compressori",
-      "normalized_text": "tempo di ritardo tra lo spegnimento di due diversi compressori",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param45_P02T01D01",
-        "Alias": "Param45",
-        "MultiLanguageDescription": {
-          "it": "Tempo di ritardo tra lo spegnimento di due diversi compressori",
-          "en": "Delay time between the shutdown of two different compressors"
-        },
-        "Label": "doF",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param46",
-      "raw_text": "Tempo minimo in cui uno stage rimane ON",
-      "normalized_text": "tempo minimo in cui uno stage rimane on",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param46_P02T01D01",
-        "Alias": "Param46",
-        "MultiLanguageDescription": {
-          "it": "Tempo minimo in cui uno stage rimane ON",
-          "en": "Minimum time a stage remains ON"
-        },
-        "Label": "donF",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param47",
-      "raw_text": "Tempo massimo in cui uno stage rimane acceso",
-      "normalized_text": "tempo massimo in cui uno stage rimane acceso",
-      "measurement": "ore",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param47_P02T01D01",
-        "Alias": "Param47",
-        "MultiLanguageDescription": {
-          "it": "Tempo massimo in cui uno stage rimane acceso",
-          "en": "Maximum time a stage stays on"
-        },
-        "Label": "MAon",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param48",
-      "raw_text": "Param48",
-      "normalized_text": "param48",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param48_P02T01D01",
-        "Alias": "Param48",
-        "MultiLanguageDescription": {
-          "en": "Param48"
-        },
-        "Label": "FdLy",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param49",
-      "raw_text": "Param49",
-      "normalized_text": "param49",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param49_P02T01D01",
-        "Alias": "Param49",
-        "MultiLanguageDescription": {
-          "en": "Param49"
-        },
-        "Label": "FdLF",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param50",
-      "raw_text": "Ritardo all' accensione",
-      "normalized_text": "ritardo all accensione",
-      "measurement": "sec",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param50_P02T01D01",
-        "Alias": "Param50",
-        "MultiLanguageDescription": {
-          "it": "Ritardo all' accensione",
-          "en": "Ignition delay"
-        },
-        "Label": "odo",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param51",
-      "raw_text": "Set point minimo",
-      "normalized_text": "set point minimo",
-      "measurement": "bar/°C/PSI/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param51_P02T01D01",
-        "Alias": "Param51",
-        "MultiLanguageDescription": {
-          "it": "Set point minimo",
-          "en": "Minimum set point"
-        },
-        "Label": "LSE",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param52",
-      "raw_text": "Setpoint massimo",
-      "normalized_text": "setpoint massimo",
-      "measurement": "bar/°C/PSI/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param52_P02T01D01",
-        "Alias": "Param52",
-        "MultiLanguageDescription": {
-          "it": "Setpoint massimo",
-          "en": "Maximum setpoint"
-        },
-        "Label": "HSE",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param53",
-      "raw_text": "Set point per sonda 2 (sempre ptc) per compressori a vite",
-      "normalized_text": "set point per sonda 2 sempre ptc per compressori a vite",
-      "measurement": "°C/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param53_P02T01D01",
-        "Alias": "Param53",
-        "MultiLanguageDescription": {
-          "it": "Set point per sonda 2 (sempre ptc) per compressori a vite",
-          "en": "Set point for probe 2 (always ptc) for screw compressors"
-        },
-        "Label": "Lit",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param54",
-      "raw_text": "Differenziale per compressore a vite",
-      "normalized_text": "differenziale per compressore a vite",
-      "measurement": "°C/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param54_P02T01D01",
-        "Alias": "Param54",
-        "MultiLanguageDescription": {
-          "it": "Differenziale per compressore a vite",
-          "en": "Differential for screw compressor"
-        },
-        "Label": "Lid",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param55",
-      "raw_text": "Banda proporzionale per la regolazione della ventola",
-      "normalized_text": "banda proporzionale per la regolazione della ventola",
-      "measurement": "bar/°C/PSI/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param55_P02T01D01",
-        "Alias": "Param55",
-        "MultiLanguageDescription": {
-          "it": "Banda proporzionale per la regolazione della ventola",
-          "en": "Proportional band for fan regulation"
-        },
-        "Label": "Pb",
-        "Category": "{\"it\":\"Configurazione Ventole\",\"en\":\"Fan configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param56",
-      "raw_text": "Regolazione per il risparmio energetico dei ventilatori",
-      "normalized_text": "regolazione per il risparmio energetico dei ventilatori",
-      "measurement": "bar/°C/PSI/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param56_P02T01D01",
-        "Alias": "Param56",
-        "MultiLanguageDescription": {
-          "it": "Regolazione per il risparmio energetico dei ventilatori",
-          "en": "Energy saving adjustment of the fans"
-        },
-        "Label": "ESF",
-        "Category": "{\"it\":\"Configurazione Ventole\",\"en\":\"Fan configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param57",
-      "raw_text": "Tempo di ritardo tra l'inserimento di due diverse ventole",
-      "normalized_text": "tempo di ritardo tra l inserimento di due diverse ventole",
-      "measurement": "sec",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param57_P02T01D01",
-        "Alias": "Param57",
-        "MultiLanguageDescription": {
-          "it": "Tempo di ritardo tra l'inserimento di due diverse ventole",
-          "en": "Delay time between the insertion of two different fans"
-        },
-        "Label": "Fon",
-        "Category": "{\"it\":\"Configurazione Ventole\",\"en\":\"Fan configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param58",
-      "raw_text": "Tempo di ritardo tra lo spegnimento di due diverse ventole",
-      "normalized_text": "tempo di ritardo tra lo spegnimento di due diverse ventole",
-      "measurement": "sec",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param58_P02T01D01",
-        "Alias": "Param58",
-        "MultiLanguageDescription": {
-          "it": "Tempo di ritardo tra lo spegnimento di due diverse ventole",
-          "en": "Delay time between the shutdown of two different fans"
-        },
-        "Label": "FoF",
-        "Category": "{\"it\":\"Configurazione Ventole\",\"en\":\"Fan configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param59",
-      "raw_text": "Set point minimo (ventola)",
-      "normalized_text": "set point minimo ventola",
-      "measurement": "bar/°C/PSI/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param59_P02T01D01",
-        "Alias": "Param59",
-        "MultiLanguageDescription": {
-          "it": "Set point minimo (ventola)",
-          "en": "Minimum set point (fan)"
-        },
-        "Label": "LSF",
-        "Category": "{\"it\":\"Configurazione Ventole\",\"en\":\"Fan configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param60",
-      "raw_text": "Set point massimo (ventola)",
-      "normalized_text": "set point massimo ventola",
-      "measurement": "bar/°C/PSI/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param60_P02T01D01",
-        "Alias": "Param60",
-        "MultiLanguageDescription": {
-          "it": "Set point massimo (ventola)",
-          "en": "Maximum set point (fan)"
-        },
-        "Label": "HSF",
-        "Category": "{\"it\":\"Configurazione Ventole\",\"en\":\"Fan configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param61",
-      "raw_text": "Ritardo sonda di allarme all'accensione",
-      "normalized_text": "ritardo sonda di allarme all accensione",
-      "measurement": "min",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param61_P02T01D01",
-        "Alias": "Param61",
-        "MultiLanguageDescription": {
-          "it": "Ritardo sonda di allarme all'accensione",
-          "en": "Alarm probe delay at start-up"
-        },
-        "Label": "PAO",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param62",
-      "raw_text": "Limite inferiore per allarme pressione (compressori)",
-      "normalized_text": "limite inferiore per allarme pressione compressori",
-      "measurement": "bar/°C/PSI/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param62_P02T01D01",
-        "Alias": "Param62",
-        "MultiLanguageDescription": {
-          "it": "Limite inferiore per allarme pressione (compressori)",
-          "en": "Lower limit for pressure alarm (compressors)"
-        },
-        "Label": "LAL",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param63",
-      "raw_text": "Limite superiore per allarme pressione (compressori)",
-      "normalized_text": "limite superiore per allarme pressione compressori",
-      "measurement": "bar/°C/PSI/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param63_P02T01D01",
-        "Alias": "Param63",
-        "MultiLanguageDescription": {
-          "it": "Limite superiore per allarme pressione (compressori)",
-          "en": "Upper limit for pressure alarm (compressors)"
-        },
-        "Label": "HAL",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param64",
-      "raw_text": "Ritardo allarme pressione / temperatura (compressori)",
-      "normalized_text": "ritardo allarme pressione / temperatura compressori",
-      "measurement": "min",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param64_P02T01D01",
-        "Alias": "Param64",
-        "MultiLanguageDescription": {
-          "it": "Ritardo allarme pressione / temperatura (compressori)",
-          "en": "Pressure / temperature alarm delay (compressors)"
-        },
-        "Label": "tAo",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param65",
-      "raw_text": "Regolazione allarme ore lavoro",
-      "normalized_text": "regolazione allarme ore lavoro",
-      "measurement": "x10 ore",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param65_P02T01D01",
-        "Alias": "Param65",
-        "MultiLanguageDescription": {
-          "it": "Regolazione allarme ore lavoro",
-          "en": "Work hours alarm adjustment"
-        },
-        "Label": "SEr",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param66",
-      "raw_text": "Attivazioni massime del pressostato",
-      "normalized_text": "attivazioni massime del pressostato",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param66_P02T01D01",
-        "Alias": "Param66",
-        "MultiLanguageDescription": {
-          "it": "Attivazioni massime del pressostato",
-          "en": "Maximum activations of the pressure switch"
-        },
-        "Label": "PEn",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param67",
-      "raw_text": "Tempo di attivazione del pressostato",
-      "normalized_text": "tempo di attivazione del pressostato",
-      "measurement": "min",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param67_P02T01D01",
-        "Alias": "Param67",
-        "MultiLanguageDescription": {
-          "it": "Tempo di attivazione del pressostato",
-          "en": "Activation time of the pressure switch"
-        },
-        "Label": "PEI",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param68",
-      "raw_text": "Compressori ON con sonda guasta",
-      "normalized_text": "compressori on con sonda guasta",
-      "measurement": "min",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param68_P02T01D01",
-        "Alias": "Param68",
-        "MultiLanguageDescription": {
-          "it": "Compressori ON con sonda guasta",
-          "en": "Compressors ON with faulty probe"
-        },
-        "Label": "SPr",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param69",
-      "raw_text": "Potenza utilizzata con errori",
-      "normalized_text": "potenza utilizzata con errori",
-      "measurement": "%",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param69_P02T01D01",
-        "Alias": "Param69",
-        "MultiLanguageDescription": {
-          "it": "Potenza utilizzata con errori",
-          "en": "Power used with errors"
-        },
-        "Label": "PoPr",
-        "Category": "{\"it\":\"Configurazione Compressori\",\"en\":\"Compressors configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param70",
-      "raw_text": "Set allarme bassa pressione",
-      "normalized_text": "set allarme bassa pressione",
-      "measurement": "bar/°C/PSI/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param70_P02T01D01",
-        "Alias": "Param70",
-        "MultiLanguageDescription": {
-          "it": "Set allarme bassa pressione",
-          "en": "Low pressure alarm set"
-        },
-        "Label": "LAF",
-        "Category": "{\"it\":\"Configurazione Ventole\",\"en\":\"Fan configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param71",
-      "raw_text": "Set allarme alta pressione",
-      "normalized_text": "set allarme alta pressione",
-      "measurement": "bar/°C/PSI/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param71_P02T01D01",
-        "Alias": "Param71",
-        "MultiLanguageDescription": {
-          "it": "Set allarme alta pressione",
-          "en": "High pressure alarm set"
-        },
-        "Label": "HAF",
-        "Category": "{\"it\":\"Configurazione Ventole\",\"en\":\"Fan configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param72",
-      "raw_text": "Ritardo allarme pressione",
-      "normalized_text": "ritardo allarme pressione",
-      "measurement": "min",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param72_P02T01D01",
-        "Alias": "Param72",
-        "MultiLanguageDescription": {
-          "it": "Ritardo allarme pressione",
-          "en": "Pressure alarm delay"
-        },
-        "Label": "AFd",
-        "Category": "{\"it\":\"Configurazione Ventole\",\"en\":\"Fan configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param73",
-      "raw_text": "Attivazioni massime del pressostato del ventilatore",
-      "normalized_text": "attivazioni massime del pressostato del ventilatore",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param73_P02T01D01",
-        "Alias": "Param73",
-        "MultiLanguageDescription": {
-          "it": "Attivazioni massime del pressostato del ventilatore",
-          "en": "Maximum activations of the fan pressure switch"
-        },
-        "Label": "PnF",
-        "Category": "{\"it\":\"Configurazione Ventole\",\"en\":\"Fan configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param74",
-      "raw_text": "Tempo di attivazione del pressostato della ventola",
-      "normalized_text": "tempo di attivazione del pressostato della ventola",
-      "measurement": "min",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param74_P02T01D01",
-        "Alias": "Param74",
-        "MultiLanguageDescription": {
-          "it": "Tempo di attivazione del pressostato della ventola",
-          "en": "Fan pressure switch activation time"
-        },
-        "Label": "PiF",
-        "Category": "{\"it\":\"Configurazione Ventole\",\"en\":\"Fan configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param75",
-      "raw_text": "Ventola accesa con sonda guasta",
-      "normalized_text": "ventola accesa con sonda guasta",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param75_P02T01D01",
-        "Alias": "Param75",
-        "MultiLanguageDescription": {
-          "it": "Ventola accesa con sonda guasta",
-          "en": "Fan on with faulty probe"
-        },
-        "Label": "FPr",
-        "Category": "{\"it\":\"Configurazione Ventole\",\"en\":\"Fan configuration\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param76",
-      "raw_text": "Funzione set point dinamica abilitata",
-      "normalized_text": "funzione set point dinamica abilitata",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param76_P02T01D01",
-        "Alias": "Param76",
-        "MultiLanguageDescription": {
-          "it": "Funzione set point dinamica abilitata",
-          "en": "Dynamic set point function enabled"
-        },
-        "Label": "dSEP",
-        "Category": "{\"it\":\"Set Point Dinamico\",\"en\":\"Dynamic Set Point\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param77",
-      "raw_text": "Temperatura esterna impostata per la funzione DYNAMIC SET POINT",
-      "normalized_text": "temperatura esterna impostata per la funzione dynamic set point",
-      "measurement": "°C/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param77_P02T01D01",
-        "Alias": "Param77",
-        "MultiLanguageDescription": {
-          "it": "Temperatura esterna impostata per la funzione DYNAMIC SET POINT",
-          "en": "Outside temperature set for the DYNAMIC SET POINT function"
-        },
-        "Label": "dSES",
-        "Category": "{\"it\":\"Set Point Dinamico\",\"en\":\"Dynamic Set Point\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param78",
-      "raw_text": "Banda proporzionale",
-      "normalized_text": "banda proporzionale",
-      "measurement": "°C/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param78_P02T01D01",
-        "Alias": "Param78",
-        "MultiLanguageDescription": {
-          "it": "Banda proporzionale",
-          "en": "Proportional band"
-        },
-        "Label": "dSEb",
-        "Category": "{\"it\":\"Set Point Dinamico\",\"en\":\"Dynamic Set Point\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param79",
-      "raw_text": "Differenziale per DYNAMIC",
-      "normalized_text": "differenziale per dynamic",
-      "measurement": "bar/°C/PSI/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param79_P02T01D01",
-        "Alias": "Param79",
-        "MultiLanguageDescription": {
-          "it": "Differenziale per DYNAMIC",
-          "en": "Differential for DYNAMIC"
-        },
-        "Label": "dSEd",
-        "Category": "{\"it\":\"Set Point Dinamico\",\"en\":\"Dynamic Set Point\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param80",
-      "raw_text": "Modalita' di lavoro dell'uscita analogica",
-      "normalized_text": "modalita di lavoro dell uscita analogica",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param80_P02T01D01",
-        "Alias": "Param80",
-        "MultiLanguageDescription": {
-          "it": "Modalita' di lavoro dell'uscita analogica",
-          "en": "Working mode of the analogue output"
-        },
-        "Label": "AOC",
-        "Category": "{\"it\":\"Uscita Analogica\",\"en\":\"Analog output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param81",
-      "raw_text": "Sonda per uscita analogica",
-      "normalized_text": "sonda per uscita analogica",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param81_P02T01D01",
-        "Alias": "Param81",
-        "MultiLanguageDescription": {
-          "it": "Sonda per uscita analogica",
-          "en": "Probe for analogue output"
-        },
-        "Label": "AOP",
-        "Category": "{\"it\":\"Uscita Analogica\",\"en\":\"Analog output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param82",
-      "raw_text": "Limite inferiore della scala per l'uscita analogica",
-      "normalized_text": "limite inferiore della scala per l uscita analogica",
-      "measurement": "bar/°C",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param82_P02T01D01",
-        "Alias": "Param82",
-        "MultiLanguageDescription": {
-          "it": "Limite inferiore della scala per l'uscita analogica",
-          "en": "Lower limit of the scale for the analog output"
-        },
-        "Label": "LAO",
-        "Category": "{\"it\":\"Uscita Analogica\",\"en\":\"Analog output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param83",
-      "raw_text": "Limite superiore della scala per uscita analogica",
-      "normalized_text": "limite superiore della scala per uscita analogica",
-      "measurement": "bar/°C",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param83_P02T01D01",
-        "Alias": "Param83",
-        "MultiLanguageDescription": {
-          "it": "Limite superiore della scala per uscita analogica",
-          "en": "Upper limit of the scale for analog output"
-        },
-        "Label": "UAO",
-        "Category": "{\"it\":\"Uscita Analogica\",\"en\":\"Analog output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param84",
-      "raw_text": "Valore minimo dell'uscita analogica",
-      "normalized_text": "valore minimo dell uscita analogica",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param84_P02T01D01",
-        "Alias": "Param84",
-        "MultiLanguageDescription": {
-          "it": "Valore minimo dell'uscita analogica",
-          "en": "Minimum value of the analogue output"
-        },
-        "Label": "AOM",
-        "Category": "{\"it\":\"Uscita Analogica\",\"en\":\"Analog output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param85",
-      "raw_text": "Valore uscita analogica dopo accensione compressore",
-      "normalized_text": "valore uscita analogica dopo accensione compressore",
-      "measurement": "mA",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param85_P02T01D01",
-        "Alias": "Param85",
-        "MultiLanguageDescription": {
-          "it": "Valore uscita analogica dopo accensione compressore",
-          "en": "Analog output value after compressor ignition"
-        },
-        "Label": "Aoo",
-        "Category": "{\"it\":\"Uscita Analogica\",\"en\":\"Analog output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param86",
-      "raw_text": "Valore uscita analogica dopo spegnimento compressore",
-      "normalized_text": "valore uscita analogica dopo spegnimento compressore",
-      "measurement": "mA",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param86_P02T01D01",
-        "Alias": "Param86",
-        "MultiLanguageDescription": {
-          "it": "Valore uscita analogica dopo spegnimento compressore",
-          "en": "Analog output value after compressor shutdown"
-        },
-        "Label": "AoF",
-        "Category": "{\"it\":\"Uscita Analogica\",\"en\":\"Analog output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param87",
-      "raw_text": "Percentuale di uscita analogica in caso di guasto della sonda",
-      "normalized_text": "percentuale di uscita analogica in caso di guasto della sonda",
-      "measurement": "%",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param87_P02T01D01",
-        "Alias": "Param87",
-        "MultiLanguageDescription": {
-          "it": "Percentuale di uscita analogica in caso di guasto della sonda",
-          "en": "Percentage of analogue output in case of probe failure"
-        },
-        "Label": "SAO",
-        "Category": "{\"it\":\"Uscita Analogica\",\"en\":\"Analog output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param88",
-      "raw_text": "Ritardo tra l'uscita dalla zona neutra e l'inizio della regolazione",
-      "normalized_text": "ritardo tra l uscita dalla zona neutra e l inizio della regolazione",
-      "measurement": "sec",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param88_P02T01D01",
-        "Alias": "Param88",
-        "MultiLanguageDescription": {
-          "it": "Ritardo tra l'uscita dalla zona neutra e l'inizio della regolazione",
-          "en": "Delay between leaving the neutral zone and the start of regulation"
-        },
-        "Label": "t1",
-        "Category": "{\"it\":\"Uscita Analogica\",\"en\":\"Analog output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param89",
-      "raw_text": "Tempo di innalzamento dell'uscita analogica (da A0M a 20mA)",
-      "normalized_text": "tempo di innalzamento dell uscita analogica da a0m a 20ma",
-      "measurement": "sec",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param89_P02T01D01",
-        "Alias": "Param89",
-        "MultiLanguageDescription": {
-          "it": "Tempo di innalzamento dell'uscita analogica (da A0M a 20mA)",
-          "en": "Rise time of the analog output (from A0M to 20mA)"
-        },
-        "Label": "t2",
-        "Category": "{\"it\":\"Uscita Analogica\",\"en\":\"Analog output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param90",
-      "raw_text": "Tempo di permanenza dell'uscita analogica prima dell'attivazione di un'altra uscita",
-      "normalized_text": "tempo di permanenza dell uscita analogica prima dell attivazione di un altra uscita",
-      "measurement": "sec",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param90_P02T01D01",
-        "Alias": "Param90",
-        "MultiLanguageDescription": {
-          "it": "Tempo di permanenza dell'uscita analogica prima dell'attivazione di un'altra uscita",
-          "en": "Dwell time of the analogue output before the activation of another output"
-        },
-        "Label": "t3",
-        "Category": "{\"it\":\"Uscita Analogica\",\"en\":\"Analog output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param91",
-      "raw_text": "Ritardo tra l'uscita dalla zona neutra e l'inizio della riduzione dell'uscita analogica",
-      "normalized_text": "ritardo tra l uscita dalla zona neutra e l inizio della riduzione dell uscita analogica",
-      "measurement": "sec",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param91_P02T01D01",
-        "Alias": "Param91",
-        "MultiLanguageDescription": {
-          "it": "Ritardo tra l'uscita dalla zona neutra e l'inizio della riduzione dell'uscita analogica",
-          "en": "Delay between the exit from the neutral zone and the start of the reduction of the analogue output"
-        },
-        "Label": "t4",
-        "Category": "{\"it\":\"Uscita Analogica\",\"en\":\"Analog output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param92",
-      "raw_text": "Tempo di caduta dell'uscita analogica",
-      "normalized_text": "tempo di caduta dell uscita analogica",
-      "measurement": "sec",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param92_P02T01D01",
-        "Alias": "Param92",
-        "MultiLanguageDescription": {
-          "it": "Tempo di caduta dell'uscita analogica",
-          "en": "Fall time of the analog output"
-        },
-        "Label": "t5",
-        "Category": "{\"it\":\"Uscita Analogica\",\"en\":\"Analog output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param93",
-      "raw_text": "Tempo di permanenza dell'uscita analogica prima della disattivazione di un'uscita",
-      "normalized_text": "tempo di permanenza dell uscita analogica prima della disattivazione di un uscita",
-      "measurement": "sec",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param93_P02T01D01",
-        "Alias": "Param93",
-        "MultiLanguageDescription": {
-          "it": "Tempo di permanenza dell'uscita analogica prima della disattivazione di un'uscita",
-          "en": "Dwell time of the analogue output before the deactivation of an output"
-        },
-        "Label": "t6",
-        "Category": "{\"it\":\"Uscita Analogica\",\"en\":\"Analog output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param94",
-      "raw_text": "Attivazione dell'uscita trigger",
-      "normalized_text": "attivazione dell uscita trigger",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param94_P02T01D01",
-        "Alias": "Param94",
-        "MultiLanguageDescription": {
-          "it": "Attivazione dell'uscita trigger",
-          "en": "Activation of the trigger output"
-        },
-        "Label": "tOC",
-        "Category": "{\"it\":\"Uscita Trigger\",\"en\":\"Trigger output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param95",
-      "raw_text": "Sonda per uscita trigger",
-      "normalized_text": "sonda per uscita trigger",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param95_P02T01D01",
-        "Alias": "Param95",
-        "MultiLanguageDescription": {
-          "it": "Sonda per uscita trigger",
-          "en": "Probe for trigger output"
-        },
-        "Label": "tOP",
-        "Category": "{\"it\":\"Uscita Trigger\",\"en\":\"Trigger output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param96",
-      "raw_text": "Limite inferiore della scala per l'uscita trigger",
-      "normalized_text": "limite inferiore della scala per l uscita trigger",
-      "measurement": "bar/°C",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param96_P02T01D01",
-        "Alias": "Param96",
-        "MultiLanguageDescription": {
-          "it": "Limite inferiore della scala per l'uscita trigger",
-          "en": "Lower limit of the scale for the trigger output"
-        },
-        "Label": "LtO",
-        "Category": "{\"it\":\"Uscita Trigger\",\"en\":\"Trigger output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param97",
-      "raw_text": "Limite scala superiore per l'uscita trigger",
-      "normalized_text": "limite scala superiore per l uscita trigger",
-      "measurement": "bar/°C",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param97_P02T01D01",
-        "Alias": "Param97",
-        "MultiLanguageDescription": {
-          "it": "Limite scala superiore per l'uscita trigger",
-          "en": "Upper scale limit for trigger output"
-        },
-        "Label": "UtO",
-        "Category": "{\"it\":\"Uscita Trigger\",\"en\":\"Trigger output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param98",
-      "raw_text": "Valore minimo dell'uscita trigger",
-      "normalized_text": "valore minimo dell uscita trigger",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param98_P02T01D01",
-        "Alias": "Param98",
-        "MultiLanguageDescription": {
-          "it": "Valore minimo dell'uscita trigger",
-          "en": "Minimum value of the trigger output"
-        },
-        "Label": "tOM",
-        "Category": "{\"it\":\"Uscita Trigger\",\"en\":\"Trigger output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param99",
-      "raw_text": "Percentuale di uscita trigger in caso di errore della sonda",
-      "normalized_text": "percentuale di uscita trigger in caso di errore della sonda",
-      "measurement": "%",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param99_P02T01D01",
-        "Alias": "Param99",
-        "MultiLanguageDescription": {
-          "it": "Percentuale di uscita trigger in caso di errore della sonda",
-          "en": "Percentage of trigger output in case of probe error"
-        },
-        "Label": "StO",
-        "Category": "{\"it\":\"Uscita Trigger\",\"en\":\"Trigger output\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param100",
-      "raw_text": "Silenziamento relÃ¨ di allarme",
-      "normalized_text": "silenziamento relè di allarme",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param100_P02T01D01",
-        "Alias": "Param100",
-        "MultiLanguageDescription": {
-          "it": "Silenziamento relÃ¨ di allarme",
-          "en": "Alarm relay silence"
-        },
-        "Label": "tbA",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param101",
-      "raw_text": "RelÃ¨ di allarme di polarita'",
-      "normalized_text": "relè di allarme di polarita",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param101_P02T01D01",
-        "Alias": "Param101",
-        "MultiLanguageDescription": {
-          "it": "RelÃ¨ di allarme di polarita'",
-          "en": "Polarity alarm relay"
-        },
-        "Label": "OAP",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param102",
-      "raw_text": "Funzione oFF abilitata",
-      "normalized_text": "funzione off abilitata",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param102_P02T01D01",
-        "Alias": "Param102",
-        "MultiLanguageDescription": {
-          "it": "Funzione oFF abilitata",
-          "en": "OFF function enabled"
-        },
-        "Label": "oFF",
-        "Category": "{\"it\":\"Generale\",\"en\":\"General\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param103",
-      "raw_text": "Indirizzo seriale compressori",
-      "normalized_text": "indirizzo seriale compressori",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param103_P02T01D01",
-        "Alias": "Param103",
-        "MultiLanguageDescription": {
-          "it": "Indirizzo seriale compressori",
-          "en": "Compressors serial address"
-        },
-        "Label": "Ad1",
-        "Category": "{\"it\":\"Altro\",\"en\":\"Other\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param104",
-      "raw_text": "Indirizzo seriale ventola",
-      "normalized_text": "indirizzo seriale ventola",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param104_P02T01D01",
-        "Alias": "Param104",
-        "MultiLanguageDescription": {
-          "it": "Indirizzo seriale ventola",
-          "en": "Fan serial address"
-        },
-        "Label": "Ad2",
-        "Category": "{\"it\":\"Altro\",\"en\":\"Other\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param105",
-      "raw_text": "Set point compressori",
-      "normalized_text": "set point compressori",
-      "measurement": "bar/°C/PSI/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param105_P02T01D01",
-        "Alias": "Param105",
-        "MultiLanguageDescription": {
-          "it": "Set point compressori",
-          "en": "Compressors set point"
-        },
-        "Label": "SEtC",
-        "Category": "{\"it\":\"Set Point\",\"en\":\"Set Point\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Parameters",
-      "source_key": "Param106",
-      "raw_text": "Set point ventola",
-      "normalized_text": "set point ventola",
-      "measurement": "bar/°C/PSI/°F",
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Param106_P02T01D01",
-        "Alias": "Param106",
-        "MultiLanguageDescription": {
-          "it": "Set point ventola",
-          "en": "Fan set point"
-        },
-        "Label": "SEtF",
-        "Category": "{\"it\":\"Set Point\",\"en\":\"Set Point\"}",
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Alarms",
-      "source_key": "Alarm0",
-      "raw_text": "Bassa Temperatura Sonda 1",
-      "normalized_text": "bassa temperatura sonda 1",
-      "measurement": null,
-      "type": 2,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Alarm0_P02T01D01",
-        "Alias": "Alarm0",
-        "MultiLanguageDescription": {
-          "it": "Bassa Temperatura Sonda 1",
-          "en": "Low Temperature Probe 1 Value"
+          "en": "Tensione L2-N",
+          "it": "Tensione L2-N"
         },
         "Label": null,
         "Category": null,
-        "Priority": 8
+        "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
-      "section": "Alarms",
-      "source_key": "Alarm1",
-      "raw_text": "Alta Temperatura Sonda 1",
-      "normalized_text": "alta temperatura sonda 1",
-      "measurement": null,
-      "type": 2,
+      "section": "ContinuosReads",
+      "source_key": "Read14",
+      "raw_text": "Tensione L3-N",
+      "normalized_text": "tensione l3 n",
+      "measurement": "V",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Alarm1_P02T01D01",
-        "Alias": "Alarm1",
+        "Name": "Read14_P05T01D01",
+        "Alias": "Read14",
         "MultiLanguageDescription": {
-          "it": "Alta Temperatura Sonda 1",
-          "en": "High Temperature Probe 1 Value"
+          "en": "Tensione L3-N",
+          "it": "Tensione L3-N"
         },
         "Label": null,
         "Category": null,
-        "Priority": 8
+        "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
-      "section": "Alarms",
-      "source_key": "Alarm2",
-      "raw_text": "Errore Sonda 1",
-      "normalized_text": "errore sonda 1",
-      "measurement": null,
-      "type": 2,
+      "section": "ContinuosReads",
+      "source_key": "Read15",
+      "raw_text": "Tensione L–N Media",
+      "normalized_text": "tensione l n media",
+      "measurement": "V",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Alarm2_P02T01D01",
-        "Alias": "Alarm2",
+        "Name": "Read15_P05T01D01",
+        "Alias": "Read15",
         "MultiLanguageDescription": {
-          "it": "Errore Sonda 1",
-          "en": "Probe 1 error"
+          "en": "Tensione L–N Media",
+          "it": "Tensione L–N Media"
         },
         "Label": null,
         "Category": null,
-        "Priority": 1
+        "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
-      "section": "Alarms",
-      "source_key": "Alarm3",
-      "raw_text": "Bassa Temperatura Sonda 2",
-      "normalized_text": "bassa temperatura sonda 2",
-      "measurement": null,
-      "type": 2,
+      "section": "ContinuosReads",
+      "source_key": "Read16",
+      "raw_text": "Potenza Attiva Fase 1",
+      "normalized_text": "potenza attiva fase 1",
+      "measurement": "kW",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Alarm3_P02T01D01",
-        "Alias": "Alarm3",
+        "Name": "Read16_P05T01D01",
+        "Alias": "Read16",
         "MultiLanguageDescription": {
-          "it": "Bassa Temperatura Sonda 2",
-          "en": "Low Temperature Probe 2 Value"
+          "en": "Potenza Attiva Fase 1",
+          "it": "Potenza Attiva Fase 1"
         },
         "Label": null,
         "Category": null,
-        "Priority": 8
+        "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
-      "section": "Alarms",
-      "source_key": "Alarm4",
-      "raw_text": "Alta Temperatura Sonda 2",
-      "normalized_text": "alta temperatura sonda 2",
-      "measurement": null,
-      "type": 2,
+      "section": "ContinuosReads",
+      "source_key": "Read17",
+      "raw_text": "Potenza Attiva Fase 2",
+      "normalized_text": "potenza attiva fase 2",
+      "measurement": "kW",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Alarm4_P02T01D01",
-        "Alias": "Alarm4",
+        "Name": "Read17_P05T01D01",
+        "Alias": "Read17",
         "MultiLanguageDescription": {
-          "it": "Alta Temperatura Sonda 2",
-          "en": "High Temperature Probe 2 Value"
+          "en": "Potenza Attiva Fase 2",
+          "it": "Potenza Attiva Fase 2"
         },
         "Label": null,
         "Category": null,
-        "Priority": 8
+        "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
-      "section": "Alarms",
-      "source_key": "Alarm5",
-      "raw_text": "Errore Sonda 2",
-      "normalized_text": "errore sonda 2",
-      "measurement": null,
-      "type": 2,
+      "section": "ContinuosReads",
+      "source_key": "Read18",
+      "raw_text": "Potenza Attiva Fase 3",
+      "normalized_text": "potenza attiva fase 3",
+      "measurement": "kW",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Alarm5_P02T01D01",
-        "Alias": "Alarm5",
+        "Name": "Read18_P05T01D01",
+        "Alias": "Read18",
         "MultiLanguageDescription": {
-          "it": "Errore Sonda 2",
-          "en": "Probe 2 error"
+          "en": "Potenza Attiva Fase 3",
+          "it": "Potenza Attiva Fase 3"
         },
         "Label": null,
         "Category": null,
-        "Priority": 1
+        "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
-      "section": "Alarms",
-      "source_key": "Alarm6",
-      "raw_text": "Allarme Compressore 1",
-      "normalized_text": "allarme compressore 1",
-      "measurement": null,
-      "type": 2,
+      "section": "ContinuosReads",
+      "source_key": "Read19",
+      "raw_text": "Potenza Attiva Trifase",
+      "normalized_text": "potenza attiva trifase",
+      "measurement": "kW",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Alarm6_P02T01D01",
-        "Alias": "Alarm6",
+        "Name": "Read19_P05T01D01",
+        "Alias": "Read19",
         "MultiLanguageDescription": {
-          "it": "Allarme Compressore 1",
-          "en": "Compressor 1 alarm"
+          "en": "Potenza Attiva Trifase",
+          "it": "Potenza Attiva Trifase"
         },
         "Label": null,
         "Category": null,
-        "Priority": 6
+        "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
-      "section": "Alarms",
-      "source_key": "Alarm7",
-      "raw_text": "Allarme Compressore 2",
-      "normalized_text": "allarme compressore 2",
+      "section": "ContinuosReads",
+      "source_key": "Read20",
+      "raw_text": "Fattore di potenza trifase (PF)",
+      "normalized_text": "fattore di potenza trifase pf",
       "measurement": null,
-      "type": 2,
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Alarm7_P02T01D01",
-        "Alias": "Alarm7",
+        "Name": "Read20_P05T01D01",
+        "Alias": "Read20",
         "MultiLanguageDescription": {
-          "it": "Allarme Compressore 2",
-          "en": "Compressor alarm 2"
+          "en": "Fattore di potenza trifase (PF)",
+          "it": "Fattore di potenza trifase (PF)"
         },
         "Label": null,
         "Category": null,
-        "Priority": 6
+        "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
-      "section": "Alarms",
-      "source_key": "Alarm8",
-      "raw_text": "Allarme Compressore 3",
-      "normalized_text": "allarme compressore 3",
-      "measurement": null,
-      "type": 2,
+      "section": "ContinuosReads",
+      "source_key": "Read21",
+      "raw_text": "Frequenza",
+      "normalized_text": "frequenza",
+      "measurement": "Hz",
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Alarm8_P02T01D01",
-        "Alias": "Alarm8",
+        "Name": "Read21_P05T01D01",
+        "Alias": "Read21",
         "MultiLanguageDescription": {
-          "it": "Allarme Compressore 3",
-          "en": "Compressor alarm 3"
+          "en": "Frequenza",
+          "it": "Frequenza"
         },
         "Label": null,
         "Category": null,
-        "Priority": 6
+        "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
-      "section": "Alarms",
-      "source_key": "Alarm9",
-      "raw_text": "Allarme Compressore 4",
-      "normalized_text": "allarme compressore 4",
-      "measurement": null,
-      "type": 2,
+      "section": "ContinuosReads",
+      "source_key": "Read22",
+      "raw_text": "Energia Attiva Totale importata",
+      "normalized_text": "energia attiva totale importata",
+      "measurement": "kWh",
+      "type": 7,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Alarm9_P02T01D01",
-        "Alias": "Alarm9",
+        "Name": "Read22_P05T01D01",
+        "Alias": "Read22",
         "MultiLanguageDescription": {
-          "it": "Allarme Compressore 4",
-          "en": "Compressor alarm 4"
+          "en": "Energia Attiva Totale importata",
+          "it": "Energia Attiva Totale importata"
         },
         "Label": null,
         "Category": null,
-        "Priority": 6
+        "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
-      "section": "Alarms",
-      "source_key": "Alarm10",
-      "raw_text": "Allarme Compressore 5",
-      "normalized_text": "allarme compressore 5",
-      "measurement": null,
-      "type": 2,
+      "section": "ContinuosReads",
+      "source_key": "Read23",
+      "raw_text": "Energia Attiva Parziale importata",
+      "normalized_text": "energia attiva parziale importata",
+      "measurement": "kWh",
+      "type": 7,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Alarm10_P02T01D01",
-        "Alias": "Alarm10",
+        "Name": "Read23_P05T01D01",
+        "Alias": "Read23",
         "MultiLanguageDescription": {
-          "it": "Allarme Compressore 5",
-          "en": "Compressor alarm 5"
+          "en": "Energia Attiva Parziale importata",
+          "it": "Energia Attiva Parziale importata"
         },
         "Label": null,
         "Category": null,
-        "Priority": 6
+        "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
-      "section": "Alarms",
-      "source_key": "Alarm11",
-      "raw_text": "Allarme Compressore 6",
-      "normalized_text": "allarme compressore 6",
-      "measurement": null,
-      "type": 2,
+      "section": "ContinuosReads",
+      "source_key": "Read24",
+      "raw_text": "Energia Attiva importata Fase 1",
+      "normalized_text": "energia attiva importata fase 1",
+      "measurement": "kWh",
+      "type": 7,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Alarm11_P02T01D01",
-        "Alias": "Alarm11",
+        "Name": "Read24_P05T01D01",
+        "Alias": "Read24",
         "MultiLanguageDescription": {
-          "it": "Allarme Compressore 6",
-          "en": "Compressor alarm 6"
+          "en": "Energia Attiva importata Fase 1",
+          "it": "Energia Attiva importata Fase 1"
         },
         "Label": null,
         "Category": null,
-        "Priority": 6
+        "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
-      "section": "Alarms",
-      "source_key": "Alarm12",
-      "raw_text": "Allarme Livello Liquido",
-      "normalized_text": "allarme livello liquido",
-      "measurement": null,
-      "type": 2,
+      "section": "ContinuosReads",
+      "source_key": "Read25",
+      "raw_text": "Energia Attiva importata Fase 2",
+      "normalized_text": "energia attiva importata fase 2",
+      "measurement": "kWh",
+      "type": 7,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Alarm12_P02T01D01",
-        "Alias": "Alarm12",
+        "Name": "Read25_P05T01D01",
+        "Alias": "Read25",
         "MultiLanguageDescription": {
-          "it": "Allarme Livello Liquido",
-          "en": "Liquid Level Alarm"
+          "en": "Energia Attiva importata Fase 2",
+          "it": "Energia Attiva importata Fase 2"
         },
         "Label": null,
         "Category": null,
-        "Priority": 8
+        "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
-      "section": "Alarms",
-      "source_key": "Alarm13",
-      "raw_text": "Errore EEPROM",
-      "normalized_text": "errore eeprom",
-      "measurement": null,
-      "type": 2,
+      "section": "ContinuosReads",
+      "source_key": "Read26",
+      "raw_text": "Energia Attiva importata Fase 3",
+      "normalized_text": "energia attiva importata fase 3",
+      "measurement": "kWh",
+      "type": 7,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Alarm13_P02T01D01",
-        "Alias": "Alarm13",
+        "Name": "Read26_P05T01D01",
+        "Alias": "Read26",
         "MultiLanguageDescription": {
-          "it": "Errore EEPROM",
-          "en": "EEPROM error"
+          "en": "Energia Attiva importata Fase 3",
+          "it": "Energia Attiva importata Fase 3"
         },
         "Label": null,
         "Category": null,
-        "Priority": 10
+        "Priority": null
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
-      "section": "Alarms",
-      "source_key": "Alarm14",
-      "raw_text": "Manuntenzione Compressore 1",
-      "normalized_text": "manuntenzione compressore 1",
+      "section": "ContinuosReads",
+      "source_key": "Read27",
+      "raw_text": "Error diagnostic",
+      "normalized_text": "error diagnostic",
       "measurement": null,
-      "type": 2,
+      "type": 3,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Alarm14_P02T01D01",
-        "Alias": "Alarm14",
+        "Name": "Read27_P05T01D01",
+        "Alias": "Read27",
         "MultiLanguageDescription": {
-          "it": "Manuntenzione Compressore 1",
-          "en": "Compressor maintenance 1"
+          "en": "Error diagnostic",
+          "it": "Diagnostica Errore"
         },
         "Label": null,
         "Category": null,
-        "Priority": 1
+        "Priority": null
       },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Alarms",
-      "source_key": "Alarm15",
-      "raw_text": "Manuntenzione Compressore 2",
-      "normalized_text": "manuntenzione compressore 2",
-      "measurement": null,
-      "type": 2,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Alarm15_P02T01D01",
-        "Alias": "Alarm15",
-        "MultiLanguageDescription": {
-          "it": "Manuntenzione Compressore 2",
-          "en": "Compressor maintenance 2"
-        },
-        "Label": null,
-        "Category": null,
-        "Priority": 1
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Alarms",
-      "source_key": "Alarm16",
-      "raw_text": "Manuntenzione Compressore 3",
-      "normalized_text": "manuntenzione compressore 3",
-      "measurement": null,
-      "type": 2,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Alarm16_P02T01D01",
-        "Alias": "Alarm16",
-        "MultiLanguageDescription": {
-          "it": "Manuntenzione Compressore 3",
-          "en": "Compressor maintenance 3"
-        },
-        "Label": null,
-        "Category": null,
-        "Priority": 1
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Alarms",
-      "source_key": "Alarm17",
-      "raw_text": "Manuntenzione Compressore 4",
-      "normalized_text": "manuntenzione compressore 4",
-      "measurement": null,
-      "type": 2,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Alarm17_P02T01D01",
-        "Alias": "Alarm17",
-        "MultiLanguageDescription": {
-          "it": "Manuntenzione Compressore 4",
-          "en": "Compressor maintenance 4"
-        },
-        "Label": null,
-        "Category": null,
-        "Priority": 1
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Alarms",
-      "source_key": "Alarm18",
-      "raw_text": "Manuntenzione Compressore 5",
-      "normalized_text": "manuntenzione compressore 5",
-      "measurement": null,
-      "type": 2,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Alarm18_P02T01D01",
-        "Alias": "Alarm18",
-        "MultiLanguageDescription": {
-          "it": "Manuntenzione Compressore 5",
-          "en": "Compressor maintenance 5"
-        },
-        "Label": null,
-        "Category": null,
-        "Priority": 1
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Alarms",
-      "source_key": "Alarm19",
-      "raw_text": "Manuntenzione Compressore 6",
-      "normalized_text": "manuntenzione compressore 6",
-      "measurement": null,
-      "type": 2,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Alarm19_P02T01D01",
-        "Alias": "Alarm19",
-        "MultiLanguageDescription": {
-          "it": "Manuntenzione Compressore 6",
-          "en": "Compressor maintenance 6"
-        },
-        "Label": null,
-        "Category": null,
-        "Priority": 1
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Alarms",
-      "source_key": "Alarm20",
-      "raw_text": "Allarme Alta Pressione",
-      "normalized_text": "allarme alta pressione",
-      "measurement": null,
-      "type": 2,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Alarm20_P02T01D01",
-        "Alias": "Alarm20",
-        "MultiLanguageDescription": {
-          "it": "Allarme Alta Pressione",
-          "en": "High Pressure Alarm"
-        },
-        "Label": null,
-        "Category": null,
-        "Priority": 8
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Alarms",
-      "source_key": "Alarm21",
-      "raw_text": "Allarme Bassa Pressione",
-      "normalized_text": "allarme bassa pressione",
-      "measurement": null,
-      "type": 2,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Alarm21_P02T01D01",
-        "Alias": "Alarm21",
-        "MultiLanguageDescription": {
-          "it": "Allarme Bassa Pressione",
-          "en": "Low Pressure Alarm"
-        },
-        "Label": null,
-        "Category": null,
-        "Priority": 8
-      },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
       "section": "Alarms",
@@ -2992,7 +600,7 @@
       "type": 2,
       "enabled": true,
       "evidence_fields": {
-        "Name": "StatusMessage_P02T01D01",
+        "Name": "StatusMessage_P05T01D01",
         "Alias": "StatusMessage",
         "MultiLanguageDescription": {
           "en": "OFF-Line",
@@ -3006,154 +614,28 @@
         "Category": null,
         "Priority": 10
       },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     },
     {
-      "section": "Commands",
-      "source_key": "Command0",
-      "raw_text": "Dispositivo OFF",
-      "normalized_text": "dispositivo off",
+      "section": "VirtualVariables",
+      "source_key": "VVar0",
+      "raw_text": "Power Factor",
+      "normalized_text": "power factor",
       "measurement": null,
-      "type": 3,
+      "type": 9,
       "enabled": true,
       "evidence_fields": {
-        "Name": "Command0_P02T01D01",
-        "Alias": "Command0",
+        "Name": "VVar0_P05T01D01",
+        "Alias": "VVar0",
         "MultiLanguageDescription": {
-          "it": "Dispositivo OFF",
-          "en": "Device OFF"
+          "en": "Power Factor",
+          "it": "Fattore di Potenza"
         },
         "Label": null,
         "Category": null,
         "Priority": null
       },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Commands",
-      "source_key": "Command1",
-      "raw_text": "Dispositivo ON",
-      "normalized_text": "dispositivo on",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Command1_P02T01D01",
-        "Alias": "Command1",
-        "MultiLanguageDescription": {
-          "it": "Dispositivo ON",
-          "en": "Device ON"
-        },
-        "Label": null,
-        "Category": null,
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Commands",
-      "source_key": "Command2",
-      "raw_text": "Tastiera Bloccata",
-      "normalized_text": "tastiera bloccata",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Command2_P02T01D01",
-        "Alias": "Command2",
-        "MultiLanguageDescription": {
-          "it": "Tastiera Bloccata",
-          "en": "Keyboard Locked"
-        },
-        "Label": null,
-        "Category": null,
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Commands",
-      "source_key": "Command3",
-      "raw_text": "Tastiera Sbloccata",
-      "normalized_text": "tastiera sbloccata",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Command3_P02T01D01",
-        "Alias": "Command3",
-        "MultiLanguageDescription": {
-          "it": "Tastiera Sbloccata",
-          "en": "Keyboard Unlocked"
-        },
-        "Label": null,
-        "Category": null,
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Commands",
-      "source_key": "Command4",
-      "raw_text": "Allarme Muto",
-      "normalized_text": "allarme muto",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Command4_P02T01D01",
-        "Alias": "Command4",
-        "MultiLanguageDescription": {
-          "it": "Allarme Muto",
-          "en": "Mute alarm"
-        },
-        "Label": null,
-        "Category": null,
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Commands",
-      "source_key": "Command5",
-      "raw_text": "Energy Saving ON",
-      "normalized_text": "energy saving on",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Command5_P02T01D01",
-        "Alias": "Command5",
-        "MultiLanguageDescription": {
-          "it": "Energy Saving ON",
-          "en": "Energy Saving ON"
-        },
-        "Label": null,
-        "Category": null,
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
-    },
-    {
-      "section": "Commands",
-      "source_key": "Command6",
-      "raw_text": "Energy Saving OFF",
-      "normalized_text": "energy saving off",
-      "measurement": null,
-      "type": 3,
-      "enabled": true,
-      "evidence_fields": {
-        "Name": "Command6_P02T01D01",
-        "Alias": "Command6",
-        "MultiLanguageDescription": {
-          "it": "Energy Saving OFF",
-          "en": "Energy Saving OFF"
-        },
-        "Label": null,
-        "Category": null,
-        "Priority": null
-      },
-      "device_id": "P02T01D01"
+      "device_id": "P05T01D01"
     }
   ],
   "support_only": {
@@ -3162,275 +644,451 @@
         "Pen": "Read0",
         "Labels": [
           {
-            "Code": "it",
-            "Description": "Sonda aspirazione"
+            "Code": "en",
+            "Description": "Numero di Fasi"
           },
           {
-            "Code": "en",
-            "Description": "Suction probe"
+            "Code": "it",
+            "Description": "Numero di Fasi"
           }
         ],
-        "Measurement": "°C",
-        "Name": "Pen0_P02T01D01",
+        "Measurement": null,
+        "Name": "Pen0_P05T01D01",
         "Type": 0
       },
       {
         "Pen": "Read1",
         "Labels": [
           {
-            "Code": "it",
-            "Description": "Sonda mandata"
+            "Code": "en",
+            "Description": "Numero di Cavi"
           },
           {
-            "Code": "en",
-            "Description": "Delivery probe"
-          }
-        ],
-        "Measurement": "°C",
-        "Name": "Pen1_P02T01D01",
-        "Type": 0
-      },
-      {
-        "Pen": "Param105",
-        "Labels": [
-          {
             "Code": "it",
-            "Description": "Setpoint compressori"
-          },
-          {
-            "Code": "en",
-            "Description": "Setpoint compressor"
-          }
-        ],
-        "Measurement": "bar/°C/PSI/°F",
-        "Name": "Pen2_P02T01D01",
-        "Type": 0
-      },
-      {
-        "Pen": "Param106",
-        "Labels": [
-          {
-            "Code": "it",
-            "Description": "Setpoint Ventole"
-          },
-          {
-            "Code": "en",
-            "Description": "Setpoint Fan"
-          }
-        ],
-        "Measurement": "bar/°C/PSI/°F",
-        "Name": "Pen3_P02T01D01",
-        "Type": 0
-      },
-      {
-        "Pen": "Read33",
-        "Labels": [
-          {
-            "Code": "it",
-            "Description": "Stato Macchina"
-          },
-          {
-            "Code": "en",
-            "Description": "Machine Status"
+            "Description": "Numero di Cavi"
           }
         ],
         "Measurement": null,
-        "Name": "Pen4_P02T01D01",
-        "Type": 1
+        "Name": "Pen1_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read2",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Tipo di Sistema (Potenza)"
+          },
+          {
+            "Code": "it",
+            "Description": "Tipo di Sistema (Potenza)"
+          }
+        ],
+        "Measurement": null,
+        "Name": "Pen2_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read3",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Frequenza Nominale"
+          },
+          {
+            "Code": "it",
+            "Description": "Frequenza Nominale"
+          }
+        ],
+        "Measurement": "Hz",
+        "Name": "Pen3_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read4",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Corrente L1"
+          },
+          {
+            "Code": "it",
+            "Description": "Corrente L1"
+          }
+        ],
+        "Measurement": "A",
+        "Name": "Pen4_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read5",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Corrente L2"
+          },
+          {
+            "Code": "it",
+            "Description": "Corrente L2"
+          }
+        ],
+        "Measurement": "A",
+        "Name": "Pen5_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read6",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Corrente L3"
+          },
+          {
+            "Code": "it",
+            "Description": "Corrente L3"
+          }
+        ],
+        "Measurement": "A",
+        "Name": "Pen6_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read7",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Corrente Media"
+          },
+          {
+            "Code": "it",
+            "Description": "Corrente Media"
+          }
+        ],
+        "Measurement": "A",
+        "Name": "Pen7_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read8",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Tensione L1-L2"
+          },
+          {
+            "Code": "it",
+            "Description": "Tensione L1-L2"
+          }
+        ],
+        "Measurement": "V",
+        "Name": "Pen8_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read9",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Tensione L2-L3"
+          },
+          {
+            "Code": "it",
+            "Description": "Tensione L2-L3"
+          }
+        ],
+        "Measurement": "V",
+        "Name": "Pen9_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read10",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Tensione L3-L1"
+          },
+          {
+            "Code": "it",
+            "Description": "Tensione L3-L1"
+          }
+        ],
+        "Measurement": "V",
+        "Name": "Pen10_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read11",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Tensione L–L Media"
+          },
+          {
+            "Code": "it",
+            "Description": "Tensione L–L Media"
+          }
+        ],
+        "Measurement": "V",
+        "Name": "Pen11_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read12",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Tensione L1-N"
+          },
+          {
+            "Code": "it",
+            "Description": "Tensione L1-N"
+          }
+        ],
+        "Measurement": "V",
+        "Name": "Pen12_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read13",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Tensione L2-N"
+          },
+          {
+            "Code": "it",
+            "Description": "Tensione L2-N"
+          }
+        ],
+        "Measurement": "V",
+        "Name": "Pen13_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read14",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Tensione L3-N"
+          },
+          {
+            "Code": "it",
+            "Description": "Tensione L3-N"
+          }
+        ],
+        "Measurement": "V",
+        "Name": "Pen14_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read15",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Tensione L–N Media"
+          },
+          {
+            "Code": "it",
+            "Description": "Tensione L–N Media"
+          }
+        ],
+        "Measurement": "V",
+        "Name": "Pen15_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read16",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Potenza Attiva Fase 1"
+          },
+          {
+            "Code": "it",
+            "Description": "Potenza Attiva Fase 1"
+          }
+        ],
+        "Measurement": "kW",
+        "Name": "Pen16_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read17",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Potenza Attiva Fase 2"
+          },
+          {
+            "Code": "it",
+            "Description": "Potenza Attiva Fase 2"
+          }
+        ],
+        "Measurement": "kW",
+        "Name": "Pen17_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read18",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Potenza Attiva Fase 3"
+          },
+          {
+            "Code": "it",
+            "Description": "Potenza Attiva Fase 3"
+          }
+        ],
+        "Measurement": "kW",
+        "Name": "Pen18_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read19",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Potenza Attiva Trifase"
+          },
+          {
+            "Code": "it",
+            "Description": "Potenza Attiva Trifase"
+          }
+        ],
+        "Measurement": "kW",
+        "Name": "Pen19_P05T01D01",
+        "Type": 0
+      },
+      {
+        "Pen": "Read20",
+        "Labels": [
+          {
+            "Code": "en",
+            "Description": "Fattore di potenza trifase (PF)"
+          },
+          {
+            "Code": "it",
+            "Description": "Fattore di potenza trifase (PF)"
+          }
+        ],
+        "Measurement": null,
+        "Name": "Pen20_P05T01D01",
+        "Type": 0
       },
       {
         "Pen": "Read21",
         "Labels": [
           {
-            "Code": "it",
-            "Description": "Compressore 1"
+            "Code": "en",
+            "Description": "Frequenza"
           },
           {
-            "Code": "en",
-            "Description": "Compressor 1"
+            "Code": "it",
+            "Description": "Frequenza"
           }
         ],
-        "Measurement": null,
-        "Name": "Pen5_P02T01D01",
-        "Type": 1
+        "Measurement": "Hz",
+        "Name": "Pen21_P05T01D01",
+        "Type": 0
       },
       {
         "Pen": "Read22",
         "Labels": [
           {
-            "Code": "it",
-            "Description": "Compressore 2"
+            "Code": "en",
+            "Description": "Energia Attiva Totale importata"
           },
           {
-            "Code": "en",
-            "Description": "Compressor 2"
+            "Code": "it",
+            "Description": "Energia Attiva Totale importata"
           }
         ],
-        "Measurement": null,
-        "Name": "Pen6_P02T01D01",
-        "Type": 1
+        "Measurement": "kWh",
+        "Name": "Pen22_P05T01D01",
+        "Type": 0
       },
       {
         "Pen": "Read23",
         "Labels": [
           {
-            "Code": "it",
-            "Description": "Compressore 3"
+            "Code": "en",
+            "Description": "Energia Attiva Parziale importata"
           },
           {
-            "Code": "en",
-            "Description": "Compressor 3"
+            "Code": "it",
+            "Description": "Energia Attiva Parziale importata"
           }
         ],
-        "Measurement": null,
-        "Name": "Pen7_P02T01D01",
-        "Type": 1
+        "Measurement": "kWh",
+        "Name": "Pen23_P05T01D01",
+        "Type": 0
       },
       {
         "Pen": "Read24",
         "Labels": [
           {
-            "Code": "it",
-            "Description": "Compressore 4"
+            "Code": "en",
+            "Description": "Energia Attiva importata Fase 1"
           },
           {
-            "Code": "en",
-            "Description": "Compressor 4"
+            "Code": "it",
+            "Description": "Energia Attiva importata Fase 1"
           }
         ],
-        "Measurement": null,
-        "Name": "Pen8_P02T01D01",
-        "Type": 1
+        "Measurement": "kWh",
+        "Name": "Pen24_P05T01D01",
+        "Type": 0
       },
       {
         "Pen": "Read25",
         "Labels": [
           {
-            "Code": "it",
-            "Description": "Compressore 5"
+            "Code": "en",
+            "Description": "Energia Attiva importata Fase 2"
           },
           {
-            "Code": "en",
-            "Description": "Compressor 5"
+            "Code": "it",
+            "Description": "Energia Attiva importata Fase 2"
           }
         ],
-        "Measurement": null,
-        "Name": "Pen9_P02T01D01",
-        "Type": 1
+        "Measurement": "kWh",
+        "Name": "Pen25_P05T01D01",
+        "Type": 0
       },
       {
         "Pen": "Read26",
         "Labels": [
           {
-            "Code": "it",
-            "Description": "Compressore 6"
+            "Code": "en",
+            "Description": "Energia Attiva importata Fase 3"
           },
           {
-            "Code": "en",
-            "Description": "Compressor 6"
+            "Code": "it",
+            "Description": "Energia Attiva importata Fase 3"
           }
         ],
-        "Measurement": null,
-        "Name": "Pen10_P02T01D01",
-        "Type": 1
+        "Measurement": "kWh",
+        "Name": "Pen26_P05T01D01",
+        "Type": 0
       },
       {
-        "Pen": "Read27",
+        "Pen": "VVar0",
         "Labels": [
           {
-            "Code": "it",
-            "Description": "Ventilatore 1"
+            "Code": "en",
+            "Description": "Fattore di potenza trifase (PF)"
           },
           {
-            "Code": "en",
-            "Description": "Fan 1"
+            "Code": "it",
+            "Description": "Fattore di potenza trifase (PF)"
           }
         ],
         "Measurement": null,
-        "Name": "Pen11_P02T01D01",
-        "Type": 1
-      },
-      {
-        "Pen": "Read28",
-        "Labels": [
-          {
-            "Code": "it",
-            "Description": "Ventilatore 2"
-          },
-          {
-            "Code": "en",
-            "Description": "Fan 2"
-          }
-        ],
-        "Measurement": null,
-        "Name": "Pen12_P02T01D01",
-        "Type": 1
-      },
-      {
-        "Pen": "Read29",
-        "Labels": [
-          {
-            "Code": "it",
-            "Description": "Ventilatore 3"
-          },
-          {
-            "Code": "en",
-            "Description": "Fan 3"
-          }
-        ],
-        "Measurement": null,
-        "Name": "Pen13_P02T01D01",
-        "Type": 1
-      },
-      {
-        "Pen": "Read30",
-        "Labels": [
-          {
-            "Code": "it",
-            "Description": "Ventilatore 4"
-          },
-          {
-            "Code": "en",
-            "Description": "Fan 4"
-          }
-        ],
-        "Measurement": null,
-        "Name": "Pen14_P02T01D01",
-        "Type": 1
-      },
-      {
-        "Pen": "Read31",
-        "Labels": [
-          {
-            "Code": "it",
-            "Description": "Ventilatore 5"
-          },
-          {
-            "Code": "en",
-            "Description": "Fan 5"
-          }
-        ],
-        "Measurement": null,
-        "Name": "Pen15_P02T01D01",
-        "Type": 1
-      },
-      {
-        "Pen": "Read32",
-        "Labels": [
-          {
-            "Code": "it",
-            "Description": "Ventilatore 6"
-          },
-          {
-            "Code": "en",
-            "Description": "Fan 6"
-          }
-        ],
-        "Measurement": null,
-        "Name": "Pen16_P02T01D01",
-        "Type": 1
+        "Name": "Pen27_P05T01D01",
+        "Type": 0
       }
     ],
-    "TemplateGuid": "5c2667d5-dfc6-18f5-0b17-420c90dfb858"
+    "TemplateGuid": "42a94bad-6251-3975-2e59-cf740465103c"
   }
 }

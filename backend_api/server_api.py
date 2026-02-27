@@ -137,7 +137,7 @@ def apply_patch(input_path: str | None, file_name: str | None, store: str | None
         raise HTTPException(status_code=404, detail="user_id or batch_id not exists!")
         
     cfg = dict(ARTIFACTS[artifact])
-    cfg["input_path"] = input_path
+    cfg["input_path"] = str(input_path)
     
     # artifact = {template_base || kb}
     if artifact != "device_list" and artifact != "template":
