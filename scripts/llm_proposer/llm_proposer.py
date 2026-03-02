@@ -5,6 +5,7 @@ import json
 from src.metrics_calculation.llm_calculate_metrics import compute_time_metrics, compute_efficiency_metrics, compute_effectiveness_metrics, aggregate_ollama_metrics, compute_quality_metrics, compute_metrics
 
 TIMEZONE = timezone(timedelta(hours=1))
+ollama_call_count = 0
 
 def extract_llm_contexts(mr: dict) -> list[dict]:
     # estrae i contesti LLM dal matching report che richiedono llm ( ambiguous , unmapped )
@@ -232,6 +233,7 @@ def parse_llm_output(output: dict) -> dict:
     return output
 
 def ensure_labels(actions_payload: dict) -> dict:
+
     actions = actions_payload.get("actions", [])
     for a in actions:
         tgt = a.get("target", {})

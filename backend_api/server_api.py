@@ -6,7 +6,7 @@ from pathlib import Path
 import json
 from  typing import Any
 
-from scripts.orchestrator import run_template_pipeline, run_patch, ARTIFACTS, summarize_dictionary_diff, build_dictionary_patch_from_run_report, build_dictionary_suggestions_from_run_report, dictionary_upsert, kb_upsert_mapping, summarize_kb_diff, template_apply_patch, summarize_template_base_diff, run_device_list
+from scripts.orchestrator import start_template_run, llm_propose_for_run, template_run, run_patch, ARTIFACTS, summarize_dictionary_diff, build_dictionary_patch_from_run_report, build_dictionary_suggestions_from_run_report, dictionary_upsert, kb_upsert_mapping, summarize_kb_diff, template_apply_patch, summarize_template_base_diff, run_device_list
 from src.validator.validator import load_json
 from src.intermediateLayer.postgres_repository import RunRepository, UsersRepository, BatchesRepository
 from mcp_server.tools.dictionary_tool import _next_versioned_path
@@ -22,10 +22,6 @@ class LoginRequest(BaseModel):
 class BatchesRequest(BaseModel):
     user_id: UUID4
     total_runs: int
-
-class RunTemplateRequest(BaseModel):
-    template_name: str
-    validate_only: bool = True
 
 class RunDictionaryRequest(BaseModel):
     dictionary_name: str
@@ -62,6 +58,20 @@ class RunDeviceListRequest(BaseModel):
     store: str
     device_list_name: str
     validate_only: bool = True 
+
+class RunTemplateStartRequest(BaseModel):
+    template_name: str
+
+class RunTemplateLlmRequest(BaseModel):
+    run_id: str
+    llm_model: str | None = None 
+
+class RunTemplateFinishRequest(BaseModel):
+    run_id: str
+    template_name: str 
+    validate_only: bool = True 
+    apply_llm: bool = False 
+    llm_patch_actions: dict | None = None
 
 
 app = FastAPI()
@@ -236,22 +246,24 @@ def apply_patch(input_path: str | None, file_name: str | None, patch_json: dict 
 
         return {"status": "ok", "run_id": report.get("run_id"), "report_path": str(report_path)}
     
-    # artifact = template
-    elif artifact == "template":
-        report_path = run_template_pipeline(template_path=str(input_path), validate_only=validate_only, use_llm=False)
-        report = load_json(report_path)
-        runClass.save_run(report, user_id, batch_id)
-        batchClass.increment_completed_runs(batch_id)
-        ambiguous_count = report.get("metrics", {}).get("ambiguous_count", 0)
+        """
+        # artifact = template
+        elif artifact == "template":
+            report_path = run_template_pipeline(template_path=str(input_path), validate_only=validate_only, use_llm=False)
+            report = load_json(report_path)
+            runClass.save_run(report, user_id, batch_id)
+            batchClass.increment_completed_runs(batch_id)
+            ambiguous_count = report.get("metrics", {}).get("ambiguous_count", 0)
 
-        return {
-            "status": "ok",
-            "run_id": report.get("run_id"),
-            "report_path": str(report_path),
-            "has_ambiguous": ambiguous_count > 0,
-            "ambiguous_count": ambiguous_count
-        }
-    
+            return {
+                "status": "ok",
+                "run_id": report.get("run_id"),
+                "report_path": str(report_path),
+                "has_ambiguous": ambiguous_count > 0,
+                "ambiguous_count": ambiguous_count
+            }
+        """
+
     # artifact = device_list
     else:
         report_path = run_device_list(cfg, validate_only)
@@ -376,11 +388,13 @@ def list_device_list():
 def get_device_list(store: str, dl: str):
     return get_file_of_artifact(None, store, dl, "device_list", PVS_DIR) # preview device_list
 
+"""
 # run template
 @app.post("/run/template")
 def run_template(payload: RunTemplateRequest):
     input_path = TEMPLATE_DIR / payload.template_name
     return apply_patch(input_path, payload.template_name, None, None, None, "template", None, payload.validate_only, None, None, None)
+"""
 
 # run dizionario
 @app.post("/run/dictionary")
@@ -420,3 +434,39 @@ def edit_template_base(payload: TemplateBaseEditRequest):
 def run_deviceList(payload: RunDeviceListRequest):
     input_path = PVS_DIR / payload.store / payload.device_list_name
     return apply_patch(input_path, payload.device_list_name, None, None, None, "device_list", None, payload.validate_only, None, None, None)
+
+# start run template --> normalizzazione e matching
+@app.post("/run/template/start")
+def run_template_start(payload: RunTemplateStartRequest):
+    input_path = TEMPLATE_DIR / payload.template_name
+    if not input_path.exists():
+        raise HTTPException(status_code=404, detail="Template not found")
+
+    result = start_template_run(template_path=str(input_path))
+    return result
+
+# genera llm patch
+@app.post("/run/template/llm")
+def run_template_llm(payload: RunTemplateLlmRequest):
+    result = llm_propose_for_run(run_id=payload.run_id, llm_model=payload.llm_model)
+    return result
+
+# applica patch + run report
+@app.post("/run/template/finish")
+def run_template(payload: RunTemplateFinishRequest):
+    input_path = TEMPLATE_DIR / payload.template_name
+    if not input_path.exists():
+        raise HTTPException(status_code=404, detail="Template not found")
+    
+    if not user_id or not batch_id:
+        raise HTTPException(status_code=404, detail="user_id or batch_id not exists!")
+
+    result = template_run(run_id=payload.run_id, template_path=str(input_path), validate_only=payload.validate_only, apply_llm=payload.apply_llm, llm_actions_override=payload.llm_patch_actions)
+    report_path = result.get("report_path", {})
+    try:
+        run_report = load_json(report_path)
+        runClass.save_run(run_report, user_id, batch_id)
+        batchClass.increment_completed_runs(batch_id)
+    except Exception as e:
+        raise HTTPException(status_code=404, detail="Run report not found!")
+    return result

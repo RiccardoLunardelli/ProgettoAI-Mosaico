@@ -15,7 +15,6 @@ import yaml
 TIMEZONE = timezone(timedelta(hours=1))
 PATCH_ROOT = Path("mcp_server/patch") 
 RUNS_ROOT = Path("runs")
-ollama_call_count = 0
 
 ARTIFACTS = {
     "dictionary": {
@@ -51,6 +50,49 @@ def load_config(path: str) -> dict:
 
     with open(path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
+
+def start_template_run(template_path: str, config_path: str="config/config.yml",) -> dict:
+    # normalizzazione e matching
+
+    cfg = load_config(config_path)
+    paths = cfg.get("paths", {})
+
+    dictionary_path = paths.get("dictionary")
+    kb_path = paths.get("kb")
+    template_base_path = paths.get("template_base")
+    device_context_path = paths.get("device_context")
+    schema_tipo_path = paths.get("schema_tipo")
+    output_dir = paths.get("output_dir", "output_dir")
+
+    run_id = generate_run_id()
+    run_dir = RUNS_ROOT / run_id
+    run_dir.mkdir(parents=True, exist_ok=True)
+
+    # Normalizzazione
+    normalized_payload = normalization(template_path, schema_tipo_path)
+    normalized_path = run_dir / "normalized_template_v0.1.json"
+    normalized_path.write_text(json.dumps(normalized_payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # Matching
+    matching_path = run_dir / "matching_report_v0.1.json"
+    run_matching(
+        normalized_path=str(normalized_path),
+        template_base_path=template_base_path,
+        dictionary_path=dictionary_path,
+        kb_path=kb_path,
+        device_context_path=device_context_path,
+        output_path=str(matching_path),
+    )
+    mr = load_json(str(matching_path))
+    has_ambiguous = any(i.get("status") == "ambiguous" for i in mr.get("items", []))
+    ambiguous_count = sum(1 for i in mr.get("items", []) if i.get("status") == "ambiguous")
+
+    return {
+        "run_id": run_id,
+        "matching_path": str(matching_path),
+        "has_ambiguous": has_ambiguous,
+        "ambiguous_count": ambiguous_count,
+    }
 
 def get_template_guid(input_path: str, mr: dict | None, artifact_type) -> str:
     # trova template guid
@@ -433,7 +475,7 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
             "metrics": {
                 **effectiveness_metrics,
 
-                "llm_calls": ollama_call_count,
+                "llm_calls": llm_attempt.get("llm_calls"),
                 "llm_total_sec": llm_attempt.get("llm_total_sec") if llm_attempt else 0.0,
                 "llm_avg_sec": llm_attempt.get("llm_avg_sec") if llm_attempt else 0.0,
 
@@ -882,6 +924,39 @@ def build_artifact_versions(artifact_type: str, dict_payload: dict | None, kb_pa
         return {"device_list_version": dl_v}
     return {}
 
+#------------LLM---------------------------
+def llm_propose_for_run(run_id: str, llm_model: str | None = None,) -> dict:
+    #  genera LLM patch (come proposta)
+
+    run_dir = RUNS_ROOT / run_id
+    matching_path = run_dir / "matching_report_v0.1.json"
+
+    if not matching_path.exists():
+        raise FileNotFoundError("matching report not found for run_id")
+    
+    mr = load_json(str(matching_path))
+    model = llm_model or "llama3.1:8b"
+
+    llm_actions, _, llm_attempt = llm_propose_actions(model, mr)
+
+    llm_actions = ensure_labels(llm_actions)
+    llm_actions = filter_low_confidence(llm_actions)
+    llm_contexts = extract_llm_contexts(mr)
+    llm_actions = filter_by_candidate_gap(llm_actions, llm_contexts, min_gap=0.10)
+
+    llm_attempt_path = run_dir / "llm_attempt.json"
+    llm_attempt_path.write_text(json.dumps(llm_attempt, ensure_ascii=False, indent=2),encoding="utf-8")
+
+    llm_actions_path = run_dir / "llm_patch_actions.json"
+    llm_actions_path.write_text(json.dumps(llm_actions, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    return {
+        "run_id": run_id,
+        "llm_patch_actions": llm_actions,
+        "llm_patch_path": str(llm_actions_path),
+        "llm_attempt": llm_attempt
+    }
+
 #--------------RUN-----------------------
 def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> None:
     run_id = generate_run_id()
@@ -956,6 +1031,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
             json.dump(run_report, f, indent=2, ensure_ascii=False, default=str)
         return report_path
 
+    '''
     # ---- TEMPLATE FLOW ----
     mr, analysis = load_matching(matching_path)
 
@@ -1115,6 +1191,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> No
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(run_report, f, indent=2, ensure_ascii=False)
     return report_path
+    '''
 
 def run_device_list(cfg: dict, validate) -> None:
     # run per device_list
@@ -1190,6 +1267,137 @@ def run_device_list(cfg: dict, validate) -> None:
         json.dump(run_report, f, indent=2, ensure_ascii=False, default=str)
     return report_path
 
+def template_run(run_id: str, template_path: str, validate_only: bool, apply_llm: bool, llm_actions_override: dict | None = None, manual_actions_path: str | None = None, config_path: str = "config/config.yml") -> dict:
+    # run completa per template
+
+    cfg = load_config(config_path)
+    paths = cfg.get("paths", {})
+    llm_cfg = cfg.get("llm", {})
+    llm_attempt = None
+
+    dictionary_path = paths.get("dictionary")
+    kb_path = paths.get("kb")
+    template_base_path = paths.get("template_base")
+
+    # aggiorna ARTIFACTS per versioni nel report
+    ARTIFACTS["dictionary"]["input_path"] = dictionary_path
+    ARTIFACTS["kb"]["input_path"] = kb_path
+    ARTIFACTS["template_base"]["input_path"] = template_base_path
+
+    run_dir = RUNS_ROOT / run_id
+    matching_path = run_dir / "matching_report_v0.1.json"
+    llm_attempt_path = run_dir / "llm_attempt.json"
+
+    if not matching_path.exists():
+        raise FileNotFoundError("matching_report not found for run_id")
+    
+    if llm_attempt_path.exists():
+        llm_attempt = load_json(str(llm_attempt_path))
+
+    # carica matching
+    mr, analysis = load_matching(str(matching_path))
+
+    # actions deterministiche
+    actions_out = run_dir / "patch_actions_v0.1.json"
+    if manual_actions_path:
+        actions_payload = load_json(manual_actions_path)
+    else:
+        actions_payload = build_patch_actions_from_matching(mr, str(actions_out))
+
+    # LLM patch (se richiesto)
+    llm_actions = None
+    llm_proposed_actions = None 
+
+    if apply_llm:
+        llm_path = run_dir / "llm_patch_actions.json"
+        if llm_path.exists():
+            llm_proposed_actions = load_json(str(llm_path))
+        else:
+            raise FileNotFoundError("llm_patch_actions not found")
+
+        # azioni da applicare: override se presente, altrimenti tutte
+        llm_actions = llm_actions_override or llm_proposed_actions
+
+        actions_payload = merge_actions_dedup(actions_payload, llm_actions)
+
+    llm_proposed_count = len(llm_proposed_actions.get("actions", [])) if llm_proposed_actions else 0
+    llm_applied_count = count_llm_applied(actions_payload, llm_proposed_actions) if llm_proposed_actions else 0
+
+    if llm_attempt is None:
+        llm_attempt = {}
+    llm_attempt["llm_patch_proposed"] = llm_proposed_count
+    llm_attempt["llm_patch_applied"] = llm_applied_count
+
+
+    # build patch + validation
+    cfg_art = dict(ARTIFACTS["template"])
+    cfg_art["input_path"] = template_path
+    cfg_art["matching_path"] = str(matching_path)
+    cfg_art["template_base_path"] = template_base_path
+    cfg_art["llm_model"] = llm_cfg.get("model", "llama3.1:8b")
+
+    template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = \
+        build_patch_and_validation(cfg_art, "template", template_apply_patch, summarize_template_real_diff, actions_payload_override=actions_payload)
+
+    if validation_error:
+        run_report = build_run_report(
+            cfg=cfg_art, run_id=run_id, artifact_type="template",
+            input_path=template_path, output_path=template_path,
+            diff=validation_error.get("diff", []),
+            schema_versions={}, committed=False, status="validation_error",
+            validation_block={
+                "status": "error",
+                "errors": validation_error.get("errors", []),
+                "warnings": validation_error.get("warnings", []),
+                "stage": validation_error.get("stage"),
+            },
+            mr=mr, dictionary_payload=None, kb_payload=None,
+            template_base_path=template_base_path,
+            template_base_version=load_json(template_base_path).get("template_base_version") if template_base_path else None,
+            llm_attempt=llm_attempt, actions_payload=actions_payload
+        )
+        report_path = run_dir / "run_report.json"
+        report_path.write_text(json.dumps(run_report, ensure_ascii=False, indent=2), encoding="utf-8")
+        return {"run_id": run_id, "report_path": str(report_path), "status": "validation_error"}
+
+    artifact, preview, diff = compute_diff(template_path, template_patch, validated_preview, validated_diff, template_apply_patch, summarize_template_real_diff)
+
+    output_path, committed, status, _ = apply_commit(template_path, template_patch, diff, validate_only, template_apply_patch)
+
+    schema_versions, dict_payload, kb_payload, tb_version = build_report_context("template", str(matching_path), template_base_path)
+    schema_versions = build_artifact_versions("template", dict_payload=dict_payload, kb_payload=kb_payload, template_base_version=tb_version)
+
+    run_report = build_run_report(
+        cfg=cfg_art, run_id=run_id, artifact_type="template",
+        input_path=template_path, output_path=output_path, diff=diff,
+        schema_versions=schema_versions, committed=committed, status=status,
+        validation_block=validation_block, mr=mr,
+        dictionary_payload=dict_payload, kb_payload=kb_payload,
+        template_base_path=template_base_path, template_base_version=tb_version,
+        llm_attempt=llm_attempt, actions_payload=actions_payload
+    )
+
+    if analysis:
+        run_report["analysis"] = analysis
+        run_report["analysis"]["matching_path"] = str(matching_path)
+    if mr:
+        run_report["matched_variables"] = extract_matched_variables_from_matching_report(mr)
+    if actions_payload:
+        run_report["actions"] = actions_payload.get("actions", [])
+        run_report["actions_path"] = str(actions_out)
+    if template_base_path:
+        run_report["absent_concepts"] = build_absent_concepts(
+            template_base_path=template_base_path,
+            mr=mr,
+            actions_payload=actions_payload,
+        )
+
+    report_path = run_dir / "run_report.json"
+    report_path.write_text(json.dumps(run_report, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    return {"run_id": run_id, "report_path": str(report_path), "status": status}
+
+"""
 def run_template_pipeline(template_path: str, validate_only: bool, use_llm: bool, config_path: str="config/config.yml"):
     # run template completa
 
@@ -1239,6 +1447,7 @@ def run_template_pipeline(template_path: str, validate_only: bool, use_llm: bool
     report_path = run_patch(cfg_art, "template", template_apply_patch, summarize_template_real_diff, validate_only)
 
     return report_path
+"""
 
 """
 if __name__ == "__main__":
