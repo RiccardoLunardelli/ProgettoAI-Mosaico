@@ -10,6 +10,7 @@ from scripts.orchestrator import run_template_pipeline, run_patch, ARTIFACTS, su
 from src.validator.validator import load_json
 from src.intermediateLayer.postgres_repository import RunRepository, UsersRepository, BatchesRepository
 from mcp_server.tools.dictionary_tool import _next_versioned_path
+from mcp_server.core import MCPContext
 
 class SignupRequest(BaseModel):
     email: str
@@ -91,7 +92,7 @@ def list_artifact(artifact, artifact_dir):
     # artifact = device_list
     else:
         items = []
-        for store_dir in sorted(PVS_DIR.iterdir()):
+        for store_dir in sorted(artifact_dir.iterdir()):
             if not store_dir.is_dir():
                 continue
             dl = store_dir / "device_list.json"
@@ -125,11 +126,27 @@ def editor_json_inline(file_name, file_json, file_dir, artifact):
     
     old_path = input_path
     new_path = _next_versioned_path(old_path)
+
+    # validazione 
+    ctx = MCPContext(repo_root=".")
+    try:
+        if artifact == "dictionary":
+            ctx.schema_validate("dictionary", file_json)
+        elif artifact == "kb":
+            ctx.schema_validate("kb", file_json)
+        elif artifact == "template_base":
+            ctx.schema_validate("template_base", file_json)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Payload not valid: {e}!")
+    
+
     new_path.write_text(json.dumps(file_json, ensure_ascii=False, indent=2), encoding="utf-8")
+
     return {"status": "ok", "new_file": str(new_path)}
 
-def apply_patch(input_path: str | None, file_name: str | None, store: str | None, patch_json: dict | None, upsert: Any | None, summarize: Any | None, file_dir, artifact: str, patch_file_name: str | None, validate_only: bool, run_id: str | None, mode: str | None, manual_mode: str | None):
-    # applica le patch
+def apply_patch(input_path: str | None, file_name: str | None, patch_json: dict | None, upsert: Any | None, summarize: Any | None, artifact: str, patch_file_name: str | None, validate_only: bool, run_id: str | None, mode: str | None, manual_mode: str | None):
+    # applica le patch, genera report e salva nel db
+
     if not input_path.exists():
         raise HTTPException(status_code=404, detail=f"{file_name} file not exists!")
         
@@ -139,7 +156,7 @@ def apply_patch(input_path: str | None, file_name: str | None, store: str | None
     cfg = dict(ARTIFACTS[artifact])
     cfg["input_path"] = str(input_path)
     
-    # artifact = {template_base || kb}
+    # artifact = template_base || kb || dictionary
     if artifact != "device_list" and artifact != "template":
         out_dir = Path("output_dir")
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -247,7 +264,7 @@ def apply_patch(input_path: str | None, file_name: str | None, store: str | None
         return {"status": "ok", "run_id": report.get("run_id"), "report_path": str(report_path), "warning": report.get("validation", {}).get("warnings")}
 
 
-#-----ENDOPOINT-------
+#-----ENDPOINT-------
 @app.get("/")
 def root():
     return {"message": "ok"}
@@ -363,13 +380,13 @@ def get_device_list(store: str, dl: str):
 @app.post("/run/template")
 def run_template(payload: RunTemplateRequest):
     input_path = TEMPLATE_DIR / payload.template_name
-    return apply_patch(input_path, payload.template_name, None, None, None, None, None, "template", None, payload.validate_only, None, None, None)
+    return apply_patch(input_path, payload.template_name, None, None, None, "template", None, payload.validate_only, None, None, None)
 
 # run dizionario
 @app.post("/run/dictionary")
 def run_dictionary(payload: RunDictionaryRequest):
     input_path = DICTIONARIES_DIR / payload.dictionary_name
-    return apply_patch(input_path, payload.dictionary_name, None, payload.patch_json, dictionary_upsert, summarize_dictionary_diff, DICTIONARIES_DIR, "dictionary", "dictionary_patch.json", payload.validate_only, payload.run_id, payload.mode, payload.manual_mode)
+    return apply_patch(input_path, payload.dictionary_name, payload.patch_json, dictionary_upsert, summarize_dictionary_diff, "dictionary", "dictionary_patch.json", payload.validate_only, payload.run_id, payload.mode, payload.manual_mode) 
 
 # modifica json editor inline dizionario
 @app.post("/dictionary/edit")
@@ -380,7 +397,7 @@ def edit_dictionary(payload: DictionaryEditRequest):
 @app.post("/run/kb")
 def run_kb(payload: RunKbRequest):
     input_path = KB_DIR / payload.kb_name
-    return apply_patch(input_path, payload.kb_name, None, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, KB_DIR, "kb", "kb_patch.json", payload.validate_only, None, None, None)
+    return apply_patch(input_path, payload.kb_name, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, "kb", "kb_patch.json", payload.validate_only, None, None, None)
 
 # modifica json editor inline kb
 @app.post("/kb/edit")
@@ -391,7 +408,7 @@ def edit_kb(payload: KbEditRequest):
 @app.post("/run/template_base")
 def run_template_base(payload: RunTemplateBaseRequest):
     input_path = TEMPLATE_BASE_DIR / payload.template_base_name
-    return apply_patch(input_path, payload.template_base_name, None, payload.patch_json, template_apply_patch, summarize_template_base_diff, TEMPLATE_BASE_DIR, "template_base", "template_base_patch.json", payload.validate_only, None, None, None)
+    return apply_patch(input_path, payload.template_base_name, payload.patch_json, template_apply_patch, summarize_template_base_diff, "template_base", "template_base_patch.json", payload.validate_only, None, None, None)
 
 # modifica json editor inline template base
 @app.post("/template_base/edit")
@@ -402,4 +419,4 @@ def edit_template_base(payload: TemplateBaseEditRequest):
 @app.post("/run/device_list")
 def run_deviceList(payload: RunDeviceListRequest):
     input_path = PVS_DIR / payload.store / payload.device_list_name
-    return apply_patch(input_path, payload.device_list_name, payload.store, None, None, None, PVS_DIR, "device_list", None, payload.validate_only, None, None, None)
+    return apply_patch(input_path, payload.device_list_name, None, None, None, "device_list", None, payload.validate_only, None, None, None)
