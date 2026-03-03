@@ -5,8 +5,8 @@
       "op": "update_kb_rule",
       "scope_id": "P01T04D01_028d14de-71dc-6e64-9587-c7111a39793e",
       "source_type": "ContinuosRead",
-      "source_key": "Read101",
-      "concept_id": "prova",
+      "source_key": "Read176666666",
+      "concept_id": "temp_defro_prova",
       "reason": "correction_after_review",
       "evidence": "manual_patch_update",
       "semantic_category": "temperature"

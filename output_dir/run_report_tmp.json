@@ -1,8 +1,8 @@
 {
-  "run_id": "run20260227_140131",
+  "run_id": "run20260303_102022",
   "target": {
-    "input_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/5c2667d5-dfc6-18f5-0b17-420c90dfb858.json",
-    "output_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/5c2667d5-dfc6-18f5-0b17-420c90dfb858.json",
+    "input_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/f8eeb7b4-36f7-17b0-1340-1cfd9ce5228c.json",
+    "output_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/f8eeb7b4-36f7-17b0-1340-1cfd9ce5228c.json",
     "artifact_type": "template"
   },
   "actions": [
@@ -10,251 +10,95 @@
       "type": "map_variable",
       "patch": {
         "set_fields": {
-          "Category_Patch": "alarm",
-          "ConceptId_Patch": "alarm_compressor_fault",
-          "SemanticCategory_Patch": "alarm"
+          "Category_Patch": "measurement",
+          "ConceptId_Patch": "superheat_temperature",
+          "SemanticCategory_Patch": "temperature"
         }
       },
       "reason": "fuzzy_match",
       "target": {
         "labels": {
-          "en": "allarme compressore 1",
-          "it": "allarme compressore 1"
+          "en": "surriscaldamento",
+          "it": "surriscaldamento"
         },
-        "category": "alarm",
-        "concept_id": "alarm_compressor_fault",
-        "semantic_category": "alarm"
+        "category": "measurement",
+        "concept_id": "superheat_temperature",
+        "semantic_category": "temperature"
       },
-      "section": "Alarms",
+      "section": "ContinuosReads",
       "evidence": {
-        "normalized_text": "allarme compressore 1"
-      },
-      "confidence": 0.95,
-      "source_key": "Alarm6"
-    },
-    {
-      "type": "map_variable",
-      "patch": {
-        "set_fields": {
-          "Category_Patch": "alarm",
-          "ConceptId_Patch": "alarm_compressor_fault",
-          "SemanticCategory_Patch": "alarm"
-        }
-      },
-      "reason": "fuzzy_match",
-      "target": {
-        "labels": {
-          "en": "allarme compressore 2",
-          "it": "allarme compressore 2"
-        },
-        "category": "alarm",
-        "concept_id": "alarm_compressor_fault",
-        "semantic_category": "alarm"
-      },
-      "section": "Alarms",
-      "evidence": {
-        "normalized_text": "allarme compressore 2"
-      },
-      "confidence": 0.95,
-      "source_key": "Alarm7"
-    },
-    {
-      "type": "map_variable",
-      "patch": {
-        "set_fields": {
-          "Category_Patch": "alarm",
-          "ConceptId_Patch": "alarm_compressor_fault",
-          "SemanticCategory_Patch": "alarm"
-        }
-      },
-      "reason": "fuzzy_match",
-      "target": {
-        "labels": {
-          "en": "allarme compressore 3",
-          "it": "allarme compressore 3"
-        },
-        "category": "alarm",
-        "concept_id": "alarm_compressor_fault",
-        "semantic_category": "alarm"
-      },
-      "section": "Alarms",
-      "evidence": {
-        "normalized_text": "allarme compressore 3"
-      },
-      "confidence": 0.95,
-      "source_key": "Alarm8"
-    },
-    {
-      "type": "map_variable",
-      "patch": {
-        "set_fields": {
-          "Category_Patch": "alarm",
-          "ConceptId_Patch": "alarm_compressor_fault",
-          "SemanticCategory_Patch": "alarm"
-        }
-      },
-      "reason": "fuzzy_match",
-      "target": {
-        "labels": {
-          "en": "allarme compressore 4",
-          "it": "allarme compressore 4"
-        },
-        "category": "alarm",
-        "concept_id": "alarm_compressor_fault",
-        "semantic_category": "alarm"
-      },
-      "section": "Alarms",
-      "evidence": {
-        "normalized_text": "allarme compressore 4"
-      },
-      "confidence": 0.95,
-      "source_key": "Alarm9"
-    },
-    {
-      "type": "map_variable",
-      "patch": {
-        "set_fields": {
-          "Category_Patch": "alarm",
-          "ConceptId_Patch": "alarm_compressor_fault",
-          "SemanticCategory_Patch": "alarm"
-        }
-      },
-      "reason": "fuzzy_match",
-      "target": {
-        "labels": {
-          "en": "allarme compressore 5",
-          "it": "allarme compressore 5"
-        },
-        "category": "alarm",
-        "concept_id": "alarm_compressor_fault",
-        "semantic_category": "alarm"
-      },
-      "section": "Alarms",
-      "evidence": {
-        "normalized_text": "allarme compressore 5"
-      },
-      "confidence": 0.95,
-      "source_key": "Alarm10"
-    },
-    {
-      "type": "map_variable",
-      "patch": {
-        "set_fields": {
-          "Category_Patch": "alarm",
-          "ConceptId_Patch": "alarm_compressor_fault",
-          "SemanticCategory_Patch": "alarm"
-        }
-      },
-      "reason": "fuzzy_match",
-      "target": {
-        "labels": {
-          "en": "allarme compressore 6",
-          "it": "allarme compressore 6"
-        },
-        "category": "alarm",
-        "concept_id": "alarm_compressor_fault",
-        "semantic_category": "alarm"
-      },
-      "section": "Alarms",
-      "evidence": {
-        "normalized_text": "allarme compressore 6"
-      },
-      "confidence": 0.95,
-      "source_key": "Alarm11"
-    },
-    {
-      "type": "map_variable",
-      "patch": {
-        "set_fields": {
-          "Category_Patch": "alarm",
-          "ConceptId_Patch": "alarm_high_pressure",
-          "SemanticCategory_Patch": "alarm"
-        }
-      },
-      "reason": "fuzzy_match",
-      "target": {
-        "labels": {
-          "en": "allarme alta pressione",
-          "it": "allarme alta pressione"
-        },
-        "category": "alarm",
-        "concept_id": "alarm_high_pressure",
-        "semantic_category": "alarm"
-      },
-      "section": "Alarms",
-      "evidence": {
-        "normalized_text": "allarme alta pressione"
+        "normalized_text": "surriscaldamento"
       },
       "confidence": 1.0,
-      "source_key": "Alarm20"
+      "source_key": "Read4"
     },
     {
       "type": "map_variable",
       "patch": {
         "set_fields": {
-          "Category_Patch": "alarm",
-          "ConceptId_Patch": "alarm_low_pressure",
-          "SemanticCategory_Patch": "alarm"
+          "Category_Patch": "parameter",
+          "ConceptId_Patch": "setpoint_temperature",
+          "SemanticCategory_Patch": "setpoint"
         }
       },
       "reason": "fuzzy_match",
       "target": {
         "labels": {
-          "en": "allarme bassa pressione",
-          "it": "allarme bassa pressione"
+          "en": "set point",
+          "it": "set point"
         },
-        "category": "alarm",
-        "concept_id": "alarm_low_pressure",
-        "semantic_category": "alarm"
+        "category": "parameter",
+        "concept_id": "setpoint_temperature",
+        "semantic_category": "setpoint"
       },
-      "section": "Alarms",
+      "section": "Parameters",
       "evidence": {
-        "normalized_text": "allarme bassa pressione"
+        "normalized_text": "set point"
       },
-      "confidence": 1.0,
-      "source_key": "Alarm21"
+      "confidence": 0.9411764705882352,
+      "source_key": "Param49"
     }
   ],
   "metrics": {
-    "llm_calls": 0,
-    "llm_avg_sec": null,
+    "llm_calls": 2,
+    "llm_avg_sec": 4.533,
     "llm_quality": 0,
     "matched_gain": 0,
-    "llm_total_sec": null,
-    "matched_count": 8,
-    "unmapped_count": 122,
+    "llm_total_sec": 9.066,
+    "matched_count": 2,
+    "unmapped_count": 74,
     "warnings_count": 0,
-    "ambiguous_count": 20,
-    "llm_total_tokens": null,
+    "ambiguous_count": 5,
+    "llm_total_tokens": 3344,
     "llm_patch_applied": 0,
     "ambiguous_resolved": 0,
     "llm_patch_proposed": 0,
-    "llm_sec_per_1k_tokens": null,
+    "llm_sec_per_1k_tokens": 2.711,
     "resolved_per_1k_tokens": 0.0,
-    "llm_prompt_total_tokens": null,
+    "llm_prompt_total_tokens": 2296,
     "ambiguity_resolution_rate": 0.0,
-    "llm_generate_total_tokens": null,
-    "llm_prompt_time_total_sec": null,
-    "llm_prompt_tokens_per_sec": null,
-    "llm_generate_time_total_sec": null,
-    "llm_generate_tokens_per_sec": null,
-    "matched_count_matching_report": 8,
-    "unmapped_count_matching_report": 122,
-    "ambiguous_count_matching_report": 20
+    "llm_generate_total_tokens": 1048,
+    "llm_prompt_time_total_sec": 0.225,
+    "llm_prompt_tokens_per_sec": 10217.639,
+    "llm_generate_time_total_sec": 7.162,
+    "llm_generate_tokens_per_sec": 146.33,
+    "matched_count_matching_report": 2,
+    "unmapped_count_matching_report": 74,
+    "ambiguous_count_matching_report": 5
   },
   "analysis": {
-    "matching_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v0.1.json",
+    "matching_path": "runs/run20260303_102022/matching_report_v0.1.json",
     "unmapped_terms": [
       {
         "section": "ContinuosReads",
         "evidence": {
           "category": "measurement",
           "matched_synonym": null,
-          "normalized_text": "trasduttore aspirazione",
+          "normalized_text": "sonda di pressione p2",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Read0",
+        "source_key": "Read2",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -262,11 +106,11 @@
         "evidence": {
           "category": "measurement",
           "matched_synonym": null,
-          "normalized_text": "reg num 514",
+          "normalized_text": "apertura valvola",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Reg_Num_514",
+        "source_key": "Read5",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -274,11 +118,11 @@
         "evidence": {
           "category": "measurement",
           "matched_synonym": null,
-          "normalized_text": "reg num 515",
+          "normalized_text": "p2 value 0 01",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Reg_Num_515",
+        "source_key": "Read6",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -286,11 +130,11 @@
         "evidence": {
           "category": "measurement",
           "matched_synonym": null,
-          "normalized_text": "reg num 516",
+          "normalized_text": "generic digital input",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Reg_Num_516",
+        "source_key": "Read7",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -298,11 +142,11 @@
         "evidence": {
           "category": "measurement",
           "matched_synonym": null,
-          "normalized_text": "reg num 2048",
+          "normalized_text": "alarm output",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Reg_Num_2048",
+        "source_key": "Read8",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -310,11 +154,11 @@
         "evidence": {
           "category": "measurement",
           "matched_synonym": null,
-          "normalized_text": "reg num 2049",
+          "normalized_text": "valve output",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Reg_Num_2049",
+        "source_key": "Read9",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -322,11 +166,11 @@
         "evidence": {
           "category": "measurement",
           "matched_synonym": null,
-          "normalized_text": "reg num 2050",
+          "normalized_text": "device status",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Reg_Num_2050",
+        "source_key": "Read10",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -334,11 +178,11 @@
         "evidence": {
           "category": "measurement",
           "matched_synonym": null,
-          "normalized_text": "reg num 1280",
+          "normalized_text": "error pb1",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Reg_Num_1280",
+        "source_key": "Read11",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -346,11 +190,11 @@
         "evidence": {
           "category": "measurement",
           "matched_synonym": null,
-          "normalized_text": "reg num 257",
+          "normalized_text": "error pb2",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Reg_Num_257",
+        "source_key": "Read12",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -358,11 +202,11 @@
         "evidence": {
           "category": "measurement",
           "matched_synonym": null,
-          "normalized_text": "reg num 259",
+          "normalized_text": "lsh e hsh",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Reg_Num_259",
+        "source_key": "Read13",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -370,11 +214,11 @@
         "evidence": {
           "category": "measurement",
           "matched_synonym": null,
-          "normalized_text": "reg num 3328",
+          "normalized_text": "lop e mop",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Reg_Num_3328",
+        "source_key": "Read14",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -382,11 +226,11 @@
         "evidence": {
           "category": "measurement",
           "matched_synonym": null,
-          "normalized_text": "reg num 3329",
+          "normalized_text": "liquid eeprom moplokalarm",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Reg_Num_3329",
+        "source_key": "Read15",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -394,595 +238,7 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "configurazione carico 1",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param0",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "configurazione carico 2",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param1",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "configurazione carico 3",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param2",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "configurazione carico 4",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param3",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "configurazione carico 5",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param4",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "configurazione carico 6",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param5",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "tipo di compressore",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param6",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "polarita uscita valvola",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param7",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "potenza del compressore 1",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param8",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "potenza del compressore 2",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param9",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "potenza del compressore 3",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param10",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "potenza del compressore 4",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param11",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "potenza del compressore 5",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param12",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "potenza del compressore 6",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param13",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "tipo di freon",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param14",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "tipo di regolazione zona neutra o banda proporzionale",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param15",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "tipo di regolazione freddo / caldo",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param16",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "tipo di sequenza del compressore",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param17",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "tipo di sequenza della ventola",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param18",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "tipo di sonda p1",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param19",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "lettura 4ma",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param20",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "lettura 20ma",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param21",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "calibrazione della sonda",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param22",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "presenza sonda p2",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param23",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "tipo di sonda p2",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param24",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "lettura 4ma ventola",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param25",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "lettura 20ma ventola",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param26",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "calibrazione della sonda ventola",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param27",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "polarita interruttore a bassa pressione",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param28",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "polarita dell interruttore di alta pressione",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param29",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "polarita d ingresso digitale configurabile",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param30",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "funzione di ingresso digitale configurabile",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param31",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "ritardo dell ingresso digitale configurabile",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param32",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "ripristino manuale per allarme compressore / ventilatore",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param34",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "visualizzazione dell unita di misura",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param35",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "risoluzione c",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param36",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "visualizzazione predefinita sul display inferiore",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param37",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "formato sonda visualizzata sul display inferiore",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param38",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "modalita di visualizzazione della pressione",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param39",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "banda proporzionale per la regolazione dei compressori",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param40",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "regolazione per il risparmio energetico dei compressori",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param41",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "ritardo minimo tra 2 accensioni dello stesso compressore",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param42",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "ritardo tra lo spegnimento e l accensione dello stesso compressore",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param43",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "tempo di ritardo tra l inserimento di due carichi diversi",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param44",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "tempo di ritardo tra lo spegnimento di due diversi compressori",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param45",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "tempo minimo in cui uno stage rimane on",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param46",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "tempo massimo in cui uno stage rimane acceso",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param47",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "param48",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param48",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "param49",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Param49",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "ritardo all accensione",
+          "normalized_text": "tipo di gas",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
@@ -994,11 +250,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "banda proporzionale per la regolazione della ventola",
+          "normalized_text": "percentuale apertura valvola con sonda guasta",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param55",
+        "source_key": "Param1",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1006,11 +262,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "tempo di ritardo tra l inserimento di due diverse ventole",
+          "normalized_text": "ritardo errore sonda",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param57",
+        "source_key": "Param2",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1018,11 +274,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "tempo di ritardo tra lo spegnimento di due diverse ventole",
+          "normalized_text": "abilitazione funzione start",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param58",
+        "source_key": "Param3",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1030,11 +286,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "ritardo sonda di allarme all accensione",
+          "normalized_text": "durata scongelamento",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param61",
+        "source_key": "Param4",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1042,11 +298,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "limite inferiore per allarme pressione compressori",
+          "normalized_text": "percentuale apertura valvola con funzione start",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param62",
+        "source_key": "Param5",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1054,11 +310,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "limite superiore per allarme pressione compressori",
+          "normalized_text": "durata della funzione start",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param63",
+        "source_key": "Param6",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1066,11 +322,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "ritardo allarme pressione / temperatura compressori",
+          "normalized_text": "ritardo arresto regolazione ciclica",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param64",
+        "source_key": "Param7",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1078,11 +334,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "regolazione allarme ore lavoro",
+          "normalized_text": "tempo di arresto del regolamento",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param65",
+        "source_key": "Param8",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1090,11 +346,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "attivazioni massime del pressostato",
+          "normalized_text": "massima apertura valvolapercentuale",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param66",
+        "source_key": "Param9",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1102,11 +358,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "tempo di attivazione del pressostato",
+          "normalized_text": "durata massima della funzione di apertura forzata",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param67",
+        "source_key": "Param10",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1114,11 +370,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "compressori on con sonda guasta",
+          "normalized_text": "periodo del segnale pwm",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param68",
+        "source_key": "Param11",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1126,11 +382,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "potenza utilizzata con errori",
+          "normalized_text": "offset di banda",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param69",
+        "source_key": "Param13",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1138,11 +394,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "set allarme bassa pressione",
+          "normalized_text": "tempo integrale",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param70",
+        "source_key": "Param14",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1150,11 +406,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "set allarme alta pressione",
+          "normalized_text": "tempo derivato",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param71",
+        "source_key": "Param15",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1162,11 +418,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "ritardo allarme pressione",
+          "normalized_text": "tipo di sonda di pressione",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param72",
+        "source_key": "Param16",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1174,11 +430,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "attivazioni massime del pressostato del ventilatore",
+          "normalized_text": "valore di pressione a 4ma/0v",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param73",
+        "source_key": "Param17",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1186,11 +442,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "tempo di attivazione del pressostato della ventola",
+          "normalized_text": "valore di pressione a 20ma/5v",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param74",
+        "source_key": "Param18",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1198,11 +454,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "ventola accesa con sonda guasta",
+          "normalized_text": "taratura sonda di pressione",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param75",
+        "source_key": "Param19",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1210,11 +466,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "banda proporzionale",
+          "normalized_text": "tipo di sonda di temperatura",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param78",
+        "source_key": "Param20",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1222,11 +478,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "modalita di lavoro dell uscita analogica",
+          "normalized_text": "sonda di temperaturacalibrazione",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param80",
+        "source_key": "Param21",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1234,11 +490,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "sonda per uscita analogica",
+          "normalized_text": "polarità ingresso digitale 1",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param81",
+        "source_key": "Param22",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1246,11 +502,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "limite inferiore della scala per l uscita analogica",
+          "normalized_text": "funzione ingresso digitale 1",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param82",
+        "source_key": "Param23",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1258,11 +514,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "limite superiore della scala per uscita analogica",
+          "normalized_text": "ritardo ingresso digitale 1",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param83",
+        "source_key": "Param24",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1270,11 +526,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "valore minimo dell uscita analogica",
+          "normalized_text": "polarità ingresso digitale 2",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param84",
+        "source_key": "Param25",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1282,11 +538,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "valore uscita analogica dopo accensione compressore",
+          "normalized_text": "funzione ingresso digitale 2",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param85",
+        "source_key": "Param26",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1294,11 +550,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "valore uscita analogica dopo spegnimento compressore",
+          "normalized_text": "ritardo ingresso digitale 2",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param86",
+        "source_key": "Param27",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1306,11 +562,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "percentuale di uscita analogica in caso di guasto della sonda",
+          "normalized_text": "ritardo allarmi all accensione",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param87",
+        "source_key": "Param28",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1318,11 +574,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "ritardo tra l uscita dalla zona neutra e l inizio della regolazione",
+          "normalized_text": "funzione relè di allarme",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param88",
+        "source_key": "Param29",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1330,11 +586,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "tempo di innalzamento dell uscita analogica da a0m a 20ma",
+          "normalized_text": "muting relè di allarme concicalino",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param89",
+        "source_key": "Param30",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1342,11 +598,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "tempo di permanenza dell uscita analogica prima dell attivazione di un altra uscita",
+          "normalized_text": "regolazione pressione più bassalimite",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param90",
+        "source_key": "Param31",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1354,11 +610,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "ritardo tra l uscita dalla zona neutra e l inizio della riduzione dell uscita analogica",
+          "normalized_text": "pressione di aspirazione massima",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param91",
+        "source_key": "Param32",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1366,11 +622,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "tempo di caduta dell uscita analogica",
+          "normalized_text": "pressione di aspirazione minima",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param92",
+        "source_key": "Param33",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1378,11 +634,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "tempo di permanenza dell uscita analogica prima della disattivazione di un uscita",
+          "normalized_text": "percentuale di apertura della valvola durante mop/lop",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param93",
+        "source_key": "Param35",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1390,11 +646,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "attivazione dell uscita trigger",
+          "normalized_text": "tempo massimo tra eventi mop/lop",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param94",
+        "source_key": "Param36",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1402,11 +658,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "sonda per uscita trigger",
+          "normalized_text": "numero eventi mop/lopprima del blocco",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param95",
+        "source_key": "Param37",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1414,11 +670,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "limite inferiore della scala per l uscita trigger",
+          "normalized_text": "massimo surriscaldamentoallarme",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param96",
+        "source_key": "Param38",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1426,11 +682,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "limite scala superiore per l uscita trigger",
+          "normalized_text": "surriscaldamento minimoallarme",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param97",
+        "source_key": "Param39",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1438,11 +694,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "valore minimo dell uscita trigger",
+          "normalized_text": "ritardo allarme surriscaldamento",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param98",
+        "source_key": "Param41",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1450,11 +706,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "percentuale di uscita trigger in caso di errore della sonda",
+          "normalized_text": "recupero veloce aggiuntivocostante integrale",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param99",
+        "source_key": "Param42",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1462,11 +718,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "silenziamento relè di allarme",
+          "normalized_text": "predefinito display localevisualizzazione",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param100",
+        "source_key": "Param43",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1474,11 +730,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "relè di allarme di polarita",
+          "normalized_text": "misurazione della temperaturaunità",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param101",
+        "source_key": "Param44",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1486,11 +742,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "funzione off abilitata",
+          "normalized_text": "unità di misura della pressione",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param102",
+        "source_key": "Param45",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1498,11 +754,11 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "indirizzo seriale compressori",
+          "normalized_text": "risoluzione della temperatura",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param103",
+        "source_key": "Param46",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1510,11 +766,23 @@
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "indirizzo seriale ventola",
+          "normalized_text": "modalità di visualizzazione della pressione",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Param104",
+        "source_key": "Param47",
+        "suggested_action": "dictionary.suggest_or_upsert"
+      },
+      {
+        "section": "Parameters",
+        "evidence": {
+          "category": "parameter",
+          "matched_synonym": null,
+          "normalized_text": "percentuale di raffreddamentotempo di valutazione",
+          "semantic_category": null,
+          "dictionary_entry_id": null
+        },
+        "source_key": "Param48",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1522,7 +790,31 @@
         "evidence": {
           "category": "alarm",
           "matched_synonym": null,
-          "normalized_text": "errore sonda 1",
+          "normalized_text": "errore sonda pb1",
+          "semantic_category": null,
+          "dictionary_entry_id": null
+        },
+        "source_key": "Alarm0",
+        "suggested_action": "dictionary.suggest_or_upsert"
+      },
+      {
+        "section": "Alarms",
+        "evidence": {
+          "category": "alarm",
+          "matched_synonym": null,
+          "normalized_text": "errore sonda pb2",
+          "semantic_category": null,
+          "dictionary_entry_id": null
+        },
+        "source_key": "Alarm1",
+        "suggested_action": "dictionary.suggest_or_upsert"
+      },
+      {
+        "section": "Alarms",
+        "evidence": {
+          "category": "alarm",
+          "matched_synonym": null,
+          "normalized_text": "allarme di basso surriscaldameto lsh",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
@@ -1534,7 +826,31 @@
         "evidence": {
           "category": "alarm",
           "matched_synonym": null,
-          "normalized_text": "errore sonda 2",
+          "normalized_text": "allarme di alto surriscaldamento hsh",
+          "semantic_category": null,
+          "dictionary_entry_id": null
+        },
+        "source_key": "Alarm3",
+        "suggested_action": "dictionary.suggest_or_upsert"
+      },
+      {
+        "section": "Alarms",
+        "evidence": {
+          "category": "alarm",
+          "matched_synonym": null,
+          "normalized_text": "lop minima pressione operativa",
+          "semantic_category": null,
+          "dictionary_entry_id": null
+        },
+        "source_key": "Alarm4",
+        "suggested_action": "dictionary.suggest_or_upsert"
+      },
+      {
+        "section": "Alarms",
+        "evidence": {
+          "category": "alarm",
+          "matched_synonym": null,
+          "normalized_text": "mop massima pressione operativa",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
@@ -1546,11 +862,11 @@
         "evidence": {
           "category": "alarm",
           "matched_synonym": null,
-          "normalized_text": "allarme livello liquido",
+          "normalized_text": "injection liquid",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Alarm12",
+        "source_key": "Alarm6",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1558,11 +874,11 @@
         "evidence": {
           "category": "alarm",
           "matched_synonym": null,
-          "normalized_text": "errore eeprom",
+          "normalized_text": "eeprom failure",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Alarm13",
+        "source_key": "Alarm7",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1570,71 +886,11 @@
         "evidence": {
           "category": "alarm",
           "matched_synonym": null,
-          "normalized_text": "manuntenzione compressore 1",
+          "normalized_text": "mop lop lock alarm",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
-        "source_key": "Alarm14",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Alarms",
-        "evidence": {
-          "category": "alarm",
-          "matched_synonym": null,
-          "normalized_text": "manuntenzione compressore 2",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Alarm15",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Alarms",
-        "evidence": {
-          "category": "alarm",
-          "matched_synonym": null,
-          "normalized_text": "manuntenzione compressore 3",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Alarm16",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Alarms",
-        "evidence": {
-          "category": "alarm",
-          "matched_synonym": null,
-          "normalized_text": "manuntenzione compressore 4",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Alarm17",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Alarms",
-        "evidence": {
-          "category": "alarm",
-          "matched_synonym": null,
-          "normalized_text": "manuntenzione compressore 5",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Alarm18",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Alarms",
-        "evidence": {
-          "category": "alarm",
-          "matched_synonym": null,
-          "normalized_text": "manuntenzione compressore 6",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Alarm19",
+        "source_key": "Alarm8",
         "suggested_action": "dictionary.suggest_or_upsert"
       },
       {
@@ -1654,7 +910,31 @@
         "evidence": {
           "category": "command",
           "matched_synonym": null,
-          "normalized_text": "tastiera bloccata",
+          "normalized_text": "regulation on",
+          "semantic_category": null,
+          "dictionary_entry_id": null
+        },
+        "source_key": "Command0",
+        "suggested_action": "dictionary.suggest_or_upsert"
+      },
+      {
+        "section": "Commands",
+        "evidence": {
+          "category": "command",
+          "matched_synonym": null,
+          "normalized_text": "regulation off",
+          "semantic_category": null,
+          "dictionary_entry_id": null
+        },
+        "source_key": "Command1",
+        "suggested_action": "dictionary.suggest_or_upsert"
+      },
+      {
+        "section": "Commands",
+        "evidence": {
+          "category": "command",
+          "matched_synonym": null,
+          "normalized_text": "fast freezing on",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
@@ -1666,7 +946,7 @@
         "evidence": {
           "category": "command",
           "matched_synonym": null,
-          "normalized_text": "tastiera sbloccata",
+          "normalized_text": "fast freezing off",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
@@ -1678,7 +958,7 @@
         "evidence": {
           "category": "command",
           "matched_synonym": null,
-          "normalized_text": "allarme muto",
+          "normalized_text": "keyboard lock",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
@@ -1690,23 +970,11 @@
         "evidence": {
           "category": "command",
           "matched_synonym": null,
-          "normalized_text": "energy saving on",
+          "normalized_text": "keyboard unlock",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
         "source_key": "Command5",
-        "suggested_action": "dictionary.suggest_or_upsert"
-      },
-      {
-        "section": "Commands",
-        "evidence": {
-          "category": "command",
-          "matched_synonym": null,
-          "normalized_text": "energy saving off",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "source_key": "Command6",
         "suggested_action": "dictionary.suggest_or_upsert"
       }
     ],
@@ -1716,342 +984,113 @@
         "section": "ContinuosReads",
         "evidence": {
           "category": "measurement",
+          "gap_top2": 0.0,
           "matched_synonym": null,
-          "normalized_text": "sonda mandata",
+          "normalized_text": "sonda di temperatura p1",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
         "candidates": [
           {
-            "score": 0.7,
+            "score": 0.8,
             "concept_id": "temp_delivery"
+          },
+          {
+            "score": 0.8,
+            "concept_id": "temp_return"
+          },
+          {
+            "score": 0.7567567567567568,
+            "concept_id": "superheat_temperature"
+          },
+          {
+            "score": 0.7567567567567568,
+            "concept_id": "temp_defrost"
+          },
+          {
+            "score": 0.7142857142857143,
+            "concept_id": "state_door_open"
           }
         ],
         "confidence": null,
         "source_key": "Read1"
       },
       {
-        "section": "Parameters",
+        "section": "ContinuosReads",
         "evidence": {
-          "category": "parameter",
-          "gap_top2": 0.2571428571428571,
+          "category": "measurement",
+          "gap_top2": 0.0,
           "matched_synonym": null,
-          "normalized_text": "polarita dell ingresso allarme compressori e ventilatori",
+          "normalized_text": "sonda di temperatura p2",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
         "candidates": [
           {
             "score": 0.8,
-            "concept_id": "fan_delay"
+            "concept_id": "temp_delivery"
           },
           {
-            "score": 0.5428571428571429,
-            "concept_id": "threshold_low_temperature"
+            "score": 0.8,
+            "concept_id": "temp_return"
           },
           {
-            "score": 0.5333333333333333,
+            "score": 0.7567567567567568,
+            "concept_id": "superheat_temperature"
+          },
+          {
+            "score": 0.7567567567567568,
+            "concept_id": "temp_defrost"
+          },
+          {
+            "score": 0.7142857142857143,
+            "concept_id": "state_door_open"
+          }
+        ],
+        "confidence": null,
+        "source_key": "Read3"
+      },
+      {
+        "section": "Parameters",
+        "evidence": {
+          "category": "parameter",
+          "gap_top2": 0.1568627450980391,
+          "matched_synonym": null,
+          "normalized_text": "banda di regolazione",
+          "semantic_category": null,
+          "dictionary_entry_id": null
+        },
+        "candidates": [
+          {
+            "score": 0.8235294117647058,
             "concept_id": "setpoint_temperature"
-          },
-          {
-            "score": 0.5,
-            "concept_id": "defrost_interval"
-          },
-          {
-            "score": 0.5,
-            "concept_id": "hysteresis_temperature"
-          }
-        ],
-        "confidence": null,
-        "source_key": "Param33"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "gap_top2": 0.3125,
-          "matched_synonym": null,
-          "normalized_text": "set point minimo",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "candidates": [
-          {
-            "score": 0.875,
-            "concept_id": "setpoint_temperature"
-          },
-          {
-            "score": 0.5625,
-            "concept_id": "threshold_low_temperature"
-          },
-          {
-            "score": 0.5,
-            "concept_id": "defrost_duration"
-          },
-          {
-            "score": 0.5,
-            "concept_id": "fan_delay"
-          },
-          {
-            "score": 0.48,
-            "concept_id": "defrost_interval"
-          }
-        ],
-        "confidence": null,
-        "source_key": "Param51"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "setpoint massimo",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "candidates": [
-          {
-            "score": 0.7,
-            "concept_id": "setpoint_temperature"
-          }
-        ],
-        "confidence": null,
-        "source_key": "Param52"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "gap_top2": 0.3232758620689655,
-          "matched_synonym": null,
-          "normalized_text": "set point per sonda 2 sempre ptc per compressori a vite",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "candidates": [
-          {
-            "score": 0.875,
-            "concept_id": "setpoint_temperature"
-          },
-          {
-            "score": 0.5517241379310345,
-            "concept_id": "defrost_interval"
-          },
-          {
-            "score": 0.5454545454545454,
-            "concept_id": "hysteresis_temperature"
-          },
-          {
-            "score": 0.5,
-            "concept_id": "fan_delay"
-          },
-          {
-            "score": 0.48,
-            "concept_id": "threshold_low_temperature"
-          }
-        ],
-        "confidence": null,
-        "source_key": "Param53"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "matched_synonym": null,
-          "normalized_text": "differenziale per compressore a vite",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "candidates": [
-          {
-            "score": 0.7,
-            "concept_id": "hysteresis_temperature"
-          }
-        ],
-        "confidence": null,
-        "source_key": "Param54"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "gap_top2": 0.14583333333333326,
-          "matched_synonym": null,
-          "normalized_text": "regolazione per il risparmio energetico dei ventilatori",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "candidates": [
-          {
-            "score": 0.8125,
-            "concept_id": "fan_delay"
           },
           {
             "score": 0.6666666666666667,
-            "concept_id": "setpoint_temperature"
-          },
-          {
-            "score": 0.5333333333333333,
-            "concept_id": "defrost_interval"
-          },
-          {
-            "score": 0.4901960784313726,
             "concept_id": "hysteresis_temperature"
-          },
-          {
-            "score": 0.46938775510204084,
-            "concept_id": "threshold_high_temperature"
-          }
-        ],
-        "confidence": null,
-        "source_key": "Param56"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "gap_top2": 0.275,
-          "matched_synonym": null,
-          "normalized_text": "set point minimo ventola",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "candidates": [
-          {
-            "score": 0.875,
-            "concept_id": "setpoint_temperature"
           },
           {
             "score": 0.6,
             "concept_id": "fan_delay"
           },
           {
-            "score": 0.5714285714285714,
+            "score": 0.5,
             "concept_id": "defrost_duration"
           },
           {
-            "score": 0.5454545454545454,
-            "concept_id": "threshold_low_temperature"
-          },
-          {
-            "score": 0.5,
+            "score": 0.44999999999999996,
             "concept_id": "defrost_interval"
           }
         ],
         "confidence": null,
-        "source_key": "Param59"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "gap_top2": 0.275,
-          "matched_synonym": null,
-          "normalized_text": "set point massimo ventola",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "candidates": [
-          {
-            "score": 0.875,
-            "concept_id": "setpoint_temperature"
-          },
-          {
-            "score": 0.6,
-            "concept_id": "fan_delay"
-          },
-          {
-            "score": 0.5714285714285714,
-            "concept_id": "threshold_high_temperature"
-          },
-          {
-            "score": 0.5581395348837209,
-            "concept_id": "defrost_duration"
-          },
-          {
-            "score": 0.5,
-            "concept_id": "defrost_interval"
-          }
-        ],
-        "confidence": null,
-        "source_key": "Param60"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "gap_top2": 0.375,
-          "matched_synonym": null,
-          "normalized_text": "funzione set point dinamica abilitata",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "candidates": [
-          {
-            "score": 0.875,
-            "concept_id": "setpoint_temperature"
-          },
-          {
-            "score": 0.5,
-            "concept_id": "defrost_interval"
-          },
-          {
-            "score": 0.5,
-            "concept_id": "threshold_high_temperature"
-          },
-          {
-            "score": 0.4761904761904761,
-            "concept_id": "hysteresis_temperature"
-          },
-          {
-            "score": 0.47457627118644063,
-            "concept_id": "fan_delay"
-          }
-        ],
-        "confidence": null,
-        "source_key": "Param76"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "gap_top2": 0.07499999999999996,
-          "matched_synonym": null,
-          "normalized_text": "temperatura esterna impostata per la funzione dynamic set point",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "candidates": [
-          {
-            "score": 0.875,
-            "concept_id": "setpoint_temperature"
-          },
-          {
-            "score": 0.8,
-            "concept_id": "threshold_low_temperature"
-          },
-          {
-            "score": 0.7878787878787878,
-            "concept_id": "threshold_high_temperature"
-          },
-          {
-            "score": 0.7692307692307692,
-            "concept_id": "hysteresis_temperature"
-          },
-          {
-            "score": 0.5555555555555556,
-            "concept_id": "defrost_duration"
-          }
-        ],
-        "confidence": null,
-        "source_key": "Param77"
+        "source_key": "Param12"
       },
       {
         "section": "Parameters",
         "evidence": {
           "category": "parameter",
           "matched_synonym": null,
-          "normalized_text": "differenziale per dynamic",
+          "normalized_text": "differenziale mop/lop",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
@@ -2062,287 +1101,25 @@
           }
         ],
         "confidence": null,
-        "source_key": "Param79"
+        "source_key": "Param34"
       },
       {
         "section": "Parameters",
         "evidence": {
           "category": "parameter",
-          "gap_top2": 0.395,
           "matched_synonym": null,
-          "normalized_text": "set point compressori",
+          "normalized_text": "allarme surriscaldamentodifferenziale",
           "semantic_category": null,
           "dictionary_entry_id": null
         },
         "candidates": [
           {
-            "score": 0.875,
-            "concept_id": "setpoint_temperature"
-          },
-          {
-            "score": 0.48,
-            "concept_id": "defrost_interval"
-          },
-          {
-            "score": 0.4761904761904761,
+            "score": 0.7,
             "concept_id": "hysteresis_temperature"
-          },
-          {
-            "score": 0.4615384615384615,
-            "concept_id": "fan_delay"
-          },
-          {
-            "score": 0.4615384615384615,
-            "concept_id": "threshold_high_temperature"
           }
         ],
         "confidence": null,
-        "source_key": "Param105"
-      },
-      {
-        "section": "Parameters",
-        "evidence": {
-          "category": "parameter",
-          "gap_top2": 0.2627551020408163,
-          "matched_synonym": null,
-          "normalized_text": "set point ventola",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "candidates": [
-          {
-            "score": 0.875,
-            "concept_id": "setpoint_temperature"
-          },
-          {
-            "score": 0.6122448979591837,
-            "concept_id": "fan_delay"
-          },
-          {
-            "score": 0.5294117647058824,
-            "concept_id": "defrost_duration"
-          },
-          {
-            "score": 0.5294117647058824,
-            "concept_id": "hysteresis_temperature"
-          },
-          {
-            "score": 0.5185185185185186,
-            "concept_id": "defrost_interval"
-          }
-        ],
-        "confidence": null,
-        "source_key": "Param106"
-      },
-      {
-        "section": "Alarms",
-        "evidence": {
-          "category": "alarm",
-          "gap_top2": 0.12531328320802004,
-          "matched_synonym": null,
-          "normalized_text": "bassa temperatura sonda 1",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "candidates": [
-          {
-            "score": 0.8095238095238095,
-            "concept_id": "alarm_low_temperature"
-          },
-          {
-            "score": 0.6842105263157895,
-            "concept_id": "alarm_high_temperature"
-          },
-          {
-            "score": 0.56,
-            "concept_id": "alarm_door_open"
-          },
-          {
-            "score": 0.55,
-            "concept_id": "alarm_low_pressure"
-          },
-          {
-            "score": 0.55,
-            "concept_id": "alarm_sensor_fault"
-          }
-        ],
-        "confidence": null,
-        "source_key": "Alarm0"
-      },
-      {
-        "section": "Alarms",
-        "evidence": {
-          "category": "alarm",
-          "gap_top2": 0.0653061224489796,
-          "matched_synonym": null,
-          "normalized_text": "alta temperatura sonda 1",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "candidates": [
-          {
-            "score": 0.8,
-            "concept_id": "alarm_high_temperature"
-          },
-          {
-            "score": 0.7346938775510204,
-            "concept_id": "alarm_low_temperature"
-          },
-          {
-            "score": 0.5909090909090909,
-            "concept_id": "alarm_sensor_fault"
-          },
-          {
-            "score": 0.5714285714285714,
-            "concept_id": "alarm_high_pressure"
-          },
-          {
-            "score": 0.5625,
-            "concept_id": "alarm_door_open"
-          }
-        ],
-        "confidence": null,
-        "source_key": "Alarm1"
-      },
-      {
-        "section": "Alarms",
-        "evidence": {
-          "category": "alarm",
-          "gap_top2": 0.12531328320802004,
-          "matched_synonym": null,
-          "normalized_text": "bassa temperatura sonda 2",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "candidates": [
-          {
-            "score": 0.8095238095238095,
-            "concept_id": "alarm_low_temperature"
-          },
-          {
-            "score": 0.6842105263157895,
-            "concept_id": "alarm_high_temperature"
-          },
-          {
-            "score": 0.56,
-            "concept_id": "alarm_door_open"
-          },
-          {
-            "score": 0.55,
-            "concept_id": "alarm_low_pressure"
-          },
-          {
-            "score": 0.55,
-            "concept_id": "alarm_sensor_fault"
-          }
-        ],
-        "confidence": null,
-        "source_key": "Alarm3"
-      },
-      {
-        "section": "Alarms",
-        "evidence": {
-          "category": "alarm",
-          "gap_top2": 0.0653061224489796,
-          "matched_synonym": null,
-          "normalized_text": "alta temperatura sonda 2",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "candidates": [
-          {
-            "score": 0.8,
-            "concept_id": "alarm_high_temperature"
-          },
-          {
-            "score": 0.7346938775510204,
-            "concept_id": "alarm_low_temperature"
-          },
-          {
-            "score": 0.5909090909090909,
-            "concept_id": "alarm_sensor_fault"
-          },
-          {
-            "score": 0.5714285714285714,
-            "concept_id": "alarm_high_pressure"
-          },
-          {
-            "score": 0.5625,
-            "concept_id": "alarm_door_open"
-          }
-        ],
-        "confidence": null,
-        "source_key": "Alarm4"
-      },
-      {
-        "section": "Commands",
-        "evidence": {
-          "category": "command",
-          "gap_top2": 0.0,
-          "matched_synonym": null,
-          "normalized_text": "dispositivo off",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "candidates": [
-          {
-            "score": 0.8461538461538461,
-            "concept_id": "command_start_device"
-          },
-          {
-            "score": 0.8461538461538461,
-            "concept_id": "command_stop_device"
-          },
-          {
-            "score": 0.4666666666666666,
-            "concept_id": "command_stop_defrost"
-          },
-          {
-            "score": 0.41379310344827597,
-            "concept_id": "command_start_defrost"
-          },
-          {
-            "score": 0.3448275862068966,
-            "concept_id": "command_reset_alarm"
-          }
-        ],
-        "confidence": null,
-        "source_key": "Command0"
-      },
-      {
-        "section": "Commands",
-        "evidence": {
-          "category": "command",
-          "gap_top2": 0.0,
-          "matched_synonym": null,
-          "normalized_text": "dispositivo on",
-          "semantic_category": null,
-          "dictionary_entry_id": null
-        },
-        "candidates": [
-          {
-            "score": 0.88,
-            "concept_id": "command_start_device"
-          },
-          {
-            "score": 0.88,
-            "concept_id": "command_stop_device"
-          },
-          {
-            "score": 0.5,
-            "concept_id": "command_start_defrost"
-          },
-          {
-            "score": 0.5,
-            "concept_id": "command_stop_defrost"
-          },
-          {
-            "score": 0.3571428571428571,
-            "concept_id": "command_reset_alarm"
-          }
-        ],
-        "confidence": null,
-        "source_key": "Command1"
+        "source_key": "Param40"
       }
     ]
   },
@@ -2351,37 +1128,30 @@
     "committed": false,
     "dry_run_performed": true
   },
-  "timestamp": "2026-02-27T14:01:31.209690+01:00",
+  "timestamp": "2026-03-03T10:23:06.562254+01:00",
   "validation": {
     "stage": "validated",
     "errors": [],
     "status": "ok",
     "warnings": []
   },
-  "actions_path": "mcp_server/patch/template_real/manual_actions.json",
+  "actions_path": "runs/run20260303_102022/patch_actions_v0.1.json",
   "diff_summary": {
     "changed_paths": [
-      "set_fields: Alarms/Alarm6 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: Alarms/Alarm7 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: Alarms/Alarm8 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: Alarms/Alarm9 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: Alarms/Alarm10 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: Alarms/Alarm11 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: Alarms/Alarm20 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: Alarms/Alarm21 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch"
+      "set_fields: ContinuosReads/Read4 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Parameters/Param49 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch"
     ]
   },
   "source_files": {
     "kb_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/kb/kb_v0.1.json",
     "kb_version": "0.1",
-    "template_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/5c2667d5-dfc6-18f5-0b17-420c90dfb858.json",
+    "template_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/f8eeb7b4-36f7-17b0-1340-1cfd9ce5228c.json",
     "dictionary_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionaries/dictionary_v0.1.json",
     "dictionary_version": "0.1",
     "template_base_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/template_base/template_base_v0.1.json",
     "template_base_version": "0.1"
   },
-  "template_guid": "5c2667d5-dfc6-18f5-0b17-420c90dfb858",
-  "policy_outcome": "needs_review",
+  "template_guid": "f8eeb7b4-36f7-17b0-1340-1cfd9ce5228c",
   "absent_concepts": [
     {
       "reason": "Nessuna read presente con descrizione compatibile",
@@ -2464,20 +1234,8 @@
     {
       "reason": "Nessuna read presente con descrizione compatibile",
       "category": "measurement",
-      "concept_id": "superheat_temperature",
-      "semantic_category": "temperature"
-    },
-    {
-      "reason": "Nessuna read presente con descrizione compatibile",
-      "category": "measurement",
       "concept_id": "regulation_pressure",
       "semantic_category": "pressure"
-    },
-    {
-      "reason": "Nessuna read presente con descrizione compatibile",
-      "category": "parameter",
-      "concept_id": "setpoint_temperature",
-      "semantic_category": "setpoint"
     },
     {
       "reason": "Nessuna read presente con descrizione compatibile",
@@ -2548,7 +1306,25 @@
     {
       "reason": "Nessuna read presente con descrizione compatibile",
       "category": "alarm",
+      "concept_id": "alarm_compressor_fault",
+      "semantic_category": "alarm"
+    },
+    {
+      "reason": "Nessuna read presente con descrizione compatibile",
+      "category": "alarm",
       "concept_id": "alarm_defrost_failure",
+      "semantic_category": "alarm"
+    },
+    {
+      "reason": "Nessuna read presente con descrizione compatibile",
+      "category": "alarm",
+      "concept_id": "alarm_high_pressure",
+      "semantic_category": "alarm"
+    },
+    {
+      "reason": "Nessuna read presente con descrizione compatibile",
+      "category": "alarm",
+      "concept_id": "alarm_low_pressure",
       "semantic_category": "alarm"
     },
     {
@@ -2635,80 +1411,24 @@
     "dictionary_version": "0.1",
     "template_base_version": "0.1"
   },
-  "llm_patch_actions": null,
   "matched_variables": [
     {
       "reason": "fuzzy_match",
-      "section": "Alarms",
-      "concept_id": "alarm_compressor_fault",
-      "confidence": 0.95,
-      "source_key": "Alarm6",
-      "normalized_text": "allarme compressore 1",
-      "semantic_category": "alarm"
-    },
-    {
-      "reason": "fuzzy_match",
-      "section": "Alarms",
-      "concept_id": "alarm_compressor_fault",
-      "confidence": 0.95,
-      "source_key": "Alarm7",
-      "normalized_text": "allarme compressore 2",
-      "semantic_category": "alarm"
-    },
-    {
-      "reason": "fuzzy_match",
-      "section": "Alarms",
-      "concept_id": "alarm_compressor_fault",
-      "confidence": 0.95,
-      "source_key": "Alarm8",
-      "normalized_text": "allarme compressore 3",
-      "semantic_category": "alarm"
-    },
-    {
-      "reason": "fuzzy_match",
-      "section": "Alarms",
-      "concept_id": "alarm_compressor_fault",
-      "confidence": 0.95,
-      "source_key": "Alarm9",
-      "normalized_text": "allarme compressore 4",
-      "semantic_category": "alarm"
-    },
-    {
-      "reason": "fuzzy_match",
-      "section": "Alarms",
-      "concept_id": "alarm_compressor_fault",
-      "confidence": 0.95,
-      "source_key": "Alarm10",
-      "normalized_text": "allarme compressore 5",
-      "semantic_category": "alarm"
-    },
-    {
-      "reason": "fuzzy_match",
-      "section": "Alarms",
-      "concept_id": "alarm_compressor_fault",
-      "confidence": 0.95,
-      "source_key": "Alarm11",
-      "normalized_text": "allarme compressore 6",
-      "semantic_category": "alarm"
-    },
-    {
-      "reason": "fuzzy_match",
-      "section": "Alarms",
-      "concept_id": "alarm_high_pressure",
+      "section": "ContinuosReads",
+      "concept_id": "superheat_temperature",
       "confidence": 1.0,
-      "source_key": "Alarm20",
-      "normalized_text": "allarme alta pressione",
-      "semantic_category": "alarm"
+      "source_key": "Read4",
+      "normalized_text": "surriscaldamento",
+      "semantic_category": "temperature"
     },
     {
       "reason": "fuzzy_match",
-      "section": "Alarms",
-      "concept_id": "alarm_low_pressure",
-      "confidence": 1.0,
-      "source_key": "Alarm21",
-      "normalized_text": "allarme bassa pressione",
-      "semantic_category": "alarm"
+      "section": "Parameters",
+      "concept_id": "setpoint_temperature",
+      "confidence": 0.9411764705882352,
+      "source_key": "Param49",
+      "normalized_text": "set point",
+      "semantic_category": "setpoint"
     }
-  ],
-  "llm_patch_actions_path": null
+  ]
 }

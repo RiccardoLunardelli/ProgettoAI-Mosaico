@@ -3,51 +3,51 @@
     "category": "measurement",
     "suggestions": [
       {
-        "term": "trasduttore aspirazione",
+        "term": "sonda di pressione p2",
         "candidates": []
       },
       {
-        "term": "reg num 514",
+        "term": "apertura valvola",
         "candidates": []
       },
       {
-        "term": "reg num 515",
+        "term": "p2 value 0 01",
         "candidates": []
       },
       {
-        "term": "reg num 516",
+        "term": "generic digital input",
         "candidates": []
       },
       {
-        "term": "reg num 2048",
+        "term": "alarm output",
         "candidates": []
       },
       {
-        "term": "reg num 2049",
+        "term": "valve output",
         "candidates": []
       },
       {
-        "term": "reg num 2050",
+        "term": "device status",
         "candidates": []
       },
       {
-        "term": "reg num 1280",
+        "term": "error pb1",
         "candidates": []
       },
       {
-        "term": "reg num 257",
+        "term": "error pb2",
         "candidates": []
       },
       {
-        "term": "reg num 259",
+        "term": "lsh e hsh",
         "candidates": []
       },
       {
-        "term": "reg num 3328",
+        "term": "lop e mop",
         "candidates": []
       },
       {
-        "term": "reg num 3329",
+        "term": "liquid eeprom moplokalarm",
         "candidates": []
       }
     ]
@@ -56,379 +56,187 @@
     "category": "parameter",
     "suggestions": [
       {
-        "term": "configurazione carico 1",
+        "term": "tipo di gas",
         "candidates": []
       },
       {
-        "term": "configurazione carico 2",
+        "term": "percentuale apertura valvola con sonda guasta",
         "candidates": []
       },
       {
-        "term": "configurazione carico 3",
+        "term": "ritardo errore sonda",
         "candidates": []
       },
       {
-        "term": "configurazione carico 4",
+        "term": "abilitazione funzione start",
         "candidates": []
       },
       {
-        "term": "configurazione carico 5",
+        "term": "durata scongelamento",
         "candidates": []
       },
       {
-        "term": "configurazione carico 6",
+        "term": "percentuale apertura valvola con funzione start",
         "candidates": []
       },
       {
-        "term": "tipo di compressore",
+        "term": "durata della funzione start",
         "candidates": []
       },
       {
-        "term": "polarita uscita valvola",
+        "term": "ritardo arresto regolazione ciclica",
         "candidates": []
       },
       {
-        "term": "potenza del compressore 1",
+        "term": "tempo di arresto del regolamento",
         "candidates": []
       },
       {
-        "term": "potenza del compressore 2",
+        "term": "massima apertura valvolapercentuale",
         "candidates": []
       },
       {
-        "term": "potenza del compressore 3",
+        "term": "durata massima della funzione di apertura forzata",
         "candidates": []
       },
       {
-        "term": "potenza del compressore 4",
+        "term": "periodo del segnale pwm",
         "candidates": []
       },
       {
-        "term": "potenza del compressore 5",
+        "term": "offset di banda",
         "candidates": []
       },
       {
-        "term": "potenza del compressore 6",
+        "term": "tempo integrale",
         "candidates": []
       },
       {
-        "term": "tipo di freon",
+        "term": "tempo derivato",
         "candidates": []
       },
       {
-        "term": "tipo di regolazione zona neutra o banda proporzionale",
+        "term": "tipo di sonda di pressione",
         "candidates": []
       },
       {
-        "term": "tipo di regolazione freddo / caldo",
+        "term": "valore di pressione a 4ma/0v",
         "candidates": []
       },
       {
-        "term": "tipo di sequenza del compressore",
+        "term": "valore di pressione a 20ma/5v",
         "candidates": []
       },
       {
-        "term": "tipo di sequenza della ventola",
+        "term": "taratura sonda di pressione",
         "candidates": []
       },
       {
-        "term": "tipo di sonda p1",
+        "term": "tipo di sonda di temperatura",
         "candidates": []
       },
       {
-        "term": "lettura 4ma",
+        "term": "sonda di temperaturacalibrazione",
         "candidates": []
       },
       {
-        "term": "lettura 20ma",
+        "term": "polarità ingresso digitale 1",
         "candidates": []
       },
       {
-        "term": "calibrazione della sonda",
+        "term": "funzione ingresso digitale 1",
         "candidates": []
       },
       {
-        "term": "presenza sonda p2",
+        "term": "ritardo ingresso digitale 1",
         "candidates": []
       },
       {
-        "term": "tipo di sonda p2",
+        "term": "polarità ingresso digitale 2",
         "candidates": []
       },
       {
-        "term": "lettura 4ma ventola",
+        "term": "funzione ingresso digitale 2",
         "candidates": []
       },
       {
-        "term": "lettura 20ma ventola",
+        "term": "ritardo ingresso digitale 2",
         "candidates": []
       },
       {
-        "term": "calibrazione della sonda ventola",
+        "term": "ritardo allarmi all accensione",
         "candidates": []
       },
       {
-        "term": "polarita interruttore a bassa pressione",
+        "term": "funzione relè di allarme",
         "candidates": []
       },
       {
-        "term": "polarita dell interruttore di alta pressione",
+        "term": "muting relè di allarme concicalino",
         "candidates": []
       },
       {
-        "term": "polarita d ingresso digitale configurabile",
+        "term": "regolazione pressione più bassalimite",
         "candidates": []
       },
       {
-        "term": "funzione di ingresso digitale configurabile",
+        "term": "pressione di aspirazione massima",
         "candidates": []
       },
       {
-        "term": "ritardo dell ingresso digitale configurabile",
+        "term": "pressione di aspirazione minima",
         "candidates": []
       },
       {
-        "term": "ripristino manuale per allarme compressore / ventilatore",
+        "term": "percentuale di apertura della valvola durante mop/lop",
         "candidates": []
       },
       {
-        "term": "visualizzazione dell unita di misura",
+        "term": "tempo massimo tra eventi mop/lop",
         "candidates": []
       },
       {
-        "term": "risoluzione c",
+        "term": "numero eventi mop/lopprima del blocco",
         "candidates": []
       },
       {
-        "term": "visualizzazione predefinita sul display inferiore",
+        "term": "massimo surriscaldamentoallarme",
         "candidates": []
       },
       {
-        "term": "formato sonda visualizzata sul display inferiore",
+        "term": "surriscaldamento minimoallarme",
         "candidates": []
       },
       {
-        "term": "modalita di visualizzazione della pressione",
+        "term": "ritardo allarme surriscaldamento",
         "candidates": []
       },
       {
-        "term": "banda proporzionale per la regolazione dei compressori",
+        "term": "recupero veloce aggiuntivocostante integrale",
         "candidates": []
       },
       {
-        "term": "regolazione per il risparmio energetico dei compressori",
+        "term": "predefinito display localevisualizzazione",
         "candidates": []
       },
       {
-        "term": "ritardo minimo tra 2 accensioni dello stesso compressore",
+        "term": "misurazione della temperaturaunità",
         "candidates": []
       },
       {
-        "term": "ritardo tra lo spegnimento e l accensione dello stesso compressore",
+        "term": "unità di misura della pressione",
         "candidates": []
       },
       {
-        "term": "tempo di ritardo tra l inserimento di due carichi diversi",
+        "term": "risoluzione della temperatura",
         "candidates": []
       },
       {
-        "term": "tempo di ritardo tra lo spegnimento di due diversi compressori",
+        "term": "modalità di visualizzazione della pressione",
         "candidates": []
       },
       {
-        "term": "tempo minimo in cui uno stage rimane on",
-        "candidates": []
-      },
-      {
-        "term": "tempo massimo in cui uno stage rimane acceso",
-        "candidates": []
-      },
-      {
-        "term": "param48",
-        "candidates": []
-      },
-      {
-        "term": "param49",
-        "candidates": []
-      },
-      {
-        "term": "ritardo all accensione",
-        "candidates": []
-      },
-      {
-        "term": "banda proporzionale per la regolazione della ventola",
-        "candidates": []
-      },
-      {
-        "term": "tempo di ritardo tra l inserimento di due diverse ventole",
-        "candidates": []
-      },
-      {
-        "term": "tempo di ritardo tra lo spegnimento di due diverse ventole",
-        "candidates": []
-      },
-      {
-        "term": "ritardo sonda di allarme all accensione",
-        "candidates": []
-      },
-      {
-        "term": "limite inferiore per allarme pressione compressori",
-        "candidates": []
-      },
-      {
-        "term": "limite superiore per allarme pressione compressori",
-        "candidates": []
-      },
-      {
-        "term": "ritardo allarme pressione / temperatura compressori",
-        "candidates": []
-      },
-      {
-        "term": "regolazione allarme ore lavoro",
-        "candidates": []
-      },
-      {
-        "term": "attivazioni massime del pressostato",
-        "candidates": []
-      },
-      {
-        "term": "tempo di attivazione del pressostato",
-        "candidates": []
-      },
-      {
-        "term": "compressori on con sonda guasta",
-        "candidates": []
-      },
-      {
-        "term": "potenza utilizzata con errori",
-        "candidates": []
-      },
-      {
-        "term": "set allarme bassa pressione",
-        "candidates": []
-      },
-      {
-        "term": "set allarme alta pressione",
-        "candidates": []
-      },
-      {
-        "term": "ritardo allarme pressione",
-        "candidates": []
-      },
-      {
-        "term": "attivazioni massime del pressostato del ventilatore",
-        "candidates": []
-      },
-      {
-        "term": "tempo di attivazione del pressostato della ventola",
-        "candidates": []
-      },
-      {
-        "term": "ventola accesa con sonda guasta",
-        "candidates": []
-      },
-      {
-        "term": "banda proporzionale",
-        "candidates": []
-      },
-      {
-        "term": "modalita di lavoro dell uscita analogica",
-        "candidates": []
-      },
-      {
-        "term": "sonda per uscita analogica",
-        "candidates": []
-      },
-      {
-        "term": "limite inferiore della scala per l uscita analogica",
-        "candidates": []
-      },
-      {
-        "term": "limite superiore della scala per uscita analogica",
-        "candidates": []
-      },
-      {
-        "term": "valore minimo dell uscita analogica",
-        "candidates": []
-      },
-      {
-        "term": "valore uscita analogica dopo accensione compressore",
-        "candidates": []
-      },
-      {
-        "term": "valore uscita analogica dopo spegnimento compressore",
-        "candidates": []
-      },
-      {
-        "term": "percentuale di uscita analogica in caso di guasto della sonda",
-        "candidates": []
-      },
-      {
-        "term": "ritardo tra l uscita dalla zona neutra e l inizio della regolazione",
-        "candidates": []
-      },
-      {
-        "term": "tempo di innalzamento dell uscita analogica da a0m a 20ma",
-        "candidates": []
-      },
-      {
-        "term": "tempo di permanenza dell uscita analogica prima dell attivazione di un altra uscita",
-        "candidates": []
-      },
-      {
-        "term": "ritardo tra l uscita dalla zona neutra e l inizio della riduzione dell uscita analogica",
-        "candidates": []
-      },
-      {
-        "term": "tempo di caduta dell uscita analogica",
-        "candidates": []
-      },
-      {
-        "term": "tempo di permanenza dell uscita analogica prima della disattivazione di un uscita",
-        "candidates": []
-      },
-      {
-        "term": "attivazione dell uscita trigger",
-        "candidates": []
-      },
-      {
-        "term": "sonda per uscita trigger",
-        "candidates": []
-      },
-      {
-        "term": "limite inferiore della scala per l uscita trigger",
-        "candidates": []
-      },
-      {
-        "term": "limite scala superiore per l uscita trigger",
-        "candidates": []
-      },
-      {
-        "term": "valore minimo dell uscita trigger",
-        "candidates": []
-      },
-      {
-        "term": "percentuale di uscita trigger in caso di errore della sonda",
-        "candidates": []
-      },
-      {
-        "term": "silenziamento relè di allarme",
-        "candidates": []
-      },
-      {
-        "term": "relè di allarme di polarita",
-        "candidates": []
-      },
-      {
-        "term": "funzione off abilitata",
-        "candidates": []
-      },
-      {
-        "term": "indirizzo seriale compressori",
-        "candidates": []
-      },
-      {
-        "term": "indirizzo seriale ventola",
+        "term": "percentuale di raffreddamentotempo di valutazione",
         "candidates": []
       }
     ]
@@ -437,43 +245,39 @@
     "category": "alarm",
     "suggestions": [
       {
-        "term": "errore sonda 1",
+        "term": "errore sonda pb1",
         "candidates": []
       },
       {
-        "term": "errore sonda 2",
+        "term": "errore sonda pb2",
         "candidates": []
       },
       {
-        "term": "allarme livello liquido",
+        "term": "allarme di basso surriscaldameto lsh",
         "candidates": []
       },
       {
-        "term": "errore eeprom",
+        "term": "allarme di alto surriscaldamento hsh",
         "candidates": []
       },
       {
-        "term": "manuntenzione compressore 1",
+        "term": "lop minima pressione operativa",
         "candidates": []
       },
       {
-        "term": "manuntenzione compressore 2",
+        "term": "mop massima pressione operativa",
         "candidates": []
       },
       {
-        "term": "manuntenzione compressore 3",
+        "term": "injection liquid",
         "candidates": []
       },
       {
-        "term": "manuntenzione compressore 4",
+        "term": "eeprom failure",
         "candidates": []
       },
       {
-        "term": "manuntenzione compressore 5",
-        "candidates": []
-      },
-      {
-        "term": "manuntenzione compressore 6",
+        "term": "mop lop lock alarm",
         "candidates": []
       },
       {
@@ -486,23 +290,27 @@
     "category": "command",
     "suggestions": [
       {
-        "term": "tastiera bloccata",
+        "term": "regulation on",
         "candidates": []
       },
       {
-        "term": "tastiera sbloccata",
+        "term": "regulation off",
         "candidates": []
       },
       {
-        "term": "allarme muto",
+        "term": "fast freezing on",
         "candidates": []
       },
       {
-        "term": "energy saving on",
+        "term": "fast freezing off",
         "candidates": []
       },
       {
-        "term": "energy saving off",
+        "term": "keyboard lock",
+        "candidates": []
+      },
+      {
+        "term": "keyboard unlock",
         "candidates": []
       }
     ]

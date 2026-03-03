@@ -8,6 +8,8 @@ import psycopg2.extras
 import json
 from datetime import datetime
 
+from sqlalchemy import create_engine, String, Integer
+
 from .mapping import extract_run_row
 
 class RunRepository():

@@ -1,0 +1,511 @@
+{
+  "template_base_version": "0.5",
+  "categories": [
+    {
+      "id": "measurement",
+      "description": "Misure fisiche e stati letti dal sistema.",
+      "concepts": [
+        {
+          "concept_id": "temp_delivery",
+          "category": "measurement",
+          "semantic_category": "temperature",
+          "label": {
+            "it": "Temperatura aria di mandata",
+            "en": "Supply air temperature"
+          },
+          "description": "Temperatura dell’aria in ingresso (mandata)."
+        },
+        {
+          "concept_id": "temp_return",
+          "category": "measurement",
+          "semantic_category": "temperature",
+          "label": {
+            "it": "Temperatura aria di ripresa",
+            "en": "Return air temperature"
+          },
+          "description": "Temperatura dell’aria in uscita (ripresa)."
+        },
+        {
+          "concept_id": "temp_ambient",
+          "category": "measurement",
+          "semantic_category": "temperature",
+          "label": {
+            "it": "Temperatura ambiente",
+            "en": "Ambient temperature"
+          },
+          "description": "Temperatura dell’ambiente esterno o del locale."
+        },
+        {
+          "concept_id": "temp_evaporator",
+          "category": "measurement",
+          "semantic_category": "temperature",
+          "label": {
+            "it": "Temperatura evaporatore",
+            "en": "Evaporator temperature"
+          },
+          "description": "Temperatura rilevata sull’evaporatore."
+        },
+        {
+          "concept_id": "temp_condenser",
+          "category": "measurement",
+          "semantic_category": "temperature",
+          "label": {
+            "it": "Temperatura condensatore",
+            "en": "Condenser temperature"
+          },
+          "description": "Temperatura rilevata sul condensatore."
+        },
+        {
+          "concept_id": "temp_defrost",
+          "category": "measurement",
+          "semantic_category": "temperature",
+          "label": {
+            "it": "Temperatura sbrinamento",
+            "en": "Defrost temperature"
+          },
+          "description": "Temperatura durante la fase di sbrinamento."
+        },
+        {
+          "concept_id": "pressure_suction",
+          "category": "measurement",
+          "semantic_category": "pressure",
+          "label": {
+            "it": "Pressione di aspirazione",
+            "en": "Suction pressure"
+          },
+          "description": "Pressione di aspirazione del circuito."
+        },
+        {
+          "concept_id": "pressure_discharge",
+          "category": "measurement",
+          "semantic_category": "pressure",
+          "label": {
+            "it": "Pressione di mandata",
+            "en": "Discharge pressure"
+          },
+          "description": "Pressione di mandata del circuito."
+        },
+        {
+          "concept_id": "humidity",
+          "category": "measurement",
+          "semantic_category": "humidity",
+          "label": {
+            "it": "Umidità",
+            "en": "Humidity"
+          },
+          "description": "Umidità relativa dell’ambiente."
+        },
+        {
+          "concept_id": "state_compressor",
+          "category": "measurement",
+          "semantic_category": "state",
+          "label": {
+            "it": "Stato compressore",
+            "en": "Compressor state"
+          },
+          "description": "Stato operativo del compressore."
+        },
+        {
+          "concept_id": "state_fan",
+          "category": "measurement",
+          "semantic_category": "state",
+          "label": {
+            "it": "Stato ventilatori",
+            "en": "Fan state"
+          },
+          "description": "Stato operativo dei ventilatori."
+        },
+        {
+          "concept_id": "state_defrost",
+          "category": "measurement",
+          "semantic_category": "state",
+          "label": {
+            "it": "Stato sbrinamento",
+            "en": "Defrost state"
+          },
+          "description": "Stato della fase di sbrinamento."
+        },
+        {
+          "concept_id": "state_door_open",
+          "category": "measurement",
+          "semantic_category": "state",
+          "label": {
+            "it": "Porta aperta",
+            "en": "Door open state"
+          },
+          "description": "Stato di apertura porta/cella."
+        },
+        {
+          "concept_id": "superheat_temperature",
+          "category": "measurement",
+          "semantic_category": "temperature",
+          "label": {
+            "it": "Temperatura di surriscaldamento",
+            "en": "Superheat temperature"
+          },
+          "description": "Temperatura associata al surriscaldamento."
+        },
+        {
+          "concept_id": "regulation_pressure",
+          "category": "measurement",
+          "semantic_category": "pressure",
+          "label": {
+            "it": "Pressione di regolazione",
+            "en": "Regulation pressure"
+          },
+          "description": "Pressione usata come riferimento per la regolazione (locale o remota)."
+        },
+        {
+          "concept_id": "temp_probe",
+          "category": "measurement",
+          "semantic_category": "temperature",
+          "label": {
+            "it": "Temperatura sonda",
+            "en": "Probe temperature"
+          },
+          "description": "Temperatura rilevata da una sonda generica."
+        },
+        {
+          "concept_id": "prova temperatura 45",
+          "category": "measurement",
+          "semantic_category": "456",
+          "label": {
+            "it": "Temperatura provaaa",
+            "en": "Probe temperature"
+          },
+          "description": "Temperatura provad."
+        },
+        {
+          "concept_id": "temp_prova",
+          "category": "measurement",
+          "semantic_category": "temperature",
+          "label": {
+            "it": "Temperatura sonda prova",
+            "en": "Probe temperature"
+          },
+          "description": "Temperatura rilevata da una sonda generica di prova."
+        }
+      ]
+    },
+    {
+      "id": "parameter",
+      "description": "Parametri di configurazione e setpoint.",
+      "concepts": [
+        {
+          "concept_id": "setpoint_temperature",
+          "category": "parameter",
+          "semantic_category": "setpoint",
+          "label": {
+            "it": "Setpoint temperatura",
+            "en": "Temperature setpoint"
+          },
+          "description": "Valore target della temperatura."
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "category": "parameter",
+          "semantic_category": "temperature",
+          "label": {
+            "it": "Isteresi temperatura",
+            "en": "Temperature hysteresis"
+          },
+          "description": "Banda di isteresi per il controllo temperatura."
+        },
+        {
+          "concept_id": "defrost_interval",
+          "category": "parameter",
+          "semantic_category": "time",
+          "label": {
+            "it": "Intervallo sbrinamenti",
+            "en": "Defrost interval"
+          },
+          "description": "Intervallo temporale tra due sbrinamenti."
+        },
+        {
+          "concept_id": "defrost_duration",
+          "category": "parameter",
+          "semantic_category": "time",
+          "label": {
+            "it": "Durata sbrinamento",
+            "en": "Defrost duration"
+          },
+          "description": "Durata massima della fase di sbrinamento."
+        },
+        {
+          "concept_id": "fan_delay",
+          "category": "parameter",
+          "semantic_category": "time",
+          "label": {
+            "it": "Ritardo ventilatori",
+            "en": "Fan delay"
+          },
+          "description": "Ritardo di attivazione dei ventilatori."
+        },
+        {
+          "concept_id": "threshold_high_temperature",
+          "category": "parameter",
+          "semantic_category": "threshold",
+          "label": {
+            "it": "Soglia alta temperatura",
+            "en": "High temperature threshold"
+          },
+          "description": "Soglia per allarme o warning di alta temperatura."
+        },
+        {
+          "concept_id": "threshold_low_temperature",
+          "category": "parameter",
+          "semantic_category": "threshold",
+          "label": {
+            "it": "Soglia bassa temperatura",
+            "en": "Low temperature threshold"
+          },
+          "description": "Soglia per allarme o warning di bassa temperatura."
+        },
+        {
+          "concept_id": "superheat_setpoint",
+          "category": "parameter",
+          "semantic_category": "setpoint",
+          "label": {
+            "it": "Setpoint di surriscaldamento",
+            "en": "Superheat setpoint"
+          },
+          "description": "Setpoint target del surriscaldamento."
+        },
+        {
+          "concept_id": "dew_point_setpoint",
+          "category": "parameter",
+          "semantic_category": "setpoint",
+          "label": {
+            "it": "Setpoint dew point",
+            "en": "Dew point setpoint"
+          },
+          "description": "Valore target del dew point per la regolazione."
+        }
+      ]
+    },
+    {
+      "id": "alarm",
+      "description": "Eventi critici che richiedono intervento.",
+      "concepts": [
+        {
+          "concept_id": "alarm_high_temperature",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "label": {
+            "it": "Allarme alta temperatura",
+            "en": "High temperature alarm"
+          },
+          "description": "Temperatura oltre soglia critica alta."
+        },
+        {
+          "concept_id": "alarm_low_temperature",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "label": {
+            "it": "Allarme bassa temperatura",
+            "en": "Low temperature alarm"
+          },
+          "description": "Temperatura oltre soglia critica bassa."
+        },
+        {
+          "concept_id": "alarm_sensor_fault",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "label": {
+            "it": "Allarme guasto sonda",
+            "en": "Sensor fault alarm"
+          },
+          "description": "Guasto o assenza segnale di una sonda."
+        },
+        {
+          "concept_id": "alarm_compressor_fault",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "label": {
+            "it": "Allarme guasto compressore",
+            "en": "Compressor fault alarm"
+          },
+          "description": "Guasto o blocco del compressore."
+        },
+        {
+          "concept_id": "alarm_defrost_failure",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "label": {
+            "it": "Allarme sbrinamento",
+            "en": "Defrost failure alarm"
+          },
+          "description": "Sbrinamento non riuscito o anomalo."
+        },
+        {
+          "concept_id": "alarm_high_pressure",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "label": {
+            "it": "Allarme alta pressione",
+            "en": "High pressure alarm"
+          },
+          "description": "Pressione oltre soglia critica alta."
+        },
+        {
+          "concept_id": "alarm_low_pressure",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "label": {
+            "it": "Allarme bassa pressione",
+            "en": "Low pressure alarm"
+          },
+          "description": "Pressione oltre soglia critica bassa."
+        },
+        {
+          "concept_id": "alarm_door_open",
+          "category": "alarm",
+          "semantic_category": "alarm",
+          "label": {
+            "it": "Allarme porta aperta",
+            "en": "Door open alarm"
+          },
+          "description": "Porta aperta oltre la soglia consentita."
+        }
+      ]
+    },
+    {
+      "id": "warning",
+      "description": "Eventi non critici ma rilevanti.",
+      "concepts": [
+        {
+          "concept_id": "warning_high_temperature",
+          "category": "warning",
+          "semantic_category": "warning",
+          "label": {
+            "it": "Warning alta temperatura",
+            "en": "High temperature warning"
+          },
+          "description": "Temperatura alta ma non critica."
+        },
+        {
+          "concept_id": "warning_low_temperature",
+          "category": "warning",
+          "semantic_category": "warning",
+          "label": {
+            "it": "Warning bassa temperatura",
+            "en": "Low temperature warning"
+          },
+          "description": "Temperatura bassa ma non critica."
+        },
+        {
+          "concept_id": "warning_maintenance",
+          "category": "warning",
+          "semantic_category": "warning",
+          "label": {
+            "it": "Warning manutenzione",
+            "en": "Maintenance warning"
+          },
+          "description": "Avviso di manutenzione richiesta."
+        },
+        {
+          "concept_id": "warning_sensor_drift",
+          "category": "warning",
+          "semantic_category": "warning",
+          "label": {
+            "it": "Warning deriva sonda",
+            "en": "Sensor drift warning"
+          },
+          "description": "Possibile deriva o scostamento della sonda."
+        }
+      ]
+    },
+    {
+      "id": "command",
+      "description": "Comandi impartiti al sistema.",
+      "concepts": [
+        {
+          "concept_id": "command_start_device",
+          "category": "command",
+          "semantic_category": "command",
+          "label": {
+            "it": "Comando avvio dispositivo",
+            "en": "Start device command"
+          },
+          "description": "Comando per avviare il dispositivo."
+        },
+        {
+          "concept_id": "command_stop_device",
+          "category": "command",
+          "semantic_category": "command",
+          "label": {
+            "it": "Comando arresto dispositivo",
+            "en": "Stop device command"
+          },
+          "description": "Comando per arrestare il dispositivo."
+        },
+        {
+          "concept_id": "command_start_defrost",
+          "category": "command",
+          "semantic_category": "command",
+          "label": {
+            "it": "Comando avvio sbrinamento",
+            "en": "Start defrost command"
+          },
+          "description": "Comando per avviare lo sbrinamento."
+        },
+        {
+          "concept_id": "command_stop_defrost",
+          "category": "command",
+          "semantic_category": "command",
+          "label": {
+            "it": "Comando stop sbrinamento",
+            "en": "Stop defrost command"
+          },
+          "description": "Comando per fermare lo sbrinamento."
+        },
+        {
+          "concept_id": "command_reset_alarm",
+          "category": "command",
+          "semantic_category": "command",
+          "label": {
+            "it": "Comando reset allarmi",
+            "en": "Reset alarm command"
+          },
+          "description": "Comando per resettare allarmi attivi."
+        }
+      ]
+    },
+    {
+      "id": "virtual_variable",
+      "description": "Variabili derivate o calcolate.",
+      "concepts": [
+        {
+          "concept_id": "delta_temperature",
+          "category": "virtual_variable",
+          "semantic_category": "temperature",
+          "label": {
+            "it": "Delta temperatura",
+            "en": "Temperature delta"
+          },
+          "description": "Differenza tra due temperature rilevanti."
+        },
+        {
+          "concept_id": "count_defrost",
+          "category": "virtual_variable",
+          "semantic_category": "count",
+          "label": {
+            "it": "Conteggio sbrinamenti",
+            "en": "Defrost count"
+          },
+          "description": "Numero di sbrinamenti in un intervallo."
+        },
+        {
+          "concept_id": "runtime_hours",
+          "category": "virtual_variable",
+          "semantic_category": "runtime",
+          "label": {
+            "it": "Ore di funzionamento DEL SISTEMA",
+            "en": "Runtime hours"
+          },
+          "description": "Ore totali di funzionamento del sistema."
+        }
+      ]
+    }
+  ]
+}
