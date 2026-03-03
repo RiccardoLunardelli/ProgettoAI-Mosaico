@@ -3,7 +3,7 @@ from pathlib import Path
 import json
 
 from backend_api.schemas.artifacts import DictionaryEditRequest, KbEditRequest, TemplateBaseEditRequest
-from mcp_server.tools.dictionary_tool import _next_versioned_path
+from mcp_server.tools.dictionary_tool import _next_versioned_path, _extract_version_from_path
 from mcp_server.core import MCPContext
 
 router = APIRouter()
@@ -62,16 +62,20 @@ def editor_json_inline(file_name, file_json, file_dir, artifact):
     
     old_path = input_path
     new_path = _next_versioned_path(old_path)
-
+    new_version = _extract_version_from_path(new_path)
+    
     # validazione 
     ctx = MCPContext(repo_root=".")
     try:
         if artifact == "dictionary":
             ctx.schema_validate("dictionary", file_json)
+            file_json["dictionary_version"] = new_version
         elif artifact == "kb":
             ctx.schema_validate("kb", file_json)
+            file_json["kb_version"] = new_version
         elif artifact == "template_base":
             ctx.schema_validate("template_base", file_json)
+            file_json["template_base_version"] = new_version
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Payload not valid: {e}!")
     
@@ -80,7 +84,7 @@ def editor_json_inline(file_name, file_json, file_dir, artifact):
 
     return {"status": "ok", "new_file": str(new_path)}
 
-# ---- LIST & PREVIEW ----
+#----LIST & PREVIEW----
 @router.get("/templates")
 def list_templates():
     return list_artifact("template", TEMPLATE_DIR)
@@ -121,7 +125,7 @@ def list_device_list():
 def get_device_list(store: str, dl: str):
     return get_file_of_artifact(None, store, dl, "device_list", PVS_DIR)
 
-# ---- EDIT ----
+#----EDIT----
 @router.post("/dictionary/edit")
 def edit_dictionary(payload: DictionaryEditRequest):
     return editor_json_inline(payload.dictionary_name, payload.dictionary_json, DICTIONARIES_DIR, "dictionary")

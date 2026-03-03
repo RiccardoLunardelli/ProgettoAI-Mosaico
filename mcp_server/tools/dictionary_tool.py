@@ -46,7 +46,6 @@ def _extract_version_from_path(path: Path) -> str | None:
     m = re.search(r"_v(\d+\.\d+)\.json$", path.name)
     return m.group(1) if m else None
 
-
 def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) -> Dict:
     # Inserisce/aggiorna una entry nel dizionario
 
