@@ -187,6 +187,13 @@ In tutti i casi:
 
 ---
 
+## Note LLM
+- Le proposte LLM vengono salvate come `llm_patch_actions.json`.
+- I tentativi LLM (prompt/risposta/tempi) vengono tracciati in `llm_attempt.json` nella directory di run.
+- Le metriche LLM del `run_report.json` sono corrette solo se `llm_attempt.json` è caricato e passato al `build_run_report`.
+
+---
+
 ## Script coinvolti
 
 ### Orchestratore

@@ -20,6 +20,7 @@ Inserire/aggiornare concetti nel dizionario e generare suggerimenti di nuovi con
   - valida dizionario e patch
   - crea preview
   - dry-run / commit con `_next_versioned_path`
+  - aggiorna `dictionary_version` nel JSON prima del salvataggio
 
 Operazioni supportate:
 - `add_synonym`
@@ -34,3 +35,9 @@ Operazioni supportate:
   Dato un set di termini, produce candidati basati su:
   - contains su synonyms
   - contains su abbreviations
+
+---
+
+## Versioning
+- Ogni salvataggio versionato aggiorna il campo `dictionary_version`.
+- Anche l’editor inline deve aggiornare la versione prima di scrivere su disco.

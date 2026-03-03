@@ -85,7 +85,7 @@
     {
       "concept_id": "temp_defrost",
       "category": "measurement",
-      "semantic_category": "pressure",
+      "semantic_category": "temperature",
       "synonyms": {
         "it": [
           "temperatura di sbrinamento",

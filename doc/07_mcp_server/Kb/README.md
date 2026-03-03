@@ -20,7 +20,14 @@ Aggiungere/Aggiornare una o più regole della knowledge base.
   - crea preview
   - applica operazioni
   - dry-run / commit in nuova versione
+  - aggiorna `kb_version` nel JSON prima del salvataggio
 
 Operazioni supportate:
 - `add_kb_rule`
 - `update_kb_rule`
+
+---
+
+## Versioning
+- Ogni salvataggio versionato aggiorna il campo `kb_version`.
+- Anche l’editor inline deve aggiornare la versione prima di scrivere su disco.

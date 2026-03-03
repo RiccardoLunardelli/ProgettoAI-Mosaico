@@ -24,6 +24,7 @@ Arricchire/aggiornare concetti nel caso del Template base. Arricchire invece nel
   - costruisce `preview` (deepcopy)
   - se `dry_run=True`: marca dry-run e ritorna preview
   - se commit: richiede dry-run precedente, valida output, salva in versione incrementata (`_v0.x`)
+  - quando target è `template_base`, aggiorna `template_base_version` nel JSON
 
   Operazioni Template Base supportate:
     - `add_base_concept`
@@ -32,3 +33,9 @@ Arricchire/aggiornare concetti nel caso del Template base. Arricchire invece nel
 
     Operazioni Template reale supportate:
     - patch per variabile: `(section, source_key) -> fields` (set_fields)
+
+---
+
+## Versioning
+- I salvataggi versionati del Template Base aggiornano `template_base_version`.
+- Anche l’editor inline deve aggiornare la versione prima di scrivere su disco.

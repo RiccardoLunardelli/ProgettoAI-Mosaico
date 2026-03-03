@@ -13,6 +13,16 @@ Descrivere come eseguire il progetto in locale e quali parametri configurare.
 
 ---
 
+## Flusso Template (UI)
+L’orchestratore espone tre step separati:
+- `start_template_run` → normalizzazione + matching
+- `llm_propose_for_run` → proposta LLM + `llm_attempt.json`
+- `finish_template_run` → patch deterministiche, merge LLM (se attivo), report finale
+
+Nota: `run_template_pipeline` è stato rimosso.
+
+---
+
 ## Configurazione
 È possibile usare un file `config.yml` (presente in `config/config.yml`) per pre‑compilare i path:
 

@@ -85,6 +85,9 @@ def apply_patch(user_id: str, batch_id: str, input_path: str | None, file_name: 
                     "status": "ok",
                     "run_id": run_report.get("run_id"),
                     "report_path": str(report_path),
+                    "patch": patch,
+                    "patch_path": patch_path,
+                    "suggestions": suggestions,
                     "suggestions_path": str(suggestions_path)
                 }
 
@@ -126,24 +129,6 @@ def apply_patch(user_id: str, batch_id: str, input_path: str | None, file_name: 
         batchClass.increment_completed_runs(batch_id)
 
         return {"status": "ok", "run_id": report.get("run_id"), "report_path": str(report_path)}
-    
-        """
-        # artifact = template
-        elif artifact == "template":
-            report_path = run_template_pipeline(template_path=str(input_path), validate_only=validate_only, use_llm=False)
-            report = load_json(report_path)
-            runClass.save_run(report, user_id, batch_id)
-            batchClass.increment_completed_runs(batch_id)
-            ambiguous_count = report.get("metrics", {}).get("ambiguous_count", 0)
-
-            return {
-                "status": "ok",
-                "run_id": report.get("run_id"),
-                "report_path": str(report_path),
-                "has_ambiguous": ambiguous_count > 0,
-                "ambiguous_count": ambiguous_count
-            }
-        """
 
     # artifact = device_list
     else:

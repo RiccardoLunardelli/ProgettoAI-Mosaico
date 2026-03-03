@@ -43,3 +43,9 @@ Il sistema introduce:
 - **MCP Server**: validazione, patch, guardrail
 - **Matching Engine**: deterministico + fuzzy
 - **LLM Proposer**: solo su ambigui, senza auto‑commit
+
+---
+
+## Backend & Grafana
+- **Backend API (FastAPI)**: espone autenticazione, artifacts e runs.
+- **Grafana**: la fonte unica è `runs.report` (JSONB) nel DB; nessuna tabella aggiuntiva.

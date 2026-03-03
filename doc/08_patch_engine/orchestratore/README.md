@@ -5,6 +5,30 @@ Scopo: orchestrare patch, validazione, dry‑run, commit e generare `run_report.
 
 ---
 
+## Flusso Template (UI)
+Il flusso Template è diviso in 3 fasi per la UI:
+
+### `start_template_run(...)`
+- esegue `normalization()` e matching
+- salva `matching_report` in `runs/<run_id>/`
+- ritorna: `run_id`, `matching_path`, `has_ambiguous`, `ambiguous_count`
+
+### `llm_propose_for_run(...)`
+- legge `matching_report`
+- genera patch LLM (`llm_patch_actions.json`)
+- salva `llm_attempt.json`
+- ritorna patch e metriche
+
+### `finish_template_run(...)`
+- genera patch deterministiche
+- se LLM attivo: merge patch LLM (modificate o originali)
+- calcola `llm_patch_proposed` vs `llm_patch_applied`
+- salva report finale nella stessa run
+
+Nota: `run_template_pipeline` è stato rimosso (non più usato).
+
+---
+
 ### Funzioni
 
 ### `get_template_guid(input_path, mr, artifact_type)`

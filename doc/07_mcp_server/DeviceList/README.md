@@ -47,3 +47,4 @@ Questo file definisce:
 ## Note operative
 - Se `TemplateGUID` manca, viene emesso un warning.
 - I dispositivi con ruolo `centrale` sono segnalati per revisione manuale.
+- I warning vengono restituiti anche in `dry_run` e propagati fino alle API.

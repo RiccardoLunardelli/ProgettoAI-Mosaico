@@ -70,3 +70,9 @@ Le proposte vengono filtrate da policy deterministiche:
 - Output salvato come `llm_patch_actions.json`
 - Inserito nel `run_report.json`
 - **Mai applicato automaticamente**
+
+---
+
+## Tracciamento
+- Ogni chiamata LLM salva un `llm_attempt.json` nella directory della run.
+- Il `llm_attempt.json` è usato per calcolare le metriche LLM nel report.

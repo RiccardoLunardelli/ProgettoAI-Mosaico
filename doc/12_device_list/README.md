@@ -63,3 +63,9 @@ Contiene:
 **File:** `mcp_server/tools/device_list_tool.py`
 
 Dati tecnici del codice: `/doc/07_mcp_server/DeviceList`
+
+---
+
+## Warnings
+- `device_list_enrich` restituisce warning anche in `dry_run`.
+- Le API backend ritornano i warning del report (per UI).

@@ -13,6 +13,7 @@ Definire come vengono gestiti e promossi i cambiamenti su:
 - Audit completo per ogni modifica
 - Nessuna modifica in‑place
 - Aggiornamenti solo tramite patch validate
+- Aggiornamento del campo `*_version` nel JSON al momento del salvataggio
 
 ---
 

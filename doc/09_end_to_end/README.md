@@ -39,6 +39,16 @@ Descrivere la pipeline completa, dall’input reale fino al report finale.
 
 ---
 
+## Flusso Template (UI)
+Il flusso Template usato dalla UI è spezzato in 3 step:
+1. **start_template_run** → normalizzazione + matching, ritorna `run_id` e `matching_path`
+2. **llm_propose_for_run** → propone patch LLM, salva `llm_attempt.json`
+3. **finish_template_run** → patch deterministiche, merge LLM (se attivo), report finale
+
+Nota: `run_template_pipeline` è stato rimosso.
+
+---
+
 ## Output finali
 - `normalized_template.json`
 - `matching_report.json`

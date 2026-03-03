@@ -31,6 +31,8 @@ spiega cosa è stato deciso, cosa è stato applicato e con quali evidenze.
 - `unmapped_count`
 - `llm_calls`
 - `warnings_count`
+ - `llm_patch_proposed`
+ - `llm_patch_applied`
 
 ### Execution
 - `dry_run_performed`
@@ -54,3 +56,16 @@ spiega cosa è stato deciso, cosa è stato applicato e con quali evidenze.
 ## Regole
 - Report scritto **sempre**, anche in caso di errore
 - Nessuna azione applicata senza essere tracciata
+
+---
+
+## Grafana & DB
+- La fonte unica per Grafana è `runs.report` (JSONB).
+- Nessuna modifica schema DB; nessuna nuova tabella.
+- Il filtro per sezione usa regex: `~ '${section:regex}'`.
+
+---
+
+## Metriche LLM
+- Le metriche LLM sono calcolate in `src/metrics_calculation/llm_calculate_metrics.py`.
+- Sono corrette solo se `llm_attempt.json` viene caricato e passato al `build_run_report`.
