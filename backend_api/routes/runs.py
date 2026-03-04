@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends, Request
+from fastapi import APIRouter, HTTPException, Depends
 from pathlib import Path
 import json
 from typing import Any
@@ -9,8 +9,6 @@ from backend_api.schemas.runs import (
 )
 
 from backend_api.utils.deps import get_current_user
-
-from backend_api.routes.auth import middleware
 
 from src.intermediateLayer.postgres_repository import RunRepository
 from src.validator.validator import load_json
@@ -138,94 +136,70 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
     
 #-----RUNS LIST----
 @router.get("/runs/ids")
-def get_run_ids(request: Request):
-    check = middleware(request)
-    if check.get("detail") == True:
-        return {"run_ids": runClass.get_all_run_ids()}
+def get_run_ids(user = Depends(get_current_user)):
+    return {"run_ids": runClass.get_all_run_ids()}
 
 @router.get("/run_id/{run_id}")
-def get_run(run_id: str, request: Request):
+def get_run(run_id: str, user = Depends(get_current_user)):
     try:
-        check = middleware(request)
-        if check.get("detail") == True:
-            return runClass.get_run(run_id)
+        return runClass.get_run(run_id)
     except KeyError:
         raise HTTPException(status_code=404, detail="run not found!")
 
 #-----TEMPLATE (3-step)-----
 @router.post("/run/template/start")
-def run_template_start(payload: RunTemplateStartRequest, request: Request):
-    check = middleware(request)
-    if check.get("detail") == True:
-        input_path = TEMPLATE_DIR / payload.template_name
-        if not input_path.exists():
-            raise HTTPException(status_code=404, detail="template not found")
+def run_template_start(payload: RunTemplateStartRequest, user = Depends(get_current_user)):
+    input_path = TEMPLATE_DIR / payload.template_name
+    if not input_path.exists():
+        raise HTTPException(status_code=404, detail="template not found")
 
-        result = start_template_run(template_path=str(input_path))
-        return result
+    result = start_template_run(template_path=str(input_path))
+    return result
 
 @router.post("/run/template/llm")
-def run_template_llm(payload: RunTemplateLlmRequest, request: Request):
-    check = middleware(request)
-    if check.get("detail") == True:
-        return llm_propose_for_run(run_id=payload.run_id, llm_model=payload.llm_model)
+def run_template_llm(payload: RunTemplateLlmRequest, user = Depends(get_current_user)):
+    return llm_propose_for_run(run_id=payload.run_id, llm_model=payload.llm_model)
 
 @router.post("/run/template/finish")
-def run_template_finish(payload: RunTemplateFinishRequest, request: Request):
-    check = middleware(request)
-    user = get_current_user
-    if check.get("detail") == True:
-        input_path = TEMPLATE_DIR / payload.template_name
-        if not input_path.exists():
-            raise HTTPException(status_code=404, detail="template not found")
+def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_current_user)):
+    input_path = TEMPLATE_DIR / payload.template_name
+    if not input_path.exists():
+        raise HTTPException(status_code=404, detail="template not found")
 
-        result = template_run(
-            run_id=payload.run_id,
-            template_path=str(input_path),
-            validate_only=payload.validate_only,
-            apply_llm=payload.apply_llm,
-            llm_actions_override=payload.llm_patch_actions
-        )
+    result = template_run(
+        run_id=payload.run_id,
+        template_path=str(input_path),
+        validate_only=payload.validate_only,
+        apply_llm=payload.apply_llm,
+        llm_actions_override=payload.llm_patch_actions
+    )
 
-        # salva nel DB
-        report = load_json(result["report_path"])
-        runClass.save_run(report, user["sub"])
+    # salva nel DB
+    report = load_json(result["report_path"])
+    runClass.save_run(report, user["sub"])
 
-        return result
+    return result
 
 # ---- DICTIONARY ----
 @router.post("/run/dictionary")
-def run_dictionary(payload: RunDictionaryRequest, request: Request):
-    check = middleware(request)
-    user = get_current_user
-    if check.get("detail") == True:
-        input_path = DICTIONARIES_DIR / payload.dictionary_name
-        return apply_patch(user["sub"], input_path, payload.dictionary_name, payload.patch_json, dictionary_upsert, summarize_dictionary_diff, "dictionary", "dictionary_patch.json", payload.validate_only, payload.run_id, payload.mode, payload.manual_mode) 
+def run_dictionary(payload: RunDictionaryRequest, user = Depends(get_current_user)):
+    input_path = DICTIONARIES_DIR / payload.dictionary_name
+    return apply_patch(user["sub"], input_path, payload.dictionary_name, payload.patch_json, dictionary_upsert, summarize_dictionary_diff, "dictionary", "dictionary_patch.json", payload.validate_only, payload.run_id, payload.mode, payload.manual_mode) 
 
 # ---- KB ----
 @router.post("/run/kb")
-def run_kb(payload: RunKbRequest, request: Request):
-    check = middleware(request)
-    user = get_current_user
-    if check.get("detail") == True:
-        input_path = KB_DIR / payload.kb_name
-        return  apply_patch(user["sub"], input_path, payload.kb_name, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, "kb", "kb_patch.json", payload.validate_only, None, None, None)
+def run_kb(payload: RunKbRequest, user = Depends(get_current_user)):
+    input_path = KB_DIR / payload.kb_name
+    return  apply_patch(user["sub"], input_path, payload.kb_name, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, "kb", "kb_patch.json", payload.validate_only, None, None, None)
 
 # ---- TEMPLATE BASE ----
 @router.post("/run/template_base")
-def run_template_base(payload: RunTemplateBaseRequest, request: Request):
-    check = middleware(request)
-    user = get_current_user
-    if check.get("detail") == True:
-        input_path = TEMPLATE_BASE_DIR / payload.template_base_name
-        return apply_patch(user["sub"], input_path, payload.template_base_name, payload.patch_json, template_apply_patch, summarize_template_base_diff, "template_base", "template_base_patch.json", payload.validate_only, None, None, None)
+def run_template_base(payload: RunTemplateBaseRequest, user = Depends(get_current_user)):
+    input_path = TEMPLATE_BASE_DIR / payload.template_base_name
+    return apply_patch(user["sub"], input_path, payload.template_base_name, payload.patch_json, template_apply_patch, summarize_template_base_diff, "template_base", "template_base_patch.json", payload.validate_only, None, None, None)
 
  # ---- DEVICE LIST ----
-
 @router.post("/run/device_list")
-def run_device_list_api(payload: RunDeviceListRequest,request:Request):
-    check = middleware(request)
-    user = get_current_user
-    if check.get("detail") == True:
-        input_path = PVS_DIR / payload.store / payload.device_list_name
-        return apply_patch(user["sub"], input_path, payload.device_list_name, None, None, None, "device_list", None, payload.validate_only, None, None, None)
+def run_device_list_api(payload: RunDeviceListRequest, user = Depends(get_current_user)):
+    input_path = PVS_DIR / payload.store / payload.device_list_name
+    return apply_patch(user["sub"], input_path, payload.device_list_name, None, None, None, "device_list", None, payload.validate_only, None, None, None)

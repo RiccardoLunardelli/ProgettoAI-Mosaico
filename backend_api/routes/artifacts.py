@@ -1,11 +1,12 @@
-from fastapi import APIRouter, HTTPException, Depends, Request
+from fastapi import APIRouter, HTTPException, Depends
 from pathlib import Path
 import json
 
 from backend_api.schemas.artifacts import DictionaryEditRequest, KbEditRequest, TemplateBaseEditRequest
 from mcp_server.tools.dictionary_tool import _next_versioned_path, _extract_version_from_path
 from mcp_server.core import MCPContext
-from backend_api.routes.auth import middleware
+
+from backend_api.utils.deps import get_current_user
 
 router = APIRouter()
 
@@ -87,80 +88,54 @@ def editor_json_inline(file_name, file_json, file_dir, artifact):
 
 #----LIST & PREVIEW----
 @router.get("/templates")
-def list_templates(request: Request):
-    check = middleware(request)
-    if check.get("detail") == True:
-        return list_artifact("template", TEMPLATE_DIR)
+def list_templates(user = Depends(get_current_user)):
+    return list_artifact("template", TEMPLATE_DIR)
 
 @router.get("/templates/{name}")
-def get_template(name: str, request: Request):
-    check = middleware(request)
-    if check.get("detail") == True:
-        return get_file_of_artifact(name, None, None, "template", TEMPLATE_DIR)
+def get_template(name: str, user = Depends(get_current_user)):
+    return get_file_of_artifact(name, None, None, "template", TEMPLATE_DIR)
 
 @router.get("/dictionaries")
-def list_dictionaries(request: Request):
-    check = middleware(request)
-    if check.get("detail") == True:
-        return list_artifact("dictionary", DICTIONARIES_DIR)
+def list_dictionaries(user = Depends(get_current_user)):
+    return list_artifact("dictionary", DICTIONARIES_DIR)
 
 @router.get("/dictionaries/{name}")
-def get_dictionary(name: str, request: Request):
-    check = middleware(request)
-    if check.get("detail") == True:
-        return get_file_of_artifact(name, None, None, "dictionary", DICTIONARIES_DIR)
+def get_dictionary(name: str, user = Depends(get_current_user)):
+    return get_file_of_artifact(name, None, None, "dictionary", DICTIONARIES_DIR)
 
 @router.get("/kb")
-def list_kb(request: Request):
-    check = middleware(request)
-    if check.get("detail") == True:
-        return list_artifact("kb", KB_DIR)
+def list_kb(user = Depends(get_current_user)):
+    return list_artifact("kb", KB_DIR)
 
 @router.get("/kb/{name}")
-def get_kb(name: str, request: Request):
-    check = middleware(request)
-    if check.get("detail") == True:
-        return get_file_of_artifact(name, None, None, "kb", KB_DIR)
+def get_kb(name: str, user = Depends(get_current_user)):
+    return get_file_of_artifact(name, None, None, "kb", KB_DIR)
 
 @router.get("/template_base")
-def list_template_base(request: Request):
-    check = middleware(request)
-    if check.get("detail") == True:
-        return list_artifact("template_base", TEMPLATE_BASE_DIR)
+def list_template_base(user = Depends(get_current_user)):
+    return list_artifact("template_base", TEMPLATE_BASE_DIR)
 
 @router.get("/template_base/{name}")
-def get_template_base(name: str, request: Request):
-    check = middleware(request)
-    if check.get("detail") == True:
-        return get_file_of_artifact(name, None, None, "template_base", TEMPLATE_BASE_DIR)
+def get_template_base(name: str, user = Depends(get_current_user)):
+    return get_file_of_artifact(name, None, None, "template_base", TEMPLATE_BASE_DIR)
 
 @router.get("/device_list")
-def list_device_list(request: Request):
-    check = middleware(request)
-    if check.get("detail") == True:
-        return list_artifact("device_list", PVS_DIR) 
+def list_device_list(user = Depends(get_current_user)):
+    return list_artifact("device_list", PVS_DIR) 
 
 @router.get("/device_list/{store}/{dl}")
-def get_device_list(store: str, dl: str, request: Request):
-    check = middleware(request)
-    if check.get("detail") == True:
-        return get_file_of_artifact(None, store, dl, "device_list", PVS_DIR)
+def get_device_list(store: str, dl: str, user = Depends(get_current_user)):
+    return get_file_of_artifact(None, store, dl, "device_list", PVS_DIR)
 
 #----EDIT----
 @router.post("/dictionary/edit")
-def edit_dictionary(payload: DictionaryEditRequest, request: Request):
-    check = middleware(request)
-    if check.get("detail") == True:
-        return editor_json_inline(payload.dictionary_name, payload.dictionary_json, DICTIONARIES_DIR, "dictionary")
+def edit_dictionary(payload: DictionaryEditRequest, user = Depends(get_current_user)):
+    return editor_json_inline(payload.dictionary_name, payload.dictionary_json, DICTIONARIES_DIR, "dictionary")
 
 @router.post("/kb/edit")
-def edit_kb(payload: KbEditRequest, request: Request):
-    check = middleware(request)
-    if check.get("detail") == True:
-        return editor_json_inline(payload.kb_name, payload.kb_json, KB_DIR, "kb")
+def edit_kb(payload: KbEditRequest, user = Depends(get_current_user)):
+    return editor_json_inline(payload.kb_name, payload.kb_json, KB_DIR, "kb")
 
 @router.post("/template_base/edit")
-def edit_template_base(payload: TemplateBaseEditRequest, request: Request):
-    check = middleware(request)
-    if check.get("detail") == True:
-        return editor_json_inline(payload.template_base_name, payload.template_base_json, TEMPLATE_BASE_DIR, "template_base")
+def edit_template_base(payload: TemplateBaseEditRequest, user = Depends(get_current_user)):
+    return editor_json_inline(payload.template_base_name, payload.template_base_json, TEMPLATE_BASE_DIR, "template_base")
