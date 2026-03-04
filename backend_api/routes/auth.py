@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Response, Depends
+from fastapi import APIRouter, HTTPException, Response, Depends, Request
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from uuid import uuid4
@@ -26,8 +26,14 @@ def jwt_token(user_id: str | None, email: str | None, action, user: Dict[str, An
         payload["user"] = jsonable_encoder(user)
 
     resp = JSONResponse(content=payload)
-    resp.set_cookie(key="token", value=token, httponly=True, secure=False, samesite="lax", max_age=60 * 60 * 24)
+    resp.set_cookie(key="token", value=token, httponly=True, samesite="lax", secure=False, max_age=60 * 60 * 24)
     return resp
+
+def middleware(request):
+    token = request.cookies.get("token")
+    decoded = get_current_user(token)
+    if decoded:
+        return {"detail": True}
 
 @router.post("/signup")
 def signup(payload: SignupRequest):
@@ -47,7 +53,6 @@ def signup(payload: SignupRequest):
 
 @router.post("/login")
 def login(payload: LoginRequest):
-    token = ""
     try:
         user = userClass.verify_user_password(payload.email, payload.password)
         if not user:
@@ -65,7 +70,10 @@ def logout():
     resp.delete_cookie("token")
     return resp
 
-@router.post("/checkauth")
-def checkAuth(user=Depends(get_current_user)):
+@router.get("/checkauth")
+def checkAuth(user = Depends(get_current_user)):
     # controlla token
-    return {"status": "ok", "user": user}
+    return {"detail": True}
+
+    
+

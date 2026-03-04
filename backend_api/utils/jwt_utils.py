@@ -2,7 +2,7 @@ import os
 import jwt
 from datetime import datetime, timezone, timedelta
 
-JWT_SECRET = os.getenv("JWT_SECRET", "secret_key") # firma del token
+JWT_SECRET = os.getenv("JWT_SECRET", "i9Y2@8gqw^C$%SfBia9ZUl!c^r9yM@Y4&z6T&4by@0%jgr0ZpmEsuthA#3X8Fu!c!bu") # firma del token
 JWT_ALG = "HS256"
 JWT_EXPIRES_HOURS = int(os.getenv("WT_EXPIRES_HOURS", "24")) # durata del token
 
