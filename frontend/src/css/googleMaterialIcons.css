@@ -1,0 +1,77 @@
+@font-face {
+  font-family: "Material Symbols Outlined";
+  src: url("/fonts/material-symbols/MaterialSymbolsOutlined-VariableFont_FILL,GRAD,opsz,wght.ttf") format("truetype");
+  font-weight: 100 700;
+  font-style: normal;
+}
+
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+.iconDefault:hover {
+  background-color: var(--iconDefaultHoverColor);
+  border-radius: 4px;
+}
+
+.iconDefaultBlue {
+  color: var(--mainLogoColumnColor);
+}
+.iconDefaultGreen {
+  color: var(--green);
+}
+.iconDefaultRed {
+  color: var(--red);
+}
+.iconDefaultBlack {
+  color: var(--black);
+}
+.iconDefaultWhite {
+  color: var(--white);
+}
+.iconDefaultDisabled {
+  color: var(--grey);
+}
+.iconDefaultEventToManage:hover {
+  color: #3e4253;
+}
+.iconDefaultBlue.active {
+  background-color: var(--mainLogoColumnColor);
+  color: white;
+  border-radius: 4px;
+}
+.iconDefaultGreen.active {
+  background-color: var(--green);
+  color: white;
+  border-radius: 4px;
+}
+.iconDefaultRed.active {
+  background-color: var(--red);
+  color: white;
+  border-radius: 4px;
+}
+.iconDefaultBlack.active {
+  background-color: var(--black);
+  color: white;
+  border-radius: 4px;
+}
+.iconDefaultWhite.active {
+  background-color: var(--white);
+  color: transparent;
+  border-radius: 4px;
+}
+
+.activeBlue {
+  background-color: var(--mainLogoColumnColor);
+  color: white;
+  border-radius: 4px;
+}
+
+.iconRedInHover:hover {
+  color: var(--red);
+}

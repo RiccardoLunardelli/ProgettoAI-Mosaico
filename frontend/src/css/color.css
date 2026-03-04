@@ -1,0 +1,313 @@
+:root {
+  --mainFont: Poppins, Medium;
+
+  /*Smart HTML Elements*/
+  --smart-primary: #343a40 !important;
+
+  /*Color Picker*/
+  --rcp-background-color: white !important;
+  --rcp-field-input-color: black !important;
+  --rcp-field-input-border-color: black !important;
+  --rcp-field-label-color: black !important;
+
+  /*FIGMA*/
+  --Color-Border-Gray-01: #e9e9e9;
+  --Color-Grey-E9E9E9: #e9e9e9;
+  --Color-Font-Text: #3e4253;
+  --Red-Background-Row: #e00821;
+  --Color-Grey-C9C9C9-Font-off: #c9c9c9;
+  --Red-Background-Input: #e00821;
+  --Red-text-input: #fef0f2;
+  --Color-red: #e00821;
+  --Table-Border: #2b2b2b;
+  --Grey-disabled: #f6f6f6;
+  --Background-dashboard: #fbf9f6;
+  --Division-page: #2b2b2b;
+  --input-grey-B2B2B2: #b2b2b2;
+  --Argo-Theme: #343a40;
+  --Grey-inputText-BG-White: #d9d9d9;
+  --AG-GRIGIO-100: #fbfbfb;
+  --AG-GRIGIO-125: #f8f8f8;
+  --AG-GRIGIO-150: #f4f4f4;
+  --AG-GRIGIO-200: #ebebeb;
+  --AG-GRIGIO-250: #e4e4e4;
+  --AG-GRIGIO-300: #dddddd;
+  --AG-GRIGIO-400: #c9c9c9;
+  --AG-GRIGIO-500: #aeaeae;
+  --AG-GRIGIO-600: #8c8c8c;
+  --AG-GRIGIO-700: #636363;
+
+  /*Main Site*/
+  --mainBackgroundColor: #fbf9f6;
+
+  --menuBackgroundColor: #fff;
+
+  --mainTextColor: #3e4253;
+
+  --mainATagColor: #3e4253;
+  --ATagChangePathColor: #343a40;
+
+  --mainLogoColumnColor: #343a40;
+  --mainLogoColumnForGradientColor: #b95eff;
+
+  --tableBorderColor: #2b2b2b1f;
+
+  --loaderColor: #3498db;
+
+  --navBarSelectedColor: #0d6efd;
+
+  --iconDefaultColor: #343a40;
+  --iconRedColor: #e00821;
+  --iconGreenColor: green;
+
+  --addButtonIconColor: #fbf9f6;
+
+  --toogleOff: #c9c9c9;
+  --toogleOn: #343a40;
+  --toogleDisabled: #c4c4c4;
+  --toogleRed: #e00821;
+
+  --iconDefaultColor: #343a40;
+  --iconDefaultHoverColor: #ddd;
+
+  --tableRowColor: #343a4005;
+
+  --white: white;
+  --red: #e00821;
+  --blue: blue;
+  --green: green;
+  --orange: orange;
+  --yellow: #fff75e;
+  --white: white;
+  --black: black;
+  --grey: lightslategrey;
+}
+
+[data-theme="light"] {
+  /*Smart HTML Elements*/
+  --smart-primary: #343a40 !important;
+
+  /*Color Picker*/
+  --rcp-background-color: white !important;
+  --rcp-field-input-color: black !important;
+  --rcp-field-input-border-color: black !important;
+  --rcp-field-label-color: black !important;
+
+  /*FIGMA*/
+  --Color-Border-Gray-01: #e9e9e9;
+  --Color-Grey-E9E9E9: #e9e9e9;
+  --Color-Font-Text: #3e4253;
+  --Red-Background-Row: #e00821;
+  --Color-Grey-C9C9C9-Font-off: #c9c9c9;
+  --Red-Background-Input: #e00821;
+  --Red-text-input: #fef0f2;
+  --Color-red: #e00821;
+  --Table-Border: #2b2b2b;
+  --Grey-disabled: #f6f6f6;
+  --Background-dashboard: #fbf9f6;
+  --Division-page: #2b2b2b;
+  --input-grey-B2B2B2: #b2b2b2;
+  --Argo-Theme: #343a40;
+  --Grey-inputText-BG-White: #d9d9d9;
+  --AG-GRIGIO-100: #fbfbfb;
+  --AG-GRIGIO-125: #f8f8f8;
+  --AG-GRIGIO-150: #f4f4f4;
+  --AG-GRIGIO-200: #ebebeb;
+  --AG-GRIGIO-250: #e4e4e4;
+  --AG-GRIGIO-300: #dddddd;
+  --AG-GRIGIO-400: #c9c9c9;
+  --AG-GRIGIO-500: #aeaeae;
+  --AG-GRIGIO-600: #8c8c8c;
+  --AG-GRIGIO-700: #636363;
+
+  /*Main Site*/
+  --mainBackgroundColor: #fbf9f6;
+
+  --menuBackgroundColor: #fff;
+
+  --mainTextColor: #3e4253;
+
+  --mainATagColor: #3e4253;
+  --ATagChangePathColor: #343a40;
+
+  --mainLogoColumnColor: #343a40;
+
+  --tableBorderColor: #2b2b2b1f;
+
+  --loaderColor: #3498db;
+
+  --navBarSelectedColor: #0d6efd;
+
+  --iconDefaultColor: #343a40;
+  --iconRedColor: #e00821;
+  --iconGreenColor: green;
+
+  --addButtonIconColor: #fbf9f6;
+
+  --toogleOff: #c9c9c9;
+  --toogleOn: #343a40;
+  --toogleDisabled: #c4c4c4;
+  --toogleRed: #e00821;
+
+  --iconDefaultColor: #343a40;
+  --iconDefaultHoverColor: #ddd;
+
+  --tableRowColor: #343a4005;
+
+  --white: white;
+  --red: #e00821;
+  --blue: blue;
+  --green: green;
+  --orange: orange;
+  --yellow: yellow;
+  --white: white;
+  --black: black;
+  --grey: lightslategrey;
+
+  --paginationcolor: #5d45e5;
+}
+
+[data-theme="grey"] {
+  /*Smart HTML Elements*/
+  --smart-primary: #282d32 !important;
+
+  /*Color Picker*/
+  --rcp-background-color: #64696e !important;
+  --rcp-field-input-color: white !important;
+  --rcp-field-input-border-color: #282d32 !important;
+  --rcp-field-label-color: white !important;
+
+  /*FIGMA*/
+  --Color-Border-Gray-01: #2b2b2b;
+  --Color-Grey-E9E9E9: #2b2b2b;
+  --Color-Font-Text: #fbf9f6;
+  --Red-Background-Row: #ff0029;
+  --Color-Grey-C9C9C9-Font-off: #8c8c8c;
+  --Red-Background-Input: #ff0029;
+  --Red-text-input: #fef0f2;
+  --Color-red: #ff0029;
+  --Table-Border: #444;
+  --Grey-disabled: #333;
+  --Background-dashboard: #aaafb4;
+  --Division-page: #444;
+  --input-grey-B2B2B2: #666;
+  --Argo-Theme: #282d32;
+  --Grey-inputText-BG-White: #555;
+  --AG-GRIGIO-100: #64696e;
+  --AG-GRIGIO-125: #252525;
+  --AG-GRIGIO-150: #2b2b2b;
+  --AG-GRIGIO-200: #333;
+  --AG-GRIGIO-250: #3b3b3b;
+  --AG-GRIGIO-300: #444;
+  --AG-GRIGIO-400: #555;
+  --AG-GRIGIO-500: #666;
+  --AG-GRIGIO-600: #777;
+  --AG-GRIGIO-700: #888;
+
+  /*Main Site*/
+  --mainBackgroundColor: #aaafb4;
+  --menuBackgroundColor: #64696e;
+  --mainTextColor: #fbf9f6;
+  --mainATagColor: #fbf9f6;
+  --ATagChangePathColor: #282d32;
+  --mainLogoColumnColor: #282d32;
+  --tableBorderColor: #444;
+  --loaderColor: #282d32;
+  --navBarSelectedColor: #282d32;
+  --iconDefaultColor: #282d32;
+  --iconRedColor: #ff0029;
+  --iconGreenColor: rgb(0, 216, 0);
+  --addButtonIconColor: #aaafb4;
+  --toogleOff: #777;
+  --toogleOn: #282d32;
+  --toogleDisabled: #444;
+  --toogleRed: #ff0029;
+  --iconDefaultHoverColor: #666;
+  --tableRowColor: #282d3205;
+  --white: #fbf9f6;
+  --red: #ff0029;
+  --blue: blue;
+  --green: rgb(0, 216, 0);
+  --orange: #ffa500;
+  --yellow: #ff0;
+  --black: #121212;
+  --grey: #777;
+
+  --paginationcolor: #282d32;
+}
+
+[data-theme="dark"] {
+  /*Smart HTML Elements*/
+  --smart-primary: #343a40 !important;
+
+  /*Color Picker*/
+  --rcp-background-color: #1e1e1e !important;
+  --rcp-field-input-color: white !important;
+  --rcp-field-input-border-color: #343a40 !important;
+  --rcp-field-label-color: white !important;
+
+  /*FIGMA*/
+  --Color-Border-Gray-01: #2b2b2b;
+  --Color-Grey-E9E9E9: #2b2b2b;
+  --Color-Font-Text: #dcdcdc;
+  --Red-Background-Row: #ff0029;
+  --Color-Grey-C9C9C9-Font-off: #8c8c8c;
+  --Red-Background-Input: #ff0029;
+  --Red-text-input: #fef0f2;
+  --Color-red: #ff0029;
+  --Table-Border: #444;
+  --Grey-disabled: #333;
+  --Background-dashboard: #121212;
+  --Division-page: #444;
+  --input-grey-B2B2B2: #666;
+  --Argo-Theme: #343a40;
+  --Grey-inputText-BG-White: #555;
+  --AG-GRIGIO-100: #1e1e1e;
+  --AG-GRIGIO-125: #252525;
+  --AG-GRIGIO-150: #2b2b2b;
+  --AG-GRIGIO-200: #333;
+  --AG-GRIGIO-250: #3b3b3b;
+  --AG-GRIGIO-300: #444;
+  --AG-GRIGIO-400: #555;
+  --AG-GRIGIO-500: #666;
+  --AG-GRIGIO-600: #777;
+  --AG-GRIGIO-700: #888;
+
+  /*Main Site*/
+  --mainBackgroundColor: #121212;
+  --menuBackgroundColor: #1e1e1e;
+  --mainTextColor: #dcdcdc;
+  --mainATagColor: #dcdcdc;
+  --ATagChangePathColor: #343a40;
+  --mainLogoColumnColor: #343a40;
+  --tableBorderColor: #444;
+  --loaderColor: #343a40;
+  --navBarSelectedColor: #0d6efd;
+  --iconDefaultColor: #343a40;
+  --iconRedColor: #ff0029;
+  --iconGreenColor: rgb(0, 216, 0);
+  --addButtonIconColor: #121212;
+  --toogleOff: #777;
+  --toogleOn: #343a40;
+  --toogleDisabled: #444;
+  --toogleRed: #ff0029;
+  --iconDefaultHoverColor: #666;
+  --tableRowColor: #343a4005;
+  --white: #dcdcdc;
+  --red: #ff0029;
+  --blue: blue;
+  --green: rgb(0, 216, 0);
+  --orange: #ffa500;
+  --yellow: #ff0;
+  --black: #121212;
+  --grey: #777;
+
+  --paginationcolor: #5d45e5;
+}
+
+.rcp-root {
+  --rcp-background-color: white !important;
+  --rcp-field-input-color: black !important;
+  --rcp-field-input-border-color: black !important;
+  --rcp-field-label-color: black !important;
+}

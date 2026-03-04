@@ -1,0 +1,77 @@
+.infoDot {
+  height: 10px;
+  width: 10px;
+  min-width: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.pulse {
+  animation: pulse 1.8s ease-out infinite;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.7);
+  }
+  70% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 12px rgba(0, 200, 83, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 200, 83, 0);
+  }
+}
+.pulseDevice {
+  animation: pulseDevice 3s ease-in-out infinite;
+}
+@keyframes pulseDevice {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(200, 0, 0, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(200, 0, 0, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(200, 0, 0, 0);
+  }
+}
+
+.pulseOrange {
+  animation: pulseDevice 1.8s ease-in-out infinite;
+}
+@keyframes pulseDevice {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(255, 165, 0, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 165, 0, 0);
+  }
+}
+
+.pulseBlue {
+  animation: pulseDeviceSetted 1.8s ease-in-out infinite;
+}
+@keyframes pulseDeviceSetted {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(52, 152, 255, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(52, 152, 255, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(52, 152, 255, 0);
+  }
+}

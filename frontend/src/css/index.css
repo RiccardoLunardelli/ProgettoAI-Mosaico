@@ -1,0 +1,108 @@
+[data-theme="dark"] {
+  /*TODO*/
+}
+
+:root {
+  font-family: var(--mainFont);
+  line-height: 1.5;
+  letter-spacing: 0px;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#MainDiv {
+  color: var(--mainTextColor);
+  background-color: var(--mainBackgroundColor);
+}
+
+#MainMenu {
+  background-color: var(--menuBackgroundColor);
+
+  color: var(--mainATagColor);
+
+  font-size: medium;
+}
+
+#MainLogoMenu {
+  background-color: var(--mainLogoColumnColor);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 100vw;
+  min-height: 100vh;
+  font-family: var(--mainFont);
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+a {
+  color: var(--mainATagColor);
+  text-decoration: none;
+}
+
+/* Tablet */
+@media screen and (max-width: 1281px) {
+  #MainMenu {
+    font-size: smaller;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 767px) {
+  #MainMenu {
+    font-size: small;
+  }
+}
+
+.react-loading-skeleton {
+  line-height: 2 !important;
+  margin: 5px 0px;
+}
+
+.TurniDragOver {
+  outline: 2px dashed #667eea;
+  background: #f0f3ff;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/poppins/Poppins-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/poppins/Poppins-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/poppins/Poppins-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+}
+
+.DisabledCursorInput input {
+  cursor: default;
+}
+
+.inputBorderError input {
+  border-color: var(--red, red) !important;
+  box-shadow: none !important;
+}
+
+.HoverBoxShadow:hover {
+  box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.15);
+}

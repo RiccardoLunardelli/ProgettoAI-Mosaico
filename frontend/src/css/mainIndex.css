@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:regular,bold,100,200,300,400,500,600,700,800,900");
+
+
+:root {
+  font-family: var(--mainFont);
+  line-height: 1.5;
+  letter-spacing: 0px;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#MainDiv {
+  color: var(--mainTextColor);
+  background-color: var(--mainBackgroundColor);
+}
+
+#MainMenu {
+  background-color: var(--menuBackgroundColor);
+
+  color: var(--mainATagColor);
+
+  font-size: medium;
+}
+
+#MainLogoMenu {
+  background-color: var(--mainLogoColumnColor);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+a {
+  color: var(--mainATagColor);
+  text-decoration: none;
+}
+
+/* Tablet */
+@media screen and (max-width: 1281px) {
+  #MainMenu {
+    font-size: smaller;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 767px) {
+  #MainMenu {
+    font-size: small;
+  }
+}

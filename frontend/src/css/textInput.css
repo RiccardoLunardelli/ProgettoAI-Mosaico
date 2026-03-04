@@ -1,0 +1,150 @@
+.textInputContainer {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 30px;
+}
+
+.textAreaContainer {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+}
+
+.textAreaContainer textarea,
+.textInputContainer input {
+    box-sizing: border-box;
+
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+
+    padding: 4px;
+
+    outline: 0;
+    border: 1px solid var(--toogleDisabled);
+    border-radius: 4px;
+
+    font-size: 14px;
+    color: #3e4253 !important;
+    resize: none;
+
+    transition: padding border 0.1s ease-in;
+    background-color: var(--white);
+}
+
+.passwordInputContainer {
+    position: relative;
+    width: calc(100% - 10px);
+    min-width: calc(100% - 10px);
+    max-width: calc(100% - 10px);
+    height: 20px;
+    padding: 4px;
+    border: 1px solid var(--toogleDisabled);
+    border-radius: 4px;
+    color: #3e4253 !important;
+    background-color: var(--white);
+}
+
+.passwordInputContainer > * {
+    position: absolute;
+    display: inline-block;
+    box-sizing: border-box;
+    top: 0;
+
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    border: none;
+
+    font-size: 14px;
+    resize: none;
+
+    transition: padding border 0.1s ease-in;
+}
+.passwordInputContainer input {
+    width: calc(100% - 38px);
+    min-width: calc(100% - 38px);
+    max-width: calc(100% - 38px);
+    left: 4px;
+    background-color: var(--white);
+}
+.passwordInputContainer .showPasswordIcon {
+    right: 4px;
+    width: 30px;
+    min-width: 30px;
+    max-width: 30px;
+    cursor: pointer;
+    user-select: none;
+}
+.passwordInputContainer .showPasswordIcon * {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    user-select: none;
+}
+
+.passwordInputContainer:focus,
+.passwordInputContainer:hover,
+.passwordInputContainer:focus-visible,
+.passwordInputContainer:focus-within,
+.passwordInputContainer:active,
+.passwordInputContainer:target,
+.textInputContainer input:focus,
+.textInputContainer input:hover,
+.textInputContainer input:focus-visible,
+.textInputContainer input:focus-within,
+.textInputContainer input:active,
+.textInputContainer input:target,
+.textAreaContainer textarea:focus,
+.textAreaContainer textarea:hover,
+.textAreaContainer textarea:focus-visible,
+.textAreaContainer textarea:focus-within,
+.textAreaContainer textarea:active,
+.textAreaContainer textarea:target {
+    border-color: var(--Argo-Theme);
+}
+
+.textInputContainer input:focus,
+.textInputContainer input:focus-visible,
+.textInputContainer input:focus-within,
+.textAreaContainer textarea:focus,
+.textAreaContainer textarea:focus-visible,
+.textAreaContainer textarea:focus-within {
+    border-width: 2px;
+    padding: 3px;
+}
+
+.passwordInputContainer:focus,
+.passwordInputContainer:focus-visible,
+.passwordInputContainer:focus-within {
+    border-width: 2px;
+    padding: 3px;
+}
+.passwordInputContainer:focus > input,
+.passwordInputContainer:focus-visible > input,
+.passwordInputContainer:focus-within > input{
+    left: 3px;
+}
+
+
+.passwordInputContainer.inputDisabled,
+.textInputContainer [disabled],
+.textAreaContainer [disabled] {
+    opacity: .55;
+    cursor: default;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+}

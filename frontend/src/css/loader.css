@@ -1,0 +1,43 @@
+.loaderSpin {
+  border: 4px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 4px solid var(--loaderColor);
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 1.25s linear infinite; /* Safari */
+  animation: spin 1.25s linear infinite;
+}
+
+.loaderSpinSmallFromParentDivLineeSeriali .loaderSpin {
+  border: 3px solid var(--mainBackgroundColor);
+  border-top: 3px solid var(--navBarSelectedColor);
+  width: 10px;
+  height: 10px;
+}
+
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 9999;
+}
+
+.loader-spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid white;
+  border-top: 6px solid var(--loaderColor);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

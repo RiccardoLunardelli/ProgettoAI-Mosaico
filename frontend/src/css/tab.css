@@ -1,0 +1,28 @@
+.tab {
+  display: flex;
+  overflow: auto !important;
+  background-color: var(--AG-GRIGIO-150) !important;
+  border-radius: 4px;
+}
+
+.tab div {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 7px 7px;
+  margin: 4px 5px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.tab .activeTab {
+  background-color: var(--white) !important;
+
+  border-radius: 4px;
+
+  border: solid 1px var(--mainLogoColumnColor);
+
+  color: var(--mainLogoColumnColor);
+}
