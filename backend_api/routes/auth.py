@@ -75,5 +75,6 @@ def checkAuth(user = Depends(get_current_user)):
     # controlla token
     return {"detail": True}
 
+
     
 
