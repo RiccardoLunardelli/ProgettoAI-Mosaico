@@ -1,17 +1,14 @@
 from fastapi import APIRouter, HTTPException
 from pathlib import Path
 import json
-from datetime import timedelta, timezone, datetime
-from uuid import uuid4
 from typing import Any
 
 from backend_api.schemas.runs import (
     RunTemplateStartRequest, RunTemplateLlmRequest, RunTemplateFinishRequest,
-    RunDictionaryRequest, RunKbRequest, RunTemplateBaseRequest, RunDeviceListRequest,
-    BatchesRequest
+    RunDictionaryRequest, RunKbRequest, RunTemplateBaseRequest, RunDeviceListRequest
 )
 
-from src.intermediateLayer.postgres_repository import RunRepository, UsersRepository, BatchesRepository
+from src.intermediateLayer.postgres_repository import RunRepository
 from src.validator.validator import load_json
 
 from scripts.orchestrator import (
@@ -26,8 +23,6 @@ router = APIRouter()
 
 dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
 runClass = RunRepository(dsn)
-userClass = UsersRepository(dsn)
-batchClass = BatchesRepository(dsn)
 
 TEMPLATE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates")
 DICTIONARIES_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionaries")
@@ -35,14 +30,14 @@ KB_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/kb"
 TEMPLATE_BASE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/template_base")
 PVS_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs")
 
-def apply_patch(user_id: str, batch_id: str, input_path: str | None, file_name: str | None, patch_json: dict | None, upsert: Any | None, summarize: Any | None, artifact: str, patch_file_name: str | None, validate_only: bool, run_id: str | None, mode: str | None, manual_mode: str | None):
+def apply_patch(user_id: str, input_path: str | None, file_name: str | None, patch_json: dict | None, upsert: Any | None, summarize: Any | None, artifact: str, patch_file_name: str | None, validate_only: bool, run_id: str | None, mode: str | None, manual_mode: str | None):
     # applica le patch, genera report e salva nel db
 
     if not input_path.exists():
         raise HTTPException(status_code=404, detail=f"{file_name} file not exists!")
         
-    if not user_id or not batch_id:
-        raise HTTPException(status_code=404, detail="user_id or batch_id not exists!")
+    if not user_id:
+        raise HTTPException(status_code=404, detail="user_id not exists!")
         
     cfg = dict(ARTIFACTS[artifact])
     cfg["input_path"] = str(input_path)
@@ -78,8 +73,7 @@ def apply_patch(user_id: str, batch_id: str, input_path: str | None, file_name: 
                 report = load_json(str(report_path))
                 
                 # salvataggio nel db
-                runClass.save_run(report, user_id, batch_id) # run
-                batchClass.increment_completed_runs(batch_id) # incrementa batch
+                runClass.save_run(report, user_id) # run
 
                 return {
                     "status": "ok",
@@ -104,8 +98,7 @@ def apply_patch(user_id: str, batch_id: str, input_path: str | None, file_name: 
                 report_path = run_patch(cfg, "dictionary", dictionary_upsert, summarize_dictionary_diff, validate_only)
                 report = load_json(str(report_path))
 
-                runClass.save_run(report, user_id, batch_id)
-                batchClass.increment_completed_runs(batch_id)
+                runClass.save_run(report, user_id)
 
                 return {
                     "status": "ok",
@@ -125,8 +118,7 @@ def apply_patch(user_id: str, batch_id: str, input_path: str | None, file_name: 
         report = load_json(str(report_path))
 
         # salvataggio nel db
-        runClass.save_run(report, user_id, batch_id)
-        batchClass.increment_completed_runs(batch_id)
+        runClass.save_run(report, user_id)
 
         return {"status": "ok", "run_id": report.get("run_id"), "report_path": str(report_path)}
 
@@ -136,8 +128,7 @@ def apply_patch(user_id: str, batch_id: str, input_path: str | None, file_name: 
         report = load_json(str(report_path))
 
         # salvataggio nel db
-        runClass.save_run(report, user_id, batch_id)
-        batchClass.increment_completed_runs(batch_id)
+        runClass.save_run(report, user_id)
 
         return {"status": "ok", "run_id": report.get("run_id"), "report_path": str(report_path), "warning": report.get("validation", {}).get("warnings")}
     
@@ -152,15 +143,6 @@ def get_run(run_id: str):
         return runClass.get_run(run_id)
     except KeyError:
         raise HTTPException(status_code=404, detail="run not found!")
-
-#-----BATCH-----
-@router.post("/create_batch")
-def create_batch(payload: BatchesRequest):
-    batch_id = uuid4()
-    created_at = datetime.now(timezone(timedelta(hours=1)))
-    status = batchClass._validate_and_status(total_runs=payload.total_runs, completed_runs=0)
-    batchClass.create_batch(batch_id, payload.user_id, created_at, status, payload.total_runs, completed_runs=0)
-    return {"batch_id": str(batch_id), "status": status}
 
 #-----TEMPLATE (3-step)-----
 @router.post("/run/template/start")
@@ -192,8 +174,7 @@ def run_template_finish(payload: RunTemplateFinishRequest):
 
     # salva nel DB
     report = load_json(result["report_path"])
-    runClass.save_run(report, payload.user_id, payload.batch_id)
-    batchClass.increment_completed_runs(payload.batch_id)
+    runClass.save_run(report, payload.user_id)
 
     return result
 
@@ -201,22 +182,22 @@ def run_template_finish(payload: RunTemplateFinishRequest):
 @router.post("/run/dictionary")
 def run_dictionary(payload: RunDictionaryRequest):
     input_path = DICTIONARIES_DIR / payload.dictionary_name
-    return apply_patch(payload.user_id, payload.batch_id, input_path, payload.dictionary_name, payload.patch_json, dictionary_upsert, summarize_dictionary_diff, "dictionary", "dictionary_patch.json", payload.validate_only, payload.run_id, payload.mode, payload.manual_mode) 
+    return apply_patch(payload.user_id, input_path, payload.dictionary_name, payload.patch_json, dictionary_upsert, summarize_dictionary_diff, "dictionary", "dictionary_patch.json", payload.validate_only, payload.run_id, payload.mode, payload.manual_mode) 
 
 # ---- KB ----
 @router.post("/run/kb")
 def run_kb(payload: RunKbRequest):
     input_path = KB_DIR / payload.kb_name
-    return  apply_patch(payload.user_id, payload.batch_id, input_path, payload.kb_name, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, "kb", "kb_patch.json", payload.validate_only, None, None, None)
+    return  apply_patch(payload.user_id, input_path, payload.kb_name, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, "kb", "kb_patch.json", payload.validate_only, None, None, None)
 
 # ---- TEMPLATE BASE ----
 @router.post("/run/template_base")
 def run_template_base(payload: RunTemplateBaseRequest):
     input_path = TEMPLATE_BASE_DIR / payload.template_base_name
-    return apply_patch(payload.user_id, payload.batch_id, input_path, payload.template_base_name, payload.patch_json, template_apply_patch, summarize_template_base_diff, "template_base", "template_base_patch.json", payload.validate_only, None, None, None)
+    return apply_patch(payload.user_id, input_path, payload.template_base_name, payload.patch_json, template_apply_patch, summarize_template_base_diff, "template_base", "template_base_patch.json", payload.validate_only, None, None, None)
 
 # ---- DEVICE LIST ----
 @router.post("/run/device_list")
 def run_device_list_api(payload: RunDeviceListRequest):
     input_path = PVS_DIR / payload.store / payload.device_list_name
-    return apply_patch(payload.user_id, payload.batch_id, input_path, payload.device_list_name, None, None, None, "device_list", None, payload.validate_only, None, None, None)
+    return apply_patch(payload.user_id, input_path, payload.device_list_name, None, None, None, "device_list", None, payload.validate_only, None, None, None)

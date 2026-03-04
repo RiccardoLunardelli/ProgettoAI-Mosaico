@@ -18,6 +18,10 @@ alembic history --> mostra commit fatti
 
 ## ESEGUIRE SERVER BACKEND API
 PYTHONPATH=/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP uvicorn backend_api.server_api:app --reload
+
+## ESEGUIRE EX.PY
+PYTHONPATH=. python3 src/intermediateLayer/ex.py
+
 ------------------------------------------------------------------------------------------------------------------------------------
 ## METRICHE PER LLM
 

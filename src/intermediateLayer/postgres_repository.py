@@ -18,20 +18,20 @@ class RunRepository():
     def __init__(self, dsn: str) -> None:
         self._dsn = dsn
 
-    def save_run(self, run_report: Dict[str, Any], user_id: UUID, batch_id: UUID) -> None:
+    def save_run(self, run_report: Dict[str, Any], user_id: UUID) -> None:
         # salva run report
 
         row = extract_run_row(run_report)
         sql = """
         INSERT INTO runs (
-            run_id, batch_id, user_id, created_at, artifact_type, status,
+            run_id, user_id, created_at, artifact_type, status,
             committed, dry_run_performed,
             dictionary_version, kb_version, template_base_version, device_list_version,
             mapped_count, ambiguous_count, unmapped_count, llm_calls,
             report
         )
         VALUES (
-            %(run_id)s, %(batch_id)s, %(user_id)s, %(created_at)s, %(artifact_type)s, %(status)s,
+            %(run_id)s, %(user_id)s, %(created_at)s, %(artifact_type)s, %(status)s,
             %(committed)s, %(dry_run_performed)s,
             %(dictionary_version)s, %(kb_version)s, %(template_base_version)s, %(device_list_version)s,
             %(mapped_count)s, %(ambiguous_count)s, %(unmapped_count)s, %(llm_calls)s,
@@ -41,7 +41,6 @@ class RunRepository():
         params = {
             **row,
             "user_id": str(user_id),
-            "batch_id": str(batch_id),
             "report": psycopg2.extras.Json(run_report),
         }
 
@@ -126,16 +125,28 @@ class UsersRepository():
     def __init__(self, dsn: str) -> None:
         self._dsn = dsn
     
-    def create_user(self, user_id: UUID, email: str, name: Optional[str], created_at: datetime) -> None:
+    def create_user(self, user_id: UUID, email: str, name: Optional[str], password: str,  created_at: datetime) -> None:
         # creazione user
 
         sql = """
-        INSERT INTO users (id, email, name, created_at)
-        VALUES (%s, %s, %s, %s)
+        INSERT INTO users (id, email, name, password, created_at)
+        VALUES (%s, %s, %s, crypt(%s, gen_salt('bf')), %s)
         """
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
-                cur.execute(sql, (str(user_id), email, name, created_at))
+                cur.execute(sql, (str(user_id), email, name, password, created_at))
+
+    def verify_user_password(self, email: str, password: str) -> Optional[Dict[str, Any]]:
+        sql = """
+        SELECT id, email, name, created_at
+        FROM users
+        WHERE email = %s AND password = crypt(%s, password)
+        """
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute(sql, (email, password))
+                row = cur.fetchone()
+                return dict(row) if row else None
 
     def get_user(self, user_id: UUID) -> Dict[str, Any]:
         # ritorna user con certo id
@@ -181,89 +192,6 @@ class UsersRepository():
         # tronca la tabella degli users
 
         sql = "TRUNCATE TABLE users CASCADE"
-        with psycopg2.connect(self._dsn) as conn:
-            with conn.cursor() as cur:
-                cur.execute(sql)
-
-class BatchesRepository():
-    # classe per batches 
-
-    def __init__(self, dsn: str) -> None:
-        self._dsn = dsn
-    
-    def _validate_and_status(self, total_runs: int, completed_runs: int) -> str:
-        # valida stato rispetto a confronto tra total_runs e completed_runs
-
-        if completed_runs > total_runs:
-            raise ValueError("completed runs cannot be greater than total runs")
-        if completed_runs == total_runs:
-            return "completed"
-        return "running"
-
-    def create_batch(self, batch_id: UUID, user_id: UUID, created_at: datetime, status: str, total_runs: int, completed_runs: int) -> None:
-        # crea batch
-        
-        sql = """
-        INSERT INTO batches (id, user_id, created_at, status, total_runs, completed_runs)
-        VALUES (%s, %s, %s, %s, %s, %s)
-        """
-        params = (str(batch_id), str(user_id), created_at, status, total_runs, completed_runs)
-
-        with psycopg2.connect(self._dsn) as conn:
-            with conn.cursor() as cur:
-                cur.execute(sql, params)
-
-    def get_batch(self, batch_id: UUID) -> Dict[str, Any]:
-        # ritorna batch di un certo id
-
-        sql = "SELECT id, user_id, created_at, status, total_runs, completed_runs FROM batches WHERE id = %s"
-        with psycopg2.connect(self._dsn) as conn:
-            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
-                cur.execute(sql, (str(batch_id),))
-                row = cur.fetchone()
-                if row is None:
-                    raise KeyError(f"batch_id not found: {batch_id}")
-                return dict(row)
-    
-    def update_batch_status(self, batch_id: UUID, status: Optional[str]) -> None:
-        # aggiorna lo stato del batch
-
-        sql = "UPDATE batches SET status = %s WHERE id = %s"
-        with psycopg2.connect(self._dsn) as conn:
-            with conn.cursor() as cur:
-                cur.execute(sql, (status, str(batch_id)))
-    
-    def increment_completed_runs(self, batch_id: UUID, delta: int = 1) -> None:
-        # incrementa run completate 
-
-        with psycopg2.connect(self._dsn) as conn:
-            with conn.cursor() as cur:
-                cur.execute("SELECT total_runs, completed_runs FROM batches WHERE id = %s", (str(batch_id),))
-                row = cur.fetchone()
-                if row is None:
-                    raise KeyError(f"batch_id not found: {batch_id}")
-
-                total_runs, completed_runs = row
-                new_completed = completed_runs + delta 
-                new_status = self._validate_and_status(total_runs, new_completed)
-
-                cur.execute(
-                    "UPDATE batches SET completed_runs = %s, status = %s WHERE id = %s",
-                    (new_completed, new_status, str(batch_id)),
-                )
-
-    def delete_batch(self, batch_id: UUID) -> None:
-        # elimina batch da tabella
-
-        sql = "DELETE FROM batches WHERE id = %s"
-        with psycopg2.connect(self._dsn) as conn:
-            with conn.cursor() as cur:
-                cur.execute(sql, (str(batch_id),))
-
-    def truncate_batches(self) -> None:
-        # tronca la tabelle batches
-
-        sql = "TRUNCATE TABLE batches CASCADE"
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
                 cur.execute(sql)

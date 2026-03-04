@@ -24,7 +24,7 @@ def list_artifact(artifact, artifact_dir):
     # artifact = {template_base, dictionary, kb, template}
     if artifact != "device_list":
         files = sorted([p.name for p in artifact_dir.glob("*.json")])
-        return {f"{artifact}": files}
+        return files
     # artifact = device_list
     else:
         items = []
