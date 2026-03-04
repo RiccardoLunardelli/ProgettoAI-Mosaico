@@ -24,7 +24,7 @@ import { inputSliceReducer } from "./stores/slices/Base/inputSlice";
 import { userInfoSliceReducer } from "./stores/slices/Base/userInfoSlice";
 import { loaderSliceReducer } from "./stores/slices/Base/loaderSlice";
 
-const HomeTag = lazy(() => import("./components/Home/Home"));
+const HomePageTag = lazy(() => import("./components/Home/HomePage"));
 const CommonLayoutTag = lazy(
   () => import("./components/commonlayout/CommonLayout"),
 );
@@ -39,18 +39,12 @@ const LoginTag = lazy(
 );
 
 let childrenRouterArr: any = [
-  //Lista dispositivi
-  {
-    path: "/",
-    element: <span>test</span>,
-    errorElement: <ErrorBoundaryInnerTag />,
-  },
-  //Lista dispositivi
+  //Home
   {
     path: "/Home",
     element: (
       <Suspense fallback="">
-        <HomeTag />
+        <HomePageTag />
       </Suspense>
     ),
     errorElement: <ErrorBoundaryInnerTag />,

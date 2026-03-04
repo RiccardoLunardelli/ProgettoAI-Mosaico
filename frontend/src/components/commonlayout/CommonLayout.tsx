@@ -120,6 +120,26 @@ function CommonLayoutTag() {
         ) : (
           <></>
         )}
+
+        <div
+          id="OutletParentDiv"
+          style={{
+            minWidth: isMobile ? "100vw" : "84vw",
+            width: isMobile ? "100vw" : "84vw",
+            maxWidth: isMobile ? "100vw" : "84vw",
+
+            overflow: "auto",
+          }}
+        >
+          <Suspense
+            fallback=""
+          >
+            <ErrorBoundaryTag>
+              {/* Zona dove viene caricato il contenuto della pagina */}
+              <Outlet />
+            </ErrorBoundaryTag>
+          </Suspense>
+        </div>
       </div>
 
       <Suspense fallback="">
