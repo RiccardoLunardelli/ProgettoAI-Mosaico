@@ -41,6 +41,11 @@ const LoginTag = lazy(
 let childrenRouterArr: any = [
   //Home
   {
+    path: "/",
+    element: <span>test</span>,
+    errorElement: <ErrorBoundaryInnerTag />,
+  },//Home
+  {
     path: "/Home",
     element: (
       <Suspense fallback="">
