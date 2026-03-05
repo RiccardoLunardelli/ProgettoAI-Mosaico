@@ -12,6 +12,7 @@ import {
   OpenLoader,
 } from "../../../stores/slices/Base/loaderSlice";
 import { SetAuthHook } from "../SetAuthHook";
+import type { UserInfoInterface } from "../../../stores/slices/Base/userInfoSlice";
 
 const CheckAuthAPIHook = () => {
   const dispatch = useDispatch();
@@ -38,17 +39,18 @@ const CheckAuthAPIHook = () => {
 
       const jsonResponse = JSON.parse(response);
 
-      const isAuthenticated = jsonResponse.detail === true;
+      const isAuthenticated = jsonResponse.isvalid === true;
 
-      console.log("isAuth", isAuthenticated)
+      const infoUserObj: UserInfoInterface = {
+        id: jsonResponse.user?.sub ?? "",
+        email: jsonResponse.user?.email ?? "",
+      };
 
-      SetAuth(isAuthenticated, null);
+      SetAuth(isAuthenticated, infoUserObj);
 
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
-          result: response
-            ? ResultTypeEnum.Success
-            : ResultTypeEnum.Error,
+          result: response ? ResultTypeEnum.Success : ResultTypeEnum.Error,
           message: jsonResponse,
           messageType: FetchResponseTypeEnum.Json,
           otherResponseInfo: "",

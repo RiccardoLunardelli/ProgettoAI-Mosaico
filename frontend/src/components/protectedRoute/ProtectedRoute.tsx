@@ -1,13 +1,16 @@
 import { lazy, Suspense, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Outlet } from "react-router-dom";
 import { CheckAuthAPIHook } from "../../customHooks/API/Auth/checkAuthAPI";
-import { Loader } from 'rsuite';
-
-
+import { Loader } from "rsuite";
+import {
+  SetUserInfoSlice,
+  type UserInfoInterface,
+} from "../../stores/slices/Base/userInfoSlice";
 
 export default function ProtectedRoute() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [CheckAuthAPI] = CheckAuthAPIHook();
 
@@ -16,7 +19,7 @@ export default function ProtectedRoute() {
       authCheckSlice: {
         value: string | null;
       };
-    }) => state.authCheckSlice.value
+    }) => state.authCheckSlice.value,
   );
 
   //Durante la prima renderizzazione
@@ -62,7 +65,7 @@ export default function ProtectedRoute() {
         }}
       >
         <Suspense fallback="">
-          <Loader center/>
+          <Loader center />
         </Suspense>
       </div>
     );

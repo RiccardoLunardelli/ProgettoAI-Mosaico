@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 
 import { widthMaxMobile } from "../../commons/commonsVariables.tsx";
+import type { UserInfoInterface } from "../../stores/slices/Base/userInfoSlice.ts";
 
 const ErrorBoundaryTag = lazy(() => import("../error/ErrorBoundary.tsx"));
 
@@ -19,6 +20,16 @@ function CommonLayoutTag() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+
+  const userInfoSlice: {
+    value: UserInfoInterface;
+  } = useSelector(
+    (state: {
+      userInfoSlice: {
+        value: UserInfoInterface;
+      };
+    }) => state.userInfoSlice,
+  );
 
   //Usate per indicare sia siamo da mobile, tablet o pc
   const isMobile = useMediaQuery({ maxWidth: widthMaxMobile });
@@ -78,25 +89,21 @@ function CommonLayoutTag() {
                   cursor: "pointer",
 
                   display: "flex",
+                  alignItems: "center",
                   margin: "7px 10px",
                 }}
                 onClick={HandleLogoClick}
                 role="none"
               >
-                <img
-                  alt="Logo"
-                  src=""
-                  loading="lazy"
-                  style={{
-                    //minWidth: "120px",
-                    //width: "120px",
-                    //maxWidth: "120px",
-
-                    minHeight: "30px",
-                    height: "30px",
-                    maxHeight: "30px",
-                  }}
-                />
+                <span
+                  className="material-symbols-outlined"
+                  style={{ color: "var(--white)", fontSize: "30px" }}
+                >
+                  account_circle
+                </span>
+                <span style={{ color: "var(--white)", fontSize: "10px", marginLeft: "10px" }}>
+                  {userInfoSlice?.value?.email ?? ""}
+                </span>
               </div>
             </div>
             <Suspense>
@@ -131,9 +138,7 @@ function CommonLayoutTag() {
             overflow: "auto",
           }}
         >
-          <Suspense
-            fallback=""
-          >
+          <Suspense fallback="">
             <ErrorBoundaryTag>
               {/* Zona dove viene caricato il contenuto della pagina */}
               <Outlet />

@@ -11,7 +11,7 @@ import {
 import {
   CloseLoader,
 } from "../../../stores/slices/Base/loaderSlice";
-import { SetAuthHook } from "../../SetAuthHook";
+import { SetAuthHook } from "../SetAuthHook";
 
 const LogoutAPIHook = () => {
   const dispatch = useDispatch();
@@ -23,14 +23,16 @@ const LogoutAPIHook = () => {
     showLoader?: boolean;
   }) => {
     try {
-      await fetch(apiDomainString + "/UserStateLogout", {
+      await fetch(apiDomainString + "/logout", {
         method: "POST",
         headers: {
-          "Content-Type": "Login Manager",
+          "Content-Type": "application/json",
         },
         credentials: "include",
-        body: "UserStateLogout"
       });
+
+      SetAuth(false);
+      
     } catch (err) {
       console.error("CheckAuth error:", err);
 

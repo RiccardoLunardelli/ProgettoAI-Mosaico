@@ -34,10 +34,6 @@ const LoginAPIHook = () => {
     }
 
     try {
-      /* =========================
-         1️⃣ BEGIN LOGIN → OTTENIAMO IL CODE
-      ========================= */
-
       const apiCall = await fetch(apiDomainString + "/login", {
         method: FetchMethodEnum.Post,
         headers: {
@@ -51,6 +47,7 @@ const LoginAPIHook = () => {
 
       const responseOk: boolean =
         apiCall.status == 200;
+
 
       //Controllo risposta
       if (!responseOk) {

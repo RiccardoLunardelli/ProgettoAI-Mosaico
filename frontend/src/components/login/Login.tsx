@@ -9,6 +9,7 @@ import { ResultTypeEnum } from "../../commons/commonsEnums.tsx";
 import { useMediaQuery } from "react-responsive";
 import { widthMaxMobile } from "../../commons/commonsVariables.tsx";
 import { SetInputSlice } from "../../stores/slices/Base/inputSlice.ts";
+import { SetUserInfoSlice, type UserInfoInterface } from "../../stores/slices/Base/userInfoSlice.ts";
 
 const BasicButtonTag = lazy(() => import("../button/BasicButtonGeneric.tsx"));
 
@@ -113,6 +114,11 @@ function LoginTag() {
           return;
         }
 
+        console.log("infoUser", returnValue?.message)
+
+  
+
+        // dispatch(SetUserInfoSlice())
         //Se si è loggato
         navigate("/");
       },
@@ -210,7 +216,7 @@ function LoginTag() {
             >
               <TextInputTitleTag
                 idInput="Login-Email"
-                title={t("Login-3")}
+                title={t("Email")}
               />
             </div>
             <div
