@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -9,12 +9,20 @@ import { ResultTypeEnum } from "../../commons/commonsEnums.tsx";
 import { useMediaQuery } from "react-responsive";
 import { widthMaxMobile } from "../../commons/commonsVariables.tsx";
 import { SetInputSlice } from "../../stores/slices/Base/inputSlice.ts";
-import { SetUserInfoSlice, type UserInfoInterface } from "../../stores/slices/Base/userInfoSlice.ts";
 
 const BasicButtonTag = lazy(() => import("../button/BasicButtonGeneric.tsx"));
 
 const TextInputTitleTag = lazy(() => import("../input/TextInputTitle"));
 const PasswordInputTitleTag = lazy(() => import("../input/PasswordInputTitle"));
+
+//Usata per prendersi i valori nello Slice degli input
+const inputIdList = [
+  "Login-Email",
+  "Login-Password",
+  "Register-Email",
+  "Register-Password",
+  "Register-Name",
+];
 
 //Pagina Login
 function LoginTag() {
@@ -24,42 +32,35 @@ function LoginTag() {
 
   const [LoginAPI] = LoginAPIHook();
 
-  //Metodo per avere un oggetto con i valori degli input
-  const inputSliceValue = useSelector(
-    (state: {
-      inputSlice: {
-        value: any;
-      };
-    }) => {
-      //Per ogni chiave dello Slice degli input
-      return Object.keys(state.inputSlice.value).reduce(
-        function (
-          accumulator: {
-            Email: string;
-            Password: string;
-          },
-          currentValue: string
-        ) {
-          //Controllo se questa chiave mi serve
-          if (
-            (currentValue == "Login-Email" ||
-              currentValue == "Login-Password") &&
-            currentValue.split("-").length > 1
-          ) {
-            //Salvo il valore
-            (accumulator as any)[currentValue.split("-")[1]] =
-              state.inputSlice.value[currentValue];
-          }
-          return accumulator;
-        },
-        {
-          Email: "",
-          Password: "",
-        }
-      );
-    }
-  );
+  const [registerMode, SetRegisterMode] = useState(false)
 
+  //Metodo per avere un oggetto con i valori degli input
+  const inputSliceValue: {
+    "Login-Email": string;
+    "Login-Password": string;
+    "Register-Email": string;
+    "Register-Password": string;
+    "Register-Name": string;
+  } = useSelector((state: any) => {
+    //Per ogni chiave dello Slice degli input
+    return Object.keys(state.inputSlice.value).reduce(
+      function (accumulator: any, currentValue: any) {
+        //Controllo se questa chiave mi serve
+        if (inputIdList.includes(currentValue)) {
+          //Se passa tutti i controlli, salvo il valore
+          accumulator[currentValue] = state.inputSlice.value[currentValue];
+        }
+        return accumulator;
+      },
+      {
+        "Login-Email": "",
+        "Login-Password": "",
+        "Register-Email": "",
+        "Register-Password": "",
+        "Register-Name": "",
+      },
+    );
+  });
 
   //Usate per indicare sia siamo da mobile, tablet o pc
   const isMobile = useMediaQuery({ maxWidth: widthMaxMobile });
@@ -69,14 +70,31 @@ function LoginTag() {
       SetInputSlice({
         id: "Login-Email",
         value: "",
-      })
+      }),
     );
     dispatch(
       SetInputSlice({
         id: "Login-Password",
         value: "",
-      })
+      }),
     );
+    dispatch(
+      SetInputSlice({
+        id: "Register-Name",
+        value: "",
+      }),
+    );dispatch(
+      SetInputSlice({
+        id: "Register-Email",
+        value: "",
+      }),
+    );dispatch(
+      SetInputSlice({
+        id: "Register-Password",
+        value: "",
+      }),
+    );
+    
   };
 
   useEffect(() => {
@@ -86,12 +104,12 @@ function LoginTag() {
   //Metodo eseguito al click del bottone "Login"
   const HandleLogInClick = () => {
     //Controllo nome vuoto
-    if (inputSliceValue.Email.replaceAll(" ", "") == "") {
+    if (inputSliceValue["Login-Email"].replaceAll(" ", "") == "") {
       toast.error(t("VoidEmailField"));
       return;
     }
     //Controllo password vuoto
-    if (inputSliceValue.Password.replaceAll(" ", "") == "") {
+    if (inputSliceValue["Login-Password"].replaceAll(" ", "") == "") {
       toast.error(t("VoidPasswordField"));
       return;
     }
@@ -99,8 +117,8 @@ function LoginTag() {
     //CHIAMATA API
     LoginAPI({
       data: {
-        email: inputSliceValue.Email,
-        password: inputSliceValue.Password,
+        email: inputSliceValue["Login-Email"],
+        password: inputSliceValue["Login-Password"],
       },
       showLoader: true,
       EndCallback(returnValue) {
@@ -114,15 +132,31 @@ function LoginTag() {
           return;
         }
 
-        console.log("infoUser", returnValue?.message)
-
-  
-
-        // dispatch(SetUserInfoSlice())
         //Se si è loggato
         navigate("/");
       },
     });
+  };
+  
+  //Metodo eseguito al click del bottone "Login"
+  const HandleRegisterClick = () => {
+    //Controllo nome vuoto
+    if (inputSliceValue["Register-Name"].replaceAll(" ", "") == "") {
+      toast.error(t("VoidNameField"));
+      return;
+    }
+    //Controllo email vuoto
+    if (inputSliceValue["Register-Email"].replaceAll(" ", "") == "") {
+      toast.error(t("VoidEmailField"));
+      return;
+    }//Controllo password vuoto
+    if (inputSliceValue["Register-Password"].replaceAll(" ", "") == "") {
+      toast.error(t("VoidPasswordField"));
+      return;
+    }
+
+    //CHIAMATA API
+    //TODO CHIMATA REGISTER
   };
 
   return (
@@ -170,94 +204,90 @@ function LoginTag() {
           marginTop: isMobile ? "10%" : "1.5%",
         }}
       >
-        
+        <div
+          style={{
+            minWidth: "90%",
+            width: "90%",
+            maxWidth: "90%",
+
+            minHeight: "90%",
+            height: "90%",
+            maxHeight: "90%",
+
+            padding: "5% 5%",
+
+            display: "flex",
+
+            flexDirection: "column",
+          }}
+          role="none"
+          onKeyUp={(ev: any) => {
+            //Controlla se può accettare o no il tasto invio
+            if (
+              inputSliceValue["Login-Email"].replaceAll(" ", "") == "" ||
+              inputSliceValue["Login-Password"].replaceAll(" ", "") == ""
+            ) {
+              return;
+            }
+            //Controlla che ci sia la proprietà keyCode
+            if (!Object.hasOwn(ev, "keyCode")) {
+              return;
+            }
+            //Controlla che il keyCode sia l'invio
+            if (ev.keyCode != 13) {
+              return;
+            }
+            //Esegue l'azione del click del bottone "Login"
+            if(!registerMode) {
+              HandleLogInClick();
+            } else {
+              HandleRegisterClick();
+            }
+            
+          }}
+        >
           <div
             style={{
-              minWidth: "90%",
-              width: "90%",
-              maxWidth: "90%",
-
-              minHeight: "90%",
-              height: "90%",
-              maxHeight: "90%",
-
-              padding: "5% 5%",
-
-              display: "flex",
-
-              flexDirection: "column",
-            }}
-            role="none"
-            onKeyUp={(ev: any) => {
-              //Controlla se può accettare o no il tasto invio
-              if (
-                inputSliceValue.Email.replaceAll(" ", "") == "" ||
-                inputSliceValue.Password.replaceAll(" ", "") == ""
-              ) {
-                return;
-              }
-              //Controlla che ci sia la proprietà keyCode
-              if (!Object.hasOwn(ev, "keyCode")) {
-                return;
-              }
-              //Controlla che il keyCode sia l'invio
-              if (ev.keyCode != 13) {
-                return;
-              }
-              //Esegue l'azione del click del bottone "Login"
-              HandleLogInClick();
+              marginTop: "5%",
+              color: "var(--mainTextColor)",
             }}
           >
-            <div
-              style={{
-                marginTop: "5%",
-                color: "var(--mainTextColor)",
-              }}
-            >
-              <TextInputTitleTag
-                idInput="Login-Email"
-                title={t("Email")}
-              />
-            </div>
-            <div
-              style={{
-                marginTop: isMobile ? "10%" : "5%",
-                color: "var(--mainTextColor)",
-              }}
-            >
-              <PasswordInputTitleTag
-                idInput={"Login-Password"}
-                title={t("Password")}
-              />
-            </div>
+            <TextInputTitleTag idInput="Login-Email" title={t("Email")} />
+          </div>
+          <div
+            style={{
+              marginTop: isMobile ? "10%" : "5%",
+              color: "var(--mainTextColor)",
+            }}
+          >
+            <PasswordInputTitleTag
+              idInput={"Login-Password"}
+              title={t("Password")}
+            />
+          </div>
 
-            <div
-              style={{
-                marginTop: isMobile ? "10%" : "5%",
+          <div
+            style={{
+              marginTop: isMobile ? "10%" : "5%",
 
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <div
-                id="Login-LoginButton"
-                role="none"
-                onClick={HandleLogInClick}
-              >
-                <Suspense fallback="">
-                  <BasicButtonTag
-                    textToSee="Login"
-                    disabledButton={
-                      inputSliceValue.Email.replaceAll(" ", "") == "" ||
-                      inputSliceValue.Password.replaceAll(" ", "") == ""
-                    }
-                    isFill={true}
-                  />
-                </Suspense>
-              </div>
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <div id="Login-LoginButton" role="none" onClick={HandleLogInClick}>
+              <Suspense fallback="">
+                <BasicButtonTag
+                  textToSee="Login"
+                  disabledButton={
+                    inputSliceValue["Login-Email"].replaceAll(" ", "") == "" ||
+                    inputSliceValue["Login-Password"].replaceAll(" ", "") == ""
+                  }
+                  isFill={true}
+                />
+              </Suspense>
             </div>
           </div>
-        
+        </div>
       </div>
     </div>
   );

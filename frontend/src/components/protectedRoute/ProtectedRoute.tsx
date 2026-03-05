@@ -35,7 +35,7 @@ export default function ProtectedRoute() {
     //Controlla se non è loggato
     if (authCheck == "") {
       //Naviga al login
-      navigate("/login");
+      navigate("/Login");
 
       //Si ferma qua
       return;

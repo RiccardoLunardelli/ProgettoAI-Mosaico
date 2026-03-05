@@ -1,6 +1,6 @@
 import json 
 from typing import Any, Dict 
-from ..parser.normalizer import load_json
+from src.parser.normalizer import load_json
 
 from mcp_server.core import MCPContext
 

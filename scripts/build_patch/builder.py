@@ -1,7 +1,7 @@
 from datetime import datetime, timezone, timedelta
 import json
 
-from src.validator.validator import load_json
+from src.parser.normalizer import load_json
 from mcp_server.server import dictionary_bulk_suggest
 
 TIMEZONE = timezone(timedelta(hours=1))

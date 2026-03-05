@@ -20,8 +20,10 @@ import { authCheckSliceReducer } from "./stores/slices/Auth/authCheckSlice";
 import { inputSliceReducer } from "./stores/slices/Base/inputSlice";
 import { userInfoSliceReducer } from "./stores/slices/Base/userInfoSlice";
 import { loaderSliceReducer } from "./stores/slices/Base/loaderSlice";
+import { runsListSliceReducer } from "./stores/slices/Base/runsListSlice";
 
 const HomePageTag = lazy(() => import("./components/Home/HomePage"));
+const RunsListTag = lazy(() => import("./components/listRuns/RunsList"));
 const CommonLayoutTag = lazy(
   () => import("./components/commonlayout/CommonLayout"),
 );
@@ -49,6 +51,15 @@ let childrenRouterArr: any = [
     element: (
       <Suspense fallback="">
         <HomePageTag />
+      </Suspense>
+    ),
+    errorElement: <ErrorBoundaryInnerTag />,
+  },
+  {
+    path: "/Runs",
+    element: (
+      <Suspense fallback="">
+        <RunsListTag />
       </Suspense>
     ),
     errorElement: <ErrorBoundaryInnerTag />,
@@ -96,7 +107,7 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/login",
+        path: "/Login",
         element: (
           <Suspense fallback="">
             <ErrorBoundaryTag>
@@ -120,6 +131,7 @@ function SecureRoot(): JSX.Element {
       loaderSlice: loaderSliceReducer,
       inputSlice: inputSliceReducer,
       userInfoSlice: userInfoSliceReducer,
+      runsListSlice: runsListSliceReducer
     },
     devTools:
       (import.meta.env.VITE_DEBUG_DEVTOOLS?.toString()?.toLowerCase() ?? "") ==

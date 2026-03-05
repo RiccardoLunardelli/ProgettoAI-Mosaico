@@ -5,6 +5,7 @@ import type {
   ResponseMessageInterface,
 } from "../../../commons/commonsInterfaces";
 import {
+  FetchMethodEnum,
   FetchResponseTypeEnum,
   ResultTypeEnum,
 } from "../../../commons/commonsEnums";
@@ -24,7 +25,7 @@ const LogoutAPIHook = () => {
   }) => {
     try {
       await fetch(apiDomainString + "/logout", {
-        method: "POST",
+        method: FetchMethodEnum.Post,
         headers: {
           "Content-Type": "application/json",
         },

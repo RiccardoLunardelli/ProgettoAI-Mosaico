@@ -11,14 +11,14 @@ from backend_api.schemas.runs import (
 from backend_api.utils.deps import get_current_user
 
 from src.intermediateLayer.postgres_repository import RunRepository
-from src.validator.validator import load_json
 
 from scripts.orchestrator import (
     start_template_run, llm_propose_for_run, template_run,
     run_patch, ARTIFACTS,
     summarize_dictionary_diff, summarize_kb_diff, summarize_template_base_diff,
     dictionary_upsert, kb_upsert_mapping, template_apply_patch, run_device_list,
-    build_dictionary_suggestions_from_run_report, build_dictionary_patch_from_run_report
+    build_dictionary_suggestions_from_run_report, build_dictionary_patch_from_run_report,
+    load_json
 )
 
 router = APIRouter()
@@ -87,7 +87,7 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
                     "suggestions_path": str(suggestions_path)
                 }
 
-            elif mode == "manual":
+            elif mode == "manual": 
                 if manual_mode != "patch":
                     raise HTTPException(status_code=400, detail="manual mode must be patch")
                 if not patch_json:
@@ -104,7 +104,8 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
 
                 return {
                     "status": "ok",
-                    "report_path": str(report_path)
+                    "report_path": str(report_path),
+                    "run_id": report.get("run_id")
                 }
 
             else:
@@ -180,19 +181,19 @@ def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_cu
 
     return result
 
-# ---- DICTIONARY ----
+#----DICTIONARY----
 @router.post("/run/dictionary")
 def run_dictionary(payload: RunDictionaryRequest, user = Depends(get_current_user)):
     input_path = DICTIONARIES_DIR / payload.dictionary_name
     return apply_patch(user["sub"], input_path, payload.dictionary_name, payload.patch_json, dictionary_upsert, summarize_dictionary_diff, "dictionary", "dictionary_patch.json", payload.validate_only, payload.run_id, payload.mode, payload.manual_mode) 
 
-# ---- KB ----
+#----KB----
 @router.post("/run/kb")
 def run_kb(payload: RunKbRequest, user = Depends(get_current_user)):
     input_path = KB_DIR / payload.kb_name
     return  apply_patch(user["sub"], input_path, payload.kb_name, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, "kb", "kb_patch.json", payload.validate_only, None, None, None)
 
-# ---- TEMPLATE BASE ----
+#----TEMPLATE BASE----
 @router.post("/run/template_base")
 def run_template_base(payload: RunTemplateBaseRequest, user = Depends(get_current_user)):
     input_path = TEMPLATE_BASE_DIR / payload.template_base_name

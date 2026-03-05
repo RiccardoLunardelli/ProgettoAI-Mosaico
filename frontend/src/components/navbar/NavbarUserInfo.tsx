@@ -69,7 +69,7 @@ function NavbarUserInfoTag() {
             fontSize: "14px",
             transition: "background 0.2s",
           }}
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/Runs")}
         >
           Le mie run
         </DropdownMenu.Item>

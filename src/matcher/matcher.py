@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional
 import argparse
 from rapidfuzz import fuzz
 from pathlib import Path
-from ..parser.normalizer import load_json
+from src.parser.normalizer import load_json
 
 FUZZY_T_HIGH = 0.90
 FUZZY_T_LOW = 0.80

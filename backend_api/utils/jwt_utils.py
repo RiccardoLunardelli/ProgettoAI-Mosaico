@@ -25,7 +25,7 @@ def jwt_token(user_id: str | None, email: str | None, action, user: Dict[str, An
     return resp
 
 def create_token(user_id: str, email: str) -> str:
-    # crea token jwt
+    # token jwt
 
     now = datetime.now(timezone(timedelta(hours=1)))
     payload = {

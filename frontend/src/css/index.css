@@ -103,6 +103,21 @@ a {
   box-shadow: none !important;
 }
 
-.HoverBoxShadow:hover {
-  box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.15);
+
+
+
+.HoverTransform {
+  border: 1px solid #e5e7eb;
+  background-color: var(--white);
+  transition: all 0.15s ease;
+}
+
+.HoverTransform:hover {
+  border: 1px solid #0055ff;
+  background-color: rgb(248, 245, 245);
+}
+
+.RunSelected {
+  border: 1px solid #477dda;
+  background-color: #e8f0ff;
 }
