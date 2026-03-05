@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { lazy } from "react";
+import Logo from "../../../public/logo/unnamed-Photoroom.png";
 
 const NavBarLogOut = lazy(() => import("./NavBarLogOut"));
 const NavbarUserInfoTag = lazy(() => import("./NavbarUserInfo"));
@@ -34,7 +35,7 @@ function TopNavbar() {
           fontWeight: 700,
           color: "#477dda",
           cursor: "pointer",
-          userSelect: "none"
+          userSelect: "none",
         }}
         onClick={() => navigate("/")}
       >

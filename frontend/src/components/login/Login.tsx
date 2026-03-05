@@ -9,6 +9,8 @@ import { ResultTypeEnum } from "../../commons/commonsEnums.tsx";
 import { useMediaQuery } from "react-responsive";
 import { widthMaxMobile } from "../../commons/commonsVariables.tsx";
 import { SetInputSlice } from "../../stores/slices/Base/inputSlice.ts";
+import { RegisterAPIHook } from "../../customHooks/API/Auth/registerAPI.ts";
+import Logo from "../../../public/logo/unnamed-Photoroom.png";
 
 const BasicButtonTag = lazy(() => import("../button/BasicButtonGeneric.tsx"));
 
@@ -24,6 +26,9 @@ const inputIdList = [
   "Register-Name",
 ];
 
+// Regex per email valida
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 //Pagina Login
 function LoginTag() {
   const { t } = useTranslation();
@@ -31,8 +36,9 @@ function LoginTag() {
   const navigate = useNavigate();
 
   const [LoginAPI] = LoginAPIHook();
+  const [RegisterAPI] = RegisterAPIHook();
 
-  const [registerMode, SetRegisterMode] = useState(true);
+  const [registerMode, SetRegisterMode] = useState(false);
 
   //Metodo per avere un oggetto con i valori degli input
   const inputSliceValue: {
@@ -100,15 +106,24 @@ function LoginTag() {
 
   useEffect(() => {
     ResetInputValue();
-  }, []);
+  }, [registerMode]);
 
   //Metodo eseguito al click del bottone "Login"
   const HandleLogInClick = () => {
     //Controllo nome vuoto
-    if (inputSliceValue["Login-Email"].replaceAll(" ", "") == "") {
-      toast.error(t("VoidEmailField"));
+    if (
+      !inputSliceValue["Login-Email"]?.replaceAll(" ", "") ||
+      !emailRegex.test(inputSliceValue["Login-Email"].replaceAll(" ", ""))
+    ) {
+      toast.error(
+        !inputSliceValue["Login-Email"]?.replaceAll(" ", "")
+          ? t("VoidEmailField")
+          : t("InvalidEmailField"),
+      );
       return;
     }
+
+    // Email valida → prosegui con il submit
     //Controllo password vuoto
     if (inputSliceValue["Login-Password"].replaceAll(" ", "") == "") {
       toast.error(t("VoidPasswordField"));
@@ -147,17 +162,48 @@ function LoginTag() {
       return;
     }
     //Controllo email vuoto
-    if (inputSliceValue["Register-Email"].replaceAll(" ", "") == "") {
-      toast.error(t("VoidEmailField"));
+    if (
+      !inputSliceValue["Register-Email"]?.replaceAll(" ", "") ||
+      !emailRegex.test(inputSliceValue["Register-Email"].replaceAll(" ", ""))
+    ) {
+      toast.error(
+        !inputSliceValue["Register-Email"]?.replaceAll(" ", "")
+          ? t("VoidEmailField")
+          : t("InvalidEmailField"),
+      );
       return;
-    } //Controllo password vuoto
+    }
+
+    //Controllo password vuoto
     if (inputSliceValue["Register-Password"].replaceAll(" ", "") == "") {
       toast.error(t("VoidPasswordField"));
       return;
     }
 
     //CHIAMATA API
-    //TODO CHIMATA REGISTER
+    //CHIAMATA API
+    RegisterAPI({
+      data: {
+        name: inputSliceValue["Register-Name"],
+        email: inputSliceValue["Register-Email"],
+        password: inputSliceValue["Register-Password"],
+      },
+      showLoader: true,
+      EndCallback(returnValue) {
+        console.debug(returnValue);
+        //Controllo di sicurezza
+        if (
+          (returnValue?.result ?? ResultTypeEnum.Error) == ResultTypeEnum.Error
+        ) {
+          toast.error(t("Login-Error"));
+
+          return;
+        }
+
+        //Se si è loggato
+        navigate("/");
+      },
+    });
   };
 
   return (
@@ -190,9 +236,8 @@ function LoginTag() {
       >
         <img
           alt="Logo"
-          style={{
-            height: "75px",
-          }}
+          src={Logo}
+           style={{ width: "300px", height: "auto", userSelect: "none" }}
         />
       </div>
       <div
@@ -202,7 +247,6 @@ function LoginTag() {
 
           minHeight: isMobile ? "60%" : "40%",
 
-          marginTop: isMobile ? "10%" : "1.5%",
         }}
       >
         <div
@@ -309,6 +353,9 @@ function LoginTag() {
                           " ",
                           "",
                         ) === "" ||
+                        !emailRegex.test(
+                          inputSliceValue["Register-Email"].replaceAll(" ", ""),
+                        ) ||
                         inputSliceValue["Register-Password"].replaceAll(
                           " ",
                           "",
@@ -317,6 +364,9 @@ function LoginTag() {
                           ""
                       : inputSliceValue["Login-Email"].replaceAll(" ", "") ===
                           "" ||
+                        !emailRegex.test(
+                          inputSliceValue["Login-Email"].replaceAll(" ", ""),
+                        ) ||
                         inputSliceValue["Login-Password"].replaceAll(
                           " ",
                           "",
@@ -337,12 +387,13 @@ function LoginTag() {
                 fontWeight: 500,
                 fontSize: "13px",
                 userSelect: "none",
+                marginLeft: "5px",
               }}
               onClick={() => SetRegisterMode(!registerMode)}
             >
               {registerMode
-                ? (t("Registrati") ?? "Hai già un account? Login")
-                : (t("NoAccountYet") ?? "Non hai un account? Register")}
+                ? t("Hai già un account? Loggati")
+                : t("Non hai un account? Registrati")}
             </div>
           </div>
         </div>
