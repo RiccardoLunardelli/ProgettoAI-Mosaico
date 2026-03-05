@@ -49,8 +49,7 @@ def logout(user = Depends(get_current_user)):
 
 @router.get("/checkauth")
 def checkAuth(user = Depends(get_current_user)):
-    # controlla token
-    return {"detail": True}
+    return {"user": user, "isvalid": True}
 
 
     

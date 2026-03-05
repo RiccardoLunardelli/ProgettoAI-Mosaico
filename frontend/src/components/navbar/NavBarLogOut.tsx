@@ -17,10 +17,10 @@ function NavBarLogOut() {
       }}
       onClick={HandleLogOutOnClick}
     >
-      <span className="material-symbols-outlined" style={{ fontSize: "26px" }}>
+      <span className="material-symbols-outlined" style={{ fontSize: "20px", color: "var(--black)" }}>
         logout
       </span>
-      <span style={{ marginLeft: "" }}>Sign Out</span>
+      <span style={{ marginLeft: "5px", fontSize: "13px", color: "var(--black)" }}>Sign Out</span>
     </div>
   );
 }

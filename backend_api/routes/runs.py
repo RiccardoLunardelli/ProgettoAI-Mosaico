@@ -137,7 +137,7 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
 #-----RUNS LIST----
 @router.get("/runs/ids")
 def get_run_ids(user = Depends(get_current_user)):
-    return {"run_ids": runClass.get_all_run_ids()}
+    return {"run_ids": runClass.get_run_id_by_user_id(user["sub"])}
 
 @router.get("/run_id/{run_id}")
 def get_run(run_id: str, user = Depends(get_current_user)):

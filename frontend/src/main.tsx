@@ -31,17 +31,19 @@ const MasterCommonLayoutTag = lazy(
 const ProtectedRoute = lazy(
   () => import("./components/protectedRoute/ProtectedRoute"),
 );
-const LoginTag = lazy(
-  () => import("./components/login/Login"),
-);
+const LoginTag = lazy(() => import("./components/login/Login"));
 
 let childrenRouterArr: any = [
   //Home
   {
     path: "/",
-    element: <span>test</span>,
+    element: (
+      <Suspense fallback="">
+        <HomePageTag />
+      </Suspense>
+    ),
     errorElement: <ErrorBoundaryInnerTag />,
-  },//Home
+  }, //Home
   {
     path: "/Home",
     element: (
@@ -122,8 +124,7 @@ function SecureRoot(): JSX.Element {
     devTools:
       (import.meta.env.VITE_DEBUG_DEVTOOLS?.toString()?.toLowerCase() ?? "") ==
       "true",
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware()
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
   });
 
   return (
