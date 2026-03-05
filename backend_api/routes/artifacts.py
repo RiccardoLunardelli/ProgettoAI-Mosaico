@@ -33,9 +33,9 @@ def list_artifact(artifact, artifact_dir):
         for store_dir in sorted(artifact_dir.iterdir()):
             if not store_dir.is_dir():
                 continue
-            dl = store_dir / "device_list.json"
-            if dl.exists():
-                items.append({"store": store_dir.name, "path": str(dl.name)})
+            files = list(store_dir.glob("*.json"))
+            if files:
+                items.append({"store": store_dir.name, "path":  [f.name for f in files] })
         return {"device_list": items}
 
 def get_file_of_artifact(name: str | None, store: str | None, dl: str | None,  artifact, artifact_dir):

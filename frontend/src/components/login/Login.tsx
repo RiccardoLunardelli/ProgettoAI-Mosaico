@@ -32,7 +32,7 @@ function LoginTag() {
 
   const [LoginAPI] = LoginAPIHook();
 
-  const [registerMode, SetRegisterMode] = useState(false)
+  const [registerMode, SetRegisterMode] = useState(true);
 
   //Metodo per avere un oggetto con i valori degli input
   const inputSliceValue: {
@@ -83,18 +83,19 @@ function LoginTag() {
         id: "Register-Name",
         value: "",
       }),
-    );dispatch(
+    );
+    dispatch(
       SetInputSlice({
         id: "Register-Email",
         value: "",
       }),
-    );dispatch(
+    );
+    dispatch(
       SetInputSlice({
         id: "Register-Password",
         value: "",
       }),
     );
-    
   };
 
   useEffect(() => {
@@ -137,7 +138,7 @@ function LoginTag() {
       },
     });
   };
-  
+
   //Metodo eseguito al click del bottone "Login"
   const HandleRegisterClick = () => {
     //Controllo nome vuoto
@@ -149,7 +150,7 @@ function LoginTag() {
     if (inputSliceValue["Register-Email"].replaceAll(" ", "") == "") {
       toast.error(t("VoidEmailField"));
       return;
-    }//Controllo password vuoto
+    } //Controllo password vuoto
     if (inputSliceValue["Register-Password"].replaceAll(" ", "") == "") {
       toast.error(t("VoidPasswordField"));
       return;
@@ -238,21 +239,35 @@ function LoginTag() {
               return;
             }
             //Esegue l'azione del click del bottone "Login"
-            if(!registerMode) {
+            if (!registerMode) {
               HandleLogInClick();
             } else {
               HandleRegisterClick();
             }
-            
           }}
         >
+          {registerMode && (
+            <>
+              <div
+                style={{
+                  marginTop: "5%",
+                  color: "var(--mainTextColor)",
+                }}
+              >
+                <TextInputTitleTag idInput="Register-Name" title={t("Name")} />
+              </div>
+            </>
+          )}
           <div
             style={{
               marginTop: "5%",
               color: "var(--mainTextColor)",
             }}
           >
-            <TextInputTitleTag idInput="Login-Email" title={t("Email")} />
+            <TextInputTitleTag
+              idInput={registerMode ? "Register-Email" : "Login-Email"}
+              title={t("Email")}
+            />
           </div>
           <div
             style={{
@@ -261,7 +276,7 @@ function LoginTag() {
             }}
           >
             <PasswordInputTitleTag
-              idInput={"Login-Password"}
+              idInput={registerMode ? "Register-Password" : "Login-Password"}
               title={t("Password")}
             />
           </div>
@@ -274,17 +289,60 @@ function LoginTag() {
               justifyContent: "center",
             }}
           >
-            <div id="Login-LoginButton" role="none" onClick={HandleLogInClick}>
+            <div
+              id="Login-LoginButton"
+              role="none"
+              onClick={() => {
+                if (!registerMode) {
+                  HandleLogInClick();
+                } else {
+                  HandleRegisterClick();
+                }
+              }}
+            >
               <Suspense fallback="">
                 <BasicButtonTag
-                  textToSee="Login"
+                  textToSee={registerMode ? "Register" : "Login"}
                   disabledButton={
-                    inputSliceValue["Login-Email"].replaceAll(" ", "") == "" ||
-                    inputSliceValue["Login-Password"].replaceAll(" ", "") == ""
+                    registerMode
+                      ? inputSliceValue["Register-Email"].replaceAll(
+                          " ",
+                          "",
+                        ) === "" ||
+                        inputSliceValue["Register-Password"].replaceAll(
+                          " ",
+                          "",
+                        ) === "" ||
+                        inputSliceValue["Register-Name"].replaceAll(" ", "") ===
+                          ""
+                      : inputSliceValue["Login-Email"].replaceAll(" ", "") ===
+                          "" ||
+                        inputSliceValue["Login-Password"].replaceAll(
+                          " ",
+                          "",
+                        ) === ""
                   }
                   isFill={true}
                 />
               </Suspense>
+            </div>
+            {/* Toggle Login/Register */}
+            <div
+              style={{
+                marginTop: isMobile ? "5%" : "3%",
+                display: "flex",
+                justifyContent: "center",
+                cursor: "pointer",
+                color: "#477dda",
+                fontWeight: 500,
+                fontSize: "13px",
+                userSelect: "none",
+              }}
+              onClick={() => SetRegisterMode(!registerMode)}
+            >
+              {registerMode
+                ? (t("Registrati") ?? "Hai già un account? Login")
+                : (t("NoAccountYet") ?? "Non hai un account? Register")}
             </div>
           </div>
         </div>
