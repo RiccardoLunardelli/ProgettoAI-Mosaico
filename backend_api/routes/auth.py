@@ -1,39 +1,16 @@
-from fastapi import APIRouter, HTTPException, Response, Depends, Request
-from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, HTTPException, Response, Depends
 from uuid import uuid4
 from datetime import datetime, timezone, timedelta
-import json
-from typing import Any, Dict
 
 from backend_api.schemas.auth import SignupRequest, LoginRequest
 from src.intermediateLayer.postgres_repository import UsersRepository
-from backend_api.utils.jwt_utils import create_token
+from backend_api.utils.jwt_utils import jwt_token
 from backend_api.utils.deps import get_current_user
 
 router = APIRouter()
 
 dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
 userClass = UsersRepository(dsn)
-
-def jwt_token(user_id: str | None, email: str | None, action, user: Dict[str, Any] | None):
-
-    uid = user_id or (user["id"] if user else None)
-    token = create_token(str(uid), email)
-
-    payload = {"action": action}
-    if user:
-        payload["user"] = jsonable_encoder(user)
-
-    resp = JSONResponse(content=payload)
-    resp.set_cookie(key="token", value=token, httponly=True, samesite="lax", secure=False, max_age=60 * 60 * 24)
-    return resp
-
-def middleware(request):
-    token = request.cookies.get("token")
-    decoded = get_current_user(token)
-    if decoded:
-        return {"detail": True}
 
 @router.post("/signup")
 def signup(payload: SignupRequest):
@@ -65,7 +42,7 @@ def login(payload: LoginRequest):
     return token
 
 @router.post("/logout")
-def logout():
+def logout(user = Depends(get_current_user)):
     resp = Response(content='{"status":"ok"}', media_type="application/json")
     resp.delete_cookie("token")
     return resp

@@ -199,6 +199,7 @@ def run_template_base(payload: RunTemplateBaseRequest, user = Depends(get_curren
     return apply_patch(user["sub"], input_path, payload.template_base_name, payload.patch_json, template_apply_patch, summarize_template_base_diff, "template_base", "template_base_patch.json", payload.validate_only, None, None, None)
 
  # ---- DEVICE LIST ----
+
 @router.post("/run/device_list")
 def run_device_list_api(payload: RunDeviceListRequest, user = Depends(get_current_user)):
     input_path = PVS_DIR / payload.store / payload.device_list_name
