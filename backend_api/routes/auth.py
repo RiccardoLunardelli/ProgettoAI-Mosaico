@@ -12,6 +12,7 @@ router = APIRouter()
 dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
 userClass = UsersRepository(dsn)
 
+
 @router.post("/signup")
 def signup(payload: SignupRequest):
     try:
