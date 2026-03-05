@@ -136,6 +136,8 @@ const NavBarElementTag = memo(function NavBarElementTag({
               marginRight: "15px",
 
               height: "24px",
+              display: "flex",
+              alignItems: "center"
             }}
           >
             <span

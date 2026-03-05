@@ -7,12 +7,9 @@ import "./css/index.css";
 import "./css/App.css";
 import "./css/googleMaterialIcons.css";
 import "./css/color.css";
-import "./css/tab.css";
-import "./css/table.css";
 import "./css/textInput.css";
-import "./css/pulseDot.css";
 import "./css/animation.css";
-import "./css/card.css";
+import "./css/mainIndex.css";
 
 import ErrorBoundaryInnerTag from "./components/error/ErrorBoundaryInner";
 import ErrorBoundaryTag from "./components/error/ErrorBoundary";

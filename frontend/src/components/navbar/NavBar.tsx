@@ -45,9 +45,9 @@ function NavBarTag() {
           />
           <NavBarElementTag
             nameToDraw={"Test"}
-            pathToLink={"/Test"}
+            pathToLink={"/Home"}
             iconName={"material-symbols-outlined"}
-            iconSpan={"home"}
+            iconSpan={"menu"}
             customMarginTop="15px"
             customFontSize="14px"
           />
