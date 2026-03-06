@@ -18,7 +18,7 @@ const BasicButtonGenericTag = lazy(
   () => import("../button/BasicButtonGeneric"),
 );
 
-type WhatToDoType = "PatchJson" | "Edit" ;
+type WhatToDoType = "PatchJson" | "Edit";
 
 interface ComponentStateInterface {
   selectedId: string;
@@ -27,7 +27,10 @@ interface ComponentStateInterface {
 }
 
 //Usata per prendersi i valori nello Slice degli input
-const inputIdList = ["KnowledgeBaseDetails-Edit", "KnowledgeBasePatch-TextArea"];
+const inputIdList = [
+  "KnowledgeBaseDetails-Edit",
+  "KnowledgeBasePatch-TextArea",
+];
 
 function KnowledgeBasePageTag() {
   const [GetKnowledgeBaseDetailAPI] = GetKnowledgeBaseDetailAPIHook();
@@ -365,9 +368,8 @@ function KnowledgeBasePageTag() {
                 <BasicButtonGenericTag
                   textToSee="Salva"
                   disabledButton={
-                    (JSON.stringify(
-                      inputSliceValue["KnowledgeBaseDetails-Edit"],
-                    ) == JSON.stringify(knowledgeBaseListSlice.detail) ) || 
+                    inputSliceValue["KnowledgeBaseDetails-Edit"] ===
+                      JSON.stringify(knowledgeBaseListSlice.detail, null, 2) ||
                     !IsValidJSON(inputSliceValue["KnowledgeBaseDetails-Edit"])
                   }
                   clickCallBack={HandleSaveEditButtonOnClick}
@@ -477,7 +479,8 @@ function KnowledgeBasePageTag() {
                     inputSliceValue["KnowledgeBasePatch-TextArea"].replaceAll(
                       " ",
                       "",
-                    ) == "" || !IsValidJSON(inputSliceValue["KnowledgeBasePatch-TextArea"])
+                    ) == "" ||
+                    !IsValidJSON(inputSliceValue["KnowledgeBasePatch-TextArea"])
                   }
                   clickCallBack={HandleSavePatchButtonOnClick}
                 />

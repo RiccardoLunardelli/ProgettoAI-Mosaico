@@ -6,7 +6,7 @@
       "description": "Misure fisiche e stati letti dal sistema.",
       "concepts": [
         {
-          "concept_id": "temp_delivery",
+          "concept_id": "temp_prova",
           "category": "measurement",
           "semantic_category": "temperature",
           "label": {
@@ -156,7 +156,7 @@
           "description": "Pressione usata come riferimento per la regolazione (locale o remota)."
         },
         {
-          "concept_id": "temp_probe",
+          "concept_id": "temp_prove",
           "category": "measurement",
           "semantic_category": "temperature",
           "label": {
@@ -164,16 +164,6 @@
             "en": "Probe temperature"
           },
           "description": "Temperatura rilevata da una sonda generica."
-        },
-        {
-          "concept_id": "prova temperatura 45",
-          "category": "measurement",
-          "semantic_category": "456",
-          "label": {
-            "it": "Temperatura provaaa",
-            "en": "Probe temperature"
-          },
-          "description": "Temperatura provad."
         }
       ]
     },

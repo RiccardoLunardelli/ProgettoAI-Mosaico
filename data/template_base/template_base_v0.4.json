@@ -1,12 +1,12 @@
 {
-  "template_base_version": "0.3",
+  "template_base_version": "0.4",
   "categories": [
     {
       "id": "measurement",
       "description": "Misure fisiche e stati letti dal sistema.",
       "concepts": [
         {
-          "concept_id": "temp_delivery",
+          "concept_id": "temp_prova2",
           "category": "measurement",
           "semantic_category": "temperature",
           "label": {
@@ -156,7 +156,7 @@
           "description": "Pressione usata come riferimento per la regolazione (locale o remota)."
         },
         {
-          "concept_id": "temp_probe",
+          "concept_id": "temp_prove",
           "category": "measurement",
           "semantic_category": "temperature",
           "label": {
@@ -164,16 +164,6 @@
             "en": "Probe temperature"
           },
           "description": "Temperatura rilevata da una sonda generica."
-        },
-        {
-          "concept_id": "prova temperatura 45",
-          "category": "measurement",
-          "semantic_category": "456",
-          "label": {
-            "it": "Temperatura provaaa",
-            "en": "Probe temperature"
-          },
-          "description": "Temperatura provad."
         }
       ]
     },
@@ -490,7 +480,7 @@
           "category": "virtual_variable",
           "semantic_category": "runtime",
           "label": {
-            "it": "Ore di funzionamento DEL SISTEMA",
+            "it": "Ore di funzionamento",
             "en": "Runtime hours"
           },
           "description": "Ore totali di funzionamento del sistema."

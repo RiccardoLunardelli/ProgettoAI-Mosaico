@@ -369,8 +369,8 @@ function TemplateBasePageTag() {
                 <BasicButtonGenericTag
                   textToSee="Salva"
                   disabledButton={
-                    inputSliceValue["TemplateBaseDetails-Edit"] ==
-                      JSON.stringify(templateBaseListSlice.detail) &&
+                    inputSliceValue["TemplateBaseDetails-Edit"] ===
+                      JSON.stringify(templateBaseListSlice.detail, null, 2) ||
                     !IsValidJSON(inputSliceValue["TemplateBaseDetails-Edit"])
                   }
                   clickCallBack={HandleSaveEditButtonOnClick}

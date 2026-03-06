@@ -2,11 +2,1102 @@
   "target": "dictionary",
   "operations": [
     {
-      "op": "update_synonym",
-      "concept_id": "temp_defrost",
+      "op": "add_synonym",
+      "concept_id": "state_fan",
       "lang": "it",
-      "old_value": "temperatura sbrinamento",
-      "new_value": "temperatura fase sbrinamento"
+      "value": "l1 allarme sovraccarico comune ventilatori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "compressori l1 accesi per partenza compressori l2"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l2 compressori spenti per guasto compressori l1"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l2 allarme inverter compressori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_fan",
+      "lang": "it",
+      "value": "l1 allarme generico ventilatori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l1 stato del relè per la configurazione di linea di compressori 1"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l1 stato del relè per la configurazione di linea di compressori 7"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l1 stato del relè per la configurazione di linea di compressori 9"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_fan",
+      "lang": "it",
+      "value": "l2 allarme sovraccarico comune ventilatori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_fan",
+      "lang": "it",
+      "value": "l1 abilita forzatura ventilatori per allarme perdita refrigerante"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_fan",
+      "lang": "it",
+      "value": "l1 forza ventilatori per allarme perdita refrigerante"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_fan",
+      "lang": "it",
+      "value": "l2 allarme inverter ventilatori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l2 compressori in attesa per evitare avviamenti simultanei"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l1 compressori in attesa per evitare avviamenti simultanei"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l2 stato del relè per la configurazione di linea di compressori 1"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l2 stato del relè per la configurazione di linea di compressori 7"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l2 stato del relè per la configurazione di linea di compressori 9"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l1 potenza richiesta attivazione compressori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l2 potenza richiesta attivazione compressori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_fan",
+      "lang": "it",
+      "value": "l1 recupero calore offset aggiunto al setpoint di regolazione ventilatori per recupero calore"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_fan",
+      "lang": "it",
+      "value": "l1 percentuale attivazione inverter ventilatori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l1 potenza attuale compressori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_fan",
+      "lang": "it",
+      "value": "l1 potenza attuale ventilatori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l1 potenza richiesta compressori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_fan",
+      "lang": "it",
+      "value": "l1 potenza richiesta ventilatori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_fan",
+      "lang": "it",
+      "value": "l2 potenza richiesta ventilatori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_fan",
+      "lang": "it",
+      "value": "l2 potenza attuale ventilatori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l2 potenza attuale compressori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l2 potenza richiesta compressori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l1 regolazione dei compressori in pressione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_fan",
+      "lang": "it",
+      "value": "l2 percentuale attivazione inverter ventilatori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l1 numero di compressori configurati"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_fan",
+      "lang": "it",
+      "value": "l1 numero di ventilatori configurati"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l2 regolazione dei compressori in pressione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_compressor",
+      "lang": "it",
+      "value": "l2 numero di compressori configurati"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_fan",
+      "lang": "it",
+      "value": "l2 numero di ventilatori configurati"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 abilitazione modifica del setpoint per gestione aspirazione flottante"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 abilitazione setpoint condensazione flottante"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 abilita compensazione setpoint di aspirazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l2 abilita compensazione setpoint di aspirazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 abilita compensazione setpoint hpv da ain"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l2 abilitazione setpoint condensazione flottante"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l2 abilita compensazione setpoint aspirazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l2 abilita compensazione setpoint condensazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale pumpdown"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale allarme bassa pressione di scarico"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 setpoint modulante calcolato per regolazione compressione parallela"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale pumpdown"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale allarme alta pressione di aspirazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale di allarme bassa pressione di aspirazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale allarme alta pressione di condensazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale allarme bassa pressione di condensazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 setpoint di aspirazione flottante"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 setpoint di aspirazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale di regolazione aspirazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 floating suction minimo setpoint"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 floating suction massimosetpoint"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 setpoint gas cooler"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale gas cooler"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 setpoint minimo di condensazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 setpoint massimo di condensazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale zona incremento regolazione ventilatori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale zona decremento regolazione ventilatori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale allarme alta temperatura olio comune"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 setpoint regolazione valvola rprv"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale allarme basso surriscaldamento"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale zona incremento per la regolazione compressori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale zona decremento regolazione compressori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 recupero calore differenziale regolazionep i valvola di by pass gascooler con bypass consentito"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 offset di decremento al setpoint regolazione hpv in caso di attivazione sicurezze bassa pressione ricevitore"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 offset di incremento al setpoint regolazione hpv in caso di attivazione sicurezze alta pressione ricevitore"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 mininmo setpoint hpv con recupero calore attivo"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 massimo setpoint hpv con recupero calore attivo"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale allarme alta pressione di aspirazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale allarme bassa pressione di aspirazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 massimo setpoint valvola hpv da azioni di sicurezza"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale allarme basso surriscaldamento"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l2 setpoint di aspirazione flottante"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l2 setpoint di aspirazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale di regolazione aspirazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l2 floating suction minimo setpoint"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l2 floating suction massimo setpoint"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale allarme alta pressione di scarico"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale allarme bassa pressione di scarico"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale allarme alta pressione di scarico"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "threshold_high_temperature",
+      "lang": "it",
+      "value": "l2 soglia di allarme comune olio ad alta temperatura"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale allarme comune olio ad alta temperatura"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale zona incremento regolazione compressori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale zona decremento regolazione compressori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 recupero calore setpoint regolazione p i valvola di by pass gascooler con bypass consentito"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 recupero calore 2 differenziale regolazione p i pompa"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 setpoint recupero calore 1"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 recupero calore 1 setpoint regolazione p i pompa"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 recupero calore 1 differenziale regolazione p i pompa"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 recupero calore 2 setpoint di regolazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 recupero calore 2 setpoint regolazione p i pompa"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 setpoint minimo valvola hpv"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "termostato generico 1 setpoint"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "termostato generico 1 differenziale"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "termostato generico 2 setpoint"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "termostato generico 2 differenziale"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "termostato 3 generico setpoint"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "termostato 3 generico differenziale"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "termostato generico 4 setpoint"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "termostato generico 4 differenziale"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "termostato generico 5 setpoint"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "termostato generico 5 differenziale"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "modulante generico 1 setpoint"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "modulante generico 1 differenziale"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "modulante generico 2 differenziale"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "modulante generico 2 setpoint"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "differenziale allarme alta pressione ricevitore"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale attivazione prevent alta temperatura"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale di regolazion condensazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l2 setpoint di condensazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 offset compensazione setpoint compressori da ingresso digitale"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 offset compensazione setpoint ventilatori da ingresso digitale"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l2 offset compensazione setpoint compressori da ingresso digitale"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l2 offset compensazione setpoint ventilatori da ingresso digitale"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale zona incremento regolazione ventilatori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale allarme alta temperatura olio comune"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale allarme bassa temperatura olio"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 recupero calore differenziale sulla regolazione per disabilitare il bypass del gas cooler"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale allarme bassa temperatura olio"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale allarme bassa pressione di condensazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale prevent alta pressione condensazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale attivazione prevent alta temperatura"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 recupero di calore differenziale"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale allarme alta pressione di condensazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 recupero calore setpoint regolazione gas cooler bypassato con gestione basse temperature attivo"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 recupero calore percentuale di richiesta corrispondente al massimo incremento setpoint hpv"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 recupero calore massimo setpoint modulante bypass gas cooler"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "massima variazione istantanea del setpoint modulante per il compressore parallelo"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 recupero calore minima richiesta per calcolo setpoint modulante bypass gas cooler"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 recupero calore massima richiesta per calcolo setpoint modulante bypass gas cooler"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 recupero calore minimo setpoint modulante bypass gas cooler"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l2 differenziale zona decremento regolazione ventilatori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l2 setpoint minimo di condensazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l2 setpoint massima condensazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l2 recupero di calore setpoint temperatura"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l2 setpoint attuale condensazione flottante"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 offset aggiunto al setpoint aspirazione con regolazione su sonda pressione di backup"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l2 offset aggiunto al setpoint aspirazione con regolazione su sonda pressione di backup"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 compressione parallela massimo setpoint per calcolo setpoint modulante"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "l1 differenziale allarme temperatura compressore parallelo"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "recupero calore hpv minimum setpoint work delta"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 tempo di riduzione setpoint per aspirazione flottante"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "azioni su setpoint valvola hpv e setpoint gas cooler sono simultanee"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "l1 recupero calore tempo per portare il setpoint hpv al minimo valore richiesto con recupero in funzione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "differenziale per attivazione rprv con compressori off in caso di alta pressione ricevitore"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "tempo tra due variazioni del setpoint modulante per il compressore parallelo"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "minima frequenza inverter per consentire la variazione del setpoint modulante per il compressore parallelo"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "tempo incremento setpoint rprv per accensione compressore parallelo"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "tempo decremento setpoint rprv per spegnimento compressore parallelo"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_pressure",
+      "lang": "it",
+      "value": "l2 allarme alta pressione di condensazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_pressure",
+      "lang": "it",
+      "value": "l1 allarme alta pressione di scarico"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_pressure",
+      "lang": "it",
+      "value": "l2 allarme alta pressione di scarico"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_pressure",
+      "lang": "it",
+      "value": "l1 allarme alta pressione di aspirazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_pressure",
+      "lang": "it",
+      "value": "l2 allarme alta pressione di aspirazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_low_pressure",
+      "lang": "it",
+      "value": "l2 allarme bassa pressione di condensazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_low_pressure",
+      "lang": "it",
+      "value": "l2 allarme bassa pressione di scarico"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_low_pressure",
+      "lang": "it",
+      "value": "l1 allarme bassa pressione di aspirazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_low_pressure",
+      "lang": "it",
+      "value": "l2 allarme bassa pressione di aspirazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "allarme alta temperatura di scarico compressore parallelo"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_low_pressure",
+      "lang": "it",
+      "value": "allarme pressione gas cooler troppo bassa per consentire il recupero di calore 1"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_low_pressure",
+      "lang": "it",
+      "value": "allarme pressione gas cooler troppo bassa per consentire il recupero di calore 2"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "l1 allarme alta temperatura di scarico compressore 1"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "l2 allarme alta temperatura di scarico compressore 1"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "l1 allarme alta temperatura di scarico compressore 2"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "l2 allarme alta temperatura di scarico compressore 2"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "l1 allarme alta temperatura di scarico compressore 3"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "l2 allarme alta temperatura di scarico compressore 3"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "l1 allarme alta temperatura di scarico compressore 4"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "l2 allarme alta temperatura di scarico compressore 4"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "l1 allarme alta temperatura di scarico compressore 5"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "l2 allarme alta temperatura di scarico compressore 5"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "l1 allarme alta temperatura di scarico compressore 6"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "l2 allarme alta temperatura di scarico compressore 6"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_low_pressure",
+      "lang": "it",
+      "value": "l1 allarme bassa pressione di aspirazione da pressostato"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_pressure",
+      "lang": "it",
+      "value": "l2 allarme di alta pressione di condensazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_low_pressure",
+      "lang": "it",
+      "value": "l1 allarme bassa pressione di condensazione"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "l1 allarme di alta temperatura dell olio comune"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "l2 allarme di alta temperatura dell olio comune"
     }
   ]
 }
