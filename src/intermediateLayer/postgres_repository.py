@@ -89,7 +89,7 @@ class RunRepository():
                 row = cur.fetchall()
             return [{"run_id": r[0], "type": r[1]} for r in row]
 
-    def get_run_report_by_user_id(self, user_id: str) -> Dict[str, Any]:
+    def get_diff_report_by_user_id(self, user_id: str) -> Dict[str, Any]:
         # recupera report di user id
 
         sql = """
@@ -103,7 +103,7 @@ class RunRepository():
             with conn.cursor() as cur:
                 cur.execute(sql, (user_id,))
                 rows = cur.fetchall()
-        return [{"run_id": r[0], "changed_paths": r[1]} for r in rows]
+        return [{"run_id": r[0], "diff": r[1]} for r in rows]
 
     def compare_run(self, run_id_a: str, run_id_b: str) -> Dict[str, Any]:
         # confronta due run 

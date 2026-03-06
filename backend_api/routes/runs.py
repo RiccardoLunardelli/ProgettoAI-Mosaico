@@ -136,10 +136,10 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
         return {"status": "ok", "run_id": report.get("run_id"), "report_path": str(report_path), "warning": report.get("validation", {}).get("warnings")}
 
 
-#----CROLOGIA-----
+#----CRONOLOGIA DIFF-----
 @router.get("/cronology")
 def get_cronology(user = Depends(get_current_user)):
-    return runClass.get_run_report_by_user_id(user["sub"])
+    return runClass.get_diff_report_by_user_id(user["sub"])
 
 #-----RUNS LIST----
 @router.get("/runs/ids")
