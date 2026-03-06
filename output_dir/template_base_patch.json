@@ -4,13 +4,13 @@
     {
       "op": "add_base_concept",
       "category_id": "measurement",
-      "concept_id": "temp_pr",
-      "semantic_category": "pr",
+      "concept_id": "temp_prove",
+      "semantic_category": "temperature",
       "label": {
-        "it": "Temperatura pr",
-        "en": "prtemperature"
+        "it": "Temperatura sonda",
+        "en": "Probe temperature"
       },
-      "description": "Temperatura pr rilevata."
+      "description": "Temperatura rilevata da una sonda generica."
     }
   ]
 }

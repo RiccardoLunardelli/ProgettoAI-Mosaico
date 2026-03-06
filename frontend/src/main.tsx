@@ -23,8 +23,10 @@ import { loaderSliceReducer } from "./stores/slices/Base/loaderSlice";
 import { runsListSliceReducer } from "./stores/slices/Base/runsListSlice";
 import { currentPathSliceReducer } from "./stores/slices/Base/currentPath";
 import { knowledgeBaseListSliceReducer } from "./stores/slices/Base/knowledgeBaseListSlice";
+import { templateBaseListSliceReducer } from "./stores/slices/Base/templateBaseListSlice";
 
 const HomePageTag = lazy(() => import("./components/Home/HomePage"));
+const TemplateBasePageTag = lazy(() => import("./components/TemplateBase/TemplateBasePage"));
 const KnowledgeBasePageTag = lazy(
   () => import("./components/knowledgebase/KnowledgeBasePage"),
 );
@@ -74,6 +76,15 @@ let childrenRouterArr: any = [
     element: (
       <Suspense fallback="">
         <KnowledgeBasePageTag />
+      </Suspense>
+    ),
+    errorElement: <ErrorBoundaryInnerTag />,
+  },
+  {
+    path: "/TemplateBase",
+    element: (
+      <Suspense fallback="">
+        <TemplateBasePageTag />
       </Suspense>
     ),
     errorElement: <ErrorBoundaryInnerTag />,
@@ -147,7 +158,8 @@ function SecureRoot(): JSX.Element {
       userInfoSlice: userInfoSliceReducer,
       runsListSlice: runsListSliceReducer,
       currentPathSlice: currentPathSliceReducer,
-      knowledgeBaseListSlice: knowledgeBaseListSliceReducer
+      knowledgeBaseListSlice: knowledgeBaseListSliceReducer,
+      templateBaseListSlice: templateBaseListSliceReducer
     },
     devTools:
       (import.meta.env.VITE_DEBUG_DEVTOOLS?.toString()?.toLowerCase() ?? "") ==

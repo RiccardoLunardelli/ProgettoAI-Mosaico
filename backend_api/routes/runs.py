@@ -147,6 +147,10 @@ def get_run(run_id: str, user = Depends(get_current_user)):
     except KeyError:
         raise HTTPException(status_code=404, detail="run not found!")
 
+@router.get("/runid_template")
+def get_run_template(user = Depends(get_current_user)):
+    return runClass.get_run_template(user["sub"])
+
 #-----TEMPLATE (3-step)-----
 @router.post("/run/template/start")
 def run_template_start(payload: RunTemplateStartRequest, user = Depends(get_current_user)):

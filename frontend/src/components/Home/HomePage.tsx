@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { SetCurrentPathSlice } from "../../stores/slices/Base/currentPath";
 
 function HomePageTag() {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -14,9 +13,9 @@ function HomePageTag() {
   );
 
   function HandleNavigateCardOnClick(path: string, pathName: string) {
-    navigate(path)
+    navigate(path);
 
-    dispatch(SetCurrentPathSlice(pathName))
+    dispatch(SetCurrentPathSlice(pathName));
   }
 
   return (
@@ -160,7 +159,9 @@ function HomePageTag() {
             flexDirection: "column",
           }}
           className="HoverTransform"
-          onClick={() => HandleNavigateCardOnClick("KnowledgeBase", "Knowledge Base")}
+          onClick={() =>
+            HandleNavigateCardOnClick("KnowledgeBase", "Knowledge Base")
+          }
         >
           {/* Icona + testo */}
           <div
@@ -331,6 +332,9 @@ function HomePageTag() {
             flexDirection: "column",
           }}
           className="HoverTransform"
+          onClick={() =>
+            HandleNavigateCardOnClick("TemplateBase", "Template Base")
+          }
         >
           {/* Icona + testo */}
           <div

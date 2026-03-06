@@ -1,13 +1,14 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  GetKnowledgeBaseIdsAPIHook,
-  GetKnowledgeBaseDetailAPIHook,
-  UpdateKnowledgeBaseDetailAPIHook,
-  UpdateKnowledgeBasePatchAPIHook,
-} from "../../customHooks/API/KnoledgeBase/knowledgeBaseAPI";
+
 import { SetInputSlice } from "../../stores/slices/Base/inputSlice";
 import { IsValidJSON } from "../../commons/commonsFunctions";
+import {
+  GetTemplateBaseDetailAPIHook,
+  GetTemplateIdsAPIHook,
+  UpdateTemplateBaseDetailAPIHook,
+  UpdateTemplateBasePatchAPIHook,
+} from "../../customHooks/API/TemplateBase/templateBaseAPI";
 
 const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
 const Toggle = lazy(() =>
@@ -18,7 +19,7 @@ const BasicButtonGenericTag = lazy(
   () => import("../button/BasicButtonGeneric"),
 );
 
-type WhatToDoType = "PatchJson" | "Edit" ;
+type WhatToDoType = "PatchJson" | "Edit";
 
 interface ComponentStateInterface {
   selectedId: string;
@@ -27,13 +28,13 @@ interface ComponentStateInterface {
 }
 
 //Usata per prendersi i valori nello Slice degli input
-const inputIdList = ["KnowledgeBaseDetails-Edit", "KnowledgeBasePatch-TextArea"];
+const inputIdList = ["TemplateBaseDetails-Edit", "TemplateBasePatch-TextArea"];
 
-function KnowledgeBasePageTag() {
-  const [GetKnowledgeBaseDetailAPI] = GetKnowledgeBaseDetailAPIHook();
-  const [GetKnowledgeBaseIdsAPI] = GetKnowledgeBaseIdsAPIHook();
-  const [UpdateKnowledgeBaseDetailAPI] = UpdateKnowledgeBaseDetailAPIHook();
-  const [UpdateKnowledgeBasePatchAPI] = UpdateKnowledgeBasePatchAPIHook();
+function TemplateBasePageTag() {
+  const [GetTemplateBaseDetailAPI] = GetTemplateBaseDetailAPIHook();
+  const [GetTemplateBaseIdsAPI] = GetTemplateIdsAPIHook();
+  const [UpdateTemplateBaseDetailAPI] = UpdateTemplateBaseDetailAPIHook();
+  const [UpdateTemplateBasePatchAPI] = UpdateTemplateBasePatchAPIHook();
   const dispatch = useDispatch();
   const [componentState, setComponentState] = useState<ComponentStateInterface>(
     {
@@ -43,16 +44,15 @@ function KnowledgeBasePageTag() {
     },
   );
 
-  const knowledgeBaseListSlice: { value: string[]; detail: string } =
+  const templateBaseListSlice: { value: string[]; detail: string } =
     useSelector(
-      (state: {
-        knowledgeBaseListSlice: { value: string[]; detail: string };
-      }) => state.knowledgeBaseListSlice,
+      (state: { templateBaseListSlice: { value: string[]; detail: string } }) =>
+        state.templateBaseListSlice,
     );
 
   const inputSliceValue: {
-    "KnowledgeBaseDetails-Edit": string;
-    "KnowledgeBasePatch-TextArea": string;
+    "TemplateBaseDetails-Edit": string;
+    "TemplateBasePatch-TextArea": string;
   } = useSelector((state: any) => {
     //Per ogni chiave dello Slice degli input
     return Object.keys(state.inputSlice.value).reduce(
@@ -65,8 +65,8 @@ function KnowledgeBasePageTag() {
         return accumulator;
       },
       {
-        "KnowledgeBaseDetails-Edit": "",
-        "KnowledgeBasePatch-TextArea": "",
+        "TemplateBaseDetails-Edit": "",
+        "TemplateBasePatch-TextArea": "",
       },
     );
   });
@@ -92,48 +92,50 @@ function KnowledgeBasePageTag() {
   };
 
   const HandleSaveEditButtonOnClick = () => {
-    UpdateKnowledgeBaseDetailAPI({
+    UpdateTemplateBaseDetailAPI({
       data: {
-        kb_name: componentState?.selectedId ?? "",
-        kb_json: JSON.parse(inputSliceValue["KnowledgeBaseDetails-Edit"]),
+        template_base_name: componentState?.selectedId ?? "",
+        template_base_json: JSON.parse(
+          inputSliceValue["TemplateBaseDetails-Edit"],
+        ),
       },
       showToast: true,
       showLoader: true,
       EndCallback: () => {
-        GetKnowledgeBaseIdsAPI({ showLoader: true, saveResponse: true });
+        GetTemplateBaseIdsAPI({ showLoader: true, saveResponse: true });
       },
     });
   };
 
   const HandleSavePatchButtonOnClick = () => {
-    UpdateKnowledgeBasePatchAPI({
+    UpdateTemplateBasePatchAPI({
       data: {
-        kb_name: componentState?.selectedId ?? "",
+        template_base_name: componentState?.selectedId ?? "",
         validate_only: componentState.validateOnly,
-        patch_json: JSON.parse(inputSliceValue["KnowledgeBasePatch-TextArea"]),
+        patch_json: JSON.parse(inputSliceValue["TemplateBasePatch-TextArea"]),
       },
       showToast: true,
       showLoader: true,
       EndCallback: () => {
-        GetKnowledgeBaseIdsAPI({ showLoader: true, saveResponse: true });
+        GetTemplateBaseIdsAPI({ showLoader: true, saveResponse: true });
       },
     });
   };
 
   useEffect(() => {
-    GetKnowledgeBaseIdsAPI({ showLoader: true, saveResponse: true });
+    GetTemplateBaseIdsAPI({ showLoader: true, saveResponse: true });
   }, []);
 
   useEffect(() => {
     if (componentState.selectedId == "") return;
-    GetKnowledgeBaseDetailAPI({
+    GetTemplateBaseDetailAPI({
       data: { id: componentState.selectedId },
       showLoader: true,
       saveResponse: true,
       EndCallback(returnValue) {
         dispatch(
           SetInputSlice({
-            id: "KnowledgeBaseDetails-Edit",
+            id: "TemplateBaseDetails-Edit",
             value: JSON.stringify(returnValue?.message, null, 2),
           }),
         );
@@ -193,7 +195,7 @@ function KnowledgeBasePageTag() {
               }}
             >
               <span style={{ fontSize: "20px", fontWeight: 600 }}>
-                Knowledge Base
+                Template Base
               </span>
 
               <div
@@ -204,9 +206,9 @@ function KnowledgeBasePageTag() {
                   marginTop: "10px",
                 }}
               >
-                {(knowledgeBaseListSlice?.value ?? []).length > 0 ? (
+                {(templateBaseListSlice?.value ?? []).length > 0 ? (
                   <>
-                    {(knowledgeBaseListSlice?.value ?? []).map(
+                    {(templateBaseListSlice?.value ?? []).map(
                       (singleId: string) => {
                         const isSelected =
                           componentState.selectedId === singleId;
@@ -240,14 +242,16 @@ function KnowledgeBasePageTag() {
                     )}
                   </>
                 ) : (
-                  <span style={{ opacity: "60%" }}>Nessuna run trovata</span>
+                  <span style={{ opacity: "60%" }}>
+                    Nessun template trovato
+                  </span>
                 )}
               </div>
             </div>
           </div>
 
           {/* Card */}
-          {knowledgeBaseListSlice.detail && componentState.selectedId !== "" ? (
+          {templateBaseListSlice.detail && componentState.selectedId !== "" ? (
             <>
               <div
                 style={{ marginTop: "20px", display: "flex", opacity: "50%" }}
@@ -278,7 +282,7 @@ function KnowledgeBasePageTag() {
                     width: "100%",
                   }}
                 >
-                  {JSON.stringify(knowledgeBaseListSlice.detail, null, 2)}
+                  {JSON.stringify(templateBaseListSlice.detail, null, 2)}
                 </pre>
               </div>
             </>
@@ -350,11 +354,11 @@ function KnowledgeBasePageTag() {
                     <TextareaTag
                       minHeight="300px"
                       minWidth="600px"
-                      value={inputSliceValue["KnowledgeBaseDetails-Edit"] ?? ""}
+                      value={inputSliceValue["TemplateBaseDetails-Edit"] ?? ""}
                       onChange={(e: any) => {
                         dispatch(
                           SetInputSlice({
-                            id: "KnowledgeBaseDetails-Edit",
+                            id: "TemplateBaseDetails-Edit",
                             value: e,
                           }),
                         );
@@ -365,10 +369,9 @@ function KnowledgeBasePageTag() {
                 <BasicButtonGenericTag
                   textToSee="Salva"
                   disabledButton={
-                    (JSON.stringify(
-                      inputSliceValue["KnowledgeBaseDetails-Edit"],
-                    ) == JSON.stringify(knowledgeBaseListSlice.detail) ) || 
-                    !IsValidJSON(inputSliceValue["KnowledgeBaseDetails-Edit"])
+                    inputSliceValue["TemplateBaseDetails-Edit"] ==
+                      JSON.stringify(templateBaseListSlice.detail) &&
+                    !IsValidJSON(inputSliceValue["TemplateBaseDetails-Edit"])
                   }
                   clickCallBack={HandleSaveEditButtonOnClick}
                 />
@@ -458,12 +461,12 @@ function KnowledgeBasePageTag() {
                       minWidth="600px"
                       marginTop={"20px"}
                       value={
-                        inputSliceValue["KnowledgeBasePatch-TextArea"] ?? ""
+                        inputSliceValue["TemplateBasePatch-TextArea"] ?? ""
                       }
                       onChange={(e: any) => {
                         dispatch(
                           SetInputSlice({
-                            id: "KnowledgeBasePatch-TextArea",
+                            id: "TemplateBasePatch-TextArea",
                             value: e,
                           }),
                         );
@@ -474,10 +477,11 @@ function KnowledgeBasePageTag() {
                 <BasicButtonGenericTag
                   textToSee="Salva"
                   disabledButton={
-                    inputSliceValue["KnowledgeBasePatch-TextArea"].replaceAll(
+                    inputSliceValue["TemplateBasePatch-TextArea"].replaceAll(
                       " ",
                       "",
-                    ) == "" || !IsValidJSON(inputSliceValue["KnowledgeBasePatch-TextArea"])
+                    ) == "" ||
+                    !IsValidJSON(inputSliceValue["TemplateBasePatch-TextArea"])
                   }
                   clickCallBack={HandleSavePatchButtonOnClick}
                 />
@@ -494,4 +498,4 @@ function KnowledgeBasePageTag() {
   );
 }
 
-export default KnowledgeBasePageTag;
+export default TemplateBasePageTag;

@@ -1,9 +1,9 @@
 {
-  "template_base_version": "0.2",
+  "template_base_version": "1.0",
   "categories": [
     {
       "id": "measurement",
-      "description": "Misure fisiche e stati letti dal sistema.",
+      "description": "Misure fiasdadsadsadsasiche e stati letti dal sistema.",
       "concepts": [
         {
           "concept_id": "temp_delivery",
@@ -11,7 +11,7 @@
           "semantic_category": "temperature",
           "label": {
             "it": "Temperatura aria di mandata",
-            "en": "Supply air temperature"
+            "en": "Supply air temperatureeeeeeee of test"
           },
           "description": "Temperatura dell’aria in ingresso (mandata)."
         },
@@ -33,7 +33,7 @@
             "it": "Temperatura ambiente",
             "en": "Ambient temperature"
           },
-          "description": "Temperatura dell’ambiente esterno o del locale."
+          "description": "Temperatura dell’ambiente esterno o del locale di test."
         },
         {
           "concept_id": "temp_evaporator",
@@ -110,10 +110,10 @@
           "category": "measurement",
           "semantic_category": "state",
           "label": {
-            "it": "Stato ventilatori",
+            "it": "Stato vent",
             "en": "Fan state"
           },
-          "description": "Stato operativo dei ventilatori."
+          "description": "Stato operativo dei ventilatori d test."
         },
         {
           "concept_id": "state_defrost",
@@ -154,6 +154,46 @@
             "en": "Regulation pressure"
           },
           "description": "Pressione usata come riferimento per la regolazione (locale o remota)."
+        },
+        {
+          "concept_id": "temp_di_test",
+          "category": "measurement",
+          "semantic_category": "temperature",
+          "label": {
+            "it": "Temperatura di test per prova",
+            "en": "Probe temperature"
+          },
+          "description": "Temperatura rilevata da una sonda di prova."
+        },
+        {
+          "concept_id": "prova temperatura 45",
+          "category": "measurement",
+          "semantic_category": "456",
+          "label": {
+            "it": "Temperatura provaaa",
+            "en": "Probe temperature"
+          },
+          "description": "Temperatura provad."
+        },
+        {
+          "concept_id": "temp_prova",
+          "category": "measurement",
+          "semantic_category": "temperature",
+          "label": {
+            "it": "Temperatura sonda prova",
+            "en": "Probe temperature"
+          },
+          "description": "Temperatura rilevata da una sonda generica di prova."
+        },
+        {
+          "concept_id": "temp_pr",
+          "category": "measurement",
+          "semantic_category": "pr",
+          "label": {
+            "it": "Temperatura pr",
+            "en": "prtemperature"
+          },
+          "description": "Temperatura pr rilevata."
         },
         {
           "concept_id": "temp_prove",
@@ -480,7 +520,7 @@
           "category": "virtual_variable",
           "semantic_category": "runtime",
           "label": {
-            "it": "Ore di funzionamento",
+            "it": "Ore di funzionamento DEL SISTEMA di prova",
             "en": "Runtime hours"
           },
           "description": "Ore totali di funzionamento del sistema."
