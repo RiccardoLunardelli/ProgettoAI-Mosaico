@@ -21,11 +21,11 @@
   "mappings": [
     {
       "scope_id": "P01T04D01_028d14de-71dc-6e64-9587-c7111a39793e",
-      "source_type": "ContinuosRead",
-      "source_key": "Read176666666",
-      "concept_id": "temp_delivery",
-      "reason": "correction_after_review",
-      "evidence": "manual_patch_update",
+      "source_type": "ContinuosReads",
+      "source_key": "Read5505",
+      "concept_id": "temp_test_55",
+      "reason": "deterministic_mapping_from_vendor",
+      "evidence": "manual_patch_test",
       "semantic_category": "temperature"
     }
   ],

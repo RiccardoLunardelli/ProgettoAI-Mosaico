@@ -38,9 +38,9 @@ def list_artifact(artifact, artifact_dir):
         for store_dir in sorted(artifact_dir.iterdir()):
             if not store_dir.is_dir():
                 continue
-            files = list(store_dir.glob("*.json"))
+            files = "device_list.json"
             if files:
-                items.append({"store": store_dir.name, "path":  [f.name for f in files] })
+                items.append({"store": store_dir.name, "file":  files })
         return {"device_list": items}
 
 def get_file_of_artifact(name: str | None, store: str | None, dl: str | None,  artifact, artifact_dir):
@@ -86,9 +86,6 @@ def editor_json_inline(file_name, file_json, file_dir, artifact, user_id):
             file_json["template_base_version"] = new_version
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Payload not valid: {e}!")
-    
-
-    new_path.write_text(json.dumps(file_json, ensure_ascii=False, indent=2), encoding="utf-8")
 
     # build run report e salvataggio in db
     run_id = generate_run_id()
@@ -141,11 +138,21 @@ def editor_json_inline(file_name, file_json, file_dir, artifact, user_id):
     )
 
     report_path = run_dir / "run_report.json"
+    diff_report = run_report.get("diff_summary").get("changed_paths")
+
+    # controlla se ci sono differenze
+    if len(diff_report) > 0:
+        new_path.write_text(json.dumps(file_json, ensure_ascii=False, indent=2), encoding="utf-8")
+    else:
+        new_path = input_path
+
+    # scrive run report
     report_path.write_text(json.dumps(run_report, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    # salva nel db
     runClass.save_run(run_report, user_id)
 
-    return {"status": "ok", "new_file": str(new_path), "run_id": run_id, "report_path": str(report_path), "diff": run_report.get("diff_summary").get("changed_paths")}
+    return {"status": "ok", "new_file": str(new_path), "run_id": run_id, "report_path": str(report_path), "diff": diff_report}
 
 #----LIST & PREVIEW----
 @router.get("/templates")

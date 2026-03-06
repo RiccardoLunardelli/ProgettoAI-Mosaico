@@ -1,5 +1,5 @@
 {
-  "kb_version": "0.4",
+  "kb_version": "0.2",
   "generated_at": "2026-01-20T10:30:00+01:00",
   "template_base_version": "v0.1",
   "dictionary_version": "0.1",
@@ -21,11 +21,11 @@
   "mappings": [
     {
       "scope_id": "P01T04D01_028d14de-71dc-6e64-9587-c7111a39793e",
-      "source_type": "ContinuosRead",
-      "source_key": "Read101",
-      "concept_id": "prova",
-      "reason": "correction_after_review",
-      "evidence": "manual_patch_update",
+      "source_type": "ContinuosReads",
+      "source_key": "Read59",
+      "concept_id": "temp_test",
+      "reason": "deterministic_mapping_from_vendor",
+      "evidence": "manual_patch_test",
       "semantic_category": "temperature"
     }
   ],
