@@ -245,3 +245,4 @@ def build_artifact_versions(artifact_type: str, dict_payload: dict | None, kb_pa
     if artifact_type == "device_list":
         return {"device_list_version": dl_v}
     return {}
+

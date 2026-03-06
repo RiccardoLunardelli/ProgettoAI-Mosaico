@@ -24,7 +24,7 @@ def signup(payload: SignupRequest):
     created_at = datetime.now(timezone(timedelta(hours=1)))
 
     # creazione token
-    token = jwt_token(str(user_id), payload.email, "signup", None)
+    token = jwt_token(str(user_id), payload.email, "signup", None, payload.name)
 
     userClass.create_user(user_id=user_id, email=payload.email, name=payload.name, password=payload.password, created_at=created_at)
     return token
@@ -36,7 +36,7 @@ def login(payload: LoginRequest):
         if not user:
             raise HTTPException(status_code=401, detail="invalid credentials")
 
-        token = jwt_token(None, payload.email, "login", user)
+        token = jwt_token(None, payload.email, "login", user, user["name"])
     except KeyError as error:
         print(error)
 

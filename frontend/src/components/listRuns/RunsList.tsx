@@ -1,18 +1,16 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { lazy, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import {
-  SetRunDetailSlice,
   type RunListInterface,
 } from "../../stores/slices/Base/runsListSlice";
 import { GetRunDetailAPIHook } from "../../customHooks/Runs/runsAPI";
-import RunsListSkeleton from "../Skeleton/RunsListSkeleton";
+const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
 
 interface ComponentStateInterface {
   selectedId: string;
 }
 
 function RunsListTag() {
-  const dispatch = useDispatch();
   const [GetRunDetailAPI] = GetRunDetailAPIHook();
 
   const [componentState, setComponentState] = useState<ComponentStateInterface>(
@@ -45,7 +43,6 @@ function RunsListTag() {
       saveResponse: true,
     });
 
-    dispatch(SetRunDetailSlice(null));
   }, [componentState.selectedId]);
 
   return (
@@ -153,7 +150,7 @@ function RunsListTag() {
                   )}
                 </>
               ) : (
-                <span style={{opacity: "60%"}}>Nessuna run trovata</span>
+                <span style={{ opacity: "60%" }}>Nessuna run trovata</span>
               )}
             </div>
           </div>

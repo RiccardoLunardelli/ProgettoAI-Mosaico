@@ -22,8 +22,12 @@ import { userInfoSliceReducer } from "./stores/slices/Base/userInfoSlice";
 import { loaderSliceReducer } from "./stores/slices/Base/loaderSlice";
 import { runsListSliceReducer } from "./stores/slices/Base/runsListSlice";
 import { currentPathSliceReducer } from "./stores/slices/Base/currentPath";
+import { knowledgeBaseListSliceReducer } from "./stores/slices/Base/knowledgeBaseListSlice";
 
 const HomePageTag = lazy(() => import("./components/Home/HomePage"));
+const KnowledgeBasePageTag = lazy(
+  () => import("./components/knowledgebase/KnowledgeBasePage"),
+);
 const RunsListTag = lazy(() => import("./components/listRuns/RunsList"));
 const CommonLayoutTag = lazy(
   () => import("./components/commonlayout/CommonLayout"),
@@ -69,7 +73,7 @@ let childrenRouterArr: any = [
     path: "/KnowledgeBase",
     element: (
       <Suspense fallback="">
-        <RunsListTag />
+        <KnowledgeBasePageTag />
       </Suspense>
     ),
     errorElement: <ErrorBoundaryInnerTag />,
@@ -142,7 +146,8 @@ function SecureRoot(): JSX.Element {
       inputSlice: inputSliceReducer,
       userInfoSlice: userInfoSliceReducer,
       runsListSlice: runsListSliceReducer,
-      currentPathSlice: currentPathSliceReducer
+      currentPathSlice: currentPathSliceReducer,
+      knowledgeBaseListSlice: knowledgeBaseListSliceReducer
     },
     devTools:
       (import.meta.env.VITE_DEBUG_DEVTOOLS?.toString()?.toLowerCase() ?? "") ==
