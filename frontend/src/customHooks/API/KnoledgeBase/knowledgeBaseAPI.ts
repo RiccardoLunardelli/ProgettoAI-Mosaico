@@ -1,12 +1,23 @@
 import { useDispatch } from "react-redux";
 import type { ResponseMessageInterface } from "../../../commons/commonsInterfaces";
-import { CloseLoader, OpenLoader } from "../../../stores/slices/Base/loaderSlice";
-import { FetchMethodEnum, FetchResponseTypeEnum, ResultTypeEnum } from "../../../commons/commonsEnums";
+import {
+  CloseLoader,
+  OpenLoader,
+} from "../../../stores/slices/Base/loaderSlice";
+import {
+  FetchMethodEnum,
+  FetchResponseTypeEnum,
+  ResultTypeEnum,
+} from "../../../commons/commonsEnums";
 import { apiDomainString } from "../../../commons/commonsVariables";
-import { SetKnowledgeBaseDetailSlice, SetKnowledgeBaseListSlice } from "../../../stores/slices/Base/knowledgeBaseListSlice";
+import {
+  SetKnowledgeBaseDetailSlice,
+  SetKnowledgeBaseListSlice,
+} from "../../../stores/slices/Base/knowledgeBaseListSlice";
+import { useTranslation } from "react-i18next";
+import { toast, type Id } from "react-toastify";
 
-
-const GetKnoledgeBaseIdsAPIHook = () => {
+const GetKnowledgeBaseIdsAPIHook = () => {
   const dispatch = useDispatch();
 
   const GetKnoledgeBaseIdsAPI = async (infoObj: {
@@ -74,8 +85,8 @@ const GetKnowledgeBaseDetailAPIHook = () => {
 
   const GetKnowledgeBaseDetailAPI = async (infoObj: {
     data: {
-        id: string
-    },
+      id: string;
+    };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
     saveResponse?: boolean;
@@ -102,7 +113,6 @@ const GetKnowledgeBaseDetailAPIHook = () => {
 
       //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
-
         dispatch(SetKnowledgeBaseDetailSlice(jsonResponse));
       }
 
@@ -134,6 +144,232 @@ const GetKnowledgeBaseDetailAPIHook = () => {
   return [GetKnowledgeBaseDetailAPI];
 };
 
+const UpdateKnowledgeBaseDetailAPIHook = () => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
 
+  const UpdateKnowledgeBaseDetailAPI = async (infoObj: {
+    data: {
+      kb_name: string;
+      kb_json: {};
+    };
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    showToast?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    //Apre il loader, se richiesto
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
 
-export { GetKnoledgeBaseIdsAPIHook, GetKnowledgeBaseDetailAPIHook }
+    //Id del toast
+    let toastId: Id = -1;
+    //Se deve mostrare il toast
+    if (infoObj.showToast) {
+      toastId = toast.loading(t("Operazione in corso..."));
+    }
+
+    try {
+      const apiCall = await fetch(apiDomainString + "/kb/edit", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(infoObj.data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const jsonResponse: string = await apiCall.text();
+
+      const responseOk: boolean = apiCall.status == 200;
+
+      //Controllo risposta
+      if (!responseOk) {
+        if (infoObj.EndCallback) {
+          infoObj.EndCallback({
+            result: ResultTypeEnum.Error,
+            message: JSON.stringify(jsonResponse),
+            messageType: FetchResponseTypeEnum.Json,
+            otherResponseInfo: "",
+          });
+        }
+        return;
+      }
+
+      //Se la risposta è positiva
+
+      //Se deve salvare il valore
+      if (infoObj?.saveResponse ?? true) {
+      }
+
+      //Callback di successo
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+
+      //Se deve mostrare il toast
+      if (infoObj.showToast) {
+        //Imposta il toast di successo
+        toast.update(toastId, {
+          render: t("Operazione completata con successo!"),
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+          closeButton: true,
+        });
+      }
+    } catch (err) {
+      console.error("dataOra error:", err);
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Error,
+          message: err,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+
+      //Se deve mostrare il toast
+      if (infoObj.showToast) {
+        //Imposta il toast di successo
+        toast.update(toastId, {
+          render: t("Errore durante l'operazione"),
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+          closeButton: true,
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [UpdateKnowledgeBaseDetailAPI];
+};
+
+const UpdateKnowledgeBasePatchAPIHook = () => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+
+  const UpdateKnowledgeBasePatchAPI = async (infoObj: {
+    data: {
+      kb_name: string;
+      validate_only: boolean;
+      patch_json: {};
+    };
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    showToast?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    //Apre il loader, se richiesto
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
+
+    //Id del toast
+    let toastId: Id = -1;
+    //Se deve mostrare il toast
+    if (infoObj.showToast) {
+      toastId = toast.loading(t("Operazione in corso..."));
+    }
+
+    try {
+      const apiCall = await fetch(apiDomainString + "/run/kb", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(infoObj.data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const jsonResponse: string = await apiCall.text();
+
+      const responseOk: boolean = apiCall.status == 200;
+
+      //Controllo risposta
+      if (!responseOk) {
+        if (infoObj.EndCallback) {
+          infoObj.EndCallback({
+            result: ResultTypeEnum.Error,
+            message: JSON.stringify(jsonResponse),
+            messageType: FetchResponseTypeEnum.Json,
+            otherResponseInfo: "",
+          });
+        }
+        return;
+      }
+
+      //Se la risposta è positiva
+
+      //Se deve salvare il valore
+      if (infoObj?.saveResponse ?? true) {
+      }
+
+      //Callback di successo
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+
+      //Se deve mostrare il toast
+      if (infoObj.showToast) {
+        //Imposta il toast di successo
+        toast.update(toastId, {
+          render: t("Operazione completata con successo!"),
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+          closeButton: true,
+        });
+      }
+    } catch (err) {
+      console.error("dataOra error:", err);
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Error,
+          message: err,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+
+      //Se deve mostrare il toast
+      if (infoObj.showToast) {
+        //Imposta il toast di successo
+        toast.update(toastId, {
+          render: t("Errore durante l'operazione"),
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+          closeButton: true,
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [UpdateKnowledgeBasePatchAPI];
+};
+
+export {
+  GetKnowledgeBaseIdsAPIHook,
+  GetKnowledgeBaseDetailAPIHook,
+  UpdateKnowledgeBaseDetailAPIHook,
+  UpdateKnowledgeBasePatchAPIHook
+};

@@ -19,7 +19,7 @@ export async function FetchData(
   //Callback eseguita alla risposta della chiamata
   EndCallback: (returnValue?: ResponseMessageInterface) => void,
   //Metodo per come leggere la risposta
-  readResponseType: "json" | "string" = "json"
+  readResponseType: "json" | "string" = "json",
 ) {
   try {
     console.debug(["FetchData: " + JSON.stringify(infoObj)]);
@@ -36,7 +36,7 @@ export async function FetchData(
             message: "Entered URL is an empty string",
             messageType: FetchResponseTypeEnum.String,
             otherResponseInfo: {},
-          })
+          }),
       );
       EndCallback({
         result: ResultTypeEnum.Error,
@@ -90,7 +90,7 @@ export async function FetchData(
     Array.from(Object.keys(infoObj))
       .filter(
         (singleKey) =>
-          singleKey != "url" && singleKey != "method" && singleKey != "body"
+          singleKey != "url" && singleKey != "method" && singleKey != "body",
       )
       .forEach((singleKey) => {
         (objForFetchData as any)[singleKey] = infoObj[singleKey];
@@ -124,7 +124,7 @@ export async function FetchData(
               message: responseCallbackJson,
               messageType: FetchResponseTypeEnum.Json,
               otherResponseInfo: responseFetchCall,
-            })
+            }),
         );
 
         EndCallback({
@@ -143,7 +143,7 @@ export async function FetchData(
             message: responseCallbackJson,
             messageType: FetchResponseTypeEnum.Json,
             otherResponseInfo: responseFetchCall,
-          })
+          }),
       );
 
       //Se arriva qua, la risposta non è positiva
@@ -163,7 +163,7 @@ export async function FetchData(
             message: errorMessage,
             messageType: FetchResponseTypeEnum.String,
             otherResponseInfo: "",
-          })
+          }),
       );
 
       EndCallback({
@@ -193,7 +193,7 @@ export function FetchDataRecursive(
   resetBody?: boolean | undefined,
 
   //usato solo per i test, dove il metodo structureClone và in errore
-  useStructureClone = true
+  useStructureClone = true,
 ) {
   //Prende il valore di Limit iniziale
   let startLimit: number = 20;
@@ -347,12 +347,12 @@ export function CheckStringIfMail(stringToCheck: string = "") {
 //Metodo per avere una lista distinct
 export function DistinctList(
   //Array di partenza
-  startArray: any[]
+  startArray: any[],
 ) {
   //Ritorna la lista filtrata
   return startArray.filter(
     //Controlla il valore tramite JSON stringify
-    (value, index, array) => array.indexOf(value) === index
+    (value, index, array) => array.indexOf(value) === index,
   );
 }
 
@@ -402,12 +402,11 @@ export function GetThemesWithSmartPrimary(): ThemeInfo[] {
   return results;
 }
 
-
 //Metodo per generarsi ricorsivamente la lista dei path dato un oggetto
 export function GetListOfPathFromObjectRecursive(
   obj: any,
   currentPath: any[] = [],
-  results: string[][] = []
+  results: string[][] = [],
 ) {
   for (const key in obj) {
     const value = obj[key];
@@ -425,3 +424,12 @@ export function GetListOfPathFromObjectRecursive(
 
   return results;
 }
+
+export const IsValidJSON = (text: string) => {
+  try {
+    JSON.parse(text);
+    return true;
+  } catch {
+    return false;
+  }
+};

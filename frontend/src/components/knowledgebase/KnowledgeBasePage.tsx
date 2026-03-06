@@ -1,27 +1,45 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  GetKnoledgeBaseIdsAPIHook,
+  GetKnowledgeBaseIdsAPIHook,
   GetKnowledgeBaseDetailAPIHook,
+  UpdateKnowledgeBaseDetailAPIHook,
+  UpdateKnowledgeBasePatchAPIHook,
 } from "../../customHooks/API/KnoledgeBase/knowledgeBaseAPI";
+import { SetInputSlice } from "../../stores/slices/Base/inputSlice";
+import { IsValidJSON } from "../../commons/commonsFunctions";
 
 const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
 const Toggle = lazy(() =>
   import("rsuite").then((module) => ({ default: module.Toggle })),
 );
+const TextareaTag = lazy(() => import("rsuite/esm/Textarea"));
+const BasicButtonGenericTag = lazy(
+  () => import("../button/BasicButtonGeneric"),
+);
+
+type WhatToDoType = "PatchJson" | "Edit" | null;
 
 interface ComponentStateInterface {
   selectedId: string;
   validateOnly: boolean;
+  whatImDoing: WhatToDoType;
 }
+
+//Usata per prendersi i valori nello Slice degli input
+const inputIdList = ["KnowledgeBaseDatial-Edit", "KnowledgeBasePatch-TextArea"];
 
 function KnowledgeBasePageTag() {
   const [GetKnowledgeBaseDetailAPI] = GetKnowledgeBaseDetailAPIHook();
-  const [GetKnoledgeBaseIdsAPI] = GetKnoledgeBaseIdsAPIHook();
+  const [GetKnowledgeBaseIdsAPI] = GetKnowledgeBaseIdsAPIHook();
+  const [UpdateKnowledgeBaseDetailAPI] = UpdateKnowledgeBaseDetailAPIHook();
+  const [UpdateKnowledgeBasePatchAPI] = UpdateKnowledgeBasePatchAPIHook();
+  const dispatch = useDispatch();
   const [componentState, setComponentState] = useState<ComponentStateInterface>(
     {
       selectedId: "",
       validateOnly: false,
+      whatImDoing: "PatchJson",
     },
   );
 
@@ -32,6 +50,27 @@ function KnowledgeBasePageTag() {
       }) => state.knowledgeBaseListSlice,
     );
 
+  const inputSliceValue: {
+    "KnowledgeBaseDatial-Edit": string;
+    "KnowledgeBasePatch-TextArea": string;
+  } = useSelector((state: any) => {
+    //Per ogni chiave dello Slice degli input
+    return Object.keys(state.inputSlice.value).reduce(
+      function (accumulator: any, currentValue: any) {
+        //Controllo se questa chiave mi serve
+        if (inputIdList.includes(currentValue)) {
+          //Se passa tutti i controlli, salvo il valore
+          accumulator[currentValue] = state.inputSlice.value[currentValue];
+        }
+        return accumulator;
+      },
+      {
+        "KnowledgeBaseDatial-Edit": "",
+        "KnowledgeBasePatch-TextArea": "",
+      },
+    );
+  });
+
   const HandleSelectIdOnClick = (singleId: string) => {
     setComponentState((previousStateVal: ComponentStateInterface) => {
       return {
@@ -41,8 +80,48 @@ function KnowledgeBasePageTag() {
     });
   };
 
+  const HandleSelectWhatDoButtonOnClick = (whatToDo: WhatToDoType) => {
+    if (!whatToDo) return;
+
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        whatImDoing: whatToDo,
+      };
+    });
+  };
+
+  const HandleSaveEditButtonOnClick = () => {
+    UpdateKnowledgeBaseDetailAPI({
+      data: {
+        kb_name: componentState?.selectedId ?? "",
+        kb_json: JSON.parse(inputSliceValue["KnowledgeBaseDatial-Edit"]),
+      },
+      showToast: true,
+      showLoader: true,
+      EndCallback: () => {
+        GetKnowledgeBaseIdsAPI({ showLoader: true, saveResponse: true });
+      },
+    });
+  };
+
+  const HandleSavePatchButtonOnClick = () => {
+    UpdateKnowledgeBasePatchAPI({
+      data: {
+        kb_name: componentState?.selectedId ?? "",
+        validate_only: componentState.validateOnly,
+        patch_json: JSON.parse(inputSliceValue["KnowledgeBasePatch-TextArea"]),
+      },
+      showToast: true,
+      showLoader: true,
+      EndCallback: () => {
+        GetKnowledgeBaseIdsAPI({ showLoader: true, saveResponse: true });
+      },
+    });
+  };
+
   useEffect(() => {
-    GetKnoledgeBaseIdsAPI({ showLoader: true, saveResponse: true });
+    GetKnowledgeBaseIdsAPI({ showLoader: true, saveResponse: true });
   }, []);
 
   useEffect(() => {
@@ -51,6 +130,14 @@ function KnowledgeBasePageTag() {
       data: { id: componentState.selectedId },
       showLoader: true,
       saveResponse: true,
+      EndCallback(returnValue) {
+        dispatch(
+          SetInputSlice({
+            id: "KnowledgeBaseDatial-Edit",
+            value: JSON.stringify(returnValue?.message, null, 2),
+          }),
+        );
+      },
     });
   }, [componentState.selectedId]);
 
@@ -214,78 +301,194 @@ function KnowledgeBasePageTag() {
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
+          overflow: "auto",
         }}
       >
-        {/* Toggle validate Only */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <span
-            style={{
-              marginBottom: "4px",
-              fontWeight: 500,
-              fontSize: "15px",
-              marginTop: "30px",
-            }}
-          >
-            Validate Only
-          </span>
-          <Toggle
-            checked={componentState?.validateOnly ?? false}
-            onChange={(val: boolean) => {
-              setComponentState((previousStateVal: ComponentStateInterface) => {
-                return {
-                  ...previousStateVal,
-                  validateOnly: val,
-                };
-              });
-            }}
-          />
-        </div>
-        {/* Se Validate Only è abilitato */}
-        {componentState.validateOnly ? (
+        {/* Se non è selezionato un Id la pagina destra non si vede */}
+        {componentState.selectedId ? (
           <>
-            <div
-              style={{
-                backgroundColor: "#fff9e6",
-                width: "95%",
-                height: "5%",
-                marginTop: "10px",
-                borderRadius: "8px",
-                border: "1px solid #f5dead",
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center",
-              }}
-            >
-              <span
+            {/* Pulsante cosa fare */}
+            <div style={{ margin: "20px" }}>
+              <BasicButtonGenericTag
+                textToSee="Patch Json"
                 style={{
-                  fontSize: "20px",
-                  marginLeft: "20px",
-                  opacity: "0.4",
-                  userSelect: "none",
+                  marginLeft: "10px",
+                  color:
+                    componentState.whatImDoing == "PatchJson"
+                      ? "white"
+                      : undefined,
+                  backgroundColor:
+                    componentState.whatImDoing == "PatchJson"
+                      ? "#477dda"
+                      : undefined,
+                  fontWeight: 600,
                 }}
-                className="material-symbols-outlined"
-              >
-                warning
-              </span>
-              <span style={{fontSize: "13px", opacity: "0.8", marginLeft: "10px"}}>
-                Modalità Validate Only attiva — Nessuna modifica verrà salvata
-              </span>
+                clickCallBack={() =>
+                  HandleSelectWhatDoButtonOnClick("PatchJson")
+                }
+              />
+              <BasicButtonGenericTag
+                textToSee="Edit"
+                style={{
+                  marginLeft: "10px",
+                  color:
+                    componentState.whatImDoing == "Edit" ? "white" : undefined,
+                  backgroundColor:
+                    componentState.whatImDoing == "Edit"
+                      ? "#477dda"
+                      : undefined,
+                  fontWeight: 600,
+                }}
+                clickCallBack={() => HandleSelectWhatDoButtonOnClick("Edit")}
+              />
             </div>
+            {/* Se whatImDoing è Edit */}
+            {componentState.whatImDoing == "Edit" ? (
+              <>
+                <div>
+                  <Suspense fallback="">
+                    <TextareaTag
+                      minHeight="300px"
+                      minWidth="600px"
+                      value={inputSliceValue["KnowledgeBaseDatial-Edit"] ?? ""}
+                      onChange={(e: any) => {
+                        dispatch(
+                          SetInputSlice({
+                            id: "KnowledgeBaseDatial-Edit",
+                            value: e,
+                          }),
+                        );
+                      }}
+                    />
+                  </Suspense>
+                </div>
+                <BasicButtonGenericTag
+                  textToSee="Salva"
+                  disabledButton={
+                    (JSON.stringify(
+                      inputSliceValue["KnowledgeBaseDatial-Edit"],
+                    ) == JSON.stringify(knowledgeBaseListSlice.detail) ) || 
+                    !IsValidJSON(inputSliceValue["KnowledgeBaseDatial-Edit"])
+                  }
+                  clickCallBack={HandleSaveEditButtonOnClick}
+                />
+              </>
+            ) : (
+              <></>
+            )}
+            {componentState.whatImDoing == "PatchJson" ? (
+              <>
+                {/* Toggle validate Only */}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      marginBottom: "4px",
+                      fontWeight: 500,
+                      fontSize: "15px",
+                    }}
+                  >
+                    Validate Only
+                  </span>
+                  <Toggle
+                    checked={componentState?.validateOnly ?? false}
+                    onChange={(val: boolean) => {
+                      setComponentState(
+                        (previousStateVal: ComponentStateInterface) => {
+                          return {
+                            ...previousStateVal,
+                            validateOnly: val,
+                          };
+                        },
+                      );
+                    }}
+                  />
+                </div>
+                {/* Se Validate Only è abilitato */}
+                {componentState.validateOnly ? (
+                  <>
+                    <div
+                      style={{
+                        backgroundColor: "#fff9e6",
+                        width: "95%",
+                        height: "5%",
+                        marginTop: "10px",
+                        borderRadius: "8px",
+                        border: "1px solid #f5dead",
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: "20px",
+                          marginLeft: "20px",
+                          opacity: "0.4",
+                          userSelect: "none",
+                        }}
+                        className="material-symbols-outlined"
+                      >
+                        warning
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "13px",
+                          opacity: "0.8",
+                          marginLeft: "10px",
+                        }}
+                      >
+                        Modalità Validate Only attiva — Nessuna modifica verrà
+                        salvata
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
+                <div>
+                  <Suspense fallback="">
+                    <TextareaTag
+                      minHeight="300px"
+                      minWidth="600px"
+                      marginTop={"20px"}
+                      value={
+                        inputSliceValue["KnowledgeBasePatch-TextArea"] ?? ""
+                      }
+                      onChange={(e: any) => {
+                        dispatch(
+                          SetInputSlice({
+                            id: "KnowledgeBasePatch-TextArea",
+                            value: e,
+                          }),
+                        );
+                      }}
+                    />
+                  </Suspense>
+                </div>
+                <BasicButtonGenericTag
+                  textToSee="Salva"
+                  disabledButton={
+                    inputSliceValue["KnowledgeBasePatch-TextArea"].replaceAll(
+                      " ",
+                      "",
+                    ) == "" || !IsValidJSON(inputSliceValue["KnowledgeBasePatch-TextArea"])
+                  }
+                  clickCallBack={HandleSavePatchButtonOnClick}
+                />
+              </>
+            ) : (
+              <></>
+            )}
           </>
         ) : (
           <></>
         )}
-
-        { /* Text Area */ }
-        <div>
-
-        </div>
       </div>
     </div>
   );
