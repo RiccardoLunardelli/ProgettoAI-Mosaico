@@ -11,6 +11,7 @@ import { widthMaxMobile } from "../../commons/commonsVariables.tsx";
 import { SetInputSlice } from "../../stores/slices/Base/inputSlice.ts";
 import { RegisterAPIHook } from "../../customHooks/API/Auth/registerAPI.ts";
 import Logo from "../../../public/logo/unnamed-Photoroom.png";
+import { SetCurrentPathSlice } from "../../stores/slices/Base/currentPath.ts";
 
 const BasicButtonTag = lazy(() => import("../button/BasicButtonGeneric.tsx"));
 
@@ -150,6 +151,7 @@ function LoginTag() {
 
         //Se si è loggato
         navigate("/");
+        dispatch(SetCurrentPathSlice(null))
       },
     });
   };
@@ -202,6 +204,7 @@ function LoginTag() {
 
         //Se si è loggato
         navigate("/");
+        dispatch(SetCurrentPathSlice(null))
       },
     });
   };

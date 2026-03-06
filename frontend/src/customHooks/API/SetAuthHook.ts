@@ -5,6 +5,7 @@ import {
 } from "../../stores/slices/Base/userInfoSlice";
 import { useDispatch } from "react-redux";
 import { SetAuthCheckSlice } from "../../stores/slices/Auth/authCheckSlice";
+import { SetCurrentPathSlice } from "../../stores/slices/Base/currentPath";
 
 const SetAuthHook = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const SetAuthHook = () => {
     //Imposta userInfo
     SetUserInfo(userInfo);
     navigate("/");
+    dispatch(SetCurrentPathSlice(null))
   };
 
   //Metodo per impostare SetUserInfoSlice

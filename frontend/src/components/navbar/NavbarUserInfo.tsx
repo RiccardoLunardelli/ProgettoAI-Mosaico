@@ -1,11 +1,15 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { UserInfoInterface } from "../../stores/slices/Base/userInfoSlice";
 import { useNavigate } from "react-router-dom";
+import { SetCurrentPathSlice } from "../../stores/slices/Base/currentPath";
+import { useTranslation } from "react-i18next";
 
 function NavbarUserInfoTag() {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const userInfoSlice: { value: UserInfoInterface } = useSelector(
     (state: { userInfoSlice: { value: UserInfoInterface } }) =>
@@ -69,7 +73,10 @@ function NavbarUserInfoTag() {
             fontSize: "14px",
             transition: "background 0.2s",
           }}
-          onClick={() => navigate("/Runs")}
+          onClick={() => {
+            navigate("/Runs")
+            dispatch(SetCurrentPathSlice(t("Runs")))
+          }}
         >
           Le mie run
         </DropdownMenu.Item>
@@ -81,7 +88,10 @@ function NavbarUserInfoTag() {
             fontSize: "14px",
             transition: "background 0.2s",
           }}
-          onClick={() => navigate("/")}
+          onClick={() => {
+            navigate("/Settings")
+            dispatch(SetCurrentPathSlice(t("Settings")))
+          }}
         >
           Settings
         </DropdownMenu.Item>

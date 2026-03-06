@@ -1,12 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import { lazy } from "react";
-import Logo from "../../../public/logo/unnamed-Photoroom.png";
+import { useDispatch, useSelector } from "react-redux";
+import { SetCurrentPathSlice } from "../../stores/slices/Base/currentPath";
 
 const NavBarLogOut = lazy(() => import("./NavBarLogOut"));
 const NavbarUserInfoTag = lazy(() => import("./NavbarUserInfo"));
 
 function TopNavbar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const currentPathSlice: { value: string } = useSelector(
+    (state: { currentPathSlice: { value: string } }) => state.currentPathSlice,
+  );
 
   return (
     <div
@@ -28,19 +34,52 @@ function TopNavbar() {
         boxSizing: "border-box",
       }}
     >
-      {/* LEFT: Logo / Titolo */}
-      <div
-        style={{
-          fontSize: "18px",
-          fontWeight: 700,
-          color: "#477dda",
-          cursor: "pointer",
-          userSelect: "none",
-        }}
-        onClick={() => navigate("/")}
-      >
-        Semantic AI Mapper
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            fontSize: "18px",
+            fontWeight: 700,
+            color: "#477dda",
+            cursor: "pointer",
+            userSelect: "none",
+          }}
+          onClick={() => {
+                      navigate("/")
+                      dispatch(SetCurrentPathSlice(null))
+                    }}
+        >
+          Semantic AI Mapper
+        </div>
+        {/* Current Path */}
+        {currentPathSlice.value ? (
+          <>
+            <div style={{ marginLeft: "15px" }}>
+              <span
+                className="material-symbols-outlined"
+                style={{
+                  fontSize: "12px",
+                  color: "var(--black)",
+                  opacity: "50%",
+                }}
+              >
+                arrow_forward_ios
+              </span>
+              <span
+                style={{
+                  marginLeft: "12px",
+                  color: "var(--black)",
+                  fontSize: "14px",
+                }}
+              >
+                {currentPathSlice.value}
+              </span>
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
       </div>
+      {/* LEFT: Logo / Titolo */}
 
       {/* RIGHT: User + Logout */}
       <div

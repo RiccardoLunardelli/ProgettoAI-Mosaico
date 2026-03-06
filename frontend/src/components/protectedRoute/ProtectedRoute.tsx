@@ -7,6 +7,7 @@ import {
   SetUserInfoSlice,
   type UserInfoInterface,
 } from "../../stores/slices/Base/userInfoSlice";
+import { SetCurrentPathSlice } from "../../stores/slices/Base/currentPath";
 
 export default function ProtectedRoute() {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ export default function ProtectedRoute() {
     if (authCheck != "") {
       //Naviga alla lista dei rapportini / interventi
       navigate("/");
+      dispatch(SetCurrentPathSlice(null))
 
       //Si ferma qua
       return;

@@ -110,11 +110,13 @@ a {
   border: 1px solid #e5e7eb;
   background-color: var(--white);
   transition: all 0.15s ease;
+  
 }
 
 .HoverTransform:hover {
   border: 1px solid #0055ff;
   background-color: rgb(248, 245, 245);
+  cursor: pointer;
 }
 
 .RunSelected {
