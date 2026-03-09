@@ -25,9 +25,11 @@ import { currentPathSliceReducer } from "./stores/slices/Base/currentPath";
 import { knowledgeBaseListSliceReducer } from "./stores/slices/Base/knowledgeBaseListSlice";
 import { templateBaseListSliceReducer } from "./stores/slices/Base/templateBaseListSlice";
 import { dictionaryListSliceReducer } from "./stores/slices/Base/dictionaryListSlice";
+import { deviceListListSliceReducer } from "./stores/slices/Base/deviceListSlice";
 
 const HomePageTag = lazy(() => import("./components/Home/HomePage"));
-const DictionaryPageTag = lazy(() => import("./components/dictionary/DictionatyPage"));
+const DeviceListPageTag = lazy(() => import("./components/deviceList/DeviceListPage"));
+const DictionaryPageTag = lazy(() => import("./components/dictionary/DictionaryPage"));
 const TemplateBasePageTag = lazy(() => import("./components/TemplateBase/TemplateBasePage"));
 const KnowledgeBasePageTag = lazy(
   () => import("./components/knowledgebase/KnowledgeBasePage"),
@@ -96,6 +98,15 @@ let childrenRouterArr: any = [
     element: (
       <Suspense fallback="">
         <DictionaryPageTag />
+      </Suspense>
+    ),
+    errorElement: <ErrorBoundaryInnerTag />,
+  },
+  {
+    path: "/DeviceList",
+    element: (
+      <Suspense fallback="">
+        <DeviceListPageTag />
       </Suspense>
     ),
     errorElement: <ErrorBoundaryInnerTag />,
@@ -171,7 +182,8 @@ function SecureRoot(): JSX.Element {
       currentPathSlice: currentPathSliceReducer,
       knowledgeBaseListSlice: knowledgeBaseListSliceReducer,
       templateBaseListSlice: templateBaseListSliceReducer,
-      dictionaryListSlice: dictionaryListSliceReducer
+      dictionaryListSlice: dictionaryListSliceReducer,
+      deviceListListSlice: deviceListListSliceReducer,
     },
     devTools:
       (import.meta.env.VITE_DEBUG_DEVTOOLS?.toString()?.toLowerCase() ?? "") ==
