@@ -7,6 +7,8 @@ import {
   RunDeviceListAPIHook,
 } from "../../customHooks/API/DeviceList/DeviceListAPI";
 
+import { getJsonDiffLines } from "../../commons/commonsFunctions";
+
 const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
 
 const BasicButtonGenericTag = lazy(
@@ -22,7 +24,7 @@ interface ComponentStateInterface {
   selectedFile: string;
   validateOnly: boolean;
   warning: null | string[];
-  enriched_file: {} | null;
+  enriched_file: [] | null 
 }
 
 function DeviceListPageTag() {
@@ -61,6 +63,7 @@ function DeviceListPageTag() {
       };
     });
   };
+
 
   const HandleSaveButtonOnClick = () => {
     RunDeviceListAPI({
@@ -370,9 +373,8 @@ function DeviceListPageTag() {
       >
         {componentState.enriched_file ? (
           <>
-            <div style={{ marginTop: "20px", display: "flex", opacity: "50%" }}>
-              Preview run
-            </div>
+            <div style={{ marginTop: "20px", opacity: "50%" }}>Changes</div>
+
             <div
               style={{
                 backgroundColor: "#f3f5f7",
@@ -387,7 +389,7 @@ function DeviceListPageTag() {
                 overflow: "auto",
               }}
             >
-              <pre
+              <div
                 style={{
                   margin: 0,
                   textAlign: "left",
@@ -395,15 +397,44 @@ function DeviceListPageTag() {
                   wordBreak: "break-word",
                   fontSize: "13px",
                   width: "100%",
+                  fontFamily: "monospace",
                 }}
               >
-                {JSON.stringify(componentState.enriched_file, null, 2)}
-              </pre>
+                {getJsonDiffLines(deviceListListSlice.detail.content, componentState.enriched_file).map(
+                  (
+                    singleLine: {
+                      line: string;
+                      type: "same" | "added" | "removed";
+                    },
+                    index: number,
+                  ) => (
+                    <div
+                      key={`${singleLine.line}-${index}`}
+                      style={{
+                        backgroundColor:
+                          singleLine.type === "added"
+                            ? "#e8f5e9"
+                            : singleLine.type === "removed"
+                              ? "#ffebee"
+                              : "transparent",
+                        color:
+                          singleLine.type === "added"
+                            ? "#1b5e20"
+                            : singleLine.type === "removed"
+                              ? "#b71c1c"
+                              : "inherit",
+                        display: "block",
+                        width: "100%",
+                      }}
+                    >
+                      {singleLine.line}
+                    </div>
+                  ),
+                )}
+              </div>
             </div>
           </>
-        ) : (
-          <></>
-        )}
+        ) : null}
         <div>
           {/* Se Warning è stato settato */}
           {componentState.warning && componentState.warning.length > 0 ? (

@@ -1,3 +1,4 @@
+import { diffLines } from "diff/lib/diff/line.js";
 import { FetchResponseTypeEnum, ResultTypeEnum } from "./commonsEnums";
 import {
   type FetchFunctionBodyInterface,
@@ -432,4 +433,30 @@ export const IsValidJSON = (text: string) => {
   } catch {
     return false;
   }
+};
+
+export const getJsonDiffLines = (json1: [], json2: []) => {
+  if (!json1 || !json2) return [];
+
+  const oldText = JSON.stringify(json1, null, 2);
+  const newText = JSON.stringify(json2, null, 2);
+
+  const diff = diffLines(oldText, newText);
+
+  const result: { line: string; type: "same" | "added" | "removed" }[] = [];
+
+  diff.forEach((part) => {
+    const lines = part.value.split("\n");
+
+    lines.forEach((line, index) => {
+      if (index === lines.length - 1 && line === "") return;
+
+      result.push({
+        line,
+        type: part.added ? "added" : part.removed ? "removed" : "same",
+      });
+    });
+  });
+
+  return result;
 };

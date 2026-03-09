@@ -28,6 +28,7 @@ import { dictionaryListSliceReducer } from "./stores/slices/Base/dictionaryListS
 import { deviceListListSliceReducer } from "./stores/slices/Base/deviceListSlice";
 
 const HomePageTag = lazy(() => import("./components/Home/HomePage"));
+const TemplatePageTag = lazy(() => import("./components/Template/TemplatePage"));
 const DeviceListPageTag = lazy(() => import("./components/deviceList/DeviceListPage"));
 const DictionaryPageTag = lazy(() => import("./components/dictionary/DictionaryPage"));
 const TemplateBasePageTag = lazy(() => import("./components/TemplateBase/TemplateBasePage"));
@@ -107,6 +108,15 @@ let childrenRouterArr: any = [
     element: (
       <Suspense fallback="">
         <DeviceListPageTag />
+      </Suspense>
+    ),
+    errorElement: <ErrorBoundaryInnerTag />,
+  },
+  {
+    path: "/Template",
+    element: (
+      <Suspense fallback="">
+        <TemplatePageTag />
       </Suspense>
     ),
     errorElement: <ErrorBoundaryInnerTag />,
