@@ -156,9 +156,9 @@ function DictionaryPageTag() {
           componentState.Mode == "manual" ? "" : componentState.selectedRunId,
         manual_mode: componentState.Mode == "manual" ? "patch" : "",
         patch_json:
-          componentState.whatImDoing == "PatchJson"
+          (componentState.whatImDoing == "PatchJson" && componentState.Mode == "manual") 
             ? JSON.parse(inputSliceValue["DictionaryPatch-TextArea"])
-            : "",
+            : {},
       },
       showToast: true,
       showLoader: true,
