@@ -24,8 +24,10 @@ import { runsListSliceReducer } from "./stores/slices/Base/runsListSlice";
 import { currentPathSliceReducer } from "./stores/slices/Base/currentPath";
 import { knowledgeBaseListSliceReducer } from "./stores/slices/Base/knowledgeBaseListSlice";
 import { templateBaseListSliceReducer } from "./stores/slices/Base/templateBaseListSlice";
+import { dictionaryListSliceReducer } from "./stores/slices/Base/dictionaryListSlice";
 
 const HomePageTag = lazy(() => import("./components/Home/HomePage"));
+const DictionaryPageTag = lazy(() => import("./components/dictionary/DictionatyPage"));
 const TemplateBasePageTag = lazy(() => import("./components/TemplateBase/TemplateBasePage"));
 const KnowledgeBasePageTag = lazy(
   () => import("./components/knowledgebase/KnowledgeBasePage"),
@@ -85,6 +87,15 @@ let childrenRouterArr: any = [
     element: (
       <Suspense fallback="">
         <TemplateBasePageTag />
+      </Suspense>
+    ),
+    errorElement: <ErrorBoundaryInnerTag />,
+  },
+  {
+    path: "/Dictionary",
+    element: (
+      <Suspense fallback="">
+        <DictionaryPageTag />
       </Suspense>
     ),
     errorElement: <ErrorBoundaryInnerTag />,
@@ -159,7 +170,8 @@ function SecureRoot(): JSX.Element {
       runsListSlice: runsListSliceReducer,
       currentPathSlice: currentPathSliceReducer,
       knowledgeBaseListSlice: knowledgeBaseListSliceReducer,
-      templateBaseListSlice: templateBaseListSliceReducer
+      templateBaseListSlice: templateBaseListSliceReducer,
+      dictionaryListSlice: dictionaryListSliceReducer
     },
     devTools:
       (import.meta.env.VITE_DEBUG_DEVTOOLS?.toString()?.toLowerCase() ?? "") ==

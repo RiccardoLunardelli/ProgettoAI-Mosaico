@@ -135,7 +135,6 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
 
         return {"status": "ok", "run_id": report.get("run_id"), "report_path": str(report_path), "warning": report.get("validation", {}).get("warnings")}
 
-
 #----CRONOLOGIA DIFF-----
 @router.get("/cronology")
 def get_cronology(user = Depends(get_current_user)):
@@ -157,7 +156,7 @@ def get_run(run_id: str, user = Depends(get_current_user)):
 def get_run_template(user = Depends(get_current_user)):
     return runClass.get_run_template(user["sub"])
 
-#-----TEMPLATE (3-step)-----
+#-----TEMPLATE-----
 @router.post("/run/template/start")
 def run_template_start(payload: RunTemplateStartRequest, user = Depends(get_current_user)):
     input_path = TEMPLATE_DIR / payload.template_name

@@ -1,12 +1,9 @@
-import { lazy, Suspense, useEffect } from "react";
+import {  Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Outlet } from "react-router-dom";
 import { CheckAuthAPIHook } from "../../customHooks/API/Auth/checkAuthAPI";
 import { Loader } from "rsuite";
-import {
-  SetUserInfoSlice,
-  type UserInfoInterface,
-} from "../../stores/slices/Base/userInfoSlice";
+
 import { SetCurrentPathSlice } from "../../stores/slices/Base/currentPath";
 
 export default function ProtectedRoute() {

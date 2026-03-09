@@ -1,13 +1,9 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  GetKnowledgeBaseIdsAPIHook,
-  GetKnowledgeBaseDetailAPIHook,
-  UpdateKnowledgeBaseDetailAPIHook,
-  UpdateKnowledgeBasePatchAPIHook,
-} from "../../customHooks/API/KnoledgeBase/knowledgeBaseAPI";
+
 import { SetInputSlice } from "../../stores/slices/Base/inputSlice";
 import { IsValidJSON } from "../../commons/commonsFunctions";
+import { GetKnowledgeBaseDetailAPIHook, GetKnowledgeBaseIdsAPIHook, UpdateKnowledgeBaseDetailAPIHook, UpdateKnowledgeBasePatchAPIHook } from "../../customHooks/API/KnowledgeBase/knowledgeBaseAPI";
 
 const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
 const Toggle = lazy(() =>
@@ -18,7 +14,7 @@ const BasicButtonGenericTag = lazy(
   () => import("../button/BasicButtonGeneric"),
 );
 
-type WhatToDoType = "PatchJson" | "Edit";
+export type WhatToDoType = "PatchJson" | "Edit";
 
 interface ComponentStateInterface {
   selectedId: string;

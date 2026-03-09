@@ -51,7 +51,3 @@ def logout(user = Depends(get_current_user)):
 @router.get("/checkauth")
 def checkAuth(user = Depends(get_current_user)):
     return {"user": user, "isvalid": True}
-
-
-    
-

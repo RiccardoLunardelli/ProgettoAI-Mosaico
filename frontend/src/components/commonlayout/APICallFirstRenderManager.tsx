@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { GetRunIdsAPIHook } from "../../customHooks/Runs/runsAPI";
 
 //Oggetto per gestire le chiamate API eseguite alla prima renderizzazione
 function APICallFirstRenderManagerTag() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [GetRunIdsAPI] = GetRunIdsAPIHook();
 

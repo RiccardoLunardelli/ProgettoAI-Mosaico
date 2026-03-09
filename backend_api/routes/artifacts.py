@@ -29,11 +29,12 @@ def list_artifact(artifact, artifact_dir):
         raise HTTPException(status_code=404, detail=f"{artifact} directory not found !")
 
     # artifact = {template_base, dictionary, kb, template}
-    if artifact != "device_list":
+    if artifact not in ["device_list", "enrich_device_list"]:
         files = sorted([p.name for p in artifact_dir.glob("*.json")])
         return files
+    
     # artifact = device_list
-    else:
+    elif artifact == "device_list":
         items = []
         for store_dir in sorted(artifact_dir.iterdir()):
             if not store_dir.is_dir():
@@ -42,6 +43,21 @@ def list_artifact(artifact, artifact_dir):
             if files:
                 items.append({"store": store_dir.name, "file":  files })
         return {"device_list": items}
+    
+    # artifact = enrich_device_list
+    else:
+        items = []
+        for store_dir in sorted(artifact_dir.iterdir()):
+            if not store_dir.is_dir():
+                continue
+            files = list(store_dir.glob("device_list_context_*.json"))
+            for f in files:
+                items.append({"store": store_dir.name,"file": f.name})
+
+        if not items:
+            raise HTTPException(status_code=404, detail=f"{artifact} not exists")
+
+        return {"enriched_device_list": items}
 
 def get_file_of_artifact(name: str | None, store: str | None, dl: str | None,  artifact, artifact_dir):
     # ritorna contenuto file
@@ -194,6 +210,14 @@ def list_device_list(user = Depends(get_current_user)):
 @router.get("/device_list/{store}/{dl}")
 def get_device_list(store: str, dl: str, user = Depends(get_current_user)):
     return get_file_of_artifact(None, store, dl, "device_list", PVS_DIR)
+
+@router.get("/enrich_device_list")
+def list_enrich_device_list(user = Depends(get_current_user)):
+    return list_artifact("enrich_device_list", PVS_DIR)
+
+@router.get("/enrich/device_list/{store}/{dl}")
+def get_enrich_device_list(store: str, dl: str, user = Depends(get_current_user)):
+    return get_file_of_artifact(None, store, dl, "enrich_device_list", PVS_DIR)
 
 #----EDIT----
 @router.post("/dictionary/edit")

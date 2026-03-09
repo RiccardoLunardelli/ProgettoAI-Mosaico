@@ -11,17 +11,16 @@ import {
 } from "../../../commons/commonsEnums";
 import { apiDomainString } from "../../../commons/commonsVariables";
 import {
-  SetRunIdTemplateDetailSlice,
-    SetTemplateBaseDetailSlice,
-  SetTemplateBaseListSlice,
-} from "../../../stores/slices/Base/templateBaseListSlice";
+  SetDictionaryDetailSlice,
+  SetDictionaryListSlice,
+} from "../../../stores/slices/Base/dictionaryListSlice";
 import { useTranslation } from "react-i18next";
 import { toast, type Id } from "react-toastify";
 
-const GetTemplateIdsAPIHook = () => {
+const GetDictionaryIdsAPIHook = () => {
   const dispatch = useDispatch();
 
-  const GetTemplateIdsAPI = async (infoObj: {
+  const GetDictionaryIdsAPI = async (infoObj: {
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
     saveResponse?: boolean;
@@ -32,7 +31,7 @@ const GetTemplateIdsAPIHook = () => {
     }
 
     try {
-      const apiCall = await fetch(apiDomainString + "/template_base", {
+      const apiCall = await fetch(apiDomainString + "/dictionaries", {
         method: FetchMethodEnum.Get,
         credentials: "include",
         headers: {
@@ -48,9 +47,9 @@ const GetTemplateIdsAPIHook = () => {
 
       //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
-        const templateBaseList: string[] = jsonResponse ?? [];
+        const dictionaryList: string[] = jsonResponse ?? [];
 
-        dispatch(SetTemplateBaseListSlice(templateBaseList));
+        dispatch(SetDictionaryListSlice(dictionaryList));
       }
 
       //Callback di successo
@@ -78,13 +77,13 @@ const GetTemplateIdsAPIHook = () => {
     }
   };
 
-  return [GetTemplateIdsAPI];
+  return [GetDictionaryIdsAPI];
 };
 
-const GetTemplateBaseDetailAPIHook = () => {
+const GetDictionaryDetailAPIHook = () => {
   const dispatch = useDispatch();
 
-  const GetTemplateBaseDetailAPI = async (infoObj: {
+  const GetDictionaryDetailAPI = async (infoObj: {
     data: {
       id: string;
     };
@@ -98,7 +97,7 @@ const GetTemplateBaseDetailAPIHook = () => {
     }
 
     try {
-      const apiCall = await fetch(apiDomainString + "/template_base/" + infoObj.data.id, {
+      const apiCall = await fetch(apiDomainString + "/dictionaries/" + infoObj.data.id, {
         method: FetchMethodEnum.Get,
         credentials: "include",
         headers: {
@@ -114,7 +113,7 @@ const GetTemplateBaseDetailAPIHook = () => {
 
       //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
-        dispatch(SetTemplateBaseDetailSlice(jsonResponse));
+        dispatch(SetDictionaryDetailSlice(jsonResponse));
       }
 
       //Callback di successo
@@ -127,7 +126,7 @@ const GetTemplateBaseDetailAPIHook = () => {
         });
       }
     } catch (err) {
-      console.error("KnowledgeBase error:", err);
+      console.error("Dictionary error:", err);
 
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
@@ -142,80 +141,17 @@ const GetTemplateBaseDetailAPIHook = () => {
     }
   };
 
-  return [GetTemplateBaseDetailAPI];
+  return [GetDictionaryDetailAPI];
 };
 
-const GetRunIdTemplateAPIHook = () => {
-  const dispatch = useDispatch();
-
-  const GetRunIdTemplateAPI = async (infoObj: {
-    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
-    showLoader?: boolean;
-    saveResponse?: boolean;
-  }) => {
-    //Apre il loader, se richiesto
-    if (infoObj.showLoader) {
-      dispatch(OpenLoader());
-    }
-
-    try {
-      const apiCall = await fetch(apiDomainString + "/runid_template", {
-        method: FetchMethodEnum.Get,
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      //Risposta in base64
-      const response: string = await apiCall.text();
-
-      //Risposta in json
-      const jsonResponse = JSON.parse(response);
-
-      //Se deve salvare il valore
-      if (infoObj?.saveResponse ?? true) {
-        const idTempalate: string[] = jsonResponse ?? []
-
-        dispatch(SetRunIdTemplateDetailSlice(idTempalate));
-      }
-
-      //Callback di successo
-      if (infoObj.EndCallback) {
-        infoObj.EndCallback({
-          result: ResultTypeEnum.Success,
-          message: jsonResponse,
-          messageType: FetchResponseTypeEnum.Json,
-          otherResponseInfo: "",
-        });
-      }
-    } catch (err) {
-      console.error("DataOra error:", err);
-
-      if (infoObj.EndCallback) {
-        infoObj.EndCallback({
-          result: ResultTypeEnum.Error,
-          message: err,
-          messageType: FetchResponseTypeEnum.Json,
-          otherResponseInfo: "",
-        });
-      }
-    } finally {
-      if (infoObj.showLoader) dispatch(CloseLoader());
-    }
-  };
-
-  return [GetRunIdTemplateAPI];
-};
-
-const UpdateTemplateBaseDetailAPIHook = () => {
+const UpdateDictionaryDetailAPIHook = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const UpdateTemplateBaseDetailAPI = async (infoObj: {
+  const UpdateDictionaryDetailAPI = async (infoObj: {
     data: {
-      template_base_name: string;
-      template_base_json: {};
+      dictionary_name: string;
+      dictionary_json: {};
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
@@ -235,7 +171,7 @@ const UpdateTemplateBaseDetailAPIHook = () => {
     }
 
     try {
-      const apiCall = await fetch(apiDomainString + "/template_base/edit", {
+      const apiCall = await fetch(apiDomainString + "/dictionary/edit", {
         method: "POST",
         credentials: "include",
         body: JSON.stringify(infoObj.data),
@@ -316,17 +252,21 @@ const UpdateTemplateBaseDetailAPIHook = () => {
     }
   };
 
-  return [UpdateTemplateBaseDetailAPI];
+  return [UpdateDictionaryDetailAPI];
 };
 
-const UpdateTemplateBasePatchAPIHook = () => {
+
+const RunReportDictionaryAPIHook = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const UpdateTemplateBasePatchAPI = async (infoObj: {
+  const RunReportDictionaryAPI = async (infoObj: {
     data: {
-      template_base_name: string;
+      dictionary_name: string;
       validate_only: boolean;
+      mode: string;
+      run_id: string;
+      manual_mode: string;
       patch_json: {};
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
@@ -347,7 +287,7 @@ const UpdateTemplateBasePatchAPIHook = () => {
     }
 
     try {
-      const apiCall = await fetch(apiDomainString + "/run/template_base", {
+      const apiCall = await fetch(apiDomainString + "/run/dictionary", {
         method: "POST",
         credentials: "include",
         body: JSON.stringify(infoObj.data),
@@ -428,13 +368,14 @@ const UpdateTemplateBasePatchAPIHook = () => {
     }
   };
 
-  return [UpdateTemplateBasePatchAPI];
+  return [RunReportDictionaryAPI];
 };
 
+
+
 export {
-  GetTemplateIdsAPIHook,
-  GetTemplateBaseDetailAPIHook,
-  UpdateTemplateBaseDetailAPIHook,
-  UpdateTemplateBasePatchAPIHook,
-  GetRunIdTemplateAPIHook
+  GetDictionaryIdsAPIHook,
+  GetDictionaryDetailAPIHook,
+  UpdateDictionaryDetailAPIHook,
+  RunReportDictionaryAPIHook
 };
