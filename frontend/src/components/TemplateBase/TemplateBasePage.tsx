@@ -5,7 +5,7 @@ import { SetInputSlice } from "../../stores/slices/Base/inputSlice";
 import { IsValidJSON } from "../../commons/commonsFunctions";
 import {
   GetTemplateBaseDetailAPIHook,
-  GetTemplateIdsAPIHook,
+  GetTemplateBaseIdsAPIHook,
   UpdateTemplateBaseDetailAPIHook,
   UpdateTemplateBasePatchAPIHook,
 } from "../../customHooks/API/TemplateBase/templateBaseAPI";
@@ -32,7 +32,7 @@ const inputIdList = ["TemplateBaseDetails-Edit", "TemplateBasePatch-TextArea"];
 
 function TemplateBasePageTag() {
   const [GetTemplateBaseDetailAPI] = GetTemplateBaseDetailAPIHook();
-  const [GetTemplateBaseIdsAPI] = GetTemplateIdsAPIHook();
+  const [GetTemplateBaseIdsAPI] = GetTemplateBaseIdsAPIHook();
   const [UpdateTemplateBaseDetailAPI] = UpdateTemplateBaseDetailAPIHook();
   const [UpdateTemplateBasePatchAPI] = UpdateTemplateBasePatchAPIHook();
   const dispatch = useDispatch();

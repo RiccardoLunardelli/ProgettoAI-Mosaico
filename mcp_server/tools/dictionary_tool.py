@@ -222,8 +222,8 @@ def dictionary_bulk_suggest(ctx: MCPContext, terms: List[str], path: str | None 
             cid = e.get("concept_id")
             cat = e.get("category")
 
-            if expected_category and cat != expected_category:
-                continue
+            #if expected_category and cat != expected_category:
+                #continue
 
             #synonyms
             for lang, syns in (e.get("synonyms") or {}).items():
@@ -260,8 +260,9 @@ def dictionary_bulk_suggest(ctx: MCPContext, terms: List[str], path: str | None 
                             })
                     except re.error:
                         pass
-
-        suggestions.append({"term": term, "candidates": hits})
+        
+        if len(hits) > 0:
+            suggestions.append({"term": term, "candidates": hits})
 
     return {"suggestions": suggestions}
     

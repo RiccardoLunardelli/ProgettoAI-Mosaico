@@ -13,7 +13,7 @@
         "it": [
           "temperatura di mandata",
           "mandata",
-          "Sm"
+          "CIAO"
         ],
         "en": []
       },
@@ -137,28 +137,7 @@
       "semantic_category": "state",
       "synonyms": {
         "it": [
-          "compressori",
-          "compressori l1 accesi per partenza compressori l2",
-          "l2 compressori spenti per guasto compressori l1",
-          "l2 allarme inverter compressori",
-          "l1 stato del relè per la configurazione di linea di compressori 1",
-          "l1 stato del relè per la configurazione di linea di compressori 7",
-          "l1 stato del relè per la configurazione di linea di compressori 9",
-          "l2 compressori in attesa per evitare avviamenti simultanei",
-          "l1 compressori in attesa per evitare avviamenti simultanei",
-          "l2 stato del relè per la configurazione di linea di compressori 1",
-          "l2 stato del relè per la configurazione di linea di compressori 7",
-          "l2 stato del relè per la configurazione di linea di compressori 9",
-          "l1 potenza richiesta attivazione compressori",
-          "l2 potenza richiesta attivazione compressori",
-          "l1 potenza attuale compressori",
-          "l1 potenza richiesta compressori",
-          "l2 potenza attuale compressori",
-          "l2 potenza richiesta compressori",
-          "l1 regolazione dei compressori in pressione",
-          "l1 numero di compressori configurati",
-          "l2 regolazione dei compressori in pressione",
-          "l2 numero di compressori configurati"
+          "compressori"
         ],
         "en": []
       },
@@ -171,22 +150,7 @@
       "semantic_category": "state",
       "synonyms": {
         "it": [
-          "ventilatori",
-          "l1 allarme sovraccarico comune ventilatori",
-          "l1 allarme generico ventilatori",
-          "l2 allarme sovraccarico comune ventilatori",
-          "l1 abilita forzatura ventilatori per allarme perdita refrigerante",
-          "l1 forza ventilatori per allarme perdita refrigerante",
-          "l2 allarme inverter ventilatori",
-          "l1 recupero calore offset aggiunto al setpoint di regolazione ventilatori per recupero calore",
-          "l1 percentuale attivazione inverter ventilatori",
-          "l1 potenza attuale ventilatori",
-          "l1 potenza richiesta ventilatori",
-          "l2 potenza richiesta ventilatori",
-          "l2 potenza attuale ventilatori",
-          "l2 percentuale attivazione inverter ventilatori",
-          "l1 numero di ventilatori configurati",
-          "l2 numero di ventilatori configurati"
+          "ventilatori"
         ],
         "en": []
       },
@@ -224,73 +188,7 @@
       "synonyms": {
         "it": [
           "setpoint",
-          "set di regolazione parametro set",
-          "l1 abilitazione modifica del setpoint per gestione aspirazione flottante",
-          "l1 abilitazione setpoint condensazione flottante",
-          "l1 abilita compensazione setpoint di aspirazione",
-          "l2 abilita compensazione setpoint di aspirazione",
-          "l1 abilita compensazione setpoint hpv da ain",
-          "l2 abilitazione setpoint condensazione flottante",
-          "l2 abilita compensazione setpoint aspirazione",
-          "l2 abilita compensazione setpoint condensazione",
-          "l1 setpoint modulante calcolato per regolazione compressione parallela",
-          "l1 setpoint di aspirazione flottante",
-          "l1 setpoint di aspirazione",
-          "l1 floating suction minimo setpoint",
-          "l1 floating suction massimosetpoint",
-          "l1 setpoint gas cooler",
-          "l1 setpoint minimo di condensazione",
-          "l1 setpoint massimo di condensazione",
-          "l1 setpoint regolazione valvola rprv",
-          "l1 offset di decremento al setpoint regolazione hpv in caso di attivazione sicurezze bassa pressione ricevitore",
-          "l1 offset di incremento al setpoint regolazione hpv in caso di attivazione sicurezze alta pressione ricevitore",
-          "l1 mininmo setpoint hpv con recupero calore attivo",
-          "l1 massimo setpoint hpv con recupero calore attivo",
-          "l1 massimo setpoint valvola hpv da azioni di sicurezza",
-          "l2 setpoint di aspirazione flottante",
-          "l2 setpoint di aspirazione",
-          "l2 floating suction minimo setpoint",
-          "l2 floating suction massimo setpoint",
-          "l1 recupero calore setpoint regolazione p i valvola di by pass gascooler con bypass consentito",
-          "l1 setpoint recupero calore 1",
-          "l1 recupero calore 1 setpoint regolazione p i pompa",
-          "l1 recupero calore 2 setpoint di regolazione",
-          "l1 recupero calore 2 setpoint regolazione p i pompa",
-          "l1 setpoint minimo valvola hpv",
-          "termostato generico 1 setpoint",
-          "termostato generico 2 setpoint",
-          "termostato 3 generico setpoint",
-          "termostato generico 4 setpoint",
-          "termostato generico 5 setpoint",
-          "modulante generico 1 setpoint",
-          "modulante generico 2 setpoint",
-          "l2 setpoint di condensazione",
-          "l1 offset compensazione setpoint compressori da ingresso digitale",
-          "l1 offset compensazione setpoint ventilatori da ingresso digitale",
-          "l2 offset compensazione setpoint compressori da ingresso digitale",
-          "l2 offset compensazione setpoint ventilatori da ingresso digitale",
-          "l1 recupero calore setpoint regolazione gas cooler bypassato con gestione basse temperature attivo",
-          "l1 recupero calore percentuale di richiesta corrispondente al massimo incremento setpoint hpv",
-          "l1 recupero calore massimo setpoint modulante bypass gas cooler",
-          "massima variazione istantanea del setpoint modulante per il compressore parallelo",
-          "l1 recupero calore minima richiesta per calcolo setpoint modulante bypass gas cooler",
-          "l1 recupero calore massima richiesta per calcolo setpoint modulante bypass gas cooler",
-          "l1 recupero calore minimo setpoint modulante bypass gas cooler",
-          "l2 setpoint minimo di condensazione",
-          "l2 setpoint massima condensazione",
-          "l2 recupero di calore setpoint temperatura",
-          "l2 setpoint attuale condensazione flottante",
-          "l1 offset aggiunto al setpoint aspirazione con regolazione su sonda pressione di backup",
-          "l2 offset aggiunto al setpoint aspirazione con regolazione su sonda pressione di backup",
-          "l1 compressione parallela massimo setpoint per calcolo setpoint modulante",
-          "recupero calore hpv minimum setpoint work delta",
-          "l1 tempo di riduzione setpoint per aspirazione flottante",
-          "azioni su setpoint valvola hpv e setpoint gas cooler sono simultanee",
-          "l1 recupero calore tempo per portare il setpoint hpv al minimo valore richiesto con recupero in funzione",
-          "tempo tra due variazioni del setpoint modulante per il compressore parallelo",
-          "minima frequenza inverter per consentire la variazione del setpoint modulante per il compressore parallelo",
-          "tempo incremento setpoint rprv per accensione compressore parallelo",
-          "tempo decremento setpoint rprv per spegnimento compressore parallelo"
+          "set di regolazione parametro set"
         ],
         "en": []
       },
@@ -303,58 +201,7 @@
       "semantic_category": "temperature",
       "synonyms": {
         "it": [
-          "differenziale",
-          "l2 differenziale pumpdown",
-          "l1 differenziale allarme bassa pressione di scarico",
-          "l1 differenziale pumpdown",
-          "l1 differenziale allarme alta pressione di aspirazione",
-          "l1 differenziale di allarme bassa pressione di aspirazione",
-          "l1 differenziale allarme alta pressione di condensazione",
-          "l1 differenziale allarme bassa pressione di condensazione",
-          "l1 differenziale di regolazione aspirazione",
-          "l1 differenziale gas cooler",
-          "l1 differenziale zona incremento regolazione ventilatori",
-          "l1 differenziale zona decremento regolazione ventilatori",
-          "l1 differenziale allarme alta temperatura olio comune",
-          "l1 differenziale allarme basso surriscaldamento",
-          "l1 differenziale zona incremento per la regolazione compressori",
-          "l1 differenziale zona decremento regolazione compressori",
-          "l1 recupero calore differenziale regolazionep i valvola di by pass gascooler con bypass consentito",
-          "l2 differenziale allarme alta pressione di aspirazione",
-          "l2 differenziale allarme bassa pressione di aspirazione",
-          "l2 differenziale allarme basso surriscaldamento",
-          "l2 differenziale di regolazione aspirazione",
-          "l1 differenziale allarme alta pressione di scarico",
-          "l2 differenziale allarme bassa pressione di scarico",
-          "l2 differenziale allarme alta pressione di scarico",
-          "l2 differenziale allarme comune olio ad alta temperatura",
-          "l2 differenziale zona incremento regolazione compressori",
-          "l2 differenziale zona decremento regolazione compressori",
-          "l1 recupero calore 2 differenziale regolazione p i pompa",
-          "l1 recupero calore 1 differenziale regolazione p i pompa",
-          "termostato generico 1 differenziale",
-          "termostato generico 2 differenziale",
-          "termostato 3 generico differenziale",
-          "termostato generico 4 differenziale",
-          "termostato generico 5 differenziale",
-          "modulante generico 1 differenziale",
-          "modulante generico 2 differenziale",
-          "differenziale allarme alta pressione ricevitore",
-          "l2 differenziale attivazione prevent alta temperatura",
-          "l2 differenziale di regolazion condensazione",
-          "l2 differenziale zona incremento regolazione ventilatori",
-          "l2 differenziale allarme alta temperatura olio comune",
-          "l2 differenziale allarme bassa temperatura olio",
-          "l1 recupero calore differenziale sulla regolazione per disabilitare il bypass del gas cooler",
-          "l1 differenziale allarme bassa temperatura olio",
-          "l2 differenziale allarme bassa pressione di condensazione",
-          "l2 differenziale prevent alta pressione condensazione",
-          "l1 differenziale attivazione prevent alta temperatura",
-          "l2 recupero di calore differenziale",
-          "l2 differenziale allarme alta pressione di condensazione",
-          "l2 differenziale zona decremento regolazione ventilatori",
-          "l1 differenziale allarme temperatura compressore parallelo",
-          "differenziale per attivazione rprv con compressori off in caso di alta pressione ricevitore"
+          "differenziale"
         ],
         "en": []
       },
@@ -407,8 +254,7 @@
       "synonyms": {
         "it": [
           "temperatura massima",
-          "soglia allarme di alta temperatura",
-          "l2 soglia di allarme comune olio ad alta temperatura"
+          "soglia allarme di alta temperatura"
         ],
         "en": []
       },
@@ -435,22 +281,7 @@
       "semantic_category": "alarm",
       "synonyms": {
         "it": [
-          "allarme di alta temperatura",
-          "allarme alta temperatura di scarico compressore parallelo",
-          "l1 allarme alta temperatura di scarico compressore 1",
-          "l2 allarme alta temperatura di scarico compressore 1",
-          "l1 allarme alta temperatura di scarico compressore 2",
-          "l2 allarme alta temperatura di scarico compressore 2",
-          "l1 allarme alta temperatura di scarico compressore 3",
-          "l2 allarme alta temperatura di scarico compressore 3",
-          "l1 allarme alta temperatura di scarico compressore 4",
-          "l2 allarme alta temperatura di scarico compressore 4",
-          "l1 allarme alta temperatura di scarico compressore 5",
-          "l2 allarme alta temperatura di scarico compressore 5",
-          "l1 allarme alta temperatura di scarico compressore 6",
-          "l2 allarme alta temperatura di scarico compressore 6",
-          "l1 allarme di alta temperatura dell olio comune",
-          "l2 allarme di alta temperatura dell olio comune"
+          "allarme di alta temperatura"
         ],
         "en": []
       },
@@ -509,13 +340,7 @@
       "semantic_category": "alarm",
       "synonyms": {
         "it": [
-          "allarme di alta pressione",
-          "l2 allarme alta pressione di condensazione",
-          "l1 allarme alta pressione di scarico",
-          "l2 allarme alta pressione di scarico",
-          "l1 allarme alta pressione di aspirazione",
-          "l2 allarme alta pressione di aspirazione",
-          "l2 allarme di alta pressione di condensazione"
+          "allarme di alta pressione"
         ],
         "en": []
       },
@@ -528,15 +353,7 @@
       "semantic_category": "alarm",
       "synonyms": {
         "it": [
-          "allarme di bassa pressione",
-          "l2 allarme bassa pressione di condensazione",
-          "l2 allarme bassa pressione di scarico",
-          "l1 allarme bassa pressione di aspirazione",
-          "l2 allarme bassa pressione di aspirazione",
-          "allarme pressione gas cooler troppo bassa per consentire il recupero di calore 1",
-          "allarme pressione gas cooler troppo bassa per consentire il recupero di calore 2",
-          "l1 allarme bassa pressione di aspirazione da pressostato",
-          "l1 allarme bassa pressione di condensazione"
+          "allarme di bassa pressione"
         ],
         "en": []
       },

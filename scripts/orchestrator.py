@@ -6,7 +6,7 @@ from src.parser.normalizer import normalization
 from scripts.llm_proposer.llm_proposer import (
     llm_propose_actions, ensure_labels, filter_by_candidate_gap,
     filter_low_confidence, extract_llm_contexts, merge_actions_dedup,
-    count_llm_applied
+    count_llm_applied, llm_percentual, llm_progress
 )
 from scripts.summarize_diff.diff import summarize_device_list_diff, summarize_template_real_diff, compute_diff, summarize_dictionary_diff, summarize_kb_diff, summarize_template_base_diff
 from scripts.build_patch.builder import (
@@ -84,7 +84,7 @@ def llm_propose_for_run(run_id: str, llm_model: str | None = None,) -> dict:
     mr = load_json(str(matching_path))
     model = llm_model or "llama3.1:8b"
 
-    llm_actions, _, llm_attempt = llm_propose_actions(model, mr)
+    llm_actions, _, llm_attempt = llm_propose_actions(run_id, model, mr)
 
     llm_actions = ensure_labels(llm_actions)
     llm_actions = filter_low_confidence(llm_actions)
@@ -383,6 +383,7 @@ def run_device_list(cfg: dict, validate) -> None:
         "device_list_version": device_list_version
     }
 
+    #enriched_file = commit.get("preview")
     warnings = None
     if commit and commit.get("warning"):
         warnings = commit.get("warning")
@@ -412,7 +413,7 @@ def run_device_list(cfg: dict, validate) -> None:
     report_path = run_dir / "run_report.json"
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(run_report, f, indent=2, ensure_ascii=False, default=str)
-    return report_path
+    return report_path, preview
 
 def template_run(run_id: str, template_path: str, validate_only: bool, apply_llm: bool, llm_actions_override: dict | None = None, manual_actions_path: str | None = None, config_path: str = "config/config.yml") -> dict:
     # run completa per template
@@ -459,11 +460,9 @@ def template_run(run_id: str, template_path: str, validate_only: bool, apply_llm
         llm_path = run_dir / "llm_patch_actions.json"
         if llm_path.exists():
             llm_proposed_actions = load_json(str(llm_path))
-        else:
-            raise FileNotFoundError("llm_patch_actions not found")
 
         # azioni da applicare: override se presente, altrimenti tutte
-        llm_actions = llm_actions_override or llm_proposed_actions
+        llm_actions = llm_actions_override
 
         actions_payload = merge_actions_dedup(actions_payload, llm_actions)
 

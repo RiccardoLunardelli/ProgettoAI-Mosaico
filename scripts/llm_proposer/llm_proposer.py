@@ -5,7 +5,7 @@ import json
 from src.metrics_calculation.llm_calculate_metrics import compute_time_metrics, compute_efficiency_metrics, compute_effectiveness_metrics, aggregate_ollama_metrics, compute_quality_metrics, compute_metrics
 
 TIMEZONE = timezone(timedelta(hours=1))
-ollama_call_count = 0
+llm_progress = {}
 
 def extract_llm_contexts(mr: dict) -> list[dict]:
     # estrae i contesti LLM dal matching report che richiedono llm ( ambiguous , unmapped )
@@ -128,12 +128,9 @@ def filter_by_candidate_gap(actions_payload: dict, llm_contexts: list[dict], min
     actions_payload["actions"] = filtered
     return actions_payload
 
-def ollama_generate_json(model: str, prompt: str) -> dict:
+def ollama_generate_json(run_id: str, model: str, prompt: str) -> dict:
     # genera json con ollama
-
-    global ollama_call_count 
-    ollama_call_count += 1
-
+    
     url = "http://127.0.0.1:11434/api/generate"
     payload = {
         "model": model,
@@ -155,7 +152,8 @@ def ollama_generate_json(model: str, prompt: str) -> dict:
     }
     raw = r.json().get("response", "").strip()
     try: 
-        print(f"chiamata LLM {ollama_call_count}")
+        llm_progress[run_id]["done_calls"] += 1
+        print(f"chiamata LLM {llm_progress[run_id]["done_calls"]}")
         return json.loads(raw), metrics
     except Exception:
         return {"patch_actions_version": "v0.1", "generated_at": datetime.now(timezone.utc).isoformat(), "actions": []}, {}
@@ -165,13 +163,18 @@ def chunk_list(items: list, size: int) -> list[list]:
 
     return [items[i:i + size] for i in range(0, len(items), size)]
 
-def llm_propose_actions(model: str, mr: dict, batch_size: int = 3) -> dict:
+def llm_propose_actions(run_id: str, model: str, mr: dict, batch_size: int = 3) -> dict:
     # genera proposte actions con LLM e metriche LLM. Produce patch actions + info 
 
+    global llm_progress
     llm_contexts = extract_llm_contexts(mr)
     if not llm_contexts:
         return {"patch_actions_version": "v0.1","generated_at": datetime.now(timezone(timedelta(hours=1))).isoformat(), "actions": []}, {"target":"dictionary","operations":[]}, {"note":"skipped_no_ambiguous"}
     batches = chunk_list(llm_contexts, batch_size)
+    llm_progress[run_id] = {
+        "total_calls": len(batches),
+        "done_calls": 0
+    }
 
     all_actions = []
     all_dict_ops = []
@@ -180,9 +183,9 @@ def llm_propose_actions(model: str, mr: dict, batch_size: int = 3) -> dict:
 
     for idx, batch in enumerate(batches):
         prompt = build_llm_prompt(batch)
-        output, call_metrics = ollama_generate_json(model, prompt)
+        output, call_metrics = ollama_generate_json(run_id, model, prompt)
         call_metrics_list.append(call_metrics or {})
-
+        
         if isinstance(output, dict):
             pa = parse_llm_output(output)
             if isinstance(pa, dict) and isinstance(pa.get("actions"), list):
@@ -279,3 +282,16 @@ def count_llm_applied(actions_payload: dict, llm_actions: dict) -> int:
     llm_keys = {(a.get("section"), a.get("source_key")) for a in llm_actions.get("actions", [])}
     applied_keys = {(a.get("section"), a.get("source_key")) for a in actions_payload.get("actions", [])}
     return len(llm_keys & applied_keys)
+
+def llm_percentual(run_id: str) -> int:
+    # calcola la percentuale di progresso chiamate del modello
+
+    data = llm_progress.get(run_id)
+
+    if not data:
+        return 0
+
+    done = data["done_calls"]
+    total = data["total_calls"]
+
+    return int((done / max(total, 1)) * 100)

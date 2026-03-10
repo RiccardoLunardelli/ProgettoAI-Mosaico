@@ -73,7 +73,7 @@ def build_dictionary_patch_from_run_report(run_report_path: list[str], dictionar
         r = load_json(p)
         reports.append(r)
     
-    # usa solo UNMAPPED, AMBIGUOUS
+    # Estrae ambiguous
     ambiguous = []
     for r in reports:
         analysis = r.get("analysis", {})
@@ -99,17 +99,19 @@ def build_dictionary_patch_from_run_report(run_report_path: list[str], dictionar
     #----AMBIGUOUS----
     for item in ambiguous:
         candidates = item.get("candidates", [])
+        # tiene solo quelli con 1 candidato
         if len(candidates) != 1:
             continue
 
-        concept_id = candidates[0].get("concept_id")
-        text = (item.get("evidence", {}).get("normalized_text")or "").strip()
+        concept_id = candidates[0].get("concept_id") # estrae concetto
+        text = (item.get("evidence", {}).get("normalized_text")or "").strip() # estrae testo
         if not concept_id or not text:
             continue 
         
-        # ADD ABBR 
-        tokens = [t for t in text.split() if t]
+        # ADD syn / abr
+        tokens = [t for t in text.split() if t] # ex. [temp acqua] --> ["temp", "acqua"]
         if len(tokens) < 2:
+            # ADD ABBR 
             # troppo corto per essere un sinonimo valido
             if 2 <= len(text) <= 3:
                 if text not in exisisting_abbr.get(concept_id, set()):
@@ -124,6 +126,7 @@ def build_dictionary_patch_from_run_report(run_report_path: list[str], dictionar
 def build_dictionary_suggestions_from_run_report(run_report_paths: list[str], dictionary_path: str) -> dict:
     reports = [load_json(p) for p in run_report_paths]
 
+    # estrae unmpapped
     unmapped = []
     for r in reports:
         analysis = r.get("analysis", {})

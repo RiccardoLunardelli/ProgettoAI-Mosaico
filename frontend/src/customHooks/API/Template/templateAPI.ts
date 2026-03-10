@@ -10,18 +10,18 @@ import {
   ResultTypeEnum,
 } from "../../../commons/commonsEnums";
 import { apiDomainString } from "../../../commons/commonsVariables";
-import {
-  SetRunIdTemplateDetailSlice,
-    SetTemplateBaseDetailSlice,
-  SetTemplateBaseListSlice,
-} from "../../../stores/slices/Base/templateBaseListSlice";
 import { useTranslation } from "react-i18next";
 import { toast, type Id } from "react-toastify";
+import {
+  SetTemplateDetailSlice,
+  SetTemplateListSlice,
+  SetTemplatePercentualSlice,
+} from "../../../stores/slices/Base/templateListSlice";
 
-const GetTemplateBaseIdsAPIHook = () => {
+const GetTemplateIdsAPIHook = () => {
   const dispatch = useDispatch();
 
-  const GetTemplateBaseIdsAPI = async (infoObj: {
+  const GetTemplateIdsAPI = async (infoObj: {
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
     saveResponse?: boolean;
@@ -32,7 +32,7 @@ const GetTemplateBaseIdsAPIHook = () => {
     }
 
     try {
-      const apiCall = await fetch(apiDomainString + "/template_base", {
+      const apiCall = await fetch(apiDomainString + "/templates", {
         method: FetchMethodEnum.Get,
         credentials: "include",
         headers: {
@@ -50,7 +50,7 @@ const GetTemplateBaseIdsAPIHook = () => {
       if (infoObj?.saveResponse ?? true) {
         const templateBaseList: string[] = jsonResponse ?? [];
 
-        dispatch(SetTemplateBaseListSlice(templateBaseList));
+        dispatch(SetTemplateListSlice(templateBaseList));
       }
 
       //Callback di successo
@@ -78,13 +78,13 @@ const GetTemplateBaseIdsAPIHook = () => {
     }
   };
 
-  return [GetTemplateBaseIdsAPI];
+  return [GetTemplateIdsAPI];
 };
 
-const GetTemplateBaseDetailAPIHook = () => {
+const GetTemplateDetailAPIHook = () => {
   const dispatch = useDispatch();
 
-  const GetTemplateBaseDetailAPI = async (infoObj: {
+  const GetTemplateDetailAPI = async (infoObj: {
     data: {
       id: string;
     };
@@ -98,13 +98,16 @@ const GetTemplateBaseDetailAPIHook = () => {
     }
 
     try {
-      const apiCall = await fetch(apiDomainString + "/template_base/" + infoObj.data.id, {
-        method: FetchMethodEnum.Get,
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
+      const apiCall = await fetch(
+        apiDomainString + "/templates/" + infoObj.data.id,
+        {
+          method: FetchMethodEnum.Get,
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       //Risposta in base64
       const response: string = await apiCall.text();
@@ -114,7 +117,7 @@ const GetTemplateBaseDetailAPIHook = () => {
 
       //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
-        dispatch(SetTemplateBaseDetailSlice(jsonResponse));
+        dispatch(SetTemplateDetailSlice(jsonResponse));
       }
 
       //Callback di successo
@@ -127,7 +130,7 @@ const GetTemplateBaseDetailAPIHook = () => {
         });
       }
     } catch (err) {
-      console.error("KnowledgeBase error:", err);
+      console.error("template error:", err);
 
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
@@ -142,80 +145,16 @@ const GetTemplateBaseDetailAPIHook = () => {
     }
   };
 
-  return [GetTemplateBaseDetailAPI];
+  return [GetTemplateDetailAPI];
 };
 
-const GetRunIdTemplateAPIHook = () => {
-  const dispatch = useDispatch();
-
-  const GetRunIdTemplateAPI = async (infoObj: {
-    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
-    showLoader?: boolean;
-    saveResponse?: boolean;
-  }) => {
-    //Apre il loader, se richiesto
-    if (infoObj.showLoader) {
-      dispatch(OpenLoader());
-    }
-
-    try {
-      const apiCall = await fetch(apiDomainString + "/runid_template", {
-        method: FetchMethodEnum.Get,
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      //Risposta in base64
-      const response: string = await apiCall.text();
-
-      //Risposta in json
-      const jsonResponse = JSON.parse(response);
-
-      //Se deve salvare il valore
-      if (infoObj?.saveResponse ?? true) {
-        const idTempalate: string[] = jsonResponse ?? []
-
-        dispatch(SetRunIdTemplateDetailSlice(idTempalate));
-      }
-
-      //Callback di successo
-      if (infoObj.EndCallback) {
-        infoObj.EndCallback({
-          result: ResultTypeEnum.Success,
-          message: jsonResponse,
-          messageType: FetchResponseTypeEnum.Json,
-          otherResponseInfo: "",
-        });
-      }
-    } catch (err) {
-      console.error("DataOra error:", err);
-
-      if (infoObj.EndCallback) {
-        infoObj.EndCallback({
-          result: ResultTypeEnum.Error,
-          message: err,
-          messageType: FetchResponseTypeEnum.Json,
-          otherResponseInfo: "",
-        });
-      }
-    } finally {
-      if (infoObj.showLoader) dispatch(CloseLoader());
-    }
-  };
-
-  return [GetRunIdTemplateAPI];
-};
-
-const UpdateTemplateBaseDetailAPIHook = () => {
+const RunTemplateStartAPIHook = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const UpdateTemplateBaseDetailAPI = async (infoObj: {
+  const RunTemplateStartAPI = async (infoObj: {
     data: {
-      template_base_name: string;
-      template_base_json: {};
+      template_name: string;
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
@@ -235,7 +174,7 @@ const UpdateTemplateBaseDetailAPIHook = () => {
     }
 
     try {
-      const apiCall = await fetch(apiDomainString + "/template_base/edit", {
+      const apiCall = await fetch(apiDomainString + "/run/template/start", {
         method: "POST",
         credentials: "include",
         body: JSON.stringify(infoObj.data),
@@ -316,18 +255,196 @@ const UpdateTemplateBaseDetailAPIHook = () => {
     }
   };
 
-  return [UpdateTemplateBaseDetailAPI];
+  return [RunTemplateStartAPI];
 };
 
-const UpdateTemplateBasePatchAPIHook = () => {
+const RunTemplateLLMAPIHook = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const UpdateTemplateBasePatchAPI = async (infoObj: {
+  const RunTemplateLLMAPI = async (infoObj: {
     data: {
-      template_base_name: string;
+      run_id: string;
+    };
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    showToast?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    //Apre il loader, se richiesto
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
+
+    //Id del toast
+    let toastId: Id = -1;
+    //Se deve mostrare il toast
+    if (infoObj.showToast) {
+      toastId = toast.loading(t("Operazione in corso..."));
+    }
+
+    try {
+      const apiCall = await fetch(apiDomainString + "/run/template/llm", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(infoObj.data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const jsonResponse: string = await apiCall.text();
+
+      const responseOk: boolean = apiCall.status == 200;
+
+      //Controllo risposta
+      if (!responseOk) {
+        if (infoObj.EndCallback) {
+          infoObj.EndCallback({
+            result: ResultTypeEnum.Error,
+            message: JSON.stringify(jsonResponse),
+            messageType: FetchResponseTypeEnum.Json,
+            otherResponseInfo: "",
+          });
+        }
+        return;
+      }
+
+      //Se la risposta è positiva
+
+      //Se deve salvare il valore
+      if (infoObj?.saveResponse ?? true) {
+      }
+
+      //Callback di successo
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+
+      //Se deve mostrare il toast
+      if (infoObj.showToast) {
+        //Imposta il toast di successo
+        toast.update(toastId, {
+          render: t("Operazione completata con successo!"),
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+          closeButton: true,
+        });
+      }
+    } catch (err) {
+      console.error("dataOra error:", err);
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Error,
+          message: err,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+
+      //Se deve mostrare il toast
+      if (infoObj.showToast) {
+        //Imposta il toast di successo
+        toast.update(toastId, {
+          render: t("Errore durante l'operazione"),
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+          closeButton: true,
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [RunTemplateLLMAPI];
+};
+
+const GetTemplatePercentualAPIHook = () => {
+  const dispatch = useDispatch();
+
+  const GetTemplatePercentualAPI = async (infoObj: {
+    data: {
+      id: string;
+    };
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    //Apre il loader, se richiesto
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
+
+    try {
+      const apiCall = await fetch(
+        apiDomainString + "/llm/percentual?run_id=" + infoObj.data.id,
+        {
+          method: FetchMethodEnum.Get,
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+      //Risposta in base64
+      const response: string = await apiCall.text();
+
+      //Risposta in json
+      const jsonResponse = JSON.parse(response);
+
+      //Se deve salvare il valore
+      if (infoObj?.saveResponse ?? true) {
+        dispatch(SetTemplatePercentualSlice(jsonResponse));
+      }
+
+      //Callback di successo
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } catch (err) {
+      console.error("template error:", err);
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Error,
+          message: err,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [GetTemplatePercentualAPI];
+};
+
+const RunTemplateFinishAPIHook = () => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+
+  const RunTemplateFinishAPI = async (infoObj: {
+    data: {
+      run_id: string;
+      template_name: string;
       validate_only: boolean;
-      patch_json: {};
+      apply_llm: boolean;
+      llm_patch_actions: {}
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
@@ -347,7 +464,7 @@ const UpdateTemplateBasePatchAPIHook = () => {
     }
 
     try {
-      const apiCall = await fetch(apiDomainString + "/run/template_base", {
+      const apiCall = await fetch(apiDomainString + "/run/template/finish", {
         method: "POST",
         credentials: "include",
         body: JSON.stringify(infoObj.data),
@@ -428,13 +545,14 @@ const UpdateTemplateBasePatchAPIHook = () => {
     }
   };
 
-  return [UpdateTemplateBasePatchAPI];
+  return [RunTemplateFinishAPI];
 };
 
 export {
-  GetTemplateBaseIdsAPIHook,
-  GetTemplateBaseDetailAPIHook,
-  UpdateTemplateBaseDetailAPIHook,
-  UpdateTemplateBasePatchAPIHook,
-  GetRunIdTemplateAPIHook
+  GetTemplateIdsAPIHook,
+  GetTemplateDetailAPIHook,
+  RunTemplateStartAPIHook,
+  RunTemplateLLMAPIHook,
+  GetTemplatePercentualAPIHook,
+  RunTemplateFinishAPIHook
 };

@@ -3,1036 +3,191 @@
     "category": "measurement",
     "suggestions": [
       {
-        "term": "l2 allarme sonda di pressione",
-        "candidates": []
-      },
-      {
-        "term": "allarme valvola hpv da ingresso digitale",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 stato ingresso digitale",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 1 da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 2 da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 1 da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 2 da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "alarm wrong configuration of expansion board",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme chillbooster",
-        "candidates": []
-      },
-      {
-        "term": "l2 avviso prevent alta pressione",
-        "candidates": []
-      },
-      {
-        "term": "l1 avviso prevent alta pressione",
-        "candidates": []
-      },
-      {
-        "term": "l1 high temperature prevent warning",
-        "candidates": []
-      },
-      {
-        "term": "l2 high temperature prevent warning",
-        "candidates": []
-      },
-      {
-        "term": "prevent ht lock l1",
-        "candidates": []
-      },
-      {
-        "term": "prevent ht lock l2 mst",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 stato ingresso digitale",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme chillbooster",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione a da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione a da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione b da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione b da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione c da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione c da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione d da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione d da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 stato flussostato",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione e da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione e da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica termostato a da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica termostato b da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica termostato c da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica termostato d da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica termostato e da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica termostato a da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica termostato b da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica termostato c da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica termostato d da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica termostato e da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica modulante 1 da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica modulante 2 da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica modulante 1 da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica modulante 2 da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme plan",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda di pressione gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda di temperatura scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda di temperatura esterna",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda temperatura gas cooler bypassato rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme olio comune",
-        "candidates": []
-      },
-      {
         "term": "l1 allarme di alta temperatura dell olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme livello liquido",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme alta pressione ricevitore",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 prevenzione alta pressione",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme bassa pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme livello co2",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione aspirazione zona neutra regolazione in zona di stand by",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme alta pressione condensazione da pressostato",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme temperatura olio comune",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 1",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione a",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione b",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione c",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato generica funzione d",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato ingresso digitale generico 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato ingresso digitale generico 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato ingresso digitale generico 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato ingresso digitale generico 4",
-        "candidates": []
-      },
-      {
-        "term": "l1 alta pressione gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme flussostato recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme flussostato recupero calore 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato sottoraffreddamento",
-        "candidates": []
-      },
-      {
-        "term": "l1 funzione anti rumore condensazione attiva",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda di temperatura aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda temperatura di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme olio comune",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "alarm_high_temperature",
+            "match_type": "synonym",
+            "matched_value": "allarme di alta temperatura",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 allarme di alta temperatura dell olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme livello liquido",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme alta pressione condensazione da pressostato",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda pressione riserva olio rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l2 stato",
-        "candidates": []
-      },
-      {
-        "term": "allarme scheda di espansione offline",
-        "candidates": []
-      },
-      {
-        "term": "l1 funzione anti ritorno liquido attiva",
-        "candidates": []
-      },
-      {
-        "term": "l2 funzione anti ritorno liquido attiva",
-        "candidates": []
-      },
-      {
-        "term": "allarme valvola rprv da ingresso digitale",
-        "candidates": []
-      },
-      {
-        "term": "l1 uscita termostato funzione generica 5",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato ingresso digitale generico 5",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore bypass del gascooler in corso",
-        "candidates": []
-      },
-      {
-        "term": "richiesta di effettuare le azioni per incrementare la pressione del gas cooler e consentire il recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme perdita refrigerante",
-        "candidates": []
-      },
-      {
-        "term": "l2 prevenzione alta pressione",
-        "candidates": []
-      },
-      {
-        "term": "allarme driver evd offline",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato recupero calore 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato separatore olio",
-        "candidates": []
-      },
-      {
-        "term": "livello minimo separatore olio",
-        "candidates": []
-      },
-      {
-        "term": "livello massimo separatore olio",
-        "candidates": []
-      },
-      {
-        "term": "procedura di chiusura valvola hpv in corso",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme alta pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme bassa/alta pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l2 stato separatore olio",
-        "candidates": []
-      },
-      {
-        "term": "l2 livello minimo separatore olio",
-        "candidates": []
-      },
-      {
-        "term": "l2 livello maximum separatore olio",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "alarm_high_temperature",
+            "match_type": "synonym",
+            "matched_value": "allarme di alta temperatura",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 abilita valvola differenziale olio",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "hysteresis_temperature",
+            "match_type": "synonym",
+            "matched_value": "differenziale",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "pressione uscita gas cooler troppo alta/bassa rispetto al setpoint attuale",
-        "candidates": []
-      },
-      {
-        "term": "rprv open and feedback difference is high",
-        "candidates": []
-      },
-      {
-        "term": "hpv open and feedback difference is high",
-        "candidates": []
-      },
-      {
-        "term": "l2 temperatura olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme bassa pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme alta pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 bassa pressione gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda di backup condensazione rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "utilizza sonda di aspirazione l1 come sonda di condesazione l2",
-        "candidates": []
-      },
-      {
-        "term": "l2 manutenzione chillbooster richiesta",
-        "candidates": []
-      },
-      {
-        "term": "l1 manutenzione chillbooster richiesta",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 attiva",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda temperatura di scarico rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme di manutenzione chilllbooster",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato chillbooster",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme livello liquido",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme bassa pressione da comune",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme perdita categorizzato come grave",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda di by pass per recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda regolazione recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore allarme sonda rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore probe alarm",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda regolazione recupero calore 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "setpoint_temperature",
+            "match_type": "synonym",
+            "matched_value": "setpoint",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 allarme di alta pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 stato pompa",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme bassa pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda regolazione recupero calore 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda regolazione recupero calore 2",
-        "candidates": []
-      },
-      {
-        "term": "allarme pressione gas cooler troppo bassa per consentire il recupero di calore 1",
-        "candidates": []
-      },
-      {
-        "term": "allarme pressione gas cooler troppo bassa per consentire il recupero di calore 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme alta temperatura acqua in uscita recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme alta temperatura acqua in uscita recupero calore 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 allarme temperatura scarico rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme di manutenzione chilllbooster",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda di pressione condensazione di backup rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda recupero di calore",
-        "candidates": []
-      },
-      {
-        "term": "l2 stato chillbooster",
-        "candidates": []
-      },
-      {
-        "term": "l1 mst stato separatore olio",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda pressione condensazione rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda di pressione condensazione rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l2 funzione anti rumore condensazione attiva",
-        "candidates": []
-      },
-      {
-        "term": "allarme temperatura di scarico heat reclaim",
-        "candidates": []
-      },
-      {
-        "term": "al di cmp parall mst",
-        "candidates": []
-      },
-      {
-        "term": "al low rec press cmp parall ms",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme alta pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme bassa pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "prack in modalità manuale o automatica",
-        "candidates": []
-      },
-      {
-        "term": "al temp hr shr2 l1 mst",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda temperatura di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore defrost carico extra attivo",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato livello liquido",
-        "candidates": []
-      },
-      {
-        "term": "l2 stato livello liquido",
-        "candidates": []
-      },
-      {
-        "term": "funzione carico extra attivo",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme rtc",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "alarm_high_pressure",
+            "match_type": "synonym",
+            "matched_value": "allarme di alta pressione",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 aspirazione setpoint di lavoro",
-        "candidates": []
-      },
-      {
-        "term": "l1 pressione gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura satura di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura olio comune",
-        "candidates": []
-      },
-      {
-        "term": "apertura valvola rprv",
-        "candidates": []
-      },
-      {
-        "term": "sepoint attuale regolazione valvola hpv",
-        "candidates": []
-      },
-      {
-        "term": "apertura valvola hpv",
-        "candidates": []
-      },
-      {
-        "term": "feedback apertura valvola hpv",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda generica 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda generica 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda generica 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda generica 4",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda generica 5",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura uscita gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 pressione olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura gas cooler by passato",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura liquido da sonda principale o di backup",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 richiesta attuale",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 richiesta attuale",
-        "candidates": []
-      },
-      {
-        "term": "l2 temperatura satura di aspirazione",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "setpoint_temperature",
+            "match_type": "synonym",
+            "matched_value": "setpoint",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 setpoint di lavoro aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 temperatura satura di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 temperatura dell olio comune",
-        "candidates": []
-      },
-      {
-        "term": "pressione ricevitore",
-        "candidates": []
-      },
-      {
-        "term": "l2 pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 temperatura liquido",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "setpoint_temperature",
+            "match_type": "synonym",
+            "matched_value": "setpoint",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 recupero calore offset aggiunto al setpoint di regolazione valvola hpv per recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura regolazione recupero calore 2 uscita acqua",
-        "candidates": []
-      },
-      {
-        "term": "l2 pressione olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 temperatura acqua in ingresso",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura regolazione recupero calore 1 uscita acqua",
-        "candidates": []
-      },
-      {
-        "term": "l1 gradino di incremento/decremento set hpv",
-        "candidates": []
-      },
-      {
-        "term": "l1 compensazione attuale su set hpv",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "setpoint_temperature",
+            "match_type": "synonym",
+            "matched_value": "setpoint",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "minimo setpoint attuale regolazione hpv",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore segnale uscita modulante carico extra",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore velocità fissa richiesta per carico extra attivo",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore segnale 0 100 0% per valvola 3 vie bypass gascooler",
-        "candidates": []
-      },
-      {
-        "term": "l2 pressione/temperatura satura di aspirazione per prevent",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 e 2 richiesta totale",
-        "candidates": []
-      },
-      {
-        "term": "l1 pressione di condensazione da sonda di backup",
-        "candidates": []
-      },
-      {
-        "term": "l2 pressione di condensazione da sonda di backup",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "setpoint_temperature",
+            "match_type": "synonym",
+            "matched_value": "setpoint",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "act rprv setpoint",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 segnale esterno regolazione 0 10v",
-        "candidates": []
-      },
-      {
-        "term": "l1 stato unità",
-        "candidates": []
-      },
-      {
-        "term": "l1 prossimo dispositivo che sarà attivato",
-        "candidates": []
-      },
-      {
-        "term": "l1 prossimo dispositivo che verrà spento",
-        "candidates": []
-      },
-      {
-        "term": "l2 prossimo dispositivo che sarà attivato",
-        "candidates": []
-      },
-      {
-        "term": "l2 prossimo dispositivo che verrà spento",
-        "candidates": []
-      },
-      {
-        "term": "versione software",
-        "candidates": []
-      },
-      {
-        "term": "posizione valvola a",
-        "candidates": []
-      },
-      {
-        "term": "posizione valvola b",
-        "candidates": []
-      },
-      {
-        "term": "l2 stato unità",
-        "candidates": []
-      },
-      {
-        "term": "ritardo allarme alta pressione ricevitore",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione del gas cooler in pressione",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo di attesa tra 2 gradini per compensazione ste hpv",
-        "candidates": []
-      },
-      {
-        "term": "stato modulazione generica 1",
-        "candidates": []
-      },
-      {
-        "term": "stato modulazione generica 2",
-        "candidates": []
-      },
-      {
-        "term": "stato modulazione generica 1 funzione attiva nella scheda 2",
-        "candidates": []
-      },
-      {
-        "term": "stato modulazione generica 2 funzione attiva nella scheda 3",
-        "candidates": []
-      },
-      {
-        "term": "stato modulazione generica 1 funzione attiva nella scheda 3",
-        "candidates": []
-      },
-      {
-        "term": "stato modulazione generica 2 funzione attiva nella scheda 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 richiesta recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 segnale 0 100 0% attivazione pompa",
-        "candidates": []
-      },
-      {
-        "term": "unità di misura",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "setpoint_temperature",
+            "match_type": "synonym",
+            "matched_value": "setpoint",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 setpoint hpv da raggiungere con recupero calore attivo proporzionale alla richiesta",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "setpoint_temperature",
+            "match_type": "synonym",
+            "matched_value": "setpoint",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 setpoint gas cooler da raggiungere con recupero calore attivo proporzionale alla richiesta",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "setpoint_temperature",
+            "match_type": "synonym",
+            "matched_value": "setpoint",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 regolazione valvola hpv setpoint attuale",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 uscita analogica",
-        "candidates": []
-      },
-      {
-        "term": "hpv compensation value 0 100",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 uscita analogica",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 segnale modulante 0 100 0% pompa",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore stato azioni fatte per consentire il recupero calore",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "setpoint_temperature",
+            "match_type": "synonym",
+            "matched_value": "setpoint",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "actual setpoint calculated by the alghoritm",
-        "candidates": []
-      },
-      {
-        "term": "hpv compensation value 0 100",
-        "candidates": []
-      },
-      {
-        "term": "rich compr par da regol p i",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola rprv percentuale di apertura della valvola con sonda di pressione del ricevitore rotta",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "setpoint_temperature",
+            "match_type": "synonym",
+            "matched_value": "setpoint",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 setpoint gas cooler attuale",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "setpoint_temperature",
+            "match_type": "synonym",
+            "matched_value": "setpoint",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 setpoint di aspirazione per la zona neutra",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "setpoint_temperature",
+            "match_type": "synonym",
+            "matched_value": "setpoint",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 setpoint di aspirazione per la zona neutra",
-        "candidates": []
-      },
-      {
-        "term": "l2 variabile di regolazione intercooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda di compensazione gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l2 pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura ingresso gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 temperatura tra scambiatori recopero calore 1 e 2",
-        "candidates": []
-      },
-      {
-        "term": "s4 valore della sonda",
-        "candidates": []
-      },
-      {
-        "term": "s3 valore della sonda",
-        "candidates": []
-      },
-      {
-        "term": "s2 valore della sonda",
-        "candidates": []
-      },
-      {
-        "term": "s1 valore della sonda",
-        "candidates": []
-      },
-      {
-        "term": "apertura valvola rprv da segnale di feedback",
-        "candidates": []
-      },
-      {
-        "term": "apertura valvola b",
-        "candidates": []
-      },
-      {
-        "term": "apertura valvola a",
-        "candidates": []
-      },
-      {
-        "term": "l1 tipo refrigerante condensazione",
-        "candidates": []
-      },
-      {
-        "term": "stato eev valvola b",
-        "candidates": []
-      },
-      {
-        "term": "l2 regolazione intercooler in pressione",
-        "candidates": []
-      },
-      {
-        "term": "l2 tipo di regolazione intercooler",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "setpoint_temperature",
+            "match_type": "synonym",
+            "matched_value": "setpoint",
+            "confidence": 0.7
+          }
+        ]
       }
     ]
   },
@@ -1041,1875 +196,1356 @@
     "suggestions": [
       {
         "term": "abilita forzatura off compressori per alta pressione ricevitore",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori di tipo regolazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 consenso accensione da supervisore",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilita modulazione richiesta a dispositivo modulante all interno della zon a neutra solo per compressore 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 avviso inverter compressori categorizzato come grave",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 dss inibisci spunti contemporanei tra compressori l1 l2",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilita gestione consenso attivazione recupero calore 1 e 2 da supervisione",
-        "candidates": []
-      },
-      {
-        "term": "l2 forzatura uscita digitale",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori di tipo regolazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione aspirazione flottante",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilita modulazione richiesta a dispositivo modulante all interno della zon a neutra solo per compressore 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "abilita accensione compressori l1 per attivazione compressori su l2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "abilita spegnimento compressori l2 per guasto su compressori l1",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore abilita bybass del gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 consenso accensione da supervisore",
-        "candidates": []
-      },
-      {
-        "term": "l1 attiva recupero calore come prevenzione alta pressione gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilita recupero calore 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione eco",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione eco",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione tempo integrale condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione compressore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione compressore 10",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione compressore 11",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione compressore 12",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione compressore 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione compressore 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione compressore 4",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione compressore 5",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione compressore 6",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione compressore 7",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione compressore 8",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione compressore 9",
-        "candidates": []
-      },
-      {
-        "term": "l1 attiva iniezione di liquido",
-        "candidates": []
-      },
-      {
-        "term": "linea di aspirazione 2 è gestito in questa scheda",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 regolazione ventilatori in zona neutra",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 avviso inverter compressori categorizzato come grave",
-        "candidates": []
-      },
-      {
-        "term": "l2 recupero calore fascia orarias independent from plant closing time",
-        "candidates": []
-      },
-      {
-        "term": "l2 attiva eco",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione tempo integrale aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione aspirazione tempo integrale",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione compressore 1",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione compressore 2",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione compressore 3",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione compressore 4",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione compressore 5",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione compressore 6",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione compressore 7",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione compressore 8",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione compressore 9",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione compressore 10",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione compressore 11",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione compressore 12",
-        "candidates": []
-      },
-      {
-        "term": "l2 attiva iniezione di liquido",
-        "candidates": []
-      },
-      {
-        "term": "tipo reset allarme alta pressione ricevitore manuale o automatico",
-        "candidates": []
-      },
-      {
-        "term": "forzatura uscita digitale",
-        "candidates": []
-      },
-      {
-        "term": "abilita simulazione sonde",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilita funzionamento chillbooster",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione ventilatore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione ventilatore 10",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione ventilatore 11",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione ventilatore 12",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione ventilatore 13",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione ventilatore 14",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione ventilatore 15",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione ventilatore 16",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione ventilatore 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione ventilatore 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione ventilatore 4",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione ventilatore 5",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione ventilatore 6",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione ventilatore7",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione ventilatore 8",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione ventilatore 9",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione prevent alta pressione condensazione",
-        "candidates": []
-      },
-      {
-        "term": "livello olio compressore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "abilita soglia minima dss",
-        "candidates": []
-      },
-      {
-        "term": "oil injection compressor 1",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilita recupero calore come hp prevenire",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione prevent alta pressione condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione ventilatore 1",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione ventilatore 2",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione ventilatore 3",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione ventilatore 4",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione ventilatore 5",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione ventilatore 6",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione ventilatore7",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione ventilatore 8",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione ventilatore 9",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione ventilatore 10",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione ventilatore 11",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione ventilatore 12",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione ventilatore 13",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione ventilatore 14",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione ventilatore 15",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione ventilatore 16",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilita funzionamento chillbooster",
-        "candidates": []
-      },
-      {
-        "term": "l2 attivazione recupero calore da supervisor",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione azione integrale regolazione condensazione",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 regolazione ventilatori in zona neutra",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione spegnimento forzato",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilitazione spegnimento forzato",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilita controllo livello olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilita procedura sanitaria per il chillbooster",
-        "candidates": []
-      },
-      {
-        "term": "l1 attiva recupero calore come hp prevenire",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilita pump down allo spegnimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilita pump down allo spegnimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilita on/off da supervisore",
-        "candidates": []
-      },
-      {
-        "term": "l2 abilita on/off da supervisore",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore fascia orarias independent from plant closing time",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "forza chiusura rprv con compressori off",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore abilita verifica fine azione precedente",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica modulante 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica modulante 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica termostato a",
-        "candidates": []
-      },
-      {
-        "term": "l1 attivare termostato funzioni generico b",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica termostato c",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica termostato d",
-        "candidates": []
-      },
-      {
-        "term": "l1 abilitazione funzione generica termostato e",
-        "candidates": []
-      },
-      {
-        "term": "l2 chillbooster enable santary procedure",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche abilitazione fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche abilitazione fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche abilitazione fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche abilitazione fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori abilitazione fascia oraria",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori abilitazione fascia oraria",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori abilitazione fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori abilitazione fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori abilitazione fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori abilitazione fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori abilitazione fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori abilitazione fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori abilitazione fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori abilitazione fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori abilitazione fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori abilitazione fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori abilitazione fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori abilitazione fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori abilitazione fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori abilitazione fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "l2 chillbooster enable santary procedure",
-        "candidates": []
-      },
-      {
-        "term": "l1 soglia di allarme bassa pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme bassa pressione di scarico",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 soglia di allarme di alta pressione di aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 soglia di allarme bassa pressione di aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 soglia allarme alta pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 soglia allarme bassa pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore passo di incremento offset valvola hpv con richiesta presente di recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 offset condensazione flottante",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "alarm_high_pressure",
+            "match_type": "synonym",
+            "matched_value": "allarme di alta pressione",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 recupero calore passo di incremento offset ventilatori gas cooler con richiesta presente di recupero calore",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 cut off ventilatori",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 recupero calore massimo offset ventilatori gas cooler con richiesta presente di recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola rprv percentuale di apertura in pre posizionamento",
-        "candidates": []
-      },
-      {
-        "term": "condenser pressure prevent threshold",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola rprv minima percentuale di apertura con sistema spento",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola rprv minima percentuale di apertura con sistema acceso",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazion valvola hpv coefficiente m1",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione valvola hpv temperatura t12",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione valvola hpv temperatura t100",
-        "candidates": []
-      },
-      {
-        "term": "l1 soglia di allarme surriscaldamento",
-        "candidates": []
-      },
-      {
-        "term": "l1 hpv regolazione valvola pressione critica",
-        "candidates": []
-      },
-      {
-        "term": "l1 hpv regolazione valvola pressione massima",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione valvola hpv pressione p100",
-        "candidates": []
-      },
-      {
-        "term": "l1 delta massimo ammissibile per l aspirazione flottante",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola hpv percentuale di apertura con sicurezze attive",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola hpv percentuale minima di apertura con sistema acceso",
-        "candidates": []
-      },
-      {
-        "term": "l1 soglia alta pressione ricevitore per attivare sicurezze con azioni su valvola hpv",
-        "candidates": []
-      },
-      {
-        "term": "l1 massima pressione ricevitore",
-        "candidates": []
-      },
-      {
-        "term": "l1 delta di temperatura per la regolazione gas cooler con sonda di regolazione rotta",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola hpv percentuale massima apertura",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione valvola hpv temperatura t23",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione valvola hpv delta sottoraffreddamento corrispondente a t23",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola hpv massima variazione percentuale apertura valvola per secondo",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola hpv percentuale minima di apertura con sistema spento",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola hpv percentuale di apertura in pre posizionamento",
-        "candidates": []
-      },
-      {
-        "term": "l1 soglia bassa pressione ricevitore per attivare sicurezze con azioni su valvola hpv",
-        "candidates": []
-      },
-      {
-        "term": "l1 pressione minima del ricevitore",
-        "candidates": []
-      },
-      {
-        "term": "l1 soglia per valvola di scarico olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 max differenza tra posizione hpv e feedback",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme feedback hpv",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 soglia di allarme di alta pressione di aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia di allarme bassa pressione di aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 offset condensazione flottante in modalitc transcritica",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia di allarme surriscaldamento",
-        "candidates": []
-      },
-      {
-        "term": "l1 soglia di allarme alta pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia allarme bassa pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia allarme alta pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 pressure prevent offset to switch the pressure control from the discharge pressue to gas cooler pressure",
-        "candidates": []
-      },
-      {
-        "term": "offset valvola rprv per attivazione compressore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "l2 delta massimo ammissibile per l aspirazione flottante",
-        "candidates": []
-      },
-      {
-        "term": "l1 min temperature tgc for gas cooler bypass",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore soglia sulla regolazione per disabilitare il bypass del gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 percentuale di richiesta per attivazione recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 percentuale di richiesta per disattivazione recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 percentuale di richiesta per attivazione recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero di calore 2 soglia chiusura valvola",
-        "candidates": []
-      },
-      {
-        "term": "soglia allarme alta pressione ricevitore",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore minima velocità pompa con recupero calore 1 attivo",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia per valvola di scarico olio",
-        "candidates": []
-      },
-      {
-        "term": "l2 recupero calore minima velocità pompa con recupero calore 2 attivo",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore velocità fissa richiesta con defrost attivo sul carico extra",
-        "candidates": []
-      },
-      {
-        "term": "l1 chillbooster tempo di procedura sanitaria",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore velocità fissa richiesta con carico extra attivo",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore sogli attivazione carico extra",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia allarme alta pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore sogli disattivazione carico extra",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore percentuale di bypass gas cooler minima per attivazione carico extra",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia prevent alta pressione condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore percentuale di bypass gas cooler per disattivazione carico extra",
-        "candidates": []
-      },
-      {
-        "term": "l2 offset condensazione flottante",
-        "candidates": []
-      },
-      {
-        "term": "l2 cutoff venitlatori",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia allarme bassa pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "offset valvola rprv per disattivazione compressore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "compressore parallelo soglia per valvola di scarico olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 guadagno proporzionale per regolazione p i su temperatura acqua in uscita",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo di allarme alta pressione di aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo di allarme bassa pressione di aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme alta pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme bassa pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme basso surriscaldamento",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "alarm_high_pressure",
+            "match_type": "synonym",
+            "matched_value": "allarme di alta pressione",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ritardo ripartenza compressori dopo blackout",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 guadagno proporzionale per regolazione p i su temperatura acqua in uscita",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori zona neutra tempo minimo di attivazione completa",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori zona neutra tempo massimo di attivazione completa",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori zona neutra tempo minimo di disattivazione completa",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori zona neutra tempo massimo di disattivazione completao",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo minimo di on del compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo minimo di off del compressore",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 tempo di load up compressori",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo minimo tra due accensioni successive compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 minimo tempo di on compressore sotto inverter",
-        "candidates": []
-      },
-      {
-        "term": "l1 minimo tempo di off compressore sotto inverter",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 tempo di attesa attivazione recupero calore per consentire il ricircolo dell acqua",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo minimo tra attivazioni di parzializzazioni",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 minimo tempo tra due attivazione del recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatore inverter tempo incremento",
-        "candidates": []
-      },
-      {
-        "term": "l1 ventilatore inverter tempo decremento",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione zona neutra gas cooler minimo tempo raggiungimento richiesta attivazione al 100%",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione zona neutra gas cooler massimo tempo raggiungimento richiesta attivazione al 100%",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione zona neutra gas cooler minimo tempo raggiungimento richiesta spegnimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 regolazione zona neutra gas cooler massimo tempo raggiungimento richiesta spegnimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 durata procedura speed up",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme olio",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 tempo integrale di regolazione pi compressori",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo integrale per regolazione p i valvola rprv",
-        "candidates": []
-      },
-      {
-        "term": "l1 attivazione minima ventilatore modulante",
-        "candidates": []
-      },
-      {
-        "term": "l1 attivazione massima del ventilatore modulante",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme alta pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo integrale di regolazione valvola hpv",
-        "candidates": []
-      },
-      {
-        "term": "l1 band per la regolazione valvola p i hpv",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola hpv tempo di apertura in pre posizionamento",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola rprv tempo di apertura pre posizionamento",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo minimo tra due accensioni successive compressore sotto inverter",
-        "candidates": []
-      },
-      {
-        "term": "l1 banda per regolazione p i valvola rprv",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 minimo tempo tra due attivazione del recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo valvola di scarico olio",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 tipo di rotazione compressori",
-        "candidates": []
-      },
-      {
-        "term": "l1 valvola rprv massima percentuale di apertura",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo per passare dalla potenza minima alla massima per il compressore modulante",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo per passare dalla potenza max alla min per il compressore modulante",
-        "candidates": []
-      },
-      {
-        "term": "l1 minima frequenza inverter compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 massima frequenza inverter compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 ritardo attivazione recupero calore dopo partenza pompa",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 ritardo attivazione recuepro calore da partenza pompa",
-        "candidates": []
-      },
-      {
-        "term": "l1 soglia per lo spegnimento forzato",
-        "candidates": []
-      },
-      {
-        "term": "l2 soglia per lo spegnimento forzato",
-        "candidates": []
-      },
-      {
-        "term": "l1 selezione modalità olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l2 oil level valve management opening time",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 tempo integrale per regolazione p i su temperatura acqua in uscita",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 tempo integrale per regolazione p i su temperatura acqua in uscita",
-        "candidates": []
-      },
-      {
-        "term": "l2 oil level valve management closing time",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme alta pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme bassa pressione di scarico",
-        "candidates": []
-      },
-      {
-        "term": "l1 tipo refrigerante aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 massimo numero di pulsazioni solenoide olio",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo minimo tra due accensioni successive compressore sotto inverter",
-        "candidates": []
-      },
-      {
-        "term": "l1 oil level valve management opening time",
-        "candidates": []
-      },
-      {
-        "term": "l1 oil level valve management closing time",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme alta pressione di aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme bassa pressione di aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 massimo numero di pulsazioni valvola olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo inizio pulsazioni olio",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme basso surriscaldamento",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ritardo ripartenza compressori dopo blackout",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo aspirazione flottante",
-        "candidates": []
-      },
-      {
-        "term": "l1 minimo tempo chiusura valvola olio comune",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori zona neutra tempo minimo di attivazione completa",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori zona neutra tempo massimo di attivazione completa",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori zona neutra tempo minimo di disattivazione completa",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori zona neutra tempo massimo di disattivazione completa",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo minimo di on del compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo minimo di off del compressore",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 tempo di load up compressori",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo minimo tra due accensioni successive compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 minimo tempo chiusura valvola olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l2 minimo tempo di on compressore sotto inverter",
-        "candidates": []
-      },
-      {
-        "term": "l2 minimo tempo di off compressore sotto inverter",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo minimo tra attivazioni di parzializzazioni",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo valutazione minimo livello olio",
-        "candidates": []
-      },
-      {
-        "term": "soglia di apertura valvola rprv per attivazione compresore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "ritardo in attivazione del compressore parallelo dopo la valutazione della percentuale di apertura della valvola rprv",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 tipo di segnale di regolazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 tipo di segnale di regolazione",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 tipo di rotazione compressori",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 tempo integrale di regolazione pi compressori",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo per passare dalla potenza minima alla massima per il compressore modulante",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo per passare dalla potenza max alla min per il compressore modulante",
-        "candidates": []
-      },
-      {
-        "term": "l2 minima frequenza inverter compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 massima frequenza inverter compressore",
-        "candidates": []
-      },
-      {
-        "term": "banda per la regolazione del compressore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "tempo derivativo per la regolazione del compressore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "l2 tipo refrigerante aspirazione",
-        "candidates": []
-      },
-      {
-        "term": "tempo integrale per la regolazione del compressore parallelo",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "tempo di attesa prima di forzare rprv chiusa con compressori off",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore tempo di valutazione temperatura gas cooler bypassato per consentirne il bypass",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 ritardo in spegnimento pompa dopo disattivazione recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore tempo tra due incrementi di offset valvola hpv con richiesta presente di recupero calore",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 recupero calore tempo tra due incrementi di offset ventilatori gas cooler con richiesta presente di recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo valutazione minimo livello olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore guadagno proporzionale per regolazione p i bypass gas cooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore tempo integrale regolazione p i valvola di by pass gascooler",
-        "candidates": []
-      },
-      {
-        "term": "l1 livello olio comune tempo di on attivazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 livello olio comune tempo di off attivazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 livello olio comune tempo di on disattivazione",
-        "candidates": []
-      },
-      {
-        "term": "tempo minimo tra due accensioni successive compressore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme tipo 1 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme tipo 2 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme tipo 3 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme tipo 4 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme tipo 5 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme tipo 6 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme tipo 7 compressore",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "dss ritardo di valutazione prima di accendere i compressori della linea 1 per allarme compressori linea 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "dss ritardo di valutazione prima di spegnere i compressori della linea 2 per allarme compressori linea 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo segnalazione allarme perdita refrigerante",
-        "candidates": []
-      },
-      {
-        "term": "l1 livello olio comune tempo di off disattivazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo valvola di scarico olio",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 guadagno proporzionale regolazione p i pompa",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme tipo 1 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme tipo 2 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme tipo 3 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme tipo 4 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme tipo 5 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme tipo 6 compressore",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme tipo 7 compressore",
-        "candidates": []
-      },
-      {
-        "term": "oil pulsing minimum activation times",
-        "candidates": []
-      },
-      {
-        "term": "tempo minimo di on compressore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "compressore parallelo oil level valve management opening time",
-        "candidates": []
-      },
-      {
-        "term": "compressore parallelo oil level valve management closing time",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 tempo integrale per regolazione p i della pompa",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 guadagno proporzionale regolazione p i pompa",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme bassa pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 massimo numero di allarmi flussostato prima di passare a manuale",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 tempo di attesa prima di resettare l allarme flussostato",
-        "candidates": []
-      },
-      {
-        "term": "l1 porta seriale a cui è connesso il supervisore",
-        "candidates": []
-      },
-      {
-        "term": "l2 porta seriale a cui è connesso il supervisore",
-        "candidates": []
-      },
-      {
-        "term": "l2 ritardo allarme alta pressione di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 tempo integrale regolazione p i pompa",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 chillbooster tempo di forzatura dei ventilatori alla massima potenza",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 chillbooster tempo di forzatura dei ventilatori alla massima potenza",
-        "candidates": []
-      },
-      {
-        "term": "l1 chilbooster durata procedura sanitaria",
-        "candidates": []
-      },
-      {
-        "term": "l2 regolazione zona neutra gas cooler minimo tempo raggiungimento richiesta attivazione al 100%",
-        "candidates": []
-      },
-      {
-        "term": "l2 regolazione zona neutra gas cooler massimo tempo raggiungimento richiesta spegnimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 attivazione minima ventilatore modulante",
-        "candidates": []
-      },
-      {
-        "term": "l2 regolazione zona neutra gas cooler massimo tempo raggiungimento richiesta attivazione al 100%",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo per passare dalla massima alla minima potenza per il compressore parallelo modulante",
-        "candidates": []
-      },
-      {
-        "term": "l1 tempo per passare dalla minima alla massima potenza per il compressore parallelo modulante",
-        "candidates": []
-      },
-      {
-        "term": "l2 regolazione zona neutra gas cooler minimo tempo raggiungimento richiesta spegnimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 massima attivazione ventilatore modulante",
-        "candidates": []
-      },
-      {
-        "term": "l2 speed up durata procedura",
-        "candidates": []
-      },
-      {
-        "term": "l2 tempo integrale di linea di condensazione",
-        "candidates": []
-      },
-      {
-        "term": "l2 tipo refrigerante condensazione",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 tempo di load up dolce compressori",
-        "candidates": []
-      },
-      {
-        "term": "contatore funzionamento minuti solenoide olio compressore parallelo",
-        "candidates": []
-      },
-      {
-        "term": "l1 ritardo allarme bassa pressione del ricevitore",
-        "candidates": []
-      },
-      {
-        "term": "compressore parallelo ritardo valvola di scarico olio",
-        "candidates": []
-      },
-      {
-        "term": "maximum variation",
-        "candidates": []
-      },
-      {
-        "term": "hr delay on hr circ pump",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 tempo di attesa prima di resettare l allarme flussostato",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 1 massimo numero di allarmi flussostato prima di passare a manuale",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore 2 ritardo allarme flussostato",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore tempo valutazione by pass",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori ora fine fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori ora fine fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori ora fine fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori ora fine fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche ora fine fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori ora fine fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori ora fine fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori ora fine fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori ora fine fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche ora fine fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori ora fine fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori ora fine fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori ora fine fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori ora fine fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche ora fine fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori ora fine fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori ora fine fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori ora fine fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori ora fine fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche ora fine fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori minuto fine fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori minuto fine fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori minuto fine fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori minuto fine fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche minuto fine fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori minuto fine fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori minuto fine fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori minuto fine fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche minuto fine fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori minuto fine fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori minuto fine fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori minuto fine fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori minuto fine fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche minuto fine fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori minuto fine fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori minuto fine fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori minuto fine fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori minuto fine fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche minuto fine fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori minuto fine fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori ora inizio fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori ora inizio fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori ora inizio fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori ora inizio fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche ora inizio fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori ora inizio fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori ora inizio fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori ora inizio fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori ora inizio fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche ora inizio fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori ora inizio fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori ora inizio fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori ora inizio fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori ora inizio fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche ora inizio fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori ora inizio fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori ora inizio fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori ora inizio fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori ora inizio fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche ora inizio fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori minuto inizio fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori minuto inizio fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori minuto inizio fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori minuto inizio fascia oraria 1",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche minuto inizio fascia oraria 1",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori minuto inizio fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori minuto inizio fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori minuto inizio fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori minuto inizio fascia oraria 2",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche minuto inizio fascia oraria 2",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori minuto inizio fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori minuto inizio fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori minuto inizio fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori minuto inizio fascia oraria 3",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche minuto inizio fascia oraria 3",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori minuto inizio fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori minuto inizio fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori minuto inizio fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori minuto inizio fascia oraria 4",
-        "candidates": []
-      },
-      {
-        "term": "funzioni generiche minuto inizio fascia oraria 4",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 compressori scheduler weekday",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 compressori scheduler weekday",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 ventilatori scheduler weekday",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 ventilatori scheduler weekday",
-        "candidates": []
-      },
-      {
-        "term": "dummy",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       }
     ]
   },
@@ -2917,426 +1553,75 @@
     "category": "alarm",
     "suggestions": [
       {
-        "term": "l1 allarme livello co2",
-        "candidates": []
-      },
-      {
-        "term": "al di cmp parall mst",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme flussostato recupero calore 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme flussostato recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme perdita refrigerante",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme perdita categorizzato come grave",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme livello liquido",
-        "candidates": []
-      },
-      {
-        "term": "al low rec press cmp parall ms",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme olio comune",
-        "candidates": []
-      },
-      {
-        "term": "al temp hr shr2 l1 mst",
-        "candidates": []
-      },
-      {
-        "term": "alarm wrong configuration of expansion board",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme rtc",
-        "candidates": []
-      },
-      {
         "term": "l1 allarme sovraccarico comune ventilatori",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 allarme sovraccarico comune ventilatori",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 10",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 11",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 12",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 13",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 14",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 15",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 16",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 2",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 4",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 5",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 6",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 7",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 8",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme ventilatore 9",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l1 allarme generico ventilatori",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 1",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 2",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 1",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 1 da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 1 da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 2",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 2 da scheda plan 2",
-        "candidates": []
-      },
-      {
-        "term": "allarme generico 2 da scheda plan 3",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme surriscaldamento",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme surriscaldamento",
-        "candidates": []
-      },
-      {
-        "term": "allarme scheda di espansione offline",
-        "candidates": []
-      },
-      {
-        "term": "l2 temperatura olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda di backup condensazione rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore allarme sonda rotta o disconnessa",
-        "candidates": []
-      },
-      {
-        "term": "l1 recupero calore probe alarm",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda regolazione recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 sonda regolazione recupero calore 2",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme sonda recupero di calore",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "pressione uscita gas cooler troppo alta/bassa rispetto al setpoint attuale",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme plan",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme plan connessione mancante con la scheda di compressione parallela",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme chillbooster",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme chillbooster",
-        "candidates": []
-      },
-      {
-        "term": "allarme driver evd offline",
-        "candidates": []
-      },
-      {
-        "term": "allarme valvola hpv da ingresso digitale",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "setpoint_temperature",
+            "match_type": "synonym",
+            "matched_value": "setpoint",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 allarme inverter compressori",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_compressor",
+            "match_type": "synonym",
+            "matched_value": "compressori",
+            "confidence": 0.7
+          }
+        ]
       },
       {
         "term": "l2 allarme inverter ventilatori",
-        "candidates": []
-      },
-      {
-        "term": "prevent ht lock l1",
-        "candidates": []
-      },
-      {
-        "term": "prevent ht lock l2 mst",
-        "candidates": []
-      },
-      {
-        "term": "allarme valvola rprv da ingresso digitale",
-        "candidates": []
-      },
-      {
-        "term": "hpv open and feedback difference is high",
-        "candidates": []
-      },
-      {
-        "term": "rprv open and feedback difference is high",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme livello liquido",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme livello liquido",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme olio comune",
-        "candidates": []
-      },
-      {
-        "term": "l2 allarme di manutenzione chilllbooster",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme di manutenzione chilllbooster",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda di by pass per recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda recupero calore",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda regolazione recupero calore 1",
-        "candidates": []
-      },
-      {
-        "term": "l1 allarme sonda regolazione recupero calore 2",
-        "candidates": []
-      },
-      {
-        "term": "off line",
-        "candidates": []
+        "candidates": [
+          {
+            "concept_id": "state_fan",
+            "match_type": "synonym",
+            "matched_value": "ventilatori",
+            "confidence": 0.7
+          }
+        ]
       }
     ]
   },
   {
     "category": "warning",
-    "suggestions": [
-      {
-        "term": "l1 manutenzione chillbooster richiesta",
-        "candidates": []
-      },
-      {
-        "term": "l2 manutenzione chillbooster richiesta",
-        "candidates": []
-      },
-      {
-        "term": "l1 avviso di compressore 10",
-        "candidates": []
-      },
-      {
-        "term": "l2 avviso di compressore 10",
-        "candidates": []
-      },
-      {
-        "term": "l1 avviso di compressore 11",
-        "candidates": []
-      },
-      {
-        "term": "l2 avviso di compressore 11",
-        "candidates": []
-      },
-      {
-        "term": "l1 avviso di compressore 12",
-        "candidates": []
-      },
-      {
-        "term": "l2 avviso di compressore 12",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressore 1 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressore 1 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressore 2 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressore 2 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressor 3 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressor 3 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressor 4 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressor 4 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressor 5 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressor 5 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 compressore 6 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l2 compressore 6 avvertimento",
-        "candidates": []
-      },
-      {
-        "term": "l1 avviso di compressore 7",
-        "candidates": []
-      },
-      {
-        "term": "l2 avviso di compressore 7",
-        "candidates": []
-      },
-      {
-        "term": "l1 avviso di compressore 8",
-        "candidates": []
-      },
-      {
-        "term": "l2 avviso di compressore 8",
-        "candidates": []
-      },
-      {
-        "term": "l1 avviso di compressore 9",
-        "candidates": []
-      },
-      {
-        "term": "l2 avviso di compressore 9",
-        "candidates": []
-      },
-      {
-        "term": "l1 avviso inverter compressore",
-        "candidates": []
-      },
-      {
-        "term": "l1 avviso prevent alta pressione",
-        "candidates": []
-      },
-      {
-        "term": "l2 avviso prevent alta pressione",
-        "candidates": []
-      },
-      {
-        "term": "l1 prevenzione alta pressione",
-        "candidates": []
-      },
-      {
-        "term": "l2 prevenzione alta pressione",
-        "candidates": []
-      }
-    ]
+    "suggestions": []
   }
 ]

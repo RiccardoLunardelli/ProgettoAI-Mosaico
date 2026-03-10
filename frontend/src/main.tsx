@@ -26,12 +26,21 @@ import { knowledgeBaseListSliceReducer } from "./stores/slices/Base/knowledgeBas
 import { templateBaseListSliceReducer } from "./stores/slices/Base/templateBaseListSlice";
 import { dictionaryListSliceReducer } from "./stores/slices/Base/dictionaryListSlice";
 import { deviceListListSliceReducer } from "./stores/slices/Base/deviceListSlice";
+import { templateListSliceReducer } from "./stores/slices/Base/templateListSlice";
 
 const HomePageTag = lazy(() => import("./components/Home/HomePage"));
-const TemplatePageTag = lazy(() => import("./components/Template/TemplatePage"));
-const DeviceListPageTag = lazy(() => import("./components/deviceList/DeviceListPage"));
-const DictionaryPageTag = lazy(() => import("./components/dictionary/DictionaryPage"));
-const TemplateBasePageTag = lazy(() => import("./components/TemplateBase/TemplateBasePage"));
+const TemplatePageTag = lazy(
+  () => import("./components/Template/TemplatePage"),
+);
+const DeviceListPageTag = lazy(
+  () => import("./components/deviceList/DeviceListPage"),
+);
+const DictionaryPageTag = lazy(
+  () => import("./components/dictionary/DictionaryPage"),
+);
+const TemplateBasePageTag = lazy(
+  () => import("./components/TemplateBase/TemplateBasePage"),
+);
 const KnowledgeBasePageTag = lazy(
   () => import("./components/knowledgebase/KnowledgeBasePage"),
 );
@@ -194,6 +203,7 @@ function SecureRoot(): JSX.Element {
       templateBaseListSlice: templateBaseListSliceReducer,
       dictionaryListSlice: dictionaryListSliceReducer,
       deviceListListSlice: deviceListListSliceReducer,
+      templateListSlice: templateListSliceReducer,
     },
     devTools:
       (import.meta.env.VITE_DEBUG_DEVTOOLS?.toString()?.toLowerCase() ?? "") ==

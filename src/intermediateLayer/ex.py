@@ -46,4 +46,4 @@ user_id = "d875ceed-5219-41f7-bc38-bb069f7514d7"
 ## -------------TRONCATE-----------------------
 
 repo.truncate_runs()
-user.truncate_users()
+#user.truncate_users()

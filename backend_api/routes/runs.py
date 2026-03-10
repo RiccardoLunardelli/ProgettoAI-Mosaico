@@ -18,7 +18,7 @@ from scripts.orchestrator import (
     summarize_dictionary_diff, summarize_kb_diff, summarize_template_base_diff,
     dictionary_upsert, kb_upsert_mapping, template_apply_patch, run_device_list,
     build_dictionary_suggestions_from_run_report, build_dictionary_patch_from_run_report,
-    load_json
+    load_json, llm_percentual, llm_progress
 )
 
 router = APIRouter()
@@ -127,18 +127,23 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
 
     # artifact = device_list
     else:
-        report_path = run_device_list(cfg, validate_only)
+        report_path, enriched_file = run_device_list(cfg, validate_only)
         report = load_json(str(report_path))
 
         # salvataggio nel db
         runClass.save_run(report, user_id)
 
-        return {"status": "ok", "run_id": report.get("run_id"), "report_path": str(report_path), "warning": report.get("validation", {}).get("warnings")}
+        return {"status": "ok", "run_id": report.get("run_id"), "report_path": str(report_path), "warning": report.get("validation", {}).get("warnings"), "enriched_file": enriched_file}
 
 #----CRONOLOGIA DIFF-----
 @router.get("/cronology")
 def get_cronology(user = Depends(get_current_user)):
     return runClass.get_diff_report_by_user_id(user["sub"])
+
+#-----LLM %-------
+@router.get("/llm/percentual")
+def get_llm_percentual(run_id: str, user = Depends(get_current_user)):
+    return {"percent": llm_percentual(run_id)}
 
 #-----RUNS LIST----
 @router.get("/runs/ids")
@@ -187,6 +192,7 @@ def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_cu
     # salva nel DB
     report = load_json(result["report_path"])
     runClass.save_run(report, user["sub"])
+    llm_progress.pop(payload.run_id, None)
 
     return result
 

@@ -121,6 +121,7 @@ def device_list_enrich(ctx: MCPContext, path: str, dry_run: bool) -> Dict[str, A
         out["enum_generated"] = enum 
         out["device_role_generated"] = device_role
         enriched.append(out)
+        
     
     ctx.schema_validate("device_list_context", enriched)
 
@@ -145,6 +146,7 @@ def device_list_enrich(ctx: MCPContext, path: str, dry_run: bool) -> Dict[str, A
 
     ctx.require_dry_run(enriched)
     ctx.write_json(out_path, enriched)
+    print(enriched)
     return {
         "status": "dry_run_ok",
         "preview": enriched,

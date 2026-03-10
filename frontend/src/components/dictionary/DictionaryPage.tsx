@@ -156,7 +156,8 @@ function DictionaryPageTag() {
           componentState.Mode == "manual" ? "" : componentState.selectedRunId,
         manual_mode: componentState.Mode == "manual" ? "patch" : "",
         patch_json:
-          (componentState.whatImDoing == "PatchJson" && componentState.Mode == "manual") 
+          componentState.whatImDoing == "PatchJson" &&
+          componentState.Mode == "manual"
             ? JSON.parse(inputSliceValue["DictionaryPatch-TextArea"])
             : {},
       },
@@ -531,6 +532,16 @@ function DictionaryPageTag() {
                     <div>
                       <Suspense fallback="">
                         <TextareaTag
+                          style={{
+                            width: "100%",
+                            borderRadius: "8px",
+                            border: "1px solid #d1d5db",
+                            padding: "12px",
+                            boxSizing: "border-box",
+                            fontSize: "13px",
+                            fontFamily: "monospace",
+                            backgroundColor: "#f9fafb",
+                          }}
                           minHeight="300px"
                           minWidth="600px"
                           value={
@@ -705,7 +716,7 @@ function DictionaryPageTag() {
                         marginTop: "20px",
                         display: "flex",
                         opacity: "50%",
-                        marginBottom: "5px"
+                        marginBottom: "5px",
                       }}
                     >
                       Risultato
@@ -722,7 +733,7 @@ function DictionaryPageTag() {
                         display: "flex",
                         justifyContent: "flex-start",
                         overflow: "auto",
-                        marginBottom: "10px"
+                        marginBottom: "10px",
                       }}
                     >
                       <pre
