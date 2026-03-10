@@ -8,7 +8,7 @@ import {
   GetTemplatePercentualAPIHook,
   RunTemplateFinishAPIHook,
 } from "../../customHooks/API/Template/templateAPI";
-import type { TemplatePercentualInterface } from "../../stores/slices/Base/templateListSlice";
+import { SetTemplatePercentualSlice, type TemplatePercentualInterface } from "../../stores/slices/Base/templateListSlice";
 const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
 import "rsuite/dist/rsuite.min.css";
 import { SetInputSlice } from "../../stores/slices/Base/inputSlice";
@@ -160,6 +160,7 @@ function TemplatePageTag() {
   };
 
   const HandleGeneratePatchLLM = () => {
+    
     setComponentState((previousStateVal: ComponentStateInterface) => {
       return {
         ...previousStateVal,
@@ -260,6 +261,7 @@ function TemplatePageTag() {
 
   useEffect(() => {
     GetTemplateIdsAPI({ showLoader: true, saveResponse: true });
+    dispatch(SetTemplatePercentualSlice({percent: 0}))
   }, []);
 
   useEffect(() => {

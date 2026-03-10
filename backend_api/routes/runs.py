@@ -173,7 +173,8 @@ def run_template_start(payload: RunTemplateStartRequest, user = Depends(get_curr
 
 @router.post("/run/template/llm")
 def run_template_llm(payload: RunTemplateLlmRequest, user = Depends(get_current_user)):
-    return llm_propose_for_run(run_id=payload.run_id, llm_model=payload.llm_model)
+    response = llm_propose_for_run(run_id=payload.run_id, llm_model=payload.llm_model)
+    return response["llm_patch_actions"]
 
 @router.post("/run/template/finish")
 def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_current_user)):
