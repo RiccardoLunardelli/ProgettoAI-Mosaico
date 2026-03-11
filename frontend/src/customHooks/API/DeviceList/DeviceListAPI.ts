@@ -13,6 +13,8 @@ import { apiDomainString } from "../../../commons/commonsVariables";
 import {
   SetDeviceListDetailSlice,
   SetDeviceListListSlice,
+  SetEnrichedDetailSlice,
+  SetEnrichedValueSlice,
   type DeviceListStoreFileInterface,
 } from "../../../stores/slices/Base/deviceListSlice";
 import { useTranslation } from "react-i18next";
@@ -266,8 +268,149 @@ const RunDeviceListAPIHook = () => {
   return [RunDeviceListAPI];
 };
 
+const GetEnrichedIdsAPIHook = () => {
+  const dispatch = useDispatch();
+
+  const GetEnrichedIdsAPI = async (infoObj: {
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    //Apre il loader, se richiesto
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
+
+    try {
+      const apiCall = await fetch(apiDomainString + "/enrich_device_list", {
+        method: FetchMethodEnum.Get,
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      //Risposta in base64
+      const response: string = await apiCall.text();
+
+      //Risposta in json
+      const jsonResponse = JSON.parse(response);
+
+      //Se deve salvare il valore
+      if (infoObj?.saveResponse ?? true) {
+        const deviceListList: DeviceListStoreFileInterface[] =
+          jsonResponse?.enriched_device_list ?? [];
+
+        dispatch(SetEnrichedValueSlice(deviceListList));
+      }
+
+      //Callback di successo
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } catch (err) {
+      console.error("enriched error:", err);
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Error,
+          message: err,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [GetEnrichedIdsAPI];
+};
+
+const GetEnrichedDetailAPIHook = () => {
+  const dispatch = useDispatch();
+
+  const GetEnrichedDetailAPI = async (infoObj: {
+    data: {
+      store: string;
+      dl: string;
+    };
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    //Apre il loader, se richiesto
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
+
+    try {
+      const apiCall = await fetch(
+        apiDomainString +
+          "/enrich/device_list/" +
+          infoObj.data.store +
+          "/" +
+          infoObj.data.dl,
+        {
+          method: FetchMethodEnum.Get,
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      //Risposta in base64
+      const response: string = await apiCall.text();
+
+      //Risposta in json
+      const jsonResponse = JSON.parse(response);
+
+      //Se deve salvare il valore
+      if (infoObj?.saveResponse ?? true) {
+        dispatch(SetEnrichedDetailSlice(jsonResponse));
+      }
+
+      //Callback di successo
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } catch (err) {
+      console.error("DeviceList error:", err);
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Error,
+          message: err,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [GetEnrichedDetailAPI];
+};
+
+
+
 export {
   GetDeviceListDetailAPIHook,
   GetDeviceListIdsAPIHook,
   RunDeviceListAPIHook,
+  GetEnrichedIdsAPIHook,
+  GetEnrichedDetailAPIHook
 };
+

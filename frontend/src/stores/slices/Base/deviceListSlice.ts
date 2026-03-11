@@ -10,6 +10,8 @@ export const deviceListListSlice = createSlice({
   initialState: {
     value: null as DeviceListStoreFileInterface[] | null,
     detail: null as any,
+    enrichedValue: null as DeviceListStoreFileInterface[] | null,
+    enrichedDetail: null as any
   },
   reducers: {
     SetDeviceListListSlice: (
@@ -28,10 +30,26 @@ export const deviceListListSlice = createSlice({
     ) => {
       state.detail = action.payload;
     },
+    SetEnrichedValueSlice: (
+      state,
+      action: {
+        payload: DeviceListStoreFileInterface[];
+      },
+    ) => {
+      state.enrichedValue = action.payload;
+    },
+    SetEnrichedDetailSlice: (
+      state,
+      action: {
+        payload: any;
+      },
+    ) => {
+      state.enrichedDetail = action.payload;
+    },
   },
 });
 
-export const { SetDeviceListListSlice, SetDeviceListDetailSlice } =
+export const { SetDeviceListListSlice, SetDeviceListDetailSlice, SetEnrichedValueSlice, SetEnrichedDetailSlice } =
   deviceListListSlice.actions;
 
 export const deviceListListSliceReducer = deviceListListSlice.reducer;

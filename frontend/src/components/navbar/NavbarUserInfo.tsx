@@ -74,21 +74,6 @@ function NavbarUserInfoTag() {
             transition: "background 0.2s",
           }}
           onClick={() => {
-            navigate("/Runs")
-            dispatch(SetCurrentPathSlice(t("Runs")))
-          }}
-        >
-          Le mie run
-        </DropdownMenu.Item>
-        <DropdownMenu.Item
-          style={{
-            padding: "10px 15px",
-            cursor: "pointer",
-            color: "#477dda",
-            fontSize: "14px",
-            transition: "background 0.2s",
-          }}
-          onClick={() => {
             navigate("/Settings")
             dispatch(SetCurrentPathSlice(t("Settings")))
           }}

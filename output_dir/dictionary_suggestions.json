@@ -3,40 +3,7 @@
     "category": "measurement",
     "suggestions": [
       {
-        "term": "l1 allarme di alta temperatura dell olio comune",
-        "candidates": [
-          {
-            "concept_id": "alarm_high_temperature",
-            "match_type": "synonym",
-            "matched_value": "allarme di alta temperatura",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 allarme di alta temperatura dell olio comune",
-        "candidates": [
-          {
-            "concept_id": "alarm_high_temperature",
-            "match_type": "synonym",
-            "matched_value": "allarme di alta temperatura",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 abilita valvola differenziale olio",
-        "candidates": [
-          {
-            "concept_id": "hysteresis_temperature",
-            "match_type": "synonym",
-            "matched_value": "differenziale",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "pressione uscita gas cooler troppo alta/bassa rispetto al setpoint attuale",
+        "term": "setpoint",
         "candidates": [
           {
             "concept_id": "setpoint_temperature",
@@ -47,7 +14,40 @@
         ]
       },
       {
-        "term": "l2 allarme di alta pressione di condensazione",
+        "term": "set di regolazione parametro set",
+        "candidates": [
+          {
+            "concept_id": "setpoint_temperature",
+            "match_type": "synonym",
+            "matched_value": "set di regolazione parametro set",
+            "confidence": 0.7
+          }
+        ]
+      },
+      {
+        "term": "allarme di bassa temperatura sonda 1",
+        "candidates": [
+          {
+            "concept_id": "alarm_low_temperature",
+            "match_type": "synonym",
+            "matched_value": "allarme di bassa temperatura",
+            "confidence": 0.7
+          }
+        ]
+      },
+      {
+        "term": "allarme di alta temperatura sonda 1",
+        "candidates": [
+          {
+            "concept_id": "alarm_high_temperature",
+            "match_type": "synonym",
+            "matched_value": "allarme di alta temperatura",
+            "confidence": 0.7
+          }
+        ]
+      },
+      {
+        "term": "allarme di alta pressione",
         "candidates": [
           {
             "concept_id": "alarm_high_pressure",
@@ -58,133 +58,12 @@
         ]
       },
       {
-        "term": "l1 aspirazione setpoint di lavoro",
+        "term": "allarme di bassa pressione",
         "candidates": [
           {
-            "concept_id": "setpoint_temperature",
+            "concept_id": "alarm_low_pressure",
             "match_type": "synonym",
-            "matched_value": "setpoint",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 setpoint di lavoro aspirazione",
-        "candidates": [
-          {
-            "concept_id": "setpoint_temperature",
-            "match_type": "synonym",
-            "matched_value": "setpoint",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 recupero calore offset aggiunto al setpoint di regolazione valvola hpv per recupero calore",
-        "candidates": [
-          {
-            "concept_id": "setpoint_temperature",
-            "match_type": "synonym",
-            "matched_value": "setpoint",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "minimo setpoint attuale regolazione hpv",
-        "candidates": [
-          {
-            "concept_id": "setpoint_temperature",
-            "match_type": "synonym",
-            "matched_value": "setpoint",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "act rprv setpoint",
-        "candidates": [
-          {
-            "concept_id": "setpoint_temperature",
-            "match_type": "synonym",
-            "matched_value": "setpoint",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 setpoint hpv da raggiungere con recupero calore attivo proporzionale alla richiesta",
-        "candidates": [
-          {
-            "concept_id": "setpoint_temperature",
-            "match_type": "synonym",
-            "matched_value": "setpoint",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 setpoint gas cooler da raggiungere con recupero calore attivo proporzionale alla richiesta",
-        "candidates": [
-          {
-            "concept_id": "setpoint_temperature",
-            "match_type": "synonym",
-            "matched_value": "setpoint",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 regolazione valvola hpv setpoint attuale",
-        "candidates": [
-          {
-            "concept_id": "setpoint_temperature",
-            "match_type": "synonym",
-            "matched_value": "setpoint",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "actual setpoint calculated by the alghoritm",
-        "candidates": [
-          {
-            "concept_id": "setpoint_temperature",
-            "match_type": "synonym",
-            "matched_value": "setpoint",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 setpoint gas cooler attuale",
-        "candidates": [
-          {
-            "concept_id": "setpoint_temperature",
-            "match_type": "synonym",
-            "matched_value": "setpoint",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 setpoint di aspirazione per la zona neutra",
-        "candidates": [
-          {
-            "concept_id": "setpoint_temperature",
-            "match_type": "synonym",
-            "matched_value": "setpoint",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 setpoint di aspirazione per la zona neutra",
-        "candidates": [
-          {
-            "concept_id": "setpoint_temperature",
-            "match_type": "synonym",
-            "matched_value": "setpoint",
+            "matched_value": "allarme di bassa pressione",
             "confidence": 0.7
           }
         ]
@@ -195,1354 +74,287 @@
     "category": "parameter",
     "suggestions": [
       {
-        "term": "abilita forzatura off compressori per alta pressione ricevitore",
+        "term": "percentuale sonda sbrinamento virtuale 100=dpa 0 =dpb",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l1 compressori di tipo regolazione",
+        "term": "time out per sbrinamento termostatato",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l1 avviso inverter compressori categorizzato come grave",
+        "term": "attivazione funzione sbrinamento con 2 sonde",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l1 dss inibisci spunti contemporanei tra compressori l1 l2",
+        "term": "sbrinamento all accensione",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l2 compressori di tipo regolazione",
+        "term": "orari di inizio del primo sbrinamento nei giorni feriali",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "abilita accensione compressori l1 per attivazione compressori su l2",
+        "term": "orari di inizio del secondo sbrinamento nei giorni feriali",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "abilita spegnimento compressori l2 per guasto su compressori l1",
+        "term": "orari di inizio del terzo sbrinamento nei giorni feriali",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l2 regolazione ventilatori in zona neutra",
+        "term": "orari di inizio del quinto sbrinamento nei giorni feriali",
         "candidates": [
           {
-            "concept_id": "state_fan",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "ventilatori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l2 avviso inverter compressori categorizzato come grave",
+        "term": "orari di inizio del sesto sbrinamento nei giorni feriali",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l1 regolazione ventilatori in zona neutra",
+        "term": "orari di inizio del primo sbrinamento nei giorni festivi",
         "candidates": [
           {
-            "concept_id": "state_fan",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "ventilatori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "forza chiusura rprv con compressori off",
+        "term": "orari di inizio del secondo sbrinamento nei giorni festivi",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l1 compressori abilitazione fascia oraria",
+        "term": "orari di inizio del terzo sbrinamento nei giorni festivi",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l2 compressori abilitazione fascia oraria",
+        "term": "orari di inizio del quinto sbrinamento nei giorni festivi",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l1 ventilatori abilitazione fascia oraria 1",
+        "term": "orari di inizio del sesto sbrinamento nei giorni festivi",
         "candidates": [
           {
-            "concept_id": "state_fan",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "ventilatori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l2 ventilatori abilitazione fascia oraria 1",
+        "term": "tempartura fine sbrinamento 1 sonda1",
         "candidates": [
           {
-            "concept_id": "state_fan",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "ventilatori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l1 compressori abilitazione fascia oraria 2",
+        "term": "tempartura fine sbrinamento 2 sonda1",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l2 compressori abilitazione fascia oraria 2",
+        "term": "tempartura fine sbrinamento 3 sonda1",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l1 ventilatori abilitazione fascia oraria 2",
+        "term": "tempartura fine sbrinamento 4 sonda1",
         "candidates": [
           {
-            "concept_id": "state_fan",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "ventilatori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l2 ventilatori abilitazione fascia oraria 2",
+        "term": "tempartura fine sbrinamento 5 sonda1",
         "candidates": [
           {
-            "concept_id": "state_fan",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "ventilatori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l1 compressori abilitazione fascia oraria 3",
+        "term": "tempartura fine sbrinamento 6 sonda1",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l2 compressori abilitazione fascia oraria 3",
+        "term": "tempartura fine sbrinamento 1 sonda2",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l1 ventilatori abilitazione fascia oraria 3",
+        "term": "tempartura fine sbrinamento 2 sonda2",
         "candidates": [
           {
-            "concept_id": "state_fan",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "ventilatori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l2 ventilatori abilitazione fascia oraria 3",
+        "term": "tempartura fine sbrinamento 3 sonda2",
         "candidates": [
           {
-            "concept_id": "state_fan",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "ventilatori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l1 compressori abilitazione fascia oraria 4",
+        "term": "tempartura fine sbrinamento 4 sonda2",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l2 compressori abilitazione fascia oraria 4",
+        "term": "tempartura fine sbrinamento 5 sonda2",
         "candidates": [
           {
-            "concept_id": "state_compressor",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "compressori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
       },
       {
-        "term": "l1 ventilatori abilitazione fascia oraria 4",
+        "term": "tempartura fine sbrinamento 6 sonda2",
         "candidates": [
           {
-            "concept_id": "state_fan",
+            "concept_id": "state_defrost",
             "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori abilitazione fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 soglia di allarme di alta pressione di aspirazione",
-        "candidates": [
-          {
-            "concept_id": "alarm_high_pressure",
-            "match_type": "synonym",
-            "matched_value": "allarme di alta pressione",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 recupero calore passo di incremento offset ventilatori gas cooler con richiesta presente di recupero calore",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 cut off ventilatori",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 recupero calore massimo offset ventilatori gas cooler con richiesta presente di recupero calore",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 soglia di allarme di alta pressione di aspirazione",
-        "candidates": [
-          {
-            "concept_id": "alarm_high_pressure",
-            "match_type": "synonym",
-            "matched_value": "allarme di alta pressione",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ritardo ripartenza compressori dopo blackout",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori zona neutra tempo minimo di attivazione completa",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori zona neutra tempo massimo di attivazione completa",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori zona neutra tempo minimo di disattivazione completa",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori zona neutra tempo massimo di disattivazione completao",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 tempo di load up compressori",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 tempo integrale di regolazione pi compressori",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 tipo di rotazione compressori",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ritardo ripartenza compressori dopo blackout",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori zona neutra tempo minimo di attivazione completa",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori zona neutra tempo massimo di attivazione completa",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori zona neutra tempo minimo di disattivazione completa",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori zona neutra tempo massimo di disattivazione completa",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 tempo di load up compressori",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 tipo di rotazione compressori",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 tempo integrale di regolazione pi compressori",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "tempo di attesa prima di forzare rprv chiusa con compressori off",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 recupero calore tempo tra due incrementi di offset ventilatori gas cooler con richiesta presente di recupero calore",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "dss ritardo di valutazione prima di accendere i compressori della linea 1 per allarme compressori linea 2",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "dss ritardo di valutazione prima di spegnere i compressori della linea 2 per allarme compressori linea 1",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 chillbooster tempo di forzatura dei ventilatori alla massima potenza",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 chillbooster tempo di forzatura dei ventilatori alla massima potenza",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 tempo di load up dolce compressori",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori ora fine fascia oraria 1",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori ora fine fascia oraria 1",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori ora fine fascia oraria 1",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori ora fine fascia oraria 1",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori ora fine fascia oraria 2",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori ora fine fascia oraria 2",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori ora fine fascia oraria 2",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori ora fine fascia oraria 2",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori ora fine fascia oraria 3",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori ora fine fascia oraria 3",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori ora fine fascia oraria 3",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori ora fine fascia oraria 3",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori ora fine fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori ora fine fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori ora fine fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori ora fine fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori minuto fine fascia oraria 1",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori minuto fine fascia oraria 1",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori minuto fine fascia oraria 1",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori minuto fine fascia oraria 1",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori minuto fine fascia oraria 2",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori minuto fine fascia oraria 2",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori minuto fine fascia oraria 2",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori minuto fine fascia oraria 3",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori minuto fine fascia oraria 3",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori minuto fine fascia oraria 3",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori minuto fine fascia oraria 3",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori minuto fine fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori minuto fine fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori minuto fine fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori minuto fine fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori minuto fine fascia oraria 2",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori ora inizio fascia oraria 1",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori ora inizio fascia oraria 1",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori ora inizio fascia oraria 1",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori ora inizio fascia oraria 1",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori ora inizio fascia oraria 2",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori ora inizio fascia oraria 2",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori ora inizio fascia oraria 2",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori ora inizio fascia oraria 2",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori ora inizio fascia oraria 3",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori ora inizio fascia oraria 3",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori ora inizio fascia oraria 3",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori ora inizio fascia oraria 3",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori ora inizio fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori ora inizio fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori ora inizio fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori ora inizio fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori minuto inizio fascia oraria 1",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori minuto inizio fascia oraria 1",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori minuto inizio fascia oraria 1",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori minuto inizio fascia oraria 1",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori minuto inizio fascia oraria 2",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori minuto inizio fascia oraria 2",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori minuto inizio fascia oraria 2",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori minuto inizio fascia oraria 2",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori minuto inizio fascia oraria 3",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori minuto inizio fascia oraria 3",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori minuto inizio fascia oraria 3",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori minuto inizio fascia oraria 3",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori minuto inizio fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori minuto inizio fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori minuto inizio fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori minuto inizio fascia oraria 4",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 compressori scheduler weekday",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 compressori scheduler weekday",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 ventilatori scheduler weekday",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 ventilatori scheduler weekday",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
+            "matched_value": "sbrinamento",
             "confidence": 0.7
           }
         ]
@@ -1551,77 +363,10 @@
   },
   {
     "category": "alarm",
-    "suggestions": [
-      {
-        "term": "l1 allarme sovraccarico comune ventilatori",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 allarme sovraccarico comune ventilatori",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l1 allarme generico ventilatori",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "pressione uscita gas cooler troppo alta/bassa rispetto al setpoint attuale",
-        "candidates": [
-          {
-            "concept_id": "setpoint_temperature",
-            "match_type": "synonym",
-            "matched_value": "setpoint",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 allarme inverter compressori",
-        "candidates": [
-          {
-            "concept_id": "state_compressor",
-            "match_type": "synonym",
-            "matched_value": "compressori",
-            "confidence": 0.7
-          }
-        ]
-      },
-      {
-        "term": "l2 allarme inverter ventilatori",
-        "candidates": [
-          {
-            "concept_id": "state_fan",
-            "match_type": "synonym",
-            "matched_value": "ventilatori",
-            "confidence": 0.7
-          }
-        ]
-      }
-    ]
+    "suggestions": []
   },
   {
-    "category": "warning",
+    "category": "command",
     "suggestions": []
   }
 ]

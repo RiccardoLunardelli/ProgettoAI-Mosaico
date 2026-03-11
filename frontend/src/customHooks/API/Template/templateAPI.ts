@@ -220,7 +220,7 @@ const RunTemplateStartAPIHook = () => {
       if (infoObj.showToast) {
         //Imposta il toast di successo
         toast.update(toastId, {
-          render: t("Operazione completata con successo!"),
+          render: t("Matching eseguito con successo!"),
           type: "success",
           isLoading: false,
           autoClose: 3000,

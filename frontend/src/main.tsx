@@ -32,8 +32,8 @@ const HomePageTag = lazy(() => import("./components/Home/HomePage"));
 const TemplatePageTag = lazy(
   () => import("./components/Template/TemplatePage"),
 );
-const DeviceListPageTag = lazy(
-  () => import("./components/deviceList/DeviceListPage"),
+const DeviceListPageManagerTag = lazy(
+  () => import("./components/deviceList/DeviceListPageManager"),
 );
 const DictionaryPageTag = lazy(
   () => import("./components/dictionary/DictionaryPage"),
@@ -116,7 +116,7 @@ let childrenRouterArr: any = [
     path: "/DeviceList",
     element: (
       <Suspense fallback="">
-        <DeviceListPageTag />
+        <DeviceListPageManagerTag />
       </Suspense>
     ),
     errorElement: <ErrorBoundaryInnerTag />,
@@ -126,6 +126,15 @@ let childrenRouterArr: any = [
     element: (
       <Suspense fallback="">
         <TemplatePageTag />
+      </Suspense>
+    ),
+    errorElement: <ErrorBoundaryInnerTag />,
+  },
+  {
+    path: "/History",
+    element: (
+      <Suspense fallback="">
+        <RunsListTag />
       </Suspense>
     ),
     errorElement: <ErrorBoundaryInnerTag />,

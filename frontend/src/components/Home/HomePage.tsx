@@ -514,6 +514,9 @@ function HomePageTag() {
             flexDirection: "column",
           }}
           className="HoverTransform"
+          onClick={() =>
+            HandleNavigateCardOnClick("History", "History")
+          }
         >
           {/* Icona + testo */}
           <div

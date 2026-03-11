@@ -1,12 +1,10 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { GetRunIdsAPIHook } from "../../customHooks/Runs/runsAPI";
 
 //Oggetto per gestire le chiamate API eseguite alla prima renderizzazione
 function APICallFirstRenderManagerTag() {
   // const dispatch = useDispatch();
 
-  const [GetRunIdsAPI] = GetRunIdsAPIHook();
 
   const authCheck: string | null = useSelector(
     (state: {
@@ -19,7 +17,6 @@ function APICallFirstRenderManagerTag() {
   //Metodo per eseguire le prime chiamate api
   const ExeFirstCall = () => {
     //Chiamate da svolgere
-    GetRunIdsAPI({ saveResponse: true, showLoader: true });
   };
 
   //Ogni volta che cambia authCheck

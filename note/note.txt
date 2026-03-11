@@ -17,11 +17,19 @@ uv run alembic upgrade head --> invia utlima migrazione
 alembic history --> mostra commit fatti
 
 ## ESEGUIRE SERVER BACKEND API
-PYTHONPATH=/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP uvicorn backend_api.server_api:app --reload
+PYTHONPATH=/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP uvicorn backend_api.main:app --reload --host 0.0.0.0 --port 8000
 
 ## ESEGUIRE EX.PY
 PYTHONPATH=. python3 src/intermediateLayer/ex.py
 
+
+source /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/.venv/bin/activate
+
+## ngrock per backend 
+ngrok http 8000 --pooling-enabled
+
+## nrok per frontend
+ngrok http 5173 --pooling-enabled
 ------------------------------------------------------------------------------------------------------------------------------------
 ## METRICHE PER LLM
 
