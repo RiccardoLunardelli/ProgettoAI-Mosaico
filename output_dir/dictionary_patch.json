@@ -1,3 +1,11 @@
 {
-  "ciao": "ciao"
+  "target": "dictionary",
+  "operations": [
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "differenziale surriscaldamento"
+    }
+  ]
 }

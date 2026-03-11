@@ -12,7 +12,7 @@ from scripts.config.config import RUNS_ROOT, generate_run_id
 from scripts.report.report import build_run_report
 from scripts.summarize_diff.diff import summarize_dictionary_diff, summarize_kb_diff, summarize_template_base_diff
 
-router = APIRouter()
+router = APIRouter(prefix="/api")
 dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
 runClass = RunRepository(dsn)
 

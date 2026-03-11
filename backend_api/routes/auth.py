@@ -7,7 +7,7 @@ from src.intermediateLayer.postgres_repository import UsersRepository
 from backend_api.utils.jwt_utils import jwt_token
 from backend_api.utils.deps import get_current_user
 
-router = APIRouter()
+router = APIRouter(prefix="/api")
 
 dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
 userClass = UsersRepository(dsn)

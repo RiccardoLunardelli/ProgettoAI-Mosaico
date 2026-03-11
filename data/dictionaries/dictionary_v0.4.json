@@ -1,5 +1,5 @@
 {
-  "dictionary_version": "0.3",
+  "dictionary_version": "0.4",
   "language": [
     "it",
     "en"
@@ -29,7 +29,9 @@
         ],
         "en": []
       },
-      "abbreviations": [],
+      "abbreviations": [
+        "sm"
+      ],
       "patterns": []
     },
     {
@@ -200,8 +202,7 @@
       "semantic_category": "temperature",
       "synonyms": {
         "it": [
-          "differenziale",
-          "differenziale surriscaldamento"
+          "differenziale"
         ],
         "en": []
       },

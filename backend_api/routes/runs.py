@@ -21,7 +21,7 @@ from scripts.orchestrator import (
     load_json, llm_percentual, llm_progress
 )
 
-router = APIRouter()
+router = APIRouter(prefix="/api")
 
 dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
 runClass = RunRepository(dsn)
