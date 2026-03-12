@@ -2,8 +2,14 @@
   "target": "template_base",
   "operations": [
     {
-      "op": "remove_base_concept",
-      "concept_id": "temp_prova2"
+      "op": "update_base_metadata",
+      "concept_id": "regulation_pressure",
+      "label": {
+        "it": "Prova",
+        "en": "test"
+      },
+      "description": "ProvaTest",
+      "category": "warning"
     }
   ]
 }

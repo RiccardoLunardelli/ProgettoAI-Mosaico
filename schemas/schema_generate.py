@@ -179,17 +179,12 @@ class TemplateBasePatch(BaseModel):
     ]]
 
 # ---------DIZIONARIO-----------------------
-class DictionaryPatterns(BaseModel):
-    regex: str
-    description: str
-
 class DictionaryEntry(BaseModel):
     concept_id: str
     category: str
     semantic_category: str
     synonyms: Dict[str, List[str]]
     abbreviations: List[str]
-    patterns: List[DictionaryPatterns]
 
 class Dictionary(BaseModel):
     dictionary_version: str
@@ -215,12 +210,6 @@ class DictionaryPatchAddAbbreviation(BaseModel):
     concept_id: str 
     value: str 
 
-class DictionaryPatchAddPattern(BaseModel):
-    op: Literal["add_pattern"]
-    concept_id: str 
-    regex: str 
-    description: str
-
 class DictionaryPatchUpdateCategory(BaseModel):
     op: Literal["update_category"]
     concept_id: str
@@ -233,7 +222,6 @@ class DictionaryPatchAddConcept(BaseModel):
     semantic_category: str 
     synonyms: Dict[str, List[str]] = Field(default_factory=dict)
     abbreviations: List[str] = Field(default_factory=list)
-    patterns: List[DictionaryPatterns] = Field(default_factory=list)
 
 class DictionaryPatchUpdateSemanticCategory(BaseModel):
     op: Literal["update_semantic_category"]
@@ -248,7 +236,6 @@ class DictionaryPatch(BaseModel):
             DictionaryPatchAddConcept,
             DictionaryPatchUpdateSynonym,
             DictionaryPatchAddAbbreviation,
-            DictionaryPatchAddPattern,
             DictionaryPatchUpdateCategory,
             DictionaryPatchUpdateSemanticCategory,
         ]

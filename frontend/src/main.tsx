@@ -58,6 +58,10 @@ const ProtectedRoute = lazy(
 );
 const LoginTag = lazy(() => import("./components/login/Login"));
 
+const ProtectedRouteAdmin = lazy(
+  () => import("./components/protectedRoute/ProtectedRouteAdmin"),
+);
+
 let childrenRouterArr: any = [
   //Home
   {
@@ -143,6 +147,14 @@ let childrenRouterArr: any = [
   },
 ];
 
+let adminChildrenRouterArr: any[] = [
+  {
+    path: "/admin",
+    element: <span>admin</span>,
+    errorElement: <ErrorBoundaryInnerTag />,
+  },
+];
+
 const protectedChildrenArr: any[] = [
   {
     element: (
@@ -154,7 +166,21 @@ const protectedChildrenArr: any[] = [
         </ErrorBoundaryTag>
       </Suspense>
     ),
-    children: childrenRouterArr,
+    children: [
+      ...childrenRouterArr,
+      {
+        element: (
+          <Suspense fallback="">
+            <ErrorBoundaryTag>
+              <Suspense fallback="">
+                <ProtectedRouteAdmin />
+              </Suspense>
+            </ErrorBoundaryTag>
+          </Suspense>
+        ),
+        children: adminChildrenRouterArr,
+      },
+    ],
   },
 ];
 

@@ -6,7 +6,8 @@ from backend_api.schemas.artifacts import DictionaryEditRequest, KbEditRequest, 
 from mcp_server.tools.dictionary_tool import _next_versioned_path, _extract_version_from_path
 from mcp_server.core import MCPContext
 
-from src.intermediateLayer.postgres_repository import RunRepository
+from src.intermediateLayer.postgres_repository import RunRepository, ArtifactRepository
+from backend_api.routes.runs import _register_artifact_from_path
 from backend_api.utils.deps import get_current_user
 from scripts.config.config import RUNS_ROOT, generate_run_id
 from scripts.report.report import build_run_report
@@ -15,6 +16,7 @@ from scripts.summarize_diff.diff import summarize_dictionary_diff, summarize_kb_
 router = APIRouter(prefix="/api")
 dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
 runClass = RunRepository(dsn)
+artifactClass = ArtifactRepository(dsn)
 
 TEMPLATE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates")
 DICTIONARIES_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionaries")
@@ -22,6 +24,7 @@ KB_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/kb"
 TEMPLATE_BASE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/template_base")
 PVS_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs")
 
+"""
 def list_artifact(artifact, artifact_dir):
     # restituisce lista dei file presenti in una cartella
 
@@ -58,7 +61,9 @@ def list_artifact(artifact, artifact_dir):
             raise HTTPException(status_code=404, detail=f"{artifact} not exists")
 
         return {"enriched_device_list": items}
+"""
 
+"""
 def get_file_of_artifact(name: str | None, store: str | None, dl: str | None,  artifact, artifact_dir):
     # ritorna contenuto file
 
@@ -74,7 +79,8 @@ def get_file_of_artifact(name: str | None, store: str | None, dl: str | None,  a
         return {"store": store, "name": dl, "content": content}
     
     return content
-
+"""
+    
 def editor_json_inline(file_name, file_json, file_dir, artifact, user_id):
     # modifica json direttamente da editor
 
@@ -166,58 +172,69 @@ def editor_json_inline(file_name, file_json, file_dir, artifact, user_id):
     report_path.write_text(json.dumps(run_report, ensure_ascii=False, indent=2), encoding="utf-8")
 
     # salva nel db
-    runClass.save_run(run_report, user_id)
+    artifact_id = _register_artifact_from_path(str(new_path), artifact)
+    runClass.save_run(run_report, user_id, artifact_id)
 
     return {"status": "ok", "new_file": str(new_path), "run_id": run_id, "report_path": str(report_path), "diff": diff_report}
 
 #----LIST & PREVIEW----
 @router.get("/templates")
 def list_templates(user = Depends(get_current_user)):
-    return list_artifact("template", TEMPLATE_DIR)
+    return artifactClass.list_artifact("template")
 
 @router.get("/templates/{name}")
 def get_template(name: str, user = Depends(get_current_user)):
-    return get_file_of_artifact(name, None, None, "template", TEMPLATE_DIR)
+    return artifactClass.get_artifact_content(name)
 
 @router.get("/dictionaries")
 def list_dictionaries(user = Depends(get_current_user)):
-    return list_artifact("dictionary", DICTIONARIES_DIR)
+    return artifactClass.list_artifact("dictionary")
 
 @router.get("/dictionaries/{name}")
 def get_dictionary(name: str, user = Depends(get_current_user)):
-    return get_file_of_artifact(name, None, None, "dictionary", DICTIONARIES_DIR)
+    return artifactClass.get_artifact_content(name)
 
 @router.get("/kb")
 def list_kb(user = Depends(get_current_user)):
-    return list_artifact("kb", KB_DIR)
+    return artifactClass.list_artifact("kb")
 
 @router.get("/kb/{name}")
 def get_kb(name: str, user = Depends(get_current_user)):
-    return get_file_of_artifact(name, None, None, "kb", KB_DIR)
+    return artifactClass.get_artifact_content(name)
 
 @router.get("/template_base")
 def list_template_base(user = Depends(get_current_user)):
-    return list_artifact("template_base", TEMPLATE_BASE_DIR)
+    return artifactClass.list_artifact("template_base")
 
 @router.get("/template_base/{name}")
 def get_template_base(name: str, user = Depends(get_current_user)):
-    return get_file_of_artifact(name, None, None, "template_base", TEMPLATE_BASE_DIR)
+    return artifactClass.get_artifact_content(name)
 
 @router.get("/device_list")
 def list_device_list(user = Depends(get_current_user)):
-    return list_artifact("device_list", PVS_DIR) 
+    dl = artifactClass.list_artifact("device_list")
+    store_dl = []
+    for f in dl:
+        store, file = f.split("/",1)
+        store_dl.append({"store": store, "file": file})
+    return {"device_list": store_dl}
 
 @router.get("/device_list/{store}/{dl}")
 def get_device_list(store: str, dl: str, user = Depends(get_current_user)):
-    return get_file_of_artifact(None, store, dl, "device_list", PVS_DIR)
+    return artifactClass.get_artifact_content(f"{store}/{dl}")
 
 @router.get("/enrich_device_list")
 def list_enrich_device_list(user = Depends(get_current_user)):
-    return list_artifact("enrich_device_list", PVS_DIR)
+    dl = artifactClass.list_artifact("device_list_context")
+    store_dl = []
+    for f in dl:
+        store, file = f.split("/",1)
+        store_dl.append({"store": store, "file": file})
+    return {"enriched_device_list": store_dl}
 
 @router.get("/enrich/device_list/{store}/{dl}")
 def get_enrich_device_list(store: str, dl: str, user = Depends(get_current_user)):
-    return get_file_of_artifact(None, store, dl, "enrich_device_list", PVS_DIR)
+    return artifactClass.get_artifact_content(f"{store}/{dl}")
 
 #----EDIT----
 @router.post("/dictionary/edit")

@@ -25,11 +25,12 @@ PYTHONPATH=. python3 src/intermediateLayer/ex.py
 
 source /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/.venv/bin/activate
 
-## ngrock per backend 
-ngrok http 8000 --pooling-enabled
-
 ## nrok per frontend
-ngrok http 5173 --pooling-enabled
+ngrok http 5173
+
+
+## PARSER DB file
+PYTHONPATH=. python3 src/parser_file_db/importer.py
 ------------------------------------------------------------------------------------------------------------------------------------
 ## METRICHE PER LLM
 

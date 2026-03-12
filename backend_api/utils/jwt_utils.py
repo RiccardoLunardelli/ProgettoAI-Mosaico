@@ -14,7 +14,12 @@ def jwt_token(user_id: str | None, email: str | None, action, user: Dict[str, An
     # funzione principale: crea token + lo setta nei cookie
 
     uid = user_id or (user["id"] if user else None)
-    token = create_token(str(uid), email, name)
+    token = create_token(
+    str(uid),
+    email,
+    name,
+    user.get("role") if user else None
+)
 
     payload = {"action": action}
     if user:
@@ -24,7 +29,7 @@ def jwt_token(user_id: str | None, email: str | None, action, user: Dict[str, An
     resp.set_cookie(key="token", value=token, httponly=True, samesite="lax", secure=False, max_age=60 * 60 * 24)
     return resp
 
-def create_token(user_id: str, email: str, name: str) -> str:
+def create_token(user_id: str, email: str, name: str, role: int | None) -> str:
     # token jwt
 
     now = datetime.now(timezone(timedelta(hours=1)))
@@ -32,6 +37,7 @@ def create_token(user_id: str, email: str, name: str) -> str:
         "sub": user_id, # sub = id utente
         "email": email,
         "name": name,
+        "role": role,
         "iat": int(now.timestamp()),    # iat = quando il token è stato creato
         "exp": int((now + timedelta(hours=JWT_EXPIRES_HOURS)).timestamp()) # exp = quando scade il token
     }

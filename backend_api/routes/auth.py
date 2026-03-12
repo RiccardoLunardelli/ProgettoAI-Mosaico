@@ -3,7 +3,7 @@ from uuid import uuid4
 from datetime import datetime, timezone, timedelta
 
 from backend_api.schemas.auth import SignupRequest, LoginRequest
-from src.intermediateLayer.postgres_repository import UsersRepository
+from src.intermediateLayer.postgres_repository import UsersRepository, Roles
 from backend_api.utils.jwt_utils import jwt_token
 from backend_api.utils.deps import get_current_user
 
@@ -11,6 +11,7 @@ router = APIRouter(prefix="/api")
 
 dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
 userClass = UsersRepository(dsn)
+rolesClass = Roles(dsn)
 
 
 @router.post("/signup")
@@ -20,13 +21,17 @@ def signup(payload: SignupRequest):
         raise HTTPException(status_code=409, detail="email already exists!")
     except KeyError:
         pass
+
+    if not rolesClass.role_exists(payload.role):
+        raise HTTPException(status_code=400, detail="invalid role")
+
     user_id = uuid4()
     created_at = datetime.now(timezone(timedelta(hours=1)))
 
     # creazione token
     token = jwt_token(str(user_id), payload.email, "signup", None, payload.name)
 
-    userClass.create_user(user_id=user_id, email=payload.email, name=payload.name, password=payload.password, created_at=created_at)
+    userClass.create_user(user_id=user_id, email=payload.email, name=payload.name, password=payload.password, created_at=created_at, role=payload.role)
     return token
 
 @router.post("/login")

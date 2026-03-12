@@ -2,14 +2,14 @@
   "target": "kb",
   "operations": [
     {
-      "op": "add_kb_rule",
-      "scope_id": "P01T04D01_028d14de-71dc-6e64-9587-c7111a39793e",
-      "source_type": "ContinuosReads",
-      "source_key": "Read59",
-      "concept_id": "temp_test",
-      "reason": "deterministic_mapping_from_vendor",
-      "evidence": "manual_patch_test",
-      "semantic_category": "temperature"
+      "op": "update_kb_rule",
+      "scope_id": "asdadasd",
+      "source_type": "ContinuosRead",
+      "source_key": "Read69",
+      "concept_id": "ciaoooo",
+      "reason": "fatti_i_Cazzi_tuoi2",
+      "evidence": "esempio_patch2",
+      "semantic_category": "boh2"
     }
   ]
 }

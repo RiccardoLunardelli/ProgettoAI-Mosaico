@@ -49,7 +49,7 @@ def _next_versioned_path(path: Path) -> Path:
 
 def _extract_version_from_path(path: Path) -> str | None:
     m = re.search(r"_v(\d+\.\d+)\.json$", path.name)
-    return m.group(1) if m else None
+    return m.group(1) if m else "0.0"
 
 def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) -> Dict:
     # Inserisce/aggiorna una entry nel dizionario
@@ -95,8 +95,7 @@ def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
                 "category": op["category"],
                 "semantic_category": op["semantic_category"],
                 "synonyms": op.get("synonyms", {}),
-                "abbreviations": op.get("abbreviations", []),
-                "patterns": op.get("patterns", []),
+                "abbreviations": op.get("abbreviations", [])
             }
             entries.append(new_entry)   # aggiunge nuovo concetto a dizionario
 
@@ -136,22 +135,6 @@ def dictionary_upsert(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
                     abbreviations = entry.setdefault("abbreviations", [])
                     if value not in abbreviations:
                         abbreviations.append(value)
-                    break
-        
-        #-------ADD PATTERN---------------------
-        elif op["op"] == "add_pattern":
-            concept_id = op["concept_id"]
-            regex = op["regex"]
-            description = op["description"]
-
-            search_result = dictionary_search(ctx, str(p), None, None, concept_id)
-            if not search_result["results"]:
-                raise ValueError(f"Concept {concept_id} not found")
-
-            for entry in entries:
-                if entry["concept_id"] == concept_id:
-                    patterns = entry.setdefault("patterns", [])
-                    patterns.append({"regex": regex, "description": description})
                     break
         
         #-------UPDATE CATEGORY------------------------
@@ -245,21 +228,6 @@ def dictionary_bulk_suggest(ctx: MCPContext, terms: List[str], path: str | None 
                         "matched_value": abbr,
                         "confidence": 0.6
                     })
-
-            # patterns
-            for ptn in e.get("patterns") or []:
-                regex = ptn.get("regex")
-                if regex:
-                    try:
-                        if re.search(regex, t):
-                            hits.append({
-                                "concept_id": cid,
-                                "match_type": "pattern",
-                                "matched_value": regex,
-                                "confidence": 0.5
-                            })
-                    except re.error:
-                        pass
         
         if len(hits) > 0:
             suggestions.append({"term": term, "candidates": hits})

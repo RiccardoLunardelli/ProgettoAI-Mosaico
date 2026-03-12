@@ -132,14 +132,6 @@ def summarize_dictionary_diff(before: dict, after: dict) -> list[str]:
         for val in sorted(b_abbr - a_abbr):
             summary.append(f"remove_abbreviation: {concept_id} '{val}'")
 
-        # patterns diff (by regex+description)
-        b_pat = {(p.get("regex"), p.get("description")) for p in b_entry.get("patterns", [])}
-        a_pat = {(p.get("regex"), p.get("description")) for p in a_entry.get("patterns", [])}
-        for regex, desc in sorted(a_pat - b_pat):
-            summary.append(f"add_pattern: {concept_id} /{regex}/ ({desc})")
-        for regex, desc in sorted(b_pat - a_pat):
-            summary.append(f"remove_pattern: {concept_id} /{regex}/ ({desc})")
-
     return summary
 
 def summarize_kb_diff(before: dict, after: dict) -> list[str]:

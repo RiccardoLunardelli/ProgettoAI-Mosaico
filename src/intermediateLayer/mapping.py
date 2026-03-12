@@ -12,20 +12,14 @@ def _get_nested(d: Dict[str, Any], path: list[str]) -> Any:
         cur = cur[key]
     return cur
 
-def extract_run_row(report: Dict[str, Any]) -> Dict[str, Any]:
+def extract_run_row(report: Dict[str, Any], artifact_id: str) -> Dict[str, Any]:
     # estrae e ritorna valori dal run report
 
     run_id = report.get("run_id")
     created_at = report.get("timestamp")
-    artifact_type = _get_nested(report, ["target", "artifact_type"])
     execution_status = _get_nested(report, ["execution", "status"])
     committed = _get_nested(report, ["execution", "committed"])
     dry_run = _get_nested(report, ["execution", "dry_run_performed"])
-
-    dictionary_version = _get_nested(report, ["schema_versions", "dictionary_version"])
-    kb_version = _get_nested(report, ["schema_versions", "kb_version"])
-    template_base_version = _get_nested(report, ["schema_versions", "template_base_version"])
-    device_list_version = _get_nested(report, ["schema_versions", "device_list_version"])
 
     metrics = report.get("metrics") or {}
     mapped_count = metrics.get("matched_count")
@@ -37,20 +31,16 @@ def extract_run_row(report: Dict[str, Any]) -> Dict[str, Any]:
         raise ValueError("run_report missing run_id")
     if not created_at:
         raise ValueError("run_report missing timestamp")
-    if not artifact_type:
+    if not artifact_id:
         raise ValueError("run_report missing artifact_type in target")
     
     return {
         "run_id": run_id,
         "created_at": created_at,
-        "artifact_type": artifact_type,
+        "artifact_id": artifact_id,
         "status": execution_status,
         "committed": committed,
         "dry_run_performed": dry_run,
-        "dictionary_version": dictionary_version,
-        "kb_version": kb_version,
-        "template_base_version": template_base_version,
-        "device_list_version": device_list_version,
         "mapped_count": mapped_count,
         "ambiguous_count": ambiguous_count,
         "unmapped_count": unmapped_count,

@@ -10,7 +10,7 @@ from backend_api.schemas.runs import (
 
 from backend_api.utils.deps import get_current_user
 
-from src.intermediateLayer.postgres_repository import RunRepository
+from src.intermediateLayer.postgres_repository import RunRepository, ArtifactRepository
 
 from scripts.orchestrator import (
     start_template_run, llm_propose_for_run, template_run,
@@ -21,10 +21,13 @@ from scripts.orchestrator import (
     load_json, llm_percentual, llm_progress
 )
 
+from mcp_server.tools.dictionary_tool import _extract_version_from_path
+
 router = APIRouter(prefix="/api")
 
 dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
 runClass = RunRepository(dsn)
+artifactRepo = ArtifactRepository(dsn)
 
 TEMPLATE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates")
 DICTIONARIES_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionaries")
@@ -75,7 +78,10 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
                 report = load_json(str(report_path))
                 
                 # salvataggio nel db
-                runClass.save_run(report, user_id) # run
+                artifact_type = report.get("target", {}).get("artifact_type", artifact)
+                artifact_output = report.get("target", {}).get("output_path") or str(input_path)
+                artifact_id = _register_artifact_from_path(artifact_output, artifact_type)
+                runClass.save_run(report, user_id, artifact_id)
 
                 return {
                     "status": "ok",
@@ -100,7 +106,11 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
                 report_path = run_patch(cfg, "dictionary", dictionary_upsert, summarize_dictionary_diff, validate_only)
                 report = load_json(str(report_path))
 
-                runClass.save_run(report, user_id)
+                artifact_type = report.get("target", {}).get("artifact_type", artifact)
+                artifact_output = report.get("target", {}).get("output_path") or str(input_path)
+                artifact_id = _register_artifact_from_path(artifact_output, artifact_type)
+                runClass.save_run(report, user_id, artifact_id)
+
 
                 return {
                     "status": "ok",
@@ -121,7 +131,11 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
         report = load_json(str(report_path))
 
         # salvataggio nel db
-        runClass.save_run(report, user_id)
+        artifact_type = report.get("target", {}).get("artifact_type", artifact)
+        artifact_output = report.get("target", {}).get("output_path") or str(input_path)
+        artifact_id = _register_artifact_from_path(artifact_output, artifact_type)
+        runClass.save_run(report, user_id, artifact_id)
+
 
         return {"status": "ok", "run_id": report.get("run_id"), "report_path": str(report_path)}
 
@@ -131,9 +145,31 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
         report = load_json(str(report_path))
 
         # salvataggio nel db
-        runClass.save_run(report, user_id)
+        artifact_type = report.get("target", {}).get("artifact_type", artifact)
+        artifact_output = report.get("target", {}).get("output_path") or str(input_path)
+        artifact_id = _register_artifact_from_path(artifact_output, artifact_type)
+        runClass.save_run(report, user_id, artifact_id)
+
 
         return {"status": "ok", "run_id": report.get("run_id"), "report_path": str(report_path), "warning": report.get("validation", {}).get("warnings"), "enriched_file": enriched_file}
+
+def _register_artifact_from_path(path: str, artifact_type: str) -> str:
+    # salva artifact nel db
+
+    p = Path(path)
+
+    if not p.exists():
+        raise HTTPException(status_code=404, detail=f"{artifact_type} output not found: {path}")
+    
+    with open(p, "r", encoding="utf-8") as f:
+        content = json.load(f)
+        
+    return artifactRepo.upsert_artifact(
+        artifact_type=artifact_type,
+        name=p.name,
+        version=_extract_version_from_path(p),
+        content=content,
+    )
 
 #----CRONOLOGIA DIFF-----
 @router.get("/cronology")
@@ -192,7 +228,12 @@ def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_cu
 
     # salva nel DB
     report = load_json(result["report_path"])
-    runClass.save_run(report, user["sub"])
+    artifact_type = report.get("target", {}).get("artifact_type", "template")
+    artifact_output = report.get("target", {}).get("output_path") or str(input_path)
+    artifact_id = _register_artifact_from_path(artifact_output, artifact_type)
+    runClass.save_run(report, user["sub"], artifact_id)
+
+
     llm_progress.pop(payload.run_id, None)
 
     return result

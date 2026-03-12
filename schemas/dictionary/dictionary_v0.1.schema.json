@@ -30,13 +30,6 @@
           },
           "title": "Abbreviations",
           "type": "array"
-        },
-        "patterns": {
-          "items": {
-            "$ref": "#/$defs/DictionaryPatterns"
-          },
-          "title": "Patterns",
-          "type": "array"
         }
       },
       "required": [
@@ -44,28 +37,9 @@
         "category",
         "semantic_category",
         "synonyms",
-        "abbreviations",
-        "patterns"
+        "abbreviations"
       ],
       "title": "DictionaryEntry",
-      "type": "object"
-    },
-    "DictionaryPatterns": {
-      "properties": {
-        "regex": {
-          "title": "Regex",
-          "type": "string"
-        },
-        "description": {
-          "title": "Description",
-          "type": "string"
-        }
-      },
-      "required": [
-        "regex",
-        "description"
-      ],
-      "title": "DictionaryPatterns",
       "type": "object"
     }
   },

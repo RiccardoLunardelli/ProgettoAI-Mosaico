@@ -2,10 +2,11 @@
   "target": "dictionary",
   "operations": [
     {
-      "op": "add_synonym",
-      "concept_id": "hysteresis_temperature",
+      "op": "update_synonym",
+      "concept_id": "temp_delivery",
       "lang": "it",
-      "value": "differenziale surriscaldamento"
+      "old_value": "mandata",
+      "new_value": "mandatavera"
     }
   ]
 }

@@ -12,12 +12,12 @@
       "synonyms": {
         "it": [
           "temperatura di mandata",
-          "mandata"
+          "Sm",
+          "mandatavera"
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "temp_return",
@@ -29,8 +29,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "temp_ambient",
@@ -40,8 +39,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "superheat_temperature",
@@ -54,8 +52,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "temp_evaporator",
@@ -67,8 +64,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "temp_condenser",
@@ -78,8 +74,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "temp_defrost",
@@ -92,8 +87,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "pressure_suction",
@@ -105,8 +99,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "pressure_discharge",
@@ -116,8 +109,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "humidity",
@@ -127,8 +119,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "state_compressor",
@@ -140,8 +131,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "state_fan",
@@ -153,8 +143,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "state_defrost",
@@ -166,8 +155,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "state_door_open",
@@ -177,8 +165,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "setpoint_temperature",
@@ -191,8 +178,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "hysteresis_temperature",
@@ -204,8 +190,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "defrost_interval",
@@ -217,8 +202,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "defrost_duration",
@@ -230,8 +214,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "fan_delay",
@@ -243,8 +226,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "threshold_high_temperature",
@@ -257,8 +239,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "threshold_low_temperature",
@@ -271,8 +252,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "alarm_high_temperature",
@@ -284,8 +264,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "alarm_low_temperature",
@@ -297,8 +276,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "alarm_sensor_fault",
@@ -308,8 +286,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "alarm_compressor_fault",
@@ -319,8 +296,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "alarm_defrost_failure",
@@ -330,8 +306,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "alarm_high_pressure",
@@ -343,8 +318,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "alarm_low_pressure",
@@ -356,8 +330,7 @@
         ],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "alarm_door_open",
@@ -367,8 +340,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "warning_high_temperature",
@@ -378,8 +350,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "warning_low_temperature",
@@ -389,8 +360,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "warning_maintenance",
@@ -400,8 +370,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "warning_sensor_drift",
@@ -411,8 +380,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "command_start_device",
@@ -422,8 +390,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "command_stop_device",
@@ -433,8 +400,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "command_start_defrost",
@@ -444,8 +410,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "command_stop_defrost",
@@ -455,8 +420,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "command_reset_alarm",
@@ -466,8 +430,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "delta_temperature",
@@ -477,8 +440,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "count_defrost",
@@ -488,8 +450,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     },
     {
       "concept_id": "runtime_hours",
@@ -499,8 +460,7 @@
         "it": [],
         "en": []
       },
-      "abbreviations": [],
-      "patterns": []
+      "abbreviations": []
     }
   ]
 }
