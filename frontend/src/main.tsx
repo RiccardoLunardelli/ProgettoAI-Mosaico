@@ -11,6 +11,8 @@ import "./css/textInput.css";
 import "./css/animation.css";
 import "./css/mainIndex.css";
 
+import "rsuite/dist/rsuite.min.css";
+
 import ErrorBoundaryInnerTag from "./components/error/ErrorBoundaryInner";
 import ErrorBoundaryTag from "./components/error/ErrorBoundary";
 import { Provider } from "react-redux";

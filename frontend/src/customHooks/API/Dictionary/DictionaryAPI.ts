@@ -97,13 +97,16 @@ const GetDictionaryDetailAPIHook = () => {
     }
 
     try {
-      const apiCall = await fetch(apiDomainString + "/dictionaries/" + infoObj.data.id, {
-        method: FetchMethodEnum.Get,
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
+      const apiCall = await fetch(
+        apiDomainString + "/dictionaries/" + infoObj.data.id,
+        {
+          method: FetchMethodEnum.Get,
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       //Risposta in base64
       const response: string = await apiCall.text();
@@ -255,7 +258,6 @@ const UpdateDictionaryDetailAPIHook = () => {
   return [UpdateDictionaryDetailAPI];
 };
 
-
 const RunReportDictionaryAPIHook = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -274,14 +276,12 @@ const RunReportDictionaryAPIHook = () => {
     showToast?: boolean;
     saveResponse?: boolean;
   }) => {
-    //Apre il loader, se richiesto
     if (infoObj.showLoader) {
       dispatch(OpenLoader());
     }
 
-    //Id del toast
     let toastId: Id = -1;
-    //Se deve mostrare il toast
+
     if (infoObj.showToast) {
       toastId = toast.loading(t("Operazione in corso..."));
     }
@@ -297,41 +297,45 @@ const RunReportDictionaryAPIHook = () => {
       });
 
       const jsonResponse: string = await apiCall.text();
+      const responseOk: boolean = apiCall.ok;
 
-      const responseOk: boolean = apiCall.status == 200;
-
-      //Controllo risposta
       if (!responseOk) {
-        if (infoObj.EndCallback) {
-          infoObj.EndCallback({
+        if (infoObj.showToast) {
+          toast.update(toastId, {
+            render: t("Errore durante l'operazione"),
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+            closeButton: true,
+          });
+        }
+
+        try {
+          infoObj.EndCallback?.({
             result: ResultTypeEnum.Error,
-            message: JSON.stringify(jsonResponse),
+            message: jsonResponse,
             messageType: FetchResponseTypeEnum.Json,
             otherResponseInfo: "",
           });
+        } catch (callbackErr) {
+          console.error("EndCallback error:", callbackErr);
         }
+
         return;
       }
 
-      //Se la risposta è positiva
-
-      //Se deve salvare il valore
-      if (infoObj?.saveResponse ?? true) {
-      }
-
-      //Callback di successo
-      if (infoObj.EndCallback) {
-        infoObj.EndCallback({
+      try {
+        infoObj.EndCallback?.({
           result: ResultTypeEnum.Success,
           message: jsonResponse,
           messageType: FetchResponseTypeEnum.Json,
           otherResponseInfo: "",
         });
+      } catch (callbackErr) {
+        console.error("EndCallback error:", callbackErr);
       }
 
-      //Se deve mostrare il toast
       if (infoObj.showToast) {
-        //Imposta il toast di successo
         toast.update(toastId, {
           render: t("Operazione completata con successo!"),
           type: "success",
@@ -343,18 +347,7 @@ const RunReportDictionaryAPIHook = () => {
     } catch (err) {
       console.error("dataOra error:", err);
 
-      if (infoObj.EndCallback) {
-        infoObj.EndCallback({
-          result: ResultTypeEnum.Error,
-          message: err,
-          messageType: FetchResponseTypeEnum.Json,
-          otherResponseInfo: "",
-        });
-      }
-
-      //Se deve mostrare il toast
       if (infoObj.showToast) {
-        //Imposta il toast di successo
         toast.update(toastId, {
           render: t("Errore durante l'operazione"),
           type: "error",
@@ -363,19 +356,30 @@ const RunReportDictionaryAPIHook = () => {
           closeButton: true,
         });
       }
+
+      try {
+        infoObj.EndCallback?.({
+          result: ResultTypeEnum.Error,
+          message: String(err),
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      } catch (callbackErr) {
+        console.error("EndCallback error:", callbackErr);
+      }
     } finally {
-      if (infoObj.showLoader) dispatch(CloseLoader());
+      if (infoObj.showLoader) {
+        dispatch(CloseLoader());
+      }
     }
   };
 
   return [RunReportDictionaryAPI];
 };
 
-
-
 export {
   GetDictionaryIdsAPIHook,
   GetDictionaryDetailAPIHook,
   UpdateDictionaryDetailAPIHook,
-  RunReportDictionaryAPIHook
+  RunReportDictionaryAPIHook,
 };

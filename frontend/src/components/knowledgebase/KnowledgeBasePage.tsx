@@ -3,7 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { SetInputSlice } from "../../stores/slices/Base/inputSlice";
 import { IsValidJSON } from "../../commons/commonsFunctions";
-import { GetKnowledgeBaseDetailAPIHook, GetKnowledgeBaseIdsAPIHook, UpdateKnowledgeBaseDetailAPIHook, UpdateKnowledgeBasePatchAPIHook } from "../../customHooks/API/KnowledgeBase/knowledgeBaseAPI";
+import {
+  GetKnowledgeBaseDetailAPIHook,
+  GetKnowledgeBaseIdsAPIHook,
+  UpdateKnowledgeBaseDetailAPIHook,
+  UpdateKnowledgeBasePatchAPIHook,
+} from "../../customHooks/API/KnowledgeBase/knowledgeBaseAPI";
+
+import KnowledgeBasePatchFormTag from "./KnowledgeBasePatchForm";
 
 const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
 const Toggle = lazy(() =>
@@ -450,24 +457,7 @@ function KnowledgeBasePageTag() {
                   <></>
                 )}
                 <div>
-                  <Suspense fallback="">
-                    <TextareaTag
-                      minHeight="300px"
-                      minWidth="600px"
-                      marginTop={"20px"}
-                      value={
-                        inputSliceValue["KnowledgeBasePatch-TextArea"] ?? ""
-                      }
-                      onChange={(e: any) => {
-                        dispatch(
-                          SetInputSlice({
-                            id: "KnowledgeBasePatch-TextArea",
-                            value: e,
-                          }),
-                        );
-                      }}
-                    />
-                  </Suspense>
+                  <KnowledgeBasePatchFormTag inputPrefix="KnowledgeBasePatch" />
                 </div>
                 <BasicButtonGenericTag
                   textToSee="Salva"

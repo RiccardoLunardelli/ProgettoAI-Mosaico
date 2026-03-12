@@ -1,7 +1,7 @@
 
 import type {
   BreadcrumbPathInterface,
-  BreadcrumbPropertiesInterface,
+  BreadcrumbPropertiesInterface
 } from "./commonsInterfaces.tsx";
 import type { JSX } from "react";
 
@@ -32,4 +32,6 @@ export const DefaultBreadcrumbArray: Array<BreadcrumbPathInterface> = [];
 export const DefaultBreadcrumbProperties: BreadcrumbPropertiesInterface = {
   path: [],
 };
+
+
 

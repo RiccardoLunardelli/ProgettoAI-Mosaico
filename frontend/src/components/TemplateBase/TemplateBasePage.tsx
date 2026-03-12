@@ -9,6 +9,7 @@ import {
   UpdateTemplateBaseDetailAPIHook,
   UpdateTemplateBasePatchAPIHook,
 } from "../../customHooks/API/TemplateBase/templateBaseAPI";
+import TemplateBasePatchFormTag from "./TemplateBasePatchForm";
 
 const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
 const Toggle = lazy(() =>
@@ -455,24 +456,7 @@ function TemplateBasePageTag() {
                   <></>
                 )}
                 <div>
-                  <Suspense fallback="">
-                    <TextareaTag
-                      minHeight="300px"
-                      minWidth="600px"
-                      marginTop={"20px"}
-                      value={
-                        inputSliceValue["TemplateBasePatch-TextArea"] ?? ""
-                      }
-                      onChange={(e: any) => {
-                        dispatch(
-                          SetInputSlice({
-                            id: "TemplateBasePatch-TextArea",
-                            value: e,
-                          }),
-                        );
-                      }}
-                    />
-                  </Suspense>
+                  <TemplateBasePatchFormTag inputPrefix="TemplateBasePatch" />
                 </div>
                 <BasicButtonGenericTag
                   textToSee="Salva"

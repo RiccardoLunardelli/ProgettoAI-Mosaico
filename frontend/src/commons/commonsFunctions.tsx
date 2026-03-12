@@ -460,3 +460,90 @@ export const getJsonDiffLines = (json1: [], json2: []) => {
 
   return result;
 };
+
+
+export const BuildPatchJson = ({
+  target,
+  operation,
+  values,
+  inputPrefix,
+}: {
+  target: "dictionary" | "kb" | "template_base";
+  operation: string;
+  values: Record<string, string>;
+  inputPrefix: string;
+}) => {
+  const get = (key: string) => values[`${inputPrefix}-${key}`] ?? "";
+
+  const base: any = {
+    target,
+    operations: [],
+  };
+
+  let operationPayload: any = {
+    op: operation,
+  };
+
+  if (target === "dictionary") {
+    switch (operation) {
+      case "add_abbreviation":
+        operationPayload.concept_id = get("ConceptId");
+        operationPayload.value = get("Value");
+        break;
+
+      case "add_synonym":
+        operationPayload.concept_id = get("ConceptId");
+        operationPayload.lang = get("Lang");
+        operationPayload.value = get("Value");
+        break;
+    }
+  }
+
+  if (target === "kb") {
+    switch (operation) {
+      case "add_kb_rule":
+      case "update_kb_rule":
+        operationPayload.scope_id = get("ScopeId");
+        operationPayload.source_type = get("SourceType");
+        operationPayload.source_key = get("SourceKey");
+        operationPayload.concept_id = get("ConceptId");
+        operationPayload.reason = get("Reason");
+        operationPayload.evidence = get("Evidence");
+        operationPayload.semantic_category = get("SemanticCategory");
+        break;
+    }
+  }
+
+  if (target === "template_base") {
+    switch (operation) {
+      case "add_base_concept":
+        operationPayload.category_id = get("CategoryId");
+        operationPayload.concept_id = get("ConceptId");
+        operationPayload.semantic_category = get("SemanticCategory");
+        operationPayload.label = {
+          it: get("LabelIt"),
+          en: get("LabelEn"),
+        };
+        operationPayload.description = get("Description");
+        break;
+
+      case "remove_base_concept":
+        operationPayload.concept_id = get("ConceptId");
+        break;
+
+      case "update_base_metadata":
+        operationPayload.concept_id = get("ConceptId");
+        operationPayload.label = {
+          it: get("LabelIt"),
+          en: get("LabelEn"),
+        };
+        operationPayload.description = get("Description");
+        operationPayload.category = get("Category");
+        break;
+    }
+  }
+
+  base.operations.push(operationPayload);
+
+  return JSON.stringify(base, null, 2);
+};

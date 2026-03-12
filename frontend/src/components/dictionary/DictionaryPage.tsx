@@ -10,6 +10,7 @@ import {
 import { SetInputSlice } from "../../stores/slices/Base/inputSlice";
 import { IsValidJSON } from "../../commons/commonsFunctions";
 import { GetRunIdTemplateAPIHook } from "../../customHooks/API/TemplateBase/templateBaseAPI";
+import DictionaryPatchFormTag from "./DictionaryPatchForm";
 
 const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
 
@@ -574,24 +575,9 @@ function DictionaryPageTag() {
                 {componentState.whatImDoing == "PatchJson" ? (
                   <>
                     <div>
-                      <Suspense fallback="">
-                        <TextareaTag
-                          minHeight="300px"
-                          minWidth="600px"
-                          marginTop={"20px"}
-                          value={
-                            inputSliceValue["DictionaryPatch-TextArea"] ?? ""
-                          }
-                          onChange={(e: any) => {
-                            dispatch(
-                              SetInputSlice({
-                                id: "DictionaryPatch-TextArea",
-                                value: e,
-                              }),
-                            );
-                          }}
-                        />
-                      </Suspense>
+                      <DictionaryPatchFormTag
+                        inputPrefix="DictionaryPatch"
+                      />
                     </div>
                     <BasicButtonGenericTag
                       textToSee="Salva"
