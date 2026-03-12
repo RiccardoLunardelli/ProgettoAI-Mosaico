@@ -21,7 +21,7 @@ const BasicButtonGenericTag = lazy(
 const Toggle = lazy(() =>
   import("rsuite").then((module) => ({ default: module.Toggle })),
 );
-const TextareaTag = lazy(() => import("rsuite/esm/Textarea"));
+const MonacoEditorTag = lazy(() => import("@monaco-editor/react"));
 
 export type ModeType = "run_report" | "manual";
 
@@ -530,33 +530,46 @@ function DictionaryPageTag() {
                 {/* Se whatImDoing è Edit */}
                 {componentState.whatImDoing == "Edit" ? (
                   <>
-                    <div>
+                    <div
+                      style={{
+                        width: "100%",
+                        maxWidth: "600px",
+                        minWidth: "600px",
+                      }}
+                    >
                       <Suspense fallback="">
-                        <TextareaTag
+                        <div
                           style={{
-                            width: "100%",
                             borderRadius: "8px",
                             border: "1px solid #d1d5db",
-                            padding: "12px",
-                            boxSizing: "border-box",
-                            fontSize: "13px",
-                            fontFamily: "monospace",
+                            overflow: "hidden",
                             backgroundColor: "#f9fafb",
                           }}
-                          minHeight="300px"
-                          minWidth="600px"
-                          value={
-                            inputSliceValue["DictionaryDetails-Edit"] ?? ""
-                          }
-                          onChange={(e: any) => {
-                            dispatch(
-                              SetInputSlice({
-                                id: "DictionaryDetails-Edit",
-                                value: e,
-                              }),
-                            );
-                          }}
-                        />
+                        >
+                          <MonacoEditorTag
+                            height="300px"
+                            defaultLanguage="json"
+                            value={inputSliceValue["DictionaryDetails-Edit"] ?? ""}
+                            onChange={(value) => {
+                              dispatch(
+                                SetInputSlice({
+                                  id: "DictionaryDetails-Edit",
+                                  value: value ?? "",
+                                }),
+                              );
+                            }}
+                            options={{
+                              minimap: { enabled: false },
+                              fontSize: 13,
+                              formatOnPaste: true,
+                              formatOnType: true,
+                              scrollBeyondLastLine: false,
+                              wordWrap: "on",
+                              automaticLayout: true,
+                              tabSize: 2,
+                            }}
+                          />
+                        </div>
                       </Suspense>
                     </div>
                     <BasicButtonGenericTag

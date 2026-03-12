@@ -19,6 +19,7 @@ const TextareaTag = lazy(() => import("rsuite/esm/Textarea"));
 const BasicButtonGenericTag = lazy(
   () => import("../button/BasicButtonGeneric"),
 );
+const MonacoEditorTag = lazy(() => import("@monaco-editor/react"));
 
 type WhatToDoType = "PatchJson" | "Edit";
 
@@ -350,21 +351,47 @@ function TemplateBasePageTag() {
             {/* Se whatImDoing è Edit */}
             {componentState.whatImDoing == "Edit" ? (
               <>
-                <div>
+                <div
+                  style={{
+                    width: "90%",
+                  }}
+                >
                   <Suspense fallback="">
-                    <TextareaTag
-                      minHeight="300px"
-                      minWidth="600px"
-                      value={inputSliceValue["TemplateBaseDetails-Edit"] ?? ""}
-                      onChange={(e: any) => {
-                        dispatch(
-                          SetInputSlice({
-                            id: "TemplateBaseDetails-Edit",
-                            value: e,
-                          }),
-                        );
+                    <div
+                      style={{
+                        borderRadius: "8px",
+                        border: "1px solid #d1d5db",
+                        overflow: "hidden",
+                        backgroundColor: "#f9fafb",
                       }}
-                    />
+                    >
+                      <MonacoEditorTag
+                        height="550px"
+                        defaultLanguage="json"
+                        value={
+                          inputSliceValue["TemplateBaseDetails-Edit"] ?? ""
+                        }
+                        onChange={(value) => {
+                          dispatch(
+                            SetInputSlice({
+                              id: "TemplateBaseDetails-Edit",
+                              value: value ?? "",
+                            }),
+                          );
+                        }}
+                        options={{
+                          minimap: { enabled: false },
+                          fontSize: 13,
+                          formatOnPaste: true,
+                          formatOnType: true,
+                          scrollBeyondLastLine: false,
+                          wordWrap: "on",
+                          tabSize: 2,
+                          automaticLayout: true,
+                          readOnly: true,
+                        }}
+                      />
+                    </div>
                   </Suspense>
                 </div>
                 <BasicButtonGenericTag

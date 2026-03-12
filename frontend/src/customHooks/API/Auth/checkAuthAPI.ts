@@ -45,6 +45,7 @@ const CheckAuthAPIHook = () => {
         id: jsonResponse.user?.sub ?? "",
         email: jsonResponse.user?.email ?? "",
         name: jsonResponse.user?.name ?? "",
+        role: jsonResponse.user?.role ?? 2
       };
 
       SetAuth(isAuthenticated, infoUserObj);

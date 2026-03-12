@@ -4,6 +4,7 @@ export interface UserInfoInterface {
   name: string
   id: string
   email: string
+  role: string
 }
 
 export const userInfoSlice = createSlice({

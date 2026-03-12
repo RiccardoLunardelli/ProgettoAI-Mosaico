@@ -10,7 +10,6 @@ const SelectPickerTag = lazy(() =>
 type DictionaryOperationType =
   | "add_abbreviation"
   | "add_concept"
-//   | "add_pattern"
   | "add_synonym"
   | "update_category"
   | "update_semantic_category"
@@ -97,7 +96,8 @@ const DICTIONARY_OPERATIONS: Record<
       {
         id: "synonyms_it",
         label: "Synonyms IT",
-        placeholder: "Es. valore sonda p4 temperatura, temperatura sonda p4",
+        placeholder:
+          "Es. valore sonda p4 temperatura, temperatura sonda p4",
         helperText: "Valori separati da virgola.",
         type: "text",
       },
@@ -115,40 +115,8 @@ const DICTIONARY_OPERATIONS: Record<
         helperText: "Valori separati da virgola.",
         type: "text",
       },
-    //   {
-    //     id: "patterns",
-    //     label: "Patterns",
-    //     placeholder: "Es. pattern1, pattern2",
-    //     helperText: "Valori separati da virgola.",
-    //     type: "text",
-    //   },
     ],
   },
-
-  /*add_pattern: {
-    label: "Add Pattern",
-    helperText: "Aggiunge una regex a un concept esistente.",
-    fields: [
-      {
-        id: "concept_id",
-        label: "Concept ID",
-        placeholder: "Es. temp_defrost",
-        type: "text",
-      },
-      {
-        id: "regex",
-        label: "Regex",
-        placeholder: "(?i)\\b(temp|temperatura)\\s*(sbrinamento|defrost|td)\\b",
-        type: "text",
-      },
-      {
-        id: "description",
-        label: "Description",
-        placeholder: "Es. Pattern temperatura sbrinamento/defrost",
-        type: "text",
-      },
-    ],
-  },*/
 
   add_synonym: {
     label: "Add Synonym",
@@ -250,15 +218,27 @@ function DictionaryPatchFormTag({
 }: DictionaryPatchFormTagPropsInterface) {
   const dispatch = useDispatch();
 
-  const inputSliceValue: Record<string, string> = useSelector((state: any) => {
-    return state.inputSlice.value ?? {};
-  });
+  const inputSliceValue = useSelector((state: any) => ({
+    operation: state.inputSlice.value?.[`${inputPrefix}-operation`] ?? "",
+    concept_id: state.inputSlice.value?.[`${inputPrefix}-concept_id`] ?? "",
+    value: state.inputSlice.value?.[`${inputPrefix}-value`] ?? "",
+    category: state.inputSlice.value?.[`${inputPrefix}-category`] ?? "",
+    semantic_category:
+      state.inputSlice.value?.[`${inputPrefix}-semantic_category`] ?? "",
+    synonyms_it: state.inputSlice.value?.[`${inputPrefix}-synonyms_it`] ?? "",
+    synonyms_en: state.inputSlice.value?.[`${inputPrefix}-synonyms_en`] ?? "",
+    abbreviations:
+      state.inputSlice.value?.[`${inputPrefix}-abbreviations`] ?? "",
+    lang: state.inputSlice.value?.[`${inputPrefix}-lang`] ?? "",
+    old_value: state.inputSlice.value?.[`${inputPrefix}-old_value`] ?? "",
+    new_value: state.inputSlice.value?.[`${inputPrefix}-new_value`] ?? "",
+    textArea: state.inputSlice.value?.[`${inputPrefix}-TextArea`] ?? "",
+  }));
 
   const operationInputId = `${inputPrefix}-operation`;
-
   const textAreaInputId = `${inputPrefix}-TextArea`;
 
-  const currentOperation = (inputSliceValue[operationInputId] ?? "") as
+  const currentOperation = inputSliceValue.operation as
     | DictionaryOperationType
     | "";
 
@@ -276,7 +256,7 @@ function DictionaryPatchFormTag({
   };
 
   const getFieldValue = (fieldId: string) => {
-    return inputSliceValue[`${inputPrefix}-${fieldId}`] ?? "";
+    return inputSliceValue[fieldId as keyof typeof inputSliceValue] ?? "";
   };
 
   const parseCommaSeparatedArray = (value: string) => {
@@ -321,18 +301,8 @@ function DictionaryPatchFormTag({
           en: parseCommaSeparatedArray(getFieldValue("synonyms_en")),
         },
         abbreviations: parseCommaSeparatedArray(getFieldValue("abbreviations")),
-        // patterns: parseCommaSeparatedArray(getFieldValue("patterns")),
       };
     }
-
-    /*if (currentOperation === "add_pattern") {
-      operationPayload = {
-        op: "add_pattern",
-        concept_id: getFieldValue("concept_id"),
-        regex: getFieldValue("regex"),
-        description: getFieldValue("description"),
-      };
-    }*/
 
     if (currentOperation === "add_synonym") {
       operationPayload = {
@@ -381,7 +351,30 @@ function DictionaryPatchFormTag({
 
   const jsonPreview = useMemo(() => {
     return buildDictionaryPatchJson();
-  }, [inputSliceValue, inputPrefix, currentOperation]);
+  }, [
+    currentOperation,
+    inputSliceValue.concept_id,
+    inputSliceValue.value,
+    inputSliceValue.category,
+    inputSliceValue.semantic_category,
+    inputSliceValue.synonyms_it,
+    inputSliceValue.synonyms_en,
+    inputSliceValue.abbreviations,
+    inputSliceValue.lang,
+    inputSliceValue.old_value,
+    inputSliceValue.new_value,
+  ]);
+
+  useEffect(() => {
+    if (inputSliceValue.textArea === jsonPreview) return;
+
+    dispatch(
+      SetInputSlice({
+        id: textAreaInputId,
+        value: jsonPreview,
+      }),
+    );
+  }, [dispatch, inputSliceValue.textArea, jsonPreview, textAreaInputId]);
 
   const labelStyle = {
     fontSize: "13px",
@@ -409,6 +402,7 @@ function DictionaryPatchFormTag({
     display: "flex",
     flexDirection: "column" as const,
     gap: "18px",
+    minWidth: 0,
   };
 
   const inputCardStyle = {
@@ -418,11 +412,12 @@ function DictionaryPatchFormTag({
     backgroundColor: "#f9fafb",
     border: "1px solid #e5e7eb",
     boxSizing: "border-box" as const,
+    minWidth: 0,
   };
 
   const RenderField = (field: DictionaryFieldInterface) => {
     const fieldInputId = `${inputPrefix}-${field.id}`;
-    const fieldValue = inputSliceValue[fieldInputId] ?? "";
+    const fieldValue = getFieldValue(field.id);
 
     if (field.type === "text") {
       return (
@@ -475,15 +470,6 @@ function DictionaryPatchFormTag({
     return null;
   };
 
-  useEffect(() => {
-    dispatch(
-      SetInputSlice({
-        id: textAreaInputId,
-        value: jsonPreview,
-      }),
-    );
-  }, [dispatch, jsonPreview, textAreaInputId]);
-
   return (
     <div style={cardStyle}>
       <div
@@ -491,6 +477,7 @@ function DictionaryPatchFormTag({
           display: "flex",
           flexDirection: "column",
           gap: "4px",
+          minWidth: 0,
         }}
       >
         <span
@@ -519,6 +506,7 @@ function DictionaryPatchFormTag({
           gridTemplateColumns: "1fr",
           gap: "16px",
           alignItems: "start",
+          minWidth: 0,
         }}
       >
         <div style={inputCardStyle}>
@@ -566,6 +554,7 @@ function DictionaryPatchFormTag({
               gridTemplateColumns: "repeat(2, minmax(260px, 1fr))",
               gap: "16px",
               alignItems: "start",
+              minWidth: 0,
             }}
           >
             {currentOperationConfig.fields.map((singleField) => (
@@ -590,6 +579,8 @@ function DictionaryPatchFormTag({
           display: "flex",
           flexDirection: "column",
           gap: "8px",
+          width: "100%",
+          minWidth: 0,
         }}
       >
         <span
