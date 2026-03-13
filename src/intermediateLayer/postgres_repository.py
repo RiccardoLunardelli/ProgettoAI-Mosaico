@@ -156,9 +156,7 @@ class UsersRepository():
             with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
                 cur.execute(sql, (str(user_id),))
                 row = cur.fetchone()
-                if row is None:
-                    raise KeyError(f"user_id not found: {user_id}")
-                return dict(row)
+                return dict(row) if row else {}
 
     def get_user_by_email(self, email: str) -> Dict[str, Any]:
         # ritorna user con certa mail
@@ -214,6 +212,42 @@ class UsersRepository():
             "password": r[4],
             "role": r[5]
         }for r in rows]
+
+    def update_user(self, user_id: UUID, email: Optional[str] = None, name: Optional[str] = None, password: Optional[str] = None, role: Optional[int] = None) -> None:
+        sets = []
+        params = []
+
+        if email is not None:
+            sets.append("email = %s")
+            params.append(email)
+
+        if name is not None:
+            sets.append("name = %s")
+            params.append(name)
+
+        if password is not None:
+            sets.append("password = crypt(%s, gen_salt('bf'))")
+            params.append(password)
+        
+        if role is not None:
+            sets.append("role = %s")
+            params.append(role)
+
+        if not sets:
+            raise ValueError("no fields to update")
+
+        sql = f"""
+            UPDATE users
+            SET {", ".join(sets)}
+            WHERE id = %s
+        """
+        params.append(str(user_id))
+
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, tuple(params))
+                if cur.rowcount == 0:
+                    raise KeyError(f"user_id not found: {user_id}")
 
     def truncate_users(self) -> None:
         # tronca la tabella degli users
@@ -284,14 +318,88 @@ class ArtifactRepository():
             "version": r[3]
         }for r in rows]     
 
-    def drop_artifact(self, id) -> Dict[str, Any]:
+    def get_artifacts_by_ids_or_name(self, ids: list[str] | None, name: str | None) -> list[dict]:
+        # cerca artifacts per lista ids oppure per name (uno dei due)
+
+        if ids:
+            id_list = [str(x) for x in ids]
+            sql = """
+            SELECT id, type, name, version
+            FROM artifacts
+            WHERE id = ANY(%s::uuid[])
+            """
+            with psycopg2.connect(self._dsn) as conn:
+                with conn.cursor() as cur:
+                    cur.execute(sql, (id_list,))
+                    rows = cur.fetchall()
+
+            return [
+                {"id": str(r[0]), "type": r[1], "name": r[2], "version": r[3]}
+                for r in rows
+            ]
+
+        if name:
+            sql = """
+            SELECT id, type, name, version
+            FROM artifacts
+            WHERE name = %s
+            ORDER BY version NULLS LAST, id
+            """
+            with psycopg2.connect(self._dsn) as conn:
+                with conn.cursor() as cur:
+                    cur.execute(sql, (name,))
+                    rows = cur.fetchall()
+
+            return [
+                {"id": str(r[0]), "type": r[1], "name": r[2], "version": r[3]}
+                for r in rows
+            ]
+
+        raise ValueError("provide ids or name")
+
+    def drop_artifact(self, ids) -> Dict[str, Any]:
         # elimina file da db
 
-        sql = "DELETE FROM artifacts WHERE id = %s"
+        id_list = [str(x) for x in ids]
+        if not id_list:
+            return {"deleted": [], "blocked": []}
+
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
-                cur.execute(sql, (str(id),))
-        return {"deleted": id}
+                # 1) trova ID bloccati da FK logiche (runs/devices)
+                cur.execute(
+                    """
+                    SELECT i.id,
+                        EXISTS (SELECT 1 FROM runs r WHERE r.artifact_id = i.id) AS used_in_runs,
+                        EXISTS (SELECT 1 FROM devices d WHERE d.id_template = i.id) AS used_in_devices
+                    FROM unnest(%s::uuid[]) AS i(id)
+                    """,
+                    (id_list,),
+                )
+                rows = cur.fetchall()
+
+                blocked = []
+                deletable = []
+                for artifact_id, used_in_runs, used_in_devices in rows:
+                    if used_in_runs or used_in_devices:
+                        blocked.append({
+                            "id": str(artifact_id),
+                            "used_in_runs": used_in_runs,
+                            "used_in_devices": used_in_devices,
+                        })
+                    else:
+                        deletable.append(str(artifact_id))
+
+                # 2) delete bulk solo dei deletable
+                deleted = []
+                if deletable:
+                    cur.execute(
+                        "DELETE FROM artifacts WHERE id = ANY(%s::uuid[]) RETURNING id",
+                        (deletable,),
+                    )
+                    deleted = [str(r[0]) for r in cur.fetchall()]
+
+        return {"deleted": deleted, "blocked": blocked}
 
 class Roles():
     # classe per ruoli
@@ -320,3 +428,143 @@ class Roles():
             with conn.cursor() as cur:
                 cur.execute(sql, (role_id,))
                 return cur.fetchone() is not None
+
+class Clients():
+    # classe per clienti
+
+    def __init__(self, dsn: str) -> None:
+        self._dsn = dsn
+
+    def list_clients(self) -> list[str]:
+        # ritorna tutti i clienti
+
+        sql = "SELECT * FROM clients"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql)
+                rows = cur.fetchall()
+        return [
+            {
+              "id": r[0],
+              "name": r[1]  
+            } for r in rows
+        ]
+
+    def upsert_client(self, name) -> str:
+        # inserisce clienti
+
+        sql = "INSERT INTO clients (id, name) VALUES (%s, %s)"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                id = str(uuid4())
+                cur.execute(sql, (id, name))
+        return {"insert client": name}
+    
+    def client_exists(self, name) -> Dict[str, Any]:
+        # controllo se esiste gia cliente
+
+        sql = "SELECT * FROM clients WHERE name = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (name,))
+                row = cur.fetchone()
+        return row if row else {}
+
+    def delete_client(self, name: str):
+        # elimina cliente dal db
+
+        sql = "DELETE FROM clients WHERE name = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (name, ))
+        return {"deleted": name}
+
+    def update_name(self, new_name: str, name: str):
+        # aggiorna nome di un cliente
+        
+        sql = "UPDATE clients SET name = %s WHERE name = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (new_name, name))
+        return {"updated client": name}
+
+
+class Stores():
+    # classe per i pt vendita
+
+    def __init__(self, dsn: str) -> None:
+        self._dsn = dsn
+
+    def upsert_store(self, client_id: UUID | str, store_name: str, content: Dict[str, Any]) -> Dict[str, Any]:
+        # inserisce store
+
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                store_id = str(uuid4())
+                cur.execute("INSERT INTO stores (id, client_id, name, content) VALUES (%s, %s, %s, %s)",(store_id, str(client_id), store_name, psycopg2.extras.Json(content)),)
+                return {"id": store_id, "client_id": str(client_id), "name": store_name, "action": "inserted"}
+
+    def update_store(self, id: UUID, client_id: UUID | None, new_name: str | None):
+        # aggiorna store
+
+        sets = []
+        params = []
+
+        if client_id is not None:
+            sets.append("client_id = %s")
+            params.append(str(client_id))
+
+        if new_name is not None:
+            sets.append("name = %s")
+            params.append(new_name)
+
+        if not sets:
+            raise ValueError("no fields to update")
+
+        sql = f"""
+            UPDATE stores
+            SET {", ".join(sets)}
+            WHERE id = %s
+        """
+        params.append(str(id))
+
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, tuple(params))
+                if cur.rowcount == 0:
+                    raise KeyError(f"store_id not found: {id}")
+
+    def list_store(self) -> list[str]:
+        # ritorna lista store
+
+        sql = "SELECT * FROM stores"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql)
+                rows = cur.fetchall()
+        return [
+            {
+                "id": r[0],
+                "client_id": r[1],
+                "name": r[2]
+            } for r in rows
+        ]
+
+    def store_exists(self, name: str) -> Dict[str, Any]:
+        # controlla se uno store esiste gia
+
+        sql = "SELECT * FROM stores WHERE name = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql , (name,))
+                row = cur.fetchone()
+        return row if row else {}
+
+    def delete_store(self, name):
+        # elimina store
+
+        sql = "DELETE FROM stores WHERE name = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (name,))
+        return {"deleted": name}

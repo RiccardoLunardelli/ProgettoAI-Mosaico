@@ -14,6 +14,8 @@ function TopNavbar() {
     (state: { currentPathSlice: { value: string } }) => state.currentPathSlice,
   );
 
+  const isThisAdAdminPath = currentPathSlice.value == "User Management";
+
   return (
     <div
       style={{
@@ -44,9 +46,9 @@ function TopNavbar() {
             userSelect: "none",
           }}
           onClick={() => {
-                      navigate("/")
-                      dispatch(SetCurrentPathSlice(null))
-                    }}
+            navigate("/");
+            dispatch(SetCurrentPathSlice(null));
+          }}
         >
           Semantic AI Mapper
         </div>
@@ -69,6 +71,14 @@ function TopNavbar() {
                   marginLeft: "12px",
                   color: "var(--black)",
                   fontSize: "14px",
+                  cursor: isThisAdAdminPath ? "pointer" : undefined,
+                }}
+                onClick={() => {
+                  if (isThisAdAdminPath) {
+                    navigate("/Admin");
+                    dispatch(SetCurrentPathSlice("Admin"))
+                  }
+                  return;
                 }}
               >
                 {currentPathSlice.value}

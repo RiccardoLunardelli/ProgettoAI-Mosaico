@@ -18,7 +18,7 @@ def jwt_token(user_id: str | None, email: str | None, action, user: Dict[str, An
     str(uid),
     email,
     name,
-    user.get("role") if user else None
+    user.get("role") if user else 2
 )
 
     payload = {"action": action}

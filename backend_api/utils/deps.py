@@ -1,4 +1,4 @@
-from fastapi import Cookie, HTTPException
+from fastapi import Cookie, HTTPException, Depends
 import jwt 
 from backend_api.utils.jwt_utils import decode_token
 
@@ -11,3 +11,9 @@ def get_current_user(token: str | None = Cookie(default=None)):
         raise HTTPException(status_code=401, detail="token expired")
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="invalid token")
+    
+def require_admin(user=Depends(get_current_user)):
+    # admin => role == 1
+    if user.get("role") != 1:
+        raise HTTPException(status_code=403, detail="admin only")
+    return user

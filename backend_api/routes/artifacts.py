@@ -6,7 +6,7 @@ from backend_api.schemas.artifacts import DictionaryEditRequest, KbEditRequest, 
 from mcp_server.tools.dictionary_tool import _next_versioned_path, _extract_version_from_path
 from mcp_server.core import MCPContext
 
-from src.intermediateLayer.postgres_repository import RunRepository, ArtifactRepository
+from src.intermediateLayer.postgres_repository import RunRepository, ArtifactRepository, Stores
 from backend_api.routes.runs import _register_artifact_from_path
 from backend_api.utils.deps import get_current_user
 from scripts.config.config import RUNS_ROOT, generate_run_id
@@ -17,6 +17,7 @@ router = APIRouter(prefix="/api")
 dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
 runClass = RunRepository(dsn)
 artifactClass = ArtifactRepository(dsn)
+storeClass = Stores(dsn)
 
 TEMPLATE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates")
 DICTIONARIES_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionaries")
