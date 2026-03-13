@@ -123,3 +123,7 @@ a {
   border: 1px solid #477dda;
   background-color: #e8f0ff;
 }
+
+.user-role-picker {
+  z-index: 100000 !important;
+}

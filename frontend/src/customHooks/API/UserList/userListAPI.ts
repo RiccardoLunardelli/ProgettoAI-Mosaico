@@ -1,0 +1,307 @@
+import { useDispatch } from "react-redux";
+import type { ResponseMessageInterface } from "../../../commons/commonsInterfaces";
+import {
+  CloseLoader,
+  OpenLoader,
+} from "../../../stores/slices/Base/loaderSlice";
+import {
+  FetchMethodEnum,
+  FetchResponseTypeEnum,
+  ResultTypeEnum,
+} from "../../../commons/commonsEnums";
+import { apiDomainString } from "../../../commons/commonsVariables";
+import {
+  SetUserListSlice,
+  type UserListInterface,
+} from "../../../stores/slices/Base/userListSlice";
+import { useTranslation } from "react-i18next";
+import { toast, type Id } from "react-toastify";
+
+const GetUserListAPIHook = () => {
+  const dispatch = useDispatch();
+
+  const GetUserListAPI = async (infoObj: {
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    //Apre il loader, se richiesto
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
+
+    try {
+      const apiCall = await fetch(apiDomainString + "/users", {
+        method: FetchMethodEnum.Get,
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      //Risposta in base64
+      const response: string = await apiCall.text();
+
+      //Risposta in json
+      const jsonResponse = JSON.parse(response);
+
+      //Se deve salvare il valore
+      if (infoObj?.saveResponse ?? true) {
+        const userListList: UserListInterface[] = jsonResponse ?? [];
+
+        dispatch(SetUserListSlice(userListList));
+      }
+
+      //Callback di successo
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } catch (err) {
+      console.error("UserList error:", err);
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Error,
+          message: err,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [GetUserListAPI];
+};
+
+const UpdateUserListAPIHook = () => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+
+  const UpdateUserListAPI = async (infoObj: {
+    data: {
+      user_id: string;
+      email: string;
+      name: string;
+      password: string;
+      role: number;
+    };
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    showToast?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    //Apre il loader, se richiesto
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
+
+    //Id del toast
+    let toastId: Id = -1;
+    //Se deve mostrare il toast
+    if (infoObj.showToast) {
+      toastId = toast.loading(t("Operazione in corso..."));
+    }
+
+    try {
+      const apiCall = await fetch(apiDomainString + "/update_user", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(infoObj.data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const jsonResponse: string = await apiCall.text();
+
+      const responseOk: boolean = apiCall.status == 200;
+
+      //Controllo risposta
+      if (!responseOk) {
+        if (infoObj.EndCallback) {
+          infoObj.EndCallback({
+            result: ResultTypeEnum.Error,
+            message: JSON.stringify(jsonResponse),
+            messageType: FetchResponseTypeEnum.Json,
+            otherResponseInfo: "",
+          });
+        }
+        return;
+      }
+
+      //Se la risposta è positiva
+
+      //Se deve salvare il valore
+      if (infoObj?.saveResponse ?? true) {
+      }
+
+      //Callback di successo
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+
+      //Se deve mostrare il toast
+      if (infoObj.showToast) {
+        //Imposta il toast di successo
+        toast.update(toastId, {
+          render: t("Operazione completata con successo!"),
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+          closeButton: true,
+        });
+      }
+    } catch (err) {
+      console.error("UserUpdate error:", err);
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Error,
+          message: err,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+
+      //Se deve mostrare il toast
+      if (infoObj.showToast) {
+        //Imposta il toast di successo
+        toast.update(toastId, {
+          render: t("Errore durante l'operazione"),
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+          closeButton: true,
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [UpdateUserListAPI];
+};
+
+const DeleteUserListAPIHook = () => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+
+  const DeleteUserListAPI = async (infoObj: {
+    data: {
+      user_id: string;
+    };
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    showToast?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    //Apre il loader, se richiesto
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
+
+    //Id del toast
+    let toastId: Id = -1;
+    //Se deve mostrare il toast
+    if (infoObj.showToast) {
+      toastId = toast.loading(t("Operazione in corso..."));
+    }
+
+    try {
+      const apiCall = await fetch(apiDomainString + "/delete_user", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(infoObj.data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const jsonResponse: string = await apiCall.text();
+
+      const responseOk: boolean = apiCall.status == 200;
+
+      //Controllo risposta
+      if (!responseOk) {
+        if (infoObj.EndCallback) {
+          infoObj.EndCallback({
+            result: ResultTypeEnum.Error,
+            message: JSON.stringify(jsonResponse),
+            messageType: FetchResponseTypeEnum.Json,
+            otherResponseInfo: "",
+          });
+        }
+        return;
+      }
+
+      //Se la risposta è positiva
+
+      //Se deve salvare il valore
+      if (infoObj?.saveResponse ?? true) {
+      }
+
+      //Callback di successo
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+
+      //Se deve mostrare il toast
+      if (infoObj.showToast) {
+        //Imposta il toast di successo
+        toast.update(toastId, {
+          render: t("Operazione completata con successo!"),
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+          closeButton: true,
+        });
+      }
+    } catch (err) {
+      console.error("Delete User error:", err);
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Error,
+          message: err,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+
+      //Se deve mostrare il toast
+      if (infoObj.showToast) {
+        //Imposta il toast di successo
+        toast.update(toastId, {
+          render: t("Errore durante l'operazione"),
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+          closeButton: true,
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [DeleteUserListAPI];
+};
+
+export { GetUserListAPIHook, UpdateUserListAPIHook, DeleteUserListAPIHook };

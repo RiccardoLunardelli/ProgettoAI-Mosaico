@@ -6,7 +6,6 @@ import { SetCurrentPathSlice } from "../../stores/slices/Base/currentPath";
 import { useTranslation } from "react-i18next";
 
 function NavbarUserInfoTag() {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -15,8 +14,6 @@ function NavbarUserInfoTag() {
     (state: { userInfoSlice: { value: UserInfoInterface } }) =>
       state.userInfoSlice,
   );
-
-  
 
   return (
     <DropdownMenu.Root>
@@ -74,12 +71,34 @@ function NavbarUserInfoTag() {
             transition: "background 0.2s",
           }}
           onClick={() => {
-            navigate("/Settings")
-            dispatch(SetCurrentPathSlice(t("Settings")))
+            navigate("/Settings");
+            dispatch(SetCurrentPathSlice(t("Settings")));
           }}
         >
           Settings
         </DropdownMenu.Item>
+        {/* Se sono admin la vedo, se no non vedo */}
+        {(userInfoSlice?.value?.role ?? 2) == 1 ? (
+          <>
+            <DropdownMenu.Item
+              style={{
+                padding: "10px 15px",
+                cursor: "pointer",
+                color: "#477dda",
+                fontSize: "14px",
+                transition: "background 0.2s",
+              }}
+              onClick={() => {
+                navigate("/Admin");
+                dispatch(SetCurrentPathSlice(t("Admin")));
+              }}
+            >
+              Admin
+            </DropdownMenu.Item>
+          </>
+        ) : (
+          <></>
+        )}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );

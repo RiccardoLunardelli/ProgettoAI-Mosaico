@@ -29,8 +29,18 @@ import { templateBaseListSliceReducer } from "./stores/slices/Base/templateBaseL
 import { dictionaryListSliceReducer } from "./stores/slices/Base/dictionaryListSlice";
 import { deviceListListSliceReducer } from "./stores/slices/Base/deviceListSlice";
 import { templateListSliceReducer } from "./stores/slices/Base/templateListSlice";
+import { userListSliceReducer } from "./stores/slices/Base/userListSlice";
 
 const HomePageTag = lazy(() => import("./components/Home/HomePage"));
+const UserManagementPageTag = lazy(
+  () => import("./components/AdminPages/UserManagement/UserManagementPage"),
+);
+const ProtectedRouteAdmin = lazy(
+  () => import("./components/protectedRoute/ProtectedRouteAdmin"),
+);
+const AdminHomePageTag = lazy(
+  () => import("./components/AdminPages/AdminHomePage/AdminHomePage"),
+);
 const TemplatePageTag = lazy(
   () => import("./components/Template/TemplatePage"),
 );
@@ -57,10 +67,6 @@ const ProtectedRoute = lazy(
   () => import("./components/protectedRoute/ProtectedRoute"),
 );
 const LoginTag = lazy(() => import("./components/login/Login"));
-
-const ProtectedRouteAdmin = lazy(
-  () => import("./components/protectedRoute/ProtectedRouteAdmin"),
-);
 
 let childrenRouterArr: any = [
   //Home
@@ -145,13 +151,30 @@ let childrenRouterArr: any = [
     ),
     errorElement: <ErrorBoundaryInnerTag />,
   },
-];
-
-let adminChildrenRouterArr: any[] = [
   {
-    path: "/admin",
-    element: <span>admin</span>,
-    errorElement: <ErrorBoundaryInnerTag />,
+    element: (
+      <Suspense fallback="">
+        <ProtectedRouteAdmin />
+      </Suspense>
+    ),
+    children: [
+      {
+        path: "/Admin",
+        element: (
+          <Suspense>
+            <AdminHomePageTag />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/UserManagement",
+        element: (
+          <Suspense>
+            <UserManagementPageTag />
+          </Suspense>
+        ),
+      },
+    ],
   },
 ];
 
@@ -166,21 +189,7 @@ const protectedChildrenArr: any[] = [
         </ErrorBoundaryTag>
       </Suspense>
     ),
-    children: [
-      ...childrenRouterArr,
-      {
-        element: (
-          <Suspense fallback="">
-            <ErrorBoundaryTag>
-              <Suspense fallback="">
-                <ProtectedRouteAdmin />
-              </Suspense>
-            </ErrorBoundaryTag>
-          </Suspense>
-        ),
-        children: adminChildrenRouterArr,
-      },
-    ],
+    children: childrenRouterArr,
   },
 ];
 
@@ -241,6 +250,7 @@ function SecureRoot(): JSX.Element {
       dictionaryListSlice: dictionaryListSliceReducer,
       deviceListListSlice: deviceListListSliceReducer,
       templateListSlice: templateListSliceReducer,
+      userListSlice: userListSliceReducer
     },
     devTools:
       (import.meta.env.VITE_DEBUG_DEVTOOLS?.toString()?.toLowerCase() ?? "") ==

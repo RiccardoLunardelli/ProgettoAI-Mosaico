@@ -75,7 +75,7 @@ function HomePageTag() {
           }}
           className="HoverTransform"
           onClick={() =>
-            HandleNavigateCardOnClick("Dictionary", "Dictionary")
+            HandleNavigateCardOnClick("/Dictionary", "Dictionary")
           }
         >
           {/* Icona + testo */}
@@ -163,7 +163,7 @@ function HomePageTag() {
           }}
           className="HoverTransform"
           onClick={() =>
-            HandleNavigateCardOnClick("KnowledgeBase", "Knowledge Base")
+            HandleNavigateCardOnClick("/KnowledgeBase", "Knowledge Base")
           }
         >
           {/* Icona + testo */}
@@ -251,7 +251,7 @@ function HomePageTag() {
           }}
           className="HoverTransform"
           onClick={() =>
-            HandleNavigateCardOnClick("Template", "Template")
+            HandleNavigateCardOnClick("/Template", "Template")
           }
         >
           {/* Icona + testo */}
@@ -339,7 +339,7 @@ function HomePageTag() {
           }}
           className="HoverTransform"
           onClick={() =>
-            HandleNavigateCardOnClick("TemplateBase", "Template Base")
+            HandleNavigateCardOnClick("/TemplateBase", "Template Base")
           }
         >
           {/* Icona + testo */}
@@ -427,7 +427,7 @@ function HomePageTag() {
           }}
           className="HoverTransform"
           onClick={() =>
-            HandleNavigateCardOnClick("DeviceList", "Device List")
+            HandleNavigateCardOnClick("/DeviceList", "Device List")
           }
         >
           {/* Icona + testo */}
@@ -515,7 +515,7 @@ function HomePageTag() {
           }}
           className="HoverTransform"
           onClick={() =>
-            HandleNavigateCardOnClick("History", "History")
+            HandleNavigateCardOnClick("/History", "History")
           }
         >
           {/* Icona + testo */}
@@ -591,7 +591,7 @@ function HomePageTag() {
               History delle operazioni svolte
             </span>
           </div>
-        </div>
+        </div>        
       </div>
     </div>
   );

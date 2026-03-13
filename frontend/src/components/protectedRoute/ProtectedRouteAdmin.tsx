@@ -1,16 +1,37 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { SetCurrentPathSlice } from "../../stores/slices/Base/currentPath";
 
-export default function ProtectedRouteAdmin() {
-  const userInfo = useSelector((state: any) => state.userInfoSlice);
+function ProtectedRouteAdmin() {
+  const dispatch = useDispatch();
+  
+  const userInfo = useSelector((state: any) => state.userInfoSlice.value);
 
-  const isAdmin = userInfo?.role !== 1;
-  // oppure:
-  // const isAdmin = userInfo?.is_admin === true;
+  const authCheck: string | null = useSelector(
+    (state: {
+      authCheckSlice: {
+        value: string | null;
+      };
+    }) => state.authCheckSlice.value,
+  );
+
+  const isAdmin = userInfo?.role == 1;
+
+
+
+  console.log("sono admin", isAdmin)
 
   if (!isAdmin) {
+    dispatch(SetCurrentPathSlice(null));
+
+    if(authCheck == "") {
+        return <Navigate to="/Login" replace />;
+    }
+
     return <Navigate to="/Home" replace />;
   }
 
   return <Outlet />;
 }
+
+export default ProtectedRouteAdmin
