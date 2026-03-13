@@ -488,7 +488,6 @@ class Clients():
                 cur.execute(sql, (new_name, name))
         return {"updated client": name}
 
-
 class Stores():
     # classe per i pt vendita
 
@@ -568,3 +567,51 @@ class Stores():
             with conn.cursor() as cur:
                 cur.execute(sql, (name,))
         return {"deleted": name}
+
+class Devices():
+    # classe per devices
+
+    def __init__(self, dsn: str) -> None:
+        self._dsn = dsn
+
+    def list_devices(self) -> list[str]:
+        # restituisce i device
+
+        sql = "SELECT * FROM devices"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql)
+                rows = cur.fetchall()
+        return [
+            {
+                "id": r[0],
+                "store_id": r[1],
+                "description": r[2],
+                "hd_plc": r[3],
+                "id_template": r[4]
+            } for r in rows
+        ]
+
+    def insert_device(self, store_id: UUID, description: str, hd_plc: str, id_template: UUID | None):
+        # inserimento device
+
+        sql = "INSERT INTO devices (id, store_id, description, hd_plc, id_template) VALUES (%s, %s, %s, %s, %s)"
+        device_id = uuid4()
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    sql,
+                    (str(device_id), str(store_id), description, hd_plc, str(id_template) if id_template else None),
+                )
+        return str(device_id)
+
+    def device_exist(self, id):
+        # check device in db
+
+        sql = "SELECT * FROM devices WHERE id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (str(id),))
+
+                row = cur.fetchone()
+        return {"device": row} if row else {}

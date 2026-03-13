@@ -1,13 +1,14 @@
 from uuid import uuid4
 from datetime import datetime, timezone, timedelta
 import json
-from src.intermediateLayer.postgres_repository import RunRepository, UsersRepository, Roles
+from src.intermediateLayer.postgres_repository import RunRepository, UsersRepository, Roles, Devices
 
 dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
 
 repo = RunRepository(dsn)
 user = UsersRepository(dsn)
 role = Roles(dsn)
+device = Devices(dsn)
 """
 REPO
 with open("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/runs/run20260216_143121/run_report.json", "r", encoding="utf-8") as f:
@@ -46,7 +47,7 @@ user_id = "d875ceed-5219-41f7-bc38-bb069f7514d7"
 
 ## -------------TRONCATE-----------------------
 
-repo.truncate_runs()
+#repo.truncate_runs()
 #user.truncate_users()
 
 ## INSERIMENTO ROLE
@@ -56,5 +57,8 @@ repo.truncate_runs()
 #user.update_user_role(1, "admin@gmail.com")
 
 
+# INSERIMENTO DEVICE
+
+device.insert_device("a406276b-e290-4627-874f-3e8c04fc6d2c", "CENTRALE TN MAT: 0VCD345201 ADR: 1.005", "PLC1.RACK0.SLOT2.DB100.DBX0.0","981465f4-3f24-4f5e-b7a9-4d92f3a3c870")
 
 

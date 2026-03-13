@@ -44,3 +44,6 @@ class UpdateStoreAdmin(BaseModel):
 
 class DeleteStoreAdmin(BaseModel):
     name: str
+
+class UpdateDeviceAdmin(BaseModel):
+    id: UUID4
