@@ -13,14 +13,14 @@ import { apiDomainString } from "../../../commons/commonsVariables";
 import { useTranslation } from "react-i18next";
 import { toast, type Id } from "react-toastify";
 import {
-  SetClientListSlice,
-  type ClientListInterface,
-} from "../../../stores/slices/Base/clientListSlice";
+  SetStoreDevicesListSlice,
+  type StoreDevicesListInterface,
+} from "../../../stores/slices/Base/storeDevicesListSlice";
 
-const GetClientListAPIHook = () => {
+const GetStoreDevicesListAPIHook = () => {
   const dispatch = useDispatch();
 
-  const GetClientListAPI = async (infoObj: {
+  const GetStoreDevicesListAPI = async (infoObj: {
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
     saveResponse?: boolean;
@@ -30,7 +30,7 @@ const GetClientListAPIHook = () => {
     }
 
     try {
-      const apiCall = await fetch(apiDomainString + "/clients", {
+      const apiCall = await fetch(apiDomainString + "/devices", {
         method: FetchMethodEnum.Get,
         credentials: "include",
         headers: {
@@ -42,8 +42,10 @@ const GetClientListAPIHook = () => {
       const jsonResponse = JSON.parse(response);
 
       if (infoObj?.saveResponse ?? true) {
-        const clientListList: ClientListInterface[] = jsonResponse ?? [];
-        dispatch(SetClientListSlice(clientListList));
+        const storeDevicesListList: StoreDevicesListInterface[] =
+          jsonResponse ?? [];
+
+        dispatch(SetStoreDevicesListSlice(storeDevicesListList));
       }
 
       if (infoObj.EndCallback) {
@@ -55,7 +57,7 @@ const GetClientListAPIHook = () => {
         });
       }
     } catch (err) {
-      console.error("ClientList error:", err);
+      console.error("StoreDevicesList error:", err);
 
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
@@ -72,17 +74,20 @@ const GetClientListAPIHook = () => {
     }
   };
 
-  return [GetClientListAPI];
+  return [GetStoreDevicesListAPI];
 };
 
-const UpdateClientListAPIHook = () => {
+const UpdateStoreDevicesListAPIHook = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const UpdateClientListAPI = async (infoObj: {
+  const UpdateStoreDevicesListAPI = async (infoObj: {
     data: {
-      name: string;
-      new_name: string;
+      id: string;
+      store_id: string;
+      description: string;
+      hd_plc: string;
+      id_template: string;
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
@@ -99,7 +104,7 @@ const UpdateClientListAPIHook = () => {
     }
 
     try {
-      const apiCall = await fetch(apiDomainString + "/update_client", {
+      const apiCall = await fetch(apiDomainString + "/update_device", {
         method: "POST",
         credentials: "include",
         body: JSON.stringify(infoObj.data),
@@ -147,7 +152,7 @@ const UpdateClientListAPIHook = () => {
         });
       }
     } catch (err) {
-      console.error("UpdateClient error:", err);
+      console.error("UpdateStoreDevices error:", err);
 
       if (infoObj.showToast) {
         toast.update(toastId, {
@@ -165,16 +170,16 @@ const UpdateClientListAPIHook = () => {
     }
   };
 
-  return [UpdateClientListAPI];
+  return [UpdateStoreDevicesListAPI];
 };
 
-const DeleteClientListAPIHook = () => {
+const DeleteStoreDevicesListAPIHook = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const DeleteClientListAPI = async (infoObj: {
+  const DeleteStoreDevicesListAPI = async (infoObj: {
     data: {
-      name: string;
+      id: string;
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
@@ -191,7 +196,7 @@ const DeleteClientListAPIHook = () => {
     }
 
     try {
-      const apiCall = await fetch(apiDomainString + "/delete_client", {
+      const apiCall = await fetch(apiDomainString + "/delete_device", {
         method: "POST",
         credentials: "include",
         body: JSON.stringify(infoObj.data),
@@ -239,7 +244,7 @@ const DeleteClientListAPIHook = () => {
         });
       }
     } catch (err) {
-      console.error("DeleteClient error:", err);
+      console.error("DeleteStoreDevices error:", err);
 
       if (infoObj.showToast) {
         toast.update(toastId, {
@@ -257,16 +262,19 @@ const DeleteClientListAPIHook = () => {
     }
   };
 
-  return [DeleteClientListAPI];
+  return [DeleteStoreDevicesListAPI];
 };
 
-const InsertClientListAPIHook = () => {
+const InsertStoreDevicesListAPIHook = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const InsertClientListAPI = async (infoObj: {
+  const InsertStoreDevicesListAPI = async (infoObj: {
     data: {
-      name: string;
+      store_id: string;
+      description: string;
+      hd_plc: string;
+      id_template: string;
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
@@ -283,7 +291,7 @@ const InsertClientListAPIHook = () => {
     }
 
     try {
-      const apiCall = await fetch(apiDomainString + "/insert_client", {
+      const apiCall = await fetch(apiDomainString + "/insert_device", {
         method: "POST",
         credentials: "include",
         body: JSON.stringify(infoObj.data),
@@ -331,7 +339,7 @@ const InsertClientListAPIHook = () => {
         });
       }
     } catch (err) {
-      console.error("InsertClient error:", err);
+      console.error("InsertStoreDevices error:", err);
 
       if (infoObj.showToast) {
         toast.update(toastId, {
@@ -349,12 +357,12 @@ const InsertClientListAPIHook = () => {
     }
   };
 
-  return [InsertClientListAPI];
+  return [InsertStoreDevicesListAPI];
 };
 
 export {
-  GetClientListAPIHook,
-  UpdateClientListAPIHook,
-  DeleteClientListAPIHook,
-  InsertClientListAPIHook,
+  GetStoreDevicesListAPIHook,
+  UpdateStoreDevicesListAPIHook,
+  DeleteStoreDevicesListAPIHook,
+  InsertStoreDevicesListAPIHook,
 };

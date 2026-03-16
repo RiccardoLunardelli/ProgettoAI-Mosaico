@@ -14,7 +14,7 @@ function TopNavbar() {
     (state: { currentPathSlice: { value: string } }) => state.currentPathSlice,
   );
 
-  const isThisAdAdminPath = currentPathSlice.value == "User Management" || "Client Management" || "Store Management";
+  const isThisAdAdminPath = currentPathSlice.value == "User Management" || "Client Management" || "Store Management" || "Store Devices Management";
 
   return (
     <div
