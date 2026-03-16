@@ -6,7 +6,7 @@ from backend_api.schemas.artifacts import DictionaryEditRequest, KbEditRequest, 
 from mcp_server.tools.dictionary_tool import _next_versioned_path, _extract_version_from_path
 from mcp_server.core import MCPContext
 
-from src.intermediateLayer.postgres_repository import RunRepository, ArtifactRepository, Stores
+from src.intermediateLayer.postgres_repository import RunRepository, ArtifactRepository, Stores, Template
 from backend_api.routes.runs import _register_artifact_from_path
 from backend_api.utils.deps import get_current_user
 from scripts.config.config import RUNS_ROOT, generate_run_id
@@ -18,6 +18,7 @@ dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password h
 runClass = RunRepository(dsn)
 artifactClass = ArtifactRepository(dsn)
 storeClass = Stores(dsn)
+templateClass = Template(dsn)
 
 TEMPLATE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates")
 DICTIONARIES_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionaries")
@@ -186,6 +187,11 @@ def list_templates(user = Depends(get_current_user)):
 @router.get("/templates/{name}")
 def get_template(name: str, user = Depends(get_current_user)):
     return artifactClass.get_artifact_content(name)
+
+@router.get("/template_usage")
+def get_template_usage(name: str, user = Depends(get_current_user)):
+    id = templateClass.get_template_id_by_name(name)
+    return templateClass.get_template_usage(id)
 
 @router.get("/dictionaries")
 def list_dictionaries(user = Depends(get_current_user)):

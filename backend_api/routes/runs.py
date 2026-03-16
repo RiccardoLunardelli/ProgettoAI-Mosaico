@@ -80,7 +80,7 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
                 # salvataggio nel db
                 artifact_type = report.get("target", {}).get("artifact_type", artifact)
                 artifact_output = report.get("target", {}).get("output_path") or str(input_path)
-                artifact_id = _register_artifact_from_path(artifact_output, artifact_type)
+                artifact_id = _register_artifact_from_path(input_path, artifact_type)
                 runClass.save_run(report, user_id, artifact_id)
 
                 return {
@@ -108,7 +108,7 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
 
                 artifact_type = report.get("target", {}).get("artifact_type", artifact)
                 artifact_output = report.get("target", {}).get("output_path") or str(input_path)
-                artifact_id = _register_artifact_from_path(artifact_output, artifact_type)
+                artifact_id = _register_artifact_from_path(input_path, artifact_type)
                 runClass.save_run(report, user_id, artifact_id)
 
 
@@ -133,7 +133,7 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
         # salvataggio nel db
         artifact_type = report.get("target", {}).get("artifact_type", artifact)
         artifact_output = report.get("target", {}).get("output_path") or str(input_path)
-        artifact_id = _register_artifact_from_path(artifact_output, artifact_type)
+        artifact_id = _register_artifact_from_path(input_path, artifact_type)
         runClass.save_run(report, user_id, artifact_id)
 
 
@@ -147,7 +147,7 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
         # salvataggio nel db
         artifact_type = report.get("target", {}).get("artifact_type", artifact)
         artifact_output = report.get("target", {}).get("output_path") or str(input_path)
-        artifact_id = _register_artifact_from_path(artifact_output, artifact_type)
+        artifact_id = _register_artifact_from_path(input_path, artifact_type)
         runClass.save_run(report, user_id, artifact_id)
 
 
@@ -230,7 +230,7 @@ def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_cu
     report = load_json(result["report_path"])
     artifact_type = report.get("target", {}).get("artifact_type", "template")
     artifact_output = report.get("target", {}).get("output_path") or str(input_path)
-    artifact_id = _register_artifact_from_path(artifact_output, artifact_type)
+    artifact_id = _register_artifact_from_path(input_path, artifact_type)
     runClass.save_run(report, user["sub"], artifact_id)
 
 

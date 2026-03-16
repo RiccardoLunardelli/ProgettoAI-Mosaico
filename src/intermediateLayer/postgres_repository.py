@@ -667,3 +667,47 @@ class Devices():
                 "hd_plc": row[3],
                 "id_template": row[4]
                 } if row else {}
+
+class Template():
+
+    def __init__(self, dsn: str) -> None:
+        self._dsn = dsn
+
+    def get_template_id_by_name(self, name: str) -> str:
+        # ritorna uuid template 
+
+        sql = "SELECT id FROM artifacts WHERE name = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (name,))
+                row = cur.fetchone()
+        return row[0]
+
+    def get_template_usage(self, id: str) -> list[str]:
+        # ritorna i dispositivi e store che usano template
+
+        sql = """
+        SELECT
+            a.id          AS template_id,
+            a.name        AS template_name,
+            a.version     AS template_version,
+            c.id          AS client_id,
+            c.name        AS client_name,
+            s.id          AS store_id,
+            s.name        AS store_name,
+            d.id          AS device_id,
+            d.description AS device_description,
+            d.hd_plc      AS device_hd_plc
+        FROM artifacts a
+        LEFT JOIN devices d ON d.id_template = a.id
+        LEFT JOIN stores s  ON s.id = d.store_id
+        LEFT JOIN clients c ON c.id = s.client_id
+        WHERE a.type = 'template' AND a.id = %s
+        ORDER BY a.name, c.name, s.name, d.description
+        """
+
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute(sql, (str(id),))
+                rows = cur.fetchall()
+                return [dict(r) for r in rows]
