@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from src.intermediateLayer.postgres_repository import UsersRepository, ArtifactRepository, Clients, Stores, Devices
 from backend_api.schemas.admin import UpdateRoleAdmin, DropArtifactAdmin, DeleteUserAdmin, InsertClientAdmin, DeleteClientAdmin, UpsertStoreAdmin, UpdateUser, DeleteStoreAdmin, UpdateClientAdmin, \
-    UpdateStoreAdmin, UpdateDeviceAdmin, InsertDeviceAdmin, DeleteDeviceAdmin
+    UpdateStoreAdmin, UpdateDeviceAdmin, InsertDeviceAdmin, DeleteDeviceAdmin, InsertArtifactAdmin
 
 from backend_api.utils.deps import require_admin
 from uuid import UUID
@@ -43,7 +43,7 @@ def check_artifact(ids: list[str] | None, name: str | None):
                 detail={"message": "Artifact not found", "name": name}
             )
 
-        return name
+        return {"artifact": name} if name else {}
 
     raise HTTPException(status_code=400, detail="provide ids or name")
 
@@ -116,6 +116,7 @@ def device_operation(id: UUID | None, store_id: UUID | None, description: str | 
             raise HTTPException(status_code=404, detail="Device not found")
 
 # ------ENDPOINT--------
+
 #--USER--
 @router.get("/users")
 def get_all_users(user = Depends(require_admin)):
@@ -143,6 +144,15 @@ def drop_artifact(payload: DropArtifactAdmin, user = Depends(require_admin)):
 def get_artifact_content(name: str, user = Depends(require_admin)):
     name = check_artifact(None, name)
     return artifactClass.get_artifact_content(name)
+
+@router.post("/insert_artifact")
+def insert_artifact(payload: InsertArtifactAdmin, user = Depends(require_admin)):
+    check = artifactClass.get_artifacts_by_ids_or_name(None, payload.name)
+    if len(check) > 0:
+        raise HTTPException(status_code=409, detail="Artifact already exists!")
+
+    return artifactClass.upsert_artifact(payload.type, payload.name, payload.version, payload.content)
+
 
 #--CLIENTS--
 @router.get("/clients")

@@ -2,14 +2,15 @@
   "target": "template_base",
   "operations": [
     {
-      "op": "update_base_metadata",
-      "concept_id": "regulation_pressure",
+      "op": "add_base_concept",
+      "category_id": "measurement",
+      "concept_id": "prova",
+      "semantic_category": "prova",
       "label": {
-        "it": "Prova",
-        "en": "test"
+        "it": "temperatura di prova",
+        "en": "prove"
       },
-      "description": "ProvaTest",
-      "category": "warning"
+      "description": "Questa è solo una prova"
     }
   ]
 }

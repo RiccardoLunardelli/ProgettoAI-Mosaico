@@ -21,6 +21,12 @@ class DeleteUserAdmin(BaseModel):
 class GetArtifact(BaseModel):
     id: UUID4
 
+class InsertArtifactAdmin(BaseModel):
+    type: str 
+    name: str 
+    version: str 
+    content: dict 
+
 class DropArtifactAdmin(BaseModel):
     ids: list[UUID4]
 
