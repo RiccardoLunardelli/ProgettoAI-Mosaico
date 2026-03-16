@@ -1,10 +1,12 @@
-from pydantic import BaseModel, UUID4, EmailStr
+from pydantic import BaseModel, UUID4, EmailStr, field_validator
 from typing import Any
 
+#----ROLE-----
 class UpdateRoleAdmin(BaseModel):
     role: int
     user_id: UUID4
 
+#-----USER------
 class UpdateUser(BaseModel):
     user_id: UUID4
     email: EmailStr | None = None 
@@ -12,12 +14,17 @@ class UpdateUser(BaseModel):
     password: str | None = None
     role: int | None = None
 
-class DropArtifactAdmin(BaseModel):
-    ids: list[UUID4]
-
 class DeleteUserAdmin(BaseModel):
     user_id: UUID4
 
+#----ARTIFACT-----
+class GetArtifact(BaseModel):
+    id: UUID4
+
+class DropArtifactAdmin(BaseModel):
+    ids: list[UUID4]
+
+#----CLIENT-----
 class InsertClientAdmin(BaseModel):
     name: str
 
@@ -25,12 +32,10 @@ class UpdateClientAdmin(BaseModel):
     name: str
     new_name: str
 
-class GetArtifact(BaseModel):
-    id: UUID4
-
 class DeleteClientAdmin(BaseModel):
     name: str
 
+#---STORE----
 class UpsertStoreAdmin(BaseModel):
     client_id: UUID4
     store: str
@@ -45,5 +50,26 @@ class UpdateStoreAdmin(BaseModel):
 class DeleteStoreAdmin(BaseModel):
     name: str
 
+#---DEVICE-----
 class UpdateDeviceAdmin(BaseModel):
+    id: UUID4
+    store_id: UUID4 | None 
+    description: str | None 
+    hd_plc: str | None 
+    id_template: UUID4 | None
+
+    @field_validator("store_id", "id_template", mode="before")
+    @classmethod
+    def empty_to_none(cls, v):
+        if v == "":
+            return None
+        return v
+
+class InsertDeviceAdmin(BaseModel):
+    store_id: UUID4
+    description: str
+    hd_plc: str | None
+    id_template: UUID4 | None
+
+class DeleteDeviceAdmin(BaseModel):
     id: UUID4

@@ -30,8 +30,12 @@ import { dictionaryListSliceReducer } from "./stores/slices/Base/dictionaryListS
 import { deviceListListSliceReducer } from "./stores/slices/Base/deviceListSlice";
 import { templateListSliceReducer } from "./stores/slices/Base/templateListSlice";
 import { userListSliceReducer } from "./stores/slices/Base/userListSlice";
+import { clientListSliceReducer } from "./stores/slices/Base/ClientListSlice";
 
 const HomePageTag = lazy(() => import("./components/Home/HomePage"));
+const ClientManagementPageTag = lazy(
+  () => import("./components/AdminPages/ClientManagement/ClientManagementPage"),
+);
 const UserManagementPageTag = lazy(
   () => import("./components/AdminPages/UserManagement/UserManagementPage"),
 );
@@ -174,6 +178,14 @@ let childrenRouterArr: any = [
           </Suspense>
         ),
       },
+      {
+        path: "/ClientManagement",
+        element: (
+          <Suspense>
+            <ClientManagementPageTag />
+          </Suspense>
+        ),
+      },
     ],
   },
 ];
@@ -250,7 +262,8 @@ function SecureRoot(): JSX.Element {
       dictionaryListSlice: dictionaryListSliceReducer,
       deviceListListSlice: deviceListListSliceReducer,
       templateListSlice: templateListSliceReducer,
-      userListSlice: userListSliceReducer
+      userListSlice: userListSliceReducer,
+      clientListSlice: clientListSliceReducer,
     },
     devTools:
       (import.meta.env.VITE_DEBUG_DEVTOOLS?.toString()?.toLowerCase() ?? "") ==

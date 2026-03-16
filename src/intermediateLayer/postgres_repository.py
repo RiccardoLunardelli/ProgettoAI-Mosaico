@@ -605,6 +605,53 @@ class Devices():
                 )
         return str(device_id)
 
+    def update_device(self, id: UUID, store_id: UUID | None, description: str | None, hd_plc: str | None, id_template: UUID | None):
+        # aggiorna device nel db
+
+        sets = []
+        params = []
+
+        if store_id is not None:
+            sets.append("store_id = %s")
+            params.append(str(store_id))
+
+        if description is not None:
+            sets.append("description = %s")
+            params.append(description)
+        
+        if hd_plc is not None:
+            sets.append("hd_plc = %s")
+            params.append(hd_plc)
+        
+        if id_template is not None:
+            sets.append("id_template = %s")
+            params.append(str(id_template))
+        
+        if not sets:
+            raise ValueError("no field to update")
+    
+        sql = f"""
+            UPDATE devices
+            SET {", ".join(sets)}
+            WHERE id = %s
+        """
+        params.append(str(id))
+
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, tuple(params))
+                if cur.rowcount == 0:
+                    raise KeyError(f"device_id not found: {id}")
+
+    def delete_device(self, id: UUID):
+        # delete di un device dal db
+
+        sql = "DELETE FROM devices WHERE id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (str(id),))
+        return {"deleted": id}
+
     def device_exist(self, id):
         # check device in db
 
@@ -612,6 +659,11 @@ class Devices():
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
                 cur.execute(sql, (str(id),))
-
                 row = cur.fetchone()
-        return {"device": row} if row else {}
+        return {
+                "id": row[0],
+                "store_id": row[1],
+                "description": row[2],
+                "hd_plc": row[3],
+                "id_template": row[4]
+                } if row else {}

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from src.intermediateLayer.postgres_repository import UsersRepository, ArtifactRepository, Clients, Stores, Devices
 from backend_api.schemas.admin import UpdateRoleAdmin, DropArtifactAdmin, DeleteUserAdmin, InsertClientAdmin, DeleteClientAdmin, UpsertStoreAdmin, UpdateUser, DeleteStoreAdmin, UpdateClientAdmin, \
-    UpdateStoreAdmin, UpdateDeviceAdmin
+    UpdateStoreAdmin, UpdateDeviceAdmin, InsertDeviceAdmin, DeleteDeviceAdmin
 
 from backend_api.utils.deps import require_admin
 from uuid import UUID
@@ -100,8 +100,20 @@ def store_operation(id: UUID | None, client_id: UUID | None, name: str | None, n
         elif type_op == "delete" or type_op == "update":
             raise HTTPException(status_code=404, detail=f"store {name} not found")
 
-def device_operation():
-    pass 
+def device_operation(id: UUID | None, store_id: UUID | None, description: str | None, hd_plc: str | None, id_template: UUID | None, type_op: str):
+    
+    if type_op == "insert":
+        return deviceClass.insert_device(store_id, description, hd_plc, id_template)
+    
+    check = check_device(id)
+    if len(check) > 0:
+        if type_op == "update":
+            return deviceClass.update_device(id, store_id, description, hd_plc, id_template)
+        elif type_op == "delete":
+            return deviceClass.delete_device(id)
+    else:
+        if type_op == "update" or type_op == "delete":
+            raise HTTPException(status_code=404, detail="Device not found")
 
 # ------ENDPOINT--------
 #--USER--
@@ -171,6 +183,14 @@ def delete_store(payload: DeleteStoreAdmin, user = Depends(require_admin)):
 def get_devices(user = Depends(require_admin)):
     return deviceClass.list_devices()
 
-@router.post("update_device")
+@router.post("/insert_device")
+def insert_device(payload: InsertDeviceAdmin, user = Depends(require_admin)):
+    return device_operation(None, payload.store_id, payload.description, payload.hd_plc, payload.id_template, "insert")
+
+@router.post("/update_device")
 def update_device(payload: UpdateDeviceAdmin, user = Depends(require_admin)):
-    return deviceClass.device_exist(payload.id)
+    return device_operation(payload.id, payload.store_id, payload.description, payload.hd_plc, payload.id_template, "update")
+
+@router.post("/delete_device")
+def delete_device(payload: DeleteDeviceAdmin, user = Depends(require_admin)):
+    return device_operation(payload.id, None, None, None, None, "delete")
