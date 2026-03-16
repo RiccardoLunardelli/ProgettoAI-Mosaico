@@ -12,7 +12,10 @@ import {
 import { apiDomainString } from "../../../commons/commonsVariables";
 import { useTranslation } from "react-i18next";
 import { toast, type Id } from "react-toastify";
-import { SetClientListSlice, type ClientListInterface } from "../../../stores/slices/Base/ClientListSlice";
+import {
+  SetClientListSlice,
+  type ClientListInterface,
+} from "../../../stores/slices/Base/clientListSlice";
 
 const GetClientListAPIHook = () => {
   const dispatch = useDispatch();
@@ -127,6 +130,17 @@ const UpdateClientListAPIHook = () => {
             otherResponseInfo: "",
           });
         }
+
+        if (infoObj.showToast) {
+          toast.update(toastId, {
+            render: t("Errore durante l'operazione"),
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+            closeButton: true,
+          });
+        }
+
         return;
       }
 
@@ -298,7 +312,6 @@ const DeleteClientListAPIHook = () => {
   return [DeleteClientListAPI];
 };
 
-
 const InsertClientListAPIHook = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -348,6 +361,17 @@ const InsertClientListAPIHook = () => {
             otherResponseInfo: "",
           });
         }
+
+        if (infoObj.showToast) {
+          toast.update(toastId, {
+            render: t("Errore durante l'operazione"),
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+            closeButton: true,
+          });
+        }
+
         return;
       }
 
@@ -409,4 +433,9 @@ const InsertClientListAPIHook = () => {
   return [InsertClientListAPI];
 };
 
-export { GetClientListAPIHook, UpdateClientListAPIHook, DeleteClientListAPIHook, InsertClientListAPIHook };
+export {
+  GetClientListAPIHook,
+  UpdateClientListAPIHook,
+  DeleteClientListAPIHook,
+  InsertClientListAPIHook,
+};

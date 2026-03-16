@@ -1,36 +1,41 @@
 import { lazy, useMemo, useState, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DeleteClientListAPIHook } from "../../../customHooks/API/Client/ClientAPI";
+import type { StoreListInterface } from "../../../stores/slices/Base/storeListSlice";
+import { SetStoreListSlice } from "../../../stores/slices/Base/storeListSlice";
+import { DeleteStoreListAPIHook } from "../../../customHooks/API/Store/StoreAPI";
 import type { ClientListInterface } from "../../../stores/slices/Base/clientListSlice";
-import { SetClientListSlice } from "../../../stores/slices/Base/clientListSlice";
 
-const ClientManagementModalTag = lazy(() => import("./ClientManagementModal"));
-const InsertClientModalTag = lazy(() => import("./InsertClientModal"));
-const BasicButtonGenericTag = lazy(
-  () => import("../../button/BasicButtonGeneric"),
+const StoreManagementModalTag = lazy(() => import("./StoreManagementModal"));
+const InsertStoreManagementModalTag = lazy(
+  () => import("./InsertStoreManagementModal"),
 );
 
 interface ComponentStateInterface {
-  selectedName: string;
+  selectedStoreId: string;
   showModal: boolean;
   showDeleteModal: boolean;
-  deletingClientName: string;
+  deletingStoreId: string;
   showInsertModal: boolean;
 }
 
-function ClientManagementPageTag() {
+function StoreManagementPageTag() {
   const dispatch = useDispatch();
 
-  const [DeleteClientListAPI] = DeleteClientListAPIHook();
+  const [DeleteStoreListAPI] = DeleteStoreListAPIHook();
 
   const [componentState, setComponentState] = useState<ComponentStateInterface>(
     {
-      selectedName: "",
+      selectedStoreId: "",
       showModal: false,
       showDeleteModal: false,
-      deletingClientName: "",
+      deletingStoreId: "",
       showInsertModal: false,
     },
+  );
+
+  const storeListSlice: { value: StoreListInterface[] } = useSelector(
+    (state: { storeListSlice: { value: StoreListInterface[] } }) =>
+      state.storeListSlice,
   );
 
   const clientListSlice: { value: ClientListInterface[] } = useSelector(
@@ -38,29 +43,27 @@ function ClientManagementPageTag() {
       state.clientListSlice,
   );
 
-  const selectedClient = useMemo(() => {
-    return (clientListSlice?.value ?? []).find(
-      (singleClient: ClientListInterface) =>
-        String(
-          (singleClient as ClientListInterface & { name?: string })?.name ?? "",
-        ) === String(componentState.selectedName),
+  const selectedStore = useMemo(() => {
+    return (storeListSlice?.value ?? []).find(
+      (singleStore: StoreListInterface) =>
+        String(singleStore.id ?? "") ===
+        String(componentState.selectedStoreId ?? ""),
     );
-  }, [clientListSlice?.value, componentState.selectedName]);
+  }, [storeListSlice?.value, componentState.selectedStoreId]);
 
-  const deletingClient = useMemo(() => {
-    return (clientListSlice?.value ?? []).find(
-      (singleClient: ClientListInterface) =>
-        String(
-          (singleClient as ClientListInterface & { name?: string })?.name ?? "",
-        ) === String(componentState.deletingClientName),
+  const deletingStore = useMemo(() => {
+    return (storeListSlice?.value ?? []).find(
+      (singleStore: StoreListInterface) =>
+        String(singleStore.id ?? "") ===
+        String(componentState.deletingStoreId ?? ""),
     );
-  }, [clientListSlice?.value, componentState.deletingClientName]);
+  }, [storeListSlice?.value, componentState.deletingStoreId]);
 
-  const HandleSelectClientOnClick = (singleClientName: string) => {
+  const HandleSelectStoreOnClick = (singleStoreId: string) => {
     setComponentState((previousStateVal: ComponentStateInterface) => {
       return {
         ...previousStateVal,
-        selectedName: singleClientName ?? "",
+        selectedStoreId: singleStoreId ?? "",
         showModal: true,
       };
     });
@@ -71,7 +74,7 @@ function ClientManagementPageTag() {
       return {
         ...previousStateVal,
         showModal: false,
-        selectedName: "",
+        selectedStoreId: "",
       };
     });
   };
@@ -94,12 +97,12 @@ function ClientManagementPageTag() {
     });
   };
 
-  const HandleOpenDeleteModal = (singleClientName: string) => {
+  const HandleOpenDeleteModal = (singleStoreId: string) => {
     setComponentState((previousStateVal: ComponentStateInterface) => {
       return {
         ...previousStateVal,
         showDeleteModal: true,
-        deletingClientName: singleClientName ?? "",
+        deletingStoreId: singleStoreId ?? "",
       };
     });
   };
@@ -109,53 +112,91 @@ function ClientManagementPageTag() {
       return {
         ...previousStateVal,
         showDeleteModal: false,
-        deletingClientName: "",
+        deletingStoreId: "",
       };
     });
   };
 
-  const HandleConfirmDeleteClientOnClick = () => {
-    const clientNameToDelete = componentState.deletingClientName ?? "";
+  const HandleConfirmDeleteStoreOnClick = () => {
+    const storeIdToDelete = componentState.deletingStoreId ?? "";
 
-    if (!clientNameToDelete) return;
+    const storeToDelete = (storeListSlice?.value ?? []).find(
+      (singleStore: StoreListInterface) =>
+        String(singleStore.id ?? "") === String(storeIdToDelete),
+    );
 
-    DeleteClientListAPI({
+    const storeName = storeToDelete?.name ?? "";
+
+    if (!storeName) return;
+
+    DeleteStoreListAPI({
       showLoader: true,
       showToast: true,
       data: {
-        name: clientNameToDelete,
+        name: storeName,
       },
       EndCallback: () => {
-        const newClientList = [...(clientListSlice?.value ?? [])].filter(
-          (singleClient: ClientListInterface) =>
-            String(
-              (singleClient as ClientListInterface & { name?: string })?.name ??
-                "",
-            ) !== String(clientNameToDelete),
+        const newStoreList = [...(storeListSlice?.value ?? [])].filter(
+          (singleStore: StoreListInterface) =>
+            String(singleStore.id ?? "") !== String(storeIdToDelete),
         );
 
-        dispatch(SetClientListSlice(newClientList));
+        dispatch(SetStoreListSlice(newStoreList));
 
         setComponentState((previousStateVal: ComponentStateInterface) => {
           return {
             ...previousStateVal,
             showDeleteModal: false,
-            deletingClientName: "",
+            deletingStoreId: "",
             showModal:
-              String(previousStateVal.selectedName) ===
-              String(clientNameToDelete)
+              String(previousStateVal.selectedStoreId) ===
+              String(storeIdToDelete)
                 ? false
                 : previousStateVal.showModal,
-            selectedName:
-              String(previousStateVal.selectedName) ===
-              String(clientNameToDelete)
+            selectedStoreId:
+              String(previousStateVal.selectedStoreId) ===
+              String(storeIdToDelete)
                 ? ""
-                : previousStateVal.selectedName,
+                : previousStateVal.selectedStoreId,
           };
         });
       },
     });
   };
+
+  const clientNameById = useMemo(() => {
+    const map: Record<string, string> = {};
+
+    (clientListSlice?.value ?? []).forEach(
+      (singleClient: ClientListInterface) => {
+        const clientId = String(
+          (
+            singleClient as ClientListInterface & {
+              id?: string;
+              client_id?: string;
+            }
+          )?.id ??
+            (
+              singleClient as ClientListInterface & {
+                id?: string;
+                client_id?: string;
+              }
+            )?.client_id ??
+            "",
+        );
+
+        const clientName = String(
+          (singleClient as ClientListInterface & { name?: string })?.name ?? "",
+        );
+
+        if (clientId) {
+          map[clientId] = clientName || clientId;
+        }
+      },
+    );
+
+    return map;
+  }, [clientListSlice?.value]);
 
   return (
     <>
@@ -197,18 +238,29 @@ function ClientManagementPageTag() {
                 textAlign: "center",
               }}
             >
-              Client Management
+              Store Management
             </span>
 
             <div style={{ position: "absolute", right: 0 }}>
-              <BasicButtonGenericTag
-                textToSee="Inserisci Cliente"
-                clickCallBack={HandleOpenInsertModal}
-              />
+              <button
+                onClick={HandleOpenInsertModal}
+                style={{
+                  height: "40px",
+                  padding: "0 16px",
+                  borderRadius: "10px",
+                  border: "1px solid #477dda",
+                  backgroundColor: "#477dda",
+                  color: "#ffffff",
+                  cursor: "pointer",
+                  fontWeight: 600,
+                }}
+              >
+                Inserisci Store
+              </button>
             </div>
           </div>
 
-          {(clientListSlice?.value ?? []).length > 0 ? (
+          {(storeListSlice?.value ?? []).length > 0 ? (
             <div
               style={{
                 display: "grid",
@@ -219,31 +271,22 @@ function ClientManagementPageTag() {
                 boxSizing: "border-box",
               }}
             >
-              {(clientListSlice?.value ?? [])
+              {(storeListSlice?.value ?? [])
                 .slice()
-                .sort((a, b) =>
-                  String(
-                    (a as ClientListInterface & { name?: string })?.name ?? "",
-                  ).localeCompare(
-                    String(
-                      (b as ClientListInterface & { name?: string })?.name ??
-                        "",
-                    ),
-                  ),
-                )
-                .map((singleClient: ClientListInterface, index: number) => {
-                  const clientName =
-                    (singleClient as ClientListInterface & { name?: string })
-                      ?.name ?? "";
-
-                  const isSelected = componentState.selectedName === clientName;
+                .sort((a, b) => (a.name ?? "").localeCompare(b.name ?? ""))
+                .map((singleStore: StoreListInterface, index: number) => {
+                  const isSelected =
+                    String(componentState.selectedStoreId ?? "") ===
+                    String(singleStore?.id ?? "");
 
                   return (
                     <div
-                      key={`${clientName}-${index}`}
+                      key={String(
+                        singleStore?.id ?? `${singleStore?.name}-${index}`,
+                      )}
                       className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
                       onClick={() => {
-                        HandleSelectClientOnClick(clientName);
+                        HandleSelectStoreOnClick(String(singleStore.id ?? ""));
                       }}
                       style={{
                         borderRadius: "12px",
@@ -265,7 +308,7 @@ function ClientManagementPageTag() {
                         className="material-symbols-outlined"
                         onClick={(e) => {
                           e.stopPropagation();
-                          HandleOpenDeleteModal(clientName);
+                          HandleOpenDeleteModal(String(singleStore.id ?? ""));
                         }}
                         style={{
                           position: "absolute",
@@ -285,6 +328,8 @@ function ClientManagementPageTag() {
                           display: "flex",
                           flexDirection: "column",
                           gap: "10px",
+                          minWidth: 0,
+                          paddingRight: "28px",
                         }}
                       >
                         <span
@@ -297,7 +342,7 @@ function ClientManagementPageTag() {
                             overflowWrap: "anywhere",
                           }}
                         >
-                          {clientName || `Client ${index + 1}`}
+                          {singleStore.name || `Store ${index + 1}`}
                         </span>
 
                         <span
@@ -305,9 +350,26 @@ function ClientManagementPageTag() {
                             fontSize: "12px",
                             color: "#6b7280",
                             lineHeight: "1.4",
+                            wordBreak: "break-word",
+                            overflowWrap: "anywhere",
                           }}
                         >
-                          Clicca per modificare
+                          Cliente:{" "}
+                          {clientNameById[
+                            String(singleStore.client_id ?? "")
+                          ] ??
+                            singleStore.client_id ??
+                            "-"}
+                        </span>
+
+                        <span
+                          style={{
+                            fontSize: "12px",
+                            color: "#9ca3af",
+                            lineHeight: "1.4",
+                          }}
+                        >
+                          ID: {singleStore.id ?? "-"}
                         </span>
                       </div>
 
@@ -335,7 +397,7 @@ function ClientManagementPageTag() {
                             textOverflow: "ellipsis",
                           }}
                         >
-                          Client
+                          Store
                         </span>
 
                         <span
@@ -353,22 +415,22 @@ function ClientManagementPageTag() {
                 })}
             </div>
           ) : (
-            <span style={{ opacity: "60%" }}>Nessun client trovato</span>
+            <span style={{ opacity: "60%" }}>Nessuno store trovato</span>
           )}
         </div>
       </div>
 
       <Suspense fallback={<></>}>
-        <ClientManagementModalTag
+        <StoreManagementModalTag
           showModal={componentState.showModal}
-          selectedClient={selectedClient}
-          selectedName={componentState.selectedName}
+          selectedStore={selectedStore}
+          selectedStoreId={componentState.selectedStoreId}
           onClose={HandleCloseModal}
         />
       </Suspense>
 
       <Suspense fallback={<></>}>
-        <InsertClientModalTag
+        <InsertStoreManagementModalTag
           showModal={componentState.showInsertModal}
           onClose={HandleCloseInsertModal}
         />
@@ -419,7 +481,7 @@ function ClientManagementPageTag() {
                   color: "#111827",
                 }}
               >
-                Elimina client
+                Elimina store
               </span>
 
               <span
@@ -431,7 +493,7 @@ function ClientManagementPageTag() {
               >
                 Sei sicuro di voler eliminare{" "}
                 <span style={{ fontWeight: 600, color: "#111827" }}>
-                  {deletingClient?.name ?? "questo client"}
+                  {deletingStore?.name ?? "questo store"}
                 </span>
                 ?
               </span>
@@ -461,7 +523,7 @@ function ClientManagementPageTag() {
               </button>
 
               <button
-                onClick={HandleConfirmDeleteClientOnClick}
+                onClick={HandleConfirmDeleteStoreOnClick}
                 style={{
                   height: "40px",
                   padding: "0 16px",
@@ -485,4 +547,4 @@ function ClientManagementPageTag() {
   );
 }
 
-export default ClientManagementPageTag;
+export default StoreManagementPageTag;

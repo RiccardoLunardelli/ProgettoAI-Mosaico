@@ -12,7 +12,7 @@ import {
 import { apiDomainString } from "../../../commons/commonsVariables";
 import {
   SetRunIdTemplateDetailSlice,
-    SetTemplateBaseDetailSlice,
+  SetTemplateBaseDetailSlice,
   SetTemplateBaseListSlice,
 } from "../../../stores/slices/Base/templateBaseListSlice";
 import { useTranslation } from "react-i18next";
@@ -98,13 +98,16 @@ const GetTemplateBaseDetailAPIHook = () => {
     }
 
     try {
-      const apiCall = await fetch(apiDomainString + "/template_base/" + infoObj.data.id, {
-        method: FetchMethodEnum.Get,
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
+      const apiCall = await fetch(
+        apiDomainString + "/template_base/" + infoObj.data.id,
+        {
+          method: FetchMethodEnum.Get,
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       //Risposta in base64
       const response: string = await apiCall.text();
@@ -175,7 +178,7 @@ const GetRunIdTemplateAPIHook = () => {
 
       //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
-        const idTempalate: string[] = jsonResponse ?? []
+        const idTempalate: string[] = jsonResponse ?? [];
 
         dispatch(SetRunIdTemplateDetailSlice(idTempalate));
       }
@@ -258,6 +261,17 @@ const UpdateTemplateBaseDetailAPIHook = () => {
             otherResponseInfo: "",
           });
         }
+
+        if (infoObj.showToast) {
+          toast.update(toastId, {
+            render: t("Errore durante l'operazione"),
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+            closeButton: true,
+          });
+        }
+
         return;
       }
 
@@ -370,6 +384,17 @@ const UpdateTemplateBasePatchAPIHook = () => {
             otherResponseInfo: "",
           });
         }
+
+        if (infoObj.showToast) {
+          toast.update(toastId, {
+            render: t("Errore durante l'operazione"),
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+            closeButton: true,
+          });
+        }
+
         return;
       }
 
@@ -436,5 +461,5 @@ export {
   GetTemplateBaseDetailAPIHook,
   UpdateTemplateBaseDetailAPIHook,
   UpdateTemplateBasePatchAPIHook,
-  GetRunIdTemplateAPIHook
+  GetRunIdTemplateAPIHook,
 };

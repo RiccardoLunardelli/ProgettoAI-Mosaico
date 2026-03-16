@@ -133,6 +133,17 @@ const UpdateUserListAPIHook = () => {
             otherResponseInfo: "",
           });
         }
+
+        if (infoObj.showToast) {
+          toast.update(toastId, {
+            render: t("Errore durante l'operazione"),
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+            closeButton: true,
+          });
+        }
+
         return;
       }
 
@@ -243,6 +254,17 @@ const DeleteUserListAPIHook = () => {
             otherResponseInfo: "",
           });
         }
+
+        if (infoObj.showToast) {
+          toast.update(toastId, {
+            render: t("Errore durante l'operazione"),
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+            closeButton: true,
+          });
+        }
+
         return;
       }
 

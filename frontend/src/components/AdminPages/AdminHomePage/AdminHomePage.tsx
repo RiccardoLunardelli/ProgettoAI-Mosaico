@@ -2,10 +2,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import type { UserInfoInterface } from "../../../stores/slices/Base/userInfoSlice";
 import { SetCurrentPathSlice } from "../../../stores/slices/Base/currentPath";
+import { useEffect } from "react";
+import { GetClientListAPIHook } from "../../../customHooks/API/Client/ClientAPI";
+import { GetStoreListAPIHook } from "../../../customHooks/API/Store/StoreAPI";
 
 function AdminHomePageTag() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [GetStoreListAPI] = GetStoreListAPIHook();
+  const [GetClientListAPI] = GetClientListAPIHook();
 
   const userInfoSlice: { value: UserInfoInterface } = useSelector(
     (state: { userInfoSlice: { value: UserInfoInterface } }) =>
@@ -17,6 +23,12 @@ function AdminHomePageTag() {
 
     dispatch(SetCurrentPathSlice(pathName));
   }
+
+  useEffect(() => {
+    GetStoreListAPI({ saveResponse: true, showLoader: true });
+    GetClientListAPI({ saveResponse: true, showLoader: true });
+  }, []);
+
   return (
     <div
       style={{
@@ -155,7 +167,6 @@ function AdminHomePageTag() {
 
 
         {/* Cliente */}
-
         <div
           style={{
             borderRadius: "10px",
@@ -243,9 +254,99 @@ function AdminHomePageTag() {
             </span>
           </div>
         </div>
+        
+        {/* Store */}
+        <div
+          style={{
+            borderRadius: "10px",
+            height: "180px",
+            padding: "15px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+          className="HoverTransform"
+          onClick={() =>
+            HandleNavigateCardOnClick("/StoreManagement", "Store Management")
+          }
+        >
+          {/* Icona + testo */}
+          <div
+            style={{
+              marginLeft: "10px",
+              marginTop: "8px",
+              height: "80px",
+              width: "60px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            {/* Icona */}
+            <div
+              style={{
+                height: "60px",
+                width: "60px",
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <span
+                className="material-symbols-outlined"
+                style={{ fontSize: "40px", color: "#3268c5", zIndex: 1 }}
+              >
+                identity_platform
+              </span>
+
+              <div
+                style={{
+                  position: "absolute",
+                  height: "100%",
+                  width: "100%",
+                  backgroundColor: "#477dda",
+                  opacity: "0.2",
+                  borderRadius: "6px",
+                }}
+              />
+            </div>
+          </div>
+          {/* Testo sotto icona */}
+          <div
+            style={{
+              marginLeft: "10px",
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "20px",
+                fontWeight: 500,
+                color: "var(--black)",
+              }}
+            >
+              Store Management
+            </span>
+            <span
+              style={{
+                fontSize: "14px",
+                fontWeight: 400,
+                color: "var(--black)",
+                opacity: 0.6,
+                marginTop: "4px",
+              }}
+            >
+              Modifica i dettagli di uno store
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
 export default AdminHomePageTag;
+

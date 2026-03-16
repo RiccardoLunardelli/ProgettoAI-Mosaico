@@ -197,6 +197,17 @@ const UpdateDictionaryDetailAPIHook = () => {
             otherResponseInfo: "",
           });
         }
+
+        if (infoObj.showToast) {
+          toast.update(toastId, {
+            render: t("Errore durante l'operazione"),
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+            closeButton: true,
+          });
+        }
+
         return;
       }
 
@@ -300,6 +311,15 @@ const RunReportDictionaryAPIHook = () => {
       const responseOk: boolean = apiCall.ok;
 
       if (!responseOk) {
+        if (infoObj.EndCallback) {
+          infoObj.EndCallback({
+            result: ResultTypeEnum.Error,
+            message: JSON.stringify(jsonResponse),
+            messageType: FetchResponseTypeEnum.Json,
+            otherResponseInfo: "",
+          });
+        }
+
         if (infoObj.showToast) {
           toast.update(toastId, {
             render: t("Errore durante l'operazione"),
@@ -308,17 +328,6 @@ const RunReportDictionaryAPIHook = () => {
             autoClose: 3000,
             closeButton: true,
           });
-        }
-
-        try {
-          infoObj.EndCallback?.({
-            result: ResultTypeEnum.Error,
-            message: jsonResponse,
-            messageType: FetchResponseTypeEnum.Json,
-            otherResponseInfo: "",
-          });
-        } catch (callbackErr) {
-          console.error("EndCallback error:", callbackErr);
         }
 
         return;

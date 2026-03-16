@@ -197,6 +197,17 @@ const RunTemplateStartAPIHook = () => {
             otherResponseInfo: "",
           });
         }
+
+        if (infoObj.showToast) {
+          toast.update(toastId, {
+            render: t("Errore durante l'operazione"),
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+            closeButton: true,
+          });
+        }
+
         return;
       }
 
@@ -307,6 +318,17 @@ const RunTemplateLLMAPIHook = () => {
             otherResponseInfo: "",
           });
         }
+
+        if (infoObj.showToast) {
+          toast.update(toastId, {
+            render: t("Errore durante l'operazione"),
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+            closeButton: true,
+          });
+        }
+
         return;
       }
 
@@ -444,7 +466,7 @@ const RunTemplateFinishAPIHook = () => {
       template_name: string;
       validate_only: boolean;
       apply_llm: boolean;
-      llm_patch_actions: {}
+      llm_patch_actions: {};
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
@@ -487,6 +509,17 @@ const RunTemplateFinishAPIHook = () => {
             otherResponseInfo: "",
           });
         }
+
+        if (infoObj.showToast) {
+          toast.update(toastId, {
+            render: t("Errore durante l'operazione"),
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+            closeButton: true,
+          });
+        }
+
         return;
       }
 
@@ -554,5 +587,5 @@ export {
   RunTemplateStartAPIHook,
   RunTemplateLLMAPIHook,
   GetTemplatePercentualAPIHook,
-  RunTemplateFinishAPIHook
+  RunTemplateFinishAPIHook,
 };

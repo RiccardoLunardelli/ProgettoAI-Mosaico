@@ -30,9 +30,11 @@ import { dictionaryListSliceReducer } from "./stores/slices/Base/dictionaryListS
 import { deviceListListSliceReducer } from "./stores/slices/Base/deviceListSlice";
 import { templateListSliceReducer } from "./stores/slices/Base/templateListSlice";
 import { userListSliceReducer } from "./stores/slices/Base/userListSlice";
-import { clientListSliceReducer } from "./stores/slices/Base/ClientListSlice";
+import { clientListSliceReducer } from "./stores/slices/Base/clientListSlice";
+import { storeListSliceReducer } from "./stores/slices/Base/storeListSlice";
 
 const HomePageTag = lazy(() => import("./components/Home/HomePage"));
+const StoreManagementPageTag = lazy(() => import("./components/AdminPages/StoreManagement/StoreManagementPage"));
 const ClientManagementPageTag = lazy(
   () => import("./components/AdminPages/ClientManagement/ClientManagementPage"),
 );
@@ -185,6 +187,13 @@ let childrenRouterArr: any = [
             <ClientManagementPageTag />
           </Suspense>
         ),
+      },{
+        path: "/StoreManagement",
+        element: (
+          <Suspense>
+            <StoreManagementPageTag />
+          </Suspense>
+        ),
       },
     ],
   },
@@ -264,6 +273,7 @@ function SecureRoot(): JSX.Element {
       templateListSlice: templateListSliceReducer,
       userListSlice: userListSliceReducer,
       clientListSlice: clientListSliceReducer,
+      storeListSlice : storeListSliceReducer
     },
     devTools:
       (import.meta.env.VITE_DEBUG_DEVTOOLS?.toString()?.toLowerCase() ?? "") ==

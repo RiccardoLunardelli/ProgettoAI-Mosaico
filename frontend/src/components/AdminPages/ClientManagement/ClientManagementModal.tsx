@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   SetClientListSlice,
   type ClientListInterface,
-} from "../../../stores/slices/Base/ClientListSlice";
+} from "../../../stores/slices/Base/clientListSlice";
 import { SetInputSlice } from "../../../stores/slices/Base/inputSlice";
 import { UpdateClientListAPIHook } from "../../../customHooks/API/Client/ClientAPI";
 
