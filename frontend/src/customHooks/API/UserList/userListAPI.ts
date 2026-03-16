@@ -25,7 +25,6 @@ const GetUserListAPIHook = () => {
     showLoader?: boolean;
     saveResponse?: boolean;
   }) => {
-    //Apre il loader, se richiesto
     if (infoObj.showLoader) {
       dispatch(OpenLoader());
     }
@@ -39,20 +38,14 @@ const GetUserListAPIHook = () => {
         },
       });
 
-      //Risposta in base64
       const response: string = await apiCall.text();
-
-      //Risposta in json
       const jsonResponse = JSON.parse(response);
 
-      //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
         const userListList: UserListInterface[] = jsonResponse ?? [];
-
         dispatch(SetUserListSlice(userListList));
       }
 
-      //Callback di successo
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
           result: ResultTypeEnum.Success,
@@ -97,14 +90,11 @@ const UpdateUserListAPIHook = () => {
     showToast?: boolean;
     saveResponse?: boolean;
   }) => {
-    //Apre il loader, se richiesto
     if (infoObj.showLoader) {
       dispatch(OpenLoader());
     }
 
-    //Id del toast
     let toastId: Id = -1;
-    //Se deve mostrare il toast
     if (infoObj.showToast) {
       toastId = toast.loading(t("Operazione in corso..."));
     }
@@ -120,20 +110,9 @@ const UpdateUserListAPIHook = () => {
       });
 
       const jsonResponse: string = await apiCall.text();
-
       const responseOk: boolean = apiCall.status == 200;
 
-      //Controllo risposta
       if (!responseOk) {
-        if (infoObj.EndCallback) {
-          infoObj.EndCallback({
-            result: ResultTypeEnum.Error,
-            message: JSON.stringify(jsonResponse),
-            messageType: FetchResponseTypeEnum.Json,
-            otherResponseInfo: "",
-          });
-        }
-
         if (infoObj.showToast) {
           toast.update(toastId, {
             render: t("Errore durante l'operazione"),
@@ -147,13 +126,9 @@ const UpdateUserListAPIHook = () => {
         return;
       }
 
-      //Se la risposta è positiva
-
-      //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
       }
 
-      //Callback di successo
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
           result: ResultTypeEnum.Success,
@@ -163,9 +138,7 @@ const UpdateUserListAPIHook = () => {
         });
       }
 
-      //Se deve mostrare il toast
       if (infoObj.showToast) {
-        //Imposta il toast di successo
         toast.update(toastId, {
           render: t("Operazione completata con successo!"),
           type: "success",
@@ -177,18 +150,7 @@ const UpdateUserListAPIHook = () => {
     } catch (err) {
       console.error("UserUpdate error:", err);
 
-      if (infoObj.EndCallback) {
-        infoObj.EndCallback({
-          result: ResultTypeEnum.Error,
-          message: err,
-          messageType: FetchResponseTypeEnum.Json,
-          otherResponseInfo: "",
-        });
-      }
-
-      //Se deve mostrare il toast
       if (infoObj.showToast) {
-        //Imposta il toast di successo
         toast.update(toastId, {
           render: t("Errore durante l'operazione"),
           type: "error",
@@ -218,14 +180,11 @@ const DeleteUserListAPIHook = () => {
     showToast?: boolean;
     saveResponse?: boolean;
   }) => {
-    //Apre il loader, se richiesto
     if (infoObj.showLoader) {
       dispatch(OpenLoader());
     }
 
-    //Id del toast
     let toastId: Id = -1;
-    //Se deve mostrare il toast
     if (infoObj.showToast) {
       toastId = toast.loading(t("Operazione in corso..."));
     }
@@ -241,20 +200,9 @@ const DeleteUserListAPIHook = () => {
       });
 
       const jsonResponse: string = await apiCall.text();
-
       const responseOk: boolean = apiCall.status == 200;
 
-      //Controllo risposta
       if (!responseOk) {
-        if (infoObj.EndCallback) {
-          infoObj.EndCallback({
-            result: ResultTypeEnum.Error,
-            message: JSON.stringify(jsonResponse),
-            messageType: FetchResponseTypeEnum.Json,
-            otherResponseInfo: "",
-          });
-        }
-
         if (infoObj.showToast) {
           toast.update(toastId, {
             render: t("Errore durante l'operazione"),
@@ -268,13 +216,9 @@ const DeleteUserListAPIHook = () => {
         return;
       }
 
-      //Se la risposta è positiva
-
-      //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
       }
 
-      //Callback di successo
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
           result: ResultTypeEnum.Success,
@@ -284,9 +228,7 @@ const DeleteUserListAPIHook = () => {
         });
       }
 
-      //Se deve mostrare il toast
       if (infoObj.showToast) {
-        //Imposta il toast di successo
         toast.update(toastId, {
           render: t("Operazione completata con successo!"),
           type: "success",
@@ -298,18 +240,7 @@ const DeleteUserListAPIHook = () => {
     } catch (err) {
       console.error("Delete User error:", err);
 
-      if (infoObj.EndCallback) {
-        infoObj.EndCallback({
-          result: ResultTypeEnum.Error,
-          message: err,
-          messageType: FetchResponseTypeEnum.Json,
-          otherResponseInfo: "",
-        });
-      }
-
-      //Se deve mostrare il toast
       if (infoObj.showToast) {
-        //Imposta il toast di successo
         toast.update(toastId, {
           render: t("Errore durante l'operazione"),
           type: "error",

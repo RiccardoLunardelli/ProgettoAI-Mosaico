@@ -14,7 +14,11 @@ function TopNavbar() {
     (state: { currentPathSlice: { value: string } }) => state.currentPathSlice,
   );
 
-  const isThisAdAdminPath = currentPathSlice.value == "User Management" || "Client Management" || "Store Management" || "Store Devices Management";
+  const isThisAdAdminPath =
+    currentPathSlice.value == "User Management" ||
+    currentPathSlice.value == "Client Management" ||
+    currentPathSlice.value == "Store Management" ||
+    currentPathSlice.value == "Store Devices Management";
 
   return (
     <div
@@ -76,7 +80,7 @@ function TopNavbar() {
                 onClick={() => {
                   if (isThisAdAdminPath) {
                     navigate("/Admin");
-                    dispatch(SetCurrentPathSlice("Admin"))
+                    dispatch(SetCurrentPathSlice("Admin"));
                   }
                   return;
                 }}

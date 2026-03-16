@@ -25,7 +25,6 @@ const GetKnowledgeBaseIdsAPIHook = () => {
     showLoader?: boolean;
     saveResponse?: boolean;
   }) => {
-    //Apre il loader, se richiesto
     if (infoObj.showLoader) {
       dispatch(OpenLoader());
     }
@@ -39,20 +38,14 @@ const GetKnowledgeBaseIdsAPIHook = () => {
         },
       });
 
-      //Risposta in base64
       const response: string = await apiCall.text();
-
-      //Risposta in json
       const jsonResponse = JSON.parse(response);
 
-      //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
         const knowledgeBaseList: string[] = jsonResponse ?? [];
-
         dispatch(SetKnowledgeBaseListSlice(knowledgeBaseList));
       }
 
-      //Callback di successo
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
           result: ResultTypeEnum.Success,
@@ -91,7 +84,6 @@ const GetKnowledgeBaseDetailAPIHook = () => {
     showLoader?: boolean;
     saveResponse?: boolean;
   }) => {
-    //Apre il loader, se richiesto
     if (infoObj.showLoader) {
       dispatch(OpenLoader());
     }
@@ -105,18 +97,13 @@ const GetKnowledgeBaseDetailAPIHook = () => {
         },
       });
 
-      //Risposta in base64
       const response: string = await apiCall.text();
-
-      //Risposta in json
       const jsonResponse = JSON.parse(response);
 
-      //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
         dispatch(SetKnowledgeBaseDetailSlice(jsonResponse));
       }
 
-      //Callback di successo
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
           result: ResultTypeEnum.Success,
@@ -158,14 +145,11 @@ const UpdateKnowledgeBaseDetailAPIHook = () => {
     showToast?: boolean;
     saveResponse?: boolean;
   }) => {
-    //Apre il loader, se richiesto
     if (infoObj.showLoader) {
       dispatch(OpenLoader());
     }
 
-    //Id del toast
     let toastId: Id = -1;
-    //Se deve mostrare il toast
     if (infoObj.showToast) {
       toastId = toast.loading(t("Operazione in corso..."));
     }
@@ -181,20 +165,9 @@ const UpdateKnowledgeBaseDetailAPIHook = () => {
       });
 
       const jsonResponse: string = await apiCall.text();
-
       const responseOk: boolean = apiCall.status == 200;
 
-      //Controllo risposta
       if (!responseOk) {
-        if (infoObj.EndCallback) {
-          infoObj.EndCallback({
-            result: ResultTypeEnum.Error,
-            message: JSON.stringify(jsonResponse),
-            messageType: FetchResponseTypeEnum.Json,
-            otherResponseInfo: "",
-          });
-        }
-
         if (infoObj.showToast) {
           toast.update(toastId, {
             render: t("Errore durante l'operazione"),
@@ -208,13 +181,9 @@ const UpdateKnowledgeBaseDetailAPIHook = () => {
         return;
       }
 
-      //Se la risposta è positiva
-
-      //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
       }
 
-      //Callback di successo
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
           result: ResultTypeEnum.Success,
@@ -224,9 +193,7 @@ const UpdateKnowledgeBaseDetailAPIHook = () => {
         });
       }
 
-      //Se deve mostrare il toast
       if (infoObj.showToast) {
-        //Imposta il toast di successo
         toast.update(toastId, {
           render: t("Operazione completata con successo!"),
           type: "success",
@@ -238,18 +205,7 @@ const UpdateKnowledgeBaseDetailAPIHook = () => {
     } catch (err) {
       console.error("dataOra error:", err);
 
-      if (infoObj.EndCallback) {
-        infoObj.EndCallback({
-          result: ResultTypeEnum.Error,
-          message: err,
-          messageType: FetchResponseTypeEnum.Json,
-          otherResponseInfo: "",
-        });
-      }
-
-      //Se deve mostrare il toast
       if (infoObj.showToast) {
-        //Imposta il toast di successo
         toast.update(toastId, {
           render: t("Errore durante l'operazione"),
           type: "error",
@@ -281,14 +237,11 @@ const UpdateKnowledgeBasePatchAPIHook = () => {
     showToast?: boolean;
     saveResponse?: boolean;
   }) => {
-    //Apre il loader, se richiesto
     if (infoObj.showLoader) {
       dispatch(OpenLoader());
     }
 
-    //Id del toast
     let toastId: Id = -1;
-    //Se deve mostrare il toast
     if (infoObj.showToast) {
       toastId = toast.loading(t("Operazione in corso..."));
     }
@@ -304,20 +257,9 @@ const UpdateKnowledgeBasePatchAPIHook = () => {
       });
 
       const jsonResponse: string = await apiCall.text();
-
       const responseOk: boolean = apiCall.status == 200;
 
-      //Controllo risposta
       if (!responseOk) {
-        if (infoObj.EndCallback) {
-          infoObj.EndCallback({
-            result: ResultTypeEnum.Error,
-            message: JSON.stringify(jsonResponse),
-            messageType: FetchResponseTypeEnum.Json,
-            otherResponseInfo: "",
-          });
-        }
-
         if (infoObj.showToast) {
           toast.update(toastId, {
             render: t("Errore durante l'operazione"),
@@ -331,13 +273,9 @@ const UpdateKnowledgeBasePatchAPIHook = () => {
         return;
       }
 
-      //Se la risposta è positiva
-
-      //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
       }
 
-      //Callback di successo
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
           result: ResultTypeEnum.Success,
@@ -347,9 +285,7 @@ const UpdateKnowledgeBasePatchAPIHook = () => {
         });
       }
 
-      //Se deve mostrare il toast
       if (infoObj.showToast) {
-        //Imposta il toast di successo
         toast.update(toastId, {
           render: t("Operazione completata con successo!"),
           type: "success",
@@ -361,18 +297,7 @@ const UpdateKnowledgeBasePatchAPIHook = () => {
     } catch (err) {
       console.error("dataOra error:", err);
 
-      if (infoObj.EndCallback) {
-        infoObj.EndCallback({
-          result: ResultTypeEnum.Error,
-          message: err,
-          messageType: FetchResponseTypeEnum.Json,
-          otherResponseInfo: "",
-        });
-      }
-
-      //Se deve mostrare il toast
       if (infoObj.showToast) {
-        //Imposta il toast di successo
         toast.update(toastId, {
           render: t("Errore durante l'operazione"),
           type: "error",

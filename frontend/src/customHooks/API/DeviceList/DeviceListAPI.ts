@@ -28,7 +28,6 @@ const GetDeviceListIdsAPIHook = () => {
     showLoader?: boolean;
     saveResponse?: boolean;
   }) => {
-    //Apre il loader, se richiesto
     if (infoObj.showLoader) {
       dispatch(OpenLoader());
     }
@@ -42,13 +41,9 @@ const GetDeviceListIdsAPIHook = () => {
         },
       });
 
-      //Risposta in base64
       const response: string = await apiCall.text();
-
-      //Risposta in json
       const jsonResponse = JSON.parse(response);
 
-      //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
         const deviceListList: DeviceListStoreFileInterface[] =
           jsonResponse?.device_list ?? [];
@@ -56,7 +51,6 @@ const GetDeviceListIdsAPIHook = () => {
         dispatch(SetDeviceListListSlice(deviceListList));
       }
 
-      //Callback di successo
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
           result: ResultTypeEnum.Success,
@@ -96,7 +90,6 @@ const GetDeviceListDetailAPIHook = () => {
     showLoader?: boolean;
     saveResponse?: boolean;
   }) => {
-    //Apre il loader, se richiesto
     if (infoObj.showLoader) {
       dispatch(OpenLoader());
     }
@@ -117,18 +110,13 @@ const GetDeviceListDetailAPIHook = () => {
         },
       );
 
-      //Risposta in base64
       const response: string = await apiCall.text();
-
-      //Risposta in json
       const jsonResponse = JSON.parse(response);
 
-      //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
         dispatch(SetDeviceListDetailSlice(jsonResponse));
       }
 
-      //Callback di successo
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
           result: ResultTypeEnum.Success,
@@ -171,14 +159,11 @@ const RunDeviceListAPIHook = () => {
     showToast?: boolean;
     saveResponse?: boolean;
   }) => {
-    //Apre il loader, se richiesto
     if (infoObj.showLoader) {
       dispatch(OpenLoader());
     }
 
-    //Id del toast
     let toastId: Id = -1;
-    //Se deve mostrare il toast
     if (infoObj.showToast) {
       toastId = toast.loading(t("Operazione in corso..."));
     }
@@ -194,20 +179,9 @@ const RunDeviceListAPIHook = () => {
       });
 
       const jsonResponse: string = await apiCall.text();
-
       const responseOk: boolean = apiCall.status == 200;
 
-      //Controllo risposta
       if (!responseOk) {
-        if (infoObj.EndCallback) {
-          infoObj.EndCallback({
-            result: ResultTypeEnum.Error,
-            message: JSON.stringify(jsonResponse),
-            messageType: FetchResponseTypeEnum.Json,
-            otherResponseInfo: "",
-          });
-        }
-
         if (infoObj.showToast) {
           toast.update(toastId, {
             render: t("Errore durante l'operazione"),
@@ -221,13 +195,9 @@ const RunDeviceListAPIHook = () => {
         return;
       }
 
-      //Se la risposta è positiva
-
-      //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
       }
 
-      //Callback di successo
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
           result: ResultTypeEnum.Success,
@@ -237,9 +207,7 @@ const RunDeviceListAPIHook = () => {
         });
       }
 
-      //Se deve mostrare il toast
       if (infoObj.showToast) {
-        //Imposta il toast di successo
         toast.update(toastId, {
           render: t("Operazione completata con successo!"),
           type: "success",
@@ -251,18 +219,7 @@ const RunDeviceListAPIHook = () => {
     } catch (err) {
       console.error("dataOra error:", err);
 
-      if (infoObj.EndCallback) {
-        infoObj.EndCallback({
-          result: ResultTypeEnum.Error,
-          message: err,
-          messageType: FetchResponseTypeEnum.Json,
-          otherResponseInfo: "",
-        });
-      }
-
-      //Se deve mostrare il toast
       if (infoObj.showToast) {
-        //Imposta il toast di successo
         toast.update(toastId, {
           render: t("Errore durante l'operazione"),
           type: "error",
@@ -287,7 +244,6 @@ const GetEnrichedIdsAPIHook = () => {
     showLoader?: boolean;
     saveResponse?: boolean;
   }) => {
-    //Apre il loader, se richiesto
     if (infoObj.showLoader) {
       dispatch(OpenLoader());
     }
@@ -301,13 +257,9 @@ const GetEnrichedIdsAPIHook = () => {
         },
       });
 
-      //Risposta in base64
       const response: string = await apiCall.text();
-
-      //Risposta in json
       const jsonResponse = JSON.parse(response);
 
-      //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
         const deviceListList: DeviceListStoreFileInterface[] =
           jsonResponse?.enriched_device_list ?? [];
@@ -315,7 +267,6 @@ const GetEnrichedIdsAPIHook = () => {
         dispatch(SetEnrichedValueSlice(deviceListList));
       }
 
-      //Callback di successo
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
           result: ResultTypeEnum.Success,
@@ -355,7 +306,6 @@ const GetEnrichedDetailAPIHook = () => {
     showLoader?: boolean;
     saveResponse?: boolean;
   }) => {
-    //Apre il loader, se richiesto
     if (infoObj.showLoader) {
       dispatch(OpenLoader());
     }
@@ -376,18 +326,13 @@ const GetEnrichedDetailAPIHook = () => {
         },
       );
 
-      //Risposta in base64
       const response: string = await apiCall.text();
-
-      //Risposta in json
       const jsonResponse = JSON.parse(response);
 
-      //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
         dispatch(SetEnrichedDetailSlice(jsonResponse));
       }
 
-      //Callback di successo
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
           result: ResultTypeEnum.Success,

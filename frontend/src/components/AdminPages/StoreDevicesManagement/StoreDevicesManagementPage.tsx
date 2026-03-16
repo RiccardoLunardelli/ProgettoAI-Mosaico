@@ -13,6 +13,9 @@ const StoreDevicesManagementModalTag = lazy(
 const InsertStoreDevicesManagementModalTag = lazy(
   () => import("./InsertStoreDevicesManagementModal"),
 );
+const SelectPickerTag = lazy(() =>
+  import("rsuite").then((module) => ({ default: module.SelectPicker })),
+);
 
 interface ComponentStateInterface {
   selectedDeviceId: string;
@@ -20,6 +23,7 @@ interface ComponentStateInterface {
   showDeleteModal: boolean;
   deletingDeviceId: string;
   showInsertModal: boolean;
+  selectedStoreId: string | null;
 }
 
 function StoreDevicesManagementPageTag() {
@@ -34,6 +38,7 @@ function StoreDevicesManagementPageTag() {
       showDeleteModal: false,
       deletingDeviceId: "",
       showInsertModal: false,
+      selectedStoreId: null,
     },
   );
 
@@ -79,6 +84,33 @@ function StoreDevicesManagementPageTag() {
 
     return map;
   }, [storeListSlice?.value]);
+
+  const storeOptions = useMemo(() => {
+    return (storeListSlice?.value ?? [])
+      .slice()
+      .sort((a, b) =>
+        String(a.name ?? "").localeCompare(String(b.name ?? "")),
+      )
+      .map((singleStore: StoreListInterface) => {
+        return {
+          label: String(singleStore.name ?? singleStore.id ?? ""),
+          value: String(singleStore.id ?? ""),
+        };
+      });
+  }, [storeListSlice?.value]);
+
+  const filteredDevicesList = useMemo(() => {
+    return (storeDevicesListSlice?.value ?? [])
+      .filter((singleDevice: StoreDevicesListInterface) => {
+        return componentState.selectedStoreId
+          ? String(singleDevice.store_id ?? "") ===
+              String(componentState.selectedStoreId ?? "")
+          : true;
+      })
+      .sort((a, b) =>
+        String(a.description ?? "").localeCompare(String(b.description ?? "")),
+      );
+  }, [storeDevicesListSlice?.value, componentState.selectedStoreId]);
 
   const HandleSelectDeviceOnClick = (singleDeviceId: string) => {
     setComponentState((previousStateVal: ComponentStateInterface) => {
@@ -240,7 +272,56 @@ function StoreDevicesManagementPageTag() {
             </div>
           </div>
 
-          {(storeDevicesListSlice?.value ?? []).length > 0 ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginBottom: "22px",
+            }}
+          >
+            <Suspense fallback={<></>}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "6px",
+                  width: "320px",
+                  maxWidth: "100%",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    color: "#374151",
+                  }}
+                >
+                  Filtro Store
+                </span>
+
+                <SelectPickerTag
+                  data={storeOptions}
+                  value={componentState.selectedStoreId}
+                  cleanable
+                  searchable
+                  block
+                  placeholder="Seleziona store"
+                  onChange={(newValue) => {
+                    setComponentState(
+                      (previousStateVal: ComponentStateInterface) => {
+                        return {
+                          ...previousStateVal,
+                          selectedStoreId: newValue ? String(newValue) : null,
+                        };
+                      },
+                    );
+                  }}
+                />
+              </div>
+            </Suspense>
+          </div>
+
+          {filteredDevicesList.length > 0 ? (
             <div
               style={{
                 display: "grid",
@@ -251,168 +332,155 @@ function StoreDevicesManagementPageTag() {
                 boxSizing: "border-box",
               }}
             >
-              {(storeDevicesListSlice?.value ?? [])
-                .slice()
-                .sort((a, b) =>
-                  String(a.description ?? "").localeCompare(
-                    String(b.description ?? ""),
-                  ),
-                )
-                .map(
-                  (singleDevice: StoreDevicesListInterface, index: number) => {
-                    const isSelected =
-                      String(componentState.selectedDeviceId ?? "") ===
-                      String(singleDevice?.id ?? "");
+              {filteredDevicesList.map(
+                (singleDevice: StoreDevicesListInterface, index: number) => {
+                  const isSelected =
+                    String(componentState.selectedDeviceId ?? "") ===
+                    String(singleDevice?.id ?? "");
 
-                    return (
-                      <div
-                        key={String(singleDevice?.id ?? `device-${index}`)}
-                        className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
-                        onClick={() => {
-                          HandleSelectDeviceOnClick(
-                            String(singleDevice.id ?? ""),
-                          );
+                  return (
+                    <div
+                      key={String(singleDevice?.id ?? `device-${index}`)}
+                      className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
+                      onClick={() => {
+                        HandleSelectDeviceOnClick(String(singleDevice.id ?? ""));
+                      }}
+                      style={{
+                        borderRadius: "12px",
+                        padding: "16px",
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                        boxSizing: "border-box",
+                        minHeight: "180px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        cursor: "pointer",
+                        overflow: "hidden",
+                        transition: "all 0.18s ease",
+                        backgroundColor: "#ffffff",
+                        position: "relative",
+                      }}
+                    >
+                      <span
+                        className="material-symbols-outlined"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          HandleOpenDeleteModal(String(singleDevice.id ?? ""));
                         }}
                         style={{
-                          borderRadius: "12px",
-                          padding: "16px",
-                          boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-                          boxSizing: "border-box",
-                          minHeight: "180px",
+                          position: "absolute",
+                          top: "12px",
+                          right: "12px",
+                          fontSize: "20px",
+                          color: "#ef4444",
+                          cursor: "pointer",
+                          userSelect: "none",
+                        }}
+                      >
+                        delete
+                      </span>
+
+                      <div
+                        style={{
                           display: "flex",
                           flexDirection: "column",
-                          justifyContent: "space-between",
-                          cursor: "pointer",
-                          overflow: "hidden",
-                          transition: "all 0.18s ease",
-                          backgroundColor: "#ffffff",
-                          position: "relative",
+                          gap: "10px",
+                          minWidth: 0,
+                          paddingRight: "28px",
                         }}
                       >
                         <span
-                          className="material-symbols-outlined"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            HandleOpenDeleteModal(
-                              String(singleDevice.id ?? ""),
-                            );
-                          }}
                           style={{
-                            position: "absolute",
-                            top: "12px",
-                            right: "12px",
-                            fontSize: "20px",
-                            color: "#ef4444",
-                            cursor: "pointer",
-                            userSelect: "none",
+                            fontSize: "15px",
+                            fontWeight: 600,
+                            color: "var(--black)",
+                            lineHeight: "1.4",
+                            wordBreak: "break-word",
+                            overflowWrap: "anywhere",
                           }}
                         >
-                          delete
+                          {singleDevice.description || `Device ${index + 1}`}
                         </span>
 
-                        <div
+                        <span
                           style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "10px",
-                            minWidth: 0,
-                            paddingRight: "28px",
+                            fontSize: "12px",
+                            color: "#6b7280",
+                            lineHeight: "1.4",
+                            wordBreak: "break-word",
+                            overflowWrap: "anywhere",
                           }}
                         >
-                          <span
-                            style={{
-                              fontSize: "15px",
-                              fontWeight: 600,
-                              color: "var(--black)",
-                              lineHeight: "1.4",
-                              wordBreak: "break-word",
-                              overflowWrap: "anywhere",
-                            }}
-                          >
-                            {singleDevice.description || `Device ${index + 1}`}
-                          </span>
+                          Store:{" "}
+                          {storeNameById[String(singleDevice.store_id ?? "")] ??
+                            singleDevice.store_id ??
+                            "-"}
+                        </span>
 
-                          <span
-                            style={{
-                              fontSize: "12px",
-                              color: "#6b7280",
-                              lineHeight: "1.4",
-                              wordBreak: "break-word",
-                              overflowWrap: "anywhere",
-                            }}
-                          >
-                            Store:{" "}
-                            {storeNameById[
-                              String(singleDevice.store_id ?? "")
-                            ] ??
-                              singleDevice.store_id ??
-                              "-"}
-                          </span>
-
-                          <span
-                            style={{
-                              fontSize: "12px",
-                              color: "#6b7280",
-                              lineHeight: "1.4",
-                              wordBreak: "break-word",
-                              overflowWrap: "anywhere",
-                            }}
-                          >
-                            HD/PLC: {singleDevice.hd_plc ?? "-"}
-                          </span>
-
-                          <span
-                            style={{
-                              fontSize: "12px",
-                              color: "#9ca3af",
-                              lineHeight: "1.4",
-                            }}
-                          >
-                            Template ID: {singleDevice.id_template ?? "-"}
-                          </span>
-                        </div>
-
-                        <div
+                        <span
                           style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            marginTop: "16px",
-                            gap: "12px",
+                            fontSize: "12px",
+                            color: "#6b7280",
+                            lineHeight: "1.4",
+                            wordBreak: "break-word",
+                            overflowWrap: "anywhere",
                           }}
                         >
-                          <span
-                            style={{
-                              fontSize: "12px",
-                              fontWeight: 600,
-                              padding: "4px 10px",
-                              borderRadius: "999px",
-                              backgroundColor: "#eef4ff",
-                              color: "#477dda",
-                              border: "1px solid #dbe6ff",
-                              maxWidth: "100%",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            Device
-                          </span>
+                          HD/PLC: {singleDevice.hd_plc ?? "-"}
+                        </span>
 
-                          <span
-                            style={{
-                              fontSize: "12px",
-                              color: "#9ca3af",
-                              flexShrink: 0,
-                            }}
-                          >
-                            Apri
-                          </span>
-                        </div>
+                        <span
+                          style={{
+                            fontSize: "12px",
+                            color: "#9ca3af",
+                            lineHeight: "1.4",
+                          }}
+                        >
+                          Template ID: {singleDevice.id_template ?? "-"}
+                        </span>
                       </div>
-                    );
-                  },
-                )}
+
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          marginTop: "16px",
+                          gap: "12px",
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: 600,
+                            padding: "4px 10px",
+                            borderRadius: "999px",
+                            backgroundColor: "#eef4ff",
+                            color: "#477dda",
+                            border: "1px solid #dbe6ff",
+                            maxWidth: "100%",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          Device
+                        </span>
+
+                        <span
+                          style={{
+                            fontSize: "12px",
+                            color: "#9ca3af",
+                            flexShrink: 0,
+                          }}
+                        >
+                          Apri
+                        </span>
+                      </div>
+                    </div>
+                  );
+                },
+              )}
             </div>
           ) : (
             <span style={{ opacity: "60%" }}>Nessun device trovato</span>
