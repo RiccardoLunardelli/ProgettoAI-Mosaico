@@ -6,6 +6,11 @@ class RunTemplateRequest(BaseModel):
 
 class RunTemplateStartRequest(BaseModel):
     id: str
+    dictionary_id: str 
+    kb_id: str 
+    template_base_id: str 
+    device_context_id: str 
+
 
 class RunTemplateLlmRequest(BaseModel):
     run_id: str
@@ -13,7 +18,6 @@ class RunTemplateLlmRequest(BaseModel):
 
 class RunTemplateFinishRequest(BaseModel):
     run_id: str
-    template_name: str
     validate_only: bool = True
     apply_llm: bool = False
     llm_patch_actions: dict | None = None

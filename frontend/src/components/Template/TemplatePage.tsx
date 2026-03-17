@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   GetTemplateDetailAPIHook,
@@ -9,35 +9,53 @@ import {
   RunTemplateFinishAPIHook,
 } from "../../customHooks/API/Template/templateAPI";
 import {
+  GetDictionaryDetailAPIHook,
+  GetDictionaryIdsAPIHook,
+} from "../../customHooks/API/Dictionary/DictionaryAPI";
+import {
+  GetTemplateBaseDetailAPIHook,
+  GetTemplateBaseIdsAPIHook,
+} from "../../customHooks/API/TemplateBase/templateBaseAPI";
+import {
+  GetEnrichedDetailAPIHook,
+  GetEnrichedIdsAPIHook,
+} from "../../customHooks/API/DeviceList/DeviceListAPI";
+import {
   SetTemplatePercentualSlice,
   type TemplateListInterface,
   type TemplatePercentualInterface,
 } from "../../stores/slices/Base/templateListSlice";
-const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
-import "rsuite/dist/rsuite.min.css";
 import { SetInputSlice } from "../../stores/slices/Base/inputSlice";
-import ollamaLogo from "../../../public/logo/ollama.png";
 import { IsValidJSON } from "../../commons/commonsFunctions";
 
-const BasicButtonGenericTag = lazy(
-  () => import("../button/BasicButtonGeneric"),
-);
+import TemplateStepperTag from "./sections/TemplateStepper";
+import TemplateValidateBannerTag from "./sections/TemplateValidateBanner";
+import TemplateLoaderOverlayTag from "./sections/TemplateLoaderOverlay";
+import TemplateStepDictionarySelectionTag from "./sections/TemplateStepDictionarySection";
+import TemplateStepSelectionTag from "./sections/TemplateStepSelection";
+import TemplateStepDeviceListEnrichedSelectionTag from "./sections/TemplateStepDeviceListEnrichedSelection";
+import TemplateStepKnowledgeBaseSelectionTag from "./sections/TemplateStepKnowledgeBaseSelection";
+import TemplateStepTemplateBaseSelectionTag from "./sections/TemplateStepTemplateBaseSelection";
+import TemplateStepMatchingTag from "./sections/TemplateStepMatching";
+import TemplateStepResultTag from "./sections/TemplateStepResult";
 
-const TextareaTag = lazy(() => import("rsuite/esm/Textarea"));
+import type { DictionatyListInterface } from "../../stores/slices/Base/dictionaryListSlice";
+import type { DeviceListStoreFileInterface } from "../../stores/slices/Base/deviceListSlice";
+import type { KnowledgeBaseListInterface } from "../../stores/slices/Base/knowledgeBaseListSlice";
+import type { TemplateBaseListInterface } from "../../stores/slices/Base/templateBaseListSlice";
+import {
+  GetKnowledgeBaseDetailAPIHook,
+  GetKnowledgeBaseIdsAPIHook,
+} from "../../customHooks/API/KnowledgeBase/knowledgeBaseAPI";
 
-const CheckboxTag = lazy(() =>
-  import("rsuite").then((module) => ({ default: module.Checkbox })),
-);
-
-const Toggle = lazy(() =>
-  import("rsuite").then((module) => ({ default: module.Toggle })),
-);
-
-const ProgressTag = lazy(() =>
-  import("rsuite").then((module) => ({ default: module.Progress })),
-);
-
-type CurrentStepNameType = "Selezione" | "Matching" | "Risultato";
+type CurrentStepNameType =
+  | "Dictionary"
+  | "Template"
+  | "Device List"
+  | "Knowledge Base"
+  | "Template Base"
+  | "Matching"
+  | "Risultato";
 
 interface StepOneResponseInterface {
   run_id: string;
@@ -48,7 +66,11 @@ interface StepOneResponseInterface {
 interface ComponentStateInterface {
   currentStep: number;
   currentStepName: CurrentStepNameType;
+  selected_dictionary_id: string;
   selected_id: string;
+  selected_device_list_enriched: DeviceListStoreFileInterface | null;
+  selected_knowledge_base_id: string;
+  selected_template_base_id: string;
   validateOnly: boolean;
   stepOneResponse: StepOneResponseInterface | null;
   use_llm: boolean;
@@ -57,8 +79,14 @@ interface ComponentStateInterface {
   llm_suggestion: null | {};
 }
 
-//Usata per prendersi i valori nello Slice degli input
 const inputIdList = ["LLMSuggestionPatch-Edit"];
+
+const mainCardWidth = "35vw";
+const mainCardMinWidth = "520px";
+const contentWidth = "80%";
+const infoCardHeight = "300px";
+const listCardHeight = "260px";
+const footerWidth = "80%";
 
 function TemplatePageTag() {
   const [GetTemplateIdsAPI] = GetTemplateIdsAPIHook();
@@ -68,13 +96,29 @@ function TemplatePageTag() {
   const [GetTemplatePercentualAPI] = GetTemplatePercentualAPIHook();
   const [RunTemplateFinishAPI] = RunTemplateFinishAPIHook();
 
+  const [GetDictionaryIdsAPI] = GetDictionaryIdsAPIHook();
+  const [GetDictionaryDetailAPI] = GetDictionaryDetailAPIHook();
+
+  const [GetEnrichedIdsAPI] = GetEnrichedIdsAPIHook();
+  const [GetEnrichedDetailAPI] = GetEnrichedDetailAPIHook();
+
+  const [GetKnowledgeBaseIdsAPI] = GetKnowledgeBaseIdsAPIHook();
+  const [GetKnowledgeBaseDetailAPI] = GetKnowledgeBaseDetailAPIHook();
+
+  const [GetTemplateBaseIdsAPI] = GetTemplateBaseIdsAPIHook();
+  const [GetTemplateBaseDetailAPI] = GetTemplateBaseDetailAPIHook();
+
   const dispatch = useDispatch();
 
   const [componentState, setComponentState] = useState<ComponentStateInterface>(
     {
       currentStep: 1,
-      currentStepName: "Selezione",
+      currentStepName: "Dictionary",
+      selected_dictionary_id: "",
       selected_id: "",
+      selected_device_list_enriched: null,
+      selected_knowledge_base_id: "",
+      selected_template_base_id: "",
       validateOnly: false,
       stepOneResponse: null,
       use_llm: false,
@@ -114,40 +158,73 @@ function TemplatePageTag() {
     }) => state.templateListSlice,
   );
 
-  const HandleSelectIdOnClick = (singleId: string) => {
-    setComponentState((previousStateVal: ComponentStateInterface) => {
-      return {
-        ...previousStateVal,
-        selected_id: singleId,
+  const dictionaryListSlice: {
+    value: DictionatyListInterface[];
+    detail: any;
+  } = useSelector(
+    (state: {
+      dictionaryListSlice: {
+        value: DictionatyListInterface[];
+        detail: any;
       };
-    });
-  };
+    }) => state.dictionaryListSlice,
+  );
 
-  const HandleNextStepOneOnClick = () => {
-    if (!componentState.selected_id) return;
+  const deviceListListSlice: {
+    enrichedValue: DeviceListStoreFileInterface[];
+    enrichedDetail: any;
+  } = useSelector(
+    (state: {
+      deviceListListSlice: {
+        enrichedValue: DeviceListStoreFileInterface[];
+        enrichedDetail: any;
+      };
+    }) => state.deviceListListSlice,
+  );
 
-    RunTemplateStartAPI({
-      data: {
-        id: componentState?.selected_id ?? "",
-      },
-      showLoader: true,
-      showToast: true,
-      saveResponse: false,
-      EndCallback(returnValue) {
-        const parsedReturnValue = JSON.parse(returnValue?.message ?? "");
-        setComponentState((previousStateVal: ComponentStateInterface) => {
-          return {
-            ...previousStateVal,
-            stepOneResponse: {
-              run_id: parsedReturnValue?.run_id ?? "",
-              has_ambiguous: parsedReturnValue?.has_ambiguous ?? false,
-              ambigouous_count: parsedReturnValue?.ambiguous_count ?? 0,
-            },
-          };
-        });
-      },
-    });
-  };
+  const knowledgeBaseListSlice: {
+    value: KnowledgeBaseListInterface[];
+    detail: any;
+  } = useSelector(
+    (state: {
+      knowledgeBaseListSlice: {
+        value: KnowledgeBaseListInterface[];
+        detail: any;
+      };
+    }) => state.knowledgeBaseListSlice,
+  );
+
+  const templateBaseListSlice: {
+    value: TemplateBaseListInterface[];
+    detail: any;
+  } = useSelector(
+    (state: {
+      templateBaseListSlice: {
+        value: TemplateBaseListInterface[];
+        detail: any;
+      };
+    }) => state.templateBaseListSlice,
+  );
+
+  const llmPatchValue = inputSliceValue["LLMSuggestionPatch-Edit"] ?? "";
+
+  const isPatchRequired =
+    componentState.use_llm && componentState.checkboxValue;
+
+  const isPatchJsonValid = !isPatchRequired || IsValidJSON(llmPatchValue);
+
+  const selectedDeviceContextId =
+    (componentState.selected_device_list_enriched as any)?.id ?? "";
+
+  const isRunDisabled =
+    !componentState.stepOneResponse?.run_id ||
+    !componentState.selected_dictionary_id ||
+    !componentState.selected_id ||
+    !componentState.selected_device_list_enriched ||
+    !componentState.selected_knowledge_base_id ||
+    !componentState.selected_template_base_id ||
+    !selectedDeviceContextId ||
+    (isPatchRequired && !isPatchJsonValid);
 
   const HandleChangeStepAndName = (
     currentStep: number,
@@ -159,6 +236,89 @@ function TemplatePageTag() {
         currentStep,
         currentStepName,
       };
+    });
+  };
+
+  const HandleSelectDictionaryIdOnClick = (singleId: string) => {
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        selected_dictionary_id: singleId,
+      };
+    });
+  };
+
+  const HandleSelectIdOnClick = (singleId: string) => {
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        selected_id: singleId,
+      };
+    });
+  };
+
+  const HandleSelectDeviceListEnrichedOnClick = (
+    selectedItem: DeviceListStoreFileInterface,
+  ) => {
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        selected_device_list_enriched: selectedItem,
+      };
+    });
+  };
+
+  const HandleSelectKnowledgeBaseIdOnClick = (singleId: string) => {
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        selected_knowledge_base_id: singleId,
+      };
+    });
+  };
+
+  const HandleSelectTemplateBaseIdOnClick = (singleId: string) => {
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        selected_template_base_id: singleId,
+      };
+    });
+  };
+
+  const HandleStartMatchingOnClick = () => {
+    if (!componentState.selected_dictionary_id) return;
+    if (!componentState.selected_id) return;
+    if (!componentState.selected_device_list_enriched) return;
+    if (!componentState.selected_knowledge_base_id) return;
+    if (!componentState.selected_template_base_id) return;
+    if (!selectedDeviceContextId) return;
+
+    RunTemplateStartAPI({
+      data: {
+        id: componentState.selected_id ?? "",
+        dictionary_id: componentState.selected_dictionary_id ?? "",
+        kb_id: componentState.selected_knowledge_base_id ?? "",
+        template_base_id: componentState.selected_template_base_id ?? "",
+        device_context_id: selectedDeviceContextId,
+      },
+      showLoader: true,
+      showToast: true,
+      saveResponse: false,
+      EndCallback(returnValue) {
+        const parsedReturnValue = JSON.parse(returnValue?.message ?? "");
+
+        setComponentState((previousStateVal: ComponentStateInterface) => {
+          return {
+            ...previousStateVal,
+            stepOneResponse: {
+              run_id: parsedReturnValue?.run_id ?? "",
+              has_ambiguous: parsedReturnValue?.has_ambiguous ?? false,
+              ambigouous_count: parsedReturnValue?.ambiguous_count ?? 0,
+            },
+          };
+        });
+      },
     });
   };
 
@@ -209,33 +369,14 @@ function TemplatePageTag() {
     });
   };
 
-  const GetStepStyle = (stepNumber: number) => {
-    const isCompleted = componentState.currentStep > stepNumber;
-    const isCurrent = componentState.currentStep === stepNumber;
-
-    return {
-      backgroundColor: isCompleted
-        ? "#22c55e"
-        : isCurrent
-          ? "#2563eb"
-          : "#e5e7eb",
-      color: isCompleted || isCurrent ? "#fff" : "#6b7280",
-    };
-  };
-
   const HandleExecuteRunOnClick = () => {
     if (isPatchRequired && !isPatchJsonValid) return;
-
-    const selectedTemplate = (templateListSlice?.value ?? []).find(
-      (item) => item.id === componentState.selected_id,
-    );
 
     RunTemplateFinishAPI({
       showLoader: true,
       showToast: true,
       data: {
         run_id: componentState.stepOneResponse?.run_id ?? "",
-        template_name: selectedTemplate?.name ?? "",
         validate_only: componentState.validateOnly,
         apply_llm: componentState.checkboxValue,
         llm_patch_actions: isPatchRequired ? JSON.parse(llmPatchValue) : {},
@@ -278,12 +419,30 @@ function TemplatePageTag() {
   }, [templateListSlice?.percentual?.percent, componentState.showLoader]);
 
   useEffect(() => {
+    GetDictionaryIdsAPI({ showLoader: true, saveResponse: true });
     GetTemplateIdsAPI({ showLoader: true, saveResponse: true });
+    GetEnrichedIdsAPI({ showLoader: true, saveResponse: true });
+    GetKnowledgeBaseIdsAPI({ showLoader: true, saveResponse: true });
+    GetTemplateBaseIdsAPI({ showLoader: true, saveResponse: true });
     dispatch(SetTemplatePercentualSlice({ percent: 0 }));
   }, []);
 
   useEffect(() => {
+    if (componentState.selected_dictionary_id == "") return;
+
+    GetDictionaryDetailAPI({
+      data: {
+        id: componentState.selected_dictionary_id,
+      },
+      showLoader: true,
+      saveResponse: true,
+      EndCallback() {},
+    });
+  }, [componentState.selected_dictionary_id]);
+
+  useEffect(() => {
     if (componentState.selected_id == "") return;
+
     GetTemplateDetailAPI({
       data: {
         id: componentState.selected_id,
@@ -294,24 +453,214 @@ function TemplatePageTag() {
     });
   }, [componentState.selected_id]);
 
-  const mainCardWidth = "35vw";
-  const mainCardMinWidth = "520px";
-  const contentWidth = "80%";
-  const infoCardHeight = "300px";
-  const listCardHeight = "260px";
-  const footerWidth = "80%";
+  useEffect(() => {
+    if (!componentState.selected_device_list_enriched) return;
 
-  const llmPatchValue = inputSliceValue["LLMSuggestionPatch-Edit"] ?? "";
+    GetEnrichedDetailAPI({
+      data: {
+        store:
+          (componentState.selected_device_list_enriched as any)?.store ?? "",
+        dl: (componentState.selected_device_list_enriched as any)?.file ?? "",
+      },
+      showLoader: true,
+      saveResponse: true,
+      EndCallback() {},
+    });
+  }, [componentState.selected_device_list_enriched]);
 
-  const isPatchRequired =
-    componentState.use_llm && componentState.checkboxValue;
+  useEffect(() => {
+    if (componentState.selected_knowledge_base_id == "") return;
 
-  const isPatchJsonValid = !isPatchRequired || IsValidJSON(llmPatchValue);
+    GetKnowledgeBaseDetailAPI({
+      data: {
+        id: componentState.selected_knowledge_base_id,
+      },
+      showLoader: true,
+      saveResponse: true,
+      EndCallback() {},
+    });
+  }, [componentState.selected_knowledge_base_id]);
 
-  const isRunDisabled =
-    !componentState.stepOneResponse?.run_id ||
-    !componentState.selected_id ||
-    (isPatchRequired && !isPatchJsonValid);
+  useEffect(() => {
+    if (componentState.selected_template_base_id == "") return;
+
+    GetTemplateBaseDetailAPI({
+      data: {
+        id: componentState.selected_template_base_id,
+      },
+      showLoader: true,
+      saveResponse: true,
+      EndCallback() {},
+    });
+  }, [componentState.selected_template_base_id]);
+
+  const RenderCurrentStep = () => {
+    switch (componentState.currentStep) {
+      case 1:
+        return (
+          <TemplateStepDictionarySelectionTag
+            selectedDictionaryId={componentState.selected_dictionary_id}
+            dictionaryList={dictionaryListSlice?.value ?? []}
+            dictionaryDetail={dictionaryListSlice?.detail}
+            mainCardWidth={mainCardWidth}
+            mainCardMinWidth={mainCardMinWidth}
+            contentWidth={contentWidth}
+            infoCardHeight={infoCardHeight}
+            listCardHeight={listCardHeight}
+            footerWidth={footerWidth}
+            onSelectDictionaryId={HandleSelectDictionaryIdOnClick}
+            onNext={() => {
+              HandleChangeStepAndName(2, "Template");
+            }}
+          />
+        );
+
+      case 2:
+        return (
+          <TemplateStepSelectionTag
+            selectedId={componentState.selected_id}
+            validateOnly={componentState.validateOnly}
+            templateList={templateListSlice?.value ?? []}
+            templateDetail={templateListSlice?.detail}
+            mainCardWidth={mainCardWidth}
+            mainCardMinWidth={mainCardMinWidth}
+            contentWidth={contentWidth}
+            infoCardHeight={infoCardHeight}
+            listCardHeight={listCardHeight}
+            footerWidth={footerWidth}
+            nextButtonText="Avanti ai device list"
+            onSelectId={HandleSelectIdOnClick}
+            onToggleValidateOnly={(val: boolean) => {
+              setComponentState((previousStateVal: ComponentStateInterface) => {
+                return {
+                  ...previousStateVal,
+                  validateOnly: val,
+                };
+              });
+            }}
+            onNext={() => {
+              HandleChangeStepAndName(3, "Device List");
+            }}
+          />
+        );
+
+      case 3:
+        return (
+          <TemplateStepDeviceListEnrichedSelectionTag
+            selectedDeviceListEnriched={
+              componentState.selected_device_list_enriched
+            }
+            deviceListEnrichedList={deviceListListSlice?.enrichedValue ?? []}
+            deviceListEnrichedDetail={deviceListListSlice?.enrichedDetail}
+            mainCardWidth={mainCardWidth}
+            mainCardMinWidth={mainCardMinWidth}
+            contentWidth={contentWidth}
+            infoCardHeight={infoCardHeight}
+            listCardHeight={listCardHeight}
+            footerWidth={footerWidth}
+            onSelectDeviceListEnriched={HandleSelectDeviceListEnrichedOnClick}
+            onNext={() => {
+              HandleChangeStepAndName(4, "Knowledge Base");
+            }}
+          />
+        );
+
+      case 4:
+        return (
+          <TemplateStepKnowledgeBaseSelectionTag
+            selectedKnowledgeBaseId={componentState.selected_knowledge_base_id}
+            knowledgeBaseList={knowledgeBaseListSlice?.value ?? []}
+            knowledgeBaseDetail={knowledgeBaseListSlice?.detail}
+            mainCardWidth={mainCardWidth}
+            mainCardMinWidth={mainCardMinWidth}
+            contentWidth={contentWidth}
+            infoCardHeight={infoCardHeight}
+            listCardHeight={listCardHeight}
+            footerWidth={footerWidth}
+            onSelectKnowledgeBaseId={HandleSelectKnowledgeBaseIdOnClick}
+            onNext={() => {
+              HandleChangeStepAndName(5, "Template Base");
+            }}
+          />
+        );
+
+      case 5:
+        return (
+          <TemplateStepTemplateBaseSelectionTag
+            selectedTemplateBaseId={componentState.selected_template_base_id}
+            templateBaseList={templateBaseListSlice?.value ?? []}
+            templateBaseDetail={templateBaseListSlice?.detail}
+            mainCardWidth={mainCardWidth}
+            mainCardMinWidth={mainCardMinWidth}
+            contentWidth={contentWidth}
+            infoCardHeight={infoCardHeight}
+            listCardHeight={listCardHeight}
+            footerWidth={footerWidth}
+            onSelectTemplateBaseId={HandleSelectTemplateBaseIdOnClick}
+            onNext={() => {
+              HandleStartMatchingOnClick();
+              HandleChangeStepAndName(6, "Matching");
+            }}
+          />
+        );
+
+      case 6:
+        return (
+          <TemplateStepMatchingTag
+            stepOneResponse={componentState.stepOneResponse}
+            useLLM={componentState.use_llm}
+            llmSuggestion={componentState.llm_suggestion}
+            checkboxValue={componentState.checkboxValue}
+            llmPatchValue={llmPatchValue}
+            contentWidth={contentWidth}
+            mainCardMinWidth={mainCardMinWidth}
+            footerWidth={footerWidth}
+            onToggleUseLLM={(value: boolean) => {
+              setComponentState((previousStateVal: ComponentStateInterface) => {
+                return {
+                  ...previousStateVal,
+                  use_llm: value,
+                };
+              });
+            }}
+            onGeneratePatchLLM={HandleGeneratePatchLLM}
+            onPatchChange={(value: string) => {
+              dispatch(
+                SetInputSlice({
+                  id: "LLMSuggestionPatch-Edit",
+                  value,
+                }),
+              );
+            }}
+            onToggleApplyPatch={() => {
+              setComponentState((previousStateVal: ComponentStateInterface) => {
+                return {
+                  ...previousStateVal,
+                  checkboxValue: !previousStateVal.checkboxValue,
+                };
+              });
+            }}
+            onNext={() => {
+              HandleChangeStepAndName(7, "Risultato");
+            }}
+          />
+        );
+
+      case 7:
+        return (
+          <TemplateStepResultTag
+            runId={componentState.stepOneResponse?.run_id ?? ""}
+            isRunDisabled={isRunDisabled}
+            contentWidth={contentWidth}
+            mainCardMinWidth={mainCardMinWidth}
+            onExecuteRun={HandleExecuteRunOnClick}
+          />
+        );
+
+      default:
+        return null;
+    }
+  };
 
   return (
     <>
@@ -327,96 +676,11 @@ function TemplatePageTag() {
           transition: "filter 0.2s ease",
         }}
       >
-        {/* Div sopra */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            width: "100%",
-            padding: "20px",
-            boxSizing: "border-box",
-            borderBottom: "1px solid #e5e7eb",
-          }}
-        >
-          {/* Step 1 */}
-          <div
-            style={{
-              width: "30px",
-              height: "30px",
-              borderRadius: "50%",
-              ...GetStepStyle(1),
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontWeight: 600,
-              fontSize: "14px",
-              marginLeft: "30px",
-            }}
-          >
-            1
-          </div>
+        <TemplateStepperTag
+          currentStep={componentState.currentStep}
+          currentStepName={componentState.currentStepName}
+        />
 
-          <span
-            className="material-symbols-outlined"
-            style={{ margin: "0 8px", opacity: 0.5 }}
-          >
-            chevron_right
-          </span>
-
-          {/* Step 2 */}
-          <div
-            style={{
-              width: "30px",
-              height: "30px",
-              borderRadius: "50%",
-              ...GetStepStyle(2),
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontWeight: 600,
-              fontSize: "14px",
-            }}
-          >
-            2
-          </div>
-
-          <span
-            className="material-symbols-outlined"
-            style={{ margin: "0 8px", opacity: 0.5 }}
-          >
-            chevron_right
-          </span>
-
-          {/* Step 3 */}
-          <div
-            style={{
-              width: "30px",
-              height: "30px",
-              borderRadius: "50%",
-              ...GetStepStyle(3),
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontWeight: 600,
-              fontSize: "14px",
-            }}
-          >
-            3
-          </div>
-
-          {/* Label */}
-          <span
-            style={{
-              marginLeft: "12px",
-              fontSize: "14px",
-              color: "#6b7280",
-            }}
-          >
-            {componentState.currentStepName}
-          </span>
-        </div>
-
-        {/* Div sotto */}
         <div
           style={{
             display: "flex",
@@ -434,672 +698,22 @@ function TemplatePageTag() {
                 width: "100%",
               }}
             >
-              {/* Banner globale Validate Only visibile in tutti gli step */}
-              {componentState.validateOnly ? (
-                <div
-                  style={{
-                    backgroundColor: "#fff9e6",
-                    width: contentWidth,
-                    minWidth: mainCardMinWidth,
-                    height: "35px",
-                    borderRadius: "8px",
-                    border: "1px solid #f5dead",
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    marginBottom: "14px",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: "20px",
-                      marginLeft: "20px",
-                      opacity: "0.4",
-                      userSelect: "none",
-                    }}
-                    className="material-symbols-outlined"
-                  >
-                    warning
-                  </span>
-                  <span
-                    style={{
-                      fontSize: "13px",
-                      opacity: "0.8",
-                      marginLeft: "10px",
-                    }}
-                  >
-                    Modalità Validate Only attiva — Nessuna modifica verrà
-                    salvata
-                  </span>
-                </div>
-              ) : (
-                <></>
-              )}
+              <TemplateValidateBannerTag
+                validateOnly={componentState.validateOnly}
+                contentWidth={contentWidth}
+                mainCardMinWidth={mainCardMinWidth}
+              />
 
-              {/* Se sono allo step 1 */}
-              {componentState.currentStep == 1 ? (
-                <>
-                  {/* Card */}
-                  <div
-                    style={{
-                      backgroundColor: "#ffffff",
-                      borderRadius: "8px",
-                      padding: "10px",
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-                      boxSizing: "border-box",
-                      width: mainCardWidth,
-                      minWidth: mainCardMinWidth,
-                      height: listCardHeight,
-                      minHeight: "260px",
-                      display: "flex",
-                      justifyContent: "flex-start",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        margin: "10px",
-                        alignItems: "flex-start",
-                        width: "100%",
-                        height: "100%",
-                      }}
-                    >
-                      <span style={{ fontSize: "20px", fontWeight: 600 }}>
-                        Template
-                      </span>
-
-                      <div
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          overflow: "auto",
-                          marginTop: "10px",
-                        }}
-                      >
-                        {(templateListSlice?.value ?? []).length > 0 ? (
-                          <>
-                            {(templateListSlice?.value ?? []).map(
-                              (singleId: TemplateListInterface) => {
-                                const isSelected =
-                                  componentState.selected_id ===
-                                  (singleId.id ?? "");
-
-                                return (
-                                  <div
-                                    key={`${singleId.id}`}
-                                    className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
-                                    style={{
-                                      borderRadius: "8px",
-                                      padding: "6px 10px",
-                                      width: "95%",
-                                      cursor: "pointer",
-                                      fontSize: "13px",
-                                      color: "var(--black)",
-                                      marginTop: "8px",
-                                      display: "flex",
-                                      justifyContent: "space-between",
-                                      alignItems: "center",
-                                    }}
-                                    onClick={() => {
-                                      HandleSelectIdOnClick(singleId.id);
-                                    }}
-                                  >
-                                    <span
-                                      style={{
-                                        fontSize: "14px",
-                                        fontWeight: 500,
-                                      }}
-                                    >
-                                      {singleId.name}
-                                    </span>
-                                  </div>
-                                );
-                              },
-                            )}
-                          </>
-                        ) : (
-                          <span style={{ opacity: "60%" }}>
-                            Nessun template trovato
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Preview template */}
-                  {templateListSlice?.detail &&
-                  componentState.selected_id !== "" ? (
-                    <>
-                      <div
-                        style={{
-                          marginTop: "20px",
-                          display: "flex",
-                          opacity: "50%",
-                          width: contentWidth,
-                          minWidth: mainCardMinWidth,
-                        }}
-                      >
-                        Preview template
-                      </div>
-
-                      <div
-                        style={{
-                          backgroundColor: "#f3f5f7",
-                          borderRadius: "8px",
-                          padding: "10px",
-                          boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-                          boxSizing: "border-box",
-                          width: contentWidth,
-                          minWidth: mainCardMinWidth,
-                          height: infoCardHeight,
-                          minHeight: "300px",
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          overflow: "auto",
-                        }}
-                      >
-                        <pre
-                          style={{
-                            margin: 0,
-                            textAlign: "left",
-                            whiteSpace: "pre-wrap",
-                            wordBreak: "break-word",
-                            fontSize: "13px",
-                            width: "100%",
-                          }}
-                        >
-                          {JSON.stringify(templateListSlice.detail, null, 2)}
-                        </pre>
-                      </div>
-
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "flex-end",
-                          justifyContent: "space-between",
-                          width: footerWidth,
-                          minWidth: mainCardMinWidth,
-                          marginTop: "18px",
-                        }}
-                      >
-                        {/* Toggle validate Only */}
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                          }}
-                        >
-                          <span
-                            style={{
-                              marginBottom: "4px",
-                              fontWeight: 500,
-                              fontSize: "15px",
-                            }}
-                          >
-                            Validate Only
-                          </span>
-
-                          <Toggle
-                            checked={componentState?.validateOnly ?? false}
-                            onChange={(val: boolean) => {
-                              setComponentState(
-                                (previousStateVal: ComponentStateInterface) => {
-                                  return {
-                                    ...previousStateVal,
-                                    validateOnly: val,
-                                  };
-                                },
-                              );
-                            }}
-                          />
-                        </div>
-
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                          }}
-                        >
-                          <BasicButtonGenericTag
-                            textToSee="Esegui matching"
-                            disabledButton={componentState.selected_id == ""}
-                            clickCallBack={() => {
-                              HandleChangeStepAndName(2, "Matching");
-                              HandleNextStepOneOnClick();
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      {componentState.selected_id !== "" && (
-                        <RunsListSkeleton />
-                      )}
-                    </>
-                  )}
-                </>
-              ) : (
-                <></>
-              )}
-
-              {/* Se sono allo step 2 */}
-              {componentState.currentStep == 2 ? (
-                <>
-                  {/* Card */}
-                  <div
-                    style={{
-                      backgroundColor: "#ffffff",
-                      borderRadius: "8px",
-                      padding: "10px",
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-                      boxSizing: "border-box",
-                      width: contentWidth,
-                      minWidth: mainCardMinWidth,
-                      minHeight: "560px",
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      height: "700px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        margin: "10px",
-                        alignItems: "flex-start",
-                        width: "100%",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center",
-                        }}
-                      >
-                        <img
-                          src={ollamaLogo}
-                          style={{
-                            width: "40px",
-                            height: "40px",
-                          }}
-                        />
-                        <span
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: 600,
-                            marginLeft: "5px",
-                          }}
-                        >
-                          Modello LLM
-                        </span>
-                      </div>
-
-                      <div
-                        style={{
-                          width: "100%",
-                          marginTop: "14px",
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "14px",
-                        }}
-                      >
-                        <div
-                          style={{
-                            width: "100%",
-                            backgroundColor: "#fff7ed",
-                            border: "1px solid #fed7aa",
-                            borderRadius: "8px",
-                            padding: "10px 14px",
-                            boxSizing: "border-box",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "8px",
-                              fontSize: "14px",
-                              fontWeight: 500,
-                              color: "#9a3412",
-                            }}
-                          >
-                            <span
-                              className="material-symbols-outlined"
-                              style={{
-                                fontSize: "18px",
-                                color: "#f97316",
-                              }}
-                            >
-                              warning
-                            </span>
-                            Ambiguità trovate
-                          </div>
-
-                          <span
-                            style={{
-                              fontSize: "13px",
-                              fontWeight: 600,
-                              color: "#ea580c",
-                            }}
-                          >
-                            {componentState.stepOneResponse?.ambigouous_count ??
-                              0}
-                          </span>
-                        </div>
-
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "12px",
-                          }}
-                        >
-                          <Suspense fallback="">
-                            <Toggle
-                              checked={componentState.use_llm}
-                              onChange={(e: boolean) => {
-                                setComponentState(
-                                  (
-                                    previousStateVal: ComponentStateInterface,
-                                  ) => {
-                                    return {
-                                      ...previousStateVal,
-                                      use_llm: e,
-                                    };
-                                  },
-                                );
-                              }}
-                            />
-                          </Suspense>
-                          <span
-                            style={{
-                              fontSize: "14px",
-                              fontWeight: 500,
-                            }}
-                          >
-                            Usa LLM per risolvere le ambiguità
-                          </span>
-                        </div>
-
-                        {componentState.use_llm ? (
-                          <>
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "14px",
-                                width: "100%",
-                              }}
-                            >
-                              <div>
-                                <Suspense fallback="">
-                                  <BasicButtonGenericTag
-                                    textToSee="Genera patch LLM"
-                                    clickCallBack={HandleGeneratePatchLLM}
-                                  />
-                                </Suspense>
-                              </div>
-                            </div>
-                            {componentState.llm_suggestion ? (
-                              <>
-                                <div
-                                  style={{
-                                    width: "100%",
-                                    display: "flex",
-                                    flexDirection: "column",
-                                  }}
-                                >
-                                  <span
-                                    style={{
-                                      fontSize: "13px",
-                                      opacity: "0.7",
-                                      marginBottom: "8px",
-                                      fontWeight: 500,
-                                    }}
-                                  >
-                                    PATCH LLM PROPOSTE (MODIFICABILE)
-                                  </span>
-
-                                  <Suspense fallback="">
-                                    <TextareaTag
-                                      style={{
-                                        width: "100%",
-                                        borderRadius: "8px",
-                                        border: "1px solid #d1d5db",
-                                        padding: "12px",
-                                        boxSizing: "border-box",
-                                        fontSize: "13px",
-                                        fontFamily: "monospace",
-                                        backgroundColor: "#f9fafb",
-                                      }}
-                                      minHeight="300px"
-                                      minWidth="600px"
-                                      value={
-                                        inputSliceValue[
-                                          "LLMSuggestionPatch-Edit"
-                                        ] ?? ""
-                                      }
-                                      onChange={(e: any) => {
-                                        dispatch(
-                                          SetInputSlice({
-                                            id: "LLMSuggestionPatch-Edit",
-                                            value: e,
-                                          }),
-                                        );
-                                      }}
-                                    />
-                                  </Suspense>
-                                </div>
-                                <div style={{ display: "flex" }}>
-                                  <CheckboxTag
-                                    checked={componentState.checkboxValue}
-                                    onChange={() => {
-                                      setComponentState(
-                                        (
-                                          previousStateVal: ComponentStateInterface,
-                                        ) => {
-                                          return {
-                                            ...previousStateVal,
-                                            checkboxValue:
-                                              !componentState.checkboxValue,
-                                          };
-                                        },
-                                      );
-                                    }}
-                                  >
-                                    Applica questa patch
-                                  </CheckboxTag>
-                                </div>
-                              </>
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-end",
-                      width: footerWidth,
-                      minWidth: mainCardMinWidth,
-                      marginTop: "18px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <BasicButtonGenericTag
-                        textToSee="Avanti al risultato"
-                        clickCallBack={() => {
-                          HandleChangeStepAndName(3, "Risultato");
-                        }}
-                      />
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
-
-              {/* Se sono allo step 3 */}
-              {componentState.currentStep == 3 ? (
-                <>
-                  {/* Card */}
-                  <div
-                    style={{
-                      backgroundColor: "#ffffff",
-                      borderRadius: "8px",
-                      padding: "10px",
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-                      boxSizing: "border-box",
-                      width: contentWidth,
-                      minWidth: mainCardMinWidth,
-                      minHeight: "240px",
-                      display: "flex",
-                      justifyContent: "flex-start",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        margin: "10px",
-                        alignItems: "flex-start",
-                        width: "100%",
-                      }}
-                    >
-                      <span style={{ fontSize: "20px", fontWeight: 600 }}>
-                        Esegui Run
-                      </span>
-
-                      <div
-                        style={{
-                          width: "100%",
-                          marginTop: "18px",
-                          backgroundColor: "#eef4ff",
-                          border: "1px solid #bcd0ee",
-                          borderRadius: "4px",
-                          padding: "8px 12px",
-                          boxSizing: "border-box",
-                          fontSize: "14px",
-                          color: "#2563eb",
-                        }}
-                      >
-                        # Run ID:{" "}
-                        {componentState.stepOneResponse?.run_id ?? "-"}
-                      </div>
-
-                      <div
-                        style={{
-                          marginTop: "16px",
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          width: "100%",
-                        }}
-                      >
-                        <BasicButtonGenericTag
-                          textToSee="Esegui Run"
-                          disabledButton={isRunDisabled}
-                          clickCallBack={() => {
-                            HandleExecuteRunOnClick();
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
+              {RenderCurrentStep()}
             </div>
           </div>
         </div>
       </div>
 
-      {componentState.showLoader && !componentState.llm_suggestion ? (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(255, 255, 255, 0.30)",
-            backdropFilter: "blur(6px)",
-            WebkitBackdropFilter: "blur(6px)",
-            zIndex: 9999,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            pointerEvents: "all",
-          }}
-        >
-          <div
-            style={{
-              minWidth: "320px",
-              padding: "24px 28px",
-              borderRadius: "16px",
-              backgroundColor: "rgba(255,255,255,0.92)",
-              boxShadow: "0 8px 30px rgba(0,0,0,0.12)",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "16px",
-            }}
-          >
-            <img
-              src={ollamaLogo}
-              style={{
-                width: "70px",
-                height: "70px",
-                objectFit: "contain",
-              }}
-            />
-
-            <span
-              style={{
-                fontSize: "14px",
-                fontWeight: 600,
-                color: "#374151",
-              }}
-            >
-              Risoluzione ambiguità...
-            </span>
-            <div className="thinking-dots">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-
-            <div style={{ width: "240px" }}>
-              <Suspense fallback="">
-                <ProgressTag
-                  percent={templateListSlice?.percentual?.percent ?? 0}
-                  showInfo={true}
-                />
-              </Suspense>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
+      <TemplateLoaderOverlayTag
+        show={componentState.showLoader && !componentState.llm_suggestion}
+        percent={templateListSlice?.percentual?.percent ?? 0}
+      />
     </>
   );
 }

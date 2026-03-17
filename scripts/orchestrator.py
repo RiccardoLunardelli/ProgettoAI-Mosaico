@@ -2,7 +2,7 @@ from mcp_server.server import dictionary_upsert, kb_upsert_mapping, template_app
 from mcp_server.core import MCPContext
 from src.validator.validator import load_json
 from src.matcher.matcher import run_matching
-from src.parser.normalizer import normalization
+from src.parser.normalizer import normalization,normalize_template, model_dump
 from scripts.llm_proposer.llm_proposer import (
     llm_propose_actions, ensure_labels, filter_by_candidate_gap,
     filter_low_confidence, extract_llm_contexts, merge_actions_dedup,
@@ -28,38 +28,63 @@ import json
 from pathlib import Path
 
 
-def start_template_run(template_path: str, config_path: str="config/config.yml",) -> dict:
+def start_template_run(template_name: str, dictionary_name: str, kb_name: str, template_base_name: str, device_context_name: str,
+                       template_id: str, dictionary_id: str, kb_id: str, template_base_id: str, device_context_id: str, template_payload: dict,  dictionary_payload: dict,
+                        kb_payload: dict, template_base_payload: dict, device_context_payload: list | dict, config_path: str="config/config.yml") -> dict:
     # normalizzazione e matching
 
     cfg = load_config(config_path)
     paths = cfg.get("paths", {})
-
-    dictionary_path = paths.get("dictionary")
-    kb_path = paths.get("kb")
-    template_base_path = paths.get("template_base")
-    device_context_path = paths.get("device_context")
     schema_tipo_path = paths.get("schema_tipo")
-    output_dir = paths.get("output_dir", "output_dir")
 
     run_id = generate_run_id()
     run_dir = RUNS_ROOT / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
 
-    # Normalizzazione
-    normalized_payload = normalization(template_path, schema_tipo_path)
+    # snapshot input DB -> file tecnici run
+    template_input_path = run_dir / f"{template_name}"
+    dictionary_input_path = run_dir / f"{dictionary_name}"
+    kb_input_path = run_dir / f"{kb_name}"
+    template_base_input_path = run_dir / f"{template_base_name}"
+    device_context_input_path = run_dir / f"{device_context_name}"
+
+    template_input_path.write_text(json.dumps(template_payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    dictionary_input_path.write_text(json.dumps(dictionary_payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    kb_input_path.write_text(json.dumps(kb_payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    template_base_input_path.write_text(json.dumps(template_base_payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    device_context_input_path.write_text(json.dumps(device_context_payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # context persistente della run (finish usera solo questo)
+    run_context = {
+        "template_id": template_id,
+        "dictionary_id": dictionary_id,
+        "kb_id": kb_id,
+        "template_base_id": template_base_id,
+        "device_context_id": device_context_id,
+        "template_input_path": str(template_input_path),
+        "dictionary_input_path": str(dictionary_input_path),
+        "kb_input_path": str(kb_input_path),
+        "template_base_input_path": str(template_base_input_path),
+        "device_context_input_path": str(device_context_input_path),
+    }
+    (run_dir / "run_context.json").write_text(json.dumps(run_context, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # normalizzazione (usa snapshot template)
+    normalized_payload = normalization(str(template_input_path), schema_tipo_path)
     normalized_path = run_dir / "normalized_template_v0.1.json"
     normalized_path.write_text(json.dumps(normalized_payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    # Matching
+    # matching (usa snapshot input DB)
     matching_path = run_dir / "matching_report_v0.1.json"
     run_matching(
         normalized_path=str(normalized_path),
-        template_base_path=template_base_path,
-        dictionary_path=dictionary_path,
-        kb_path=kb_path,
-        device_context_path=device_context_path,
+        template_base_path=str(template_base_input_path),
+        dictionary_path=str(dictionary_input_path),
+        kb_path=str(kb_input_path),
+        device_context_path=str(device_context_input_path),
         output_path=str(matching_path),
     )
+
     mr = load_json(str(matching_path))
     has_ambiguous = any(i.get("status") == "ambiguous" for i in mr.get("items", []))
     ambiguous_count = sum(1 for i in mr.get("items", []) if i.get("status") == "ambiguous")
@@ -415,56 +440,64 @@ def run_device_list(cfg: dict, validate) -> None:
         json.dump(run_report, f, indent=2, ensure_ascii=False, default=str)
     return report_path, preview
 
-def template_run(run_id: str, template_path: str, validate_only: bool, apply_llm: bool, llm_actions_override: dict | None = None, manual_actions_path: str | None = None, config_path: str = "config/config.yml") -> dict:
+def template_run(run_id: str, validate_only: bool, apply_llm: bool, llm_actions_override: dict | None = None, manual_actions_path: str | None = None, config_path: str = "config/config.yml") -> dict:
     # run completa per template
 
     cfg = load_config(config_path)
-    paths = cfg.get("paths", {})
     llm_cfg = cfg.get("llm", {})
     llm_attempt = None
 
-    dictionary_path = paths.get("dictionary")
-    kb_path = paths.get("kb")
-    template_base_path = paths.get("template_base")
+    run_dir = RUNS_ROOT / run_id
+    run_context_path = run_dir / "run_context.json"
+    if not run_context_path.exists():
+        raise FileNotFoundError("run_context not found for run_id")
 
-    # aggiorna ARTIFACTS per versioni nel report
+    run_ctx = load_json(str(run_context_path))
+    template_path = run_ctx.get("template_input_path")
+    dictionary_path = run_ctx.get("dictionary_input_path")
+    kb_path = run_ctx.get("kb_input_path")
+    template_base_path = run_ctx.get("template_base_input_path")
+
+    if not template_path or not Path(template_path).exists():
+        raise FileNotFoundError("template_input_path missing/not found in run_context")
+    if not dictionary_path or not Path(dictionary_path).exists():
+        raise FileNotFoundError("dictionary_input_path missing/not found in run_context")
+    if not kb_path or not Path(kb_path).exists():
+        raise FileNotFoundError("kb_input_path missing/not found in run_context")
+    if not template_base_path or not Path(template_base_path).exists():
+        raise FileNotFoundError("template_base_input_path missing/not found in run_context")
+
     ARTIFACTS["dictionary"]["input_path"] = dictionary_path
     ARTIFACTS["kb"]["input_path"] = kb_path
     ARTIFACTS["template_base"]["input_path"] = template_base_path
 
-    run_dir = RUNS_ROOT / run_id
     matching_path = run_dir / "matching_report_v0.1.json"
     llm_attempt_path = run_dir / "llm_attempt.json"
 
     if not matching_path.exists():
         raise FileNotFoundError("matching_report not found for run_id")
-    
+
     if llm_attempt_path.exists():
         llm_attempt = load_json(str(llm_attempt_path))
 
-    # carica matching
     mr, analysis = load_matching(str(matching_path))
 
-    # actions deterministiche
     actions_out = run_dir / "patch_actions_v0.1.json"
     if manual_actions_path:
         actions_payload = load_json(manual_actions_path)
     else:
         actions_payload = build_patch_actions_from_matching(mr, str(actions_out))
 
-    # LLM patch (se richiesto)
     llm_actions = None
-    llm_proposed_actions = None 
+    llm_proposed_actions = None
 
     if apply_llm:
         llm_path = run_dir / "llm_patch_actions.json"
         if llm_path.exists():
             llm_proposed_actions = load_json(str(llm_path))
-
-        # azioni da applicare: override se presente, altrimenti tutte
         llm_actions = llm_actions_override
-
-        actions_payload = merge_actions_dedup(actions_payload, llm_actions)
+        if llm_actions is not None:
+            actions_payload = merge_actions_dedup(actions_payload, llm_actions)
 
     llm_proposed_count = len(llm_proposed_actions.get("actions", [])) if llm_proposed_actions else 0
     llm_applied_count = count_llm_applied(actions_payload, llm_proposed_actions) if llm_proposed_actions else 0
@@ -474,8 +507,6 @@ def template_run(run_id: str, template_path: str, validate_only: bool, apply_llm
     llm_attempt["llm_patch_proposed"] = llm_proposed_count
     llm_attempt["llm_patch_applied"] = llm_applied_count
 
-
-    # build patch + validation
     cfg_art = dict(ARTIFACTS["template"])
     cfg_art["input_path"] = template_path
     cfg_art["matching_path"] = str(matching_path)
@@ -483,7 +514,10 @@ def template_run(run_id: str, template_path: str, validate_only: bool, apply_llm
     cfg_art["llm_model"] = llm_cfg.get("model", "llama3.1:8b")
 
     template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = \
-        build_patch_and_validation(cfg_art, "template", template_apply_patch, summarize_template_real_diff, actions_payload_override=actions_payload)
+        build_patch_and_validation(
+            cfg_art, "template", template_apply_patch, summarize_template_real_diff,
+            actions_payload_override=actions_payload
+        )
 
     if validation_error:
         run_report = build_run_report(
@@ -506,12 +540,21 @@ def template_run(run_id: str, template_path: str, validate_only: bool, apply_llm
         report_path.write_text(json.dumps(run_report, ensure_ascii=False, indent=2), encoding="utf-8")
         return {"run_id": run_id, "report_path": str(report_path), "status": "validation_error"}
 
-    artifact, preview, diff = compute_diff(template_path, template_patch, validated_preview, validated_diff, template_apply_patch, summarize_template_real_diff)
+    artifact, preview, diff = compute_diff(
+        template_path, template_patch, validated_preview, validated_diff,
+        template_apply_patch, summarize_template_real_diff
+    )
 
-    output_path, committed, status, _ = apply_commit(template_path, template_patch, diff, validate_only, template_apply_patch)
+    output_path, committed, status, _ = apply_commit(
+        template_path, template_patch, diff, validate_only, template_apply_patch
+    )
 
-    schema_versions, dict_payload, kb_payload, tb_version = build_report_context("template", str(matching_path), template_base_path)
-    schema_versions = build_artifact_versions("template", dict_payload=dict_payload, kb_payload=kb_payload, template_base_version=tb_version)
+    schema_versions, dict_payload, kb_payload, tb_version = build_report_context(
+        "template", str(matching_path), template_base_path
+    )
+    schema_versions = build_artifact_versions(
+        "template", dict_payload=dict_payload, kb_payload=kb_payload, template_base_version=tb_version
+    )
 
     run_report = build_run_report(
         cfg=cfg_art, run_id=run_id, artifact_type="template",

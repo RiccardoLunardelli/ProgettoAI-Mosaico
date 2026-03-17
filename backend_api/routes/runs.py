@@ -200,12 +200,34 @@ def get_run_template(user = Depends(get_current_user)):
 #-----TEMPLATE-----
 @router.post("/run/template/start")
 def run_template_start(payload: RunTemplateStartRequest, user = Depends(get_current_user)):
-    name = artifactRepo.get_artifact_name_by_id(payload.id)
-    input_path = TEMPLATE_DIR / name
-    if not input_path.exists():
-        raise HTTPException(status_code=404, detail="template not found")
+    template_name = artifactRepo.get_artifact_name_by_id(payload.id)
+    dictionary_name = artifactRepo.get_artifact_name_by_id(payload.dictionary_id)
+    kb_name = artifactRepo.get_artifact_name_by_id(payload.kb_id)
+    template_base_name = artifactRepo.get_artifact_name_by_id(payload.template_base_id)
+    device_context_name = artifactRepo.get_artifact_name_by_id(payload.device_context_id)
+    template_payload = artifactRepo.get_artifact_content(payload.id, "template")
+    dictionary_payload = artifactRepo.get_artifact_content(payload.dictionary_id, "dictionary")
+    kb_payload = artifactRepo.get_artifact_content(payload.kb_id, "kb")
+    template_base_payload = artifactRepo.get_artifact_content(payload.template_base_id, "template_base")
+    device_context_payload = artifactRepo.get_artifact_content(payload.device_context_id, "dlc")
 
-    result = start_template_run(template_path=str(input_path))
+    result = start_template_run(
+        template_name=template_name,
+        dictionary_name=dictionary_name,
+        kb_name=kb_name,
+        template_base_name=template_base_name,
+        device_context_name="device_list_context_v0.1.json",
+        template_id=payload.id,
+        dictionary_id=payload.dictionary_id,
+        kb_id=payload.kb_id,
+        template_base_id=payload.template_base_id,
+        device_context_id=payload.device_context_id,
+        template_payload=template_payload,
+        dictionary_payload=dictionary_payload,
+        kb_payload=kb_payload,
+        template_base_payload=template_base_payload,
+        device_context_payload=device_context_payload,
+    )
     return result
 
 @router.post("/run/template/llm")
@@ -215,23 +237,15 @@ def run_template_llm(payload: RunTemplateLlmRequest, user = Depends(get_current_
 
 @router.post("/run/template/finish")
 def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_current_user)):
-    input_path = TEMPLATE_DIR / payload.template_name
-    if not input_path.exists():
-        raise HTTPException(status_code=404, detail="template not found")
 
-    result = template_run(
-        run_id=payload.run_id,
-        template_path=str(input_path),
-        validate_only=payload.validate_only,
-        apply_llm=payload.apply_llm,
-        llm_actions_override=payload.llm_patch_actions
-    )
+
+    result = template_run(run_id=payload.run_id, validate_only=payload.validate_only, apply_llm=payload.apply_llm, llm_actions_override=payload.llm_patch_actions)
 
     # salva nel DB
     report = load_json(result["report_path"])
     artifact_type = report.get("target", {}).get("artifact_type", "template")
-    artifact_output = report.get("target", {}).get("output_path") or str(input_path)
-    artifact_id = _register_artifact_from_path(input_path, artifact_type)
+    artifact_output = report.get("target", {}).get("input_path")
+    artifact_id = _register_artifact_from_path(artifact_output, artifact_type)
     runClass.save_run(report, user["sub"], artifact_id)
 
 

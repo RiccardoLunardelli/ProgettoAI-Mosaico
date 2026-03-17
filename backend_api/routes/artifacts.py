@@ -191,8 +191,7 @@ def get_template(id: str, user = Depends(get_current_user)):
     return artifactClass.get_artifact_content(id, "template")
 
 @router.get("/template_usage")
-def get_template_usage(name: str, user = Depends(get_current_user)):
-    id = templateClass.get_template_id_by_name(name)
+def get_template_usage(id: str, user = Depends(get_current_user)):
     return templateClass.get_template_usage(id)
 
 @router.get("/dictionaries")

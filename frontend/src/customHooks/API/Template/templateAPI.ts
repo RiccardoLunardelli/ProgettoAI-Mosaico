@@ -156,6 +156,10 @@ const RunTemplateStartAPIHook = () => {
   const RunTemplateStartAPI = async (infoObj: {
     data: {
       id: string;
+      dictionary_id: string;
+      kb_id: string;
+      template_base_id: string;
+      device_context_id: string;
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
@@ -464,7 +468,6 @@ const RunTemplateFinishAPIHook = () => {
   const RunTemplateFinishAPI = async (infoObj: {
     data: {
       run_id: string;
-      template_name: string;
       validate_only: boolean;
       apply_llm: boolean;
       llm_patch_actions: {};

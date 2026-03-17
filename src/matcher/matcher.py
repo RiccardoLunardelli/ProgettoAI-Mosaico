@@ -207,9 +207,9 @@ def build_llm_context(section: str, source_key: str, text: str, expected_categor
         ],
         "device_ctx": {
             "template_guid": template_guid,
-            "type_fam": device_ctx.get("type_fam"),
-            "device_role": device_ctx.get("device_role"),
-            "enum": device_ctx.get("enum")
+            "type_fam": device_ctx.get("type_fam_generated"),
+            "device_role": device_ctx.get("device_role_generated"),
+            "enum": device_ctx.get("enum_generated")
         },
         "versions": {
             "dictionary_version": versions.get("dictionary_version"),

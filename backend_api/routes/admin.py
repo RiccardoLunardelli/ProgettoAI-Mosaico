@@ -149,7 +149,7 @@ def drop_artifact(payload: DropArtifactAdmin, user = Depends(require_admin)):
     ids = check_artifact(None, payload.ids, None)
     return artifactClass.drop_artifact(ids)
 
-@router.get("/artifact_content")
+@router.get("/artifact_content/{id}")
 def artifact_content(id: str, user = Depends(require_admin)):
     check = check_artifact(id, None, None)
     if len(check) > 0:
