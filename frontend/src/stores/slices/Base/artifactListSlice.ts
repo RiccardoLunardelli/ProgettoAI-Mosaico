@@ -11,6 +11,7 @@ export const artifactListSlice = createSlice({
   name: "artifactListSlice",
   initialState: {
     value: null as ArtifactListInterface[] | null,
+    detail: null as any,
   },
   reducers: {
     SetArtifactListSlice: (
@@ -22,9 +23,17 @@ export const artifactListSlice = createSlice({
       state.value = action.payload;
       state.value = action.payload;
     },
+    SetArtifactDetailListSlice: (
+      state,
+      action: {
+        payload: any;
+      },
+    ) => {
+      state.detail = action.payload;
+    },
   },
 });
 
-export const { SetArtifactListSlice } = artifactListSlice.actions;
+export const { SetArtifactListSlice, SetArtifactDetailListSlice } = artifactListSlice.actions;
 
 export const artifactListSliceReducer = artifactListSlice.reducer;

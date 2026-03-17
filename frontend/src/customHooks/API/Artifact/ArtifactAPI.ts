@@ -13,6 +13,7 @@ import { apiDomainString } from "../../../commons/commonsVariables";
 import { useTranslation } from "react-i18next";
 import { toast, type Id } from "react-toastify";
 import {
+    SetArtifactDetailListSlice,
   SetArtifactListSlice,
   type ArtifactListInterface,
 } from "../../../stores/slices/Base/artifactListSlice";
@@ -75,13 +76,74 @@ const GetArtifactListAPIHook = () => {
   return [GetArtifactListAPI];
 };
 
+const GetArtifactListDetailAPIHook = () => {
+  const dispatch = useDispatch();
+
+  const GetArtifactListDetailAPI = async (infoObj: {
+    data: {
+      id: string;
+    };
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
+
+    try {
+      const apiCall = await fetch(
+        apiDomainString + "/artifact_content/" + infoObj.data.id,
+        {
+          method: FetchMethodEnum.Get,
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      const response: string = await apiCall.text();
+      const jsonResponse = JSON.parse(response);
+
+      if (infoObj?.saveResponse ?? true) {
+        dispatch(SetArtifactDetailListSlice(jsonResponse));
+      }
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } catch (err) {
+      console.error("Dictionary error:", err);
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Error,
+          message: err,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [GetArtifactListDetailAPI];
+};
+
 const DeleteArtifactListAPIHook = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const DeleteArtifactListAPI = async (infoObj: {
     data: {
-      name: string;
+      ids: string[];
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
@@ -262,8 +324,10 @@ const InsertArtifactListAPIHook = () => {
   return [InsertArtifactListAPI];
 };
 
+
 export {
   GetArtifactListAPIHook,
   DeleteArtifactListAPIHook,
   InsertArtifactListAPIHook,
+  GetArtifactListDetailAPIHook
 };

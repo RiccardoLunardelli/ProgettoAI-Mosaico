@@ -1,7 +1,8 @@
-import { lazy, Suspense, useEffect, useMemo } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "rsuite";
 import { SetInputSlice } from "../../../stores/slices/Base/inputSlice";
+import { IsValidJSON } from "../../../commons/commonsFunctions";
 import { InsertArtifactListAPIHook } from "../../../customHooks/API/Artifact/ArtifactAPI";
 
 const TextInputTitleTag = lazy(() => import("../../input/TextInputTitle"));
@@ -24,35 +25,23 @@ function InsertArtifactManagementModalTag({
   const dispatch = useDispatch();
   const [InsertArtifactListAPI] = InsertArtifactListAPIHook();
 
-  const inputSlice: {
-    value: Record<string, string>;
-  } = useSelector((state: any) => state.inputSlice);
-
-  const inputValue = useMemo(() => {
+  const inputSliceValue: {
+    "InsertArtifactManagement-Name": string;
+    "InsertArtifactManagement-Type": string;
+    "InsertArtifactManagement-Version": string;
+    "InsertArtifactManagement-Content": string;
+  } = useSelector((state: any) => {
     return {
-      name: inputSlice?.value?.[`${inputPrefix}-Name`] ?? "",
-      type: inputSlice?.value?.[`${inputPrefix}-Type`] ?? "",
-      version: inputSlice?.value?.[`${inputPrefix}-Version`] ?? "",
-      content: inputSlice?.value?.[`${inputPrefix}-Content`] ?? "",
+      "InsertArtifactManagement-Name":
+        state.inputSlice.value["InsertArtifactManagement-Name"] ?? "",
+      "InsertArtifactManagement-Type":
+        state.inputSlice.value["InsertArtifactManagement-Type"] ?? "",
+      "InsertArtifactManagement-Version":
+        state.inputSlice.value["InsertArtifactManagement-Version"] ?? "",
+      "InsertArtifactManagement-Content":
+        state.inputSlice.value["InsertArtifactManagement-Content"] ?? "",
     };
-  }, [inputSlice]);
-
-  const IsValidJSON = (value: string) => {
-    if (!value || value.trim() === "") return false;
-
-    try {
-      JSON.parse(value);
-      return true;
-    } catch {
-      return false;
-    }
-  };
-
-  const disabledSaveButton =
-    inputValue.name.trim() === "" ||
-    inputValue.type.trim() === "" ||
-    inputValue.version.trim() === "" ||
-    !IsValidJSON(inputValue.content);
+  });
 
   const HandleCloseModal = () => {
     dispatch(
@@ -83,16 +72,15 @@ function InsertArtifactManagementModalTag({
     onClose();
   };
 
-  const HandleInsertArtifactOnClick = () => {
+  const HandleInsertOnClick = () => {
     InsertArtifactListAPI({
       showLoader: true,
       showToast: true,
-      saveResponse: false,
       data: {
-        name: inputValue.name,
-        type: inputValue.type,
-        version: inputValue.version,
-        content: JSON.parse(inputValue.content),
+        name: inputSliceValue[`${inputPrefix}-Name`],
+        type: inputSliceValue[`${inputPrefix}-Type`],
+        version: inputSliceValue[`${inputPrefix}-Version`],
+        content: JSON.parse(inputSliceValue[`${inputPrefix}-Content`]),
       },
       EndCallback() {
         HandleCloseModal();
@@ -215,8 +203,7 @@ function InsertArtifactManagementModalTag({
                   height="420px"
                   defaultLanguage="json"
                   language="json"
-                  theme="vs-dark"
-                  value={inputValue.content}
+                  value={inputSliceValue[`${inputPrefix}-Content`] ?? ""}
                   onChange={(value) => {
                     dispatch(
                       SetInputSlice({
@@ -236,7 +223,8 @@ function InsertArtifactManagementModalTag({
               </Suspense>
             </div>
 
-            {inputValue.content.trim() !== "" && !IsValidJSON(inputValue.content) ? (
+            {inputSliceValue[`${inputPrefix}-Content`].trim() !== "" &&
+            !IsValidJSON(inputSliceValue[`${inputPrefix}-Content`]) ? (
               <span
                 style={{
                   fontSize: "12px",
@@ -246,7 +234,9 @@ function InsertArtifactManagementModalTag({
               >
                 Il content deve essere un JSON valido
               </span>
-            ) : null}
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </Modal.Body>
@@ -270,8 +260,13 @@ function InsertArtifactManagementModalTag({
           <Suspense fallback="">
             <BasicButtonGenericTag
               textToSee="Salva"
-              disabledButton={disabledSaveButton}
-              clickCallBack={HandleInsertArtifactOnClick}
+              disabledButton={
+                inputSliceValue[`${inputPrefix}-Name`].trim() === "" ||
+                inputSliceValue[`${inputPrefix}-Type`].trim() === "" ||
+                inputSliceValue[`${inputPrefix}-Version`].trim() === "" ||
+                !IsValidJSON(inputSliceValue[`${inputPrefix}-Content`])
+              }
+              clickCallBack={HandleInsertOnClick}
             />
           </Suspense>
         </div>

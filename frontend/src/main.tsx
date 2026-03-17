@@ -33,9 +33,14 @@ import { userListSliceReducer } from "./stores/slices/Base/userListSlice";
 import { clientListSliceReducer } from "./stores/slices/Base/clientListSlice";
 import { storeListSliceReducer } from "./stores/slices/Base/storeListSlice";
 import { storeDevicesListSliceReducer } from "./stores/slices/Base/storeDevicesListSlice";
+import { artifactListSliceReducer } from "./stores/slices/Base/artifactListSlice";
 
 const HomePageTag = lazy(() => import("./components/Home/HomePage"));
-const StoreDevicesManagementPageTag = lazy(() => import("./components/AdminPages/StoreDevicesManagement/StoreDevicesManagementPage"));
+const ArtifactManagementPageTag = lazy(() => import("./components/AdminPages/ArtifactsManagement/ArtifactManagementPage"));
+const StoreDevicesManagementPageTag = lazy(
+  () =>
+    import("./components/AdminPages/StoreDevicesManagement/StoreDevicesManagementPage"),
+);
 const StoreManagementPageTag = lazy(
   () => import("./components/AdminPages/StoreManagement/StoreManagementPage"),
 );
@@ -199,11 +204,19 @@ let childrenRouterArr: any = [
             <StoreManagementPageTag />
           </Suspense>
         ),
-      },{
+      },
+      {
         path: "/StoreDevicesManagement",
         element: (
           <Suspense>
             <StoreDevicesManagementPageTag />
+          </Suspense>
+        ),
+      },{
+        path: "/ArtifactManagement",
+        element: (
+          <Suspense>
+            <ArtifactManagementPageTag />
           </Suspense>
         ),
       },
@@ -287,6 +300,7 @@ function SecureRoot(): JSX.Element {
       clientListSlice: clientListSliceReducer,
       storeListSlice: storeListSliceReducer,
       storeDevicesListSlice: storeDevicesListSliceReducer,
+      artifactListSlice: artifactListSliceReducer,
     },
     devTools:
       (import.meta.env.VITE_DEBUG_DEVTOOLS?.toString()?.toLowerCase() ?? "") ==
