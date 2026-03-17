@@ -12,8 +12,8 @@
       "synonyms": {
         "it": [
           "temperatura di mandata",
-          "Sm",
-          "mandatavera"
+          "mandata",
+          "Sm"
         ],
         "en": []
       },
@@ -139,7 +139,8 @@
       "semantic_category": "state",
       "synonyms": {
         "it": [
-          "ventilatori"
+          "ventilatori",
+          "valore sonda regolazione ventilatori"
         ],
         "en": []
       },
@@ -151,7 +152,15 @@
       "semantic_category": "state",
       "synonyms": {
         "it": [
-          "sbrinamento"
+          "sbrinamento",
+          "tempo mancante al prossimo sbrinamento 1=10 sec",
+          "uscita digitale sbrinamento resistenze",
+          "stato sbrinamento ritardo avviamento attesa dsd",
+          "stato sbrinamento manuale",
+          "stato sbrinamento sincronizzato lan",
+          "stato sbrinamento in gocciolamento",
+          "stato sbrinamento in pausa attesa consenso di fine da lan",
+          "master sbrinamento"
         ],
         "en": []
       },
@@ -174,7 +183,13 @@
       "synonyms": {
         "it": [
           "setpoint",
-          "set di regolazione parametro set"
+          "set di regolazione parametro set",
+          "setpoint minimo",
+          "setpoint massimo",
+          "setpoint per ciclo continuo",
+          "setpoint surriscaldamento",
+          "setpoint resistenze durante sbrinamento",
+          "sincronizzazione setpoint"
         ],
         "en": []
       },
@@ -186,7 +201,16 @@
       "semantic_category": "temperature",
       "synonyms": {
         "it": [
-          "differenziale"
+          "differenziale",
+          "configurazione differenziale relativo/assoluto",
+          "differenziale assoluto",
+          "differenziale per le resistenze",
+          "differenziale di temperatura per evitare la pendolazione delle ventole",
+          "differenziale ripartenza ventole",
+          "differenziale resistenze anti condensanti",
+          "differenziale rientro allarme temperatura",
+          "differenziale rientro allarme temperatura sonda sbrinamento",
+          "differenziale rientro allarme temperatura sonda ventole"
         ],
         "en": []
       },
@@ -235,7 +259,9 @@
       "synonyms": {
         "it": [
           "temperatura massima",
-          "soglia allarme di alta temperatura"
+          "soglia allarme di alta temperatura",
+          "soglia allarme di alta temperatura sonda sbrinamento",
+          "soglia allarme di alta temperatura sonda ventole"
         ],
         "en": []
       },
@@ -248,7 +274,9 @@
       "synonyms": {
         "it": [
           "temperatura minima",
-          "soglia allarme di bassa temperatura"
+          "soglia allarme di bassa temperatura",
+          "soglia allarme di bassa temperatura sonda sbrinamento",
+          "soglia allarme di bassa temperatura sonda ventole"
         ],
         "en": []
       },
@@ -260,7 +288,10 @@
       "semantic_category": "alarm",
       "synonyms": {
         "it": [
-          "allarme di alta temperatura"
+          "allarme di alta temperatura",
+          "allarme di alta temperatura sonda 1",
+          "allarme di alta temperatura sbrinamento",
+          "allarme di alta temperatura ventole"
         ],
         "en": []
       },
@@ -272,7 +303,10 @@
       "semantic_category": "alarm",
       "synonyms": {
         "it": [
-          "allarme di bassa temperatura"
+          "allarme di bassa temperatura",
+          "allarme di bassa temperatura sonda 1",
+          "allarme di bassa temperatura sbrinamento",
+          "allarme di bassa temperatura ventole"
         ],
         "en": []
       },

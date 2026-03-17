@@ -200,7 +200,8 @@ def get_run_template(user = Depends(get_current_user)):
 #-----TEMPLATE-----
 @router.post("/run/template/start")
 def run_template_start(payload: RunTemplateStartRequest, user = Depends(get_current_user)):
-    input_path = TEMPLATE_DIR / payload.template_name
+    name = artifactRepo.get_artifact_name_by_id(payload.id)
+    input_path = TEMPLATE_DIR / name
     if not input_path.exists():
         raise HTTPException(status_code=404, detail="template not found")
 
@@ -241,20 +242,23 @@ def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_cu
 #----DICTIONARY----
 @router.post("/run/dictionary")
 def run_dictionary(payload: RunDictionaryRequest, user = Depends(get_current_user)):
-    input_path = DICTIONARIES_DIR / payload.dictionary_name
-    return apply_patch(user["sub"], input_path, payload.dictionary_name, payload.patch_json, dictionary_upsert, summarize_dictionary_diff, "dictionary", "dictionary_patch.json", payload.validate_only, payload.run_id, payload.mode, payload.manual_mode) 
+    name = artifactRepo.get_artifact_name_by_id(payload.id)
+    input_path = DICTIONARIES_DIR / name
+    return apply_patch(user["sub"], input_path, name, payload.patch_json, dictionary_upsert, summarize_dictionary_diff, "dictionary", "dictionary_patch.json", payload.validate_only, payload.run_id, payload.mode, payload.manual_mode) 
 
 #----KB----
 @router.post("/run/kb")
 def run_kb(payload: RunKbRequest, user = Depends(get_current_user)):
-    input_path = KB_DIR / payload.kb_name
-    return  apply_patch(user["sub"], input_path, payload.kb_name, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, "kb", "kb_patch.json", payload.validate_only, None, None, None)
+    name = artifactRepo.get_artifact_name_by_id(payload.id)
+    input_path = KB_DIR / name
+    return  apply_patch(user["sub"], input_path, name, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, "kb", "kb_patch.json", payload.validate_only, None, None, None)
 
 #----TEMPLATE BASE----
 @router.post("/run/template_base")
 def run_template_base(payload: RunTemplateBaseRequest, user = Depends(get_current_user)):
-    input_path = TEMPLATE_BASE_DIR / payload.template_base_name
-    return apply_patch(user["sub"], input_path, payload.template_base_name, payload.patch_json, template_apply_patch, summarize_template_base_diff, "template_base", "template_base_patch.json", payload.validate_only, None, None, None)
+    name = artifactRepo.get_artifact_name_by_id(payload.id)
+    input_path = TEMPLATE_BASE_DIR / name
+    return apply_patch(user["sub"], input_path, name, payload.patch_json, template_apply_patch, summarize_template_base_diff, "template_base", "template_base_patch.json", payload.validate_only, None, None, None)
 
  # ---- DEVICE LIST ----
 

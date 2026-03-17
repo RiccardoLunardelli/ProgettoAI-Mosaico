@@ -79,6 +79,10 @@ def compute_effectiveness_metrics(mr, actions_payload, llm_total_tokens: int) ->
     ambiguous_post = post.get("ambiguous_count", 0)
     matched_pre = pre.get("matched_count", 0)
     matched_post = post.get("matched_count", 0)
+    unmapped_pre = compute_metrics(mr, None).get("unmapped_count")
+
+    tot = matched_pre + ambiguous_pre + unmapped_pre
+    dictionary_score = matched_pre / tot
 
     ambiguous_resolved = ambiguous_pre - ambiguous_post
     matched_gain = matched_post - matched_pre
@@ -89,7 +93,8 @@ def compute_effectiveness_metrics(mr, actions_payload, llm_total_tokens: int) ->
     return {
         "matched_count_matching_report": matched_pre,
         "ambiguous_count_matching_report": ambiguous_pre,
-        "unmapped_count_matching_report": compute_metrics(mr, None).get("unmapped_count"),
+        "unmapped_count_matching_report": unmapped_pre,
+        "dictionary_score": round(dictionary_score, 2),
         "matched_count": matched_post,
         "ambiguous_count": ambiguous_post,
         "unmapped_count": compute_metrics(mr, actions_payload).get("unmapped_count"),

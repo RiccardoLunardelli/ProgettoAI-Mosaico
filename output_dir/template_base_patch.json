@@ -1,16 +1,4 @@
 {
   "target": "template_base",
-  "operations": [
-    {
-      "op": "add_base_concept",
-      "category_id": "measurement",
-      "concept_id": "prova",
-      "semantic_category": "prova",
-      "label": {
-        "it": "temperatura di prova",
-        "en": "prove"
-      },
-      "description": "Questa è solo una prova"
-    }
-  ]
+  "operations": []
 }

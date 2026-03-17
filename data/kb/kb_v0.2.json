@@ -20,13 +20,13 @@
   ],
   "mappings": [
     {
-      "scope_id": "P01T04D01_028d14de-71dc-6e64-9587-c7111a39793e",
-      "source_type": "ContinuosReads",
-      "source_key": "Read59",
-      "concept_id": "temp_test",
-      "reason": "deterministic_mapping_from_vendor",
-      "evidence": "manual_patch_test",
-      "semantic_category": "temperature"
+      "scope_id": "",
+      "source_type": "",
+      "source_key": "",
+      "concept_id": "",
+      "reason": "",
+      "evidence": "",
+      "semantic_category": ""
     }
   ],
   "exceptions": {

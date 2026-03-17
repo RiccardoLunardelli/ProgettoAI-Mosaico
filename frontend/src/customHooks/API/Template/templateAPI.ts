@@ -155,7 +155,7 @@ const RunTemplateStartAPIHook = () => {
 
   const RunTemplateStartAPI = async (infoObj: {
     data: {
-      template_name: string;
+      id: string;
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
@@ -474,19 +474,19 @@ const RunTemplateFinishAPIHook = () => {
     showToast?: boolean;
     saveResponse?: boolean;
   }) => {
-    //Apre il loader, se richiesto
     if (infoObj.showLoader) {
       dispatch(OpenLoader());
     }
 
-    //Id del toast
-    let toastId: Id = -1;
-    //Se deve mostrare il toast
+    let toastId: Id | undefined = undefined;
+
     if (infoObj.showToast) {
       toastId = toast.loading(t("Operazione in corso..."));
     }
 
     try {
+      console.log("RunTemplateFinishAPI payload:", infoObj.data);
+
       const apiCall = await fetch(apiDomainString + "/run/template/finish", {
         method: "POST",
         credentials: "include",
@@ -496,22 +496,22 @@ const RunTemplateFinishAPIHook = () => {
         },
       });
 
-      const jsonResponse: string = await apiCall.text();
+      const responseText = await apiCall.text();
 
-      const responseOk: boolean = apiCall.status == 200;
+      console.log("RunTemplateFinishAPI status:", apiCall.status);
+      console.log("RunTemplateFinishAPI response:", responseText);
 
-      //Controllo risposta
-      if (!responseOk) {
+      if (!apiCall.ok) {
         if (infoObj.EndCallback) {
           infoObj.EndCallback({
             result: ResultTypeEnum.Error,
-            message: JSON.stringify(jsonResponse),
+            message: responseText,
             messageType: FetchResponseTypeEnum.Json,
             otherResponseInfo: "",
           });
         }
 
-        if (infoObj.showToast) {
+        if (infoObj.showToast && toastId !== undefined) {
           toast.update(toastId, {
             render: t("Errore durante l'operazione"),
             type: "error",
@@ -524,25 +524,16 @@ const RunTemplateFinishAPIHook = () => {
         return;
       }
 
-      //Se la risposta è positiva
-
-      //Se deve salvare il valore
-      if (infoObj?.saveResponse ?? true) {
-      }
-
-      //Callback di successo
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
           result: ResultTypeEnum.Success,
-          message: jsonResponse,
+          message: responseText,
           messageType: FetchResponseTypeEnum.Json,
           otherResponseInfo: "",
         });
       }
 
-      //Se deve mostrare il toast
-      if (infoObj.showToast) {
-        //Imposta il toast di successo
+      if (infoObj.showToast && toastId !== undefined) {
         toast.update(toastId, {
           render: t("Operazione completata con successo!"),
           type: "success",
@@ -552,20 +543,18 @@ const RunTemplateFinishAPIHook = () => {
         });
       }
     } catch (err) {
-      console.error("dataOra error:", err);
+      console.error("RunTemplateFinishAPI error:", err);
 
       if (infoObj.EndCallback) {
         infoObj.EndCallback({
           result: ResultTypeEnum.Error,
-          message: err,
+          message: String(err),
           messageType: FetchResponseTypeEnum.Json,
           otherResponseInfo: "",
         });
       }
 
-      //Se deve mostrare il toast
-      if (infoObj.showToast) {
-        //Imposta il toast di successo
+      if (infoObj.showToast && toastId !== undefined) {
         toast.update(toastId, {
           render: t("Errore durante l'operazione"),
           type: "error",
@@ -575,11 +564,13 @@ const RunTemplateFinishAPIHook = () => {
         });
       }
     } finally {
-      if (infoObj.showLoader) dispatch(CloseLoader());
+      if (infoObj.showLoader) {
+        dispatch(CloseLoader());
+      }
     }
   };
 
-  return [RunTemplateFinishAPI];
+  return [RunTemplateFinishAPI] as const;
 };
 
 export {

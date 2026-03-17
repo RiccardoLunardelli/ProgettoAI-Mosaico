@@ -20,10 +20,19 @@ def check_user(id):
     # controlla se user è presente nel db
     return userClass.get_user_by_id(id)
 
-def check_artifact(ids: list[str] | None, name: str | None):
+def check_artifact(id: str | None, ids: list[str] | None, name: str | None):
+
+    if id:
+        rows = artifactClass.get_artifacts_by_ids_or_name(id, None, None)
+        if not rows:
+            raise HTTPException(status_code=404, detail={"message": "Artifact not found", "id": id})
+        row = rows[0]
+        return {"artifact": row["id"], "name": row["name"]}
+
+
     if ids:
         requested = {str(x) for x in ids}
-        found_rows = artifactClass.get_artifacts_by_ids_or_name(ids=ids, name=None)
+        found_rows = artifactClass.get_artifacts_by_ids_or_name(None, ids=ids, name=None)
         found_ids = {row["id"] for row in found_rows}
 
         missing = sorted(requested - found_ids)
@@ -137,17 +146,20 @@ def get_all_artifacts(user = Depends(require_admin)):
 
 @router.post("/drop_artifact")
 def drop_artifact(payload: DropArtifactAdmin, user = Depends(require_admin)):
-    ids = check_artifact(payload.ids, None)
+    ids = check_artifact(None, payload.ids, None)
     return artifactClass.drop_artifact(ids)
 
 @router.get("/artifact_content")
-def get_artifact_content(name: str, user = Depends(require_admin)):
-    name = check_artifact(None, name)
-    return artifactClass.get_artifact_content(name)
+def artifact_content(id: str, user = Depends(require_admin)):
+    check = check_artifact(id, None, None)
+    if len(check) > 0:
+        return artifactClass.get_artifact_content(id, "artifact")
+    else:
+        raise HTTPException(status_code=404, detail="Not found")
 
 @router.post("/insert_artifact")
 def insert_artifact(payload: InsertArtifactAdmin, user = Depends(require_admin)):
-    check = artifactClass.get_artifacts_by_ids_or_name(None, payload.name)
+    check = artifactClass.get_artifacts_by_ids_or_name(None, None, payload.name)
     if len(check) > 0:
         raise HTTPException(status_code=409, detail="Artifact already exists!")
 

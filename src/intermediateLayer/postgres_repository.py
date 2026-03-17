@@ -105,6 +105,55 @@ class RunRepository():
                 rows = cur.fetchall()
         return [{"run_id": r[0], "diff": r[1]} for r in rows]
 
+    def get_dictionary_templates_scores(self, dictionary_version: str) -> dict:
+        # ritorna info dizionario per template a cui è stato applicato
+        sql = """
+        SELECT
+            r.run_id,
+            r.created_at,
+            r.report #>> '{source_files,template_path}' AS template_path,
+            (r.report #>> '{metrics,dictionary_score}')::float AS dictionary_score
+        FROM runs r
+        WHERE r.report #>> '{target,artifact_type}' = 'template'
+        AND r.report #>> '{source_files,dictionary_version}' = %s
+        AND (r.report #>> '{metrics,dictionary_score}') IS NOT NULL
+        ORDER BY r.created_at DESC
+        """
+
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute(sql, (dictionary_version,))
+                rows = [dict(r) for r in cur.fetchall()]
+
+        # tieni solo l'ultima run per ogni template
+        by_template = {}
+        for r in rows:
+            template_path = r.get("template_path")
+            if not template_path:
+                continue
+            template_name = template_path.split("/")[-1]
+            if template_name not in by_template:
+                by_template[template_name] = {
+                    "run_id": r.get("run_id"),
+                    "template": template_name,
+                    "template_path": template_path,
+                    "score": float(r.get("dictionary_score") or 0.0),
+                    "created_at": r.get("created_at"),
+                }
+
+        templates = list(by_template.values())
+        if templates:
+            avg_score = round(sum(t["score"] for t in templates) / len(templates), 4)
+        else:
+            avg_score = 0.0
+
+        return {
+            "dictionary_version": dictionary_version,
+            "templates": templates,
+            "avg_score": avg_score,
+            "templates_count": len(templates),
+        }
+
     def delete_run(self, run_id: str) -> None:
         # delete di una run da runs
 
@@ -283,24 +332,28 @@ class ArtifactRepository():
     def list_artifact(self, artifact_type) -> List[str]:
         # torna i nomi dei file
 
-        sql = "SELECT name FROM artifacts WHERE type = %s"
+        sql = "SELECT id, name, version FROM artifacts WHERE type = %s"
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
                 cur.execute(sql, (artifact_type,))
                 rows = cur.fetchall()
-        return [r[0] for r in rows]
 
-    def get_artifact_content(self, artifact_name) -> Dict:
+        return [{"id": r[0], "name": r[1], "version": r[2]} for r in rows]
+
+    def get_artifact_content(self, artifact_id: str, type: str) -> Dict:
         # ritorna json artefatto
-
-        sql = "SELECT content FROM artifacts WHERE name = %s"
+    
+        if type not in ["device_list", "device_list_context"]:
+            sql = "SELECT content FROM artifacts WHERE id = %s"
+        else:
+            sql = "SELECT content FROM artifacts WHERE name = %s"
         with psycopg2.connect(self._dsn) as conn:
             psycopg2.extras.register_default_jsonb(conn, loads=json.loads)
             with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
-                cur.execute(sql, (artifact_name,))
+                cur.execute(sql, (artifact_id,))
                 row = cur.fetchone()
                 if row is None:
-                    raise KeyError(f"{artifact_name} not found")
+                    raise KeyError(f"{artifact_id} not found")
                 return row["content"]
 
     def get_artifacts(self) -> List[str]:    
@@ -318,44 +371,44 @@ class ArtifactRepository():
             "version": r[3]
         }for r in rows]     
 
-    def get_artifacts_by_ids_or_name(self, ids: list[str] | None, name: str | None) -> list[dict]:
+    def get_artifact_name_by_id(self, id: str) -> str:
+        # ritorna il nome dell artefatto dall id
+
+        sql = "SELECT name FROM artifacts WHERE id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (id,))
+                row = cur.fetchone()
+        return row[0]
+
+    def get_artifacts_by_ids_or_name(self, id: str | None, ids: list[str] | None, name: str | None) -> list[dict]:
         # cerca artifacts per lista ids oppure per name (uno dei due)
 
-        if ids:
+        sql_base = "SELECT id, type, name, version FROM artifacts"
+        params = ()
+
+        if id:
+            sql = sql_base + " WHERE id = %s"
+            params = (str(id),)
+        elif ids:
             id_list = [str(x) for x in ids]
-            sql = """
-            SELECT id, type, name, version
-            FROM artifacts
-            WHERE id = ANY(%s::uuid[])
-            """
-            with psycopg2.connect(self._dsn) as conn:
-                with conn.cursor() as cur:
-                    cur.execute(sql, (id_list,))
-                    rows = cur.fetchall()
+            sql = sql_base + " WHERE id = ANY(%s::uuid[])"
+            params = (id_list,)
+        elif name:
+            sql = sql_base + " WHERE name = %s"
+            params = (name,)
+        else:
+            raise ValueError("provide id or ids or name")
 
-            return [
-                {"id": str(r[0]), "type": r[1], "name": r[2], "version": r[3]}
-                for r in rows
-            ]
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, params)
+                rows = cur.fetchall()
 
-        if name:
-            sql = """
-            SELECT id, type, name, version
-            FROM artifacts
-            WHERE name = %s
-            ORDER BY version NULLS LAST, id
-            """
-            with psycopg2.connect(self._dsn) as conn:
-                with conn.cursor() as cur:
-                    cur.execute(sql, (name,))
-                    rows = cur.fetchall()
-
-            return [
-                {"id": str(r[0]), "type": r[1], "name": r[2], "version": r[3]}
-                for r in rows
-            ]
-
-        raise ValueError("provide ids or name")
+        return [
+            {"id": str(r[0]), "type": r[1], "name": r[2], "version": r[3]}
+            for r in rows
+        ]
 
     def drop_artifact(self, ids) -> Dict[str, Any]:
         # elimina file da db
@@ -577,7 +630,18 @@ class Devices():
     def list_devices(self) -> list[str]:
         # restituisce i device
 
-        sql = "SELECT * FROM devices"
+        sql = """
+            SELECT
+                d.id,
+                d.store_id,
+                s.name AS store_name,
+                d.description,
+                d.hd_plc,
+                d.id_template
+            FROM devices d
+            LEFT JOIN stores s ON s.id = d.store_id
+            ORDER BY s.name, d.description
+            """
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
                 cur.execute(sql)
@@ -586,9 +650,10 @@ class Devices():
             {
                 "id": r[0],
                 "store_id": r[1],
-                "description": r[2],
-                "hd_plc": r[3],
-                "id_template": r[4]
+                "store_name": r[2],
+                "description": r[3],
+                "hd_plc": r[4],
+                "id_template": r[5]
             } for r in rows
         ]
 

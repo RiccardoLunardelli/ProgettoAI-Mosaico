@@ -2,11 +2,208 @@
   "target": "dictionary",
   "operations": [
     {
-      "op": "update_synonym",
-      "concept_id": "temp_delivery",
+      "op": "add_synonym",
+      "concept_id": "state_fan",
       "lang": "it",
-      "old_value": "mandata",
-      "new_value": "mandatavera"
+      "value": "valore sonda regolazione ventilatori"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_defrost",
+      "lang": "it",
+      "value": "tempo mancante al prossimo sbrinamento 1=10 sec"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_defrost",
+      "lang": "it",
+      "value": "uscita digitale sbrinamento resistenze"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_defrost",
+      "lang": "it",
+      "value": "stato sbrinamento ritardo avviamento attesa dsd"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_defrost",
+      "lang": "it",
+      "value": "stato sbrinamento manuale"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_defrost",
+      "lang": "it",
+      "value": "stato sbrinamento sincronizzato lan"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_defrost",
+      "lang": "it",
+      "value": "stato sbrinamento in gocciolamento"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_defrost",
+      "lang": "it",
+      "value": "stato sbrinamento in pausa attesa consenso di fine da lan"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "state_defrost",
+      "lang": "it",
+      "value": "master sbrinamento"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "configurazione differenziale relativo/assoluto"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "differenziale assoluto"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "setpoint minimo"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "setpoint massimo"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "setpoint per ciclo continuo"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "setpoint surriscaldamento"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "setpoint resistenze durante sbrinamento"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "differenziale per le resistenze"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "differenziale di temperatura per evitare la pendolazione delle ventole"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "differenziale ripartenza ventole"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "differenziale resistenze anti condensanti"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "differenziale rientro allarme temperatura"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "threshold_high_temperature",
+      "lang": "it",
+      "value": "soglia allarme di alta temperatura sonda sbrinamento"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "threshold_low_temperature",
+      "lang": "it",
+      "value": "soglia allarme di bassa temperatura sonda sbrinamento"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "differenziale rientro allarme temperatura sonda sbrinamento"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "threshold_high_temperature",
+      "lang": "it",
+      "value": "soglia allarme di alta temperatura sonda ventole"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "threshold_low_temperature",
+      "lang": "it",
+      "value": "soglia allarme di bassa temperatura sonda ventole"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "hysteresis_temperature",
+      "lang": "it",
+      "value": "differenziale rientro allarme temperatura sonda ventole"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "setpoint_temperature",
+      "lang": "it",
+      "value": "sincronizzazione setpoint"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_low_temperature",
+      "lang": "it",
+      "value": "allarme di bassa temperatura sonda 1"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "allarme di alta temperatura sonda 1"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_low_temperature",
+      "lang": "it",
+      "value": "allarme di bassa temperatura sbrinamento"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "allarme di alta temperatura sbrinamento"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_low_temperature",
+      "lang": "it",
+      "value": "allarme di bassa temperatura ventole"
+    },
+    {
+      "op": "add_synonym",
+      "concept_id": "alarm_high_temperature",
+      "lang": "it",
+      "value": "allarme di alta temperatura ventole"
     }
   ]
 }

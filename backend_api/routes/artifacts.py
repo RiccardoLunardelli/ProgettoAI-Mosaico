@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pathlib import Path
 import json
+from uuid import UUID
 
 from backend_api.schemas.artifacts import DictionaryEditRequest, KbEditRequest, TemplateBaseEditRequest
 from mcp_server.tools.dictionary_tool import _next_versioned_path, _extract_version_from_path
@@ -83,9 +84,10 @@ def get_file_of_artifact(name: str | None, store: str | None, dl: str | None,  a
     return content
 """
     
-def editor_json_inline(file_name, file_json, file_dir, artifact, user_id):
+def editor_json_inline(id, file_json, file_dir, artifact, user_id):
     # modifica json direttamente da editor
 
+    file_name = artifactClass.get_artifact_name_by_id(id)
     input_path = file_dir / file_name
 
     if not input_path.exists():
@@ -184,9 +186,9 @@ def editor_json_inline(file_name, file_json, file_dir, artifact, user_id):
 def list_templates(user = Depends(get_current_user)):
     return artifactClass.list_artifact("template")
 
-@router.get("/templates/{name}")
-def get_template(name: str, user = Depends(get_current_user)):
-    return artifactClass.get_artifact_content(name)
+@router.get("/templates/{id}")
+def get_template(id: str, user = Depends(get_current_user)):
+    return artifactClass.get_artifact_content(id, "template")
 
 @router.get("/template_usage")
 def get_template_usage(name: str, user = Depends(get_current_user)):
@@ -197,61 +199,77 @@ def get_template_usage(name: str, user = Depends(get_current_user)):
 def list_dictionaries(user = Depends(get_current_user)):
     return artifactClass.list_artifact("dictionary")
 
-@router.get("/dictionaries/{name}")
-def get_dictionary(name: str, user = Depends(get_current_user)):
-    return artifactClass.get_artifact_content(name)
+@router.get("/dictionaries/{id}")
+def get_dictionary(id: str, user = Depends(get_current_user)):
+    return artifactClass.get_artifact_content(id, "dictionary")
+
+@router.get("/dictionary/{version}/score")
+def get_dictionary_score(version: str, user = Depends(get_current_user)):
+    return runClass.get_dictionary_templates_scores(version)
 
 @router.get("/kb")
 def list_kb(user = Depends(get_current_user)):
     return artifactClass.list_artifact("kb")
 
-@router.get("/kb/{name}")
-def get_kb(name: str, user = Depends(get_current_user)):
-    return artifactClass.get_artifact_content(name)
+@router.get("/kb/{id}")
+def get_kb(id: str, user = Depends(get_current_user)):
+    return artifactClass.get_artifact_content(id, "kb")
 
 @router.get("/template_base")
 def list_template_base(user = Depends(get_current_user)):
     return artifactClass.list_artifact("template_base")
 
-@router.get("/template_base/{name}")
-def get_template_base(name: str, user = Depends(get_current_user)):
-    return artifactClass.get_artifact_content(name)
+@router.get("/template_base/{id}")
+def get_template_base(id: str, user = Depends(get_current_user)):
+    return artifactClass.get_artifact_content(id, "template_base")
 
 @router.get("/device_list")
 def list_device_list(user = Depends(get_current_user)):
     dl = artifactClass.list_artifact("device_list")
     store_dl = []
-    for f in dl:
-        store, file = f.split("/",1)
-        store_dl.append({"store": store, "file": file})
+    for row in dl:
+        name = row["name"]
+        if "/" in name:
+            store, file = name.split("/", 1)
+        store_dl.append({
+            "id": row["id"],
+            "store": store,
+            "file": file
+        })
     return {"device_list": store_dl}
 
 @router.get("/device_list/{store}/{dl}")
 def get_device_list(store: str, dl: str, user = Depends(get_current_user)):
-    return artifactClass.get_artifact_content(f"{store}/{dl}")
+    return artifactClass.get_artifact_content(f"{store}/{dl}", "device_list")
 
 @router.get("/enrich_device_list")
 def list_enrich_device_list(user = Depends(get_current_user)):
     dl = artifactClass.list_artifact("device_list_context")
     store_dl = []
-    for f in dl:
-        store, file = f.split("/",1)
-        store_dl.append({"store": store, "file": file})
+    for row in dl:
+        name = row["name"]
+        if "/" in name:
+            store, file = name.split("/", 1)
+        store_dl.append({
+            "id": row["id"],
+            "store": store,
+            "file": file
+        })
     return {"enriched_device_list": store_dl}
 
 @router.get("/enrich/device_list/{store}/{dl}")
 def get_enrich_device_list(store: str, dl: str, user = Depends(get_current_user)):
-    return artifactClass.get_artifact_content(f"{store}/{dl}")
+    return artifactClass.get_artifact_content(f"{store}/{dl}", "device_list_context")
 
 #----EDIT----
 @router.post("/dictionary/edit")
 def edit_dictionary(payload: DictionaryEditRequest, user = Depends(get_current_user)):
-    return editor_json_inline(payload.dictionary_name, payload.dictionary_json, DICTIONARIES_DIR, "dictionary", user["sub"])
+    return editor_json_inline(payload.id, payload.dictionary_json, DICTIONARIES_DIR, "dictionary", user["sub"])
 
 @router.post("/kb/edit")
 def edit_kb(payload: KbEditRequest, user = Depends(get_current_user)):
-    return editor_json_inline(payload.kb_name, payload.kb_json, KB_DIR, "kb", user["sub"])
+    return editor_json_inline(payload.id, payload.kb_json, KB_DIR, "kb", user["sub"])
 
 @router.post("/template_base/edit")
 def edit_template_base(payload: TemplateBaseEditRequest, user = Depends(get_current_user)):
-    return editor_json_inline(payload.template_base_name, payload.template_base_json, TEMPLATE_BASE_DIR, "template_base", user["sub"])
+    return editor_json_inline(payload.id, payload.template_base_json, TEMPLATE_BASE_DIR, "template_base", user["sub"])

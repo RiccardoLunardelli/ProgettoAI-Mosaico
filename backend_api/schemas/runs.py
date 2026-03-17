@@ -5,7 +5,7 @@ class RunTemplateRequest(BaseModel):
     validate_only: bool = True
 
 class RunTemplateStartRequest(BaseModel):
-    template_name: str
+    id: str
 
 class RunTemplateLlmRequest(BaseModel):
     run_id: str
@@ -19,7 +19,7 @@ class RunTemplateFinishRequest(BaseModel):
     llm_patch_actions: dict | None = None
 
 class RunDictionaryRequest(BaseModel):
-    dictionary_name: str
+    id: str
     validate_only: bool = True
     mode: str
     run_id: str | None = None
@@ -27,12 +27,12 @@ class RunDictionaryRequest(BaseModel):
     patch_json: dict | None = None
 
 class RunKbRequest(BaseModel):
-    kb_name: str
+    id: str
     validate_only: bool = True
     patch_json: dict
 
 class RunTemplateBaseRequest(BaseModel):
-    template_base_name: str
+    id: str
     validate_only: bool = True
     patch_json: dict
 

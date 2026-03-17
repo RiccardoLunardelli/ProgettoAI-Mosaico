@@ -17,6 +17,7 @@ const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
 import "rsuite/dist/rsuite.min.css";
 import { SetInputSlice } from "../../stores/slices/Base/inputSlice";
 import ollamaLogo from "../../../public/logo/ollama.png";
+import { IsValidJSON } from "../../commons/commonsFunctions";
 
 const BasicButtonGenericTag = lazy(
   () => import("../button/BasicButtonGeneric"),
@@ -127,7 +128,7 @@ function TemplatePageTag() {
 
     RunTemplateStartAPI({
       data: {
-        template_name: componentState?.selected_id ?? "",
+        id: componentState?.selected_id ?? "",
       },
       showLoader: true,
       showToast: true,
@@ -223,16 +224,24 @@ function TemplatePageTag() {
   };
 
   const HandleExecuteRunOnClick = () => {
+    if (isPatchRequired && !isPatchJsonValid) return;
+
+    const selectedTemplate = (templateListSlice?.value ?? []).find(
+      (item) => item.id === componentState.selected_id,
+    );
+
     RunTemplateFinishAPI({
       showLoader: true,
       showToast: true,
       data: {
         run_id: componentState.stepOneResponse?.run_id ?? "",
-        template_name: componentState?.selected_id ?? "",
-        validate_only: componentState?.validateOnly ?? true,
-        apply_llm: componentState?.checkboxValue ?? false,
-        llm_patch_actions:
-          JSON.parse(inputSliceValue["LLMSuggestionPatch-Edit"]) ?? {},
+        template_name: selectedTemplate?.name ?? "",
+        validate_only: componentState.validateOnly,
+        apply_llm: componentState.checkboxValue,
+        llm_patch_actions: isPatchRequired ? JSON.parse(llmPatchValue) : {},
+      },
+      EndCallback(returnValue) {
+        console.log("Finish callback:", returnValue);
       },
     });
   };
@@ -291,6 +300,18 @@ function TemplatePageTag() {
   const infoCardHeight = "300px";
   const listCardHeight = "260px";
   const footerWidth = "80%";
+
+  const llmPatchValue = inputSliceValue["LLMSuggestionPatch-Edit"] ?? "";
+
+  const isPatchRequired =
+    componentState.use_llm && componentState.checkboxValue;
+
+  const isPatchJsonValid = !isPatchRequired || IsValidJSON(llmPatchValue);
+
+  const isRunDisabled =
+    !componentState.stepOneResponse?.run_id ||
+    !componentState.selected_id ||
+    (isPatchRequired && !isPatchJsonValid);
 
   return (
     <>
@@ -995,7 +1016,10 @@ function TemplatePageTag() {
                       >
                         <BasicButtonGenericTag
                           textToSee="Esegui Run"
-                          clickCallBack={HandleExecuteRunOnClick}
+                          disabledButton={isRunDisabled}
+                          clickCallBack={() => {
+                            HandleExecuteRunOnClick();
+                          }}
                         />
                       </div>
                     </div>
