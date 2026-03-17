@@ -1,19 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
+export interface DictionatyListInterface {
+  id: string;
+  name: string;
+}
 
 export const dictionaryListSlice = createSlice({
   name: "dictionaryListSlice",
   initialState: {
-    value: null as string[] | null,
-    detail: null as any
+    value: null as DictionatyListInterface[] | null,
+    detail: null as any,
   },
   reducers: {
     SetDictionaryListSlice: (
       state,
       action: {
-        payload: string[];
-      }
+        payload: DictionatyListInterface[];
+      },
     ) => {
       state.value = action.payload;
     },
@@ -21,13 +24,14 @@ export const dictionaryListSlice = createSlice({
       state,
       action: {
         payload: any;
-      }
+      },
     ) => {
       state.detail = action.payload;
     },
   },
 });
 
-export const { SetDictionaryListSlice, SetDictionaryDetailSlice } = dictionaryListSlice.actions;
+export const { SetDictionaryListSlice, SetDictionaryDetailSlice } =
+  dictionaryListSlice.actions;
 
 export const dictionaryListSliceReducer = dictionaryListSlice.reducer;

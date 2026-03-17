@@ -1,4 +1,4 @@
-import { lazy, useMemo, useState, Suspense } from "react";
+import { lazy, useMemo, useState, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   SetStoreDevicesListSlice,
@@ -6,6 +6,8 @@ import {
 } from "../../../stores/slices/Base/storeDevicesListSlice";
 import { DeleteStoreDevicesListAPIHook } from "../../../customHooks/API/StoreDevices/StoreDevicesAPI";
 import type { StoreListInterface } from "../../../stores/slices/Base/storeListSlice";
+import { GetTemplateIdsAPIHook } from "../../../customHooks/API/Template/templateAPI";
+import type { TemplateListInterface } from "../../../stores/slices/Base/templateListSlice";
 
 const StoreDevicesManagementModalTag = lazy(
   () => import("./StoreDevicesManagementModal"),
@@ -30,6 +32,7 @@ function StoreDevicesManagementPageTag() {
   const dispatch = useDispatch();
 
   const [DeleteStoreDevicesListAPI] = DeleteStoreDevicesListAPIHook();
+  const [GetTemplateIdsAPI] = GetTemplateIdsAPIHook();
 
   const [componentState, setComponentState] = useState<ComponentStateInterface>(
     {
@@ -52,6 +55,11 @@ function StoreDevicesManagementPageTag() {
   const storeListSlice: { value: StoreListInterface[] } = useSelector(
     (state: { storeListSlice: { value: StoreListInterface[] } }) =>
       state.storeListSlice,
+  );
+
+  const templateListSlice: { value: TemplateListInterface[] } = useSelector(
+    (state: { templateListSlice: { value: TemplateListInterface[] } }) =>
+      state.templateListSlice,
   );
 
   const selectedDevice = useMemo(() => {
@@ -84,6 +92,23 @@ function StoreDevicesManagementPageTag() {
 
     return map;
   }, [storeListSlice?.value]);
+
+  const templateNameById = useMemo(() => {
+    const map: Record<string, string> = {};
+
+    (templateListSlice?.value ?? []).forEach(
+      (singleTemplate: TemplateListInterface) => {
+        const templateId = String(singleTemplate?.id ?? "");
+        const templateName = String(singleTemplate?.name ?? "");
+
+        if (templateId) {
+          map[templateId] = templateName || templateId;
+        }
+      },
+    );
+
+    return map;
+  }, [templateListSlice?.value]);
 
   const storeOptions = useMemo(() => {
     return (storeListSlice?.value ?? [])
@@ -209,6 +234,10 @@ function StoreDevicesManagementPageTag() {
       },
     });
   };
+
+  useEffect(() => {
+    GetTemplateIdsAPI({ saveResponse: true, showLoader: true });
+  }, []);
 
   return (
     <>
@@ -436,7 +465,10 @@ function StoreDevicesManagementPageTag() {
                             lineHeight: "1.4",
                           }}
                         >
-                          Template ID: {singleDevice.id_template ?? "-"}
+                          Template:{" "}
+                          {templateNameById[String(singleDevice.id_template ?? "")] ??
+                            singleDevice.id_template ??
+                            "-"}
                         </span>
                       </div>
 

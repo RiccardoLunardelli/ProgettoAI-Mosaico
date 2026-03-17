@@ -7,7 +7,6 @@ const SelectPickerTag = lazy(() =>
   import("rsuite").then((module) => ({ default: module.SelectPicker })),
 );
 
-const MonacoEditorTag = lazy(() => import("@monaco-editor/react"));
 
 type KnowledgeBaseOperationType = "add_kb_rule" | "update_kb_rule";
 

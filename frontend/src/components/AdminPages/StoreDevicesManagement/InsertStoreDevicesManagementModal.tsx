@@ -7,6 +7,8 @@ import {
   InsertStoreDevicesListAPIHook,
 } from "../../../customHooks/API/StoreDevices/StoreDevicesAPI";
 import type { StoreListInterface } from "../../../stores/slices/Base/storeListSlice";
+import { GetTemplateIdsAPIHook } from "../../../customHooks/API/Template/templateAPI";
+import type { TemplateListInterface } from "../../../stores/slices/Base/templateListSlice";
 
 const TextInputTitleTag = lazy(() => import("../../input/TextInputTitle"));
 const BasicButtonGenericTag = lazy(
@@ -31,6 +33,7 @@ function InsertStoreDevicesManagementModalTag({
 
   const [InsertStoreDevicesListAPI] = InsertStoreDevicesListAPIHook();
   const [GetStoreDevicesListAPI] = GetStoreDevicesListAPIHook();
+  const [GetTemplateIdsAPI] = GetTemplateIdsAPIHook();
 
   const inputSlice: { value: Record<string, string> } = useSelector(
     (state: { inputSlice: { value: Record<string, string> } }) =>
@@ -42,17 +45,41 @@ function InsertStoreDevicesManagementModalTag({
       state.storeListSlice,
   );
 
-  const storeOptions = useMemo(() => {
-    return (storeListSlice?.value ?? []).map((singleStore: StoreListInterface) => {
-      const storeId = String(singleStore?.id ?? "");
-      const storeName = String(singleStore?.name ?? "");
+  const templateListSlice: { value: TemplateListInterface[] } = useSelector(
+    (state: { templateListSlice: { value: TemplateListInterface[] } }) =>
+      state.templateListSlice,
+  );
 
-      return {
-        label: storeName || storeId,
-        value: storeId,
-      };
-    });
+  const storeOptions = useMemo(() => {
+    return (storeListSlice?.value ?? []).map(
+      (singleStore: StoreListInterface) => {
+        const storeId = String(singleStore?.id ?? "");
+        const storeName = String(singleStore?.name ?? "");
+
+        return {
+          label: storeName || storeId,
+          value: storeId,
+        };
+      },
+    );
   }, [storeListSlice?.value]);
+
+  const templateOptions = useMemo(() => {
+    return (templateListSlice?.value ?? [])
+      .slice()
+      .sort((a, b) =>
+        String(a.name ?? "").localeCompare(String(b.name ?? "")),
+      )
+      .map((singleTemplate: TemplateListInterface) => {
+        const templateId = String(singleTemplate?.id ?? "");
+        const templateName = String(singleTemplate?.name ?? "");
+
+        return {
+          label: templateName || templateId,
+          value: templateId,
+        };
+      });
+  }, [templateListSlice?.value]);
 
   useEffect(() => {
     if (!showModal) return;
@@ -86,6 +113,10 @@ function InsertStoreDevicesManagementModalTag({
     );
   }, [showModal, dispatch]);
 
+  useEffect(() => {
+    GetTemplateIdsAPI({ saveResponse: true, showLoader: false });
+  }, []);
+
   const HandleInsertButtonOnClick = () => {
     const store_id = inputSlice?.value?.[`${inputPrefix}-store_id`] ?? "";
     const description =
@@ -94,7 +125,12 @@ function InsertStoreDevicesManagementModalTag({
     const id_template =
       inputSlice?.value?.[`${inputPrefix}-id_template`] ?? "";
 
-    if (!store_id || !description.trim() || !hd_plc.trim() || !id_template.trim()) {
+    if (
+      !store_id ||
+      !description.trim() ||
+      !hd_plc.trim() ||
+      !id_template.trim()
+    ) {
       return;
     }
 
@@ -203,10 +239,44 @@ function InsertStoreDevicesManagementModalTag({
               />
             </div>
 
-            <TextInputTitleTag
-              idInput={`${inputPrefix}-id_template`}
-              title="Template ID"
-            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "6px",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  color: "#111827",
+                }}
+              >
+                Template
+              </span>
+
+              <SelectPickerTag
+                data={templateOptions}
+                cleanable={false}
+                searchable={true}
+                placeholder="Seleziona template"
+                value={
+                  inputSlice?.value?.[`${inputPrefix}-id_template`]
+                    ? String(inputSlice.value[`${inputPrefix}-id_template`])
+                    : null
+                }
+                onChange={(value) => {
+                  dispatch(
+                    SetInputSlice({
+                      id: `${inputPrefix}-id_template`,
+                      value: value ? String(value) : "",
+                    }),
+                  );
+                }}
+                style={{ width: "100%" }}
+              />
+            </div>
 
             <div style={{ gridColumn: "1 / -1" }}>
               <TextInputTitleTag

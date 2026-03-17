@@ -14,6 +14,7 @@ import {
   SetRunIdTemplateDetailSlice,
   SetTemplateBaseDetailSlice,
   SetTemplateBaseListSlice,
+  type TemplateBaseListInterface,
 } from "../../../stores/slices/Base/templateBaseListSlice";
 import { useTranslation } from "react-i18next";
 import { toast, type Id } from "react-toastify";
@@ -43,7 +44,7 @@ const GetTemplateBaseIdsAPIHook = () => {
       const jsonResponse = JSON.parse(response);
 
       if (infoObj?.saveResponse ?? true) {
-        const templateBaseList: string[] = jsonResponse ?? [];
+        const templateBaseList: TemplateBaseListInterface[] = jsonResponse ?? [];
         dispatch(SetTemplateBaseListSlice(templateBaseList));
       }
 
@@ -197,7 +198,7 @@ const UpdateTemplateBaseDetailAPIHook = () => {
 
   const UpdateTemplateBaseDetailAPI = async (infoObj: {
     data: {
-      template_base_name: string;
+      id: string;
       template_base_json: {};
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
@@ -288,7 +289,7 @@ const UpdateTemplateBasePatchAPIHook = () => {
 
   const UpdateTemplateBasePatchAPI = async (infoObj: {
     data: {
-      template_base_name: string;
+      id: string;
       validate_only: boolean;
       patch_json: {};
     };

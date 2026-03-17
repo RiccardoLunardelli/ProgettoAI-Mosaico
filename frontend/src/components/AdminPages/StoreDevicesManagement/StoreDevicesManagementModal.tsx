@@ -11,6 +11,8 @@ import {
   UpdateStoreDevicesListAPIHook,
 } from "../../../customHooks/API/StoreDevices/StoreDevicesAPI";
 import type { StoreListInterface } from "../../../stores/slices/Base/storeListSlice";
+import { GetTemplateIdsAPIHook } from "../../../customHooks/API/Template/templateAPI";
+import type { TemplateListInterface } from "../../../stores/slices/Base/templateListSlice";
 
 const RunsListSkeleton = lazy(() => import("../../Skeleton/RunsListSkeleton"));
 const TextInputTitleTag = lazy(() => import("../../input/TextInputTitle"));
@@ -40,6 +42,7 @@ function StoreDevicesManagementModalTag({
 
   const [UpdateStoreDevicesListAPI] = UpdateStoreDevicesListAPIHook();
   const [GetStoreDevicesListAPI] = GetStoreDevicesListAPIHook();
+  const [GetTemplateIdsAPI] = GetTemplateIdsAPIHook();
 
   const inputSlice: { value: Record<string, string> } = useSelector(
     (state: { inputSlice: { value: Record<string, string> } }) =>
@@ -49,6 +52,11 @@ function StoreDevicesManagementModalTag({
   const storeListSlice: { value: StoreListInterface[] } = useSelector(
     (state: { storeListSlice: { value: StoreListInterface[] } }) =>
       state.storeListSlice,
+  );
+
+  const templateListSlice: { value: TemplateListInterface[] } = useSelector(
+    (state: { templateListSlice: { value: TemplateListInterface[] } }) =>
+      state.templateListSlice,
   );
 
   const storeDevicesListSlice: { value: StoreDevicesListInterface[] } =
@@ -71,6 +79,23 @@ function StoreDevicesManagementModalTag({
       },
     );
   }, [storeListSlice?.value]);
+
+  const templateOptions = useMemo(() => {
+    return (templateListSlice?.value ?? [])
+      .slice()
+      .sort((a, b) =>
+        String(a.name ?? "").localeCompare(String(b.name ?? "")),
+      )
+      .map((singleTemplate: TemplateListInterface) => {
+        const templateId = String(singleTemplate?.id ?? "");
+        const templateName = String(singleTemplate?.name ?? "");
+
+        return {
+          label: templateName || templateId,
+          value: templateId,
+        };
+      });
+  }, [templateListSlice?.value]);
 
   useEffect(() => {
     if (!showModal || !selectedDevice) return;
@@ -113,6 +138,7 @@ function StoreDevicesManagementModalTag({
 
   useEffect(() => {
     GetStoreDevicesListAPI({ saveResponse: true, showLoader: true });
+    GetTemplateIdsAPI({ saveResponse: true, showLoader: true });
   }, []);
 
   const HandleSaveButtonOnClick = () => {
@@ -307,10 +333,44 @@ function StoreDevicesManagementModalTag({
                   title="HD / PLC"
                 />
 
-                <TextInputTitleTag
-                  idInput={`${inputPrefix}-id_template`}
-                  title="Template ID"
-                />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "6px",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "13px",
+                      fontWeight: 600,
+                      color: "#111827",
+                    }}
+                  >
+                    Template
+                  </span>
+
+                  <SelectPickerTag
+                    data={templateOptions}
+                    cleanable={false}
+                    searchable={true}
+                    placeholder="Seleziona template"
+                    value={
+                      inputSlice?.value?.[`${inputPrefix}-id_template`]
+                        ? String(inputSlice.value[`${inputPrefix}-id_template`])
+                        : null
+                    }
+                    onChange={(value) => {
+                      dispatch(
+                        SetInputSlice({
+                          id: `${inputPrefix}-id_template`,
+                          value: value ? String(value) : "",
+                        }),
+                      );
+                    }}
+                    style={{ width: "100%" }}
+                  />
+                </div>
               </div>
 
               <div

@@ -11,12 +11,12 @@ import {
 } from "../../customHooks/API/KnowledgeBase/knowledgeBaseAPI";
 
 import KnowledgeBasePatchFormTag from "./KnowledgeBasePatchForm";
+import type { KnowledgeBaseListInterface } from "../../stores/slices/Base/knowledgeBaseListSlice";
 
 const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
 const Toggle = lazy(() =>
   import("rsuite").then((module) => ({ default: module.Toggle })),
 );
-const TextareaTag = lazy(() => import("rsuite/esm/Textarea"));
 const BasicButtonGenericTag = lazy(
   () => import("../button/BasicButtonGeneric"),
 );
@@ -51,10 +51,10 @@ function KnowledgeBasePageTag() {
     },
   );
 
-  const knowledgeBaseListSlice: { value: string[]; detail: string } =
+  const knowledgeBaseListSlice: { value: KnowledgeBaseListInterface[]; detail: string } =
     useSelector(
       (state: {
-        knowledgeBaseListSlice: { value: string[]; detail: string };
+        knowledgeBaseListSlice: { value: KnowledgeBaseListInterface[]; detail: string };
       }) => state.knowledgeBaseListSlice,
     );
 
@@ -102,7 +102,7 @@ function KnowledgeBasePageTag() {
   const HandleSaveEditButtonOnClick = () => {
     UpdateKnowledgeBaseDetailAPI({
       data: {
-        kb_name: componentState?.selectedId ?? "",
+        id: componentState?.selectedId ?? "",
         kb_json: JSON.parse(inputSliceValue["KnowledgeBaseDetails-Edit"]),
       },
       showToast: true,
@@ -116,7 +116,7 @@ function KnowledgeBasePageTag() {
   const HandleSavePatchButtonOnClick = () => {
     UpdateKnowledgeBasePatchAPI({
       data: {
-        kb_name: componentState?.selectedId ?? "",
+        id: componentState?.selectedId ?? "",
         validate_only: componentState.validateOnly,
         patch_json: JSON.parse(inputSliceValue["KnowledgeBasePatch-TextArea"]),
       },
@@ -215,13 +215,13 @@ function KnowledgeBasePageTag() {
                 {(knowledgeBaseListSlice?.value ?? []).length > 0 ? (
                   <>
                     {(knowledgeBaseListSlice?.value ?? []).map(
-                      (singleId: string) => {
+                      (singleId: KnowledgeBaseListInterface) => {
                         const isSelected =
-                          componentState.selectedId === singleId;
+                          componentState.selectedId === (singleId?.id ?? "");
 
                         return (
                           <div
-                            key={singleId ?? ""}
+                            key={singleId?.id ?? ""}
                             className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
                             style={{
                               borderRadius: "8px",
@@ -236,11 +236,11 @@ function KnowledgeBasePageTag() {
                               alignItems: "center",
                             }}
                             onClick={() => {
-                              HandleSelectIdOnClick(singleId);
+                              HandleSelectIdOnClick(singleId.id);
                             }}
                           >
                             <span style={{ fontSize: "14px", fontWeight: 500 }}>
-                              {singleId ?? ""}
+                              {singleId?.name ?? ""}
                             </span>
                           </div>
                         );
@@ -370,7 +370,9 @@ function KnowledgeBasePageTag() {
                       <MonacoEditorTag
                         height="550px"
                         defaultLanguage="json"
-                        value={inputSliceValue["KnowledgeBaseDetails-Edit"] ?? ""}
+                        value={
+                          inputSliceValue["KnowledgeBaseDetails-Edit"] ?? ""
+                        }
                         onChange={(value) => {
                           dispatch(
                             SetInputSlice({

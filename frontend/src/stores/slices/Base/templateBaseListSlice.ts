@@ -1,20 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
+export interface TemplateBaseListInterface {
+  id: string;
+  name: string;
+}
 
 export const templateBaseListSlice = createSlice({
   name: "templateBaseListSlice",
   initialState: {
-    value: null as string[] | null,
+    value: null as TemplateBaseListInterface[] | null,
     detail: null as any,
-    runIdTemplate: null as string[] | null
+    runIdTemplate: null as string[] | null,
   },
   reducers: {
     SetTemplateBaseListSlice: (
       state,
       action: {
-        payload: string[];
-      }
+        payload: TemplateBaseListInterface[];
+      },
     ) => {
       state.value = action.payload;
     },
@@ -22,7 +25,7 @@ export const templateBaseListSlice = createSlice({
       state,
       action: {
         payload: any;
-      }
+      },
     ) => {
       state.detail = action.payload;
     },
@@ -30,13 +33,17 @@ export const templateBaseListSlice = createSlice({
       state,
       action: {
         payload: string[];
-      }
+      },
     ) => {
       state.runIdTemplate = action.payload;
     },
   },
 });
 
-export const { SetTemplateBaseListSlice, SetTemplateBaseDetailSlice, SetRunIdTemplateDetailSlice } = templateBaseListSlice.actions;
+export const {
+  SetTemplateBaseListSlice,
+  SetTemplateBaseDetailSlice,
+  SetRunIdTemplateDetailSlice,
+} = templateBaseListSlice.actions;
 
 export const templateBaseListSliceReducer = templateBaseListSlice.reducer;

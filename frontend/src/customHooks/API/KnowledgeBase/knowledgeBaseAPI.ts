@@ -13,6 +13,7 @@ import { apiDomainString } from "../../../commons/commonsVariables";
 import {
   SetKnowledgeBaseDetailSlice,
   SetKnowledgeBaseListSlice,
+  type KnowledgeBaseListInterface,
 } from "../../../stores/slices/Base/knowledgeBaseListSlice";
 import { useTranslation } from "react-i18next";
 import { toast, type Id } from "react-toastify";
@@ -42,7 +43,7 @@ const GetKnowledgeBaseIdsAPIHook = () => {
       const jsonResponse = JSON.parse(response);
 
       if (infoObj?.saveResponse ?? true) {
-        const knowledgeBaseList: string[] = jsonResponse ?? [];
+        const knowledgeBaseList: KnowledgeBaseListInterface[] = jsonResponse ?? [];
         dispatch(SetKnowledgeBaseListSlice(knowledgeBaseList));
       }
 
@@ -137,7 +138,7 @@ const UpdateKnowledgeBaseDetailAPIHook = () => {
 
   const UpdateKnowledgeBaseDetailAPI = async (infoObj: {
     data: {
-      kb_name: string;
+      id: string;
       kb_json: {};
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
@@ -228,7 +229,7 @@ const UpdateKnowledgeBasePatchAPIHook = () => {
 
   const UpdateKnowledgeBasePatchAPI = async (infoObj: {
     data: {
-      kb_name: string;
+      id: string;
       validate_only: boolean;
       patch_json: {};
     };

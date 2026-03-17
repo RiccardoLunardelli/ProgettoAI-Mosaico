@@ -13,6 +13,7 @@ import { apiDomainString } from "../../../commons/commonsVariables";
 import {
   SetDictionaryDetailSlice,
   SetDictionaryListSlice,
+  type DictionatyListInterface,
 } from "../../../stores/slices/Base/dictionaryListSlice";
 import { useTranslation } from "react-i18next";
 import { toast, type Id } from "react-toastify";
@@ -42,7 +43,7 @@ const GetDictionaryIdsAPIHook = () => {
       const jsonResponse = JSON.parse(response);
 
       if (infoObj?.saveResponse ?? true) {
-        const dictionaryList: string[] = jsonResponse ?? [];
+        const dictionaryList: DictionatyListInterface[] = jsonResponse ?? [];
         dispatch(SetDictionaryListSlice(dictionaryList));
       }
 
@@ -140,7 +141,7 @@ const UpdateDictionaryDetailAPIHook = () => {
 
   const UpdateDictionaryDetailAPI = async (infoObj: {
     data: {
-      dictionary_name: string;
+      id: string;
       dictionary_json: {};
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
@@ -231,7 +232,7 @@ const RunReportDictionaryAPIHook = () => {
 
   const RunReportDictionaryAPI = async (infoObj: {
     data: {
-      dictionary_name: string;
+      id: string;
       validate_only: boolean;
       mode: string;
       run_id: string;

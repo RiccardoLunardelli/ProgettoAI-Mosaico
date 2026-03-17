@@ -401,7 +401,7 @@ function NoEnrichListPageTag() {
                   fontFamily: "monospace",
                 }}
               >
-                {getJsonDiffLines(deviceListListSlice.detail.content, componentState.enriched_file).map(
+                {getJsonDiffLines(deviceListListSlice.detail, componentState.enriched_file).map(
                   (
                     singleLine: {
                       line: string;

@@ -1,18 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
+export interface KnowledgeBaseListInterface {
+  id: string;
+  name: string;
+}
 
 export const knowledgeBaseListSlice = createSlice({
   name: "knowledgeBaseListSlice",
   initialState: {
-    value: null as string[] | null,
+    value: null as KnowledgeBaseListInterface[] | null,
     detail: null as any
   },
   reducers: {
     SetKnowledgeBaseListSlice: (
       state,
       action: {
-        payload: string[];
+        payload: KnowledgeBaseListInterface[];
       }
     ) => {
       state.value = action.payload;

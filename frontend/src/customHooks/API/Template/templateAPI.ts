@@ -17,6 +17,7 @@ import {
   SetTemplateListSlice,
   SetTemplatePercentualSlice,
 } from "../../../stores/slices/Base/templateListSlice";
+import type { TemplateBaseListInterface } from "../../../stores/slices/Base/templateBaseListSlice";
 
 const GetTemplateIdsAPIHook = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const GetTemplateIdsAPIHook = () => {
 
       //Se deve salvare il valore
       if (infoObj?.saveResponse ?? true) {
-        const templateBaseList: string[] = jsonResponse ?? [];
+        const templateBaseList: TemplateBaseListInterface[] = jsonResponse ?? [];
 
         dispatch(SetTemplateListSlice(templateBaseList));
       }

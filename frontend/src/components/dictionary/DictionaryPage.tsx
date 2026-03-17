@@ -11,6 +11,7 @@ import { SetInputSlice } from "../../stores/slices/Base/inputSlice";
 import { IsValidJSON } from "../../commons/commonsFunctions";
 import { GetRunIdTemplateAPIHook } from "../../customHooks/API/TemplateBase/templateBaseAPI";
 import DictionaryPatchFormTag from "./DictionaryPatchForm";
+import type { DictionatyListInterface } from "../../stores/slices/Base/dictionaryListSlice";
 
 const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
 
@@ -32,6 +33,7 @@ interface suggestionRunInterface {
 
 interface ComponentStateInterface {
   selectedId: string;
+  selectedName: string;
   selectedRunId: string;
   validateOnly: boolean;
   whatImDoing: WhatToDoType;
@@ -51,9 +53,13 @@ function DictionaryPageTag() {
 
   const dispatch = useDispatch();
 
-  const dictionaryListSlice: { value: string[]; detail: string } = useSelector(
-    (state: { dictionaryListSlice: { value: string[]; detail: string } }) =>
-      state.dictionaryListSlice,
+  const dictionaryListSlice: {
+    value: DictionatyListInterface[];
+    detail: string;
+  } = useSelector(
+    (state: {
+      dictionaryListSlice: { value: DictionatyListInterface[]; detail: string };
+    }) => state.dictionaryListSlice,
   );
 
   const templateBaseListSlice: { runIdTemplate: string[] } = useSelector(
@@ -64,6 +70,7 @@ function DictionaryPageTag() {
   const [componentState, setComponentState] = useState<ComponentStateInterface>(
     {
       selectedId: "",
+      selectedName: "",
       validateOnly: false,
       whatImDoing: "PatchJson",
       Mode: "run_report",
@@ -136,7 +143,7 @@ function DictionaryPageTag() {
   const HandleSaveEditButtonOnClick = () => {
     UpdateDictionaryDetailAPI({
       data: {
-        dictionary_name: componentState?.selectedId ?? "",
+        id: componentState?.selectedId ?? "",
         dictionary_json: JSON.parse(inputSliceValue["DictionaryDetails-Edit"]),
       },
       showToast: true,
@@ -150,7 +157,7 @@ function DictionaryPageTag() {
   const HandleSaveButtonOnClick = () => {
     RunReportDictionaryAPI({
       data: {
-        dictionary_name: componentState?.selectedId ?? "",
+        id: componentState?.selectedId ?? "",
         validate_only: componentState.validateOnly,
         mode: componentState.Mode,
         run_id:
@@ -282,13 +289,13 @@ function DictionaryPageTag() {
                 {(dictionaryListSlice?.value ?? []).length > 0 ? (
                   <>
                     {(dictionaryListSlice?.value ?? []).map(
-                      (singleId: string) => {
+                      (singleId: DictionatyListInterface) => {
                         const isSelected =
-                          componentState.selectedId === singleId;
+                          componentState.selectedId === (singleId?.id ?? "");
 
                         return (
                           <div
-                            key={singleId ?? ""}
+                            key={singleId.id ?? ""}
                             className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
                             style={{
                               borderRadius: "8px",
@@ -303,11 +310,11 @@ function DictionaryPageTag() {
                               alignItems: "center",
                             }}
                             onClick={() => {
-                              HandleSelectIdOnClick(singleId);
+                              HandleSelectIdOnClick(singleId.id);
                             }}
                           >
                             <span style={{ fontSize: "14px", fontWeight: 500 }}>
-                              {singleId ?? ""}
+                              {singleId.name ?? ""}
                             </span>
                           </div>
                         );
@@ -549,7 +556,9 @@ function DictionaryPageTag() {
                           <MonacoEditorTag
                             height="300px"
                             defaultLanguage="json"
-                            value={inputSliceValue["DictionaryDetails-Edit"] ?? ""}
+                            value={
+                              inputSliceValue["DictionaryDetails-Edit"] ?? ""
+                            }
                             onChange={(value) => {
                               dispatch(
                                 SetInputSlice({
@@ -588,9 +597,7 @@ function DictionaryPageTag() {
                 {componentState.whatImDoing == "PatchJson" ? (
                   <>
                     <div>
-                      <DictionaryPatchFormTag
-                        inputPrefix="DictionaryPatch"
-                      />
+                      <DictionaryPatchFormTag inputPrefix="DictionaryPatch" />
                     </div>
                     <BasicButtonGenericTag
                       textToSee="Salva"
@@ -640,10 +647,6 @@ function DictionaryPageTag() {
                       height: "100%",
                     }}
                   >
-                    <span style={{ fontSize: "20px", fontWeight: 600 }}>
-                      Seleziona un Run Id
-                    </span>
-
                     <div
                       style={{
                         width: "100%",
@@ -655,6 +658,9 @@ function DictionaryPageTag() {
                       {(templateBaseListSlice?.runIdTemplate ?? []).length >
                       0 ? (
                         <>
+                          <span style={{ fontSize: "20px", fontWeight: 600, display: "flex" }}>
+                            Seleziona un Run Id
+                          </span>
                           {(templateBaseListSlice?.runIdTemplate ?? []).map(
                             (singleId: string) => {
                               const isSelected =
@@ -695,7 +701,9 @@ function DictionaryPageTag() {
                         </>
                       ) : (
                         <span style={{ opacity: "60%" }}>
-                          Nessuna Run Id trovato
+                          E' necessario fare una run per il template per poter
+                          generare suggerimente e patch direttamente per il
+                          dizionario
                         </span>
                       )}
                     </div>

@@ -4,10 +4,15 @@ export interface TemplatePercentualInterface {
   percent: number;
 }
 
+export interface TemplateListInterface {
+  id: string,
+  name: string
+}
+
 export const templateListSlice = createSlice({
   name: "templateListSlice",
   initialState: {
-    value: null as string[] | null,
+    value: null as TemplateListInterface[] | null,
     detail: null as any,
     percentual: null as null | TemplatePercentualInterface,
   },
@@ -15,7 +20,7 @@ export const templateListSlice = createSlice({
     SetTemplateListSlice: (
       state,
       action: {
-        payload: string[];
+        payload: TemplateListInterface[];
       },
     ) => {
       state.value = action.payload;

@@ -10,12 +10,12 @@ import {
   UpdateTemplateBasePatchAPIHook,
 } from "../../customHooks/API/TemplateBase/templateBaseAPI";
 import TemplateBasePatchFormTag from "./TemplateBasePatchForm";
+import type { TemplateBaseListInterface } from "../../stores/slices/Base/templateBaseListSlice";
 
 const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
 const Toggle = lazy(() =>
   import("rsuite").then((module) => ({ default: module.Toggle })),
 );
-const TextareaTag = lazy(() => import("rsuite/esm/Textarea"));
 const BasicButtonGenericTag = lazy(
   () => import("../button/BasicButtonGeneric"),
 );
@@ -46,9 +46,9 @@ function TemplateBasePageTag() {
     },
   );
 
-  const templateBaseListSlice: { value: string[]; detail: string } =
+  const templateBaseListSlice: { value: TemplateBaseListInterface[]; detail: string } =
     useSelector(
-      (state: { templateBaseListSlice: { value: string[]; detail: string } }) =>
+      (state: { templateBaseListSlice: { value: TemplateBaseListInterface[]; detail: string } }) =>
         state.templateBaseListSlice,
     );
 
@@ -96,7 +96,7 @@ function TemplateBasePageTag() {
   const HandleSaveEditButtonOnClick = () => {
     UpdateTemplateBaseDetailAPI({
       data: {
-        template_base_name: componentState?.selectedId ?? "",
+        id: componentState?.selectedId ?? "",
         template_base_json: JSON.parse(
           inputSliceValue["TemplateBaseDetails-Edit"],
         ),
@@ -112,7 +112,7 @@ function TemplateBasePageTag() {
   const HandleSavePatchButtonOnClick = () => {
     UpdateTemplateBasePatchAPI({
       data: {
-        template_base_name: componentState?.selectedId ?? "",
+        id: componentState?.selectedId ?? "",
         validate_only: componentState.validateOnly,
         patch_json: JSON.parse(inputSliceValue["TemplateBasePatch-TextArea"]),
       },
@@ -211,13 +211,13 @@ function TemplateBasePageTag() {
                 {(templateBaseListSlice?.value ?? []).length > 0 ? (
                   <>
                     {(templateBaseListSlice?.value ?? []).map(
-                      (singleId: string) => {
+                      (singleId: TemplateBaseListInterface) => {
                         const isSelected =
-                          componentState.selectedId === singleId;
+                          componentState.selectedId === singleId.id;
 
                         return (
                           <div
-                            key={singleId ?? ""}
+                            key={singleId.id ?? ""}
                             className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
                             style={{
                               borderRadius: "8px",
@@ -232,11 +232,11 @@ function TemplateBasePageTag() {
                               alignItems: "center",
                             }}
                             onClick={() => {
-                              HandleSelectIdOnClick(singleId);
+                              HandleSelectIdOnClick(singleId.id);
                             }}
                           >
                             <span style={{ fontSize: "14px", fontWeight: 500 }}>
-                              {singleId ?? ""}
+                              {singleId.name ?? ""}
                             </span>
                           </div>
                         );
@@ -388,7 +388,7 @@ function TemplateBasePageTag() {
                           wordWrap: "on",
                           tabSize: 2,
                           automaticLayout: true,
-                          readOnly: true,
+                          readOnly: false,
                         }}
                       />
                     </div>

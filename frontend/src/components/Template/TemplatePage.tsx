@@ -10,6 +10,7 @@ import {
 } from "../../customHooks/API/Template/templateAPI";
 import {
   SetTemplatePercentualSlice,
+  type TemplateListInterface,
   type TemplatePercentualInterface,
 } from "../../stores/slices/Base/templateListSlice";
 const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
@@ -99,13 +100,13 @@ function TemplatePageTag() {
   });
 
   const templateListSlice: {
-    value: string[];
+    value: TemplateListInterface[];
     detail: any;
     percentual: TemplatePercentualInterface;
   } = useSelector(
     (state: {
       templateListSlice: {
-        value: string[];
+        value: TemplateListInterface[];
         detail: any;
         percentual: TemplatePercentualInterface;
       };
@@ -498,14 +499,14 @@ function TemplatePageTag() {
                         {(templateListSlice?.value ?? []).length > 0 ? (
                           <>
                             {(templateListSlice?.value ?? []).map(
-                              (singleId) => {
+                              (singleId: TemplateListInterface) => {
                                 const isSelected =
                                   componentState.selected_id ===
-                                  (singleId ?? "");
+                                  (singleId.id ?? "");
 
                                 return (
                                   <div
-                                    key={`${singleId}`}
+                                    key={`${singleId.id}`}
                                     className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
                                     style={{
                                       borderRadius: "8px",
@@ -520,7 +521,7 @@ function TemplatePageTag() {
                                       alignItems: "center",
                                     }}
                                     onClick={() => {
-                                      HandleSelectIdOnClick(singleId);
+                                      HandleSelectIdOnClick(singleId.id);
                                     }}
                                   >
                                     <span
@@ -529,7 +530,7 @@ function TemplatePageTag() {
                                         fontWeight: 500,
                                       }}
                                     >
-                                      {singleId}
+                                      {singleId.name}
                                     </span>
                                   </div>
                                 );
