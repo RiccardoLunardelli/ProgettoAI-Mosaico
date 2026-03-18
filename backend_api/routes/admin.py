@@ -3,6 +3,7 @@ from src.intermediateLayer.postgres_repository import UsersRepository, ArtifactR
 from backend_api.schemas.admin import UpdateRoleAdmin, DropArtifactAdmin, DeleteUserAdmin, InsertClientAdmin, DeleteClientAdmin, UpsertStoreAdmin, UpdateUser, DeleteStoreAdmin, UpdateClientAdmin, \
     UpdateStoreAdmin, UpdateDeviceAdmin, InsertDeviceAdmin, DeleteDeviceAdmin, InsertArtifactAdmin, EditConfigAdmin
 
+from scripts.orchestrator import load_config
 from backend_api.utils.deps import require_admin
 from backend_api.routes.artifacts import editor_json_inline, CONFIG_DIR
 from uuid import UUID
@@ -95,7 +96,7 @@ def client_operation(name: str, type_op: str, new_name: str | None):
         elif type_op == "delete" or type_op == "update":
             return HTTPException(status_code=404, detail="Client not exists!")
 
-def store_operation(id: UUID | None, client_id: UUID | None, name: str | None, new_name: str | None, content: dict | None, type_op: str):
+def store_operation(id: UUID | None, client_id: UUID | None, name: str | None, new_name: str | None, content: list[dict] | None, type_op: str):
     check = check_store(name)
     if len(check) > 0:
         if type_op == "insert":
@@ -221,11 +222,12 @@ def delete_device(payload: DeleteDeviceAdmin, user = Depends(require_admin)):
 #----CONFIG-----
 @router.get("/config/device_list")
 def get_config_device_list(user = Depends(require_admin)):
-    return artifactClass.get_config("config")
+    return [p.name for p in sorted (CONFIG_DIR.glob("device_list_rules*.yml"))]
 
 @router.get("/config/content/{id}")
-def get_config_content(id: str, user = Depends(require_admin)):
-    return artifactClass.get_artifact_content(id, "config")
+def get_config_content(name: str, user = Depends(require_admin)):
+    path = CONFIG_DIR / name
+    return load_config(path)
 
 @router.post("/edit/config")
 def edit_config_inline(payload: EditConfigAdmin,user = Depends(require_admin)):

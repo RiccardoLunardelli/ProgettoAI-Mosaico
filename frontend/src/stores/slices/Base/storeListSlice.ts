@@ -4,6 +4,19 @@ export interface StoreListInterface {
   id: string;
   client_id: string;
   name: string;
+  content: {
+    ID: string;
+    enum: string;
+    IDPTD: string;
+    Plant: string;
+    Enable: boolean;
+    Address: string;
+    PageURL: string;
+    type_fam: string;
+    PlantGroup: string;
+    Description: string;
+    TemplateGUID: string;
+  }[];
 }
 
 export const storeListSlice = createSlice({

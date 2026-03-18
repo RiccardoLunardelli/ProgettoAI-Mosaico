@@ -312,7 +312,7 @@ class ArtifactRepository():
     def __init__(self, dsn: str) -> None:
         self._dsn = dsn
 
-    def upsert_artifact(self, artifact_type: str, name: str, version: Optional[str], content: Dict[str, Any]) -> str:
+    def upsert_artifact(self, artifact_type: str, name: str, version: Optional[str], content: Dict[str, Any] | str) -> str:
         select_sql = "SELECT id FROM artifacts WHERE type = %s AND name = %s AND COALESCE(version, '') = COALESCE(%s, '') LIMIT 1"
         insert_sql = """
         INSERT INTO artifacts (id, type, name, version, content)
@@ -408,23 +408,6 @@ class ArtifactRepository():
         return [
             {"id": str(r[0]), "type": r[1], "name": r[2], "version": r[3]}
             for r in rows
-        ]
-
-    def get_config(self, type: str) -> List[str]:
-        # ritorna tutti i file di configurazione
-
-        sql = "SELECT * FROM artifacts WHERE type = %s"
-        with psycopg2.connect(self._dsn) as conn:
-            with conn.cursor() as cur:
-                cur.execute(sql, (type,))
-                rows = cur.fetchall()
-        return [
-            {
-                "id": r[0],
-                "type": r[1],
-                "name": r[2],
-                "version": r[3]
-            } for r in rows
         ]
 
     def drop_artifact(self, ids) -> Dict[str, Any]:
@@ -564,14 +547,77 @@ class Stores():
     def __init__(self, dsn: str) -> None:
         self._dsn = dsn
 
-    def upsert_store(self, client_id: UUID | str, store_name: str, content: Dict[str, Any]) -> Dict[str, Any]:
+    def _resolve_template_id_from_guid(self, cur, template_guid: str | None) -> str | None:
+        
+        if not template_guid:
+            return None
+
+        # mapping: artifacts.type='template' e name='<TemplateGUID>.json'
+        cur.execute("SELECT id FROM artifacts WHERE type = 'template' AND name = %s LIMIT 1",(f"{template_guid}.json",),)
+        row = cur.fetchone()
+        if not row:
+            return None
+
+        # compatibile sia tuple cursor sia RealDictCursor
+        if isinstance(row, dict):
+            return str(row.get("id"))
+        return str(row[0])
+    
+    def _device_exists(self, cur, store_id: str, description: str) -> bool:
+        # controlla se esiste gia device
+
+        cur.execute("SELECT 1 FROM devices WHERE store_id = %s AND description = %s LIMIT 1",(store_id, description),)
+        return cur.fetchone() is not None
+
+    def insert_device_from_content(self, cur, store_id: str, store_name: str, content) -> dict:
+    # inserisce device nel db partendo dal content dello store
+
+        if not isinstance(content, list):
+            return {"devices_inserted": 0, "devices_skipped": 0}
+
+        inserted = 0
+        skipped = 0
+
+        for idx, item in enumerate(content, start=1):
+            description = (item.get("Description") or "").strip()
+            if not description:
+                skipped += 1
+                continue
+
+            if self._device_exists(cur, store_id, description):
+                skipped += 1
+                continue
+
+            template_guid = item.get("TemplateGUID")
+            id_template = self._resolve_template_id_from_guid(cur, template_guid)
+
+            # hd_plc placeholder inventato
+            idptd = item.get("IDPTD") or f"D{idx:04d}"
+            hd_plc = f"PLC_FAKE.{store_name}.{idptd}"
+
+            cur.execute(
+                """
+                INSERT INTO devices (id, store_id, description, hd_plc, id_template)
+                VALUES (%s, %s, %s, %s, %s)
+                """,
+                (str(uuid4()), store_id, description, hd_plc, id_template),
+            )
+            inserted += 1
+
+        return {"devices_inserted": inserted, "devices_skipped": skipped}
+
+
+
+    def upsert_store(self, client_id: UUID | str, store_name: str, content: Dict[str, Any] | list[dict]) -> Dict[str, Any]:
         # inserisce store
 
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
                 store_id = str(uuid4())
                 cur.execute("INSERT INTO stores (id, client_id, name, content) VALUES (%s, %s, %s, %s)",(store_id, str(client_id), store_name, psycopg2.extras.Json(content)),)
-                return {"id": store_id, "client_id": str(client_id), "name": store_name, "action": "inserted"}
+                # qua ci va inserimento device in devices nel db da content
+                device_stats = self.insert_device_from_content(cur, store_id, store_name, content)
+                return {"id": store_id, "client_id": str(client_id), "name": store_name, "action": "inserted", **device_stats}
 
     def update_store(self, id: UUID, client_id: UUID | None, new_name: str | None):
         # aggiorna store
@@ -615,7 +661,8 @@ class Stores():
             {
                 "id": r[0],
                 "client_id": r[1],
-                "name": r[2]
+                "name": r[2],
+                "content": r[3]
             } for r in rows
         ]
 

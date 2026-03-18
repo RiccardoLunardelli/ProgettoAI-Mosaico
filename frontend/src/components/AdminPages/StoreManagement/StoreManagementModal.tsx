@@ -155,7 +155,7 @@ function StoreManagementModalTag({
   };
 
   return (
-    <Modal open={showModal} onClose={onClose} size="md" overflow={true}>
+    <Modal open={showModal} onClose={onClose} size="lg" overflow={true}>
       <Modal.Header>
         <div
           style={{
@@ -188,9 +188,7 @@ function StoreManagementModalTag({
           padding: "18px",
         }}
       >
-        <Suspense
-          fallback={""}
-        >
+        <Suspense fallback={""}>
           {selectedStore ? (
             <>
               <div
@@ -201,7 +199,6 @@ function StoreManagementModalTag({
                   alignItems: "start",
                 }}
               >
-                {/* STORE ID */}
                 <div
                   style={{
                     display: "flex",
@@ -234,7 +231,6 @@ function StoreManagementModalTag({
                   />
                 </div>
 
-                {/* CLIENTE */}
                 <div
                   style={{
                     display: "flex",
@@ -274,7 +270,6 @@ function StoreManagementModalTag({
                   />
                 </div>
 
-                {/* STORE NAME */}
                 <div style={{ gridColumn: "1 / -1" }}>
                   <TextInputTitleTag
                     idInput={`${inputPrefix}-name`}
@@ -285,7 +280,314 @@ function StoreManagementModalTag({
 
               <div
                 style={{
-                  marginTop: "10px",
+                  marginTop: "24px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "12px",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: 700,
+                    color: "#111827",
+                  }}
+                >
+                  Content
+                </span>
+
+                {(selectedStore?.content ?? []).length > 0 ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "12px",
+                      maxHeight: "420px",
+                      overflowY: "auto",
+                      paddingRight: "4px",
+                    }}
+                  >
+                    {(selectedStore?.content ?? []).map((singleContent, index) => {
+                      return (
+                        <div
+                          key={`${singleContent.ID ?? "content"}-${index}`}
+                          style={{
+                            border: "1px solid #e5e7eb",
+                            borderRadius: "12px",
+                            backgroundColor: "#ffffff",
+                            padding: "14px",
+                            display: "grid",
+                            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                            gap: "10px 16px",
+                          }}
+                        >
+                          <div>
+                            <span
+                              style={{
+                                fontSize: "11px",
+                                color: "#6b7280",
+                                display: "block",
+                                marginBottom: "3px",
+                              }}
+                            >
+                              ID
+                            </span>
+                            <span
+                              style={{
+                                fontSize: "13px",
+                                color: "#111827",
+                                fontWeight: 600,
+                                wordBreak: "break-word",
+                              }}
+                            >
+                              {singleContent.ID || "-"}
+                            </span>
+                          </div>
+
+                          <div>
+                            <span
+                              style={{
+                                fontSize: "11px",
+                                color: "#6b7280",
+                                display: "block",
+                                marginBottom: "3px",
+                              }}
+                            >
+                              enum
+                            </span>
+                            <span
+                              style={{
+                                fontSize: "13px",
+                                color: "#111827",
+                                wordBreak: "break-word",
+                              }}
+                            >
+                              {singleContent.enum || "-"}
+                            </span>
+                          </div>
+
+                          <div>
+                            <span
+                              style={{
+                                fontSize: "11px",
+                                color: "#6b7280",
+                                display: "block",
+                                marginBottom: "3px",
+                              }}
+                            >
+                              IDPTD
+                            </span>
+                            <span
+                              style={{
+                                fontSize: "13px",
+                                color: "#111827",
+                                wordBreak: "break-word",
+                              }}
+                            >
+                              {singleContent.IDPTD || "-"}
+                            </span>
+                          </div>
+
+                          <div>
+                            <span
+                              style={{
+                                fontSize: "11px",
+                                color: "#6b7280",
+                                display: "block",
+                                marginBottom: "3px",
+                              }}
+                            >
+                              Plant
+                            </span>
+                            <span
+                              style={{
+                                fontSize: "13px",
+                                color: "#111827",
+                                wordBreak: "break-word",
+                              }}
+                            >
+                              {singleContent.Plant || "-"}
+                            </span>
+                          </div>
+
+                          <div>
+                            <span
+                              style={{
+                                fontSize: "11px",
+                                color: "#6b7280",
+                                display: "block",
+                                marginBottom: "3px",
+                              }}
+                            >
+                              Enable
+                            </span>
+                            <span
+                              style={{
+                                fontSize: "13px",
+                                color: singleContent.Enable
+                                  ? "#16a34a"
+                                  : "#dc2626",
+                                fontWeight: 600,
+                              }}
+                            >
+                              {singleContent.Enable ? "true" : "false"}
+                            </span>
+                          </div>
+
+                          <div>
+                            <span
+                              style={{
+                                fontSize: "11px",
+                                color: "#6b7280",
+                                display: "block",
+                                marginBottom: "3px",
+                              }}
+                            >
+                              type_fam
+                            </span>
+                            <span
+                              style={{
+                                fontSize: "13px",
+                                color: "#111827",
+                                wordBreak: "break-word",
+                              }}
+                            >
+                              {singleContent.type_fam || "-"}
+                            </span>
+                          </div>
+
+                          <div style={{ gridColumn: "1 / -1" }}>
+                            <span
+                              style={{
+                                fontSize: "11px",
+                                color: "#6b7280",
+                                display: "block",
+                                marginBottom: "3px",
+                              }}
+                            >
+                              Description
+                            </span>
+                            <span
+                              style={{
+                                fontSize: "13px",
+                                color: "#111827",
+                                wordBreak: "break-word",
+                              }}
+                            >
+                              {singleContent.Description || "-"}
+                            </span>
+                          </div>
+
+                          <div style={{ gridColumn: "1 / -1" }}>
+                            <span
+                              style={{
+                                fontSize: "11px",
+                                color: "#6b7280",
+                                display: "block",
+                                marginBottom: "3px",
+                              }}
+                            >
+                              Address
+                            </span>
+                            <span
+                              style={{
+                                fontSize: "13px",
+                                color: "#111827",
+                                wordBreak: "break-word",
+                              }}
+                            >
+                              {singleContent.Address || "-"}
+                            </span>
+                          </div>
+
+                          <div style={{ gridColumn: "1 / -1" }}>
+                            <span
+                              style={{
+                                fontSize: "11px",
+                                color: "#6b7280",
+                                display: "block",
+                                marginBottom: "3px",
+                              }}
+                            >
+                              PageURL
+                            </span>
+                            <span
+                              style={{
+                                fontSize: "13px",
+                                color: "#111827",
+                                wordBreak: "break-word",
+                              }}
+                            >
+                              {singleContent.PageURL || "-"}
+                            </span>
+                          </div>
+
+                          <div>
+                            <span
+                              style={{
+                                fontSize: "11px",
+                                color: "#6b7280",
+                                display: "block",
+                                marginBottom: "3px",
+                              }}
+                            >
+                              PlantGroup
+                            </span>
+                            <span
+                              style={{
+                                fontSize: "13px",
+                                color: "#111827",
+                                wordBreak: "break-word",
+                              }}
+                            >
+                              {singleContent.PlantGroup || "-"}
+                            </span>
+                          </div>
+
+                          <div>
+                            <span
+                              style={{
+                                fontSize: "11px",
+                                color: "#6b7280",
+                                display: "block",
+                                marginBottom: "3px",
+                              }}
+                            >
+                              TemplateGUID
+                            </span>
+                            <span
+                              style={{
+                                fontSize: "13px",
+                                color: "#111827",
+                                wordBreak: "break-word",
+                              }}
+                            >
+                              {singleContent.TemplateGUID || "-"}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      border: "1px solid #e5e7eb",
+                      borderRadius: "12px",
+                      backgroundColor: "#f9fafb",
+                      padding: "16px",
+                      fontSize: "13px",
+                      color: "#6b7280",
+                    }}
+                  >
+                    Nessun content disponibile
+                  </div>
+                )}
+              </div>
+
+              <div
+                style={{
+                  marginTop: "18px",
                   display: "flex",
                   justifyContent: "flex-end",
                 }}

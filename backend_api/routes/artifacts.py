@@ -86,7 +86,7 @@ def get_file_of_artifact(name: str | None, store: str | None, dl: str | None,  a
     return content
 """
     
-def editor_json_inline(id, file, file_dir, artifact, user_id):
+def editor_json_inline(id: str, file: str | dict, file_dir, artifact: str, user_id: str):
     # modifica json direttamente da editor
 
     file_name = artifactClass.get_artifact_name_by_id(id)
