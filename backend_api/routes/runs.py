@@ -244,9 +244,11 @@ def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_cu
     # salva nel DB
     report = load_json(result["report_path"])
     artifact_type = report.get("target", {}).get("artifact_type", "template")
-    artifact_output = report.get("target", {}).get("input_path")
-    artifact_id = _register_artifact_from_path(artifact_output, artifact_type)
-    runClass.save_run(report, user["sub"], artifact_id)
+    artifact_input = report.get("target", {}).get("input_path")
+    artifact_output = report.get("target", {}).get("output_path")
+    _register_artifact_from_path(artifact_output, artifact_type)
+    artifact_id_input = _register_artifact_from_path(artifact_input, artifact_type)
+    runClass.save_run(report, user["sub"], artifact_id_input)
 
 
     llm_progress.pop(payload.run_id, None)

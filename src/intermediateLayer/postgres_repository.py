@@ -410,6 +410,23 @@ class ArtifactRepository():
             for r in rows
         ]
 
+    def get_config(self, type: str) -> List[str]:
+        # ritorna tutti i file di configurazione
+
+        sql = "SELECT * FROM artifacts WHERE type = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (type,))
+                rows = cur.fetchall()
+        return [
+            {
+                "id": r[0],
+                "type": r[1],
+                "name": r[2],
+                "version": r[3]
+            } for r in rows
+        ]
+
     def drop_artifact(self, ids) -> Dict[str, Any]:
         # elimina file da db
 
@@ -738,16 +755,6 @@ class Template():
     def __init__(self, dsn: str) -> None:
         self._dsn = dsn
 
-    def get_template_id_by_name(self, name: str) -> str:
-        # ritorna uuid template 
-
-        sql = "SELECT id FROM artifacts WHERE name = %s"
-        with psycopg2.connect(self._dsn) as conn:
-            with conn.cursor() as cur:
-                cur.execute(sql, (name,))
-                row = cur.fetchone()
-        return row[0]
-
     def get_template_usage(self, id: str) -> list[str]:
         # ritorna i dispositivi e store che usano template
 
@@ -776,3 +783,4 @@ class Template():
                 cur.execute(sql, (str(id),))
                 rows = cur.fetchall()
                 return [dict(r) for r in rows]
+

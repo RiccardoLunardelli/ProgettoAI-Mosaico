@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pathlib import Path
 import json
+import yaml
 from uuid import UUID
 
 from backend_api.schemas.artifacts import DictionaryEditRequest, KbEditRequest, TemplateBaseEditRequest
@@ -26,6 +27,7 @@ DICTIONARIES_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MC
 KB_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/kb")
 TEMPLATE_BASE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/template_base")
 PVS_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs")
+CONFIG_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/config")
 
 """
 def list_artifact(artifact, artifact_dir):
@@ -84,7 +86,7 @@ def get_file_of_artifact(name: str | None, store: str | None, dl: str | None,  a
     return content
 """
     
-def editor_json_inline(id, file_json, file_dir, artifact, user_id):
+def editor_json_inline(id, file, file_dir, artifact, user_id):
     # modifica json direttamente da editor
 
     file_name = artifactClass.get_artifact_name_by_id(id)
@@ -93,7 +95,12 @@ def editor_json_inline(id, file_json, file_dir, artifact, user_id):
     if not input_path.exists():
         raise HTTPException(status_code=404, detail=f"{artifact} file not exists!")
     
-    old_payload = json.loads(input_path.read_text(encoding="utf-8"))
+    # old_payload
+    if artifact == "config":
+        old_payload = yaml.safe_load(input_path.read_text(encoding="utf-8")) or {}
+    else:
+        old_payload = json.loads(input_path.read_text(encoding="utf-8"))
+
 
     new_path = _next_versioned_path(input_path)
     new_version = _extract_version_from_path(new_path)
@@ -102,14 +109,21 @@ def editor_json_inline(id, file_json, file_dir, artifact, user_id):
     ctx = MCPContext(repo_root=".")
     try:
         if artifact == "dictionary":
-            ctx.schema_validate("dictionary", file_json)
-            file_json["dictionary_version"] = new_version
+            ctx.schema_validate("dictionary", file)
+            file["dictionary_version"] = new_version
         elif artifact == "kb":
-            ctx.schema_validate("kb", file_json)
-            file_json["kb_version"] = new_version
+            ctx.schema_validate("kb", file)
+            file["kb_version"] = new_version
         elif artifact == "template_base":
-            ctx.schema_validate("template_base", file_json)
-            file_json["template_base_version"] = new_version
+            ctx.schema_validate("template_base", file)
+            file["template_base_version"] = new_version
+        elif artifact == "config":
+            if not isinstance(file, str):
+                raise HTTPException(status_code=400, detail="config payload must be yaml string")
+        try:
+            file = yaml.safe_load(file) or {}
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"invalid yaml: {e}")
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Payload not valid: {e}!")
 
@@ -119,29 +133,42 @@ def editor_json_inline(id, file_json, file_dir, artifact, user_id):
     run_dir.mkdir(parents=True, exist_ok=True)
 
     if artifact == "dictionary":
-        diff = summarize_dictionary_diff(old_payload, file_json)
-        schema_versions = {"dictionary_version": file_json.get("dictionary_version")}
-        dictionary_payload = file_json
+        diff = summarize_dictionary_diff(old_payload, file)
+        schema_versions = {"dictionary_version": file.get("dictionary_version")}
+        dictionary_payload = file
         kb_payload = None
         template_base_path = None
         template_base_version = None
 
+    # kb
     elif artifact == "kb":
-        diff = summarize_kb_diff(old_payload, file_json)
-        schema_versions = {"kb_version": file_json.get("kb_version")}
+        diff = summarize_kb_diff(old_payload, file)
+        schema_versions = {"kb_version": file.get("kb_version")}
         dictionary_payload = None
-        kb_payload = file_json
+        kb_payload = file
         template_base_path = None
         template_base_version = None
 
     # template_base
-    else:  
-        diff = summarize_template_base_diff(old_payload, file_json)
-        schema_versions = {"template_base_version": file_json.get("template_base_version")}
+    elif artifact == "template_base":  
+        diff = summarize_template_base_diff(old_payload, file)
+        schema_versions = {"template_base_version": file.get("template_base_version")}
         dictionary_payload = None
         kb_payload = None
         template_base_path = str(new_path)
-        template_base_version = file_json.get("template_base_version")
+        template_base_version = file.get("template_base_version")
+
+    #config
+    elif artifact == "config":
+        # diff semplice su struttura yaml
+        diff = [] if old_payload == file else ["config_changed"]
+        schema_versions = {"config_version": new_version}
+        dictionary_payload = None
+        kb_payload = None
+        template_base_path = None
+        template_base_version = None
+    else:
+        raise HTTPException(status_code=400, detail=f"unsupported artifact: {artifact}")
 
     run_report = build_run_report(
         cfg={},
@@ -168,7 +195,11 @@ def editor_json_inline(id, file_json, file_dir, artifact, user_id):
 
     # controlla se ci sono differenze
     if len(diff_report) > 0:
-        new_path.write_text(json.dumps(file_json, ensure_ascii=False, indent=2), encoding="utf-8")
+        if artifact == "config":
+            new_path.write_text(
+                yaml.safe_dump(file, sort_keys=False, allow_unicode=True),encoding="utf-8")
+        else:
+            new_path.write_text(json.dumps(file, ensure_ascii=False, indent=2), encoding="utf-8")
     else:
         new_path = input_path
 

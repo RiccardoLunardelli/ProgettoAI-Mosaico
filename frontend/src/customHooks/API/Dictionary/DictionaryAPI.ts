@@ -13,6 +13,7 @@ import { apiDomainString } from "../../../commons/commonsVariables";
 import {
   SetDictionaryDetailSlice,
   SetDictionaryListSlice,
+  SetDictionaryScoreSlice,
   type DictionatyListInterface,
 } from "../../../stores/slices/Base/dictionaryListSlice";
 import { useTranslation } from "react-i18next";
@@ -133,6 +134,67 @@ const GetDictionaryDetailAPIHook = () => {
   };
 
   return [GetDictionaryDetailAPI];
+};
+
+const GetDictionaryVersionScoreAPIHook = () => {
+  const dispatch = useDispatch();
+
+  const GetDictionaryVersionScoreAPI = async (infoObj: {
+    data: {
+      version: string;
+    };
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
+
+    try {
+      const apiCall = await fetch(
+        apiDomainString + "/dictionary/" + infoObj.data.version + "/score",
+        {
+          method: FetchMethodEnum.Get,
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      const response: string = await apiCall.text();
+      const jsonResponse = JSON.parse(response);
+
+      if (infoObj?.saveResponse ?? true) {
+        dispatch(SetDictionaryScoreSlice(jsonResponse));
+      }
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } catch (err) {
+      console.error("Dictionary error:", err);
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Error,
+          message: err,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [GetDictionaryVersionScoreAPI];
 };
 
 const UpdateDictionaryDetailAPIHook = () => {
@@ -326,4 +388,5 @@ export {
   GetDictionaryDetailAPIHook,
   UpdateDictionaryDetailAPIHook,
   RunReportDictionaryAPIHook,
+  GetDictionaryVersionScoreAPIHook
 };

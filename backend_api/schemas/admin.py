@@ -25,7 +25,7 @@ class InsertArtifactAdmin(BaseModel):
     type: str 
     name: str 
     version: str 
-    content: dict 
+    content: dict | str
 
 class DropArtifactAdmin(BaseModel):
     ids: list[UUID4]
@@ -79,3 +79,9 @@ class InsertDeviceAdmin(BaseModel):
 
 class DeleteDeviceAdmin(BaseModel):
     id: UUID4
+
+#--CONFIG--
+class EditConfigAdmin(BaseModel):
+    id: UUID4
+    file: str 
+    

@@ -3,6 +3,19 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface DictionatyListInterface {
   id: string;
   name: string;
+  version: string;
+}
+
+export interface DictionaryVersionScoreInterface {
+  dictionary_version: string;
+  templates: {
+    run_id: string;
+    template: string;
+    template_path: string;
+    score: number;
+    created_at: string;
+  }[];
+  avg_score: number;
 }
 
 export const dictionaryListSlice = createSlice({
@@ -10,6 +23,7 @@ export const dictionaryListSlice = createSlice({
   initialState: {
     value: null as DictionatyListInterface[] | null,
     detail: null as any,
+    score: null as DictionaryVersionScoreInterface | null,
   },
   reducers: {
     SetDictionaryListSlice: (
@@ -28,10 +42,21 @@ export const dictionaryListSlice = createSlice({
     ) => {
       state.detail = action.payload;
     },
+    SetDictionaryScoreSlice: (
+      state,
+      action: {
+        payload: DictionaryVersionScoreInterface | null;
+      },
+    ) => {
+      state.score = action.payload;
+    },
   },
 });
 
-export const { SetDictionaryListSlice, SetDictionaryDetailSlice } =
-  dictionaryListSlice.actions;
+export const {
+  SetDictionaryListSlice,
+  SetDictionaryDetailSlice,
+  SetDictionaryScoreSlice,
+} = dictionaryListSlice.actions;
 
 export const dictionaryListSliceReducer = dictionaryListSlice.reducer;

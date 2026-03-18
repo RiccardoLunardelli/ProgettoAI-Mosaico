@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from src.intermediateLayer.postgres_repository import UsersRepository, ArtifactRepository, Clients, Stores, Devices
 from backend_api.schemas.admin import UpdateRoleAdmin, DropArtifactAdmin, DeleteUserAdmin, InsertClientAdmin, DeleteClientAdmin, UpsertStoreAdmin, UpdateUser, DeleteStoreAdmin, UpdateClientAdmin, \
-    UpdateStoreAdmin, UpdateDeviceAdmin, InsertDeviceAdmin, DeleteDeviceAdmin, InsertArtifactAdmin
+    UpdateStoreAdmin, UpdateDeviceAdmin, InsertDeviceAdmin, DeleteDeviceAdmin, InsertArtifactAdmin, EditConfigAdmin
 
 from backend_api.utils.deps import require_admin
+from backend_api.routes.artifacts import editor_json_inline, CONFIG_DIR
 from uuid import UUID
 
 router = APIRouter(prefix="/api", tags=["admin"], dependencies=[Depends(require_admin)])
@@ -216,3 +217,16 @@ def update_device(payload: UpdateDeviceAdmin, user = Depends(require_admin)):
 @router.post("/delete_device")
 def delete_device(payload: DeleteDeviceAdmin, user = Depends(require_admin)):
     return device_operation(payload.id, None, None, None, None, "delete")
+
+#----CONFIG-----
+@router.get("/config/device_list")
+def get_config_device_list(user = Depends(require_admin)):
+    return artifactClass.get_config("config")
+
+@router.get("/config/content/{id}")
+def get_config_content(id: str, user = Depends(require_admin)):
+    return artifactClass.get_artifact_content(id, "config")
+
+@router.post("/edit/config")
+def edit_config_inline(payload: EditConfigAdmin,user = Depends(require_admin)):
+    return editor_json_inline(payload.id, payload.file, CONFIG_DIR, "config", user["sub"])

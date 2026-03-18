@@ -11,6 +11,7 @@ import {
 import {
   GetDictionaryDetailAPIHook,
   GetDictionaryIdsAPIHook,
+  GetDictionaryVersionScoreAPIHook,
 } from "../../customHooks/API/Dictionary/DictionaryAPI";
 import {
   GetTemplateBaseDetailAPIHook,
@@ -39,7 +40,11 @@ import TemplateStepTemplateBaseSelectionTag from "./sections/TemplateStepTemplat
 import TemplateStepMatchingTag from "./sections/TemplateStepMatching";
 import TemplateStepResultTag from "./sections/TemplateStepResult";
 
-import type { DictionatyListInterface } from "../../stores/slices/Base/dictionaryListSlice";
+import {
+  SetDictionaryScoreSlice,
+  type DictionaryVersionScoreInterface,
+  type DictionatyListInterface,
+} from "../../stores/slices/Base/dictionaryListSlice";
 import type { DeviceListStoreFileInterface } from "../../stores/slices/Base/deviceListSlice";
 import type { KnowledgeBaseListInterface } from "../../stores/slices/Base/knowledgeBaseListSlice";
 import type { TemplateBaseListInterface } from "../../stores/slices/Base/templateBaseListSlice";
@@ -67,6 +72,7 @@ interface ComponentStateInterface {
   currentStep: number;
   currentStepName: CurrentStepNameType;
   selected_dictionary_id: string;
+  selected_dictionary_version: string;
   selected_id: string;
   selected_device_list_enriched: DeviceListStoreFileInterface | null;
   selected_knowledge_base_id: string;
@@ -98,6 +104,7 @@ function TemplatePageTag() {
 
   const [GetDictionaryIdsAPI] = GetDictionaryIdsAPIHook();
   const [GetDictionaryDetailAPI] = GetDictionaryDetailAPIHook();
+  const [GetDictionaryVersionScoreAPI] = GetDictionaryVersionScoreAPIHook();
 
   const [GetEnrichedIdsAPI] = GetEnrichedIdsAPIHook();
   const [GetEnrichedDetailAPI] = GetEnrichedDetailAPIHook();
@@ -115,6 +122,7 @@ function TemplatePageTag() {
       currentStep: 1,
       currentStepName: "Dictionary",
       selected_dictionary_id: "",
+      selected_dictionary_version: "",
       selected_id: "",
       selected_device_list_enriched: null,
       selected_knowledge_base_id: "",
@@ -161,11 +169,13 @@ function TemplatePageTag() {
   const dictionaryListSlice: {
     value: DictionatyListInterface[];
     detail: any;
+    score: DictionaryVersionScoreInterface;
   } = useSelector(
     (state: {
       dictionaryListSlice: {
         value: DictionatyListInterface[];
         detail: any;
+        score: DictionaryVersionScoreInterface;
       };
     }) => state.dictionaryListSlice,
   );
@@ -239,11 +249,15 @@ function TemplatePageTag() {
     });
   };
 
-  const HandleSelectDictionaryIdOnClick = (singleId: string) => {
+  const HandleSelectDictionaryIdOnClick = (
+    singleId: string,
+    singleVersion: string,
+  ) => {
     setComponentState((previousStateVal: ComponentStateInterface) => {
       return {
         ...previousStateVal,
         selected_dictionary_id: singleId,
+        selected_dictionary_version: singleVersion,
       };
     });
   };
@@ -425,6 +439,7 @@ function TemplatePageTag() {
     GetKnowledgeBaseIdsAPI({ showLoader: true, saveResponse: true });
     GetTemplateBaseIdsAPI({ showLoader: true, saveResponse: true });
     dispatch(SetTemplatePercentualSlice({ percent: 0 }));
+    dispatch(SetDictionaryScoreSlice(null))
   }, []);
 
   useEffect(() => {
@@ -436,7 +451,14 @@ function TemplatePageTag() {
       },
       showLoader: true,
       saveResponse: true,
-      EndCallback() {},
+    });
+
+    GetDictionaryVersionScoreAPI({
+      saveResponse: true,
+      showLoader: true,
+      data: {
+        version: componentState.selected_dictionary_version,
+      },
     });
   }, [componentState.selected_dictionary_id]);
 
@@ -502,6 +524,7 @@ function TemplatePageTag() {
             selectedDictionaryId={componentState.selected_dictionary_id}
             dictionaryList={dictionaryListSlice?.value ?? []}
             dictionaryDetail={dictionaryListSlice?.detail}
+            dictionaryScore={dictionaryListSlice?.score}
             mainCardWidth={mainCardWidth}
             mainCardMinWidth={mainCardMinWidth}
             contentWidth={contentWidth}
@@ -670,6 +693,8 @@ function TemplatePageTag() {
           width: "100%",
           display: "flex",
           flexDirection: "column",
+          minHeight: 0,
+          overflow: "hidden",
           filter: componentState.showLoader ? "blur(2px)" : "none",
           pointerEvents: componentState.showLoader ? "none" : "auto",
           userSelect: componentState.showLoader ? "none" : "auto",
@@ -683,29 +708,29 @@ function TemplatePageTag() {
 
         <div
           style={{
-            display: "flex",
             width: "100%",
-            padding: "20px",
-            boxSizing: "border-box",
+            flex: 1,
+            minHeight: 0,
+            overflow: "hidden",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
-          <div style={{ marginLeft: "30px", width: "100%" }}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                marginLeft: "10px",
-                width: "100%",
-              }}
-            >
-              <TemplateValidateBannerTag
-                validateOnly={componentState.validateOnly}
-                contentWidth={contentWidth}
-                mainCardMinWidth={mainCardMinWidth}
-              />
+          <TemplateValidateBannerTag
+            validateOnly={componentState.validateOnly}
+            contentWidth="100%"
+            mainCardMinWidth="0px"
+          />
 
-              {RenderCurrentStep()}
-            </div>
+          <div
+            style={{
+              width: "100%",
+              flex: 1,
+              minHeight: 0,
+              overflow: "hidden",
+            }}
+          >
+            {RenderCurrentStep()}
           </div>
         </div>
       </div>
