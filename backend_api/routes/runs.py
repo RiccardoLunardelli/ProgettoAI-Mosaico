@@ -22,6 +22,8 @@ from scripts.orchestrator import (
 )
 
 from mcp_server.tools.dictionary_tool import _extract_version_from_path
+from mcp_server.tools.device_list_tool import load_rules
+
 
 router = APIRouter(prefix="/api")
 
@@ -34,6 +36,7 @@ DICTIONARIES_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MC
 KB_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/kb")
 TEMPLATE_BASE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/template_base")
 PVS_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs")
+CONFIG_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/config")
 
 def apply_patch(user_id: str, input_path: str | None, file_name: str | None, patch_json: dict | None, upsert: Any | None, summarize: Any | None, artifact: str, patch_file_name: str | None, validate_only: bool, run_id: str | None, mode: str | None, manual_mode: str | None):
     # applica le patch, genera report e salva nel db
@@ -282,6 +285,9 @@ def run_device_list_api(payload: RunDeviceListRequest, user = Depends(get_curren
     input_path = PVS_DIR / payload.store / payload.device_list_name
     return apply_patch(user["sub"], input_path, payload.device_list_name, None, None, None, "device_list", None, payload.validate_only, None, None, None)
 
-@router.get("/device_list/base/update")
+@router.get("/enum")
 def get_base_update_device_list(user = Depends(get_current_user)):
-    return 
+    file_config = "device_list_rules.yml"
+    path = CONFIG_DIR / file_config
+    rules = load_rules(str(path))
+    return rules.get("enum", {})
