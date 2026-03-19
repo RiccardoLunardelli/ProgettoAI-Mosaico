@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import ollamaLogo from "../../../../public/logo/ollama.png"
+import ollamaLogo from "../../../../public/logo/ollama.png";
 
 const BasicButtonGenericTag = lazy(
   () => import("../../button/BasicButtonGeneric"),
@@ -40,7 +40,6 @@ function TemplateStepMatchingTag({
   llmSuggestion,
   checkboxValue,
   llmPatchValue,
-  contentWidth,
   mainCardMinWidth,
   footerWidth,
   onToggleUseLLM,
@@ -50,200 +49,209 @@ function TemplateStepMatchingTag({
   onNext,
 }: TemplateStepMatchingTagPropsInterface) {
   return (
-    <>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <div
         style={{
-          backgroundColor: "#ffffff",
-          borderRadius: "8px",
-          padding: "10px",
-          boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-          boxSizing: "border-box",
-          width: contentWidth,
-          minWidth: mainCardMinWidth,
-          minHeight: "560px",
           display: "flex",
-          justifyContent: "flex-start",
-          height: "700px",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-            margin: "10px",
-            alignItems: "flex-start",
+            backgroundColor: "#ffffff",
+            borderRadius: "8px",
+            padding: "10px",
+            boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
+            boxSizing: "border-box",
             width: "100%",
+            maxWidth: "900px",
+            minWidth: mainCardMinWidth,
+            minHeight: "560px",
+            display: "flex",
+            justifyContent: "flex-start",
+            height: "700px",
           }}
         >
           <div
             style={{
               display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
+              flexDirection: "column",
+              margin: "10px",
+              alignItems: "flex-start",
+              width: "100%",
             }}
           >
-            <img
-              src={ollamaLogo}
+            {/* HEADER */}
+            <div
               style={{
-                width: "40px",
-                height: "40px",
-              }}
-            />
-            <span
-              style={{
-                fontSize: "20px",
-                fontWeight: 600,
-                marginLeft: "5px",
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
               }}
             >
-              Modello LLM
-            </span>
-          </div>
+              <img
+                src={ollamaLogo}
+                style={{
+                  width: "40px",
+                  height: "40px",
+                }}
+              />
+              <span
+                style={{
+                  fontSize: "20px",
+                  fontWeight: 600,
+                  marginLeft: "5px",
+                }}
+              >
+                Modello LLM
+              </span>
+            </div>
 
-          <div
-            style={{
-              width: "100%",
-              marginTop: "14px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "14px",
-            }}
-          >
+            {/* CONTENUTO */}
             <div
               style={{
                 width: "100%",
-                backgroundColor: "#fff7ed",
-                border: "1px solid #fed7aa",
-                borderRadius: "8px",
-                padding: "10px 14px",
-                boxSizing: "border-box",
+                marginTop: "14px",
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
+                flexDirection: "column",
+                gap: "14px",
               }}
             >
+              {/* WARNING */}
+              <div
+                style={{
+                  width: "100%",
+                  backgroundColor: "#fff7ed",
+                  border: "1px solid #fed7aa",
+                  borderRadius: "8px",
+                  padding: "10px 14px",
+                  boxSizing: "border-box",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    fontSize: "14px",
+                    fontWeight: 500,
+                    color: "#9a3412",
+                  }}
+                >
+                  <span
+                    className="material-symbols-outlined"
+                    style={{
+                      fontSize: "18px",
+                      color: "#f97316",
+                    }}
+                  >
+                    warning
+                  </span>
+                  Ambiguità trovate
+                </div>
+
+                <span
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    color: "#ea580c",
+                  }}
+                >
+                  {stepOneResponse?.ambigouous_count ?? 0}
+                </span>
+              </div>
+
+              {/* TOGGLE */}
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "8px",
-                  fontSize: "14px",
-                  fontWeight: 500,
-                  color: "#9a3412",
+                  gap: "12px",
                 }}
               >
+                <Suspense fallback="">
+                  <Toggle
+                    checked={useLLM}
+                    onChange={(e: boolean) => {
+                      onToggleUseLLM(e);
+                    }}
+                  />
+                </Suspense>
+
                 <span
-                  className="material-symbols-outlined"
                   style={{
-                    fontSize: "18px",
-                    color: "#f97316",
+                    fontSize: "14px",
+                    fontWeight: 500,
                   }}
                 >
-                  warning
+                  Usa LLM per risolvere le ambiguità
                 </span>
-                Ambiguità trovate
               </div>
 
-              <span
-                style={{
-                  fontSize: "13px",
-                  fontWeight: 600,
-                  color: "#ea580c",
-                }}
-              >
-                {stepOneResponse?.ambigouous_count ?? 0}
-              </span>
-            </div>
+              {/* LLM SECTION */}
+              {useLLM && (
+                <>
+                  <Suspense fallback="">
+                    <BasicButtonGenericTag
+                      textToSee="Genera patch LLM"
+                      clickCallBack={onGeneratePatchLLM}
+                    />
+                  </Suspense>
 
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-              }}
-            >
-              <Suspense fallback="">
-                <Toggle
-                  checked={useLLM}
-                  onChange={(e: boolean) => {
-                    onToggleUseLLM(e);
-                  }}
-                />
-              </Suspense>
-
-              <span
-                style={{
-                  fontSize: "14px",
-                  fontWeight: 500,
-                }}
-              >
-                Usa LLM per risolvere le ambiguità
-              </span>
-            </div>
-
-            {useLLM ? (
-              <>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "14px",
-                    width: "100%",
-                  }}
-                >
-                  <div>
-                    <Suspense fallback="">
-                      <BasicButtonGenericTag
-                        textToSee="Genera patch LLM"
-                        clickCallBack={onGeneratePatchLLM}
-                      />
-                    </Suspense>
-                  </div>
-                </div>
-
-                {llmSuggestion ? (
-                  <>
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                      }}
-                    >
-                      <span
+                  {llmSuggestion && (
+                    <>
+                      <div
                         style={{
-                          fontSize: "13px",
-                          opacity: "0.7",
-                          marginBottom: "8px",
-                          fontWeight: 500,
+                          width: "100%",
+                          display: "flex",
+                          flexDirection: "column",
                         }}
                       >
-                        PATCH LLM PROPOSTE (MODIFICABILE)
-                      </span>
-
-                      <Suspense fallback="">
-                        <TextareaTag
+                        <span
                           style={{
-                            width: "100%",
-                            borderRadius: "8px",
-                            border: "1px solid #d1d5db",
-                            padding: "12px",
-                            boxSizing: "border-box",
                             fontSize: "13px",
-                            fontFamily: "monospace",
-                            backgroundColor: "#f9fafb",
+                            opacity: "0.7",
+                            marginBottom: "8px",
+                            fontWeight: 500,
                           }}
-                          minHeight="300px"
-                          minWidth="600px"
-                          value={llmPatchValue}
-                          onChange={(e: any) => {
-                            onPatchChange(e);
-                          }}
-                        />
-                      </Suspense>
-                    </div>
+                        >
+                          PATCH LLM PROPOSTE (MODIFICABILE)
+                        </span>
 
-                    <div style={{ display: "flex" }}>
+                        <Suspense fallback="">
+                          <TextareaTag
+                            style={{
+                              width: "100%",
+                              borderRadius: "8px",
+                              border: "1px solid #d1d5db",
+                              padding: "12px",
+                              boxSizing: "border-box",
+                              fontSize: "13px",
+                              fontFamily: "monospace",
+                              backgroundColor: "#f9fafb",
+                            }}
+                            minHeight="300px"
+                            minWidth="600px"
+                            value={llmPatchValue}
+                            onChange={(e: any) => {
+                              onPatchChange(e);
+                            }}
+                          />
+                        </Suspense>
+                      </div>
+
                       <Suspense fallback="">
                         <CheckboxTag
                           checked={checkboxValue}
@@ -252,33 +260,23 @@ function TemplateStepMatchingTag({
                           Applica questa patch
                         </CheckboxTag>
                       </Suspense>
-                    </div>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </>
-            ) : (
-              <></>
-            )}
+                    </>
+                  )}
+                </>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-          width: footerWidth,
-          minWidth: mainCardMinWidth,
-          marginTop: "18px",
-        }}
-      >
+        {/* FOOTER */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
+            justifyContent: "flex-end",
+            width: footerWidth,
+            minWidth: mainCardMinWidth,
+            marginTop: "18px",
           }}
         >
           <Suspense fallback="">
@@ -289,7 +287,7 @@ function TemplateStepMatchingTag({
           </Suspense>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -7,6 +7,7 @@ import {
   RunTemplateLLMAPIHook,
   GetTemplatePercentualAPIHook,
   RunTemplateFinishAPIHook,
+  GetTemplateUsageAPIHook,
 } from "../../customHooks/API/Template/templateAPI";
 import {
   GetDictionaryDetailAPIHook,
@@ -22,8 +23,10 @@ import {
   GetEnrichedIdsAPIHook,
 } from "../../customHooks/API/DeviceList/DeviceListAPI";
 import {
+  SetTemplateListUsageSlice,
   SetTemplatePercentualSlice,
   type TemplateListInterface,
+  type TemplateListUsageInterface,
   type TemplatePercentualInterface,
 } from "../../stores/slices/Base/templateListSlice";
 import { SetInputSlice } from "../../stores/slices/Base/inputSlice";
@@ -101,6 +104,7 @@ function TemplatePageTag() {
   const [RunTemplateLLMAPI] = RunTemplateLLMAPIHook();
   const [GetTemplatePercentualAPI] = GetTemplatePercentualAPIHook();
   const [RunTemplateFinishAPI] = RunTemplateFinishAPIHook();
+  const [GetTemplateUsageAPI] = GetTemplateUsageAPIHook();
 
   const [GetDictionaryIdsAPI] = GetDictionaryIdsAPIHook();
   const [GetDictionaryDetailAPI] = GetDictionaryDetailAPIHook();
@@ -156,12 +160,14 @@ function TemplatePageTag() {
     value: TemplateListInterface[];
     detail: any;
     percentual: TemplatePercentualInterface;
+    usage: TemplateListUsageInterface[]
   } = useSelector(
     (state: {
       templateListSlice: {
         value: TemplateListInterface[];
         detail: any;
         percentual: TemplatePercentualInterface;
+        usage: TemplateListUsageInterface[]
       };
     }) => state.templateListSlice,
   );
@@ -439,7 +445,8 @@ function TemplatePageTag() {
     GetKnowledgeBaseIdsAPI({ showLoader: true, saveResponse: true });
     GetTemplateBaseIdsAPI({ showLoader: true, saveResponse: true });
     dispatch(SetTemplatePercentualSlice({ percent: 0 }));
-    dispatch(SetDictionaryScoreSlice(null))
+    dispatch(SetDictionaryScoreSlice(null));
+    dispatch(SetTemplateListUsageSlice(null));
   }, []);
 
   useEffect(() => {
@@ -472,6 +479,14 @@ function TemplatePageTag() {
       showLoader: true,
       saveResponse: true,
       EndCallback() {},
+    });
+
+    GetTemplateUsageAPI({
+      saveResponse: true,
+      showLoader: true,
+      data: {
+        id: componentState.selected_id,
+      },
     });
   }, [componentState.selected_id]);
 
@@ -543,6 +558,7 @@ function TemplatePageTag() {
           <TemplateStepSelectionTag
             selectedId={componentState.selected_id}
             validateOnly={componentState.validateOnly}
+            templateUsage={templateListSlice?.usage ?? []}
             templateList={templateListSlice?.value ?? []}
             templateDetail={templateListSlice?.detail}
             mainCardWidth={mainCardWidth}

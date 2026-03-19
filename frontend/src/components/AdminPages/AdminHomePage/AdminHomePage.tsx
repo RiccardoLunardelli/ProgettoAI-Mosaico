@@ -539,8 +539,8 @@ function AdminHomePageTag() {
           className="HoverTransform"
           onClick={() =>
             HandleNavigateCardOnClick(
-              "/Config",
-              "Config",
+              "/ConfigManagement",
+              "Config Management",
             )
           }
         >

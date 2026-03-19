@@ -66,6 +66,8 @@ function TemplateStepDeviceListEnrichedSelectionTag({
           minHeight: "260px",
           display: "flex",
           justifyContent: "flex-start",
+          marginLeft: "30px",
+          marginTop: "30px",
         }}
       >
         <div
@@ -149,6 +151,7 @@ function TemplateStepDeviceListEnrichedSelectionTag({
               opacity: "50%",
               width: contentWidth,
               minWidth: mainCardMinWidth,
+              marginLeft: "30px",
             }}
           >
             Preview device list enriched
@@ -168,6 +171,7 @@ function TemplateStepDeviceListEnrichedSelectionTag({
               display: "flex",
               justifyContent: "flex-start",
               overflow: "auto",
+              marginLeft: "30px",
             }}
           >
             <pre

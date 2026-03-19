@@ -5,8 +5,22 @@ export interface TemplatePercentualInterface {
 }
 
 export interface TemplateListInterface {
-  id: string,
-  name: string
+  id: string;
+  name: string;
+  version: string;
+}
+
+export interface TemplateListUsageInterface {
+  template_id: string;
+  template_name: string;
+  template_version: string;
+  client_id: string;
+  client_name: string;
+  store_id: string;
+  store_name: string;
+  device_id: string;
+  device_description: string;
+  device_hd_plc: string;
 }
 
 export const templateListSlice = createSlice({
@@ -15,6 +29,7 @@ export const templateListSlice = createSlice({
     value: null as TemplateListInterface[] | null,
     detail: null as any,
     percentual: null as null | TemplatePercentualInterface,
+    usage: null as TemplateListUsageInterface[] | null,
   },
   reducers: {
     SetTemplateListSlice: (
@@ -41,6 +56,14 @@ export const templateListSlice = createSlice({
     ) => {
       state.percentual = action.payload;
     },
+    SetTemplateListUsageSlice: (
+      state,
+      action: {
+        payload: TemplateListUsageInterface[] | null; 
+      },
+    ) => {
+      state.usage = action.payload;
+    },
   },
 });
 
@@ -48,6 +71,7 @@ export const {
   SetTemplateListSlice,
   SetTemplateDetailSlice,
   SetTemplatePercentualSlice,
+  SetTemplateListUsageSlice
 } = templateListSlice.actions;
 
 export const templateListSliceReducer = templateListSlice.reducer;

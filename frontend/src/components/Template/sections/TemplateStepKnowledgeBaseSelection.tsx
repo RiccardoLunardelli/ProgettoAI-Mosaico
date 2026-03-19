@@ -52,6 +52,8 @@ function TemplateStepKnowledgeBaseSelectionTag({
           minHeight: "260px",
           display: "flex",
           justifyContent: "flex-start",
+          marginLeft: "30px",
+          marginTop: "30px"
         }}
       >
         <div
@@ -134,6 +136,7 @@ function TemplateStepKnowledgeBaseSelectionTag({
               opacity: "50%",
               width: contentWidth,
               minWidth: mainCardMinWidth,
+              marginLeft: "30px",
             }}
           >
             Preview knowledge base
@@ -153,6 +156,7 @@ function TemplateStepKnowledgeBaseSelectionTag({
               display: "flex",
               justifyContent: "flex-start",
               overflow: "auto",
+              marginLeft: "30px",
             }}
           >
             <pre

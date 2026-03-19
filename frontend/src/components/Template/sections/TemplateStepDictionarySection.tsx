@@ -318,7 +318,6 @@ function TemplateStepDictionarySelectionTag({
                       padding: "10px",
                       borderBottom: "1px solid #e5e7eb",
                       whiteSpace: "nowrap",
-                      position: "sticky",
                       top: 0,
                       backgroundColor: "#ffffff",
                     }}
@@ -331,7 +330,6 @@ function TemplateStepDictionarySelectionTag({
                       padding: "10px",
                       borderBottom: "1px solid #e5e7eb",
                       whiteSpace: "nowrap",
-                      position: "sticky",
                       top: 0,
                       backgroundColor: "#ffffff",
                       display: "flex",
