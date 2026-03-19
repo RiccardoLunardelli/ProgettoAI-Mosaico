@@ -221,7 +221,7 @@ def list_templates(user = Depends(get_current_user)):
 def get_template(id: str, user = Depends(get_current_user)):
     return artifactClass.get_artifact_content(id, "template")
 
-@router.get("/template_usage")
+@router.get("/template_usage/{id}")
 def get_template_usage(id: str, user = Depends(get_current_user)):
     return templateClass.get_template_usage(id)
 

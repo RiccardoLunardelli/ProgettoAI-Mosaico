@@ -237,8 +237,6 @@ def run_template_llm(payload: RunTemplateLlmRequest, user = Depends(get_current_
 
 @router.post("/run/template/finish")
 def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_current_user)):
-
-
     result = template_run(run_id=payload.run_id, validate_only=payload.validate_only, apply_llm=payload.apply_llm, llm_actions_override=payload.llm_patch_actions)
 
     # salva nel DB
@@ -278,7 +276,12 @@ def run_template_base(payload: RunTemplateBaseRequest, user = Depends(get_curren
 
  # ---- DEVICE LIST ----
 
+#---DEVICE LIST-----
 @router.post("/run/device_list")
 def run_device_list_api(payload: RunDeviceListRequest, user = Depends(get_current_user)):
     input_path = PVS_DIR / payload.store / payload.device_list_name
     return apply_patch(user["sub"], input_path, payload.device_list_name, None, None, None, "device_list", None, payload.validate_only, None, None, None)
+
+@router.get("/device_list/base/update")
+def get_base_update_device_list(user = Depends(get_current_user)):
+    return 

@@ -50695,6 +50695,1739 @@
         "semantic_category": null
       },
       "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "temperatura evaporatore satura|measurement|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Read0",
+      "section": "ContinuosReads",
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "temp_evaporator",
+      "confidence": 1.0,
+      "evidence": {
+        "normalized_text": "temperatura evaporatore satura",
+        "matched_synonym": "temperatura evaporatore",
+        "dictionary_entry_id": "temp_evaporator",
+        "category": "measurement",
+        "semantic_category": "temperature",
+        "match_source": "template_base_label_it",
+        "gap_top2": 0.18367346938775508
+      }
+    },
+    "pressione|measurement|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Read1",
+      "section": "ContinuosReads",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "pressione",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "measurement",
+        "semantic_category": null,
+        "gap_top2": 0.0
+      },
+      "candidates": [
+        {
+          "concept_id": "pressure_discharge",
+          "score": 1.0
+        },
+        {
+          "concept_id": "pressure_suction",
+          "score": 1.0
+        },
+        {
+          "concept_id": "state_compressor",
+          "score": 0.8235294117647058
+        },
+        {
+          "concept_id": "temp_return",
+          "score": 0.5714285714285714
+        },
+        {
+          "concept_id": "temp_delivery",
+          "score": 0.5555555555555556
+        }
+      ],
+      "llm_context": {
+        "section": "ContinuosReads",
+        "source_key": "Read1",
+        "normalized_text": "pressione",
+        "expected_category": "measurement",
+        "top_candidates": [
+          {
+            "concept_id": "pressure_discharge",
+            "score": 1.0,
+            "match_source": "template_base_label_it",
+            "category": "measurement",
+            "semantic_category": "pressure"
+          },
+          {
+            "concept_id": "pressure_suction",
+            "score": 1.0,
+            "match_source": "synonym_it",
+            "category": "measurement",
+            "semantic_category": "pressure"
+          },
+          {
+            "concept_id": "state_compressor",
+            "score": 0.8235294117647058,
+            "match_source": "template_base_label_it",
+            "category": "measurement",
+            "semantic_category": "state"
+          },
+          {
+            "concept_id": "temp_return",
+            "score": 0.5714285714285714,
+            "match_source": "synonym_it",
+            "category": "measurement",
+            "semantic_category": "temperature"
+          },
+          {
+            "concept_id": "temp_delivery",
+            "score": 0.5555555555555556,
+            "match_source": "template_base_description",
+            "category": "measurement",
+            "semantic_category": "temperature"
+          }
+        ],
+        "device_ctx": {
+          "template_guid": "bb51d2f3-e2c4-f596-e145-47bc38b7dbae",
+          "type_fam": null,
+          "device_role": null,
+          "enum": null
+        },
+        "versions": {
+          "dictionary_version": "0.1",
+          "kb_version": "0.1",
+          "template_base_version": "0.1"
+        }
+      }
+    },
+    "surriscaldamento|measurement|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Read3",
+      "section": "ContinuosReads",
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "superheat_temperature",
+      "confidence": 1.0,
+      "evidence": {
+        "normalized_text": "surriscaldamento",
+        "matched_synonym": "temperatura di surriscaldamento",
+        "dictionary_entry_id": "superheat_temperature",
+        "category": "measurement",
+        "semantic_category": "temperature",
+        "match_source": "synonym_it",
+        "gap_top2": 0.2941176470588236
+      }
+    },
+    "apertura valvola|measurement|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Read4",
+      "section": "ContinuosReads",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "apertura valvola",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "measurement",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "set surriscaldamento|measurement|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Read5",
+      "section": "ContinuosReads",
+      "status": "matched",
+      "technical_reason": "fuzzy_match",
+      "concept_id": "superheat_temperature",
+      "confidence": 0.9189189189189189,
+      "evidence": {
+        "normalized_text": "set surriscaldamento",
+        "matched_synonym": "temperatura di surriscaldamento",
+        "dictionary_entry_id": "superheat_temperature",
+        "category": "measurement",
+        "semantic_category": "temperature",
+        "match_source": "synonym_it",
+        "gap_top2": 0.21303656597774245
+      }
+    },
+    "errore sonda pb1|measurement|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Read6",
+      "section": "ContinuosReads",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "errore sonda pb1",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "measurement",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "errore sonda pb2|measurement|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Read7",
+      "section": "ContinuosReads",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "errore sonda pb2",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "measurement",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "lettura allarmi|measurement|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "ReadAlarm",
+      "section": "ContinuosReads",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "lettura allarmi",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "measurement",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "unità di misura temperatura|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "CF",
+      "section": "Parameters",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "unità di misura temperatura",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null,
+        "gap_top2": 0.05219012115563848
+      },
+      "candidates": [
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.8108108108108109
+        },
+        {
+          "concept_id": "threshold_low_temperature",
+          "score": 0.7586206896551724
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.75
+        },
+        {
+          "concept_id": "threshold_high_temperature",
+          "score": 0.7333333333333334
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.5490196078431373
+        }
+      ],
+      "llm_context": {
+        "section": "Parameters",
+        "source_key": "CF",
+        "normalized_text": "unità di misura temperatura",
+        "expected_category": "parameter",
+        "top_candidates": [
+          {
+            "concept_id": "hysteresis_temperature",
+            "score": 0.8108108108108109,
+            "match_source": "template_base_label_it",
+            "category": "parameter",
+            "semantic_category": "temperature"
+          },
+          {
+            "concept_id": "threshold_low_temperature",
+            "score": 0.7586206896551724,
+            "match_source": "synonym_it",
+            "category": "parameter",
+            "semantic_category": "threshold"
+          },
+          {
+            "concept_id": "setpoint_temperature",
+            "score": 0.75,
+            "match_source": "template_base_label_it",
+            "category": "parameter",
+            "semantic_category": "setpoint"
+          },
+          {
+            "concept_id": "threshold_high_temperature",
+            "score": 0.7333333333333334,
+            "match_source": "synonym_it",
+            "category": "parameter",
+            "semantic_category": "threshold"
+          },
+          {
+            "concept_id": "defrost_interval",
+            "score": 0.5490196078431373,
+            "match_source": "template_base_description",
+            "category": "parameter",
+            "semantic_category": "time"
+          }
+        ],
+        "device_ctx": {
+          "template_guid": "bb51d2f3-e2c4-f596-e145-47bc38b7dbae",
+          "type_fam": null,
+          "device_role": null,
+          "enum": null
+        },
+        "versions": {
+          "dictionary_version": "0.1",
+          "kb_version": "0.1",
+          "template_base_version": "0.1"
+        }
+      }
+    },
+    "banda proporzionale|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Pb",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "banda proporzionale",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "offset banda|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "rS",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "offset banda",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "riavvio automatico|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "ArE",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "riavvio automatico",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "tempo statico di raffreddamento|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "CLt",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "tempo statico di raffreddamento",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "ciclo valvola|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "CyP",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "ciclo valvola",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "abilita funzione start|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "ESF",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "abilita funzione start",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "timeout forzatura valvola aperta|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Fot",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "timeout forzatura valvola aperta",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "costante fast recovery|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "FrC",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "costante fast recovery",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "tipo di gas|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Fty",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "tipo di gas",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "abilita log|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "LEn",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "abilita log",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "soglia di minima pressione|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "LOP",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "soglia di minima pressione",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "limite inferiore di pressione per la regolazione del surriscaldamento|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "LPL",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "limite inferiore di pressione per la regolazione del surriscaldamento",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "allarme di minimo surrescaldamento|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "LSH",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "allarme di minimo surrescaldamento",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "visualizzazione di default|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Lod",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "visualizzazione di default",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "soglia di massima pressione operativa|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "MOP",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "soglia di massima pressione operativa",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "allarme di massimo surriscaldamento|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "MSH",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "allarme di massimo surriscaldamento",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "percentuale di massima apertura della valvola|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "MnF",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "percentuale di massima apertura della valvola",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "apertura fase di start e post defrost|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "OPE",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "apertura fase di start e post defrost",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "valore di pressione a 20ma o a 5v|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "P20",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "valore di pressione a 20ma o a 5v",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "valore di pressione a 4ma o a 0v|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "PA4",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "valore di pressione a 4ma o a 0v",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "percentuale di apertura in caso di errore sonda|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "PEO",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "percentuale di apertura in caso di errore sonda",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "tempo di errore sonda prima del blocco|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "PEd",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "tempo di errore sonda prima del blocco",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "isteresi allarme di pressione|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "PHy",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "isteresi allarme di pressione",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "unità di misura pressione|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "PMu",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "unità di misura pressione",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "modo visualizzazione pressione|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "PrM",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "modo visualizzazione pressione",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "setpoint|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "SEt",
+      "section": "Parameters",
+      "status": "matched",
+      "technical_reason": "exact_match",
+      "concept_id": "setpoint_temperature",
+      "confidence": 1.0,
+      "evidence": {
+        "normalized_text": "setpoint",
+        "matched_synonym": "setpoint",
+        "dictionary_entry_id": "setpoint_temperature",
+        "category": "parameter",
+        "semantic_category": "setpoint"
+      }
+    },
+    "durata fase di start e post defrost|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "SFd",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "durata fase di start e post defrost",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "ritardo attivazione allarme surriscaldamento|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "SHd",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "ritardo attivazione allarme surriscaldamento",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "isteresi surriscaldamento|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "SHy",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "isteresi surriscaldamento",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "durata pausa regolazione|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Std",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "durata pausa regolazione",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "intervallo di pausa regolazione|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Sti",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "intervallo di pausa regolazione",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "ritardo attivazione ingresso digitale 1 contatto pulito|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "d1d",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "ritardo attivazione ingresso digitale 1 contatto pulito",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "ritardo attivazione ingresso digitale 2 tensione di alimentazione|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "d2d",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "ritardo attivazione ingresso digitale 2 tensione di alimentazione",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "ritardo segnalazione allarmi|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "dAO",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "ritardo segnalazione allarmi",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "tempo derivato|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "dFC",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "tempo derivato",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "durata della fase di defrost|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "dFd",
+      "section": "Parameters",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "durata della fase di defrost",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null,
+        "gap_top2": 0.16666666666666652
+      },
+      "candidates": [
+        {
+          "concept_id": "defrost_duration",
+          "score": 0.8333333333333333
+        },
+        {
+          "concept_id": "fan_delay",
+          "score": 0.6666666666666667
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.6086956521739131
+        },
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.5333333333333333
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.4642857142857143
+        }
+      ],
+      "llm_context": {
+        "section": "Parameters",
+        "source_key": "dFd",
+        "normalized_text": "durata della fase di defrost",
+        "expected_category": "parameter",
+        "top_candidates": [
+          {
+            "concept_id": "defrost_duration",
+            "score": 0.8333333333333333,
+            "match_source": "template_base_description",
+            "category": "parameter",
+            "semantic_category": "time"
+          },
+          {
+            "concept_id": "fan_delay",
+            "score": 0.6666666666666667,
+            "match_source": "template_base_label_en",
+            "category": "parameter",
+            "semantic_category": "time"
+          },
+          {
+            "concept_id": "defrost_interval",
+            "score": 0.6086956521739131,
+            "match_source": "template_base_label_en",
+            "category": "parameter",
+            "semantic_category": "time"
+          },
+          {
+            "concept_id": "setpoint_temperature",
+            "score": 0.5333333333333333,
+            "match_source": "template_base_description",
+            "category": "parameter",
+            "semantic_category": "setpoint"
+          },
+          {
+            "concept_id": "hysteresis_temperature",
+            "score": 0.4642857142857143,
+            "match_source": "template_base_description",
+            "category": "parameter",
+            "semantic_category": "temperature"
+          }
+        ],
+        "device_ctx": {
+          "template_guid": "bb51d2f3-e2c4-f596-e145-47bc38b7dbae",
+          "type_fam": null,
+          "device_role": null,
+          "enum": null
+        },
+        "versions": {
+          "dictionary_version": "0.1",
+          "kb_version": "0.1",
+          "template_base_version": "0.1"
+        }
+      }
+    },
+    "delta mop lop|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "dML",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "delta mop lop",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "percentuale di apertura valvola|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "dOP",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "percentuale di apertura valvola",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "differenziale surriscaldamento|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "dSH",
+      "section": "Parameters",
+      "status": "ambiguous",
+      "technical_reason": "low_confidence_single_candidate",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "differenziale surriscaldamento",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "candidates": [
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.7
+        }
+      ],
+      "llm_context": {
+        "section": "Parameters",
+        "source_key": "dSH",
+        "normalized_text": "differenziale surriscaldamento",
+        "expected_category": "parameter",
+        "top_candidates": [
+          {
+            "concept_id": "hysteresis_temperature",
+            "score": 0.7,
+            "match_source": null,
+            "category": "parameter",
+            "semantic_category": "temperature"
+          }
+        ],
+        "device_ctx": {
+          "template_guid": "bb51d2f3-e2c4-f596-e145-47bc38b7dbae",
+          "type_fam": null,
+          "device_role": null,
+          "enum": null
+        },
+        "versions": {
+          "dictionary_version": "0.1",
+          "kb_version": "0.1",
+          "template_base_version": "0.1"
+        }
+      }
+    },
+    "funzione ingresso digitale 1 contatto pulito|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "i1F",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "funzione ingresso digitale 1 contatto pulito",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "polarità ingresso digitale 1 contatto pulito|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "i1P",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "polarità ingresso digitale 1 contatto pulito",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "funzione ingresso digitale 1 tensione di alimentazione|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "i2F",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "funzione ingresso digitale 1 tensione di alimentazione",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "polarità ingresso digitale 2 tensione alimentazione|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "i2P",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "polarità ingresso digitale 2 tensione alimentazione",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "tempo integrale|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "inC",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "tempo integrale",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "comportamento iniezione|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "inb",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "comportamento iniezione",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "ritardo iniezione|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "ind",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "ritardo iniezione",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "numero di eventi prima del blocco 0 = off|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "nPA",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "numero di eventi prima del blocco 0 = off",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "calibrazione sonda pressione|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "oPr",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "calibrazione sonda pressione",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "calibrazione sonda di temperatura|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "otE",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "calibrazione sonda di temperatura",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "risoluzione temperatura|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "rES",
+      "section": "Parameters",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "risoluzione temperatura",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null,
+        "gap_top2": 0.0121212121212122
+      },
+      "candidates": [
+        {
+          "concept_id": "setpoint_temperature",
+          "score": 0.8
+        },
+        {
+          "concept_id": "hysteresis_temperature",
+          "score": 0.7878787878787878
+        },
+        {
+          "concept_id": "threshold_low_temperature",
+          "score": 0.7586206896551724
+        },
+        {
+          "concept_id": "threshold_high_temperature",
+          "score": 0.7333333333333334
+        },
+        {
+          "concept_id": "defrost_interval",
+          "score": 0.5652173913043479
+        }
+      ],
+      "llm_context": {
+        "section": "Parameters",
+        "source_key": "rES",
+        "normalized_text": "risoluzione temperatura",
+        "expected_category": "parameter",
+        "top_candidates": [
+          {
+            "concept_id": "setpoint_temperature",
+            "score": 0.8,
+            "match_source": "template_base_label_it",
+            "category": "parameter",
+            "semantic_category": "setpoint"
+          },
+          {
+            "concept_id": "hysteresis_temperature",
+            "score": 0.7878787878787878,
+            "match_source": "template_base_label_it",
+            "category": "parameter",
+            "semantic_category": "temperature"
+          },
+          {
+            "concept_id": "threshold_low_temperature",
+            "score": 0.7586206896551724,
+            "match_source": "synonym_it",
+            "category": "parameter",
+            "semantic_category": "threshold"
+          },
+          {
+            "concept_id": "threshold_high_temperature",
+            "score": 0.7333333333333334,
+            "match_source": "synonym_it",
+            "category": "parameter",
+            "semantic_category": "threshold"
+          },
+          {
+            "concept_id": "defrost_interval",
+            "score": 0.5652173913043479,
+            "match_source": "template_base_description",
+            "category": "parameter",
+            "semantic_category": "time"
+          }
+        ],
+        "device_ctx": {
+          "template_guid": "bb51d2f3-e2c4-f596-e145-47bc38b7dbae",
+          "type_fam": null,
+          "device_role": null,
+          "enum": null
+        },
+        "versions": {
+          "dictionary_version": "0.1",
+          "kb_version": "0.1",
+          "template_base_version": "0.1"
+        }
+      }
+    },
+    "tempo massimo tra 2 eventi di mop e/o lop|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "tPA",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "tempo massimo tra 2 eventi di mop e/o lop",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "tipo di trasduttore di pressione|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "tPP",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "tipo di trasduttore di pressione",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "tacitazione relè di allarme come il buzzer|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "tbA",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "tacitazione relè di allarme come il buzzer",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "tipo di allarme segnalato dal relay|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "tdA",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "tipo di allarme segnalato dal relay",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "tipo sonda di temperatura|parameter|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "ttE",
+      "section": "Parameters",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "tipo sonda di temperatura",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "parameter",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "errore sonda pb1|alarm|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Alarm0",
+      "section": "Alarms",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "errore sonda pb1",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "alarm",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "errore sonda pb2|alarm|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Alarm1",
+      "section": "Alarms",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "errore sonda pb2",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "alarm",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "allarme lop|alarm|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Alarm2",
+      "section": "Alarms",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "allarme lop",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "alarm",
+        "semantic_category": null,
+        "gap_top2": 0.042857142857142816
+      },
+      "candidates": [
+        {
+          "concept_id": "alarm_door_open",
+          "score": 0.9
+        },
+        {
+          "concept_id": "alarm_high_pressure",
+          "score": 0.8571428571428572
+        },
+        {
+          "concept_id": "alarm_high_temperature",
+          "score": 0.8571428571428572
+        },
+        {
+          "concept_id": "alarm_compressor_fault",
+          "score": 0.8421052631578947
+        },
+        {
+          "concept_id": "alarm_defrost_failure",
+          "score": 0.8421052631578947
+        }
+      ],
+      "llm_context": {
+        "section": "Alarms",
+        "source_key": "Alarm2",
+        "normalized_text": "allarme lop",
+        "expected_category": "alarm",
+        "top_candidates": [
+          {
+            "concept_id": "alarm_door_open",
+            "score": 0.9,
+            "match_source": "template_base_label_it",
+            "category": "alarm",
+            "semantic_category": "alarm"
+          },
+          {
+            "concept_id": "alarm_high_pressure",
+            "score": 0.8571428571428572,
+            "match_source": "template_base_label_it",
+            "category": "alarm",
+            "semantic_category": "alarm"
+          },
+          {
+            "concept_id": "alarm_high_temperature",
+            "score": 0.8571428571428572,
+            "match_source": "template_base_label_it",
+            "category": "alarm",
+            "semantic_category": "alarm"
+          },
+          {
+            "concept_id": "alarm_compressor_fault",
+            "score": 0.8421052631578947,
+            "match_source": "template_base_label_it",
+            "category": "alarm",
+            "semantic_category": "alarm"
+          },
+          {
+            "concept_id": "alarm_defrost_failure",
+            "score": 0.8421052631578947,
+            "match_source": "template_base_label_it",
+            "category": "alarm",
+            "semantic_category": "alarm"
+          }
+        ],
+        "device_ctx": {
+          "template_guid": "bb51d2f3-e2c4-f596-e145-47bc38b7dbae",
+          "type_fam": null,
+          "device_role": null,
+          "enum": null
+        },
+        "versions": {
+          "dictionary_version": "0.1",
+          "kb_version": "0.1",
+          "template_base_version": "0.1"
+        }
+      }
+    },
+    "allarme mop|alarm|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Alarm3",
+      "section": "Alarms",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "allarme mop",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "alarm",
+        "semantic_category": null,
+        "gap_top2": 0.05789473684210533
+      },
+      "candidates": [
+        {
+          "concept_id": "alarm_door_open",
+          "score": 0.9
+        },
+        {
+          "concept_id": "alarm_compressor_fault",
+          "score": 0.8421052631578947
+        },
+        {
+          "concept_id": "alarm_defrost_failure",
+          "score": 0.8421052631578947
+        },
+        {
+          "concept_id": "alarm_high_pressure",
+          "score": 0.8421052631578947
+        },
+        {
+          "concept_id": "alarm_high_temperature",
+          "score": 0.8421052631578947
+        }
+      ],
+      "llm_context": {
+        "section": "Alarms",
+        "source_key": "Alarm3",
+        "normalized_text": "allarme mop",
+        "expected_category": "alarm",
+        "top_candidates": [
+          {
+            "concept_id": "alarm_door_open",
+            "score": 0.9,
+            "match_source": "template_base_label_it",
+            "category": "alarm",
+            "semantic_category": "alarm"
+          },
+          {
+            "concept_id": "alarm_compressor_fault",
+            "score": 0.8421052631578947,
+            "match_source": "template_base_label_it",
+            "category": "alarm",
+            "semantic_category": "alarm"
+          },
+          {
+            "concept_id": "alarm_defrost_failure",
+            "score": 0.8421052631578947,
+            "match_source": "template_base_label_it",
+            "category": "alarm",
+            "semantic_category": "alarm"
+          },
+          {
+            "concept_id": "alarm_high_pressure",
+            "score": 0.8421052631578947,
+            "match_source": "synonym_it",
+            "category": "alarm",
+            "semantic_category": "alarm"
+          },
+          {
+            "concept_id": "alarm_high_temperature",
+            "score": 0.8421052631578947,
+            "match_source": "synonym_it",
+            "category": "alarm",
+            "semantic_category": "alarm"
+          }
+        ],
+        "device_ctx": {
+          "template_guid": "bb51d2f3-e2c4-f596-e145-47bc38b7dbae",
+          "type_fam": null,
+          "device_role": null,
+          "enum": null
+        },
+        "versions": {
+          "dictionary_version": "0.1",
+          "kb_version": "0.1",
+          "template_base_version": "0.1"
+        }
+      }
+    },
+    "allarme grave|alarm|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Alarm4",
+      "section": "Alarms",
+      "status": "ambiguous",
+      "technical_reason": "fuzzy_ambiguous",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "allarme grave",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "alarm",
+        "semantic_category": null,
+        "gap_top2": 0.0
+      },
+      "candidates": [
+        {
+          "concept_id": "alarm_compressor_fault",
+          "score": 0.8333333333333335
+        },
+        {
+          "concept_id": "alarm_sensor_fault",
+          "score": 0.8333333333333335
+        },
+        {
+          "concept_id": "alarm_high_pressure",
+          "score": 0.8181818181818181
+        },
+        {
+          "concept_id": "alarm_high_temperature",
+          "score": 0.8181818181818181
+        },
+        {
+          "concept_id": "alarm_low_pressure",
+          "score": 0.782608695652174
+        }
+      ],
+      "llm_context": {
+        "section": "Alarms",
+        "source_key": "Alarm4",
+        "normalized_text": "allarme grave",
+        "expected_category": "alarm",
+        "top_candidates": [
+          {
+            "concept_id": "alarm_compressor_fault",
+            "score": 0.8333333333333335,
+            "match_source": "template_base_label_it",
+            "category": "alarm",
+            "semantic_category": "alarm"
+          },
+          {
+            "concept_id": "alarm_sensor_fault",
+            "score": 0.8333333333333335,
+            "match_source": "template_base_label_it",
+            "category": "alarm",
+            "semantic_category": "alarm"
+          },
+          {
+            "concept_id": "alarm_high_pressure",
+            "score": 0.8181818181818181,
+            "match_source": "template_base_label_it",
+            "category": "alarm",
+            "semantic_category": "alarm"
+          },
+          {
+            "concept_id": "alarm_high_temperature",
+            "score": 0.8181818181818181,
+            "match_source": "template_base_label_it",
+            "category": "alarm",
+            "semantic_category": "alarm"
+          },
+          {
+            "concept_id": "alarm_low_pressure",
+            "score": 0.782608695652174,
+            "match_source": "template_base_label_it",
+            "category": "alarm",
+            "semantic_category": "alarm"
+          }
+        ],
+        "device_ctx": {
+          "template_guid": "bb51d2f3-e2c4-f596-e145-47bc38b7dbae",
+          "type_fam": null,
+          "device_role": null,
+          "enum": null
+        },
+        "versions": {
+          "dictionary_version": "0.1",
+          "kb_version": "0.1",
+          "template_base_version": "0.1"
+        }
+      }
+    },
+    "injection alarm|alarm|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Alarm5",
+      "section": "Alarms",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "injection alarm",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "alarm",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "high superheated|alarm|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Alarm6",
+      "section": "Alarms",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "high superheated",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "alarm",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "low superheated|alarm|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "Alarm7",
+      "section": "Alarms",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "low superheated",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "alarm",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
+    },
+    "off line|alarm|bb51d2f3-e2c4-f596-e145-47bc38b7dbae|||||0.1|0.1|0.1": {
+      "source_key": "StatusMessage",
+      "section": "Alarms",
+      "status": "unmapped",
+      "technical_reason": "fuzzy_below_threshold",
+      "concept_id": null,
+      "confidence": null,
+      "evidence": {
+        "normalized_text": "off line",
+        "matched_synonym": null,
+        "dictionary_entry_id": null,
+        "category": "alarm",
+        "semantic_category": null
+      },
+      "suggested_action": "dictionary.suggest_or_upsert"
     }
   },
   "normalized_cache": {}

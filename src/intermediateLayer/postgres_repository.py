@@ -606,8 +606,6 @@ class Stores():
 
         return {"devices_inserted": inserted, "devices_skipped": skipped}
 
-
-
     def upsert_store(self, client_id: UUID | str, store_name: str, content: Dict[str, Any] | list[dict]) -> Dict[str, Any]:
         # inserisce store
 

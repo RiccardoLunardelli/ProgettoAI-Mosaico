@@ -224,7 +224,7 @@ def delete_device(payload: DeleteDeviceAdmin, user = Depends(require_admin)):
 def get_config_device_list(user = Depends(require_admin)):
     return [p.name for p in sorted (CONFIG_DIR.glob("device_list_rules*.yml"))]
 
-@router.get("/config/content/{id}")
+@router.get("/config/content/{name}")
 def get_config_content(name: str, user = Depends(require_admin)):
     path = CONFIG_DIR / name
     return load_config(path)
