@@ -36,8 +36,8 @@ import { storeDevicesListSliceReducer } from "./stores/slices/Base/storeDevicesL
 import { artifactListSliceReducer } from "./stores/slices/Base/artifactListSlice";
 import { configListSliceReducer } from "./stores/slices/Base/configListSlice";
 
-const GraphPageTag = lazy(
-  () => import("./components/AdminPages/Graph/GraphPage"),
+const GraphManagerTag = lazy(
+  () => import("./components/AdminPages/Graph/GraphPageManager"),
 );
 const HomePageTag = lazy(() => import("./components/Home/HomePage"));
 const ConfigManagementPage = lazy(
@@ -243,7 +243,7 @@ let childrenRouterArr: any = [
         path: "/Graph",
         element: (
           <Suspense>
-            <GraphPageTag />
+            <GraphManagerTag />
           </Suspense>
         ),
       },

@@ -1,4 +1,15 @@
 {
   "target": "template_base",
-  "operations": []
+  "operations": [
+    {
+      "op": "update_base_metadata",
+      "concept_id": "test",
+      "label": {
+        "it": "test",
+        "en": "test"
+      },
+      "description": "test",
+      "category": "measurement"
+    }
+  ]
 }

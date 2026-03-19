@@ -82,7 +82,7 @@ const UpdateUserListAPIHook = () => {
       user_id: string;
       email: string;
       name: string;
-      password: string;
+      password: string | null;
       role: number;
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;

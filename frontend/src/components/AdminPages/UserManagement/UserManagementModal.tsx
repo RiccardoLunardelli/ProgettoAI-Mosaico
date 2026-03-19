@@ -111,6 +111,10 @@ function UserManagementModalTag({
     const role = inputSlice?.value?.[`${inputPrefix}-role`] ?? "";
     const parsedRole = parseInt(role.replaceAll(" ", ""));
 
+    const currentUser = (userListSlice?.value ?? []).find((singleUser: UserListInterface) => singleUser.id == user_id)
+
+    const isSamePassword = currentUser?.password == password
+
     UpdateUserListAPI({
       showLoader: true,
       showToast: true,
@@ -118,7 +122,7 @@ function UserManagementModalTag({
         user_id,
         email,
         name,
-        password,
+        password: isSamePassword ? null : password,
         role: parseInt(role.replaceAll(" ", "")),
       },
       EndCallback: () => {

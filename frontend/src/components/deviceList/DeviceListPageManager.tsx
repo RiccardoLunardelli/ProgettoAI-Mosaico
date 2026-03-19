@@ -38,7 +38,7 @@ function DeviceListPageManagerTag() {
 
       {componentState.whatIsSelected == "enrich" ? (
         <Suspense fallback="">
-          <EnrichListPageTag />
+          <EnrichListPageTag clickCallBack={WhereImGoingOnClickCallback} />
         </Suspense>
       ) : (
         <></>
@@ -46,7 +46,7 @@ function DeviceListPageManagerTag() {
 
       {componentState.whatIsSelected == "noEnrich" ? (
         <Suspense fallback="">
-          <NoEnrichListPageTag />
+          <NoEnrichListPageTag clickCallBack={WhereImGoingOnClickCallback}/>
         </Suspense>
       ) : (
         <></>

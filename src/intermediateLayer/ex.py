@@ -47,7 +47,7 @@ user_id = "d875ceed-5219-41f7-bc38-bb069f7514d7"
 
 ## -------------TRONCATE-----------------------
 
-#repo.truncate_runs()
+repo.truncate_runs()
 #user.truncate_users()
 
 ## INSERIMENTO ROLE
@@ -59,6 +59,6 @@ user_id = "d875ceed-5219-41f7-bc38-bb069f7514d7"
 
 # INSERIMENTO DEVICE
 
-device.insert_device("a406276b-e290-4627-874f-3e8c04fc6d2c", "CENTRALE TN MAT: 0VCD345201 ADR: 1.005", "PLC1.RACK0.SLOT2.DB100.DBX0.0","981465f4-3f24-4f5e-b7a9-4d92f3a3c870")
+#device.insert_device("a406276b-e290-4627-874f-3e8c04fc6d2c", "CENTRALE TN MAT: 0VCD345201 ADR: 1.005", "PLC1.RACK0.SLOT2.DB100.DBX0.0","981465f4-3f24-4f5e-b7a9-4d92f3a3c870")
 
 

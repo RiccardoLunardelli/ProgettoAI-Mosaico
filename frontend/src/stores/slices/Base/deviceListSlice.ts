@@ -5,13 +5,18 @@ export interface DeviceListStoreFileInterface {
   file: string;
 }
 
+export interface DeviceListEnumInterface {
+  [key: string]: string
+}
+
 export const deviceListListSlice = createSlice({
   name: "deviceListListSlice",
   initialState: {
     value: null as DeviceListStoreFileInterface[] | null,
     detail: null as any,
     enrichedValue: null as DeviceListStoreFileInterface[] | null,
-    enrichedDetail: null as any
+    enrichedDetail: null as any,
+    enum: null as DeviceListEnumInterface | null
   },
   reducers: {
     SetDeviceListListSlice: (
@@ -46,10 +51,18 @@ export const deviceListListSlice = createSlice({
     ) => {
       state.enrichedDetail = action.payload;
     },
+    SetEnumDeviceListSlice: (
+      state,
+      action: {
+        payload: DeviceListEnumInterface;
+      },
+    ) => {
+      state.enum = action.payload;
+    },
   },
 });
 
-export const { SetDeviceListListSlice, SetDeviceListDetailSlice, SetEnrichedValueSlice, SetEnrichedDetailSlice } =
+export const { SetDeviceListListSlice, SetDeviceListDetailSlice, SetEnrichedValueSlice, SetEnrichedDetailSlice, SetEnumDeviceListSlice } =
   deviceListListSlice.actions;
 
 export const deviceListListSliceReducer = deviceListListSlice.reducer;

@@ -152,6 +152,16 @@
           "concept_id": "regulation_pressure",
           "description": "Pressione usata come riferimento per la regolazione (locale o remota).",
           "semantic_category": "pressure"
+        },
+        {
+          "label": {
+            "en": "test",
+            "it": "test"
+          },
+          "category": "measurement",
+          "concept_id": "test",
+          "description": "test",
+          "semantic_category": "test"
         }
       ],
       "description": "Misure fisiche e stati letti dal sistema."
@@ -477,5 +487,5 @@
       "description": "Variabili derivate o calcolate."
     }
   ],
-  "template_base_version": "0.1"
+  "template_base_version": "0.4"
 }

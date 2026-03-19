@@ -1,8 +1,8 @@
 {
-  "run_id": "run20260316_152948",
+  "run_id": "run20260319_152404",
   "target": {
-    "input_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json",
-    "output_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e_v0.1.json",
+    "input_path": "runs/run20260319_152404/028d14de-71dc-6e64-9587-c7111a39793e.json",
+    "output_path": "runs/run20260319_152404/028d14de-71dc-6e64-9587-c7111a39793e_v0.1.json",
     "artifact_type": "template"
   },
   "actions": [
@@ -849,6 +849,7 @@
     "unmapped_count": 247,
     "warnings_count": 0,
     "ambiguous_count": 83,
+    "dictionary_score": 0.09,
     "llm_total_tokens": null,
     "llm_patch_applied": 0,
     "ambiguous_resolved": 0,
@@ -867,7 +868,7 @@
     "ambiguous_count_matching_report": 83
   },
   "analysis": {
-    "matching_path": "runs/run20260316_152948/matching_report_v0.1.json",
+    "matching_path": "runs/run20260319_152404/matching_report_v0.1.json",
     "unmapped_terms": [
       {
         "section": "ContinuosReads",
@@ -6144,30 +6145,19 @@
     "committed": true,
     "dry_run_performed": true
   },
-  "timestamp": "2026-03-16T15:29:52.006620+01:00",
+  "timestamp": "2026-03-19T15:24:07.526263+01:00",
   "validation": {
     "stage": "validated",
     "errors": [],
     "status": "ok",
     "warnings": []
   },
-  "actions_path": "runs/run20260316_152948/patch_actions_v0.1.json",
+  "actions_path": "runs/run20260319_152404/patch_actions_v0.1.json",
   "diff_summary": {
     "changed_paths": [
-      "set_fields: ContinuosReads/Read0 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: ContinuosReads/Read1 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: ContinuosReads/Read2 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: ContinuosReads/Read4 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: ContinuosReads/Read5 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: ContinuosReads/Read6 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: ContinuosReads/Read12 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: ContinuosReads/Read20 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: ContinuosReads/Read34 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: ContinuosReads/Read37 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: ContinuosReads/Read41 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: ContinuosReads/Read60 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: ContinuosReads/Read62 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: ContinuosReads/Read85 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Alarms/Alarm19 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Alarms/Alarm22 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: Alarms/Alarm23 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
       "set_fields: Parameters/Param0 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
       "set_fields: Parameters/Param78 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
       "set_fields: Parameters/Param79 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
@@ -6183,18 +6173,29 @@
       "set_fields: Parameters/Param176 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
       "set_fields: Parameters/Param177 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
       "set_fields: Parameters/Param237 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: Alarms/Alarm19 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: Alarms/Alarm22 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
-      "set_fields: Alarms/Alarm23 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch"
+      "set_fields: ContinuosReads/Read0 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read1 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read2 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read4 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read5 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read6 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read12 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read20 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read34 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read37 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read41 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read60 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read62 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch",
+      "set_fields: ContinuosReads/Read85 -> Category_Patch, ConceptId_Patch, SemanticCategory_Patch"
     ]
   },
   "source_files": {
-    "kb_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/kb/kb_v0.1.json",
+    "kb_path": "runs/run20260319_152404/kb_v0.1.json",
     "kb_version": "0.1",
-    "template_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json",
-    "dictionary_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionaries/dictionary_v0.1.json",
+    "template_path": "runs/run20260319_152404/028d14de-71dc-6e64-9587-c7111a39793e.json",
+    "dictionary_path": "runs/run20260319_152404/dictionary_v0.1.json",
     "dictionary_version": "0.1",
-    "template_base_path": "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/template_base/template_base_v0.1.json",
+    "template_base_path": "runs/run20260319_152404/template_base_v0.1.json",
     "template_base_version": "0.1"
   },
   "template_guid": "028d14de-71dc-6e64-9587-c7111a39793e",

@@ -1,9 +1,14 @@
-import { lazy, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { GetEnrichedIdsAPIHook } from "../../customHooks/API/DeviceList/DeviceListAPI";
 import type { DeviceListStoreFileInterface } from "../../stores/slices/Base/deviceListSlice";
+import type { WhatIsSelcted } from "./DeviceListPageManager";
 
 const EnrichPreviewModalTag = lazy(() => import("./EnrichPreviewModal"));
+
+const BasicButtonGenericTag = lazy(
+  () => import("../button/BasicButtonGeneric"),
+);
 
 interface ComponentStateInterface {
   selectedFile: string;
@@ -11,7 +16,11 @@ interface ComponentStateInterface {
   showModal: boolean;
 }
 
-function EnrichListPageTag() {
+function EnrichListPageTag({
+  clickCallBack,
+}: {
+  clickCallBack: (whereImGoing: WhatIsSelcted) => void;
+}) {
   const [GetEnrichedIdsAPI] = GetEnrichedIdsAPIHook();
 
   const [componentState, setComponentState] = useState<ComponentStateInterface>(
@@ -85,16 +94,38 @@ function EnrichListPageTag() {
             width: "100%",
           }}
         >
-          <span
+          <div
             style={{
-              fontSize: "22px",
-              fontWeight: 600,
-              color: "#111827",
-              marginBottom: "18px",
+              display: "flex",
+              justifyContent: "flex-start",
+              marginTop: "10px",
+              marginLeft: "10px",
             }}
           >
-            Files Enriched
-          </span>
+            <div style={{width: "55%", display: "flex", marginBottom: "10px"}}>
+              <Suspense fallback="">
+                <BasicButtonGenericTag
+                  textToSee="Torna indietro"
+                  clickCallBack={() => {
+                    clickCallBack("home");
+                  }}
+                />
+              </Suspense>
+            </div>
+
+            <div style={{width: "65%", display: "flex"}}>
+              <span
+                style={{
+                  fontSize: "22px",
+                  fontWeight: 600,
+                  color: "#111827",
+                  marginBottom: "18px",
+                }}
+              >
+                Files Enriched
+              </span>
+            </div>
+          </div>
 
           {(deviceListSlice?.enrichedValue ?? []).length > 0 ? (
             <div
@@ -108,7 +139,10 @@ function EnrichListPageTag() {
               }}
             >
               {(deviceListSlice?.enrichedValue ?? []).map(
-                (singleEnriched: DeviceListStoreFileInterface, index: number) => {
+                (
+                  singleEnriched: DeviceListStoreFileInterface,
+                  index: number,
+                ) => {
                   const isSelected =
                     componentState.selectedFile ===
                       (singleEnriched?.file ?? "") &&

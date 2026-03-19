@@ -2,14 +2,14 @@
   "target": "kb",
   "operations": [
     {
-      "op": "add_kb_rule",
-      "scope_id": "",
-      "source_type": "",
-      "source_key": "",
-      "concept_id": "",
-      "reason": "",
-      "evidence": "",
-      "semantic_category": ""
+      "op": "update_kb_rule",
+      "scope_id": "sadasdassdas",
+      "source_type": "ContinuosReads",
+      "source_key": "saddassd",
+      "concept_id": "asdadsa",
+      "reason": "asdads",
+      "evidence": "asdadsddewde",
+      "semantic_category": "sadassdas"
     }
   ]
 }

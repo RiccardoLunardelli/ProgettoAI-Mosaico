@@ -1,13 +1,18 @@
 import { useSelector } from "react-redux";
-import type { DeviceListStoreFileInterface } from "../../stores/slices/Base/deviceListSlice";
-import { lazy, useEffect, useState } from "react";
+import type {
+  DeviceListEnumInterface,
+  DeviceListStoreFileInterface,
+} from "../../stores/slices/Base/deviceListSlice";
+import { lazy, Suspense, useEffect, useState } from "react";
 import {
   GetDeviceListDetailAPIHook,
   GetDeviceListIdsAPIHook,
+  GetEnumDeviceListAPIHook,
   RunDeviceListAPIHook,
 } from "../../customHooks/API/DeviceList/DeviceListAPI";
 
 import { getJsonDiffLines } from "../../commons/commonsFunctions";
+import type { WhatIsSelcted } from "./DeviceListPageManager";
 
 const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
 
@@ -24,22 +29,29 @@ interface ComponentStateInterface {
   selectedFile: string;
   validateOnly: boolean;
   warning: null | string[];
-  enriched_file: [] | null 
+  enriched_file: [] | null;
 }
 
-function NoEnrichListPageTag() {
+function NoEnrichListPageTag({
+  clickCallBack,
+}: {
+  clickCallBack: (whereImGoing: WhatIsSelcted) => void;
+}) {
   const [GetDeviceListIdsAPI] = GetDeviceListIdsAPIHook();
   const [GetDeviceListDetailAPI] = GetDeviceListDetailAPIHook();
   const [RunDeviceListAPI] = RunDeviceListAPIHook();
+  const [GetEnumDeviceListAPI] = GetEnumDeviceListAPIHook();
 
   const deviceListListSlice: {
     value: DeviceListStoreFileInterface[];
     detail: any;
+    enum: DeviceListEnumInterface;
   } = useSelector(
     (state: {
       deviceListListSlice: {
         value: DeviceListStoreFileInterface[];
         detail: any;
+        enum: DeviceListEnumInterface;
       };
     }) => state.deviceListListSlice,
   );
@@ -63,7 +75,6 @@ function NoEnrichListPageTag() {
       };
     });
   };
-
 
   const HandleSaveButtonOnClick = () => {
     RunDeviceListAPI({
@@ -89,11 +100,12 @@ function NoEnrichListPageTag() {
 
   useEffect(() => {
     GetDeviceListIdsAPI({ showLoader: true, saveResponse: true });
+    GetEnumDeviceListAPI({ showLoader: true, saveResponse: true });
   }, []);
 
   useEffect(() => {
-    if ((componentState.selectedStore == "", componentState.selectedFile == ""))
-      return;
+    if (!componentState.selectedStore || !componentState.selectedFile) return;
+
     GetDeviceListDetailAPI({
       data: {
         store: componentState.selectedStore,
@@ -114,7 +126,6 @@ function NoEnrichListPageTag() {
   }, [componentState.selectedStore, componentState.selectedFile]);
 
   return (
-    
     <div
       style={{
         backgroundColor: "#f9fafb",
@@ -124,7 +135,7 @@ function NoEnrichListPageTag() {
         flexDirection: "row",
       }}
     >
-      {/* Parte Sinistra pagina divista */}
+      {/* Parte Sinistra pagina divisa */}
       <div
         style={{
           height: "100%",
@@ -132,103 +143,224 @@ function NoEnrichListPageTag() {
           borderRight: "1px solid #e5e7eb",
         }}
       >
-        {/* Card Container */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
+            marginTop: "10px",
+            marginLeft: "10px",
+          }}
+        >
+          <Suspense fallback="">
+            <BasicButtonGenericTag
+              textToSee="Torna indietro"
+              clickCallBack={() => {
+                clickCallBack("home");
+              }}
+            />
+          </Suspense>
+        </div>
+
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            marginTop: "30px",
+            marginTop: "20px",
             marginLeft: "45px",
+            marginRight: "25px",
           }}
         >
-          {/* Card */}
+          {/* Riga alta: lista + enum */}
           <div
             style={{
-              backgroundColor: "#ffffff",
-              borderRadius: "8px",
-              padding: "10px",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-              boxSizing: "border-box",
-              width: "35vw",
-              height: "30vh",
               display: "flex",
-              justifyContent: "flex-start",
+              gap: "18px",
+              alignItems: "stretch",
+              width: "100%",
             }}
           >
+            {/* Lista device */}
             <div
               style={{
+                backgroundColor: "#ffffff",
+                borderRadius: "8px",
+                padding: "10px",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
+                boxSizing: "border-box",
+                width: "65%",
+                height: "33vh",
                 display: "flex",
-                flexDirection: "column",
-                margin: "10px",
-                alignItems: "flex-start",
-                width: "100%",
-                height: "100%",
+                justifyContent: "flex-start",
+                minHeight: "240px",
               }}
             >
-              <span style={{ fontSize: "20px", fontWeight: 600 }}>
-                DeviceList
-              </span>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  margin: "10px",
+                  alignItems: "flex-start",
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <span style={{ fontSize: "20px", fontWeight: 600 }}>
+                  DeviceList
+                </span>
+
+                <div
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    overflow: "auto",
+                    marginTop: "10px",
+                  }}
+                >
+                  {(deviceListListSlice?.value ?? []).length > 0 ? (
+                    <>
+                      {(deviceListListSlice?.value ?? []).map(
+                        (
+                          singleRun: DeviceListStoreFileInterface,
+                          index: number,
+                        ) => {
+                          const isSelected =
+                            componentState.selectedStore ===
+                              (singleRun?.store ?? "") &&
+                            componentState.selectedFile ===
+                              (singleRun?.file ?? "");
+
+                          return (
+                            <div
+                              key={`${singleRun.store}-${singleRun.file}-${index}`}
+                              className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
+                              style={{
+                                borderRadius: "8px",
+                                padding: "6px 10px",
+                                width: "95%",
+                                cursor: "pointer",
+                                fontSize: "13px",
+                                color: "var(--black)",
+                                marginTop: "8px",
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                              }}
+                              onClick={() => {
+                                HandleSelectIdOnClick(
+                                  singleRun.store,
+                                  singleRun.file,
+                                );
+                              }}
+                            >
+                              <span
+                                style={{ fontSize: "14px", fontWeight: 500 }}
+                              >
+                                {singleRun.store}
+                                {" / "}
+                                {singleRun.file}
+                              </span>
+                            </div>
+                          );
+                        },
+                      )}
+                    </>
+                  ) : (
+                    <span style={{ opacity: "60%" }}>
+                      Nessun device trovata
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Enum */}
+            <div
+              style={{
+                width: "35%",
+                minWidth: "180px",
+                display: "flex",
+                flexDirection: "column",
+
+                // 👉 effetto card (leggero)
+                backgroundColor: "#ffffff",
+                borderRadius: "8px",
+                padding: "10px",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
+                border: "1px solid #f1f5f9",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "13px",
+                  color: "#6b7280",
+                  fontWeight: 500,
+                  marginBottom: "8px",
+                }}
+              >
+                Enum disponibili
+              </div>
 
               <div
                 style={{
-                  width: "100%",
-                  height: "100%",
+                  flex: 1,
+                  minHeight: "240px",
+                  maxHeight: "28vh",
                   overflow: "auto",
-                  marginTop: "10px",
+                  fontSize: "13px",
+                  paddingRight: "4px",
                 }}
               >
-                {(deviceListListSlice?.value ?? []).length > 0 ? (
-                  <>
-                    {(deviceListListSlice?.value ?? []).map(
-                      (
-                        singleRun: DeviceListStoreFileInterface,
-                        index: Number,
-                      ) => {
-                        const isSelected =
-                          componentState.selectedStore ===
-                          (singleRun?.store ?? "");
+                {deviceListListSlice.enum &&
+                Object.keys(deviceListListSlice.enum).length > 0 ? (
+                  Object.entries(deviceListListSlice.enum).map(
+                    ([key, value]) => (
+                      <div
+                        key={key}
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          padding: "6px 6px",
+                          borderRadius: "6px",
+                          marginBottom: "4px",
 
-                        return (
-                          <div
-                            key={`${singleRun.store}-${singleRun.file}-${index}`}
-                            className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
-                            style={{
-                              borderRadius: "8px",
-                              padding: "6px 10px",
-                              width: "95%",
-                              cursor: "pointer",
-                              fontSize: "13px",
-                              color: "var(--black)",
-                              marginTop: "8px",
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                            }}
-                            onClick={() => {
-                              HandleSelectIdOnClick(
-                                singleRun.store,
-                                singleRun.file,
-                              );
-                            }}
-                          >
-                            <span style={{ fontSize: "14px", fontWeight: 500 }}>
-                              {singleRun.store}
-                              {" / "}
-                              {singleRun.file}
-                            </span>
-                          </div>
-                        );
-                      },
-                    )}
-                  </>
+                          // 👉 hover leggero
+                          transition: "background 0.15s",
+                        }}
+                        className="HoverTransform"
+                      >
+                        <span
+                          style={{
+                            fontWeight: 600,
+                            color: "#111827",
+                            minWidth: "28px",
+                          }}
+                        >
+                          {key}
+                        </span>
+
+                        <span
+                          style={{
+                            color: "#475569",
+                            textAlign: "right",
+                            flex: 1,
+                            wordBreak: "break-word",
+                          }}
+                        >
+                          {String(value)}
+                        </span>
+                      </div>
+                    ),
+                  )
                 ) : (
-                  <span style={{ opacity: "60%" }}>Nessun device trovata</span>
+                  <span style={{ opacity: "0.6" }}>
+                    Nessun enum disponibile
+                  </span>
                 )}
               </div>
             </div>
           </div>
 
-          {/* Card */}
+          {/* Preview device */}
           {deviceListListSlice.detail &&
           componentState.selectedStore &&
           componentState.selectedFile !== "" ? (
@@ -238,6 +370,7 @@ function NoEnrichListPageTag() {
               >
                 Preview device
               </div>
+
               <div
                 style={{
                   backgroundColor: "#f3f5f7",
@@ -245,7 +378,7 @@ function NoEnrichListPageTag() {
                   padding: "10px",
                   boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
                   boxSizing: "border-box",
-                  width: "95%",
+                  width: "100%",
                   height: "40vh",
                   display: "flex",
                   justifyContent: "flex-start",
@@ -265,8 +398,8 @@ function NoEnrichListPageTag() {
                   {JSON.stringify(deviceListListSlice.detail, null, 2)}
                 </pre>
               </div>
+
               <div style={{ display: "flex", alignItems: "center" }}>
-                {/* Toggle validate Only */}
                 <div
                   style={{
                     display: "flex",
@@ -284,6 +417,7 @@ function NoEnrichListPageTag() {
                   >
                     Validate Only
                   </span>
+
                   <Toggle
                     checked={componentState?.validateOnly ?? false}
                     onChange={(val: boolean) => {
@@ -298,6 +432,7 @@ function NoEnrichListPageTag() {
                     }}
                   />
                 </div>
+
                 <div style={{ marginTop: "30px", marginLeft: "10px" }}>
                   <BasicButtonGenericTag
                     textToSee="Run"
@@ -308,49 +443,46 @@ function NoEnrichListPageTag() {
                     clickCallBack={HandleSaveButtonOnClick}
                   />
                 </div>
-                {/* Se Validate Only è abilitato */}
+
                 {componentState.validateOnly ? (
-                  <>
-                    <div
+                  <div
+                    style={{
+                      backgroundColor: "#fff9e6",
+                      width: "60%",
+                      height: "5%",
+                      marginTop: "20px",
+                      borderRadius: "8px",
+                      border: "1px solid #f5dead",
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      marginLeft: "20px",
+                    }}
+                  >
+                    <span
                       style={{
-                        backgroundColor: "#fff9e6",
-                        width: "60%",
-                        height: "5%",
-                        marginTop: "20px",
-                        borderRadius: "8px",
-                        border: "1px solid #f5dead",
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
+                        fontSize: "20px",
                         marginLeft: "20px",
+                        opacity: "0.4",
+                        userSelect: "none",
+                      }}
+                      className="material-symbols-outlined"
+                    >
+                      warning
+                    </span>
+
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        opacity: "0.8",
+                        marginLeft: "10px",
                       }}
                     >
-                      <span
-                        style={{
-                          fontSize: "20px",
-                          marginLeft: "20px",
-                          opacity: "0.4",
-                          userSelect: "none",
-                        }}
-                        className="material-symbols-outlined"
-                      >
-                        warning
-                      </span>
-                      <span
-                        style={{
-                          fontSize: "13px",
-                          opacity: "0.8",
-                          marginLeft: "10px",
-                        }}
-                      >
-                        Modalità Validate Only attiva — Nessuna modifica verrà
-                        salvata
-                      </span>
-                    </div>
-                  </>
-                ) : (
-                  <></>
-                )}
+                      Modalità Validate Only attiva — Nessuna modifica verrà
+                      salvata
+                    </span>
+                  </div>
+                ) : null}
               </div>
             </>
           ) : (
@@ -361,7 +493,8 @@ function NoEnrichListPageTag() {
           )}
         </div>
       </div>
-      {/* Parte Destra pagina divista */}
+
+      {/* Parte Destra pagina divisa */}
       <div
         style={{
           height: "100%",
@@ -401,7 +534,10 @@ function NoEnrichListPageTag() {
                   fontFamily: "monospace",
                 }}
               >
-                {getJsonDiffLines(deviceListListSlice.detail, componentState.enriched_file).map(
+                {getJsonDiffLines(
+                  deviceListListSlice.detail,
+                  componentState.enriched_file,
+                ).map(
                   (
                     singleLine: {
                       line: string;
@@ -436,8 +572,8 @@ function NoEnrichListPageTag() {
             </div>
           </>
         ) : null}
-        <div>
-          {/* Se Warning è stato settato */}
+
+        <div style={{ width: "95%" }}>
           {componentState.warning && componentState.warning.length > 0 ? (
             <div
               style={{
@@ -450,8 +586,8 @@ function NoEnrichListPageTag() {
                 display: "flex",
                 justifyContent: "flex-start",
                 alignItems: "flex-start",
-                marginLeft: "20px",
                 padding: "16px",
+                boxSizing: "border-box",
               }}
             >
               <span

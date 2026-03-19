@@ -249,7 +249,7 @@ function AdminHomePageTag() {
                 marginTop: "4px",
               }}
             >
-              Modifica i dettagli di uno cliente
+              Modifica i dettagli di un cliente
             </span>
           </div>
         </div>
@@ -430,7 +430,7 @@ function AdminHomePageTag() {
                 marginTop: "4px",
               }}
             >
-              Modifica i dettagli di uno store
+              Modifica i dettagli dei device
             </span>
           </div>
         </div>
@@ -706,7 +706,7 @@ function AdminHomePageTag() {
                 marginTop: "4px",
               }}
             >
-              Modifica i config
+              Visualizza analisi con grafici
             </span>
           </div>
         </div>

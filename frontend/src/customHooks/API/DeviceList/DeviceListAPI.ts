@@ -15,6 +15,7 @@ import {
   SetDeviceListListSlice,
   SetEnrichedDetailSlice,
   SetEnrichedValueSlice,
+  SetEnumDeviceListSlice,
   type DeviceListStoreFileInterface,
 } from "../../../stores/slices/Base/deviceListSlice";
 import { useTranslation } from "react-i18next";
@@ -360,10 +361,68 @@ const GetEnrichedDetailAPIHook = () => {
   return [GetEnrichedDetailAPI];
 };
 
+const GetEnumDeviceListAPIHook = () => {
+  const dispatch = useDispatch();
+
+  const GetEnumDeviceListAPI = async (infoObj: {
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
+
+    try {
+      const apiCall = await fetch(apiDomainString + "/enum", {
+        method: FetchMethodEnum.Get,
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const response: string = await apiCall.text();
+      const jsonResponse = JSON.parse(response);
+
+      if (infoObj?.saveResponse ?? true) {
+        const enumObj: {} = jsonResponse ?? {};
+
+        dispatch(SetEnumDeviceListSlice(enumObj));
+      }
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } catch (err) {
+      console.error("DataOra error:", err);
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Error,
+          message: err,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [GetEnumDeviceListAPI];
+};
+
 export {
   GetDeviceListDetailAPIHook,
   GetDeviceListIdsAPIHook,
   RunDeviceListAPIHook,
   GetEnrichedIdsAPIHook,
   GetEnrichedDetailAPIHook,
+  GetEnumDeviceListAPIHook,
 };

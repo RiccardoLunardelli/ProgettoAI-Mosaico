@@ -19,7 +19,8 @@ function TopNavbar() {
     currentPathSlice.value == "Client Management" ||
     currentPathSlice.value == "Store Management" ||
     currentPathSlice.value == "Store Devices Management" ||
-    currentPathSlice.value == "Artifact Management"; 
+    currentPathSlice.value == "Artifact Management" ||
+    currentPathSlice.value == "Config Management"
 
   return (
     <div

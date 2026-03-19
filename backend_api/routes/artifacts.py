@@ -9,11 +9,12 @@ from mcp_server.tools.dictionary_tool import _next_versioned_path, _extract_vers
 from mcp_server.core import MCPContext
 
 from src.intermediateLayer.postgres_repository import RunRepository, ArtifactRepository, Stores, Template
-from backend_api.routes.runs import _register_artifact_from_path
+from backend_api.routes.runs import _register_artifact_from_path, initialize
 from backend_api.utils.deps import get_current_user
 from scripts.config.config import RUNS_ROOT, generate_run_id
 from scripts.report.report import build_run_report
 from scripts.summarize_diff.diff import summarize_dictionary_diff, summarize_kb_diff, summarize_template_base_diff
+
 
 router = APIRouter(prefix="/api")
 dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
@@ -90,7 +91,7 @@ def editor_json_inline(id: str, file: str | dict, file_dir, artifact: str, user_
     # modifica json direttamente da editor
 
     file_name = artifactClass.get_artifact_name_by_id(id)
-    input_path = file_dir / file_name
+    input_path = file_dir
 
     if not input_path.exists():
         raise HTTPException(status_code=404, detail=f"{artifact} file not exists!")
@@ -120,10 +121,10 @@ def editor_json_inline(id: str, file: str | dict, file_dir, artifact: str, user_
         elif artifact == "config":
             if not isinstance(file, str):
                 raise HTTPException(status_code=400, detail="config payload must be yaml string")
-        try:
-            file = yaml.safe_load(file) or {}
-        except Exception as e:
-            raise HTTPException(status_code=400, detail=f"invalid yaml: {e}")
+            try:
+                file = yaml.safe_load(file) or {}
+            except Exception as e:
+                raise HTTPException(status_code=400, detail=f"invalid yaml: {e}")
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Payload not valid: {e}!")
 
@@ -235,7 +236,9 @@ def get_dictionary(id: str, user = Depends(get_current_user)):
 
 @router.get("/dictionary/{version}/score")
 def get_dictionary_score(version: str, user = Depends(get_current_user)):
-    return runClass.get_dictionary_templates_scores(version)
+    if user["role"] != 1:
+        return runClass.get_dictionary_templates_scores(version, user["sub"])
+    return runClass.get_dictionary_templates_scores(version, None)
 
 @router.get("/kb")
 def list_kb(user = Depends(get_current_user)):
@@ -294,12 +297,16 @@ def get_enrich_device_list(store: str, dl: str, user = Depends(get_current_user)
 #----EDIT----
 @router.post("/dictionary/edit")
 def edit_dictionary(payload: DictionaryEditRequest, user = Depends(get_current_user)):
-    return editor_json_inline(payload.id, payload.dictionary_json, DICTIONARIES_DIR, "dictionary", user["sub"])
+    dir = initialize(payload.id, "dictionary")
+    return editor_json_inline(payload.id, payload.dictionary_json, dir, "dictionary", user["sub"])
 
 @router.post("/kb/edit")
 def edit_kb(payload: KbEditRequest, user = Depends(get_current_user)):
-    return editor_json_inline(payload.id, payload.kb_json, KB_DIR, "kb", user["sub"])
+    dir = initialize(payload.id, "kb")
+    return editor_json_inline(payload.id, payload.kb_json, dir, "kb", user["sub"])
 
 @router.post("/template_base/edit")
 def edit_template_base(payload: TemplateBaseEditRequest, user = Depends(get_current_user)):
-    return editor_json_inline(payload.id, payload.template_base_json, TEMPLATE_BASE_DIR, "template_base", user["sub"])
+    dir = initialize(payload.id, "template_base")
+    print(dir)
+    return editor_json_inline(payload.id, payload.template_base_json, dir, "template_base", user["sub"])

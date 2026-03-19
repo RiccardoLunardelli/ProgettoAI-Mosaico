@@ -105,7 +105,7 @@ class RunRepository():
                 rows = cur.fetchall()
         return [{"run_id": r[0], "diff": r[1]} for r in rows]
 
-    def get_dictionary_templates_scores(self, dictionary_version: str) -> dict:
+    def get_dictionary_templates_scores(self, dictionary_version: str, id: str | None) -> dict:
         # ritorna info dizionario per template a cui è stato applicato
         sql = """
         SELECT
@@ -117,12 +117,13 @@ class RunRepository():
         WHERE r.report #>> '{target,artifact_type}' = 'template'
         AND r.report #>> '{source_files,dictionary_version}' = %s
         AND (r.report #>> '{metrics,dictionary_score}') IS NOT NULL
+        AND (%s IS NULL OR r.user_id = %s)
         ORDER BY r.created_at DESC
         """
 
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
-                cur.execute(sql, (dictionary_version,))
+                cur.execute(sql, (dictionary_version, id, id))
                 rows = [dict(r) for r in cur.fetchall()]
 
         # tieni solo l'ultima run per ogni template
@@ -409,6 +410,21 @@ class ArtifactRepository():
             {"id": str(r[0]), "type": r[1], "name": r[2], "version": r[3]}
             for r in rows
         ]
+
+    def get_artifact_by_type_and_version(self, artifact_type: str, version: str) -> dict | None:
+        sql = """
+        SELECT id, type, name, version, content
+        FROM artifacts
+        WHERE type = %s AND version = %s
+        ORDER BY name
+        LIMIT 1
+        """
+        with psycopg2.connect(self._dsn) as conn:
+            psycopg2.extras.register_default_jsonb(conn, loads=json.loads)
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute(sql, (artifact_type, version))
+                row = cur.fetchone()
+                return dict(row) if row else None
 
     def drop_artifact(self, ids) -> Dict[str, Any]:
         # elimina file da db

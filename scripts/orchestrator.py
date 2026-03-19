@@ -130,11 +130,12 @@ def llm_propose_for_run(run_id: str, llm_model: str | None = None,) -> dict:
     }
 
 #--------------RUN-----------------------
-def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate) -> None:
+def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate, input_path) -> None:
     run_id = generate_run_id()
     run_dir = RUNS_ROOT / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
-
+    
+    cfg["input_path"] = str(input_path)
     input_path = cfg["input_path"]
     matching_path = cfg.get("matching_path")
     actions_path = cfg.get("actions_path")

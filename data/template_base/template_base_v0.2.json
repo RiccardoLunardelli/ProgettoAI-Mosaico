@@ -6,7 +6,7 @@
         {
           "label": {
             "en": "Supply air temperature",
-            "it": "Temperatura aria di mandata."
+            "it": "Temperatura aria di mandata"
           },
           "category": "measurement",
           "concept_id": "temp_delivery",
@@ -152,6 +152,16 @@
           "concept_id": "regulation_pressure",
           "description": "Pressione usata come riferimento per la regolazione (locale o remota).",
           "semantic_category": "pressure"
+        },
+        {
+          "label": {
+            "en": "provwe",
+            "it": "prova"
+          },
+          "category": "measurement",
+          "concept_id": "provetta",
+          "description": "prova cap",
+          "semantic_category": "prova"
         }
       ],
       "description": "Misure fisiche e stati letti dal sistema."
