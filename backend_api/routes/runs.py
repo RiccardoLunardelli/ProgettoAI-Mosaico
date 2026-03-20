@@ -7,7 +7,6 @@ from backend_api.schemas.runs import (
     RunTemplateStartRequest, RunTemplateLlmRequest, RunTemplateFinishRequest,
     RunDictionaryRequest, RunKbRequest, RunTemplateBaseRequest, RunDeviceListRequest
 )
-
 from backend_api.utils.deps import get_current_user
 from scripts.config.config import RUNS_ROOT, generate_run_id
 from src.intermediateLayer.postgres_repository import RunRepository, ArtifactRepository
@@ -23,7 +22,7 @@ from scripts.orchestrator import (
 
 from mcp_server.tools.dictionary_tool import _extract_version_from_path
 from mcp_server.tools.device_list_tool import load_rules
-
+import yaml
 
 router = APIRouter(prefix="/api")
 
@@ -38,7 +37,7 @@ TEMPLATE_BASE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-M
 PVS_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs")
 CONFIG_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/config")
 
-def apply_patch(user_id: str, input_path: str | None, file_name: str | None, patch_json: dict | None, upsert: Any | None, summarize: Any | None, artifact: str, patch_file_name: str | None, validate_only: bool, run_id: str | None, mode: str | None, manual_mode: str | None, run_dir: Path, source_artifact_name: str | None = None):
+def apply_patch(user_id: str, input_path: str | None, file_name: str | None, patch_json: dict | None, upsert: Any | None, summarize: Any | None, artifact: str, patch_file_name: str | None, validate_only: bool, run_id: str | None, mode: str | None, manual_mode: str | None, run_dir: Path, source_artifact_name: str | None = None, device_rules: dict | None = None):
     # applica le patch, genera report e salva nel db
 
     if not input_path.exists():
@@ -54,7 +53,7 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
         # forza validazione canonica su template_base da DB, non da path locale di config
         out_dir = run_dir / user_id
         out_dir.mkdir(parents=True, exist_ok=True)
-        tb_path = _resolve_template_base_snapshot_for_dictionary(out_dir)
+        tb_path = _resolve_template_base_for_dictionary(out_dir)
         cfg["template_base_path"] = str(tb_path)
     
     # artifact = template_base || kb || dictionary
@@ -151,6 +150,7 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
 
     # artifact = device_list
     else:
+        cfg["device_rules"] = device_rules or {}
         report_path, enriched_file = run_device_list(cfg, validate_only, user_id)
         report = load_json(str(report_path))
 
@@ -189,6 +189,7 @@ def _register_artifact_from_path(path: str, artifact_type: str, artifact_name: s
     )
 
 def initialize(artifact_id: str, artifact_type: str, user_id: str) -> tuple[Path, Path, str]:
+
     name = artifactRepo.get_artifact_name_by_id(artifact_id)
 
     if artifact_type == "device_list":
@@ -206,7 +207,7 @@ def initialize(artifact_id: str, artifact_type: str, user_id: str) -> tuple[Path
 
     return input_path, run_dir, run_id
 
-def _resolve_template_base_snapshot_for_dictionary(run_dir: Path) -> Path:
+def _resolve_template_base_for_dictionary(run_dir: Path) -> Path:
     # ricava l ultima versione di template base
 
     tb_art = artifactRepo.get_last_version_of_artifact("template_base")
@@ -222,6 +223,21 @@ def _resolve_template_base_snapshot_for_dictionary(run_dir: Path) -> Path:
     tb_path.write_text(json.dumps(content, ensure_ascii=False, indent=2),encoding="utf-8")
     return tb_path
 
+#---CONFIG---
+def _get_device_rules_from_db(config_id: str | None) -> dict:
+    if config_id:
+        content = artifactRepo.get_artifact_content(config_id, "config")
+    else:
+        last_cfg = artifactRepo.get_last_version_of_artifact("config")
+        if not last_cfg:
+            raise HTTPException(status_code=404, detail="config not found in DB")
+        content = last_cfg.get("content")
+
+    if isinstance(content, dict):
+        return content
+    if isinstance(content, str):
+        return yaml.safe_load(content) or {}
+    raise HTTPException(status_code=500, detail="invalid config content format")
 
 #----CRONOLOGIA DIFF-----
 @router.get("/cronology")
@@ -310,19 +326,19 @@ def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_cu
 @router.post("/run/dictionary")
 def run_dictionary(payload: RunDictionaryRequest, user = Depends(get_current_user)):
     input_path, run_dir, _ = initialize(payload.id,  "dictionary", user["sub"])
-    return apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, dictionary_upsert, summarize_dictionary_diff, "dictionary", "dictionary_patch.json", payload.validate_only, payload.run_id, payload.mode, payload.manual_mode, run_dir) 
+    return apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, dictionary_upsert, summarize_dictionary_diff, "dictionary", "dictionary_patch.json", payload.validate_only, payload.run_id, payload.mode, payload.manual_mode, run_dir, None, None) 
 
 #----KB----
 @router.post("/run/kb")
 def run_kb(payload: RunKbRequest, user = Depends(get_current_user)):
     input_path, run_dir, _ = initialize(payload.id, "kb", user["sub"])
-    return  apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, "kb", "kb_patch.json", payload.validate_only, None, None, None, run_dir)
+    return  apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, "kb", "kb_patch.json", payload.validate_only, None, None, None, run_dir, None, None)
 
 #----TEMPLATE BASE----
 @router.post("/run/template_base")
 def run_template_base(payload: RunTemplateBaseRequest, user = Depends(get_current_user)):
     input_path, run_dir, _ = initialize(payload.id, "template_base", user["sub"])
-    return apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, template_apply_patch, summarize_template_base_diff, "template_base", "template_base_patch.json", payload.validate_only, None, None, None, run_dir)
+    return apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, template_apply_patch, summarize_template_base_diff, "template_base", "template_base_patch.json", payload.validate_only, None, None, None, run_dir, None, None)
 
  # ---- DEVICE LIST ----
 
@@ -331,7 +347,8 @@ def run_template_base(payload: RunTemplateBaseRequest, user = Depends(get_curren
 def run_device_list_api(payload: RunDeviceListRequest, user = Depends(get_current_user)):
     source_artifact_name = artifactRepo.get_artifact_name_by_id(payload.id)
     input_path, run_dir, _ = initialize(payload.id, "device_list", user["sub"])
-    return apply_patch(user["sub"], input_path, input_path.name, None, None, None, "device_list", None, payload.validate_only, None, None, None, run_dir, source_artifact_name=source_artifact_name)
+    rules = _get_device_rules_from_db(payload.config_id)
+    return apply_patch(user["sub"], input_path, input_path.name, None, None, None, "device_list", None, payload.validate_only, None, None, None, run_dir, source_artifact_name=source_artifact_name, device_rules=rules)
     #input_path = PVS_DIR / payload.store / payload.device_list_name
     #return apply_patch(user["sub"], input_path, payload.device_list_name, None, None, None, "device_list", None, payload.validate_only, None, None, None)
 
@@ -340,4 +357,7 @@ def get_base_update_device_list(user = Depends(get_current_user)):
     file_config = "device_list_rules.yml"
     path = CONFIG_DIR / file_config
     rules = load_rules(str(path))
+    return rules.get("enum", {})
+    # suggerimento:
+    rules = _get_device_rules_from_db(config_id)
     return rules.get("enum", {})

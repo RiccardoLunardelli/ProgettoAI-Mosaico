@@ -185,7 +185,6 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
             "diff_summary": {"changed_paths": diff},
         }
 
-
 def build_schema_versions(ctx: MCPContext, used_schema_ids: list[str]) -> dict:
     # ritorna le versioni di tutti gli schemi
 

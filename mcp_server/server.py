@@ -55,5 +55,5 @@ def kb_upsert_mapping(path: str, patch: dict, dry_run: bool) -> dict:
 
 # ----------------DEVICE-------------------------
 @mcp.tool()
-def device_list_enrich(path: str, dry_run: bool) -> dict:
-    return device_list_tool.device_list_enrich(ctx, path, dry_run)
+def device_list_enrich(path: str, dry_run: bool, rules_payload: dict | str | None = None) -> dict:
+    return device_list_tool.device_list_enrich(ctx, path, dry_run, rules_payload)

@@ -76,6 +76,8 @@ def check_device(id):
     check = deviceClass.device_exist(id)
     return check
 
+#------OPERATION------
+
 def user_operation(id, type, role: int | None, email: str | None, name: str | None, password: str | None):
     check = check_user(id)
     if len(check) > 0:
@@ -162,7 +164,7 @@ def editor_config_json_inline(artifact_id: str, yaml_text: str, user_id: str):
     run_dir = RUNS_ROOT / user_id / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
     report_path = run_dir / "run_report.json"
-    
+
     run_report = build_run_report(
         cfg={},
         run_id=run_id,

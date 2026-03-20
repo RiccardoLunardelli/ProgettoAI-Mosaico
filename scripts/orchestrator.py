@@ -41,7 +41,7 @@ def start_template_run(user_id, template_name: str, dictionary_name: str, kb_nam
     run_dir = RUNS_ROOT / user_id / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
 
-    # snapshot input DB -> file tecnici run
+    # input DB -> file tecnici run
     template_input_path = run_dir / f"{template_name}"
     dictionary_input_path = run_dir / f"{dictionary_name}"
     kb_input_path = run_dir / f"{kb_name}"
@@ -54,7 +54,7 @@ def start_template_run(user_id, template_name: str, dictionary_name: str, kb_nam
     template_base_input_path.write_text(json.dumps(template_base_payload, ensure_ascii=False, indent=2), encoding="utf-8")
     device_context_input_path.write_text(json.dumps(device_context_payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    # context persistente della run (finish usera solo questo)
+    # context persistente della run
     run_context = {
         "template_id": template_id,
         "dictionary_id": dictionary_id,
@@ -377,9 +377,10 @@ def run_device_list(cfg: dict, validate, user_id) -> None:
     validate_only = validate
 
     commit = None
+    rules_payload = cfg.get("device_rules")
 
     # dry-run
-    dry = device_list_enrich(path=input_path, dry_run=True)
+    dry = device_list_enrich(path=input_path, dry_run=True, rules_payload=rules_payload)
     preview = dry.get("preview")
     output_path = dry.get("output_path")
     diff = summarize_device_list_diff(load_json(input_path), preview)
@@ -388,7 +389,7 @@ def run_device_list(cfg: dict, validate, user_id) -> None:
         template_patch=None,
         diff=diff,
         validate_only=validate_only,
-        upsert_fn=lambda path, patch, dry_run: device_list_enrich(path=path, dry_run=dry_run)
+        upsert_fn=lambda path, patch, dry_run: device_list_enrich(path=path, dry_run=dry_run, rules_payload=rules_payload)
     )
 
     if validate_only:
@@ -398,7 +399,7 @@ def run_device_list(cfg: dict, validate, user_id) -> None:
         committed = False 
         status = "no_change"
     else:
-        commit = device_list_enrich(path=input_path, dry_run=False)
+        commit = device_list_enrich(path=input_path, dry_run=False, rules_payload=rules_payload)
         output_path = commit.get("output_path")
         committed = True
         status = "success"

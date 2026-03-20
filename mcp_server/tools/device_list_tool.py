@@ -8,11 +8,21 @@ import yaml
 
 RULES_PATH = "config/device_list_rules.yml"
 
-def load_rules(path: str) -> dict:
+def load_rules(path: str | None = None, rules_payload: dict | str | None = None) -> dict:
     # apre file yml
 
+    if rules_payload is not None:
+        if isinstance(rules_payload, dict):
+            return rules_payload
+        if isinstance(rules_payload, str):
+            return yaml.safe_load(rules_payload) or {}
+        raise ValueError("invalid rules_payload type")
+
+    # fallback legacy locale
+    if not path:
+        path = RULES_PATH
     with open(path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
+        return yaml.safe_load(f) or {}
 
 def _match_any(desc_upper: str, keywords: list[str]) -> bool:
     # ritorna True se la keywords che gli viene passata è contenuta nella descrizione
@@ -88,14 +98,14 @@ def derive_enum(role: str, type_fam: str, rules: dict, desc: str = ""):
 
     return role_map.get(type_fam, "99")
 
-def device_list_enrich(ctx: MCPContext, path: str, dry_run: bool) -> Dict[str, Any]:
+def device_list_enrich(ctx: MCPContext, path: str, dry_run: bool, rules_payload: dict | str | None = None) -> Dict[str, Any]:
     # validazione path e arricchimento device list
 
     p = ctx.ensure_within_root(path)
     device_list = ctx.read_json(p)
     ctx.schema_validate("device_list", device_list)
 
-    rules = load_rules(RULES_PATH)
+    rules = load_rules(rules_payload=rules_payload)
     centrale = set()
     template_guid = False
 
