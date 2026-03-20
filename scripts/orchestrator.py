@@ -28,7 +28,7 @@ import json
 from pathlib import Path
 
 
-def start_template_run(template_name: str, dictionary_name: str, kb_name: str, template_base_name: str, device_context_name: str,
+def start_template_run(user_id, template_name: str, dictionary_name: str, kb_name: str, template_base_name: str, device_context_name: str,
                        template_id: str, dictionary_id: str, kb_id: str, template_base_id: str, device_context_id: str, template_payload: dict,  dictionary_payload: dict,
                         kb_payload: dict, template_base_payload: dict, device_context_payload: list | dict, config_path: str="config/config.yml") -> dict:
     # normalizzazione e matching
@@ -38,7 +38,7 @@ def start_template_run(template_name: str, dictionary_name: str, kb_name: str, t
     schema_tipo_path = paths.get("schema_tipo")
 
     run_id = generate_run_id()
-    run_dir = RUNS_ROOT / run_id
+    run_dir = RUNS_ROOT / user_id / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
 
     # snapshot input DB -> file tecnici run
@@ -130,9 +130,9 @@ def llm_propose_for_run(run_id: str, llm_model: str | None = None,) -> dict:
     }
 
 #--------------RUN-----------------------
-def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate, input_path) -> None:
+def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate, input_path, user_id) -> None:
     run_id = generate_run_id()
-    run_dir = RUNS_ROOT / run_id
+    run_dir = RUNS_ROOT / user_id / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
     
     cfg["input_path"] = str(input_path)
@@ -441,14 +441,14 @@ def run_device_list(cfg: dict, validate, user_id) -> None:
         json.dump(run_report, f, indent=2, ensure_ascii=False, default=str)
     return report_path, preview
 
-def template_run(run_id: str, validate_only: bool, apply_llm: bool, llm_actions_override: dict | None = None, manual_actions_path: str | None = None, config_path: str = "config/config.yml") -> dict:
+def template_run(user_id, run_id: str, validate_only: bool, apply_llm: bool, llm_actions_override: dict | None = None, manual_actions_path: str | None = None, config_path: str = "config/config.yml") -> dict:
     # run completa per template
 
     cfg = load_config(config_path)
     llm_cfg = cfg.get("llm", {})
     llm_attempt = None
 
-    run_dir = RUNS_ROOT / run_id
+    run_dir = RUNS_ROOT / user_id / run_id
     run_context_path = run_dir / "run_context.json"
     if not run_context_path.exists():
         raise FileNotFoundError("run_context not found for run_id")
@@ -514,11 +514,7 @@ def template_run(run_id: str, validate_only: bool, apply_llm: bool, llm_actions_
     cfg_art["template_base_path"] = template_base_path
     cfg_art["llm_model"] = llm_cfg.get("model", "llama3.1:8b")
 
-    template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = \
-        build_patch_and_validation(
-            cfg_art, "template", template_apply_patch, summarize_template_real_diff,
-            actions_payload_override=actions_payload
-        )
+    template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = build_patch_and_validation(cfg_art, "template", template_apply_patch, summarize_template_real_diff,actions_payload_override=actions_payload)
 
     if validation_error:
         run_report = build_run_report(
@@ -541,21 +537,19 @@ def template_run(run_id: str, validate_only: bool, apply_llm: bool, llm_actions_
         report_path.write_text(json.dumps(run_report, ensure_ascii=False, indent=2), encoding="utf-8")
         return {"run_id": run_id, "report_path": str(report_path), "status": "validation_error"}
 
-    artifact, preview, diff = compute_diff(
-        template_path, template_patch, validated_preview, validated_diff,
-        template_apply_patch, summarize_template_real_diff
-    )
+    artifact, preview, diff = compute_diff(template_path, template_patch, validated_preview, validated_diff, template_apply_patch, summarize_template_real_diff)
 
-    output_path, committed, status, _ = apply_commit(
-        template_path, template_patch, diff, validate_only, template_apply_patch
-    )
+    output_path, committed, status, _ = apply_commit(template_path, template_patch, diff, validate_only, template_apply_patch)
 
-    schema_versions, dict_payload, kb_payload, tb_version = build_report_context(
-        "template", str(matching_path), template_base_path
-    )
-    schema_versions = build_artifact_versions(
-        "template", dict_payload=dict_payload, kb_payload=kb_payload, template_base_version=tb_version
-    )
+    # versioni coerenti con la selezione fatta in run_start (run_context)
+    dict_payload = load_json(dictionary_path) if dictionary_path else None
+    kb_payload = load_json(kb_path) if kb_path else None
+    tb_payload = load_json(template_base_path) if template_base_path else None
+    tb_version = tb_payload.get("template_base_version") if tb_payload else None
+
+    ctx = MCPContext(repo_root=".")
+    schema_versions = build_schema_versions(ctx, ["matching_report", "patch_actions_template", "template_patch"])
+    schema_versions = build_artifact_versions("template", dict_payload=dict_payload, kb_payload=kb_payload, template_base_version=tb_version)
 
     run_report = build_run_report(
         cfg=cfg_art, run_id=run_id, artifact_type="template",

@@ -84,7 +84,7 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
                 suggestions_path = out_dir / "dictionary_suggestions.json"
                 suggestions_path.write_text(json.dumps(suggestions, ensure_ascii=False, indent=2), encoding="utf-8")
 
-                report_path = run_patch(cfg, "dictionary", dictionary_upsert, summarize_dictionary_diff, validate_only, input_path)
+                report_path = run_patch(cfg, "dictionary", dictionary_upsert, summarize_dictionary_diff, validate_only, input_path, user_id)
                 report = load_json(str(report_path))
                 
                 # salvataggio nel db
@@ -113,7 +113,7 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
                 patch_path.write_text(json.dumps(patch_json, ensure_ascii=False, indent=2), encoding="utf-8")
                 cfg["patch_path"] = str(patch_path)
 
-                report_path = run_patch(cfg, "dictionary", dictionary_upsert, summarize_dictionary_diff, validate_only, input_path)
+                report_path = run_patch(cfg, "dictionary", dictionary_upsert, summarize_dictionary_diff, validate_only, input_path, user_id)
                 report = load_json(str(report_path))
 
                 artifact_type = report.get("target", {}).get("artifact_type", artifact)
@@ -137,7 +137,7 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
         patch_path.write_text(json.dumps(patch_json, ensure_ascii=False, indent=2), encoding="utf-8")
         cfg["patch_path"] = str(patch_path)
 
-        report_path = run_patch(cfg, artifact, upsert, summarize, validate_only, input_path)
+        report_path = run_patch(cfg, artifact, upsert, summarize, validate_only, input_path, user_id)
         report = load_json(str(report_path))
 
         # salvataggio nel db
@@ -264,6 +264,7 @@ def run_template_start(payload: RunTemplateStartRequest, user = Depends(get_curr
     device_context_payload = artifactRepo.get_artifact_content(payload.device_context_id, "dlc")
 
     result = start_template_run(
+        user["sub"],
         template_name=template_name,
         dictionary_name=dictionary_name,
         kb_name=kb_name,
@@ -289,7 +290,7 @@ def run_template_llm(payload: RunTemplateLlmRequest, user = Depends(get_current_
 
 @router.post("/run/template/finish")
 def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_current_user)):
-    result = template_run(run_id=payload.run_id, validate_only=payload.validate_only, apply_llm=payload.apply_llm, llm_actions_override=payload.llm_patch_actions)
+    result = template_run(user["sub"], run_id=payload.run_id, validate_only=payload.validate_only, apply_llm=payload.apply_llm, llm_actions_override=payload.llm_patch_actions)
 
     # salva nel DB
     report = load_json(result["report_path"])

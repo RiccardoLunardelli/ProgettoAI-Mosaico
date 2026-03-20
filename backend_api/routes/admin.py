@@ -1,12 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException
-from src.intermediateLayer.postgres_repository import UsersRepository, ArtifactRepository, Clients, Stores, Devices
+from src.intermediateLayer.postgres_repository import UsersRepository, ArtifactRepository, Clients, Stores, Devices, RunRepository
 from backend_api.schemas.admin import UpdateRoleAdmin, DropArtifactAdmin, DeleteUserAdmin, InsertClientAdmin, DeleteClientAdmin, UpsertStoreAdmin, UpdateUser, DeleteStoreAdmin, UpdateClientAdmin, \
     UpdateStoreAdmin, UpdateDeviceAdmin, InsertDeviceAdmin, DeleteDeviceAdmin, InsertArtifactAdmin, EditConfigAdmin
 
 from scripts.orchestrator import load_config
 from backend_api.utils.deps import require_admin
-from backend_api.routes.artifacts import editor_json_inline, CONFIG_DIR
 from uuid import UUID
+import yaml
+from scripts.config.config import TIMEZONE, generate_run_id, RUNS_ROOT
+import re
+import json
+from scripts.report.report import build_run_report
 
 router = APIRouter(prefix="/api", tags=["admin"], dependencies=[Depends(require_admin)])
 
@@ -16,6 +20,7 @@ artifactClass = ArtifactRepository(dsn)
 clientClass = Clients(dsn)
 storeClass = Stores(dsn)
 deviceClass = Devices(dsn)
+runClass = RunRepository(dsn)
 
 # -------CHECK---------
 def check_user(id):
@@ -126,6 +131,88 @@ def device_operation(id: UUID | None, store_id: UUID | None, description: str | 
         if type_op == "update" or type_op == "delete":
             raise HTTPException(status_code=404, detail="Device not found")
 
+#---EDITOR CONFIG-----
+def editor_config_json_inline(artifact_id: str, yaml_text: str, user_id: str):
+    # editor inline di config
+
+    old_name = artifactClass.get_artifact_name_by_id(artifact_id)
+    old_content = artifactClass.get_artifact_content(artifact_id, "config")
+
+    # old content da DB: può essere stringa yaml o dict
+    if isinstance(old_content, str):
+        old_obj = yaml.safe_load(old_content) or {}
+    else:
+        old_obj = old_content or {}
+
+    try:
+        new_obj = yaml.safe_load(yaml_text) or {}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"invalid yaml: {e}")
+
+    changed = (old_obj != new_obj)
+    if not changed:
+        return {"status": "ok", "changed": False, "name": old_name}
+
+    new_name, new_version = _next_versioned_name(old_name)
+
+    # salviamo YAML come stringa nel JSONB (DB source-of-truth)
+    new_artifact_id = artifactClass.upsert_artifact(artifact_type="config", name=new_name, version=new_version, content=yaml_text)
+
+    run_id = generate_run_id()
+    run_dir = RUNS_ROOT / user_id / run_id
+    run_dir.mkdir(parents=True, exist_ok=True)
+    report_path = run_dir / "run_report.json"
+    
+    run_report = build_run_report(
+        cfg={},
+        run_id=run_id,
+        artifact_type="config",
+        input_path=old_name,
+        output_path=new_name,
+        diff=["config_changed"],
+        schema_versions={"config_version": new_version},
+        committed=True,
+        status="success",
+        validation_block={"status": "ok", "errors": [], "warnings": []},
+        mr=None,
+        dictionary_payload=None,
+        kb_payload=None,
+        template_base_path=None,
+        template_base_version=None,
+        llm_attempt=None,
+        actions_payload=None,
+    )
+
+
+    report_path.write_text(json.dumps(run_report, ensure_ascii=False, indent=2), encoding="utf-8")
+    runClass.save_run(run_report, user_id, new_artifact_id)
+
+    return {
+        "status": "ok",
+        "changed": True,
+        "run_id": run_id,
+        "artifact_id": new_artifact_id,
+        "name": new_name,
+        "version": new_version,
+    }
+
+def _next_versioned_name(name: str) -> tuple[str, str]:
+    m = re.search(r"_v(\d+)\.(\d+)\.(ya?ml|json)$", name)
+    if not m:
+        base, ext = name.rsplit(".", 1)
+        return f"{base}_v0.1.{ext}", "0.1"
+
+    major, minor, ext = int(m.group(1)), int(m.group(2)), m.group(3)
+    if minor >= 9:
+        major += 1
+        minor = 0
+    else:
+        minor += 1
+
+    new_v = f"{major}.{minor}"
+    old = f"_v{m.group(1)}.{m.group(2)}.{ext}"
+    return name.replace(old, f"_v{new_v}.{ext}"), new_v
+
 # ------ENDPOINT--------
 
 #--USER--
@@ -233,4 +320,4 @@ def get_config_content(id: str, user = Depends(require_admin)):
 
 @router.post("/edit/config")
 def edit_config_inline(payload: EditConfigAdmin,user = Depends(require_admin)):
-    return editor_json_inline(payload.id, payload.file, CONFIG_DIR, "config", user["sub"])
+    return editor_config_json_inline(payload.id, payload.file, user["sub"])

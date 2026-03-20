@@ -23,13 +23,6 @@ artifactClass = ArtifactRepository(dsn)
 storeClass = Stores(dsn)
 templateClass = Template(dsn)
 
-TEMPLATE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates")
-DICTIONARIES_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionaries")
-KB_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/kb")
-TEMPLATE_BASE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/template_base")
-PVS_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs")
-CONFIG_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/config")
-
 
 def editor_json_inline(id: str, file: str | dict, input_path: Path, artifact: str, user_id: str):
     # modifica json direttamente da editor
@@ -112,7 +105,7 @@ def editor_json_inline(id: str, file: str | dict, input_path: Path, artifact: st
     else:
         raise HTTPException(status_code=400, detail=f"unsupported artifact: {artifact}")
 
-    run_report = build_run_report(
+    run_report = build_run_report(  
         cfg={},
         run_id=run_id,
         artifact_type=artifact,

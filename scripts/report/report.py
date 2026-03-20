@@ -161,6 +161,30 @@ def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str
         "validation": validation_block,
         "diff_summary": {"changed_paths": diff},
     }
+    elif artifact_type == "config":
+        return {
+            "schema_versions": schema_versions,
+            "run_id": run_id,
+            "timestamp": datetime.now(TIMEZONE).isoformat(),
+            "template_guid": None,
+            "source_files": {
+                "config_path": input_path,
+                "config_version": schema_versions.get("config_version"),
+            },
+            "target": {
+                "artifact_type": artifact_type,
+                "input_path": input_path,
+                "output_path": output_path,
+            },
+            "execution": {
+                "dry_run_performed": True,
+                "committed": committed,
+                "status": status,
+            },
+            "validation": validation_block,
+            "diff_summary": {"changed_paths": diff},
+        }
+
 
 def build_schema_versions(ctx: MCPContext, used_schema_ids: list[str]) -> dict:
     # ritorna le versioni di tutti gli schemi
