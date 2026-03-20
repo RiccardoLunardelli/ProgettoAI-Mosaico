@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { SetInputSlice } from "../../stores/slices/Base/inputSlice";
@@ -29,15 +29,16 @@ interface ComponentStateInterface {
   whatImDoing: WhatToDoType;
 }
 
-//Usata per prendersi i valori nello Slice degli input
 const inputIdList = ["TemplateBaseDetails-Edit", "TemplateBasePatch-TextArea"];
 
 function TemplateBasePageTag() {
+  const dispatch = useDispatch();
+
   const [GetTemplateBaseDetailAPI] = GetTemplateBaseDetailAPIHook();
   const [GetTemplateBaseIdsAPI] = GetTemplateBaseIdsAPIHook();
   const [UpdateTemplateBaseDetailAPI] = UpdateTemplateBaseDetailAPIHook();
   const [UpdateTemplateBasePatchAPI] = UpdateTemplateBasePatchAPIHook();
-  const dispatch = useDispatch();
+
   const [componentState, setComponentState] = useState<ComponentStateInterface>(
     {
       selectedId: "",
@@ -46,24 +47,28 @@ function TemplateBasePageTag() {
     },
   );
 
-  const templateBaseListSlice: { value: TemplateBaseListInterface[]; detail: string } =
-    useSelector(
-      (state: { templateBaseListSlice: { value: TemplateBaseListInterface[]; detail: string } }) =>
-        state.templateBaseListSlice,
-    );
+  const templateBaseListSlice: {
+    value: TemplateBaseListInterface[];
+    detail: any;
+  } = useSelector(
+    (state: {
+      templateBaseListSlice: {
+        value: TemplateBaseListInterface[];
+        detail: any;
+      };
+    }) => state.templateBaseListSlice,
+  );
 
   const inputSliceValue: {
     "TemplateBaseDetails-Edit": string;
     "TemplateBasePatch-TextArea": string;
   } = useSelector((state: any) => {
-    //Per ogni chiave dello Slice degli input
     return Object.keys(state.inputSlice.value).reduce(
-      function (accumulator: any, currentValue: any) {
-        //Controllo se questa chiave mi serve
+      (accumulator: any, currentValue: string) => {
         if (inputIdList.includes(currentValue)) {
-          //Se passa tutti i controlli, salvo il valore
           accumulator[currentValue] = state.inputSlice.value[currentValue];
         }
+
         return accumulator;
       },
       {
@@ -73,24 +78,44 @@ function TemplateBasePageTag() {
     );
   });
 
+  const selectedTemplateBase = useMemo(() => {
+    return (templateBaseListSlice?.value ?? []).find(
+      (item) => item.id === componentState.selectedId,
+    );
+  }, [templateBaseListSlice?.value, componentState.selectedId]);
+
+  const isEditJsonValid = IsValidJSON(
+    inputSliceValue["TemplateBaseDetails-Edit"] ?? "",
+  );
+
+  const isPatchJsonValid = IsValidJSON(
+    inputSliceValue["TemplateBasePatch-TextArea"] ?? "",
+  );
+
+  const isEditChanged =
+    inputSliceValue["TemplateBaseDetails-Edit"] !==
+    JSON.stringify(templateBaseListSlice.detail, null, 2);
+
+  const canSaveEdit = isEditJsonValid && isEditChanged;
+
+  const canSavePatch =
+    (inputSliceValue["TemplateBasePatch-TextArea"] ?? "").replaceAll(" ", "") !==
+      "" && isPatchJsonValid;
+
   const HandleSelectIdOnClick = (singleId: string) => {
-    setComponentState((previousStateVal: ComponentStateInterface) => {
-      return {
-        ...previousStateVal,
-        selectedId: singleId ?? "",
-      };
-    });
+    setComponentState((previousStateVal) => ({
+      ...previousStateVal,
+      selectedId: singleId ?? "",
+    }));
   };
 
   const HandleSelectWhatDoButtonOnClick = (whatToDo: WhatToDoType) => {
     if (!whatToDo) return;
 
-    setComponentState((previousStateVal: ComponentStateInterface) => {
-      return {
-        ...previousStateVal,
-        whatImDoing: whatToDo,
-      };
-    });
+    setComponentState((previousStateVal) => ({
+      ...previousStateVal,
+      whatImDoing: whatToDo,
+    }));
   };
 
   const HandleSaveEditButtonOnClick = () => {
@@ -129,7 +154,8 @@ function TemplateBasePageTag() {
   }, []);
 
   useEffect(() => {
-    if (componentState.selectedId == "") return;
+    if (componentState.selectedId === "") return;
+
     GetTemplateBaseDetailAPI({
       data: { id: componentState.selectedId },
       showLoader: true,
@@ -145,6 +171,47 @@ function TemplateBasePageTag() {
     });
   }, [componentState.selectedId]);
 
+  const cardStyle: React.CSSProperties = {
+    backgroundColor: "#ffffff",
+    borderRadius: "14px",
+    border: "1px solid #e5e7eb",
+    boxShadow: "0 6px 18px rgba(15, 23, 42, 0.06)",
+    padding: "18px",
+  };
+
+  const sectionTitleStyle: React.CSSProperties = {
+    fontSize: "18px",
+    fontWeight: 700,
+    color: "#111827",
+    marginBottom: "12px",
+  };
+
+  const subtleTitleStyle: React.CSSProperties = {
+    fontSize: "13px",
+    fontWeight: 600,
+    color: "#6b7280",
+    textTransform: "uppercase",
+    letterSpacing: "0.04em",
+    marginBottom: "8px",
+  };
+
+  const selectionItemStyle = (isSelected: boolean): React.CSSProperties => ({
+    borderRadius: "10px",
+    padding: "10px 12px",
+    width: "100%",
+    cursor: "pointer",
+    fontSize: "13px",
+    color: isSelected ? "#1d4ed8" : "#111827",
+    marginTop: "8px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: isSelected ? "#eff6ff" : "#f9fafb",
+    border: isSelected ? "1px solid #bfdbfe" : "1px solid #e5e7eb",
+    transition: "all 0.15s ease",
+    boxSizing: "border-box",
+  });
+
   return (
     <div
       style={{
@@ -152,126 +219,105 @@ function TemplateBasePageTag() {
         height: "100%",
         width: "100%",
         display: "flex",
-        flexDirection: "row",
+        gap: "20px",
+        padding: "20px",
+        boxSizing: "border-box",
+        overflow: "hidden",
       }}
     >
-      {/* Parte Sinistra pagina divista */}
+      {/* Colonna sinistra */}
       <div
         style={{
-          height: "100%",
-          width: "50%",
-          borderRight: "1px solid #e5e7eb",
+          width: "36%",
+          minWidth: "360px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+          overflow: "hidden",
         }}
       >
-        {/* Card Container */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            marginTop: "30px",
-            marginLeft: "45px",
-          }}
-        >
-          {/* Card */}
+        <div style={{ ...cardStyle, flexShrink: 0 }}>
+          <div style={sectionTitleStyle}>Template Base</div>
+
           <div
             style={{
-              backgroundColor: "#ffffff",
-              borderRadius: "8px",
-              padding: "10px",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-              boxSizing: "border-box",
-              width: "35vw",
-              height: "30vh",
-              display: "flex",
-              justifyContent: "flex-start",
+              maxHeight: "320px",
+              overflow: "auto",
+              paddingRight: "4px",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                margin: "10px",
-                alignItems: "flex-start",
-                width: "100%",
-                height: "100%",
-              }}
-            >
-              <span style={{ fontSize: "20px", fontWeight: 600 }}>
-                Template Base
-              </span>
+            {(templateBaseListSlice?.value ?? []).length > 0 ? (
+              (templateBaseListSlice?.value ?? []).map(
+                (singleItem: TemplateBaseListInterface) => {
+                  const isSelected =
+                    componentState.selectedId === (singleItem?.id ?? "");
 
-              <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  overflow: "auto",
-                  marginTop: "10px",
-                }}
-              >
-                {(templateBaseListSlice?.value ?? []).length > 0 ? (
-                  <>
-                    {(templateBaseListSlice?.value ?? []).map(
-                      (singleId: TemplateBaseListInterface) => {
-                        const isSelected =
-                          componentState.selectedId === singleId.id;
+                  return (
+                    <div
+                      key={singleItem?.id ?? ""}
+                      className="HoverTransform"
+                      style={selectionItemStyle(isSelected)}
+                      onClick={() => HandleSelectIdOnClick(singleItem.id)}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "3px",
+                        }}
+                      >
+                        <span style={{ fontSize: "14px", fontWeight: 600 }}>
+                          {singleItem?.name ?? "Senza nome"}
+                        </span>
+                        <span style={{ fontSize: "12px", color: "#6b7280" }}>
+                          ID: {singleItem?.id ?? "-"}
+                        </span>
+                      </div>
 
-                        return (
-                          <div
-                            key={singleId.id ?? ""}
-                            className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
-                            style={{
-                              borderRadius: "8px",
-                              padding: "6px 10px",
-                              width: "95%",
-                              cursor: "pointer",
-                              fontSize: "13px",
-                              color: "var(--black)",
-                              marginTop: "8px",
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                            }}
-                            onClick={() => {
-                              HandleSelectIdOnClick(singleId.id);
-                            }}
-                          >
-                            <span style={{ fontSize: "14px", fontWeight: 500 }}>
-                              {singleId.name ?? ""}
-                            </span>
-                          </div>
-                        );
-                      },
-                    )}
-                  </>
-                ) : (
-                  <span style={{ opacity: "60%" }}>
-                    Nessun template trovato
-                  </span>
-                )}
-              </div>
-            </div>
+                      {isSelected && (
+                        <span
+                          className="material-symbols-outlined"
+                          style={{
+                            fontSize: "18px",
+                            color: "#2563eb",
+                            userSelect: "none",
+                          }}
+                        >
+                          check_circle
+                        </span>
+                      )}
+                    </div>
+                  );
+                },
+              )
+            ) : (
+              <span style={{ opacity: 0.6 }}>Nessun template trovato</span>
+            )}
           </div>
+        </div>
 
-          {/* Card */}
-          {templateBaseListSlice.detail && componentState.selectedId !== "" ? (
-            <>
-              <div
-                style={{ marginTop: "20px", display: "flex", opacity: "50%" }}
-              >
-                Preview run
-              </div>
+        <div
+          style={{
+            ...cardStyle,
+            flex: 1,
+            minHeight: 0,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <div style={sectionTitleStyle}>Preview template base</div>
+
+          {componentState.selectedId !== "" ? (
+            templateBaseListSlice.detail ? (
               <div
                 style={{
-                  backgroundColor: "#f3f5f7",
-                  borderRadius: "8px",
-                  padding: "10px",
-                  boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-                  boxSizing: "border-box",
-                  width: "80%",
-                  height: "50vh",
-                  display: "flex",
-                  justifyContent: "flex-start",
+                  flex: 1,
+                  minHeight: 0,
                   overflow: "auto",
+                  backgroundColor: "#f3f4f6",
+                  borderRadius: "10px",
+                  border: "1px solid #e5e7eb",
+                  padding: "14px",
                 }}
               >
                 <pre
@@ -281,228 +327,316 @@ function TemplateBasePageTag() {
                     whiteSpace: "pre-wrap",
                     wordBreak: "break-word",
                     fontSize: "13px",
-                    width: "100%",
+                    lineHeight: "1.5",
                   }}
                 >
                   {JSON.stringify(templateBaseListSlice.detail, null, 2)}
                 </pre>
               </div>
-            </>
+            ) : (
+              <Suspense fallback="">
+                <RunsListSkeleton />
+              </Suspense>
+            )
           ) : (
-            <>
-              {componentState.selectedId !== "" && (
-                <Suspense fallback="">
-                  <RunsListSkeleton />
-                </Suspense>
-              )}
-            </>
+            <div
+              style={{
+                flex: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "10px",
+                border: "1px dashed #d1d5db",
+                color: "#6b7280",
+                backgroundColor: "#fcfcfd",
+              }}
+            >
+              Seleziona un template base per vedere l’anteprima
+            </div>
           )}
         </div>
       </div>
-      {/* Parte Destra pagina divista */}
+
+      {/* Colonna destra */}
       <div
         style={{
-          height: "100%",
-          width: "50%",
+          flex: 1,
           display: "flex",
-          alignItems: "center",
           flexDirection: "column",
+          gap: "16px",
           overflow: "auto",
+          paddingRight: "4px",
         }}
       >
-        {/* Se non è selezionato un Id la pagina destra non si vede */}
         {componentState.selectedId ? (
           <>
-            {/* Pulsante cosa fare */}
-            <div style={{ margin: "20px" }}>
-              <BasicButtonGenericTag
-                textToSee="Patch Json"
+            <div style={cardStyle}>
+              <div style={subtleTitleStyle}>Elemento selezionato</div>
+              <div
                 style={{
-                  marginLeft: "10px",
-                  color:
-                    componentState.whatImDoing == "PatchJson"
-                      ? "white"
-                      : undefined,
-                  backgroundColor:
-                    componentState.whatImDoing == "PatchJson"
-                      ? "#477dda"
-                      : undefined,
-                  fontWeight: 600,
+                  fontSize: "20px",
+                  fontWeight: 700,
+                  color: "#111827",
                 }}
-                clickCallBack={() =>
-                  HandleSelectWhatDoButtonOnClick("PatchJson")
-                }
-              />
-              <BasicButtonGenericTag
-                textToSee="Edit"
+              >
+                {selectedTemplateBase?.name ?? "Template Base"}
+              </div>
+              <div
                 style={{
-                  marginLeft: "10px",
-                  color:
-                    componentState.whatImDoing == "Edit" ? "white" : undefined,
-                  backgroundColor:
-                    componentState.whatImDoing == "Edit"
-                      ? "#477dda"
-                      : undefined,
-                  fontWeight: 600,
+                  marginTop: "6px",
+                  color: "#6b7280",
+                  fontSize: "13px",
                 }}
-                clickCallBack={() => HandleSelectWhatDoButtonOnClick("Edit")}
-              />
+              >
+                ID: {componentState.selectedId}
+              </div>
             </div>
-            {/* Se whatImDoing è Edit */}
-            {componentState.whatImDoing == "Edit" ? (
-              <>
+
+            <div style={cardStyle}>
+              <div style={sectionTitleStyle}>Operazione</div>
+
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                <BasicButtonGenericTag
+                  textToSee="Patch Json"
+                  style={{
+                    color:
+                      componentState.whatImDoing === "PatchJson"
+                        ? "white"
+                        : undefined,
+                    backgroundColor:
+                      componentState.whatImDoing === "PatchJson"
+                        ? "#477dda"
+                        : undefined,
+                    fontWeight: 600,
+                  }}
+                  clickCallBack={() =>
+                    HandleSelectWhatDoButtonOnClick("PatchJson")
+                  }
+                />
+
+                <BasicButtonGenericTag
+                  textToSee="Edit"
+                  style={{
+                    color:
+                      componentState.whatImDoing === "Edit"
+                        ? "white"
+                        : undefined,
+                    backgroundColor:
+                      componentState.whatImDoing === "Edit"
+                        ? "#477dda"
+                        : undefined,
+                    fontWeight: 600,
+                  }}
+                  clickCallBack={() => HandleSelectWhatDoButtonOnClick("Edit")}
+                />
+              </div>
+            </div>
+
+            {componentState.whatImDoing === "Edit" && (
+              <div style={cardStyle}>
+                <div style={sectionTitleStyle}>Modifica JSON</div>
+
                 <div
                   style={{
-                    width: "90%",
+                    borderRadius: "12px",
+                    border: "1px solid #d1d5db",
+                    overflow: "hidden",
+                    backgroundColor: "#f9fafb",
                   }}
                 >
                   <Suspense fallback="">
-                    <div
-                      style={{
-                        borderRadius: "8px",
-                        border: "1px solid #d1d5db",
-                        overflow: "hidden",
-                        backgroundColor: "#f9fafb",
+                    <MonacoEditorTag
+                      height="520px"
+                      defaultLanguage="json"
+                      value={inputSliceValue["TemplateBaseDetails-Edit"] ?? ""}
+                      onChange={(value) => {
+                        dispatch(
+                          SetInputSlice({
+                            id: "TemplateBaseDetails-Edit",
+                            value: value ?? "",
+                          }),
+                        );
                       }}
-                    >
-                      <MonacoEditorTag
-                        height="550px"
-                        defaultLanguage="json"
-                        value={
-                          inputSliceValue["TemplateBaseDetails-Edit"] ?? ""
-                        }
-                        onChange={(value) => {
-                          dispatch(
-                            SetInputSlice({
-                              id: "TemplateBaseDetails-Edit",
-                              value: value ?? "",
-                            }),
-                          );
-                        }}
-                        options={{
-                          minimap: { enabled: false },
-                          fontSize: 13,
-                          formatOnPaste: true,
-                          formatOnType: true,
-                          scrollBeyondLastLine: false,
-                          wordWrap: "on",
-                          tabSize: 2,
-                          automaticLayout: true,
-                          readOnly: false,
-                        }}
-                      />
-                    </div>
+                      options={{
+                        minimap: { enabled: false },
+                        fontSize: 13,
+                        formatOnPaste: true,
+                        formatOnType: true,
+                        scrollBeyondLastLine: false,
+                        wordWrap: "on",
+                        tabSize: 2,
+                        automaticLayout: true,
+                        readOnly: false,
+                      }}
+                    />
                   </Suspense>
                 </div>
-                <BasicButtonGenericTag
-                  textToSee="Salva"
-                  disabledButton={
-                    inputSliceValue["TemplateBaseDetails-Edit"] ===
-                      JSON.stringify(templateBaseListSlice.detail, null, 2) ||
-                    !IsValidJSON(inputSliceValue["TemplateBaseDetails-Edit"])
-                  }
-                  clickCallBack={HandleSaveEditButtonOnClick}
-                />
-              </>
-            ) : (
-              <></>
-            )}
-            {componentState.whatImDoing == "PatchJson" ? (
-              <>
-                {/* Toggle validate Only */}
+
                 <div
                   style={{
                     display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
+                    justifyContent: "flex-end",
+                    marginTop: "14px",
                   }}
                 >
-                  <span
-                    style={{
-                      marginBottom: "4px",
-                      fontWeight: 500,
-                      fontSize: "15px",
-                    }}
-                  >
-                    Validate Only
-                  </span>
-                  <Toggle
-                    checked={componentState?.validateOnly ?? false}
-                    onChange={(val: boolean) => {
-                      setComponentState(
-                        (previousStateVal: ComponentStateInterface) => {
-                          return {
-                            ...previousStateVal,
-                            validateOnly: val,
-                          };
-                        },
-                      );
-                    }}
+                  <BasicButtonGenericTag
+                    textToSee="Salva modifiche"
+                    disabledButton={!canSaveEdit}
+                    clickCallBack={HandleSaveEditButtonOnClick}
                   />
                 </div>
-                {/* Se Validate Only è abilitato */}
-                {componentState.validateOnly ? (
-                  <>
+              </div>
+            )}
+
+            {componentState.whatImDoing === "PatchJson" && (
+              <div style={cardStyle}>
+                <div style={sectionTitleStyle}>Patch JSON</div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                    gap: "20px",
+                    flexWrap: "wrap",
+                    marginBottom: "14px",
+                  }}
+                >
+                  <div>
+                    <div style={subtleTitleStyle}>Modalità patch</div>
                     <div
                       style={{
-                        backgroundColor: "#fff9e6",
-                        width: "95%",
-                        height: "5%",
-                        marginTop: "10px",
-                        borderRadius: "8px",
-                        border: "1px solid #f5dead",
+                        fontSize: "14px",
+                        color: "#374151",
+                        fontWeight: 500,
+                      }}
+                    >
+                      Applica patch o valida senza salvare
+                    </div>
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "12px",
+                      backgroundColor: "#f9fafb",
+                      border: "1px solid #e5e7eb",
+                      borderRadius: "12px",
+                      padding: "10px 14px",
+                    }}
+                  >
+                    <div
+                      style={{
                         display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
+                        flexDirection: "column",
+                        alignItems: "flex-start",
                       }}
                     >
                       <span
                         style={{
-                          fontSize: "20px",
-                          marginLeft: "20px",
-                          opacity: "0.4",
-                          userSelect: "none",
+                          fontWeight: 600,
+                          fontSize: "14px",
+                          color: "#111827",
                         }}
-                        className="material-symbols-outlined"
                       >
-                        warning
+                        Validate Only
                       </span>
                       <span
                         style={{
-                          fontSize: "13px",
-                          opacity: "0.8",
-                          marginLeft: "10px",
+                          fontSize: "12px",
+                          color: "#6b7280",
                         }}
                       >
-                        Modalità Validate Only attiva — Nessuna modifica verrà
-                        salvata
+                        Controlla la patch senza salvare modifiche
                       </span>
                     </div>
-                  </>
-                ) : (
-                  <></>
+
+                    <Suspense fallback="">
+                      <Toggle
+                        checked={componentState?.validateOnly ?? false}
+                        onChange={(val: boolean) => {
+                          setComponentState((previousStateVal) => ({
+                            ...previousStateVal,
+                            validateOnly: val,
+                          }));
+                        }}
+                      />
+                    </Suspense>
+                  </div>
+                </div>
+
+                {componentState.validateOnly && (
+                  <div
+                    style={{
+                      backgroundColor: "#fff8db",
+                      border: "1px solid #fde68a",
+                      borderRadius: "10px",
+                      padding: "12px 14px",
+                      marginBottom: "14px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
+                  >
+                    <span
+                      className="material-symbols-outlined"
+                      style={{
+                        fontSize: "18px",
+                        color: "#ca8a04",
+                        userSelect: "none",
+                      }}
+                    >
+                      warning
+                    </span>
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        color: "#854d0e",
+                        fontWeight: 500,
+                      }}
+                    >
+                      Modalità Validate Only attiva — nessuna modifica verrà
+                      salvata
+                    </span>
+                  </div>
                 )}
+
                 <div>
                   <TemplateBasePatchFormTag inputPrefix="TemplateBasePatch" />
                 </div>
-                <BasicButtonGenericTag
-                  textToSee="Salva"
-                  disabledButton={
-                    inputSliceValue["TemplateBasePatch-TextArea"].replaceAll(
-                      " ",
-                      "",
-                    ) == "" ||
-                    !IsValidJSON(inputSliceValue["TemplateBasePatch-TextArea"])
-                  }
-                  clickCallBack={HandleSavePatchButtonOnClick}
-                />
-              </>
-            ) : (
-              <></>
+
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    marginTop: "14px",
+                  }}
+                >
+                  <BasicButtonGenericTag
+                    textToSee="Salva patch"
+                    disabledButton={!canSavePatch}
+                    clickCallBack={HandleSavePatchButtonOnClick}
+                  />
+                </div>
+              </div>
             )}
           </>
         ) : (
-          <></>
+          <div
+            style={{
+              ...cardStyle,
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#6b7280",
+              fontSize: "15px",
+              textAlign: "center",
+            }}
+          >
+            Seleziona un template base dalla lista a sinistra per iniziare
+          </div>
         )}
       </div>
     </div>

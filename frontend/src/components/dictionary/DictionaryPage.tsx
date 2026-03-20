@@ -465,55 +465,59 @@ function DictionaryPageTag() {
                   </div>
                 </div>
 
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    backgroundColor: "#f9fafb",
-                    border: "1px solid #e5e7eb",
-                    borderRadius: "12px",
-                    padding: "10px 14px",
-                  }}
-                >
+                {componentState.whatImDoing == "Edit" ? (
+                  <></>
+                ) : (
                   <div
                     style={{
                       display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
+                      alignItems: "center",
+                      gap: "12px",
+                      backgroundColor: "#f9fafb",
+                      border: "1px solid #e5e7eb",
+                      borderRadius: "12px",
+                      padding: "10px 14px",
                     }}
                   >
-                    <span
+                    <div
                       style={{
-                        fontWeight: 600,
-                        fontSize: "14px",
-                        color: "#111827",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-start",
                       }}
                     >
-                      Validate Only
-                    </span>
-                    <span
-                      style={{
-                        fontSize: "12px",
-                        color: "#6b7280",
-                      }}
-                    >
-                      Esegue controlli senza salvare modifiche
-                    </span>
-                  </div>
+                      <span
+                        style={{
+                          fontWeight: 600,
+                          fontSize: "14px",
+                          color: "#111827",
+                        }}
+                      >
+                        Validate Only
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "12px",
+                          color: "#6b7280",
+                        }}
+                      >
+                        Esegue controlli senza salvare modifiche
+                      </span>
+                    </div>
 
-                  <Suspense fallback="">
-                    <Toggle
-                      checked={componentState?.validateOnly ?? false}
-                      onChange={(val: boolean) => {
-                        setComponentState((previousStateVal) => ({
-                          ...previousStateVal,
-                          validateOnly: val,
-                        }));
-                      }}
-                    />
-                  </Suspense>
-                </div>
+                    <Suspense fallback="">
+                      <Toggle
+                        checked={componentState?.validateOnly ?? false}
+                        onChange={(val: boolean) => {
+                          setComponentState((previousStateVal) => ({
+                            ...previousStateVal,
+                            validateOnly: val,
+                          }));
+                        }}
+                      />
+                    </Suspense>
+                  </div>
+                )}
               </div>
 
               <div style={{ marginTop: "12px" }}>
@@ -585,9 +589,7 @@ function DictionaryPageTag() {
                     color:
                       componentState.Mode === "manual" ? "white" : undefined,
                     backgroundColor:
-                      componentState.Mode === "manual"
-                        ? "#477dda"
-                        : undefined,
+                      componentState.Mode === "manual" ? "#477dda" : undefined,
                     fontWeight: 600,
                   }}
                   clickCallBack={() => HandleSelectModeButtonOnClick("manual")}
@@ -664,7 +666,9 @@ function DictionaryPageTag() {
                         <MonacoEditorTag
                           height="420px"
                           defaultLanguage="json"
-                          value={inputSliceValue["DictionaryDetails-Edit"] ?? ""}
+                          value={
+                            inputSliceValue["DictionaryDetails-Edit"] ?? ""
+                          }
                           onChange={(value) => {
                             dispatch(
                               SetInputSlice({
