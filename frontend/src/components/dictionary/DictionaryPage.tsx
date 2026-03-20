@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { WhatToDoType } from "../knowledgebase/KnowledgeBasePage";
 import {
@@ -12,13 +12,12 @@ import { IsValidJSON } from "../../commons/commonsFunctions";
 import { GetRunIdTemplateAPIHook } from "../../customHooks/API/TemplateBase/templateBaseAPI";
 import DictionaryPatchFormTag from "./DictionaryPatchForm";
 import type { DictionatyListInterface } from "../../stores/slices/Base/dictionaryListSlice";
+import WarningTag from "../Warning/Warning";
 
 const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
-
 const BasicButtonGenericTag = lazy(
   () => import("../button/BasicButtonGeneric"),
 );
-
 const Toggle = lazy(() =>
   import("rsuite").then((module) => ({ default: module.Toggle })),
 );
@@ -26,39 +25,37 @@ const MonacoEditorTag = lazy(() => import("@monaco-editor/react"));
 
 export type ModeType = "run_report" | "manual";
 
-interface suggestionRunInterface {
+interface SuggestionRunInterface {
   patch: {};
   suggestions: {}[];
 }
 
 interface ComponentStateInterface {
   selectedId: string;
-  selectedName: string;
   selectedRunId: string;
   validateOnly: boolean;
   whatImDoing: WhatToDoType;
   Mode: ModeType;
-  suggestRun: null | suggestionRunInterface;
+  suggestRun: null | SuggestionRunInterface;
 }
 
-//Usata per prendersi i valori nello Slice degli input
 const inputIdList = ["DictionaryDetails-Edit", "DictionaryPatch-TextArea"];
 
 function DictionaryPageTag() {
+  const dispatch = useDispatch();
+
   const [GetDictionatyIdsAPI] = GetDictionaryIdsAPIHook();
   const [GetDictionaryDetailAPI] = GetDictionaryDetailAPIHook();
   const [UpdateDictionaryDetailAPI] = UpdateDictionaryDetailAPIHook();
   const [RunReportDictionaryAPI] = RunReportDictionaryAPIHook();
   const [GetRunIdTemplateAPI] = GetRunIdTemplateAPIHook();
 
-  const dispatch = useDispatch();
-
   const dictionaryListSlice: {
     value: DictionatyListInterface[];
-    detail: string;
+    detail: any;
   } = useSelector(
     (state: {
-      dictionaryListSlice: { value: DictionatyListInterface[]; detail: string };
+      dictionaryListSlice: { value: DictionatyListInterface[]; detail: any };
     }) => state.dictionaryListSlice,
   );
 
@@ -67,30 +64,16 @@ function DictionaryPageTag() {
       state.templateBaseListSlice,
   );
 
-  const [componentState, setComponentState] = useState<ComponentStateInterface>(
-    {
-      selectedId: "",
-      selectedName: "",
-      validateOnly: false,
-      whatImDoing: "PatchJson",
-      Mode: "run_report",
-      selectedRunId: "",
-      suggestRun: null,
-    },
-  );
-
   const inputSliceValue: {
     "DictionaryDetails-Edit": string;
     "DictionaryPatch-TextArea": string;
   } = useSelector((state: any) => {
-    //Per ogni chiave dello Slice degli input
     return Object.keys(state.inputSlice.value).reduce(
-      function (accumulator: any, currentValue: any) {
-        //Controllo se questa chiave mi serve
+      (accumulator: any, currentValue: string) => {
         if (inputIdList.includes(currentValue)) {
-          //Se passa tutti i controlli, salvo il valore
           accumulator[currentValue] = state.inputSlice.value[currentValue];
         }
+
         return accumulator;
       },
       {
@@ -100,48 +83,77 @@ function DictionaryPageTag() {
     );
   });
 
+  const [componentState, setComponentState] = useState<ComponentStateInterface>(
+    {
+      selectedId: "",
+      validateOnly: false,
+      whatImDoing: "PatchJson",
+      Mode: "run_report",
+      selectedRunId: "",
+      suggestRun: null,
+    },
+  );
+
+  const selectedDictionary = useMemo(() => {
+    return (dictionaryListSlice?.value ?? []).find(
+      (item) => item.id === componentState.selectedId,
+    );
+  }, [dictionaryListSlice?.value, componentState.selectedId]);
+
+  const isEditJsonValid = IsValidJSON(
+    inputSliceValue["DictionaryDetails-Edit"] ?? "",
+  );
+
+  const isPatchJsonValid = IsValidJSON(
+    inputSliceValue["DictionaryPatch-TextArea"] ?? "",
+  );
+
+  const isEditChanged =
+    inputSliceValue["DictionaryDetails-Edit"] !==
+    JSON.stringify(dictionaryListSlice.detail, null, 2);
+
+  const canSaveEdit = isEditJsonValid && isEditChanged;
+
+  const canSavePatch =
+    (inputSliceValue["DictionaryPatch-TextArea"] ?? "").replaceAll(" ", "") !==
+      "" && isPatchJsonValid;
+
   const HandleSelectIdOnClick = (singleId: string) => {
-    setComponentState((previousStateVal: ComponentStateInterface) => {
-      return {
-        ...previousStateVal,
-        selectedId: singleId ?? "",
-      };
-    });
+    setComponentState((previousStateVal) => ({
+      ...previousStateVal,
+      selectedId: singleId ?? "",
+      selectedRunId: "",
+      suggestRun: null,
+    }));
   };
 
   const HandleSelectRunIdOnClick = (singleId: string) => {
-    setComponentState((previousStateVal: ComponentStateInterface) => {
-      return {
-        ...previousStateVal,
-        selectedRunId: singleId ?? "",
-      };
-    });
+    setComponentState((previousStateVal) => ({
+      ...previousStateVal,
+      selectedRunId: singleId ?? "",
+    }));
   };
 
   const HandleSelectModeButtonOnClick = (mode: ModeType) => {
     if (!mode) return;
 
-    setComponentState((previousStateVal: ComponentStateInterface) => {
-      return {
-        ...previousStateVal,
-        Mode: mode,
-      };
-    });
+    setComponentState((previousStateVal) => ({
+      ...previousStateVal,
+      Mode: mode,
+      suggestRun: null,
+    }));
   };
 
   const HandleSelectWhatDoButtonOnClick = (whatToDo: WhatToDoType) => {
     if (!whatToDo) return;
 
-    setComponentState((previousStateVal: ComponentStateInterface) => {
-      return {
-        ...previousStateVal,
-        whatImDoing: whatToDo,
-      };
-    });
+    setComponentState((previousStateVal) => ({
+      ...previousStateVal,
+      whatImDoing: whatToDo,
+    }));
   };
 
   const HandleSaveEditButtonOnClick = () => {
-
     UpdateDictionaryDetailAPI({
       data: {
         id: componentState?.selectedId ?? "",
@@ -162,11 +174,11 @@ function DictionaryPageTag() {
         validate_only: componentState.validateOnly,
         mode: componentState.Mode,
         run_id:
-          componentState.Mode == "manual" ? "" : componentState.selectedRunId,
-        manual_mode: componentState.Mode == "manual" ? "patch" : "",
+          componentState.Mode === "manual" ? "" : componentState.selectedRunId,
+        manual_mode: componentState.Mode === "manual" ? "patch" : "",
         patch_json:
-          componentState.whatImDoing == "PatchJson" &&
-          componentState.Mode == "manual"
+          componentState.whatImDoing === "PatchJson" &&
+          componentState.Mode === "manual"
             ? JSON.parse(inputSliceValue["DictionaryPatch-TextArea"])
             : {},
       },
@@ -175,25 +187,24 @@ function DictionaryPageTag() {
       EndCallback: (result) => {
         GetDictionatyIdsAPI({ showLoader: true, saveResponse: true });
 
-        const parsedMessage = JSON.parse(result?.message);
+        const parsedMessage = JSON.parse(result?.message ?? "{}");
 
         if (parsedMessage?.patch && parsedMessage?.suggestions) {
-          setComponentState((previousStateVal: ComponentStateInterface) => {
-            return {
-              ...previousStateVal,
-              suggestRun: {
-                patch: parsedMessage?.patch ?? {},
-                suggestions: parsedMessage?.suggestions ?? [],
-              },
-            };
-          });
+          setComponentState((previousStateVal) => ({
+            ...previousStateVal,
+            suggestRun: {
+              patch: parsedMessage?.patch ?? {},
+              suggestions: parsedMessage?.suggestions ?? [],
+            },
+          }));
         }
       },
     });
   };
 
   useEffect(() => {
-    if (componentState.selectedId == "") return;
+    if (componentState.selectedId === "") return;
+
     GetDictionaryDetailAPI({
       data: { id: componentState.selectedId },
       showLoader: true,
@@ -211,18 +222,58 @@ function DictionaryPageTag() {
 
   useEffect(() => {
     GetDictionatyIdsAPI({ showLoader: true, saveResponse: true });
-    setComponentState((previousStateVal: ComponentStateInterface) => {
-      return {
-        ...previousStateVal,
-        suggestRun: null,
-      };
-    });
+
+    setComponentState((previousStateVal) => ({
+      ...previousStateVal,
+      suggestRun: null,
+    }));
   }, []);
 
   useEffect(() => {
     if (componentState.Mode !== "run_report") return;
     GetRunIdTemplateAPI({ showLoader: true, saveResponse: true });
   }, [componentState.Mode]);
+
+  const cardStyle: React.CSSProperties = {
+    backgroundColor: "#ffffff",
+    borderRadius: "14px",
+    border: "1px solid #e5e7eb",
+    boxShadow: "0 6px 18px rgba(15, 23, 42, 0.06)",
+    padding: "18px",
+  };
+
+  const sectionTitleStyle: React.CSSProperties = {
+    fontSize: "18px",
+    fontWeight: 700,
+    color: "#111827",
+    marginBottom: "12px",
+  };
+
+  const subtleTitleStyle: React.CSSProperties = {
+    fontSize: "13px",
+    fontWeight: 600,
+    color: "#6b7280",
+    textTransform: "uppercase",
+    letterSpacing: "0.04em",
+    marginBottom: "8px",
+  };
+
+  const selectionItemStyle = (isSelected: boolean): React.CSSProperties => ({
+    borderRadius: "10px",
+    padding: "10px 12px",
+    width: "100%",
+    cursor: "pointer",
+    fontSize: "13px",
+    color: isSelected ? "#1d4ed8" : "#111827",
+    marginTop: "8px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: isSelected ? "#eff6ff" : "#f9fafb",
+    border: isSelected ? "1px solid #bfdbfe" : "1px solid #e5e7eb",
+    transition: "all 0.15s ease",
+    boxSizing: "border-box",
+  });
 
   return (
     <div
@@ -231,124 +282,105 @@ function DictionaryPageTag() {
         height: "100%",
         width: "100%",
         display: "flex",
-        flexDirection: "row",
+        gap: "20px",
+        padding: "20px",
+        boxSizing: "border-box",
+        overflow: "hidden",
       }}
     >
-      {/* Parte Sinistra pagina divista */}
+      {/* Colonna sinistra */}
       <div
         style={{
-          height: "100%",
-          width: "50%",
-          borderRight: "1px solid #e5e7eb",
+          width: "36%",
+          minWidth: "360px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+          overflow: "hidden",
         }}
       >
-        {/* Card Container */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            marginTop: "30px",
-            marginLeft: "45px",
-          }}
-        >
-          {/* Card */}
+        <div style={{ ...cardStyle, flexShrink: 0 }}>
+          <div style={sectionTitleStyle}>Dictionary disponibili</div>
+
           <div
             style={{
-              backgroundColor: "#ffffff",
-              borderRadius: "8px",
-              padding: "10px",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-              boxSizing: "border-box",
-              width: "35vw",
-              height: "30vh",
-              display: "flex",
-              justifyContent: "flex-start",
+              maxHeight: "320px",
+              overflow: "auto",
+              paddingRight: "4px",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                margin: "10px",
-                alignItems: "flex-start",
-                width: "100%",
-                height: "100%",
-              }}
-            >
-              <span style={{ fontSize: "20px", fontWeight: 600 }}>
-                Dictionary disponibili
-              </span>
+            {(dictionaryListSlice?.value ?? []).length > 0 ? (
+              (dictionaryListSlice?.value ?? []).map(
+                (singleItem: DictionatyListInterface) => {
+                  const isSelected =
+                    componentState.selectedId === (singleItem?.id ?? "");
 
-              <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  overflow: "auto",
-                  marginTop: "10px",
-                }}
-              >
-                {(dictionaryListSlice?.value ?? []).length > 0 ? (
-                  <>
-                    {(dictionaryListSlice?.value ?? []).map(
-                      (singleId: DictionatyListInterface) => {
-                        const isSelected =
-                          componentState.selectedId === (singleId?.id ?? "");
+                  return (
+                    <div
+                      key={singleItem.id ?? ""}
+                      className="HoverTransform"
+                      style={selectionItemStyle(isSelected)}
+                      onClick={() => HandleSelectIdOnClick(singleItem.id)}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "3px",
+                        }}
+                      >
+                        <span style={{ fontSize: "14px", fontWeight: 600 }}>
+                          {singleItem.name ?? "Senza nome"}
+                        </span>
+                        <span style={{ fontSize: "12px", color: "#6b7280" }}>
+                          ID: {singleItem.id ?? "-"}
+                        </span>
+                      </div>
 
-                        return (
-                          <div
-                            key={singleId.id ?? ""}
-                            className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
-                            style={{
-                              borderRadius: "8px",
-                              padding: "6px 10px",
-                              width: "95%",
-                              cursor: "pointer",
-                              fontSize: "13px",
-                              color: "var(--black)",
-                              marginTop: "8px",
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                            }}
-                            onClick={() => {
-                              HandleSelectIdOnClick(singleId.id);
-                            }}
-                          >
-                            <span style={{ fontSize: "14px", fontWeight: 500 }}>
-                              {singleId.name ?? ""}
-                            </span>
-                          </div>
-                        );
-                      },
-                    )}
-                  </>
-                ) : (
-                  <span style={{ opacity: "60%" }}>Nessuna run trovata</span>
-                )}
-              </div>
-            </div>
+                      {isSelected && (
+                        <span
+                          className="material-symbols-outlined"
+                          style={{
+                            fontSize: "18px",
+                            color: "#2563eb",
+                            userSelect: "none",
+                          }}
+                        >
+                          check_circle
+                        </span>
+                      )}
+                    </div>
+                  );
+                },
+              )
+            ) : (
+              <span style={{ opacity: 0.6 }}>Nessun dictionary trovato</span>
+            )}
           </div>
+        </div>
 
-          {/* Card */}
-          {dictionaryListSlice.detail && componentState.selectedId !== "" ? (
-            <>
-              <div
-                style={{ marginTop: "20px", display: "flex", opacity: "50%" }}
-              >
-                Preview run
-              </div>
+        <div
+          style={{
+            ...cardStyle,
+            flex: 1,
+            minHeight: 0,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <div style={sectionTitleStyle}>Preview dictionary</div>
+
+          {componentState.selectedId !== "" ? (
+            dictionaryListSlice.detail ? (
               <div
                 style={{
-                  backgroundColor: "#f3f5f7",
-                  borderRadius: "8px",
-                  padding: "10px",
-                  boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-                  boxSizing: "border-box",
-                  width: "80%",
-                  height: "50vh",
-                  display: "flex",
-                  justifyContent: "flex-start",
+                  flex: 1,
+                  minHeight: 0,
                   overflow: "auto",
+                  backgroundColor: "#f3f4f6",
+                  borderRadius: "10px",
+                  border: "1px solid #e5e7eb",
+                  padding: "14px",
                 }}
               >
                 <pre
@@ -358,156 +390,232 @@ function DictionaryPageTag() {
                     whiteSpace: "pre-wrap",
                     wordBreak: "break-word",
                     fontSize: "13px",
-                    width: "100%",
+                    lineHeight: "1.5",
                   }}
                 >
                   {JSON.stringify(dictionaryListSlice.detail, null, 2)}
                 </pre>
               </div>
-            </>
+            ) : (
+              <Suspense fallback="">
+                <RunsListSkeleton />
+              </Suspense>
+            )
           ) : (
-            <>
-              {componentState.selectedId !== "" && (
-                <Suspense fallback="">
-                  <RunsListSkeleton />
-                </Suspense>
-              )}
-            </>
+            <div
+              style={{
+                flex: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "10px",
+                border: "1px dashed #d1d5db",
+                color: "#6b7280",
+                backgroundColor: "#fcfcfd",
+              }}
+            >
+              Seleziona un dictionary per vedere l’anteprima
+            </div>
           )}
         </div>
       </div>
-      {/* Parte Destra pagina divista */}
+
+      {/* Colonna destra */}
       <div
         style={{
-          height: "100%",
-          width: "50%",
+          flex: 1,
           display: "flex",
-          alignItems: "center",
           flexDirection: "column",
+          gap: "16px",
           overflow: "auto",
+          paddingRight: "4px",
         }}
       >
-        {/* Se non è selezionato un ID la parte destra della pagina non renderizza */}
         {componentState.selectedId ? (
           <>
-            {/* Toggle validate Only */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                marginTop: "20px",
-              }}
-            >
-              <span
+            <div style={cardStyle}>
+              <div
                 style={{
-                  marginBottom: "4px",
-                  fontWeight: 500,
-                  fontSize: "15px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  gap: "20px",
+                  flexWrap: "wrap",
                 }}
               >
-                Validate Only
-              </span>
-              <Toggle
-                checked={componentState?.validateOnly ?? false}
-                onChange={(val: boolean) => {
-                  setComponentState(
-                    (previousStateVal: ComponentStateInterface) => {
-                      return {
-                        ...previousStateVal,
-                        validateOnly: val,
-                      };
-                    },
-                  );
-                }}
-              />
-            </div>
-            {/* Se Validate Only è abilitato */}
-            {componentState.validateOnly ? (
-              <>
+                <div>
+                  <div style={subtleTitleStyle}>Dictionary selezionato</div>
+                  <div
+                    style={{
+                      fontSize: "20px",
+                      fontWeight: 700,
+                      color: "#111827",
+                    }}
+                  >
+                    {selectedDictionary?.name ?? "Dictionary"}
+                  </div>
+                  <div
+                    style={{
+                      marginTop: "6px",
+                      color: "#6b7280",
+                      fontSize: "13px",
+                    }}
+                  >
+                    ID: {componentState.selectedId}
+                  </div>
+                </div>
+
                 <div
                   style={{
-                    backgroundColor: "#fff9e6",
-                    width: "95%",
-                    height: "5%",
-                    marginTop: "10px",
-                    borderRadius: "8px",
-                    border: "1px solid #f5dead",
                     display: "flex",
-                    justifyContent: "flex-start",
                     alignItems: "center",
+                    gap: "12px",
+                    backgroundColor: "#f9fafb",
+                    border: "1px solid #e5e7eb",
+                    borderRadius: "12px",
+                    padding: "10px 14px",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontWeight: 600,
+                        fontSize: "14px",
+                        color: "#111827",
+                      }}
+                    >
+                      Validate Only
+                    </span>
+                    <span
+                      style={{
+                        fontSize: "12px",
+                        color: "#6b7280",
+                      }}
+                    >
+                      Esegue controlli senza salvare modifiche
+                    </span>
+                  </div>
+
+                  <Suspense fallback="">
+                    <Toggle
+                      checked={componentState?.validateOnly ?? false}
+                      onChange={(val: boolean) => {
+                        setComponentState((previousStateVal) => ({
+                          ...previousStateVal,
+                          validateOnly: val,
+                        }));
+                      }}
+                    />
+                  </Suspense>
+                </div>
+              </div>
+
+              <div style={{ marginTop: "12px" }}>
+                <WarningTag />
+              </div>
+
+              {componentState.validateOnly && (
+                <div
+                  style={{
+                    backgroundColor: "#fff8db",
+                    border: "1px solid #fde68a",
+                    borderRadius: "10px",
+                    padding: "12px 14px",
+                    marginTop: "14px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
                   }}
                 >
                   <span
+                    className="material-symbols-outlined"
                     style={{
-                      fontSize: "20px",
-                      marginLeft: "20px",
-                      opacity: "0.4",
+                      fontSize: "18px",
+                      color: "#ca8a04",
                       userSelect: "none",
                     }}
-                    className="material-symbols-outlined"
                   >
                     warning
                   </span>
                   <span
                     style={{
                       fontSize: "13px",
-                      opacity: "0.8",
-                      marginLeft: "10px",
+                      color: "#854d0e",
+                      fontWeight: 500,
                     }}
                   >
-                    Modalità Validate Only attiva — Nessuna modifica verrà
+                    Modalità Validate Only attiva — nessuna modifica verrà
                     salvata
                   </span>
                 </div>
-              </>
-            ) : (
-              <></>
-            )}
-            {/* Pulsante cosa fare */}
-            <div style={{ margin: "20px" }}>
-              <BasicButtonGenericTag
-                textToSee="Run Report"
-                style={{
-                  marginLeft: "10px",
-                  color:
-                    componentState.Mode == "run_report" ? "white" : undefined,
-                  backgroundColor:
-                    componentState.Mode == "run_report" ? "#477dda" : undefined,
-                  fontWeight: 600,
-                }}
-                clickCallBack={() =>
-                  HandleSelectModeButtonOnClick("run_report")
-                }
-              />
-              <BasicButtonGenericTag
-                textToSee="Manual"
-                style={{
-                  marginLeft: "10px",
-                  color: componentState.Mode == "manual" ? "white" : undefined,
-                  backgroundColor:
-                    componentState.Mode == "manual" ? "#477dda" : undefined,
-                  fontWeight: 600,
-                }}
-                clickCallBack={() => HandleSelectModeButtonOnClick("manual")}
-              />
+              )}
             </div>
 
-            {/* Se è selezionata la manual mode */}
-            {componentState.Mode == "manual" ? (
-              <>
-                {/* Pulsante cosa fare */}
-                <div style={{ margin: "20px" }}>
+            <div style={cardStyle}>
+              <div style={sectionTitleStyle}>Modalità operativa</div>
+
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                <BasicButtonGenericTag
+                  textToSee="Run Report"
+                  style={{
+                    color:
+                      componentState.Mode === "run_report"
+                        ? "white"
+                        : undefined,
+                    backgroundColor:
+                      componentState.Mode === "run_report"
+                        ? "#477dda"
+                        : undefined,
+                    fontWeight: 600,
+                  }}
+                  clickCallBack={() =>
+                    HandleSelectModeButtonOnClick("run_report")
+                  }
+                />
+
+                <BasicButtonGenericTag
+                  textToSee="Manual"
+                  style={{
+                    color:
+                      componentState.Mode === "manual" ? "white" : undefined,
+                    backgroundColor:
+                      componentState.Mode === "manual"
+                        ? "#477dda"
+                        : undefined,
+                    fontWeight: 600,
+                  }}
+                  clickCallBack={() => HandleSelectModeButtonOnClick("manual")}
+                />
+              </div>
+            </div>
+
+            {componentState.Mode === "manual" && (
+              <div style={cardStyle}>
+                <div style={sectionTitleStyle}>Modalità manuale</div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "10px",
+                    flexWrap: "wrap",
+                    marginBottom: "18px",
+                  }}
+                >
                   <BasicButtonGenericTag
                     textToSee="Patch Json"
                     style={{
-                      marginLeft: "10px",
                       color:
-                        componentState.whatImDoing == "PatchJson"
+                        componentState.whatImDoing === "PatchJson"
                           ? "white"
                           : undefined,
                       backgroundColor:
-                        componentState.whatImDoing == "PatchJson"
+                        componentState.whatImDoing === "PatchJson"
                           ? "#477dda"
                           : undefined,
                       fontWeight: 600,
@@ -516,16 +624,16 @@ function DictionaryPageTag() {
                       HandleSelectWhatDoButtonOnClick("PatchJson")
                     }
                   />
+
                   <BasicButtonGenericTag
                     textToSee="Edit"
                     style={{
-                      marginLeft: "10px",
                       color:
-                        componentState.whatImDoing == "Edit"
+                        componentState.whatImDoing === "Edit"
                           ? "white"
                           : undefined,
                       backgroundColor:
-                        componentState.whatImDoing == "Edit"
+                        componentState.whatImDoing === "Edit"
                           ? "#477dda"
                           : undefined,
                       fontWeight: 600,
@@ -535,213 +643,187 @@ function DictionaryPageTag() {
                     }
                   />
                 </div>
-                {/* Se whatImDoing è Edit */}
-                {componentState.whatImDoing == "Edit" ? (
-                  <>
-                    <div
-                      style={{
-                        width: "100%",
-                        maxWidth: "600px",
-                        minWidth: "600px",
-                      }}
-                    >
-                      <Suspense fallback="">
-                        <div
-                          style={{
-                            borderRadius: "8px",
-                            border: "1px solid #d1d5db",
-                            overflow: "hidden",
-                            backgroundColor: "#f9fafb",
-                          }}
-                        >
-                          <MonacoEditorTag
-                            height="300px"
-                            defaultLanguage="json"
-                            value={
-                              inputSliceValue["DictionaryDetails-Edit"] ?? ""
-                            }
-                            onChange={(value) => {
-                              dispatch(
-                                SetInputSlice({
-                                  id: "DictionaryDetails-Edit",
-                                  value: value ?? "",
-                                }),
-                              );
-                            }}
-                            options={{
-                              minimap: { enabled: false },
-                              fontSize: 13,
-                              formatOnPaste: true,
-                              formatOnType: true,
-                              scrollBeyondLastLine: false,
-                              wordWrap: "on",
-                              automaticLayout: true,
-                              tabSize: 2,
-                            }}
-                          />
-                        </div>
-                      </Suspense>
-                    </div>
-                    <BasicButtonGenericTag
-                      textToSee="Salva"
-                      disabledButton={
-                        inputSliceValue["DictionaryDetails-Edit"] ===
-                          JSON.stringify(dictionaryListSlice.detail, null, 2) ||
-                        !IsValidJSON(inputSliceValue["DictionaryDetails-Edit"])
-                      }
-                      clickCallBack={HandleSaveEditButtonOnClick}
-                    />
-                  </>
-                ) : (
-                  <></>
-                )}
-                {componentState.whatImDoing == "PatchJson" ? (
-                  <>
-                    <div>
-                      <DictionaryPatchFormTag inputPrefix="DictionaryPatch" />
-                    </div>
-                    <BasicButtonGenericTag
-                      textToSee="Salva"
-                      disabledButton={
-                        inputSliceValue["DictionaryPatch-TextArea"].replaceAll(
-                          " ",
-                          "",
-                        ) == "" ||
-                        !IsValidJSON(
-                          inputSliceValue["DictionaryPatch-TextArea"],
-                        )
-                      }
-                      clickCallBack={HandleSaveButtonOnClick}
-                    />
-                  </>
-                ) : (
-                  <></>
-                )}
-              </>
-            ) : (
-              <></>
-            )}
-            {/* Se è selezionata run_report */}
-            {componentState.Mode == "run_report" ? (
-              <>
-                {/* Card */}
-                <div
-                  style={{
-                    backgroundColor: "#ffffff",
-                    borderRadius: "8px",
-                    padding: "10px",
-                    boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-                    boxSizing: "border-box",
-                    width: "35vw",
-                    height: "30vh",
-                    display: "flex",
-                    justifyContent: "flex-start",
-                  }}
-                >
+
+                {componentState.whatImDoing === "Edit" && (
                   <div
                     style={{
                       display: "flex",
                       flexDirection: "column",
-                      margin: "10px",
-                      alignItems: "flex-start",
-                      width: "100%",
-                      height: "100%",
+                      gap: "14px",
                     }}
                   >
                     <div
                       style={{
-                        width: "100%",
-                        height: "100%",
-                        overflow: "auto",
-                        marginTop: "10px",
+                        borderRadius: "12px",
+                        border: "1px solid #d1d5db",
+                        overflow: "hidden",
+                        backgroundColor: "#f9fafb",
                       }}
                     >
-                      {(templateBaseListSlice?.runIdTemplate ?? []).length >
-                      0 ? (
-                        <>
-                          <span style={{ fontSize: "20px", fontWeight: 600, display: "flex" }}>
-                            Seleziona un Run Id
-                          </span>
-                          {(templateBaseListSlice?.runIdTemplate ?? []).map(
-                            (singleId: string) => {
-                              const isSelected =
-                                componentState.selectedRunId === singleId;
+                      <Suspense fallback="">
+                        <MonacoEditorTag
+                          height="420px"
+                          defaultLanguage="json"
+                          value={inputSliceValue["DictionaryDetails-Edit"] ?? ""}
+                          onChange={(value) => {
+                            dispatch(
+                              SetInputSlice({
+                                id: "DictionaryDetails-Edit",
+                                value: value ?? "",
+                              }),
+                            );
+                          }}
+                          options={{
+                            minimap: { enabled: false },
+                            fontSize: 13,
+                            formatOnPaste: true,
+                            formatOnType: true,
+                            scrollBeyondLastLine: false,
+                            wordWrap: "on",
+                            automaticLayout: true,
+                            tabSize: 2,
+                          }}
+                        />
+                      </Suspense>
+                    </div>
 
-                              return (
-                                <div
-                                  key={singleId ?? ""}
-                                  className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
-                                  style={{
-                                    borderRadius: "8px",
-                                    padding: "6px 10px",
-                                    width: "95%",
-                                    cursor: "pointer",
-                                    fontSize: "13px",
-                                    color: "var(--black)",
-                                    marginTop: "8px",
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                  }}
-                                  onClick={() => {
-                                    HandleSelectRunIdOnClick(singleId);
-                                  }}
-                                >
-                                  <span
-                                    style={{
-                                      fontSize: "14px",
-                                      fontWeight: 500,
-                                    }}
-                                  >
-                                    {singleId ?? ""}
-                                  </span>
-                                </div>
-                              );
-                            },
-                          )}
-                        </>
-                      ) : (
-                        <span style={{ opacity: "60%" }}>
-                          E' necessario fare una run per il template per poter
-                          generare suggerimente e patch direttamente per il
-                          dizionario
-                        </span>
-                      )}
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                      }}
+                    >
+                      <BasicButtonGenericTag
+                        textToSee="Salva modifiche"
+                        disabledButton={!canSaveEdit}
+                        clickCallBack={HandleSaveEditButtonOnClick}
+                      />
                     </div>
                   </div>
-                </div>
-                <BasicButtonGenericTag
-                  textToSee="Genera suggerimenti e patch"
-                  disabledButton={componentState.selectedRunId == ""}
-                  clickCallBack={HandleSaveButtonOnClick}
-                  style={{ marginTop: "10px" }}
-                />
-                {/* Se riceve una risposta */}
-                {componentState.suggestRun != null ? (
-                  <>
+                )}
+
+                {componentState.whatImDoing === "PatchJson" && (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "14px",
+                    }}
+                  >
+                    <DictionaryPatchFormTag inputPrefix="DictionaryPatch" />
+
                     <div
                       style={{
-                        marginTop: "20px",
                         display: "flex",
-                        opacity: "50%",
-                        marginBottom: "5px",
+                        justifyContent: "flex-end",
                       }}
                     >
-                      Risultato
+                      <BasicButtonGenericTag
+                        textToSee="Salva patch"
+                        disabledButton={!canSavePatch}
+                        clickCallBack={HandleSaveButtonOnClick}
+                      />
                     </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {componentState.Mode === "run_report" && (
+              <>
+                <div style={cardStyle}>
+                  <div style={sectionTitleStyle}>Selezione Run Id</div>
+
+                  <div
+                    style={{
+                      maxHeight: "300px",
+                      overflow: "auto",
+                      paddingRight: "4px",
+                    }}
+                  >
+                    {(templateBaseListSlice?.runIdTemplate ?? []).length > 0 ? (
+                      (templateBaseListSlice?.runIdTemplate ?? []).map(
+                        (singleId: string) => {
+                          const isSelected =
+                            componentState.selectedRunId === singleId;
+
+                          return (
+                            <div
+                              key={singleId ?? ""}
+                              className="HoverTransform"
+                              style={selectionItemStyle(isSelected)}
+                              onClick={() => HandleSelectRunIdOnClick(singleId)}
+                            >
+                              <span
+                                style={{
+                                  fontSize: "14px",
+                                  fontWeight: 600,
+                                }}
+                              >
+                                {singleId ?? ""}
+                              </span>
+
+                              {isSelected && (
+                                <span
+                                  className="material-symbols-outlined"
+                                  style={{
+                                    fontSize: "18px",
+                                    color: "#2563eb",
+                                    userSelect: "none",
+                                  }}
+                                >
+                                  check_circle
+                                </span>
+                              )}
+                            </div>
+                          );
+                        },
+                      )
+                    ) : (
+                      <div
+                        style={{
+                          backgroundColor: "#fff7ed",
+                          border: "1px solid #fed7aa",
+                          color: "#9a3412",
+                          borderRadius: "10px",
+                          padding: "12px",
+                          fontSize: "13px",
+                        }}
+                      >
+                        È necessario fare una run per il template prima di poter
+                        generare suggerimenti e patch direttamente per il
+                        dizionario.
+                      </div>
+                    )}
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      marginTop: "16px",
+                    }}
+                  >
+                    <BasicButtonGenericTag
+                      textToSee="Genera suggerimenti e patch"
+                      disabledButton={componentState.selectedRunId === ""}
+                      clickCallBack={HandleSaveButtonOnClick}
+                    />
+                  </div>
+                </div>
+
+                {componentState.suggestRun != null && (
+                  <div style={{ ...cardStyle, minHeight: "320px" }}>
+                    <div style={sectionTitleStyle}>Risultato</div>
+
                     <div
                       style={{
-                        backgroundColor: "#f3f5f7",
-                        borderRadius: "8px",
-                        padding: "10px",
-                        boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-                        boxSizing: "border-box",
-                        width: "80%",
-                        height: "60vh",
-                        display: "flex",
-                        justifyContent: "flex-start",
+                        backgroundColor: "#f3f4f6",
+                        borderRadius: "10px",
+                        border: "1px solid #e5e7eb",
+                        padding: "14px",
+                        maxHeight: "60vh",
                         overflow: "auto",
-                        marginBottom: "10px",
                       }}
                     >
                       <pre
@@ -751,23 +833,32 @@ function DictionaryPageTag() {
                           whiteSpace: "pre-wrap",
                           wordBreak: "break-word",
                           fontSize: "13px",
-                          width: "100%",
+                          lineHeight: "1.5",
                         }}
                       >
                         {JSON.stringify(componentState.suggestRun, null, 2)}
                       </pre>
                     </div>
-                  </>
-                ) : (
-                  <></>
+                  </div>
                 )}
               </>
-            ) : (
-              <></>
             )}
           </>
         ) : (
-          <></>
+          <div
+            style={{
+              ...cardStyle,
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#6b7280",
+              fontSize: "15px",
+              textAlign: "center",
+            }}
+          >
+            Seleziona un dictionary dalla lista a sinistra per iniziare
+          </div>
         )}
       </div>
     </div>

@@ -38,7 +38,7 @@ TEMPLATE_BASE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-M
 PVS_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs")
 CONFIG_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/config")
 
-def apply_patch(user_id: str, input_path: str | None, file_name: str | None, patch_json: dict | None, upsert: Any | None, summarize: Any | None, artifact: str, patch_file_name: str | None, validate_only: bool, run_id: str | None, mode: str | None, manual_mode: str | None, run_dir: Path):
+def apply_patch(user_id: str, input_path: str | None, file_name: str | None, patch_json: dict | None, upsert: Any | None, summarize: Any | None, artifact: str, patch_file_name: str | None, validate_only: bool, run_id: str | None, mode: str | None, manual_mode: str | None, run_dir: Path, source_artifact_name: str | None = None):
     # applica le patch, genera report e salva nel db
 
     if not input_path.exists():
@@ -52,14 +52,14 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
 
     if artifact == "dictionary":
         # forza validazione canonica su template_base da DB, non da path locale di config
-        out_dir = run_dir
+        out_dir = run_dir / user_id
         out_dir.mkdir(parents=True, exist_ok=True)
         tb_path = _resolve_template_base_snapshot_for_dictionary(out_dir)
         cfg["template_base_path"] = str(tb_path)
     
     # artifact = template_base || kb || dictionary
     if artifact != "device_list" and artifact != "template":
-        out_dir = run_dir
+        out_dir = run_dir / user_id
         out_dir.mkdir(parents=True, exist_ok=True)
 
         if artifact == "dictionary":
@@ -70,7 +70,7 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
                 run_report = get_run(run_id)
 
                 # salva report temporaneo
-                rr_path = out_dir / "run_report_tmp.json"
+                rr_path = out_dir /"run_report_tmp.json"
                 rr_path.write_text(json.dumps(run_report, ensure_ascii=False, indent=2), encoding="utf-8")
 
                 # crea patch per dizionario da run report
@@ -151,19 +151,26 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
 
     # artifact = device_list
     else:
-        report_path, enriched_file = run_device_list(cfg, validate_only)
+        report_path, enriched_file = run_device_list(cfg, validate_only, user_id)
         report = load_json(str(report_path))
 
         # salvataggio nel db
         artifact_type = report.get("target", {}).get("artifact_type", artifact)
         artifact_output = report.get("target", {}).get("output_path") or str(input_path)
-        artifact_id = _register_artifact_from_path(artifact_output, artifact_type)
+        artifact_name_override = None
+        if source_artifact_name and "/" in source_artifact_name:
+            store = source_artifact_name.split("/", 1)[0]
+            artifact_name_override = f"{store}/{Path(artifact_output).name}"
+
+        artifact_type_to_save = "device_list_context"
+
+        artifact_id = _register_artifact_from_path(artifact_output, artifact_type_to_save, artifact_name=artifact_name_override)
         runClass.save_run(report, user_id, artifact_id)
 
 
         return {"status": "ok", "run_id": report.get("run_id"), "report_path": str(report_path), "warning": report.get("validation", {}).get("warnings"), "enriched_file": enriched_file}
 
-def _register_artifact_from_path(path: str, artifact_type: str) -> str:
+def _register_artifact_from_path(path: str, artifact_type: str, artifact_name: str | None = None) -> str:
     # salva artifact nel db
 
     p = Path(path)
@@ -176,21 +183,27 @@ def _register_artifact_from_path(path: str, artifact_type: str) -> str:
         
     return artifactRepo.upsert_artifact(
         artifact_type=artifact_type,
-        name=p.name,
+        name=p.name if artifact_name is None else artifact_name,
         version=_extract_version_from_path(p),
         content=content,
     )
 
 def initialize(artifact_id: str, artifact_type: str, user_id: str) -> tuple[Path, Path, str]:
-    payload = artifactRepo.get_artifact_content(artifact_id, artifact_type)
     name = artifactRepo.get_artifact_name_by_id(artifact_id)
 
+    if artifact_type == "device_list":
+        payload = artifactRepo.get_artifact_content(name, artifact_type)
+    else:
+        payload = artifactRepo.get_artifact_content(artifact_id, artifact_type)
+
     run_id = generate_run_id()
-    run_dir = RUNS_ROOT / user_id / run_id
+    run_dir = RUNS_ROOT / str(user_id) / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
 
     input_path = run_dir / name
+    input_path.parent.mkdir(parents=True, exist_ok=True)
     input_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
     return input_path, run_dir, run_id
 
 def _resolve_template_base_snapshot_for_dictionary(run_dir: Path) -> Path:
@@ -295,19 +308,19 @@ def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_cu
 #----DICTIONARY----
 @router.post("/run/dictionary")
 def run_dictionary(payload: RunDictionaryRequest, user = Depends(get_current_user)):
-    input_path, run_dir, _ = initialize(payload.id,  "dictionary")
+    input_path, run_dir, _ = initialize(payload.id,  "dictionary", user["sub"])
     return apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, dictionary_upsert, summarize_dictionary_diff, "dictionary", "dictionary_patch.json", payload.validate_only, payload.run_id, payload.mode, payload.manual_mode, run_dir) 
 
 #----KB----
 @router.post("/run/kb")
 def run_kb(payload: RunKbRequest, user = Depends(get_current_user)):
-    input_path, run_dir, _ = initialize(payload.id, "kb")
+    input_path, run_dir, _ = initialize(payload.id, "kb", user["sub"])
     return  apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, "kb", "kb_patch.json", payload.validate_only, None, None, None, run_dir)
 
 #----TEMPLATE BASE----
 @router.post("/run/template_base")
 def run_template_base(payload: RunTemplateBaseRequest, user = Depends(get_current_user)):
-    input_path, run_dir, _ = initialize(payload.id, "template_base")
+    input_path, run_dir, _ = initialize(payload.id, "template_base", user["sub"])
     return apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, template_apply_patch, summarize_template_base_diff, "template_base", "template_base_patch.json", payload.validate_only, None, None, None, run_dir)
 
  # ---- DEVICE LIST ----
@@ -315,8 +328,11 @@ def run_template_base(payload: RunTemplateBaseRequest, user = Depends(get_curren
 #---DEVICE LIST-----
 @router.post("/run/device_list")
 def run_device_list_api(payload: RunDeviceListRequest, user = Depends(get_current_user)):
-    input_path = PVS_DIR / payload.store / payload.device_list_name
-    return apply_patch(user["sub"], input_path, payload.device_list_name, None, None, None, "device_list", None, payload.validate_only, None, None, None)
+    source_artifact_name = artifactRepo.get_artifact_name_by_id(payload.id)
+    input_path, run_dir, _ = initialize(payload.id, "device_list", user["sub"])
+    return apply_patch(user["sub"], input_path, input_path.name, None, None, None, "device_list", None, payload.validate_only, None, None, None, run_dir, source_artifact_name=source_artifact_name)
+    #input_path = PVS_DIR / payload.store / payload.device_list_name
+    #return apply_patch(user["sub"], input_path, payload.device_list_name, None, None, None, "device_list", None, payload.validate_only, None, None, None)
 
 @router.get("/enum")
 def get_base_update_device_list(user = Depends(get_current_user)):

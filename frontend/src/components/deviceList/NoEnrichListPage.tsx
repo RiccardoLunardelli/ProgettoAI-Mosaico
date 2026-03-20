@@ -27,6 +27,7 @@ const Toggle = lazy(() =>
 interface ComponentStateInterface {
   selectedStore: string;
   selectedFile: string;
+  selectedId: string;
   validateOnly: boolean;
   warning: null | string[];
   enriched_file: [] | null;
@@ -63,15 +64,17 @@ function NoEnrichListPageTag({
       validateOnly: false,
       warning: null,
       enriched_file: null,
+      selectedId: "",
     },
   );
 
-  const HandleSelectIdOnClick = (singleStore: string, singleFile: string) => {
+  const HandleSelectIdOnClick = (singleStore: string, singleFile: string, singleId: string) => {
     setComponentState((previousStateVal: ComponentStateInterface) => {
       return {
         ...previousStateVal,
         selectedStore: singleStore ?? "",
         selectedFile: singleFile ?? "",
+        selectedId: singleId ?? ""
       };
     });
   };
@@ -85,6 +88,7 @@ function NoEnrichListPageTag({
         store: componentState?.selectedStore ?? "",
         device_list_name: componentState?.selectedFile ?? "",
         validate_only: componentState?.validateOnly ?? true,
+        id: componentState?.selectedId ?? ""
       },
       EndCallback(result) {
         setComponentState((previousStateVal: ComponentStateInterface) => {
@@ -295,6 +299,7 @@ function NoEnrichListPageTag({
                                 HandleSelectIdOnClick(
                                   singleRun.store,
                                   singleRun.file,
+                                  singleRun.id
                                 );
                               }}
                             >

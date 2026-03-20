@@ -88,8 +88,7 @@ def template_apply_patch(ctx: MCPContext, path: str, patch: Dict[str, Any], dry_
                 if op.get("label") is not None:
                     concept["label"] = op["label"]
                 if op.get("description") is not None:
-                    concept["description"] = op["description"]
-                
+                    concept["description"] = op["description"]              
                 if op.get("semantic_category") is not None:
                     concept["semantic_category"] = op["semantic_category"]
 
@@ -104,6 +103,8 @@ def template_apply_patch(ctx: MCPContext, path: str, patch: Dict[str, Any], dry_
 
                     cat["concepts"] = [c for c in cat.get("concepts", []) if c.get("concept_id") != concept_id]
                     concept["category"] = op["category"]
+                    if op.get("semantic_category") is not None:
+                        concept["semantic_category"] = op["semantic_category"]
                     target_cat.setdefault("concepts", []).append(concept)
 
             

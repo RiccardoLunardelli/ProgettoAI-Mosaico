@@ -102,7 +102,8 @@ const TEMPLATE_BASE_OPERATIONS: Record<
 
   update_base_metadata: {
     label: "Update Base Metadata",
-    helperText: "Aggiorna metadata, label e descrizione di un concept esistente.",
+    helperText:
+      "Aggiorna metadata, label e descrizione di un concept esistente.",
     fields: [
       {
         id: "concept_id",
@@ -133,6 +134,12 @@ const TEMPLATE_BASE_OPERATIONS: Record<
         label: "Category",
         type: "select",
         options: CATEGORY_OPTIONS,
+      },
+      {
+        id: "semantic_category",
+        label: "Semantic Category",
+        placeholder: "Es. temperature",
+        type: "text",
       },
     ],
   },
@@ -218,6 +225,7 @@ function TemplateBasePatchFormTag({
         },
         description: getFieldValue("description"),
         category: getFieldValue("category"),
+        semantic_category: getFieldValue("semantic_category"),
       };
     }
 

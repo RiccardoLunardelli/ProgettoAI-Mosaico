@@ -173,12 +173,18 @@ def summarize_template_base_diff(before: dict, after: dict) -> list[str]:
     for concept_id in sorted(set(a) & set(b)):
         b_cat, b_c = b[concept_id]
         a_cat, a_c = a[concept_id]
+
         if b_cat != a_cat:
             summary.append(f"update_base_category: {concept_id} {b_cat} -> {a_cat}")
         if b_c.get("label") != a_c.get("label"):
             summary.append(f"update_base_label: {concept_id}")
         if b_c.get("description") != a_c.get("description"):
             summary.append(f"update_base_description: {concept_id}")
+        if b_c.get("semantic_category") != a_c.get("semantic_category"):
+            summary.append(
+                f"update_base_semantic_category: {concept_id} "
+                f"{b_c.get('semantic_category')} -> {a_c.get('semantic_category')}"
+            )
 
     return summary
 

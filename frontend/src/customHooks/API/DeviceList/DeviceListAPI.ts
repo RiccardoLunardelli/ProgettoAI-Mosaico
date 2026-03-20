@@ -154,6 +154,7 @@ const RunDeviceListAPIHook = () => {
       store: string;
       device_list_name: string;
       validate_only: boolean;
+      id: string;
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;

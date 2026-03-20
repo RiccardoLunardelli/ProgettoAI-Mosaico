@@ -366,11 +366,11 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate, input
     return report_path
     '''
 
-def run_device_list(cfg: dict, validate) -> None:
+def run_device_list(cfg: dict, validate, user_id) -> None:
     # run per device_list
 
     run_id = generate_run_id()
-    run_dir = RUNS_ROOT / run_id
+    run_dir = RUNS_ROOT / user_id / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
 
     input_path = cfg["input_path"]

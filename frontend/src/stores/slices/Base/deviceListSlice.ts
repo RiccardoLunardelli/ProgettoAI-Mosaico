@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface DeviceListStoreFileInterface {
   store: string;
   file: string;
+  id: string;
 }
 
 export interface DeviceListEnumInterface {

@@ -41,6 +41,7 @@ class RunTemplateBaseRequest(BaseModel):
     patch_json: dict
 
 class RunDeviceListRequest(BaseModel):
+    id: str
     store: str
     device_list_name: str
     validate_only: bool = True

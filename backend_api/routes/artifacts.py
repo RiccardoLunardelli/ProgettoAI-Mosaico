@@ -30,63 +30,7 @@ TEMPLATE_BASE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-M
 PVS_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs")
 CONFIG_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/config")
 
-"""
-def list_artifact(artifact, artifact_dir):
-    # restituisce lista dei file presenti in una cartella
 
-    if not artifact_dir.exists():
-        raise HTTPException(status_code=404, detail=f"{artifact} directory not found !")
-
-    # artifact = {template_base, dictionary, kb, template}
-    if artifact not in ["device_list", "enrich_device_list"]:
-        files = sorted([p.name for p in artifact_dir.glob("*.json")])
-        return files
-    
-    # artifact = device_list
-    elif artifact == "device_list":
-        items = []
-        for store_dir in sorted(artifact_dir.iterdir()):
-            if not store_dir.is_dir():
-                continue
-            files = "device_list.json"
-            if files:
-                items.append({"store": store_dir.name, "file":  files })
-        return {"device_list": items}
-    
-    # artifact = enrich_device_list
-    else:
-        items = []
-        for store_dir in sorted(artifact_dir.iterdir()):
-            if not store_dir.is_dir():
-                continue
-            files = list(store_dir.glob("device_list_context_*.json"))
-            for f in files:
-                items.append({"store": store_dir.name,"file": f.name})
-
-        if not items:
-            raise HTTPException(status_code=404, detail=f"{artifact} not exists")
-
-        return {"enriched_device_list": items}
-"""
-
-"""
-def get_file_of_artifact(name: str | None, store: str | None, dl: str | None,  artifact, artifact_dir):
-    # ritorna contenuto file
-
-    path = artifact_dir / name if name is not None else artifact_dir / store / dl
-
-    if not path.exists() or not path.is_file():
-        raise HTTPException(status_code=404, detail=f"{artifact} not found!")
-    
-    with open(path, "r", encoding="utf-8") as f:
-        content = json.load(f)
-
-    if store: 
-        return {"store": store, "name": dl, "content": content}
-    
-    return content
-"""
-    
 def editor_json_inline(id: str, file: str | dict, input_path: Path, artifact: str, user_id: str):
     # modifica json direttamente da editor
 
@@ -127,7 +71,7 @@ def editor_json_inline(id: str, file: str | dict, input_path: Path, artifact: st
 
     # build run report e salvataggio in db
     run_id = generate_run_id()
-    run_dir = RUNS_ROOT / run_id 
+    run_dir = RUNS_ROOT / user_id / run_id 
     run_dir.mkdir(parents=True, exist_ok=True)
 
     if artifact == "dictionary":
@@ -294,15 +238,15 @@ def get_enrich_device_list(store: str, dl: str, user = Depends(get_current_user)
 #----EDIT----
 @router.post("/dictionary/edit")
 def edit_dictionary(payload: DictionaryEditRequest, user = Depends(get_current_user)):
-    input_path, run_dir, run_id = initialize(payload.id, "dictionary")
+    input_path, run_dir, run_id = initialize(payload.id, "dictionary",user["sub"])
     return editor_json_inline(payload.id, payload.dictionary_json, input_path, "dictionary", user["sub"])
 
 @router.post("/kb/edit")
 def edit_kb(payload: KbEditRequest, user = Depends(get_current_user)):
-    input_path, run_dir, run_id = initialize(payload.id, "kb")
+    input_path, run_dir, run_id = initialize(payload.id, "kb",user["sub"])
     return editor_json_inline(payload.id, payload.kb_json, input_path, "kb", user["sub"])
 
 @router.post("/template_base/edit")
 def edit_template_base(payload: TemplateBaseEditRequest, user = Depends(get_current_user)):
-    input_path, run_dir, run_id = initialize(payload.id, "template_base")
+    input_path, run_dir, run_id = initialize(payload.id, "template_base",user["sub"])
     return editor_json_inline(payload.id, payload.template_base_json, input_path, "template_base", user["sub"])
