@@ -18,7 +18,7 @@ function GraphPageTag({
         title: "Grafici per metriche",
         description:
           "Dashboard principale con metriche template, dizionario e score.",
-        src: "http://172.27.200.118:3001/d/afge44a70kkcgf/grafici-per-metriche-copy?orgId=1&from=1773896756450&to=1773918356451&theme=light",
+        src: "/graph/d/afge44a70kkcgf/grafici-per-metriche-copy?orgId=1&from=1773896756450&to=1773918356451&theme=light",
       };
     }
 
@@ -27,7 +27,7 @@ function GraphPageTag({
         title: "LLM Dashboard",
         description:
           "Dashboard dedicata alle metriche e al comportamento del modello LLM.",
-        src: "http://172.27.200.118:3001/d/ffdth48d4rfnkb/llm-dashboard?orgId=1&from=1773313848981&to=1773918648981&theme=light",
+        src: "/graph/d/ffdth48d4rfnkb/llm-dashboard?orgId=1&from=1773313848981&to=1773918648981&theme=light",
       };
     }
 
