@@ -38,7 +38,7 @@ TEMPLATE_BASE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-M
 PVS_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs")
 CONFIG_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/config")
 
-def apply_patch(user_id: str, input_path: str | None, file_name: str | None, patch_json: dict | None, upsert: Any | None, summarize: Any | None, artifact: str, patch_file_name: str | None, validate_only: bool, run_id: str | None, mode: str | None, manual_mode: str | None):
+def apply_patch(user_id: str, input_path: str | None, file_name: str | None, patch_json: dict | None, upsert: Any | None, summarize: Any | None, artifact: str, patch_file_name: str | None, validate_only: bool, run_id: str | None, mode: str | None, manual_mode: str | None, run_dir: Path):
     # applica le patch, genera report e salva nel db
 
     if not input_path.exists():
@@ -52,14 +52,14 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
 
     if artifact == "dictionary":
         # forza validazione canonica su template_base da DB, non da path locale di config
-        out_dir = Path("output_dir")
+        out_dir = run_dir
         out_dir.mkdir(parents=True, exist_ok=True)
-        tb_path = _resolve_template_base_snapshot_for_dictionary(out_dir, Path(input_path), run_id)
+        tb_path = _resolve_template_base_snapshot_for_dictionary(out_dir)
         cfg["template_base_path"] = str(tb_path)
     
     # artifact = template_base || kb || dictionary
     if artifact != "device_list" and artifact != "template":
-        out_dir = Path("output_dir")
+        out_dir = run_dir
         out_dir.mkdir(parents=True, exist_ok=True)
 
         if artifact == "dictionary":
@@ -181,46 +181,34 @@ def _register_artifact_from_path(path: str, artifact_type: str) -> str:
         content=content,
     )
 
-def initialize(artifact_id: str, artifact_type: str) -> Path:
+def initialize(artifact_id: str, artifact_type: str, user_id: str) -> tuple[Path, Path, str]:
     payload = artifactRepo.get_artifact_content(artifact_id, artifact_type)
     name = artifactRepo.get_artifact_name_by_id(artifact_id)
 
     run_id = generate_run_id()
-    run_dir = RUNS_ROOT / run_id
+    run_dir = RUNS_ROOT / user_id / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
 
     input_path = run_dir / name
     input_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    return input_path
+    return input_path, run_dir, run_id
 
-def _resolve_template_base_snapshot_for_dictionary(run_dir: Path, dictionary_input_path: Path, run_id: str | None) -> Path:
-    # 1) prova da run_report selezionata
-    tb_version = None
-    if run_id:
-        rr = runClass.get_run(run_id)
-        tb_version = (
-            rr.get("source_files", {}).get("template_base_version")
-            or rr.get("schema_versions", {}).get("template_base_version")
-        )
+def _resolve_template_base_snapshot_for_dictionary(run_dir: Path) -> Path:
+    # ricava l ultima versione di template base
 
-    # 2) fallback: stessa versione del dizionario
-    if not tb_version:
-        d = json.loads(dictionary_input_path.read_text(encoding="utf-8"))
-        tb_version = d.get("dictionary_version")
-
-    if not tb_version:
-        raise HTTPException(status_code=400, detail="template_base version not resolvable")
-
-    tb_art = artifactRepo.get_artifact_by_type_and_version("template_base", tb_version)
+    tb_art = artifactRepo.get_last_version_of_artifact("template_base")
     if not tb_art:
-        raise HTTPException(
-            status_code=404,
-            detail=f"template_base not found for version {tb_version}"
-        )
+        raise HTTPException(status_code=404, detail="template_base not found in DB")
 
-    tb_path = run_dir / tb_art["name"]
-    tb_path.write_text(json.dumps(tb_art["content"], ensure_ascii=False, indent=2), encoding="utf-8")
+    name = tb_art.get("name")
+    content = tb_art.get("content")
+    if not name or content is None:
+        raise HTTPException(status_code=500, detail="invalid template_base artifact payload")
+
+    tb_path = run_dir / name
+    tb_path.write_text(json.dumps(content, ensure_ascii=False, indent=2),encoding="utf-8")
     return tb_path
+
 
 #----CRONOLOGIA DIFF-----
 @router.get("/cronology")
@@ -307,20 +295,20 @@ def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_cu
 #----DICTIONARY----
 @router.post("/run/dictionary")
 def run_dictionary(payload: RunDictionaryRequest, user = Depends(get_current_user)):
-    input_path = initialize(payload.id,  "dictionary")
-    return apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, dictionary_upsert, summarize_dictionary_diff, "dictionary", "dictionary_patch.json", payload.validate_only, payload.run_id, payload.mode, payload.manual_mode) 
+    input_path, run_dir, _ = initialize(payload.id,  "dictionary")
+    return apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, dictionary_upsert, summarize_dictionary_diff, "dictionary", "dictionary_patch.json", payload.validate_only, payload.run_id, payload.mode, payload.manual_mode, run_dir) 
 
 #----KB----
 @router.post("/run/kb")
 def run_kb(payload: RunKbRequest, user = Depends(get_current_user)):
-    input_path = initialize(payload.id, "kb")
-    return  apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, "kb", "kb_patch.json", payload.validate_only, None, None, None)
+    input_path, run_dir, _ = initialize(payload.id, "kb")
+    return  apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, "kb", "kb_patch.json", payload.validate_only, None, None, None, run_dir)
 
 #----TEMPLATE BASE----
 @router.post("/run/template_base")
 def run_template_base(payload: RunTemplateBaseRequest, user = Depends(get_current_user)):
-    input_path = initialize(payload.id, "template_base")
-    return apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, template_apply_patch, summarize_template_base_diff, "template_base", "template_base_patch.json", payload.validate_only, None, None, None)
+    input_path, run_dir, _ = initialize(payload.id, "template_base")
+    return apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, template_apply_patch, summarize_template_base_diff, "template_base", "template_base_patch.json", payload.validate_only, None, None, None, run_dir)
 
  # ---- DEVICE LIST ----
 

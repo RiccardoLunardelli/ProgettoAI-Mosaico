@@ -426,6 +426,26 @@ class ArtifactRepository():
                 row = cur.fetchone()
                 return dict(row) if row else None
 
+    def get_last_version_of_artifact(self, artifact_type: str) -> dict | None:
+        # prende l ultima versione dell artefatto dal db
+
+        sql = """
+        SELECT id, type, name, version, content
+        FROM artifacts
+        WHERE type = %s
+        ORDER BY
+        COALESCE(NULLIF(split_part(version, '.', 1), ''), '0')::int DESC,
+        COALESCE(NULLIF(split_part(version, '.', 2), ''), '0')::int DESC,
+            id DESC
+        LIMIT 1
+        """
+        with psycopg2.connect(self._dsn) as conn:
+            psycopg2.extras.register_default_jsonb(conn, loads=json.loads)
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute(sql, (artifact_type,))
+                row = cur.fetchone()
+                return dict(row) if row else None
+
     def drop_artifact(self, ids) -> Dict[str, Any]:
         # elimina file da db
 

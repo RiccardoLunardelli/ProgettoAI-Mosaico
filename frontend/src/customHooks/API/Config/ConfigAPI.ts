@@ -10,7 +10,9 @@ import {
   ResultTypeEnum,
 } from "../../../commons/commonsEnums";
 import { apiDomainString } from "../../../commons/commonsVariables";
-import { SetConfigDetailSlice, SetConfigListSlice } from "../../../stores/slices/Base/configListSlice";
+import { SetConfigDetailSlice, SetConfigListSlice, type ConfigListInterface } from "../../../stores/slices/Base/configListSlice";
+import { toast, type Id } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 
 const GetConfigListIdsAPIHook = () => {
@@ -38,7 +40,7 @@ const GetConfigListIdsAPIHook = () => {
       const jsonResponse = JSON.parse(response);
 
       if (infoObj?.saveResponse ?? true) {
-        const configListList: string[] = jsonResponse ?? [];
+        const configListList: ConfigListInterface[] = jsonResponse ?? [];
         dispatch(SetConfigListSlice(configListList));
       }
 
@@ -74,7 +76,7 @@ const GetConfigListDetailAPIHook = () => {
 
   const GetConfigListDetailAPI = async (infoObj: {
     data: {
-      name: string;
+      id: string;
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
@@ -85,7 +87,7 @@ const GetConfigListDetailAPIHook = () => {
     }
 
     try {
-      const apiCall = await fetch(apiDomainString + "/config/content/" + infoObj.data.name, {
+      const apiCall = await fetch(apiDomainString + "/config/content/" + infoObj.data.id, {
         method: FetchMethodEnum.Get,
         credentials: "include",
         headers: {
@@ -127,6 +129,97 @@ const GetConfigListDetailAPIHook = () => {
   return [GetConfigListDetailAPI];
 };
 
+const UpdateConfigYamlAPIHook = () => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+
+  const UpdateConfigYamlAPI = async (infoObj: {
+    data: {
+      id: string;
+      file: any;
+    };
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    showToast?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
+
+    let toastId: Id = -1;
+    if (infoObj.showToast) {
+      toastId = toast.loading(t("Operazione in corso..."));
+    }
+
+    try {
+      const apiCall = await fetch(apiDomainString + "/edit/config", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(infoObj.data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const jsonResponse: string = await apiCall.text();
+      const responseOk: boolean = apiCall.status == 200;
+
+      if (!responseOk) {
+        if (infoObj.showToast) {
+          toast.update(toastId, {
+            render: t("Errore durante l'operazione"),
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+            closeButton: true,
+          });
+        }
+
+        return;
+      }
+
+      if (infoObj?.saveResponse ?? true) {
+      }
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+
+      if (infoObj.showToast) {
+        toast.update(toastId, {
+          render: t("Operazione completata con successo!"),
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+          closeButton: true,
+        });
+      }
+    } catch (err) {
+      console.error("dataOra error:", err);
+
+      if (infoObj.showToast) {
+        toast.update(toastId, {
+          render: t("Errore durante l'operazione"),
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+          closeButton: true,
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [UpdateConfigYamlAPI];
+};
+
 
 
 
@@ -134,4 +227,5 @@ const GetConfigListDetailAPIHook = () => {
 export {
   GetConfigListIdsAPIHook,
   GetConfigListDetailAPIHook,
+  UpdateConfigYamlAPIHook
 };

@@ -87,11 +87,8 @@ def get_file_of_artifact(name: str | None, store: str | None, dl: str | None,  a
     return content
 """
     
-def editor_json_inline(id: str, file: str | dict, file_dir, artifact: str, user_id: str):
+def editor_json_inline(id: str, file: str | dict, input_path: Path, artifact: str, user_id: str):
     # modifica json direttamente da editor
-
-    file_name = artifactClass.get_artifact_name_by_id(id)
-    input_path = file_dir
 
     if not input_path.exists():
         raise HTTPException(status_code=404, detail=f"{artifact} file not exists!")
@@ -297,16 +294,15 @@ def get_enrich_device_list(store: str, dl: str, user = Depends(get_current_user)
 #----EDIT----
 @router.post("/dictionary/edit")
 def edit_dictionary(payload: DictionaryEditRequest, user = Depends(get_current_user)):
-    dir = initialize(payload.id, "dictionary")
-    return editor_json_inline(payload.id, payload.dictionary_json, dir, "dictionary", user["sub"])
+    input_path, run_dir, run_id = initialize(payload.id, "dictionary")
+    return editor_json_inline(payload.id, payload.dictionary_json, input_path, "dictionary", user["sub"])
 
 @router.post("/kb/edit")
 def edit_kb(payload: KbEditRequest, user = Depends(get_current_user)):
-    dir = initialize(payload.id, "kb")
-    return editor_json_inline(payload.id, payload.kb_json, dir, "kb", user["sub"])
+    input_path, run_dir, run_id = initialize(payload.id, "kb")
+    return editor_json_inline(payload.id, payload.kb_json, input_path, "kb", user["sub"])
 
 @router.post("/template_base/edit")
 def edit_template_base(payload: TemplateBaseEditRequest, user = Depends(get_current_user)):
-    dir = initialize(payload.id, "template_base")
-    print(dir)
-    return editor_json_inline(payload.id, payload.template_base_json, dir, "template_base", user["sub"])
+    input_path, run_dir, run_id = initialize(payload.id, "template_base")
+    return editor_json_inline(payload.id, payload.template_base_json, input_path, "template_base", user["sub"])

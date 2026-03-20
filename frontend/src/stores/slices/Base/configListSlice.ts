@@ -1,17 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export interface ConfigListInterface {
+  id: string;
+  name: string;
+  version: string;
+}
+
 
 export const configListSlice = createSlice({
   name: "configListSlice",
   initialState: {
-    value: null as string[] | null,
+    value: null as ConfigListInterface[] | null,
     detail: null as any
   },
   reducers: {
     SetConfigListSlice: (
       state,
       action: {
-        payload: string[] | null;
+        payload: ConfigListInterface[] | null;
       }
     ) => {
       state.value = action.payload;

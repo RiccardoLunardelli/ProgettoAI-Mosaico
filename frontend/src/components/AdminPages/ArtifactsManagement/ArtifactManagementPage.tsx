@@ -22,6 +22,7 @@ const SelectPickerTag = lazy(() =>
 
 interface ComponentStateInterface {
   selectedArtifactIds: string[];
+  lastSelectedArtifactId: string;
   showModal: boolean;
   showDeleteModal: boolean;
   deletingArtifactIds: string[];
@@ -36,6 +37,7 @@ function ArtifactManagementPageTag() {
   const [componentState, setComponentState] = useState<ComponentStateInterface>(
     {
       selectedArtifactIds: [],
+      lastSelectedArtifactId: "",
       showModal: false,
       showDeleteModal: false,
       deletingArtifactIds: [],
@@ -64,8 +66,30 @@ function ArtifactManagementPageTag() {
     );
   }, [artifactListSlice?.value, componentState.selectedArtifactIds]);
 
-  const singleSelectedArtifact =
-    selectedArtifacts.length === 1 ? selectedArtifacts[0] : null;
+  const previewArtifact = useMemo(() => {
+    const lastSelectedId = String(componentState.lastSelectedArtifactId ?? "");
+
+    if (lastSelectedId) {
+      const foundArtifact = (artifactListSlice?.value ?? []).find(
+        (singleArtifact: ArtifactListInterface) =>
+          String(singleArtifact?.id ?? "") === lastSelectedId,
+      );
+
+      if (foundArtifact) {
+        return foundArtifact;
+      }
+    }
+
+    if (selectedArtifacts.length > 0) {
+      return selectedArtifacts[selectedArtifacts.length - 1];
+    }
+
+    return null;
+  }, [
+    artifactListSlice?.value,
+    componentState.lastSelectedArtifactId,
+    selectedArtifacts,
+  ]);
 
   const deletingArtifacts = useMemo(() => {
     return (artifactListSlice?.value ?? []).filter(
@@ -141,15 +165,38 @@ function ArtifactManagementPageTag() {
       const alreadySelected =
         previousStateVal.selectedArtifactIds.includes(artifactIdString);
 
-      const newSelectedIds = alreadySelected
-        ? previousStateVal.selectedArtifactIds.filter(
-            (singleId: string) => String(singleId) !== artifactIdString,
-          )
-        : [...previousStateVal.selectedArtifactIds, artifactIdString];
+      if (alreadySelected) {
+        const newSelectedIds = previousStateVal.selectedArtifactIds.filter(
+          (singleId: string) => String(singleId) !== artifactIdString,
+        );
+
+        return {
+          ...previousStateVal,
+          selectedArtifactIds: newSelectedIds,
+          lastSelectedArtifactId:
+            String(previousStateVal.lastSelectedArtifactId) === artifactIdString
+              ? newSelectedIds[newSelectedIds.length - 1] ?? ""
+              : previousStateVal.lastSelectedArtifactId,
+        };
+      }
 
       return {
         ...previousStateVal,
-        selectedArtifactIds: newSelectedIds,
+        selectedArtifactIds: [
+          ...previousStateVal.selectedArtifactIds,
+          artifactIdString,
+        ],
+        lastSelectedArtifactId: artifactIdString,
+      };
+    });
+  };
+
+  const HandleClearSelection = () => {
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        selectedArtifactIds: [],
+        lastSelectedArtifactId: "",
       };
     });
   };
@@ -191,13 +238,26 @@ function ArtifactManagementPageTag() {
       },
       EndCallback() {
         setComponentState((previousStateVal: ComponentStateInterface) => {
+          const newSelectedIds = previousStateVal.selectedArtifactIds.filter(
+            (singleId: string) => !artifactIdsToDelete.includes(singleId),
+          );
+
+          const currentLastSelectedId = String(
+            previousStateVal.lastSelectedArtifactId ?? "",
+          );
+
+          const newLastSelectedId = artifactIdsToDelete.includes(
+            currentLastSelectedId,
+          )
+            ? newSelectedIds[newSelectedIds.length - 1] ?? ""
+            : currentLastSelectedId;
+
           return {
             ...previousStateVal,
             showDeleteModal: false,
             deletingArtifactIds: [],
-            selectedArtifactIds: previousStateVal.selectedArtifactIds.filter(
-              (singleId: string) => !artifactIdsToDelete.includes(singleId),
-            ),
+            selectedArtifactIds: newSelectedIds,
+            lastSelectedArtifactId: newLastSelectedId,
           };
         });
 
@@ -211,16 +271,16 @@ function ArtifactManagementPageTag() {
   }, []);
 
   useEffect(() => {
-    if (!singleSelectedArtifact?.id) return;
+    if (!previewArtifact?.id) return;
 
     GetArtifactListDetailAPI({
       data: {
-        id: String(singleSelectedArtifact.id),
+        id: String(previewArtifact.id),
       },
       showLoader: true,
       saveResponse: true,
     });
-  }, [singleSelectedArtifact?.id]);
+  }, [previewArtifact?.id]);
 
   const selectedForBulkDeleteCount = componentState.selectedArtifactIds.length;
 
@@ -287,6 +347,25 @@ function ArtifactManagementPageTag() {
                 : ""}
             </button>
 
+            <button
+              onClick={HandleClearSelection}
+              disabled={selectedForBulkDeleteCount === 0}
+              style={{
+                height: "40px",
+                padding: "0 16px",
+                borderRadius: "10px",
+                border: "1px solid #d1d5db",
+                backgroundColor:
+                  selectedForBulkDeleteCount === 0 ? "#f3f4f6" : "#ffffff",
+                color: selectedForBulkDeleteCount === 0 ? "#9ca3af" : "#374151",
+                cursor:
+                  selectedForBulkDeleteCount === 0 ? "not-allowed" : "pointer",
+                fontWeight: 600,
+              }}
+            >
+              Deseleziona tutto
+            </button>
+
             <Suspense fallback="">
               <BasicButtonGenericTag
                 textToSee="Inserisci"
@@ -305,7 +384,6 @@ function ArtifactManagementPageTag() {
             minHeight: 0,
           }}
         >
-          {/* Lista */}
           <div
             style={{
               width: "34%",
@@ -452,7 +530,6 @@ function ArtifactManagementPageTag() {
             </div>
           </div>
 
-          {/* Detail */}
           <div
             style={{
               flex: 1,
@@ -483,19 +560,27 @@ function ArtifactManagementPageTag() {
                 Dettaglio
               </span>
 
-              <Suspense fallback="">
-                <BasicButtonGenericTag
-                  textToSee="Elimina"
-                  disabledButton={!singleSelectedArtifact}
-                  clickCallBack={() => {
-                    if (!singleSelectedArtifact?.id) return;
-                    HandleOpenDeleteModal([String(singleSelectedArtifact.id)]);
-                  }}
-                />
-              </Suspense>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  alignItems: "center",
+                }}
+              >
+                <Suspense fallback="">
+                  <BasicButtonGenericTag
+                    textToSee="Elimina"
+                    disabledButton={!previewArtifact}
+                    clickCallBack={() => {
+                      if (!previewArtifact?.id) return;
+                      HandleOpenDeleteModal([String(previewArtifact.id)]);
+                    }}
+                  />
+                </Suspense>
+              </div>
             </div>
 
-            {singleSelectedArtifact ? (
+            {previewArtifact ? (
               <div
                 style={{
                   width: "100%",
@@ -507,6 +592,25 @@ function ArtifactManagementPageTag() {
                   minHeight: 0,
                 }}
               >
+                {componentState.selectedArtifactIds.length > 1 ? (
+                  <div
+                    style={{
+                      marginBottom: "14px",
+                      padding: "10px 12px",
+                      borderRadius: "10px",
+                      backgroundColor: "#eef4ff",
+                      color: "#1d4ed8",
+                      fontSize: "13px",
+                      fontWeight: 500,
+                    }}
+                  >
+                    Hai selezionato {componentState.selectedArtifactIds.length} artifact.
+                    In anteprima stai vedendo l’ultimo selezionato.
+                  </div>
+                ) : (
+                  <></>
+                )}
+
                 <div
                   style={{
                     display: "flex",
@@ -517,16 +621,16 @@ function ArtifactManagementPageTag() {
                   }}
                 >
                   <span>
-                    <b>ID:</b> {singleSelectedArtifact.id ?? "-"}
+                    <b>ID:</b> {previewArtifact.id ?? "-"}
                   </span>
                   <span>
-                    <b>Name:</b> {singleSelectedArtifact.name ?? "-"}
+                    <b>Name:</b> {previewArtifact.name ?? "-"}
                   </span>
                   <span>
-                    <b>Type:</b> {singleSelectedArtifact.type ?? "-"}
+                    <b>Type:</b> {previewArtifact.type ?? "-"}
                   </span>
                   <span>
-                    <b>Version:</b> {singleSelectedArtifact.version ?? "-"}
+                    <b>Version:</b> {previewArtifact.version ?? "-"}
                   </span>
                 </div>
 
@@ -578,9 +682,7 @@ function ArtifactManagementPageTag() {
                   fontSize: "14px",
                 }}
               >
-                {componentState.selectedArtifactIds.length > 1
-                  ? "Hai selezionato più artifact"
-                  : "Seleziona un artifact dalla lista"}
+                Seleziona un artifact dalla lista
               </div>
             )}
           </div>

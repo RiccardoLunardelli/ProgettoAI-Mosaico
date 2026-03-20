@@ -26,6 +26,8 @@ interface ComponentStateInterface {
   deletingDeviceId: string;
   showInsertModal: boolean;
   selectedStoreId: string | null;
+  selectedTemplateId: string | null;
+  searchValue: string;
 }
 
 function StoreDevicesManagementPageTag() {
@@ -42,6 +44,8 @@ function StoreDevicesManagementPageTag() {
       deletingDeviceId: "",
       showInsertModal: false,
       selectedStoreId: null,
+      selectedTemplateId: null,
+      searchValue: "",
     },
   );
 
@@ -111,31 +115,87 @@ function StoreDevicesManagementPageTag() {
   }, [templateListSlice?.value]);
 
   const storeOptions = useMemo(() => {
-    return (storeListSlice?.value ?? [])
-      .slice()
-      .sort((a, b) =>
-        String(a.name ?? "").localeCompare(String(b.name ?? "")),
-      )
-      .map((singleStore: StoreListInterface) => {
-        return {
-          label: String(singleStore.name ?? singleStore.id ?? ""),
-          value: String(singleStore.id ?? ""),
-        };
-      });
+    return [
+      { label: "Tutti gli store", value: "" },
+      ...(storeListSlice?.value ?? [])
+        .slice()
+        .sort((a, b) =>
+          String(a.name ?? "").localeCompare(String(b.name ?? "")),
+        )
+        .map((singleStore: StoreListInterface) => {
+          return {
+            label: String(singleStore.name ?? singleStore.id ?? ""),
+            value: String(singleStore.id ?? ""),
+          };
+        }),
+    ];
   }, [storeListSlice?.value]);
 
+  const templateOptions = useMemo(() => {
+    return [
+      { label: "Tutti i template", value: "" },
+      ...(templateListSlice?.value ?? [])
+        .slice()
+        .sort((a, b) =>
+          String(a.name ?? "").localeCompare(String(b.name ?? "")),
+        )
+        .map((singleTemplate: TemplateListInterface) => {
+          return {
+            label: String(singleTemplate.name ?? singleTemplate.id ?? ""),
+            value: String(singleTemplate.id ?? ""),
+          };
+        }),
+    ];
+  }, [templateListSlice?.value]);
+
   const filteredDevicesList = useMemo(() => {
+    const normalizedSearch = String(componentState.searchValue ?? "")
+      .trim()
+      .toLowerCase();
+
     return (storeDevicesListSlice?.value ?? [])
       .filter((singleDevice: StoreDevicesListInterface) => {
-        return componentState.selectedStoreId
+        const deviceId = String(singleDevice.id ?? "");
+        const description = String(singleDevice.description ?? "");
+        const storeId = String(singleDevice.store_id ?? "");
+        const hdPlc = String(singleDevice.hd_plc ?? "");
+        const templateId = String(singleDevice.id_template ?? "");
+        const storeName = String(storeNameById[storeId] ?? "");
+        const templateName = String(templateNameById[templateId] ?? "");
+
+        const matchesSearch =
+          !normalizedSearch ||
+          description.toLowerCase().includes(normalizedSearch) ||
+          deviceId.toLowerCase().includes(normalizedSearch) ||
+          hdPlc.toLowerCase().includes(normalizedSearch) ||
+          storeId.toLowerCase().includes(normalizedSearch) ||
+          templateId.toLowerCase().includes(normalizedSearch) ||
+          storeName.toLowerCase().includes(normalizedSearch) ||
+          templateName.toLowerCase().includes(normalizedSearch);
+
+        const matchesStore = componentState.selectedStoreId
           ? String(singleDevice.store_id ?? "") ===
-              String(componentState.selectedStoreId ?? "")
+            String(componentState.selectedStoreId ?? "")
           : true;
+
+        const matchesTemplate = componentState.selectedTemplateId
+          ? String(singleDevice.id_template ?? "") ===
+            String(componentState.selectedTemplateId ?? "")
+          : true;
+
+        return matchesSearch && matchesStore && matchesTemplate;
       })
       .sort((a, b) =>
         String(a.description ?? "").localeCompare(String(b.description ?? "")),
       );
-  }, [storeDevicesListSlice?.value, componentState.selectedStoreId]);
+  }, [
+    storeDevicesListSlice?.value,
+    componentState.searchValue,
+    componentState.selectedStoreId,
+    componentState.selectedTemplateId,
+    storeNameById,
+    templateNameById,
+  ]);
 
   const HandleSelectDeviceOnClick = (singleDeviceId: string) => {
     setComponentState((previousStateVal: ComponentStateInterface) => {
@@ -191,6 +251,17 @@ function StoreDevicesManagementPageTag() {
         ...previousStateVal,
         showDeleteModal: false,
         deletingDeviceId: "",
+      };
+    });
+  };
+
+  const HandleResetFilters = () => {
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        selectedStoreId: null,
+        selectedTemplateId: null,
+        searchValue: "",
       };
     });
   };
@@ -304,37 +375,52 @@ function StoreDevicesManagementPageTag() {
           <div
             style={{
               display: "flex",
-              justifyContent: "flex-end",
-              marginBottom: "22px",
+              flexWrap: "wrap",
+              gap: "12px",
+              alignItems: "center",
+              marginBottom: "18px",
+              padding: "14px",
+              borderRadius: "12px",
+              backgroundColor: "#ffffff",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
             }}
           >
-            <Suspense fallback={<></>}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "6px",
-                  width: "320px",
-                  maxWidth: "100%",
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    color: "#374151",
-                  }}
-                >
-                  Filtro Store
-                </span>
+            <input
+              value={componentState.searchValue}
+              onChange={(e) => {
+                const value = e.target.value ?? "";
 
+                setComponentState((previousStateVal) => {
+                  return {
+                    ...previousStateVal,
+                    searchValue: value,
+                  };
+                });
+              }}
+              placeholder="Cerca per descrizione, id, hd/plc, store o template..."
+              style={{
+                height: "40px",
+                minWidth: "260px",
+                flex: 1,
+                padding: "0 14px",
+                borderRadius: "10px",
+                border: "1px solid #d1d5db",
+                outline: "none",
+                fontSize: "14px",
+                backgroundColor: "#ffffff",
+                color: "#111827",
+              }}
+            />
+
+            <Suspense fallback={<></>}>
+              <div style={{ minWidth: "220px", flex: "0 0 auto" }}>
                 <SelectPickerTag
                   data={storeOptions}
-                  value={componentState.selectedStoreId}
-                  cleanable
+                  value={componentState.selectedStoreId ?? ""}
+                  cleanable={false}
                   searchable
                   block
-                  placeholder="Seleziona store"
+                  placeholder="Filtro store"
                   onChange={(newValue) => {
                     setComponentState(
                       (previousStateVal: ComponentStateInterface) => {
@@ -348,6 +434,67 @@ function StoreDevicesManagementPageTag() {
                 />
               </div>
             </Suspense>
+
+            <Suspense fallback={<></>}>
+              <div style={{ minWidth: "220px", flex: "0 0 auto" }}>
+                <SelectPickerTag
+                  data={templateOptions}
+                  value={componentState.selectedTemplateId ?? ""}
+                  cleanable={false}
+                  searchable
+                  block
+                  placeholder="Filtro template"
+                  onChange={(newValue) => {
+                    setComponentState(
+                      (previousStateVal: ComponentStateInterface) => {
+                        return {
+                          ...previousStateVal,
+                          selectedTemplateId: newValue
+                            ? String(newValue)
+                            : null,
+                        };
+                      },
+                    );
+                  }}
+                />
+              </div>
+            </Suspense>
+
+            <button
+              onClick={HandleResetFilters}
+              style={{
+                height: "40px",
+                padding: "0 16px",
+                borderRadius: "10px",
+                border: "1px solid #e5e7eb",
+                backgroundColor: "#ffffff",
+                color: "#374151",
+                cursor: "pointer",
+                fontWeight: 600,
+              }}
+            >
+              Reset
+            </button>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: "16px",
+              gap: "12px",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "13px",
+                color: "#6b7280",
+              }}
+            >
+              Risultati: {filteredDevicesList.length} /{" "}
+              {(storeDevicesListSlice?.value ?? []).length}
+            </span>
           </div>
 
           {filteredDevicesList.length > 0 ? (
@@ -466,7 +613,9 @@ function StoreDevicesManagementPageTag() {
                           }}
                         >
                           Template:{" "}
-                          {templateNameById[String(singleDevice.id_template ?? "")] ??
+                          {templateNameById[
+                            String(singleDevice.id_template ?? "")
+                          ] ??
                             singleDevice.id_template ??
                             "-"}
                         </span>
@@ -514,6 +663,10 @@ function StoreDevicesManagementPageTag() {
                 },
               )}
             </div>
+          ) : (storeDevicesListSlice?.value ?? []).length > 0 ? (
+            <span style={{ opacity: "60%" }}>
+              Nessun device trovato con i filtri selezionati
+            </span>
           ) : (
             <span style={{ opacity: "60%" }}>Nessun device trovato</span>
           )}

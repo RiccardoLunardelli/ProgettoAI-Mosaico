@@ -1,40 +1,76 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import yaml from "js-yaml";
-import { GetConfigListIdsAPIHook, GetConfigListDetailAPIHook } from "../../../customHooks/API/Config/ConfigAPI";
 
+import {
+  GetConfigListIdsAPIHook,
+  GetConfigListDetailAPIHook,
+  UpdateConfigYamlAPIHook,
+  // UpdateConfigListDetailAPIHook,
+} from "../../../customHooks/API/Config/ConfigAPI";
+import { SetInputSlice } from "../../../stores/slices/Base/inputSlice";
+import type { ConfigListInterface } from "../../../stores/slices/Base/configListSlice";
 
 const RunsListSkeleton = lazy(() => import("../../Skeleton/RunsListSkeleton"));
 const MonacoEditorTag = lazy(() => import("@monaco-editor/react"));
 
+const inputPrefix = "ConfigManagement";
+
 interface ComponentStateInterface {
   selectedId: string;
+  originalYamlValue: string;
+  yamlError: string;
+  isSaving: boolean;
 }
 
 function ConfigManagementPage() {
+  const dispatch = useDispatch();
+
   const [GetConfigListIdsAPI] = GetConfigListIdsAPIHook();
   const [GetConfigListDetailAPI] = GetConfigListDetailAPIHook();
+  const [UpdateConfigYamlAPI] = UpdateConfigYamlAPIHook();
 
   const [componentState, setComponentState] = useState<ComponentStateInterface>(
     {
       selectedId: "",
+      originalYamlValue: "",
+      yamlError: "",
+      isSaving: false,
     },
   );
 
-  const configListSlice: { value: string[] | null; detail: any } = useSelector(
+  const configListSlice: { value: ConfigListInterface[] | null; detail: any } =
+    useSelector(
+      (state: {
+        configListSlice: {
+          value: ConfigListInterface[] | null;
+          detail: any;
+        };
+      }) => state.configListSlice,
+    );
+
+  const inputSlice: {
+    value: Record<string, string>;
+  } = useSelector(
     (state: {
-      configListSlice: {
-        value: string[] | null;
-        detail: any;
+      inputSlice: {
+        value: Record<string, string>;
       };
-    }) => state.configListSlice,
+    }) => state.inputSlice,
   );
+
+  const yamlInputKey = `${inputPrefix}-Yaml`;
+
+  const currentYamlValue = useMemo(() => {
+    return inputSlice?.value?.[yamlInputKey] ?? "";
+  }, [inputSlice?.value, yamlInputKey]);
 
   const HandleSelectIdOnClick = (singleId: string) => {
     setComponentState((previousStateVal: ComponentStateInterface) => {
       return {
         ...previousStateVal,
         selectedId: singleId ?? "",
+        yamlError: "",
       };
     });
   };
@@ -44,10 +80,10 @@ function ConfigManagementPage() {
   }, []);
 
   useEffect(() => {
-    if (componentState.selectedId == "") return;
+    if (componentState.selectedId === "") return;
 
     GetConfigListDetailAPI({
-      data: { name: componentState.selectedId },
+      data: { id: componentState.selectedId },
       showLoader: true,
       saveResponse: true,
     });
@@ -80,6 +116,136 @@ function ConfigManagementPage() {
     }
   }, [configListSlice?.detail]);
 
+  useEffect(() => {
+    if (!componentState.selectedId) return;
+
+    dispatch(
+      SetInputSlice({
+        id: yamlInputKey,
+        value: yamlPreviewValue,
+      }),
+    );
+
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        originalYamlValue: yamlPreviewValue,
+        yamlError: "",
+      };
+    });
+  }, [yamlPreviewValue, componentState.selectedId, dispatch]);
+
+  const HandleYamlOnChange = (value?: string) => {
+    const newValue = value ?? "";
+
+    dispatch(
+      SetInputSlice({
+        id: yamlInputKey,
+        value: newValue,
+      }),
+    );
+
+    try {
+      yaml.load(newValue);
+
+      setComponentState((previousStateVal: ComponentStateInterface) => {
+        return {
+          ...previousStateVal,
+          yamlError: "",
+        };
+      });
+    } catch (error: any) {
+      setComponentState((previousStateVal: ComponentStateInterface) => {
+        return {
+          ...previousStateVal,
+          yamlError: String(error?.message ?? "YAML non valido"),
+        };
+      });
+    }
+  };
+
+  const hasChanges = useMemo(() => {
+    return (
+      String(currentYamlValue ?? "") !==
+      String(componentState.originalYamlValue ?? "")
+    );
+  }, [currentYamlValue, componentState.originalYamlValue]);
+
+  const isYamlValid = useMemo(() => {
+    if (!currentYamlValue?.trim()) return false;
+
+    try {
+      yaml.load(currentYamlValue);
+      return true;
+    } catch {
+      return false;
+    }
+  }, [currentYamlValue]);
+
+  const canSave =
+    !!componentState.selectedId &&
+    hasChanges &&
+    isYamlValid &&
+    !componentState.isSaving;
+
+  const HandleSaveOnClick = async () => {
+    if (!canSave) return;
+
+    try {
+      setComponentState((previousStateVal: ComponentStateInterface) => {
+        return {
+          ...previousStateVal,
+          isSaving: true,
+          yamlError: "",
+        };
+      });
+
+
+      //Se vuoi il JSON usa parsedYamlValue
+      const parsedYamlValue = yaml.load(currentYamlValue);
+      //Se vuoi la stringa utilizza currentYamlValue
+
+      UpdateConfigYamlAPI({
+        showLoader: true,
+        showToast: true,
+        data: {
+          id: componentState.selectedId,
+          file: currentYamlValue // Qui metti che tipo di file vuoi,
+        },
+        EndCallback: () => {
+          setComponentState((previousStateVal: ComponentStateInterface) => {
+            return {
+              ...previousStateVal,
+              originalYamlValue: currentYamlValue,
+              isSaving: false,
+            };
+          });
+        },
+      });
+
+      console.log("SAVE CONFIG YAML", {
+        name: componentState.selectedId,
+        content: currentYamlValue,
+      });
+
+      setComponentState((previousStateVal: ComponentStateInterface) => {
+        return {
+          ...previousStateVal,
+          originalYamlValue: currentYamlValue,
+          isSaving: false,
+        };
+      });
+    } catch (error: any) {
+      setComponentState((previousStateVal: ComponentStateInterface) => {
+        return {
+          ...previousStateVal,
+          isSaving: false,
+          yamlError: String(error?.message ?? "Errore durante il salvataggio"),
+        };
+      });
+    }
+  };
+
   return (
     <div
       style={{
@@ -90,7 +256,6 @@ function ConfigManagementPage() {
         flexDirection: "row",
       }}
     >
-      {/* Parte Sinistra */}
       <div
         style={{
           height: "100%",
@@ -143,36 +308,38 @@ function ConfigManagementPage() {
               >
                 {(configListSlice?.value ?? []).length > 0 ? (
                   <>
-                    {(configListSlice?.value ?? []).map((singleId: string) => {
-                      const isSelected =
-                        componentState.selectedId === (singleId ?? "");
+                    {(configListSlice?.value ?? []).map(
+                      (singleId: ConfigListInterface) => {
+                        const isSelected =
+                          componentState.selectedId === (singleId?.id ?? "");
 
-                      return (
-                        <div
-                          key={singleId}
-                          className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
-                          style={{
-                            borderRadius: "8px",
-                            padding: "6px 10px",
-                            width: "95%",
-                            cursor: "pointer",
-                            fontSize: "13px",
-                            color: "var(--black)",
-                            marginTop: "8px",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                          onClick={() => {
-                            HandleSelectIdOnClick(singleId);
-                          }}
-                        >
-                          <span style={{ fontSize: "14px", fontWeight: 500 }}>
-                            {singleId}
-                          </span>
-                        </div>
-                      );
-                    })}
+                        return (
+                          <div
+                            key={singleId?.id ?? ""}
+                            className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
+                            style={{
+                              borderRadius: "8px",
+                              padding: "6px 10px",
+                              width: "95%",
+                              cursor: "pointer",
+                              fontSize: "13px",
+                              color: "var(--black)",
+                              marginTop: "8px",
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                            }}
+                            onClick={() => {
+                              HandleSelectIdOnClick(singleId?.id ?? "");
+                            }}
+                          >
+                            <span style={{ fontSize: "14px", fontWeight: 500 }}>
+                              {singleId.name}
+                            </span>
+                          </div>
+                        );
+                      },
+                    )}
                   </>
                 ) : (
                   <span style={{ opacity: "60%" }}>
@@ -185,7 +352,6 @@ function ConfigManagementPage() {
         </div>
       </div>
 
-      {/* Parte Destra */}
       <div
         style={{
           height: "100%",
@@ -203,12 +369,58 @@ function ConfigManagementPage() {
                 marginTop: "30px",
                 marginBottom: "12px",
                 width: "90%",
-                opacity: "0.5",
-                fontSize: "14px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: "12px",
               }}
             >
-              Preview Monaco YAML
+              <div
+                style={{
+                  opacity: "0.5",
+                  fontSize: "14px",
+                }}
+              >
+                Preview Monaco YAML
+              </div>
+
+              <button
+                onClick={HandleSaveOnClick}
+                disabled={!canSave}
+                style={{
+                  height: "40px",
+                  padding: "0 16px",
+                  borderRadius: "10px",
+                  border: canSave ? "1px solid #477dda" : "1px solid #d1d5db",
+                  backgroundColor: canSave ? "#477dda" : "#f3f4f6",
+                  color: canSave ? "#ffffff" : "#9ca3af",
+                  cursor: canSave ? "pointer" : "not-allowed",
+                  fontWeight: 600,
+                }}
+              >
+                {componentState.isSaving ? "Salvataggio..." : "Salva"}
+              </button>
             </div>
+
+            {componentState.yamlError ? (
+              <div
+                style={{
+                  width: "90%",
+                  marginBottom: "12px",
+                  padding: "10px 12px",
+                  borderRadius: "8px",
+                  backgroundColor: "#fef2f2",
+                  border: "1px solid #fecaca",
+                  color: "#b91c1c",
+                  fontSize: "13px",
+                  boxSizing: "border-box",
+                }}
+              >
+                {componentState.yamlError}
+              </div>
+            ) : (
+              <></>
+            )}
 
             <div
               style={{
@@ -224,9 +436,10 @@ function ConfigManagementPage() {
                 <MonacoEditorTag
                   height="700px"
                   defaultLanguage="yaml"
-                  value={yamlPreviewValue}
+                  value={currentYamlValue}
+                  onChange={HandleYamlOnChange}
                   options={{
-                    readOnly: true,
+                    readOnly: false,
                     minimap: { enabled: false },
                     fontSize: 13,
                     scrollBeyondLastLine: false,

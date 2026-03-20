@@ -82,6 +82,6 @@ class DeleteDeviceAdmin(BaseModel):
 
 #--CONFIG--
 class EditConfigAdmin(BaseModel):
-    id: UUID4
+    id: str
     file: str 
     

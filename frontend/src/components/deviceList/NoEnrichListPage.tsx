@@ -3,7 +3,7 @@ import type {
   DeviceListEnumInterface,
   DeviceListStoreFileInterface,
 } from "../../stores/slices/Base/deviceListSlice";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import {
   GetDeviceListDetailAPIHook,
   GetDeviceListIdsAPIHook,
@@ -146,19 +146,63 @@ function NoEnrichListPageTag({
         <div
           style={{
             display: "flex",
-            justifyContent: "flex-start",
-            marginTop: "10px",
-            marginLeft: "10px",
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: "64px",
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            borderBottom: "1px solid #e5e7eb",
+            backgroundColor: "#ffffff",
+            boxSizing: "border-box",
           }}
         >
-          <Suspense fallback="">
-            <BasicButtonGenericTag
-              textToSee="Torna indietro"
-              clickCallBack={() => {
-                clickCallBack("home");
+          <button
+            onClick={() => {
+              clickCallBack("home");
+            }}
+            style={{
+              height: "38px",
+              padding: "0 14px 0 12px",
+              borderRadius: "10px",
+              border: "1px solid #d1d5db",
+              backgroundColor: "#ffffff",
+              color: "#374151",
+              cursor: "pointer",
+              fontWeight: 600,
+              fontSize: "13px",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              transition: "all 0.18s ease",
+              boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
+            }}
+            className="HoverTransform"
+          >
+            <span
+              className="material-symbols-outlined"
+              style={{
+                fontSize: "18px",
+                opacity: "0.8",
+                userSelect: "none",
               }}
-            />
-          </Suspense>
+            >
+              arrow_back
+            </span>
+
+            <span>Torna indietro</span>
+          </button>
+
+          <span
+            style={{
+              fontSize: "18px",
+              fontWeight: 600,
+              color: "#111827",
+            }}
+          >
+            No Enrich DeviceList
+          </span>
+
+          <div style={{ width: "120px" }} />
         </div>
 
         <div
@@ -168,6 +212,8 @@ function NoEnrichListPageTag({
             marginTop: "20px",
             marginLeft: "45px",
             marginRight: "25px",
+            height: "calc(100% - 84px)",
+            boxSizing: "border-box",
           }}
         >
           {/* Riga alta: lista + enum */}
@@ -366,7 +412,7 @@ function NoEnrichListPageTag({
           componentState.selectedFile !== "" ? (
             <>
               <div
-                style={{ marginTop: "20px", display: "flex", opacity: "50%" }}
+                style={{ marginTop: "10px", display: "flex", opacity: "50%" }}
               >
                 Preview device
               </div>

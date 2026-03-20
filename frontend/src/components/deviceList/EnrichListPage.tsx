@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { GetEnrichedIdsAPIHook } from "../../customHooks/API/DeviceList/DeviceListAPI";
 import type { DeviceListStoreFileInterface } from "../../stores/slices/Base/deviceListSlice";
@@ -6,9 +6,7 @@ import type { WhatIsSelcted } from "./DeviceListPageManager";
 
 const EnrichPreviewModalTag = lazy(() => import("./EnrichPreviewModal"));
 
-const BasicButtonGenericTag = lazy(
-  () => import("../button/BasicButtonGeneric"),
-);
+
 
 interface ComponentStateInterface {
   selectedFile: string;
@@ -82,51 +80,83 @@ function EnrichListPageTag({
           boxSizing: "border-box",
           display: "flex",
           overflow: "auto",
+          flexDirection: "column",
         }}
       >
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
-            marginTop: "30px",
-            marginLeft: "45px",
-            marginRight: "45px",
-            width: "100%",
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: "64px",
+            minHeight: "64px",
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            borderBottom: "1px solid #e5e7eb",
+            backgroundColor: "#ffffff",
+            boxSizing: "border-box",
           }}
         >
-          <div
+          <button
+            onClick={() => {
+              clickCallBack("home");
+            }}
+            className="HoverTransform"
             style={{
+              height: "38px",
+              padding: "0 14px 0 12px",
+              borderRadius: "10px",
+              border: "1px solid #d1d5db",
+              backgroundColor: "#ffffff",
+              color: "#374151",
+              cursor: "pointer",
+              fontWeight: 600,
+              fontSize: "13px",
               display: "flex",
-              justifyContent: "flex-start",
-              marginTop: "10px",
-              marginLeft: "10px",
+              alignItems: "center",
+              gap: "8px",
+              boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
             }}
           >
-            <div style={{width: "55%", display: "flex", marginBottom: "10px"}}>
-              <Suspense fallback="">
-                <BasicButtonGenericTag
-                  textToSee="Torna indietro"
-                  clickCallBack={() => {
-                    clickCallBack("home");
-                  }}
-                />
-              </Suspense>
-            </div>
+            <span
+              className="material-symbols-outlined"
+              style={{
+                fontSize: "18px",
+                opacity: "0.8",
+                userSelect: "none",
+              }}
+            >
+              arrow_back
+            </span>
 
-            <div style={{width: "65%", display: "flex"}}>
-              <span
-                style={{
-                  fontSize: "22px",
-                  fontWeight: 600,
-                  color: "#111827",
-                  marginBottom: "18px",
-                }}
-              >
-                Files Enriched
-              </span>
-            </div>
-          </div>
+            <span>Torna indietro</span>
+          </button>
 
+          <span
+            style={{
+              fontSize: "22px",
+              fontWeight: 600,
+              color: "#111827",
+              textAlign: "center",
+            }}
+          >
+            Files Enriched
+          </span>
+
+          <div style={{ width: "132px" }} />
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "24px",
+            marginLeft: "45px",
+            marginRight: "45px",
+            width: "calc(100% - 90px)",
+            boxSizing: "border-box",
+          }}
+        >
           {(deviceListSlice?.enrichedValue ?? []).length > 0 ? (
             <div
               style={{
@@ -171,6 +201,7 @@ function EnrichListPageTag({
                         cursor: "pointer",
                         overflow: "hidden",
                         transition: "all 0.18s ease",
+                        backgroundColor: "#ffffff",
                       }}
                     >
                       <div
