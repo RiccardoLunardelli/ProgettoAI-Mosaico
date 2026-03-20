@@ -6,7 +6,10 @@ from mcp_server.core import MCPContext
 import re
 from pathlib import Path
 from src.parser.normalizer import load_json
+from src.intermediateLayer.postgres_repository import ArtifactRepository
 
+dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
+artifactRepo = ArtifactRepository(dsn)
 
 def build_run_report(cfg: dict, run_id: str, artifact_type: str, input_path: str, output_path: str, diff: list[str], 
     schema_versions: dict, committed: bool, status: str, validation_block: dict | None, mr: dict | None,
@@ -206,16 +209,18 @@ def build_report_context(artifact_type, matching_path, template_base_path):
 
     schema_versions = build_schema_versions(ctx, used)
 
-    dict_payload = None 
-    kb_payload = None 
-    if "dictionary" in ARTIFACTS and ARTIFACTS["dictionary"].get("input_path"):
-        dict_payload = load_json(ARTIFACTS["dictionary"]["input_path"])
-    if "kb" in ARTIFACTS and ARTIFACTS["kb"].get("input_path"):
-        kb_payload = load_json(ARTIFACTS["kb"]["input_path"])
+    last_dict = artifactRepo.get_last_version_of_artifact("dictionary")
+    last_kb = artifactRepo.get_last_version_of_artifact("kb")
+    last_tb = artifactRepo.get_last_version_of_artifact("template_base")
 
-    tb_version = None 
-    if template_base_path:
-        tb_version = load_json(template_base_path).get("template_base_version")
+    dict_payload = last_dict.get("content") if last_dict else None
+    kb_payload = last_kb.get("content") if last_kb else None
+
+    # priorità: versione da DB
+    tb_version = None
+    if last_tb:
+        tb_version = last_tb.get("version") or (last_tb.get("content") or {}).get("template_base_version")
+
 
     return schema_versions, dict_payload, kb_payload, tb_version
 
