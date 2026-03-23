@@ -366,7 +366,7 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate, input
     return report_path
     '''
 
-def run_device_list(cfg: dict, validate, user_id) -> None:
+def run_device_list(cfg: dict, validate, user_id, version) -> None:
     # run per device_list
 
     run_id = generate_run_id()
@@ -407,7 +407,8 @@ def run_device_list(cfg: dict, validate, user_id) -> None:
     device_list_version = extract_device_list_version(output_path or input_path)
     
     schema_versions = {
-        "device_list_version": device_list_version
+        "device_list_version": device_list_version,
+        "config_device_list_version": version
     }
 
     #enriched_file = commit.get("preview")

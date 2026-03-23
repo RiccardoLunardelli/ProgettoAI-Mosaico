@@ -228,6 +228,17 @@ def list_enrich_device_list(user = Depends(get_current_user)):
 def get_enrich_device_list(store: str, dl: str, user = Depends(get_current_user)):
     return artifactClass.get_artifact_content(f"{store}/{dl}", "device_list_context")
 
+@router.get("/config/device_list")
+def get_config_device_list(user = Depends(get_current_user)):
+    return artifactClass.list_artifact("config")
+    #return [p.name for p in sorted (CONFIG_DIR.glob("device_list_rules*.yml"))]
+
+@router.get("/config/content/{id}")
+def get_config_content(id: str, user = Depends(get_current_user)):
+    return artifactClass.get_artifact_content(id, "config")
+    #path = CONFIG_DIR / name
+    #return load_config(path)
+
 #----EDIT----
 @router.post("/dictionary/edit")
 def edit_dictionary(payload: DictionaryEditRequest, user = Depends(get_current_user)):

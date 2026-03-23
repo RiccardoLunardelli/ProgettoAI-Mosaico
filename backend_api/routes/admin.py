@@ -309,17 +309,6 @@ def delete_device(payload: DeleteDeviceAdmin, user = Depends(require_admin)):
     return device_operation(payload.id, None, None, None, None, "delete")
 
 #----CONFIG-----
-@router.get("/config/device_list")
-def get_config_device_list(user = Depends(require_admin)):
-    return artifactClass.list_artifact("config")
-    #return [p.name for p in sorted (CONFIG_DIR.glob("device_list_rules*.yml"))]
-
-@router.get("/config/content/{id}")
-def get_config_content(id: str, user = Depends(require_admin)):
-    return artifactClass.get_artifact_content(id, "config")
-    #path = CONFIG_DIR / name
-    #return load_config(path)
-
 @router.post("/edit/config")
-def edit_config_inline(payload: EditConfigAdmin,user = Depends(require_admin)):
+def edit_config_inline(payload: EditConfigAdmin, user = Depends(require_admin)):
     return editor_config_json_inline(payload.id, payload.file, user["sub"])

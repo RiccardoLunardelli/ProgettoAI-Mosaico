@@ -37,7 +37,7 @@ TEMPLATE_BASE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-M
 PVS_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs")
 CONFIG_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/config")
 
-def apply_patch(user_id: str, input_path: str | None, file_name: str | None, patch_json: dict | None, upsert: Any | None, summarize: Any | None, artifact: str, patch_file_name: str | None, validate_only: bool, run_id: str | None, mode: str | None, manual_mode: str | None, run_dir: Path, source_artifact_name: str | None = None, device_rules: dict | None = None):
+def apply_patch(user_id: str, input_path: str | None, file_name: str | None, patch_json: dict | None, upsert: Any | None, summarize: Any | None, artifact: str, patch_file_name: str | None, validate_only: bool, run_id: str | None, mode: str | None, manual_mode: str | None, run_dir: Path, source_artifact_name: str | None = None, device_rules: dict | None = None, version: str | None = None):
     # applica le patch, genera report e salva nel db
 
     if not input_path.exists():
@@ -151,7 +151,7 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
     # artifact = device_list
     else:
         cfg["device_rules"] = device_rules or {}
-        report_path, enriched_file = run_device_list(cfg, validate_only, user_id)
+        report_path, enriched_file = run_device_list(cfg, validate_only, user_id, version)
         report = load_json(str(report_path))
 
         # salvataggio nel db
@@ -326,19 +326,19 @@ def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_cu
 @router.post("/run/dictionary")
 def run_dictionary(payload: RunDictionaryRequest, user = Depends(get_current_user)):
     input_path, run_dir, _ = initialize(payload.id,  "dictionary", user["sub"])
-    return apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, dictionary_upsert, summarize_dictionary_diff, "dictionary", "dictionary_patch.json", payload.validate_only, payload.run_id, payload.mode, payload.manual_mode, run_dir, None, None) 
+    return apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, dictionary_upsert, summarize_dictionary_diff, "dictionary", "dictionary_patch.json", payload.validate_only, payload.run_id, payload.mode, payload.manual_mode, run_dir, None, None, None) 
 
 #----KB----
 @router.post("/run/kb")
 def run_kb(payload: RunKbRequest, user = Depends(get_current_user)):
     input_path, run_dir, _ = initialize(payload.id, "kb", user["sub"])
-    return  apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, "kb", "kb_patch.json", payload.validate_only, None, None, None, run_dir, None, None)
+    return  apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, kb_upsert_mapping, summarize_kb_diff, "kb", "kb_patch.json", payload.validate_only, None, None, None, run_dir, None, None, None)
 
 #----TEMPLATE BASE----
 @router.post("/run/template_base")
 def run_template_base(payload: RunTemplateBaseRequest, user = Depends(get_current_user)):
     input_path, run_dir, _ = initialize(payload.id, "template_base", user["sub"])
-    return apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, template_apply_patch, summarize_template_base_diff, "template_base", "template_base_patch.json", payload.validate_only, None, None, None, run_dir, None, None)
+    return apply_patch(user["sub"], input_path, input_path.name, payload.patch_json, template_apply_patch, summarize_template_base_diff, "template_base", "template_base_patch.json", payload.validate_only, None, None, None, run_dir, None, None, None)
 
  # ---- DEVICE LIST ----
 
@@ -348,16 +348,17 @@ def run_device_list_api(payload: RunDeviceListRequest, user = Depends(get_curren
     source_artifact_name = artifactRepo.get_artifact_name_by_id(payload.id)
     input_path, run_dir, _ = initialize(payload.id, "device_list", user["sub"])
     rules = _get_device_rules_from_db(payload.config_id)
-    return apply_patch(user["sub"], input_path, input_path.name, None, None, None, "device_list", None, payload.validate_only, None, None, None, run_dir, source_artifact_name=source_artifact_name, device_rules=rules)
+    version_rules = artifactRepo.get_artifact_version_by_id(payload.config_id)
+    return apply_patch(user["sub"], input_path, input_path.name, None, None, None, "device_list", None, payload.validate_only, None, None, None, run_dir, source_artifact_name=source_artifact_name, device_rules=rules, version=version_rules)
     #input_path = PVS_DIR / payload.store / payload.device_list_name
     #return apply_patch(user["sub"], input_path, payload.device_list_name, None, None, None, "device_list", None, payload.validate_only, None, None, None)
 
-@router.get("/enum")
-def get_base_update_device_list(user = Depends(get_current_user)):
+@router.get("/enum/{config_id}")
+def get_base_update_device_list(config_id: str, user = Depends(get_current_user)):
+    rules = _get_device_rules_from_db(config_id)
+    return rules.get("enum", {})
+    # parte vecchia
     file_config = "device_list_rules.yml"
     path = CONFIG_DIR / file_config
     rules = load_rules(str(path))
-    return rules.get("enum", {})
-    # suggerimento:
-    rules = _get_device_rules_from_db(config_id)
     return rules.get("enum", {})

@@ -446,6 +446,16 @@ class ArtifactRepository():
                 row = cur.fetchone()
                 return dict(row) if row else None
 
+    def get_artifact_version_by_id(self, id: str) -> str:
+        # prende la versione dell'artefatto
+
+        sql = "SELECT version FROM artifacts WHERE id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (id,))
+                row = cur.fetchone()
+        return row[0]
+
     def drop_artifact(self, ids) -> Dict[str, Any]:
         # elimina file da db
 
