@@ -11,6 +11,7 @@ from scripts.config.config import TIMEZONE, generate_run_id, RUNS_ROOT
 import re
 import json
 from scripts.report.report import build_run_report
+from scripts.summarize_diff.diff import summarize_config_diff
 
 router = APIRouter(prefix="/api", tags=["admin"], dependencies=[Depends(require_admin)])
 
@@ -151,9 +152,10 @@ def editor_config_json_inline(artifact_id: str, yaml_text: str, user_id: str):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"invalid yaml: {e}")
 
-    changed = (old_obj != new_obj)
-    if not changed:
+    diff = summarize_config_diff(old_obj, new_obj)
+    if not diff:
         return {"status": "ok", "changed": False, "name": old_name}
+
 
     new_name, new_version = _next_versioned_name(old_name)
 
@@ -161,7 +163,7 @@ def editor_config_json_inline(artifact_id: str, yaml_text: str, user_id: str):
     new_artifact_id = artifactClass.upsert_artifact(artifact_type="config", name=new_name, version=new_version, content=yaml_text)
 
     run_id = generate_run_id()
-    run_dir = RUNS_ROOT / user_id / run_id
+    run_dir = RUNS_ROOT / str(user_id) / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
     report_path = run_dir / "run_report.json"
 
@@ -171,7 +173,7 @@ def editor_config_json_inline(artifact_id: str, yaml_text: str, user_id: str):
         artifact_type="config",
         input_path=old_name,
         output_path=new_name,
-        diff=["config_changed"],
+        diff=diff,
         schema_versions={"config_version": new_version},
         committed=True,
         status="success",
@@ -196,6 +198,7 @@ def editor_config_json_inline(artifact_id: str, yaml_text: str, user_id: str):
         "artifact_id": new_artifact_id,
         "name": new_name,
         "version": new_version,
+        "diff": diff
     }
 
 def _next_versioned_name(name: str) -> tuple[str, str]:

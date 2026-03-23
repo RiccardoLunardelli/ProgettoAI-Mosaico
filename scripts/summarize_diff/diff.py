@@ -1,4 +1,5 @@
 from src.parser.normalizer import load_json
+from typing import Any
 
 #---------DIFF-----------------
 def summarize_device_list_diff(before:dict, after: dict) -> list[str]:
@@ -187,6 +188,41 @@ def summarize_template_base_diff(before: dict, after: dict) -> list[str]:
             )
 
     return summary
+
+def summarize_config_diff(before: Any, after: Any, prefix: str = "") -> list[str]:
+    out: list[str] = []
+
+    # dict vs dict
+    if isinstance(before, dict) and isinstance(after, dict):
+        keys = set(before.keys()) | set(after.keys())
+        for k in sorted(keys):
+            p = f"{prefix}.{k}" if prefix else str(k)
+            if k not in before:
+                out.append(f"add_config_key: {p}")
+            elif k not in after:
+                out.append(f"remove_config_key: {p}")
+            else:
+                out.extend(summarize_config_diff(before[k], after[k], p))
+        return out
+
+    # list vs list
+    if isinstance(before, list) and isinstance(after, list):
+        max_len = max(len(before), len(after))
+        for i in range(max_len):
+            p = f"{prefix}[{i}]"
+            if i >= len(before):
+                out.append(f"add_config_item: {p}")
+            elif i >= len(after):
+                out.append(f"remove_config_item: {p}")
+            else:
+                out.extend(summarize_config_diff(before[i], after[i], p))
+        return out
+
+    # scalar changed
+    if before != after:
+        out.append(f"update_config_value: {prefix or 'root'}")
+
+    return out
 
 def compute_diff(input_path, template_patch, validated_preview, validated_diff, upsert_fn, diff_fn):
     # genera diff (dry-run se non validato)
