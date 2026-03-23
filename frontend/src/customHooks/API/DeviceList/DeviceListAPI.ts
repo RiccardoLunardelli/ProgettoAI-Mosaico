@@ -155,6 +155,7 @@ const RunDeviceListAPIHook = () => {
       device_list_name: string;
       validate_only: boolean;
       id: string;
+      config_id: string;
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
@@ -366,6 +367,9 @@ const GetEnumDeviceListAPIHook = () => {
   const dispatch = useDispatch();
 
   const GetEnumDeviceListAPI = async (infoObj: {
+    data: {
+      config_id: string;
+    };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
     saveResponse?: boolean;
@@ -375,13 +379,16 @@ const GetEnumDeviceListAPIHook = () => {
     }
 
     try {
-      const apiCall = await fetch(apiDomainString + "/enum", {
-        method: FetchMethodEnum.Get,
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
+      const apiCall = await fetch(
+        apiDomainString + "/enum/" + infoObj.data.config_id,
+        {
+          method: FetchMethodEnum.Get,
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       const response: string = await apiCall.text();
       const jsonResponse = JSON.parse(response);

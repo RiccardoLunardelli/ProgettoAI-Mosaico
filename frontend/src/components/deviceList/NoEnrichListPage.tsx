@@ -3,6 +3,7 @@ import type {
   DeviceListEnumInterface,
   DeviceListStoreFileInterface,
 } from "../../stores/slices/Base/deviceListSlice";
+import type { ConfigListInterface } from "../../stores/slices/Base/configListSlice";
 import { lazy, useEffect, useState } from "react";
 import {
   GetDeviceListDetailAPIHook,
@@ -10,6 +11,10 @@ import {
   GetEnumDeviceListAPIHook,
   RunDeviceListAPIHook,
 } from "../../customHooks/API/DeviceList/DeviceListAPI";
+import {
+  GetConfigListDetailAPIHook,
+  GetConfigListIdsAPIHook,
+} from "../../customHooks/API/Config/ConfigAPI";
 
 import { getJsonDiffLines } from "../../commons/commonsFunctions";
 import type { WhatIsSelcted } from "./DeviceListPageManager";
@@ -24,10 +29,17 @@ const Toggle = lazy(() =>
   import("rsuite").then((module) => ({ default: module.Toggle })),
 );
 
+type PageType = "config" | "device";
+
 interface ComponentStateInterface {
+  currentPage: PageType;
+
+  selectedConfigId: string;
+
   selectedStore: string;
   selectedFile: string;
   selectedId: string;
+
   validateOnly: boolean;
   warning: null | string[];
   enriched_file: [] | null;
@@ -43,6 +55,9 @@ function NoEnrichListPageTag({
   const [RunDeviceListAPI] = RunDeviceListAPIHook();
   const [GetEnumDeviceListAPI] = GetEnumDeviceListAPIHook();
 
+  const [GetConfigListIdsAPI] = GetConfigListIdsAPIHook();
+  const [GetConfigListDetailAPI] = GetConfigListDetailAPIHook();
+
   const deviceListListSlice: {
     value: DeviceListStoreFileInterface[];
     detail: any;
@@ -57,24 +72,85 @@ function NoEnrichListPageTag({
     }) => state.deviceListListSlice,
   );
 
+  const configListSlice: {
+    value: ConfigListInterface[] | null;
+    detail: any;
+  } = useSelector(
+    (state: {
+      configListSlice: {
+        value: ConfigListInterface[] | null;
+        detail: any;
+      };
+    }) => state.configListSlice,
+  );
+
   const [componentState, setComponentState] = useState<ComponentStateInterface>(
     {
+      currentPage: "config",
+      selectedConfigId: "",
       selectedStore: "",
       selectedFile: "",
+      selectedId: "",
       validateOnly: false,
       warning: null,
       enriched_file: null,
-      selectedId: "",
     },
   );
 
-  const HandleSelectIdOnClick = (singleStore: string, singleFile: string, singleId: string) => {
+  const isConfigPage = componentState.currentPage === "config";
+  const isDevicePage = componentState.currentPage === "device";
+
+  const selectedConfig =
+    (configListSlice?.value ?? []).find(
+      (item) => item.id === componentState.selectedConfigId,
+    ) ?? null;
+
+  const HandleBackButtonOnClick = () => {
+    if (componentState.currentPage === "device") {
+      setComponentState((previousStateVal: ComponentStateInterface) => {
+        return {
+          ...previousStateVal,
+          currentPage: "config",
+        };
+      });
+
+      return;
+    }
+
+    clickCallBack("home");
+  };
+
+  const HandleForwardButtonOnClick = () => {
+    if (!componentState.selectedConfigId) return;
+
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        currentPage: "device",
+      };
+    });
+  };
+
+  const HandleSelectConfigOnClick = (singleId: string) => {
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        selectedConfigId: singleId ?? "",
+      };
+    });
+  };
+
+  const HandleSelectIdOnClick = (
+    singleStore: string,
+    singleFile: string,
+    singleId: string,
+  ) => {
     setComponentState((previousStateVal: ComponentStateInterface) => {
       return {
         ...previousStateVal,
         selectedStore: singleStore ?? "",
         selectedFile: singleFile ?? "",
-        selectedId: singleId ?? ""
+        selectedId: singleId ?? "",
       };
     });
   };
@@ -88,7 +164,8 @@ function NoEnrichListPageTag({
         store: componentState?.selectedStore ?? "",
         device_list_name: componentState?.selectedFile ?? "",
         validate_only: componentState?.validateOnly ?? true,
-        id: componentState?.selectedId ?? ""
+        id: componentState?.selectedId ?? "",
+        config_id: componentState?.selectedConfigId ?? "",
       },
       EndCallback(result) {
         setComponentState((previousStateVal: ComponentStateInterface) => {
@@ -104,8 +181,26 @@ function NoEnrichListPageTag({
 
   useEffect(() => {
     GetDeviceListIdsAPI({ showLoader: true, saveResponse: true });
-    GetEnumDeviceListAPI({ showLoader: true, saveResponse: true });
+    GetConfigListIdsAPI({ showLoader: true, saveResponse: true });
   }, []);
+
+  useEffect(() => {
+    if (!componentState.selectedConfigId) return;
+
+    GetConfigListDetailAPI({
+      data: { id: componentState.selectedConfigId },
+      showLoader: true,
+      saveResponse: true,
+    });
+
+    GetEnumDeviceListAPI({
+      showLoader: true,
+      saveResponse: true,
+      data: {
+        config_id: componentState.selectedConfigId ?? "",
+      },
+    });
+  }, [componentState.selectedConfigId]);
 
   useEffect(() => {
     if (!componentState.selectedStore || !componentState.selectedFile) return;
@@ -139,7 +234,7 @@ function NoEnrichListPageTag({
         flexDirection: "row",
       }}
     >
-      {/* Parte Sinistra pagina divisa */}
+      {/* Parte Sinistra pagina */}
       <div
         style={{
           height: "100%",
@@ -160,41 +255,87 @@ function NoEnrichListPageTag({
             boxSizing: "border-box",
           }}
         >
-          <button
-            onClick={() => {
-              clickCallBack("home");
-            }}
-            style={{
-              height: "38px",
-              padding: "0 14px 0 12px",
-              borderRadius: "10px",
-              border: "1px solid #d1d5db",
-              backgroundColor: "#ffffff",
-              color: "#374151",
-              cursor: "pointer",
-              fontWeight: 600,
-              fontSize: "13px",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              transition: "all 0.18s ease",
-              boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
-            }}
-            className="HoverTransform"
-          >
-            <span
-              className="material-symbols-outlined"
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <button
+              onClick={HandleBackButtonOnClick}
               style={{
-                fontSize: "18px",
-                opacity: "0.8",
-                userSelect: "none",
+                height: "38px",
+                padding: "0 14px 0 12px",
+                borderRadius: "10px",
+                border: "1px solid #d1d5db",
+                backgroundColor: "#ffffff",
+                color: "#374151",
+                cursor: "pointer",
+                fontWeight: 600,
+                fontSize: "13px",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                transition: "all 0.18s ease",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
               }}
+              className="HoverTransform"
             >
-              arrow_back
-            </span>
+              <span
+                className="material-symbols-outlined"
+                style={{
+                  fontSize: "18px",
+                  opacity: "0.8",
+                  userSelect: "none",
+                }}
+              >
+                arrow_back
+              </span>
 
-            <span>Torna indietro</span>
-          </button>
+              <span>
+                {isConfigPage ? "Torna indietro" : "Torna alla config"}
+              </span>
+            </button>
+
+            <button
+              onClick={HandleForwardButtonOnClick}
+              disabled={!isConfigPage || componentState.selectedConfigId === ""}
+              style={{
+                height: "38px",
+                padding: "0 14px 0 12px",
+                borderRadius: "10px",
+                border: "1px solid #d1d5db",
+                backgroundColor:
+                  !isConfigPage || componentState.selectedConfigId === ""
+                    ? "#f3f4f6"
+                    : "#ffffff",
+                color:
+                  !isConfigPage || componentState.selectedConfigId === ""
+                    ? "#9ca3af"
+                    : "#374151",
+                cursor:
+                  !isConfigPage || componentState.selectedConfigId === ""
+                    ? "not-allowed"
+                    : "pointer",
+                fontWeight: 600,
+                fontSize: "13px",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                transition: "all 0.18s ease",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
+              }}
+              className="HoverTransform"
+            >
+              <span>Avanti</span>
+
+              <span
+                className="material-symbols-outlined"
+                style={{
+                  fontSize: "18px",
+                  opacity: "0.8",
+                  userSelect: "none",
+                }}
+              >
+                arrow_forward
+              </span>
+            </button>
+          </div>
 
           <span
             style={{
@@ -203,10 +344,20 @@ function NoEnrichListPageTag({
               color: "#111827",
             }}
           >
-            No Enrich DeviceList
+            {isConfigPage ? "Scelta Config" : "No Enrich DeviceList"}
           </span>
 
-          <div style={{ width: "120px" }} />
+          <div
+            style={{
+              width: "120px",
+              textAlign: "right",
+              fontSize: "12px",
+              fontWeight: 600,
+              color: "#6b7280",
+            }}
+          >
+            {isConfigPage ? "Step 1 / 2" : "Step 2 / 2"}
+          </div>
         </div>
 
         <div
@@ -220,7 +371,6 @@ function NoEnrichListPageTag({
             boxSizing: "border-box",
           }}
         >
-          {/* Riga alta: lista + enum */}
           <div
             style={{
               display: "flex",
@@ -229,7 +379,7 @@ function NoEnrichListPageTag({
               width: "100%",
             }}
           >
-            {/* Lista device */}
+            {/* Lista principale */}
             <div
               style={{
                 backgroundColor: "#ffffff",
@@ -255,7 +405,7 @@ function NoEnrichListPageTag({
                 }}
               >
                 <span style={{ fontSize: "20px", fontWeight: 600 }}>
-                  DeviceList
+                  {isConfigPage ? "Config YAML" : "DeviceList"}
                 </span>
 
                 <div
@@ -266,7 +416,65 @@ function NoEnrichListPageTag({
                     marginTop: "10px",
                   }}
                 >
-                  {(deviceListListSlice?.value ?? []).length > 0 ? (
+                  {isConfigPage ? (
+                    (configListSlice?.value ?? []).length > 0 ? (
+                      <>
+                        {(configListSlice?.value ?? []).map(
+                          (singleConfig: ConfigListInterface) => {
+                            const isSelected =
+                              componentState.selectedConfigId ===
+                              (singleConfig?.id ?? "");
+
+                            return (
+                              <div
+                                key={singleConfig?.id ?? ""}
+                                className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
+                                style={{
+                                  borderRadius: "8px",
+                                  padding: "8px 10px",
+                                  width: "95%",
+                                  cursor: "pointer",
+                                  fontSize: "13px",
+                                  color: "var(--black)",
+                                  marginTop: "8px",
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  alignItems: "center",
+                                }}
+                                onClick={() => {
+                                  HandleSelectConfigOnClick(
+                                    singleConfig?.id ?? "",
+                                  );
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    gap: "4px",
+                                    padding: "7px"
+                                  }}
+                                >
+                                  <span
+                                    style={{
+                                      fontSize: "14px",
+                                      fontWeight: 500,
+                                    }}
+                                  >
+                                    {singleConfig?.name ?? "Senza nome"}
+                                  </span>
+                                </div>
+                              </div>
+                            );
+                          },
+                        )}
+                      </>
+                    ) : (
+                      <span style={{ opacity: "60%" }}>
+                        Nessuna config trovata
+                      </span>
+                    )
+                  ) : (deviceListListSlice?.value ?? []).length > 0 ? (
                     <>
                       {(deviceListListSlice?.value ?? []).map(
                         (
@@ -299,7 +507,7 @@ function NoEnrichListPageTag({
                                 HandleSelectIdOnClick(
                                   singleRun.store,
                                   singleRun.file,
-                                  singleRun.id
+                                  singleRun.id,
                                 );
                               }}
                             >
@@ -317,7 +525,7 @@ function NoEnrichListPageTag({
                     </>
                   ) : (
                     <span style={{ opacity: "60%" }}>
-                      Nessun device trovata
+                      Nessuna device trovata
                     </span>
                   )}
                 </div>
@@ -325,96 +533,102 @@ function NoEnrichListPageTag({
             </div>
 
             {/* Enum */}
-            <div
-              style={{
-                width: "35%",
-                minWidth: "180px",
-                display: "flex",
-                flexDirection: "column",
-
-                // 👉 effetto card (leggero)
-                backgroundColor: "#ffffff",
-                borderRadius: "8px",
-                padding: "10px",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
-                border: "1px solid #f1f5f9",
-              }}
-            >
+            {isDevicePage ? (
               <div
                 style={{
-                  fontSize: "13px",
-                  color: "#6b7280",
-                  fontWeight: 500,
-                  marginBottom: "8px",
+                  width: "35%",
+                  minWidth: "180px",
+                  display: "flex",
+                  flexDirection: "column",
+                  backgroundColor: "#ffffff",
+                  borderRadius: "8px",
+                  padding: "10px",
+                  boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
+                  border: "1px solid #f1f5f9",
                 }}
               >
-                Enum disponibili
-              </div>
+                <div
+                  style={{
+                    fontSize: "13px",
+                    color: "#6b7280",
+                    fontWeight: 500,
+                    marginBottom: "8px",
+                  }}
+                >
+                  Enum disponibili
+                </div>
 
-              <div
-                style={{
-                  flex: 1,
-                  minHeight: "240px",
-                  maxHeight: "28vh",
-                  overflow: "auto",
-                  fontSize: "13px",
-                  paddingRight: "4px",
-                }}
-              >
-                {deviceListListSlice.enum &&
-                Object.keys(deviceListListSlice.enum).length > 0 ? (
-                  Object.entries(deviceListListSlice.enum).map(
-                    ([key, value]) => (
-                      <div
-                        key={key}
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          padding: "6px 6px",
-                          borderRadius: "6px",
-                          marginBottom: "4px",
-
-                          // 👉 hover leggero
-                          transition: "background 0.15s",
-                        }}
-                        className="HoverTransform"
-                      >
-                        <span
+                <div
+                  style={{
+                    flex: 1,
+                    minHeight: "240px",
+                    maxHeight: "28vh",
+                    overflow: "auto",
+                    fontSize: "13px",
+                    paddingRight: "4px",
+                  }}
+                >
+                  {deviceListListSlice.enum &&
+                  Object.keys(deviceListListSlice.enum).length > 0 ? (
+                    Object.entries(deviceListListSlice.enum).map(
+                      ([key, value]) => (
+                        <div
+                          key={key}
                           style={{
-                            fontWeight: 600,
-                            color: "#111827",
-                            minWidth: "28px",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            padding: "6px 6px",
+                            borderRadius: "6px",
+                            marginBottom: "4px",
+                            transition: "background 0.15s",
                           }}
+                          className="HoverTransform"
                         >
-                          {key}
-                        </span>
+                          <span
+                            style={{
+                              fontWeight: 600,
+                              color: "#111827",
+                              minWidth: "28px",
+                            }}
+                          >
+                            {key}
+                          </span>
 
-                        <span
-                          style={{
-                            color: "#475569",
-                            textAlign: "right",
-                            flex: 1,
-                            wordBreak: "break-word",
-                          }}
-                        >
-                          {String(value)}
-                        </span>
-                      </div>
-                    ),
-                  )
-                ) : (
-                  <span style={{ opacity: "0.6" }}>
-                    Nessun enum disponibile
-                  </span>
-                )}
+                          <span
+                            style={{
+                              color: "#475569",
+                              textAlign: "right",
+                              flex: 1,
+                              wordBreak: "break-word",
+                            }}
+                          >
+                            {String(value)}
+                          </span>
+                        </div>
+                      ),
+                    )
+                  ) : (
+                    <span style={{ opacity: "0.6" }}>
+                      Nessun enum disponibile
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
+            ) : (
+              <></>
+            )}
           </div>
 
-          {/* Preview device */}
-          {deviceListListSlice.detail &&
-          componentState.selectedStore &&
-          componentState.selectedFile !== "" ? (
+          {/* Preview sotto a sinistra */}
+          {isConfigPage ? (
+            componentState.selectedConfigId && configListSlice.detail ? (
+              <></>
+            ) : componentState.selectedConfigId ? (
+              <RunsListSkeleton />
+            ) : null
+          ) : deviceListListSlice.detail &&
+            componentState.selectedStore &&
+            componentState.selectedFile !== "" ? (
             <>
               <div
                 style={{ marginTop: "10px", display: "flex", opacity: "50%" }}
@@ -488,8 +702,10 @@ function NoEnrichListPageTag({
                   <BasicButtonGenericTag
                     textToSee="Run"
                     disabledButton={
-                      componentState.selectedFile == "" ||
-                      componentState.selectedStore == ""
+                      componentState.selectedFile === "" ||
+                      componentState.selectedStore === "" ||
+                      componentState.selectedId === "" ||
+                      componentState.selectedConfigId === ""
                     }
                     clickCallBack={HandleSaveButtonOnClick}
                   />
@@ -500,7 +716,7 @@ function NoEnrichListPageTag({
                     style={{
                       backgroundColor: "#fff9e6",
                       width: "60%",
-                      height: "5%",
+                      height: "40%",
                       marginTop: "20px",
                       borderRadius: "8px",
                       border: "1px solid #f5dead",
@@ -545,7 +761,7 @@ function NoEnrichListPageTag({
         </div>
       </div>
 
-      {/* Parte Destra pagina divisa */}
+      {/* Parte Destra pagina */}
       <div
         style={{
           height: "100%",
@@ -556,9 +772,56 @@ function NoEnrichListPageTag({
           overflow: "auto",
         }}
       >
-        {componentState.enriched_file ? (
-          <>
-            <div style={{ marginTop: "20px", opacity: "50%" }}>Changes</div>
+        {isConfigPage ? (
+          <div style={{ width: "95%" }}>
+            {componentState.selectedConfigId ? (
+              <div
+                style={{
+                  backgroundColor: "#ffffff",
+                  width: "100%",
+                  height: "auto",
+                  marginTop: "20px",
+                  borderRadius: "8px",
+                  border: "1px solid #e5e7eb",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-start",
+                  alignItems: "flex-start",
+                  padding: "16px",
+                  boxSizing: "border-box",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "13px",
+                    opacity: "0.6",
+                    marginBottom: "8px",
+                  }}
+                >
+                  Config selezionata
+                </div>
+
+                <div
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: 600,
+                    color: "#111827",
+                  }}
+                >
+                  {selectedConfig?.name ?? "Config YAML"}
+                </div>
+
+              </div>
+            ) : null}
+
+            <div
+              style={{
+                marginTop: "20px",
+                opacity: "50%",
+              }}
+            >
+              Preview file di configurazione
+            </div>
 
             <div
               style={{
@@ -567,14 +830,15 @@ function NoEnrichListPageTag({
                 padding: "10px",
                 boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
                 boxSizing: "border-box",
-                width: "95%",
-                height: "40vh",
+                width: "100%",
+                height: "70vh",
                 display: "flex",
                 justifyContent: "flex-start",
                 overflow: "auto",
+                marginTop: "8px",
               }}
             >
-              <div
+              <pre
                 style={{
                   margin: 0,
                   textAlign: "left",
@@ -582,99 +846,140 @@ function NoEnrichListPageTag({
                   wordBreak: "break-word",
                   fontSize: "13px",
                   width: "100%",
-                  fontFamily: "monospace",
                 }}
               >
-                {getJsonDiffLines(
-                  deviceListListSlice.detail,
-                  componentState.enriched_file,
-                ).map(
-                  (
-                    singleLine: {
-                      line: string;
-                      type: "same" | "added" | "removed";
-                    },
-                    index: number,
-                  ) => (
-                    <div
-                      key={`${singleLine.line}-${index}`}
-                      style={{
-                        backgroundColor:
-                          singleLine.type === "added"
-                            ? "#e8f5e9"
-                            : singleLine.type === "removed"
-                              ? "#ffebee"
-                              : "transparent",
-                        color:
-                          singleLine.type === "added"
-                            ? "#1b5e20"
-                            : singleLine.type === "removed"
-                              ? "#b71c1c"
-                              : "inherit",
-                        display: "block",
-                        width: "100%",
-                      }}
-                    >
-                      {singleLine.line}
+                {componentState.selectedConfigId
+                  ? typeof configListSlice.detail === "string"
+                    ? configListSlice.detail
+                    : JSON.stringify(configListSlice.detail, null, 2)
+                  : "Seleziona una config per vedere la preview"}
+              </pre>
+            </div>
+          </div>
+        ) : (
+          <>
+            {componentState.enriched_file ? (
+              <>
+                <div style={{ marginTop: "20px", opacity: "50%" }}>Changes</div>
+
+                <div
+                  style={{
+                    backgroundColor: "#f3f5f7",
+                    borderRadius: "8px",
+                    padding: "10px",
+                    boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
+                    boxSizing: "border-box",
+                    width: "95%",
+                    height: "40vh",
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    overflow: "auto",
+                  }}
+                >
+                  <div
+                    style={{
+                      margin: 0,
+                      textAlign: "left",
+                      whiteSpace: "pre-wrap",
+                      wordBreak: "break-word",
+                      fontSize: "13px",
+                      width: "100%",
+                      fontFamily: "monospace",
+                    }}
+                  >
+                    {getJsonDiffLines(
+                      deviceListListSlice.detail,
+                      componentState.enriched_file,
+                    ).map(
+                      (
+                        singleLine: {
+                          line: string;
+                          type: "same" | "added" | "removed";
+                        },
+                        index: number,
+                      ) => (
+                        <div
+                          key={`${singleLine.line}-${index}`}
+                          style={{
+                            backgroundColor:
+                              singleLine.type === "added"
+                                ? "#e8f5e9"
+                                : singleLine.type === "removed"
+                                  ? "#ffebee"
+                                  : "transparent",
+                            color:
+                              singleLine.type === "added"
+                                ? "#1b5e20"
+                                : singleLine.type === "removed"
+                                  ? "#b71c1c"
+                                  : "inherit",
+                            display: "block",
+                            width: "100%",
+                          }}
+                        >
+                          {singleLine.line}
+                        </div>
+                      ),
+                    )}
+                  </div>
+                </div>
+              </>
+            ) : null}
+
+            <div style={{ width: "95%" }}>
+              {componentState.warning && componentState.warning.length > 0 ? (
+                <div
+                  style={{
+                    backgroundColor: "#fff9e6",
+                    width: "100%",
+                    height: "auto",
+                    marginTop: "20px",
+                    borderRadius: "8px",
+                    border: "1px solid #f5dead",
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "flex-start",
+                    padding: "16px",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "20px",
+                      marginRight: "12px",
+                      opacity: "0.6",
+                      userSelect: "none",
+                      marginTop: "2px",
+                    }}
+                    className="material-symbols-outlined"
+                  >
+                    warning
+                  </span>
+
+                  <div style={{ fontSize: "13px", opacity: "0.9" }}>
+                    <div style={{ fontWeight: 600, marginBottom: "8px" }}>
+                      Attenzione, trovati {componentState.warning.length}{" "}
+                      warning
                     </div>
-                  ),
-                )}
-              </div>
+
+                    <ul style={{ margin: 0, paddingLeft: "18px" }}>
+                      {componentState.warning.map(
+                        (singleWarning: string, index: number) => (
+                          <li
+                            key={`${singleWarning}-${index}`}
+                            style={{ marginBottom: "4px" }}
+                          >
+                            {singleWarning}
+                          </li>
+                        ),
+                      )}
+                    </ul>
+                  </div>
+                </div>
+              ) : null}
             </div>
           </>
-        ) : null}
-
-        <div style={{ width: "95%" }}>
-          {componentState.warning && componentState.warning.length > 0 ? (
-            <div
-              style={{
-                backgroundColor: "#fff9e6",
-                width: "100%",
-                height: "auto",
-                marginTop: "20px",
-                borderRadius: "8px",
-                border: "1px solid #f5dead",
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
-                padding: "16px",
-                boxSizing: "border-box",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "20px",
-                  marginRight: "12px",
-                  opacity: "0.6",
-                  userSelect: "none",
-                  marginTop: "2px",
-                }}
-                className="material-symbols-outlined"
-              >
-                warning
-              </span>
-
-              <div style={{ fontSize: "13px", opacity: "0.9" }}>
-                <div style={{ fontWeight: 600, marginBottom: "8px" }}>
-                  Attenzione, trovati {componentState.warning.length} warning
-                </div>
-
-                <ul style={{ margin: 0, paddingLeft: "18px" }}>
-                  {componentState.warning.map(
-                    (singleWarning: string, index: number) => (
-                      <li
-                        key={`${singleWarning}-${index}`}
-                        style={{ marginBottom: "4px" }}
-                      >
-                        {singleWarning}
-                      </li>
-                    ),
-                  )}
-                </ul>
-              </div>
-            </div>
-          ) : null}
-        </div>
+        )}
       </div>
     </div>
   );
