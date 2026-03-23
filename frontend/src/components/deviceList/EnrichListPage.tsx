@@ -1,4 +1,4 @@
-import { lazy, useEffect, useState } from "react";
+import { lazy, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { GetEnrichedIdsAPIHook } from "../../customHooks/API/DeviceList/DeviceListAPI";
 import type { DeviceListStoreFileInterface } from "../../stores/slices/Base/deviceListSlice";
@@ -6,12 +6,11 @@ import type { WhatIsSelcted } from "./DeviceListPageManager";
 
 const EnrichPreviewModalTag = lazy(() => import("./EnrichPreviewModal"));
 
-
-
 interface ComponentStateInterface {
   selectedFile: string;
   selectedStore: string;
   showModal: boolean;
+  searchValue: string;
 }
 
 function EnrichListPageTag({
@@ -26,6 +25,7 @@ function EnrichListPageTag({
       selectedFile: "",
       selectedStore: "",
       showModal: false,
+      searchValue: "",
     },
   );
 
@@ -40,6 +40,25 @@ function EnrichListPageTag({
       };
     }) => state.deviceListListSlice,
   );
+
+  const filteredEnrichedList = useMemo(() => {
+    const sourceList = deviceListSlice?.enrichedValue ?? [];
+    const normalizedSearchValue = componentState.searchValue
+      .trim()
+      .toLowerCase();
+
+    if (normalizedSearchValue === "") return sourceList;
+
+    return sourceList.filter((singleEnriched: DeviceListStoreFileInterface) => {
+      const storeValue = String(singleEnriched?.store ?? "").toLowerCase();
+      const fileValue = String(singleEnriched?.file ?? "").toLowerCase();
+
+      return (
+        storeValue.includes(normalizedSearchValue) ||
+        fileValue.includes(normalizedSearchValue)
+      );
+    });
+  }, [deviceListSlice?.enrichedValue, componentState.searchValue]);
 
   const HandleSelectEnrichedOnClick = (
     singleStore: string,
@@ -62,6 +81,24 @@ function EnrichListPageTag({
         showModal: false,
         selectedFile: "",
         selectedStore: "",
+      };
+    });
+  };
+
+  const HandleSearchOnChange = (value: string) => {
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        searchValue: value,
+      };
+    });
+  };
+
+  const HandleResetSearchOnClick = () => {
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        searchValue: "",
       };
     });
   };
@@ -155,9 +192,141 @@ function EnrichListPageTag({
             marginRight: "45px",
             width: "calc(100% - 90px)",
             boxSizing: "border-box",
+            gap: "16px",
           }}
         >
-          {(deviceListSlice?.enrichedValue ?? []).length > 0 ? (
+          <div
+            style={{
+              backgroundColor: "#ffffff",
+              borderRadius: "12px",
+              border: "1px solid #e5e7eb",
+              padding: "16px",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "14px",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: "12px",
+                flexWrap: "wrap",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#111827",
+                }}
+              >
+                Ricerca
+              </span>
+
+              <div
+                style={{
+                  fontSize: "13px",
+                  color: "#6b7280",
+                  fontWeight: 500,
+                }}
+              >
+                Risultati: {filteredEnrichedList.length}
+                {" / "}
+                {(deviceListSlice?.enrichedValue ?? []).length}
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                gap: "12px",
+                flexWrap: "wrap",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  position: "relative",
+                  flex: 1,
+                  minWidth: "260px",
+                }}
+              >
+                <span
+                  className="material-symbols-outlined"
+                  style={{
+                    position: "absolute",
+                    left: "12px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    fontSize: "18px",
+                    color: "#9ca3af",
+                    userSelect: "none",
+                  }}
+                >
+                  search
+                </span>
+
+                <input
+                  value={componentState.searchValue}
+                  onChange={(e) => {
+                    HandleSearchOnChange(e.target.value);
+                  }}
+                  placeholder="Cerca per store o file..."
+                  style={{
+                    width: "100%",
+                    height: "42px",
+                    borderRadius: "10px",
+                    border: "1px solid #d1d5db",
+                    paddingLeft: "40px",
+                    paddingRight: "12px",
+                    fontSize: "13px",
+                    outline: "none",
+                    backgroundColor: "#ffffff",
+                    color: "#111827",
+                    boxSizing: "border-box",
+                  }}
+                />
+              </div>
+
+              <button
+                onClick={HandleResetSearchOnClick}
+                className="HoverTransform"
+                style={{
+                  height: "42px",
+                  padding: "0 14px",
+                  borderRadius: "10px",
+                  border: "1px solid #d1d5db",
+                  backgroundColor: "#ffffff",
+                  color: "#374151",
+                  cursor: "pointer",
+                  fontWeight: 600,
+                  fontSize: "13px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
+                }}
+              >
+                <span
+                  className="material-symbols-outlined"
+                  style={{
+                    fontSize: "18px",
+                    opacity: "0.8",
+                    userSelect: "none",
+                  }}
+                >
+                  close
+                </span>
+
+                <span>Pulisci</span>
+              </button>
+            </div>
+          </div>
+
+          {filteredEnrichedList.length > 0 ? (
             <div
               style={{
                 display: "grid",
@@ -168,7 +337,7 @@ function EnrichListPageTag({
                 boxSizing: "border-box",
               }}
             >
-              {(deviceListSlice?.enrichedValue ?? []).map(
+              {filteredEnrichedList.map(
                 (
                   singleEnriched: DeviceListStoreFileInterface,
                   index: number,
@@ -279,7 +448,19 @@ function EnrichListPageTag({
               )}
             </div>
           ) : (
-            <span style={{ opacity: "60%" }}>Nessun file enriched trovato</span>
+            <div
+              style={{
+                backgroundColor: "#ffffff",
+                border: "1px solid #e5e7eb",
+                borderRadius: "12px",
+                padding: "20px",
+                color: "#6b7280",
+                fontSize: "14px",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+              }}
+            >
+              Nessun file enriched trovato
+            </div>
           )}
         </div>
       </div>

@@ -51,14 +51,14 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
 
     if artifact == "dictionary":
         # forza validazione canonica su template_base da DB, non da path locale di config
-        out_dir = run_dir / user_id
+        out_dir = run_dir
         out_dir.mkdir(parents=True, exist_ok=True)
         tb_path = _resolve_template_base_for_dictionary(out_dir)
         cfg["template_base_path"] = str(tb_path)
     
     # artifact = template_base || kb || dictionary
     if artifact != "device_list" and artifact != "template":
-        out_dir = run_dir / user_id
+        out_dir = run_dir
         out_dir.mkdir(parents=True, exist_ok=True)
 
         if artifact == "dictionary":
@@ -150,27 +150,38 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
 
     # artifact = device_list
     else:
-        cfg["device_rules"] = device_rules or {}
-        report_path, enriched_file = run_device_list(cfg, validate_only, user_id, version)
-        report = load_json(str(report_path))
-
-        # salvataggio nel db
-        artifact_type = report.get("target", {}).get("artifact_type", artifact)
-        artifact_output = report.get("target", {}).get("output_path") or str(input_path)
-        artifact_name_override = None
+        store = None
+        new_v = None
         if source_artifact_name and "/" in source_artifact_name:
             store = source_artifact_name.split("/", 1)[0]
-            artifact_name_override = f"{store}/{Path(artifact_output).name}"
+            last_v = artifactRepo.get_last_device_context_version_by_store(store)
+            if not last_v:
+                new_v = "0.1"
+            else:
+                major, minor = map(int, last_v.split("."))
+                new_v = f"{major + 1}.0" if minor >= 9 else f"{major}.{minor + 1}"
 
-        artifact_type_to_save = "device_list_context"
+        cfg["device_rules"] = device_rules or {}
+        report_path, enriched_file = run_device_list(cfg, validate_only, version, run_dir, run_id, forced_context_version=new_v)
+        report = load_json(str(report_path))
 
-        artifact_id = _register_artifact_from_path(artifact_output, artifact_type_to_save, artifact_name=artifact_name_override)
+        # salvataggio
+        artifact_output = report.get("target", {}).get("output_path") or str(input_path)
+        output_name = Path(artifact_output).name
+
+        # Se output è enriched vero
+        if output_name.startswith("device_list_context_") and store and new_v:
+            artifact_id = _register_artifact_from_path(artifact_output, "device_list_context", artifact_name=f"{store}/device_list_context_v{new_v}.json", artifact_version=new_v)
+        else:
+            # no_change/validate_only: resta device_list, non enriched
+            artifact_id = _register_artifact_from_path(artifact_output, "device_list", artifact_name=source_artifact_name)
+
         runClass.save_run(report, user_id, artifact_id)
 
 
         return {"status": "ok", "run_id": report.get("run_id"), "report_path": str(report_path), "warning": report.get("validation", {}).get("warnings"), "enriched_file": enriched_file}
 
-def _register_artifact_from_path(path: str, artifact_type: str, artifact_name: str | None = None) -> str:
+def _register_artifact_from_path(path: str, artifact_type: str, artifact_name: str | None = None, artifact_version: str | None = None) -> str:
     # salva artifact nel db
 
     p = Path(path)
@@ -183,8 +194,8 @@ def _register_artifact_from_path(path: str, artifact_type: str, artifact_name: s
         
     return artifactRepo.upsert_artifact(
         artifact_type=artifact_type,
-        name=p.name if artifact_name is None else artifact_name,
-        version=_extract_version_from_path(p),
+        name=artifact_name if artifact_name else p.name,
+        version=artifact_version if artifact_version else _extract_version_from_path(p),
         content=content,
     )
 
@@ -346,10 +357,10 @@ def run_template_base(payload: RunTemplateBaseRequest, user = Depends(get_curren
 @router.post("/run/device_list")
 def run_device_list_api(payload: RunDeviceListRequest, user = Depends(get_current_user)):
     source_artifact_name = artifactRepo.get_artifact_name_by_id(payload.id)
-    input_path, run_dir, _ = initialize(payload.id, "device_list", user["sub"])
+    input_path, run_dir, run_id = initialize(payload.id, "device_list", user["sub"])
     rules = _get_device_rules_from_db(payload.config_id)
     version_rules = artifactRepo.get_artifact_version_by_id(payload.config_id)
-    return apply_patch(user["sub"], input_path, input_path.name, None, None, None, "device_list", None, payload.validate_only, None, None, None, run_dir, source_artifact_name=source_artifact_name, device_rules=rules, version=version_rules)
+    return apply_patch(user["sub"], input_path, input_path.name, None, None, None, "device_list", None, payload.validate_only, run_id, None, None, run_dir, source_artifact_name=source_artifact_name ,device_rules=rules, version=version_rules)
     #input_path = PVS_DIR / payload.store / payload.device_list_name
     #return apply_patch(user["sub"], input_path, payload.device_list_name, None, None, None, "device_list", None, payload.validate_only, None, None, None)
 

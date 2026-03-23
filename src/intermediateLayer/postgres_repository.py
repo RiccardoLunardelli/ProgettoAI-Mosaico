@@ -446,6 +446,25 @@ class ArtifactRepository():
                 row = cur.fetchone()
                 return dict(row) if row else None
 
+    def get_last_device_context_version_by_store(self, store: str) -> str | None:
+        # recupera l'ultima versione di device_list_context dello store
+
+        sql = """
+        SELECT version
+        FROM artifacts
+        WHERE type = 'device_list_context'
+        AND name LIKE %s
+        ORDER BY
+        COALESCE(NULLIF(split_part(version, '.', 1), ''), '0')::int DESC,
+        COALESCE(NULLIF(split_part(version, '.', 2), ''), '0')::int DESC
+        LIMIT 1
+        """
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (f"{store}/device_list_context_v%.json",))
+                row = cur.fetchone()
+                return row[0] if row else None
+
     def get_artifact_version_by_id(self, id: str) -> str:
         # prende la versione dell'artefatto
 
@@ -461,44 +480,28 @@ class ArtifactRepository():
 
         id_list = [str(x) for x in ids]
         if not id_list:
-            return {"deleted": [], "blocked": []}
+            return {"deleted": [], "runs_deleted": 0, "devices_unlinked": 0}
 
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
-                # 1) trova ID bloccati da FK logiche (runs/devices)
-                cur.execute(
-                    """
-                    SELECT i.id,
-                        EXISTS (SELECT 1 FROM runs r WHERE r.artifact_id = i.id) AS used_in_runs,
-                        EXISTS (SELECT 1 FROM devices d WHERE d.id_template = i.id) AS used_in_devices
-                    FROM unnest(%s::uuid[]) AS i(id)
-                    """,
-                    (id_list,),
-                )
-                rows = cur.fetchall()
 
-                blocked = []
-                deletable = []
-                for artifact_id, used_in_runs, used_in_devices in rows:
-                    if used_in_runs or used_in_devices:
-                        blocked.append({
-                            "id": str(artifact_id),
-                            "used_in_runs": used_in_runs,
-                            "used_in_devices": used_in_devices,
-                        })
-                    else:
-                        deletable.append(str(artifact_id))
+                # 1) elimina runs collegate
+                cur.execute("DELETE FROM runs WHERE artifact_id = ANY(%s::uuid[])", (id_list,),)
+                runs_deleted = cur.rowcount
 
-                # 2) delete bulk solo dei deletable
-                deleted = []
-                if deletable:
-                    cur.execute(
-                        "DELETE FROM artifacts WHERE id = ANY(%s::uuid[]) RETURNING id",
-                        (deletable,),
-                    )
-                    deleted = [str(r[0]) for r in cur.fetchall()]
+                # 2) scollega devices che puntano quei template
+                cur.execute("UPDATE devices SET id_template = NULL WHERE id_template = ANY(%s::uuid[])",(id_list,),)
+                devices_unlinked = cur.rowcount
 
-        return {"deleted": deleted, "blocked": blocked}
+                # 3) elimina artifacts richiesti
+                cur.execute("DELETE FROM artifacts WHERE id = ANY(%s::uuid[]) RETURNING id",(id_list,),)
+                deleted = [str(r[0]) for r in cur.fetchall()]
+
+        return {
+            "deleted": deleted,
+            "runs_deleted": runs_deleted,
+            "devices_unlinked": devices_unlinked,
+        }
 
 class Roles():
     # classe per ruoli

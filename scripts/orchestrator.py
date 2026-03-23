@@ -366,11 +366,9 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate, input
     return report_path
     '''
 
-def run_device_list(cfg: dict, validate, user_id, version) -> None:
+def run_device_list(cfg: dict, validate, version, run_dir, run_id, forced_context_version: str | None = None) -> None:
     # run per device_list
 
-    run_id = generate_run_id()
-    run_dir = RUNS_ROOT / user_id / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
 
     input_path = cfg["input_path"]
@@ -382,8 +380,14 @@ def run_device_list(cfg: dict, validate, user_id, version) -> None:
     # dry-run
     dry = device_list_enrich(path=input_path, dry_run=True, rules_payload=rules_payload)
     preview = dry.get("preview")
-    output_path = dry.get("output_path")
+    # versione output
+    if forced_context_version:
+        output_path = str(Path(input_path).with_name(f"device_list_context_v{forced_context_version}.json"))
+    else:
+        output_path = dry.get("output_path")
+    # diff device list
     diff = summarize_device_list_diff(load_json(input_path), preview)
+    # commit
     output_path, committed, status, no_change = apply_commit(
         input_path=input_path,
         template_patch=None,
@@ -395,16 +399,30 @@ def run_device_list(cfg: dict, validate, user_id, version) -> None:
     if validate_only:
         committed = False
         status = "validate_only"
+
     elif no_change:
-        committed = False 
+        committed = False
         status = "no_change"
+
     else:
         commit = device_list_enrich(path=input_path, dry_run=False, rules_payload=rules_payload)
-        output_path = commit.get("output_path")
-        committed = True
-        status = "success"
+
+        if forced_context_version:
+            generated = Path(commit.get("output_path"))
+            forced = Path(input_path).with_name(f"device_list_context_v{forced_context_version}.json")
+
+            if generated != forced:
+                generated.parent.mkdir(parents=True, exist_ok=True)
+                generated.replace(forced)
+
+            output_path = str(forced)
+        else:
+            output_path = commit.get("output_path")
+
+    committed = True
+    status = "success"
     
-    device_list_version = extract_device_list_version(output_path or input_path)
+    device_list_version = forced_context_version or extract_device_list_version(output_path or input_path)
     
     schema_versions = {
         "device_list_version": device_list_version,
