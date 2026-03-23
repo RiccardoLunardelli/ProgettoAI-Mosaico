@@ -181,6 +181,8 @@ function ConfigManagementPage() {
             originalYamlValue: currentYamlValue,
             isSaving: false,
           }));
+
+          GetConfigListIdsAPI({saveResponse: true, showLoader: true})
         },
       });
     } catch (error: any) {

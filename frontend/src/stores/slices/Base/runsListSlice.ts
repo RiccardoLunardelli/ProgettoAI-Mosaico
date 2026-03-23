@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface RunListInterface {
     run_id: string,
     type: string,
+    email: string,
 }
 
 

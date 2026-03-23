@@ -1,4 +1,4 @@
-import { lazy, useEffect, useState } from "react";
+import { lazy, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { type RunListInterface } from "../../stores/slices/Base/runsListSlice";
 import { GetRunIdsAPIHook } from "../../customHooks/Runs/runsAPI";
@@ -8,6 +8,7 @@ const RunsPreviewModalTag = lazy(() => import("./RunsPreviewModal"));
 interface ComponentStateInterface {
   selectedId: string;
   showModal: boolean;
+  filterValue: string;
 }
 
 function RunsListTag() {
@@ -17,6 +18,7 @@ function RunsListTag() {
     {
       selectedId: "",
       showModal: false,
+      filterValue: "",
     },
   );
 
@@ -46,6 +48,44 @@ function RunsListTag() {
       };
     });
   };
+
+  const HandleFilterOnChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const newValue = event.target.value ?? "";
+
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        filterValue: newValue,
+      };
+    });
+  };
+
+  const filteredRunsList = useMemo(() => {
+    const filterValueLowerCase = (
+      componentState.filterValue ?? ""
+    ).toLowerCase();
+
+    return (runsListSlice?.value ?? [])
+      .filter((singleRun: RunListInterface) => {
+        if (!filterValueLowerCase) {
+          return true;
+        }
+
+        const runIdValue = (singleRun?.run_id ?? "").toLowerCase();
+        const typeValue = (singleRun?.type ?? "").toLowerCase();
+        const emailValue = ((singleRun as any)?.email ?? "").toLowerCase();
+
+        return (
+          runIdValue.includes(filterValueLowerCase) ||
+          typeValue.includes(filterValueLowerCase) ||
+          emailValue.includes(filterValueLowerCase)
+        );
+      })
+      .slice()
+      .sort((a, b) => (b.run_id ?? "").localeCompare(a.run_id ?? ""));
+  }, [runsListSlice?.value, componentState.filterValue]);
 
   useEffect(() => {
     GetRunIdsAPI({ saveResponse: true, showLoader: true });
@@ -84,7 +124,35 @@ function RunsListTag() {
             Runs
           </span>
 
-          {(runsListSlice?.value ?? []).length > 0 ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+              marginBottom: "20px",
+              flexWrap: "wrap",
+            }}
+          >
+            <input
+              value={componentState.filterValue}
+              onChange={HandleFilterOnChange}
+              placeholder="Filtra per run id, tipo o email"
+              style={{
+                width: "100%",
+                maxWidth: "420px",
+                padding: "10px 14px",
+                borderRadius: "10px",
+                border: "1px solid #d1d5db",
+                outline: "none",
+                fontSize: "14px",
+                color: "#111827",
+                backgroundColor: "#ffffff",
+                boxSizing: "border-box",
+              }}
+            />
+          </div>
+
+          {filteredRunsList.length > 0 ? (
             <div
               style={{
                 display: "grid",
@@ -95,109 +163,123 @@ function RunsListTag() {
                 boxSizing: "border-box",
               }}
             >
-              {(runsListSlice?.value ?? [])
-                .slice()
-                .sort((a, b) => (b.run_id ?? "").localeCompare(a.run_id ?? ""))
-                .map((singleRun: RunListInterface) => {
-                  const isSelected =
-                    componentState.selectedId === (singleRun?.run_id ?? "");
+              {filteredRunsList.map((singleRun: RunListInterface) => {
+                const isSelected =
+                  componentState.selectedId === (singleRun?.run_id ?? "");
 
-                  return (
+                return (
+                  <div
+                    key={singleRun?.run_id ?? ""}
+                    className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
+                    onClick={() => {
+                      HandleSelectRunIdOnClick(singleRun.run_id);
+                    }}
+                    style={{
+                      borderRadius: "12px",
+                      padding: "16px",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                      boxSizing: "border-box",
+                      minHeight: "160px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      cursor: "pointer",
+                      overflow: "hidden",
+                      transition: "all 0.18s ease",
+                      backgroundColor: "#ffffff",
+                    }}
+                  >
                     <div
-                      key={singleRun?.run_id ?? ""}
-                      className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
-                      onClick={() => {
-                        HandleSelectRunIdOnClick(singleRun.run_id);
-                      }}
                       style={{
-                        borderRadius: "12px",
-                        padding: "16px",
-                        boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-                        boxSizing: "border-box",
-                        minHeight: "130px",
                         display: "flex",
                         flexDirection: "column",
-                        justifyContent: "space-between",
-                        cursor: "pointer",
-                        overflow: "hidden",
-                        transition: "all 0.18s ease",
+                        gap: "10px",
+                        minWidth: 0,
                       }}
                     >
-                      <div
+                      <span
                         style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "10px",
-                          minWidth: 0,
+                          fontSize: "15px",
+                          fontWeight: 600,
+                          color: "var(--black)",
+                          lineHeight: "1.4",
+                          wordBreak: "break-word",
+                          overflowWrap: "anywhere",
                         }}
                       >
-                        <span
-                          style={{
-                            fontSize: "15px",
-                            fontWeight: 600,
-                            color: "var(--black)",
-                            lineHeight: "1.4",
-                            wordBreak: "break-word",
-                            overflowWrap: "anywhere",
-                          }}
-                        >
-                          {singleRun.run_id}
-                        </span>
+                        {singleRun.run_id}
+                      </span>
 
-                        <span
-                          style={{
-                            fontSize: "12px",
-                            color: "#6b7280",
-                            lineHeight: "1.4",
-                          }}
-                        >
-                          Clicca per aprire la preview completa
-                        </span>
-                      </div>
-
-                      <div
+                      <span
                         style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          marginTop: "16px",
-                          gap: "12px",
+                          fontSize: "13px",
+                          color: "#4b5563",
+                          lineHeight: "1.4",
+                          wordBreak: "break-word",
+                          overflowWrap: "anywhere",
                         }}
                       >
-                        <span
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: 600,
-                            padding: "4px 10px",
-                            borderRadius: "999px",
-                            backgroundColor: "#eef4ff",
-                            color: "#477dda",
-                            border: "1px solid #dbe6ff",
-                            maxWidth: "100%",
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                          }}
-                        >
-                          {singleRun.type}
-                        </span>
+                        {(singleRun as any)?.email || "Email non disponibile"}
+                      </span>
 
-                        <span
-                          style={{
-                            fontSize: "12px",
-                            color: "#9ca3af",
-                            flexShrink: 0,
-                          }}
-                        >
-                          Apri
-                        </span>
-                      </div>
+                      <span
+                        style={{
+                          fontSize: "12px",
+                          color: "#6b7280",
+                          lineHeight: "1.4",
+                        }}
+                      >
+                        Clicca per aprire la preview completa
+                      </span>
                     </div>
-                  );
-                })}
+
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        marginTop: "16px",
+                        gap: "12px",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: 600,
+                          padding: "4px 10px",
+                          borderRadius: "999px",
+                          backgroundColor: "#eef4ff",
+                          color: "#477dda",
+                          border: "1px solid #dbe6ff",
+                          maxWidth: "100%",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {singleRun.type}
+                      </span>
+
+                      <span
+                        style={{
+                          fontSize: "12px",
+                          color: "#9ca3af",
+                          flexShrink: 0,
+                        }}
+                      >
+                        Apri
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           ) : (
-            <span style={{ opacity: "60%" }}>Nessuna run trovata</span>
+            <span style={{ opacity: "60%" }}>
+              {componentState.filterValue
+                ? "Nessuna run trovata con il filtro selezionato"
+                : "Nessuna run trovata"}
+            </span>
           )}
         </div>
       </div>
