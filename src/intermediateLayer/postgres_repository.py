@@ -81,12 +81,22 @@ class RunRepository():
     def get_run_id_by_user_id(self, user_id: str) -> List[str]:
         # ritorna tutte le run di uno user
 
-        sql =  "SELECT run_id, COALESCE(report #>> '{target,artifact_type}', 'unknown') AS artifact_type FROM runs WHERE user_id = %s ORDER BY created_at DESC"
+        sql =  "SELECT r.run_id, COALESCE(r.report #>> '{target,artifact_type}', 'unknown') AS artifact_type, u.email FROM runs r JOIN users u ON u.id = r.user_id WHERE r.user_id = %s ORDER BY r.created_at DESC"
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
                 cur.execute(sql, (user_id,))
                 row = cur.fetchall()
-            return [{"run_id": r[0], "type": r[1]} for r in row]
+            return [{"run_id": r[0], "type": r[1], "email": r[2]} for r in row]
+
+    def get_all_run(self) -> List[dict]:
+        # ritorna tutte le run
+
+        sql =  "SELECT r.run_id, COALESCE(r.report #>> '{target,artifact_type}', 'unknown') AS artifact_type, u.email FROM runs r JOIN users u ON u.id = r.user_id ORDER BY r.created_at DESC"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql)
+                row = cur.fetchall()
+            return [{"run_id": r[0], "type": r[1], "email": r[2]} for r in row]
 
     def get_diff_report_by_user_id(self, user_id: str) -> Dict[str, Any]:
         # recupera report di user id

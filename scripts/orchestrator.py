@@ -6,7 +6,7 @@ from src.parser.normalizer import normalization,normalize_template, model_dump
 from scripts.llm_proposer.llm_proposer import (
     llm_propose_actions, ensure_labels, filter_by_candidate_gap,
     filter_low_confidence, extract_llm_contexts, merge_actions_dedup,
-    count_llm_applied, llm_percentual, llm_progress
+    count_llm_applied, llm_percentual
 )
 from scripts.summarize_diff.diff import summarize_device_list_diff, summarize_template_real_diff, compute_diff, summarize_dictionary_diff, summarize_kb_diff, summarize_template_base_diff
 from scripts.build_patch.builder import (
@@ -97,10 +97,10 @@ def start_template_run(user_id, template_name: str, dictionary_name: str, kb_nam
     }
 
 #------------LLM---------------------------
-def llm_propose_for_run(run_id: str, llm_model: str | None = None,) -> dict:
+def llm_propose_for_run(run_id: str, llm_model: str | None = None, user_id: str | None = None) -> dict:
     #  genera LLM patch (come proposta)
 
-    run_dir = RUNS_ROOT / run_id
+    run_dir = RUNS_ROOT / user_id / run_id
     matching_path = run_dir / "matching_report_v0.1.json"
 
     if not matching_path.exists():
@@ -109,7 +109,7 @@ def llm_propose_for_run(run_id: str, llm_model: str | None = None,) -> dict:
     mr = load_json(str(matching_path))
     model = llm_model or "llama3.1:8b"
 
-    llm_actions, _, llm_attempt = llm_propose_actions(run_id, model, mr)
+    llm_actions, _, llm_attempt = llm_propose_actions(run_dir, model, mr)
 
     llm_actions = ensure_labels(llm_actions)
     llm_actions = filter_low_confidence(llm_actions)

@@ -1,11 +1,35 @@
 from datetime import datetime, timezone, timedelta
 import requests
 import json
+from pathlib import Path
 
 from src.metrics_calculation.llm_calculate_metrics import compute_time_metrics, compute_efficiency_metrics, compute_effectiveness_metrics, aggregate_ollama_metrics, compute_quality_metrics, compute_metrics
 
 TIMEZONE = timezone(timedelta(hours=1))
-llm_progress = {}
+
+def _progress_path(run_dir: Path) -> Path:
+    # ritorna il percorso del file del progresso delle chiamate
+
+    return run_dir / "llm_progress.json"
+
+def _write_progress(run_dir: Path, done_calls: int, total_calls: int) -> None:
+    # scrive il progresso
+
+    p = _progress_path(run_dir)
+    tmp = p.with_suffix(".tmp")
+    tmp.write_text(json.dumps({"done_calls": done_calls, "total_calls": total_calls}, ensure_ascii=False, indent=2),encoding="utf-8",)
+    tmp.replace(p)
+
+def _read_progress(run_dir: Path) -> dict:
+    # legge il progresso
+
+    p = _progress_path(run_dir)
+    if not p.exists():
+        return {"done_calls": 0, "total_calls": 0}
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return {"done_calls": 0, "total_calls": 0}
 
 def extract_llm_contexts(mr: dict) -> list[dict]:
     # estrae i contesti LLM dal matching report che richiedono llm ( ambiguous , unmapped )
@@ -128,7 +152,7 @@ def filter_by_candidate_gap(actions_payload: dict, llm_contexts: list[dict], min
     actions_payload["actions"] = filtered
     return actions_payload
 
-def ollama_generate_json(run_id: str, model: str, prompt: str) -> dict:
+def ollama_generate_json(run_dir: Path, model: str, prompt: str) -> dict:
     # genera json con ollama
     
     url = "http://127.0.0.1:11434/api/generate"
@@ -152,8 +176,8 @@ def ollama_generate_json(run_id: str, model: str, prompt: str) -> dict:
     }
     raw = r.json().get("response", "").strip()
     try: 
-        llm_progress[run_id]["done_calls"] += 1
-        print(f"chiamata LLM {llm_progress[run_id]["done_calls"]}")
+        prog = _read_progress(run_dir)
+        _write_progress(run_dir, prog["done_calls"] + 1, prog["total_calls"])
         return json.loads(raw), metrics
     except Exception:
         return {"patch_actions_version": "v0.1", "generated_at": datetime.now(timezone.utc).isoformat(), "actions": []}, {}
@@ -163,18 +187,16 @@ def chunk_list(items: list, size: int) -> list[list]:
 
     return [items[i:i + size] for i in range(0, len(items), size)]
 
-def llm_propose_actions(run_id: str, model: str, mr: dict, batch_size: int = 3) -> dict:
+def llm_propose_actions(run_dir: Path, model: str, mr: dict, batch_size: int = 3) -> dict:
     # genera proposte actions con LLM e metriche LLM. Produce patch actions + info 
 
-    global llm_progress
     llm_contexts = extract_llm_contexts(mr)
     if not llm_contexts:
+        _write_progress(run_dir, 0, 0)
         return {"patch_actions_version": "v0.1","generated_at": datetime.now(timezone(timedelta(hours=1))).isoformat(), "actions": []}, {"target":"dictionary","operations":[]}, {"note":"skipped_no_ambiguous"}
+    
     batches = chunk_list(llm_contexts, batch_size)
-    llm_progress[run_id] = {
-        "total_calls": len(batches),
-        "done_calls": 0
-    }
+    _write_progress(run_dir, 0, len(batches))
 
     all_actions = []
     all_dict_ops = []
@@ -183,7 +205,7 @@ def llm_propose_actions(run_id: str, model: str, mr: dict, batch_size: int = 3) 
 
     for idx, batch in enumerate(batches):
         prompt = build_llm_prompt(batch)
-        output, call_metrics = ollama_generate_json(run_id, model, prompt)
+        output, call_metrics = ollama_generate_json(run_dir, model, prompt)
         call_metrics_list.append(call_metrics or {})
         
         if isinstance(output, dict):
@@ -283,15 +305,10 @@ def count_llm_applied(actions_payload: dict, llm_actions: dict) -> int:
     applied_keys = {(a.get("section"), a.get("source_key")) for a in actions_payload.get("actions", [])}
     return len(llm_keys & applied_keys)
 
-def llm_percentual(run_id: str) -> int:
+def llm_percentual(run_dir: Path) -> int:
     # calcola la percentuale di progresso chiamate del modello
 
-    data = llm_progress.get(run_id)
-
-    if not data:
-        return 0
-
-    done = data["done_calls"]
-    total = data["total_calls"]
-
-    return int((done / max(total, 1)) * 100)
+    prog = _read_progress(run_dir)
+    done = prog.get("done_calls", 0)
+    total = prog.get("total_calls", 0)
+    return int((done / max(total, 1)) * 100) if total > 0 else 0

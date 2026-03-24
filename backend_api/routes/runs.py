@@ -17,7 +17,7 @@ from scripts.orchestrator import (
     summarize_dictionary_diff, summarize_kb_diff, summarize_template_base_diff,
     dictionary_upsert, kb_upsert_mapping, template_apply_patch, run_device_list,
     build_dictionary_suggestions_from_run_report, build_dictionary_patch_from_run_report,
-    load_json, llm_percentual, llm_progress
+    load_json, llm_percentual
 )
 
 from mcp_server.tools.dictionary_tool import _extract_version_from_path
@@ -258,12 +258,15 @@ def get_cronology(user = Depends(get_current_user)):
 #-----LLM %-------
 @router.get("/llm/percentual")
 def get_llm_percentual(run_id: str, user = Depends(get_current_user)):
-    return {"percent": llm_percentual(run_id)}
+    run_dir = RUNS_ROOT / user["sub"] / run_id
+    return {"percent": llm_percentual(run_dir)}
 
 #-----RUNS LIST----
 @router.get("/runs/ids")
 def get_run_ids(user = Depends(get_current_user)):
-    return {"run_ids": runClass.get_run_id_by_user_id(user["sub"])}
+    if user["role"] == 2:
+        return {"run_ids": runClass.get_run_id_by_user_id(user["sub"])}
+    return {"run_ids": runClass.get_all_run()}
 
 @router.get("/run_id/{run_id}")
 def get_run(run_id: str, user = Depends(get_current_user)):
@@ -312,7 +315,7 @@ def run_template_start(payload: RunTemplateStartRequest, user = Depends(get_curr
 
 @router.post("/run/template/llm")
 def run_template_llm(payload: RunTemplateLlmRequest, user = Depends(get_current_user)):
-    response = llm_propose_for_run(run_id=payload.run_id, llm_model=payload.llm_model)
+    response = llm_propose_for_run(run_id=payload.run_id, llm_model=payload.llm_model, user_id=user["sub"])
     return response["llm_patch_actions"]
 
 @router.post("/run/template/finish")
@@ -329,7 +332,7 @@ def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_cu
     runClass.save_run(report, user["sub"], artifact_id_input)
 
 
-    llm_progress.pop(payload.run_id, None)
+    #llm_progress.pop(payload.run_id, None)
 
     return result
 
@@ -355,7 +358,7 @@ def run_template_base(payload: RunTemplateBaseRequest, user = Depends(get_curren
 
 #---DEVICE LIST-----
 @router.post("/run/device_list")
-def run_device_list_api(payload: RunDeviceListRequest, user = Depends(get_current_user)):
+def run_device_list_api(payload: RunDeviceListRequest, user = Depends(get_current_user)): 
     source_artifact_name = artifactRepo.get_artifact_name_by_id(payload.id)
     input_path, run_dir, run_id = initialize(payload.id, "device_list", user["sub"])
     rules = _get_device_rules_from_db(payload.config_id)

@@ -78,7 +78,6 @@ def check_device(id):
     return check
 
 #------OPERATION------
-
 def user_operation(id, type, role: int | None, email: str | None, name: str | None, password: str | None):
     check = check_user(id)
     if len(check) > 0:
@@ -141,7 +140,7 @@ def editor_config_json_inline(artifact_id: str, yaml_text: str, user_id: str):
     old_name = artifactClass.get_artifact_name_by_id(artifact_id)
     old_content = artifactClass.get_artifact_content(artifact_id, "config")
 
-    # old content da DB: può essere stringa yaml o dict
+    # old content da DB
     if isinstance(old_content, str):
         old_obj = yaml.safe_load(old_content) or {}
     else:
@@ -152,14 +151,14 @@ def editor_config_json_inline(artifact_id: str, yaml_text: str, user_id: str):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"invalid yaml: {e}")
 
+    # calcola diff
     diff = summarize_config_diff(old_obj, new_obj)
     if not diff:
         return {"status": "ok", "changed": False, "name": old_name}
 
-
     new_name, new_version = _next_versioned_name(old_name)
 
-    # salviamo YAML come stringa nel JSONB (DB source-of-truth)
+    # salvataggio YAML come stringa nel JSONB
     new_artifact_id = artifactClass.upsert_artifact(artifact_type="config", name=new_name, version=new_version, content=yaml_text)
 
     run_id = generate_run_id()
