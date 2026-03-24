@@ -892,4 +892,3 @@ class Template():
                 cur.execute(sql, (str(id),))
                 rows = cur.fetchall()
                 return [dict(r) for r in rows]
-

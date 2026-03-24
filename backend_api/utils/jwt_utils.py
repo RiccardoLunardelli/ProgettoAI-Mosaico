@@ -14,12 +14,7 @@ def jwt_token(user_id: str | None, email: str | None, action, user: Dict[str, An
     # funzione principale: crea token + lo setta nei cookie
 
     uid = user_id or (user["id"] if user else None)
-    token = create_token(
-    str(uid),
-    email,
-    name,
-    user.get("role") if user else 2
-)
+    token = create_token(str(uid), email, name, user.get("role") if user else 2)
 
     payload = {"action": action}
     if user:

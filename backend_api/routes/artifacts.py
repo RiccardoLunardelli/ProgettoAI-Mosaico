@@ -148,6 +148,8 @@ def editor_json_inline(id: str, file: str | dict, input_path: Path, artifact: st
     return {"status": "ok", "new_file": str(new_path), "run_id": run_id, "report_path": str(report_path), "diff": diff_report}
 
 #----LIST & PREVIEW----
+
+#---TEMPLATE---
 @router.get("/templates")
 def list_templates(user = Depends(get_current_user)):
     return artifactClass.list_artifact("template")
@@ -160,6 +162,7 @@ def get_template(id: str, user = Depends(get_current_user)):
 def get_template_usage(id: str, user = Depends(get_current_user)):
     return templateClass.get_template_usage(id)
 
+#---DICTIONARY---
 @router.get("/dictionaries")
 def list_dictionaries(user = Depends(get_current_user)):
     return artifactClass.list_artifact("dictionary")
@@ -174,6 +177,7 @@ def get_dictionary_score(version: str, user = Depends(get_current_user)):
         return runClass.get_dictionary_templates_scores(version, user["sub"])
     return runClass.get_dictionary_templates_scores(version, None)
 
+#---KB---
 @router.get("/kb")
 def list_kb(user = Depends(get_current_user)):
     return artifactClass.list_artifact("kb")
@@ -182,6 +186,7 @@ def list_kb(user = Depends(get_current_user)):
 def get_kb(id: str, user = Depends(get_current_user)):
     return artifactClass.get_artifact_content(id, "kb")
 
+#---TEMPLATE BASE-----
 @router.get("/template_base")
 def list_template_base(user = Depends(get_current_user)):
     return artifactClass.list_artifact("template_base")
@@ -190,6 +195,7 @@ def list_template_base(user = Depends(get_current_user)):
 def get_template_base(id: str, user = Depends(get_current_user)):
     return artifactClass.get_artifact_content(id, "template_base")
 
+#---DEVICE LIST----
 @router.get("/device_list")
 def list_device_list(user = Depends(get_current_user)):
     dl = artifactClass.list_artifact("device_list")
@@ -228,16 +234,14 @@ def list_enrich_device_list(user = Depends(get_current_user)):
 def get_enrich_device_list(store: str, dl: str, user = Depends(get_current_user)):
     return artifactClass.get_artifact_content(f"{store}/{dl}", "device_list_context")
 
+#---CONFIG----
 @router.get("/config/device_list")
 def get_config_device_list(user = Depends(get_current_user)):
     return artifactClass.list_artifact("config")
-    #return [p.name for p in sorted (CONFIG_DIR.glob("device_list_rules*.yml"))]
 
 @router.get("/config/content/{id}")
 def get_config_content(id: str, user = Depends(get_current_user)):
     return artifactClass.get_artifact_content(id, "config")
-    #path = CONFIG_DIR / name
-    #return load_config(path)
 
 #----EDIT----
 @router.post("/dictionary/edit")
