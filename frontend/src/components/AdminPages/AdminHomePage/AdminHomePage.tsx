@@ -295,7 +295,7 @@ function AdminHomePageTag() {
                 className="material-symbols-outlined"
                 style={{ fontSize: "40px", color: "#3268c5", zIndex: 1 }}
               >
-                identity_platform
+                shopping_cart
               </span>
 
               <div
@@ -387,7 +387,7 @@ function AdminHomePageTag() {
                 className="material-symbols-outlined"
                 style={{ fontSize: "40px", color: "#3268c5", zIndex: 1 }}
               >
-                identity_platform
+                devices
               </span>
 
               <div
@@ -479,7 +479,7 @@ function AdminHomePageTag() {
                 className="material-symbols-outlined"
                 style={{ fontSize: "40px", color: "#3268c5", zIndex: 1 }}
               >
-                identity_platform
+                files
               </span>
 
               <div
@@ -571,7 +571,7 @@ function AdminHomePageTag() {
                 className="material-symbols-outlined"
                 style={{ fontSize: "40px", color: "#3268c5", zIndex: 1 }}
               >
-                identity_platform
+                build
               </span>
 
               <div

@@ -463,6 +463,73 @@ const RunTemplateLLMAPIHook = () => {
   return [RunTemplateLLMAPI];
 };
 
+const GetTemplateLLMResultAPIHook = () => {
+  const dispatch = useDispatch();
+
+  const GetTemplateLLMResultAPI = async (infoObj: {
+    data: {
+      run_id: string;
+    };
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    //Apre il loader, se richiesto
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
+
+    try {
+      const apiCall = await fetch(
+        apiDomainString + "/run/template/llm/result/" + infoObj.data.run_id,
+        {
+          method: FetchMethodEnum.Get,
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      //Risposta in base64
+      const response: string = await apiCall.text();
+
+      //Risposta in json
+      const jsonResponse = JSON.parse(response);
+
+      //Se deve salvare il valore
+      if (infoObj?.saveResponse ?? true) {
+        dispatch(SetTemplateListUsageSlice(jsonResponse));
+      }
+
+      //Callback di successo
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } catch (err) {
+      console.error("template error:", err);
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Error,
+          message: err,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [GetTemplateLLMResultAPI];
+};
+
 const GetTemplatePercentualAPIHook = () => {
   const dispatch = useDispatch();
 
@@ -651,5 +718,6 @@ export {
   RunTemplateLLMAPIHook,
   GetTemplatePercentualAPIHook,
   RunTemplateFinishAPIHook,
-  GetTemplateUsageAPIHook
+  GetTemplateUsageAPIHook,
+  GetTemplateLLMResultAPIHook
 };

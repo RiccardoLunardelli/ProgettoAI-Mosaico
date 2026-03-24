@@ -68,13 +68,18 @@ class RunRepository():
                     raise KeyError(f"run_id not found: {run_id}")
                 return row["report"]
 
-    def get_run_template(self, user_id: str) -> List[str]:
+    def get_run_template(self, user_id: str | None) -> List[str]:
         # ritorna tutte le id di uno user specifico dove artefatto è template
 
-        sql = "SELECT run_id FROM runs WHERE user_id = %s AND report #>> '{target,artifact_type}' = 'template' ORDER BY created_at DESC"
+        if user_id is not None:
+            sql = "SELECT run_id FROM runs WHERE user_id = %s AND report #>> '{target,artifact_type}' = 'template' ORDER BY created_at DESC"
+            params = (user_id,)
+        else:
+            sql = "SELECT run_id FROM runs WHERE report #>> '{target,artifact_type}' = 'template' ORDER BY created_at DESC"
+            params = ()
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
-                cur.execute(sql, (user_id,))
+                cur.execute(sql, params)
                 rows = cur.fetchall()
         return [r[0] for r in rows]
 

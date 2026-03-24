@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks
 from pathlib import Path
 import json
 from typing import Any
@@ -277,7 +277,9 @@ def get_run(run_id: str, user = Depends(get_current_user)):
 
 @router.get("/runid_template")
 def get_run_template(user = Depends(get_current_user)):
-    return runClass.get_run_template(user["sub"])
+    if user["role"] != 1:
+        return runClass.get_run_template(user["sub"])
+    return runClass.get_run_template(user_id=None)
 
 #-----TEMPLATE-----
 @router.post("/run/template/start")
@@ -313,10 +315,22 @@ def run_template_start(payload: RunTemplateStartRequest, user = Depends(get_curr
     )
     return result
 
+#---LLM---
 @router.post("/run/template/llm")
-def run_template_llm(payload: RunTemplateLlmRequest, user = Depends(get_current_user)):
-    response = llm_propose_for_run(run_id=payload.run_id, llm_model=payload.llm_model, user_id=user["sub"])
-    return response["llm_patch_actions"]
+def run_template_llm(payload: RunTemplateLlmRequest, bg: BackgroundTasks ,user = Depends(get_current_user)):
+    def _job():
+        llm_propose_for_run(run_id=payload.run_id, llm_model=payload.llm_model, user_id=user["sub"])
+
+    bg.add_task(_job)
+    return {"status": "started", "run_id": payload.run_id}
+
+@router.get("/run/template/llm/result/{run_id}")
+def run_template_llm_result(run_id: str, user=Depends(get_current_user)):
+    run_dir = RUNS_ROOT / user["sub"] / run_id
+    p = run_dir / "llm_patch_actions.json"
+    if not p.exists():
+        return {"status": "running", "run_id": run_id}
+    return load_json(str(p))
 
 @router.post("/run/template/finish")
 def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_current_user)):

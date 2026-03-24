@@ -8,6 +8,7 @@ import {
   GetTemplatePercentualAPIHook,
   RunTemplateFinishAPIHook,
   GetTemplateUsageAPIHook,
+  GetTemplateLLMResultAPIHook,
 } from "../../customHooks/API/Template/templateAPI";
 import {
   GetDictionaryDetailAPIHook,
@@ -105,6 +106,7 @@ function TemplatePageTag() {
   const [GetTemplatePercentualAPI] = GetTemplatePercentualAPIHook();
   const [RunTemplateFinishAPI] = RunTemplateFinishAPIHook();
   const [GetTemplateUsageAPI] = GetTemplateUsageAPIHook();
+  const [GetTemplateLLMResultAPI] = GetTemplateLLMResultAPIHook();
 
   const [GetDictionaryIdsAPI] = GetDictionaryIdsAPIHook();
   const [GetDictionaryDetailAPI] = GetDictionaryDetailAPIHook();
@@ -160,14 +162,14 @@ function TemplatePageTag() {
     value: TemplateListInterface[];
     detail: any;
     percentual: TemplatePercentualInterface;
-    usage: TemplateListUsageInterface[]
+    usage: TemplateListUsageInterface[];
   } = useSelector(
     (state: {
       templateListSlice: {
         value: TemplateListInterface[];
         detail: any;
         percentual: TemplatePercentualInterface;
-        usage: TemplateListUsageInterface[]
+        usage: TemplateListUsageInterface[];
       };
     }) => state.templateListSlice,
   );
@@ -359,33 +361,7 @@ function TemplatePageTag() {
       },
       showLoader: false,
       showToast: false,
-      EndCallback(returnValue) {
-        let parsed: any = null;
-
-        try {
-          parsed = JSON.parse(returnValue?.message ?? "{}");
-
-          if (typeof parsed === "string") {
-            parsed = JSON.parse(parsed);
-          }
-        } catch (err) {
-          console.error("Errore parsing LLM patch", err);
-          parsed = null;
-        }
-
-        setComponentState((prev) => ({
-          ...prev,
-          llm_suggestion: parsed,
-          showLoader: false,
-        }));
-
-        dispatch(
-          SetInputSlice({
-            id: "LLMSuggestionPatch-Edit",
-            value: parsed ? JSON.stringify(parsed, null, 2) : "",
-          }),
-        );
-      },
+      EndCallback() {},
     });
   };
 
@@ -431,6 +407,26 @@ function TemplatePageTag() {
     const percent = templateListSlice?.percentual?.percent ?? 0;
 
     if (componentState.showLoader && percent === 100) {
+      GetTemplateLLMResultAPI({
+        showLoader: false,
+        data: { run_id: componentState.stepOneResponse?.run_id ?? "" },
+        saveResponse: false,
+        EndCallback(returnValue) {
+          setComponentState((prev) => ({
+            ...prev,
+            llm_suggestion: returnValue?.message,
+            showLoader: false,
+          }));
+
+          dispatch(
+            SetInputSlice({
+              id: "LLMSuggestionPatch-Edit",
+              value: JSON.stringify(returnValue?.message, null, 2),
+            }),
+          );
+        },
+      });
+
       setComponentState((prev) => ({
         ...prev,
         showLoader: false,
