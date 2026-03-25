@@ -33,11 +33,11 @@ interface ComponentStateInterface {
   activeTab: string;
   continuosReadsIds: number[];
   parametersIds: number[];
-  commandsIds: number[]
+  commandsIds: number[];
 }
 
-interface ParametersTabTagPropsInterface {
-  parametersIds: number[];
+interface CommandsTabTagPropsInterface {
+  commandsIds: number[];
   setComponentState: Dispatch<SetStateAction<ComponentStateInterface>>;
 }
 
@@ -47,7 +47,7 @@ interface InputSliceInterface {
 
 interface LocalComponentStateInterface {
   showModal: boolean;
-  selectedParameterId: number | null;
+  selectedCommandId: number | null;
   isNewRecord: boolean;
 }
 
@@ -59,18 +59,14 @@ interface HtmlMaskRowInterface {
 
 interface ModalFormStateInterface {
   NameVariable: string;
-  Label: string;
-  Alias: string;
-  Category: string;
-  Default: string;
-  Visibility: string;
-  AccessLevel: number;
+  ValueCommand: string;
   AccessWriteLevel: number;
   Enable: boolean;
   MultiLanguageDescriptionIt: string;
   MultiLanguageDescriptionEn: string;
   TroubleSettings: string;
   Name: string;
+  Alias: string;
   Description: string;
   Type: number;
   Measurement: string;
@@ -96,18 +92,14 @@ const registerTypeOptions = [
 function GetDefaultModalFormState(): ModalFormStateInterface {
   return {
     NameVariable: "",
-    Label: "",
-    Alias: "",
-    Category: "",
-    Default: "",
-    Visibility: "",
-    AccessLevel: 0,
+    ValueCommand: "",
     AccessWriteLevel: 0,
     Enable: true,
     MultiLanguageDescriptionIt: "",
     MultiLanguageDescriptionEn: "",
     TroubleSettings: "[]",
     Name: "",
+    Alias: "",
     Description: "",
     Type: 0,
     Measurement: "",
@@ -123,22 +115,21 @@ function GetDefaultModalFormState(): ModalFormStateInterface {
   };
 }
 
-function ParametersTabTag({
-  parametersIds,
+function CommandsTabTag({
+  commandsIds,
   setComponentState,
-}: ParametersTabTagPropsInterface) {
+}: CommandsTabTagPropsInterface) {
   const dispatch = useDispatch();
 
   const [localComponentState, setLocalComponentState] =
     useState<LocalComponentStateInterface>({
       showModal: false,
-      selectedParameterId: null,
+      selectedCommandId: null,
       isNewRecord: false,
     });
 
-  const [modalFormState, setModalFormState] = useState<ModalFormStateInterface>(
-    GetDefaultModalFormState(),
-  );
+  const [modalFormState, setModalFormState] =
+    useState<ModalFormStateInterface>(GetDefaultModalFormState());
 
   const inputSlice: { value: InputSliceInterface } = useSelector(
     (state: { inputSlice: { value: InputSliceInterface } }) => state.inputSlice,
@@ -153,24 +144,22 @@ function ParametersTabTag({
     );
   }
 
-  function GetHtmlMaskRowsFromStore(
-    parameterId: number,
-  ): HtmlMaskRowInterface[] {
+  function GetHtmlMaskRowsFromStore(commandId: number): HtmlMaskRowInterface[] {
     const result: HtmlMaskRowInterface[] = [];
     let rowIndex = 0;
 
     while (true) {
       const rowKey =
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-HTMLMaskValue-${rowIndex}-Key`
+          `${inputPrefix}-Commands-${commandId}-HTMLMaskValue-${rowIndex}-Key`
         ];
       const rowIt =
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-HTMLMaskValue-${rowIndex}-It`
+          `${inputPrefix}-Commands-${commandId}-HTMLMaskValue-${rowIndex}-It`
         ];
       const rowEn =
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-HTMLMaskValue-${rowIndex}-En`
+          `${inputPrefix}-Commands-${commandId}-HTMLMaskValue-${rowIndex}-En`
         ];
 
       const isUndefinedRow =
@@ -201,125 +190,106 @@ function ParametersTabTag({
     return result;
   }
 
-  function BuildModalStateFromStore(
-    parameterId: number,
-  ): ModalFormStateInterface {
+  function BuildModalStateFromStore(commandId: number): ModalFormStateInterface {
     return {
       NameVariable:
-        inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-NameVariable`
-        ] ?? "",
-      Label:
-        inputSlice.value[`${inputPrefix}-Parameters-${parameterId}-Label`] ??
+        inputSlice.value[`${inputPrefix}-Commands-${commandId}-NameVariable`] ??
         "",
-      Alias:
-        inputSlice.value[`${inputPrefix}-Parameters-${parameterId}-Alias`] ??
+      ValueCommand:
+        inputSlice.value[`${inputPrefix}-Commands-${commandId}-ValueCommand`] ??
         "",
-      Category:
-        inputSlice.value[`${inputPrefix}-Parameters-${parameterId}-Category`] ??
-        "",
-      Default:
-        inputSlice.value[`${inputPrefix}-Parameters-${parameterId}-Default`] ??
-        "",
-      Visibility:
-        inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-Visibility`
-        ] ?? "",
-      AccessLevel: Number(
-        inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-AccessLevel`
-        ] ?? 0,
-      ),
       AccessWriteLevel: Number(
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-AccessWriteLevel`
+          `${inputPrefix}-Commands-${commandId}-AccessWriteLevel`
         ] ?? 0,
       ),
       Enable:
-        inputSlice.value[`${inputPrefix}-Parameters-${parameterId}-Enable`] ===
+        inputSlice.value[`${inputPrefix}-Commands-${commandId}-Enable`] ===
         "true",
       MultiLanguageDescriptionIt:
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-MultiLanguageDescription-It`
+          `${inputPrefix}-Commands-${commandId}-MultiLanguageDescription-It`
         ] ?? "",
       MultiLanguageDescriptionEn:
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-MultiLanguageDescription-En`
+          `${inputPrefix}-Commands-${commandId}-MultiLanguageDescription-En`
         ] ?? "",
       TroubleSettings:
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-TroubleSettings`
+          `${inputPrefix}-Commands-${commandId}-TroubleSettings`
         ] ?? "[]",
       Name:
-        inputSlice.value[`${inputPrefix}-Parameters-${parameterId}-Name`] ?? "",
+        inputSlice.value[`${inputPrefix}-Commands-${commandId}-Name`] ?? "",
+      Alias:
+        inputSlice.value[`${inputPrefix}-Commands-${commandId}-Alias`] ?? "",
       Description:
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-Description`
+          `${inputPrefix}-Commands-${commandId}-Description`
         ] ?? "",
       Type: Number(
-        inputSlice.value[`${inputPrefix}-Parameters-${parameterId}-Type`] ?? 0,
+        inputSlice.value[`${inputPrefix}-Commands-${commandId}-Type`] ?? 0,
       ),
       Measurement:
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-Measurement`
+          `${inputPrefix}-Commands-${commandId}-Measurement`
         ] ?? "",
       ShowIndexPage:
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-ShowIndexPage`
+          `${inputPrefix}-Commands-${commandId}-ShowIndexPage`
         ] === "true",
       HTMLViewEnable: Number(
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-HTMLViewEnable`
+          `${inputPrefix}-Commands-${commandId}-HTMLViewEnable`
         ] ?? 0,
       ),
       HTMLViewCategoryIt:
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-HTMLViewCategory-It`
+          `${inputPrefix}-Commands-${commandId}-HTMLViewCategory-It`
         ] ?? "",
       HTMLViewCategoryEn:
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-HTMLViewCategory-En`
+          `${inputPrefix}-Commands-${commandId}-HTMLViewCategory-En`
         ] ?? "",
       HTMLViewIndexPosition: Number(
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-HTMLViewIndexPosition`
+          `${inputPrefix}-Commands-${commandId}-HTMLViewIndexPosition`
         ] ?? 0,
       ),
-      HTMLMaskRows: GetHtmlMaskRowsFromStore(parameterId),
+      HTMLMaskRows: GetHtmlMaskRowsFromStore(commandId),
       ModbusAddress: Number(
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-Modbus-Address`
+          `${inputPrefix}-Commands-${commandId}-Modbus-Address`
         ] ?? 0,
       ),
       ModbusGroupName:
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-Modbus-GroupName`
+          `${inputPrefix}-Commands-${commandId}-Modbus-GroupName`
         ] ?? "",
       ModbusRegisterType:
         inputSlice.value[
-          `${inputPrefix}-Parameters-${parameterId}-Modbus-RegisterType`
+          `${inputPrefix}-Commands-${commandId}-Modbus-RegisterType`
         ] ?? "Coils",
     };
   }
 
   function HandleOpenNewModal() {
-    const newId = parametersIds.length > 0 ? Math.max(...parametersIds) + 1 : 0;
+    const newId = commandsIds.length > 0 ? Math.max(...commandsIds) + 1 : 0;
 
     setModalFormState(GetDefaultModalFormState());
 
     setLocalComponentState({
       showModal: true,
-      selectedParameterId: newId,
+      selectedCommandId: newId,
       isNewRecord: true,
     });
   }
 
-  function HandleOpenEditModal(parameterId: number) {
-    setModalFormState(BuildModalStateFromStore(parameterId));
+  function HandleOpenEditModal(commandId: number) {
+    setModalFormState(BuildModalStateFromStore(commandId));
 
     setLocalComponentState({
       showModal: true,
-      selectedParameterId: parameterId,
+      selectedCommandId: commandId,
       isNewRecord: false,
     });
   }
@@ -327,154 +297,138 @@ function ParametersTabTag({
   function HandleCloseModal() {
     setLocalComponentState({
       showModal: false,
-      selectedParameterId: null,
+      selectedCommandId: null,
       isNewRecord: false,
     });
 
     setModalFormState(GetDefaultModalFormState());
   }
 
-  function SaveModalFormIntoStore(parameterId: number) {
+  function SaveModalFormIntoStore(commandId: number) {
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-NameVariable`,
+      `${inputPrefix}-Commands-${commandId}-NameVariable`,
       modalFormState.NameVariable,
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-Label`,
-      modalFormState.Label,
+      `${inputPrefix}-Commands-${commandId}-ValueCommand`,
+      modalFormState.ValueCommand,
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-Alias`,
-      modalFormState.Alias,
-    );
-    HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-Category`,
-      modalFormState.Category,
-    );
-    HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-Default`,
-      modalFormState.Default,
-    );
-    HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-Visibility`,
-      modalFormState.Visibility,
-    );
-    HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-AccessLevel`,
-      String(Number(modalFormState.AccessLevel ?? 0)),
-    );
-    HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-AccessWriteLevel`,
+      `${inputPrefix}-Commands-${commandId}-AccessWriteLevel`,
       String(Number(modalFormState.AccessWriteLevel ?? 0)),
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-Enable`,
+      `${inputPrefix}-Commands-${commandId}-Enable`,
       String(modalFormState.Enable),
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-MultiLanguageDescription-It`,
+      `${inputPrefix}-Commands-${commandId}-MultiLanguageDescription-It`,
       modalFormState.MultiLanguageDescriptionIt,
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-MultiLanguageDescription-En`,
+      `${inputPrefix}-Commands-${commandId}-MultiLanguageDescription-En`,
       modalFormState.MultiLanguageDescriptionEn,
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-TroubleSettings`,
+      `${inputPrefix}-Commands-${commandId}-TroubleSettings`,
       modalFormState.TroubleSettings,
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-Name`,
+      `${inputPrefix}-Commands-${commandId}-Name`,
       modalFormState.Name,
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-Description`,
+      `${inputPrefix}-Commands-${commandId}-Alias`,
+      modalFormState.Alias,
+    );
+    HandleSetInput(
+      `${inputPrefix}-Commands-${commandId}-Description`,
       modalFormState.Description,
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-Type`,
+      `${inputPrefix}-Commands-${commandId}-Type`,
       String(Number(modalFormState.Type ?? 0)),
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-Measurement`,
+      `${inputPrefix}-Commands-${commandId}-Measurement`,
       modalFormState.Measurement,
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-ShowIndexPage`,
+      `${inputPrefix}-Commands-${commandId}-ShowIndexPage`,
       String(modalFormState.ShowIndexPage),
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-HTMLViewEnable`,
+      `${inputPrefix}-Commands-${commandId}-HTMLViewEnable`,
       String(Number(modalFormState.HTMLViewEnable ?? 0)),
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-HTMLViewCategory-It`,
+      `${inputPrefix}-Commands-${commandId}-HTMLViewCategory-It`,
       modalFormState.HTMLViewCategoryIt,
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-HTMLViewCategory-En`,
+      `${inputPrefix}-Commands-${commandId}-HTMLViewCategory-En`,
       modalFormState.HTMLViewCategoryEn,
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-HTMLViewIndexPosition`,
+      `${inputPrefix}-Commands-${commandId}-HTMLViewIndexPosition`,
       String(Number(modalFormState.HTMLViewIndexPosition ?? 0)),
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-Modbus-Address`,
+      `${inputPrefix}-Commands-${commandId}-Modbus-Address`,
       String(Number(modalFormState.ModbusAddress ?? 0)),
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-Modbus-GroupName`,
+      `${inputPrefix}-Commands-${commandId}-Modbus-GroupName`,
       modalFormState.ModbusGroupName,
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-Modbus-RegisterType`,
+      `${inputPrefix}-Commands-${commandId}-Modbus-RegisterType`,
       modalFormState.ModbusRegisterType,
     );
 
     modalFormState.HTMLMaskRows.forEach((singleRowValue, rowIndex) => {
       HandleSetInput(
-        `${inputPrefix}-Parameters-${parameterId}-HTMLMaskValue-${rowIndex}-Key`,
+        `${inputPrefix}-Commands-${commandId}-HTMLMaskValue-${rowIndex}-Key`,
         singleRowValue.key,
       );
       HandleSetInput(
-        `${inputPrefix}-Parameters-${parameterId}-HTMLMaskValue-${rowIndex}-It`,
+        `${inputPrefix}-Commands-${commandId}-HTMLMaskValue-${rowIndex}-It`,
         singleRowValue.it,
       );
       HandleSetInput(
-        `${inputPrefix}-Parameters-${parameterId}-HTMLMaskValue-${rowIndex}-En`,
+        `${inputPrefix}-Commands-${commandId}-HTMLMaskValue-${rowIndex}-En`,
         singleRowValue.en,
       );
     });
 
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-HTMLMaskValue-${modalFormState.HTMLMaskRows.length}-Key`,
+      `${inputPrefix}-Commands-${commandId}-HTMLMaskValue-${modalFormState.HTMLMaskRows.length}-Key`,
       "",
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-HTMLMaskValue-${modalFormState.HTMLMaskRows.length}-It`,
+      `${inputPrefix}-Commands-${commandId}-HTMLMaskValue-${modalFormState.HTMLMaskRows.length}-It`,
       "",
     );
     HandleSetInput(
-      `${inputPrefix}-Parameters-${parameterId}-HTMLMaskValue-${modalFormState.HTMLMaskRows.length}-En`,
+      `${inputPrefix}-Commands-${commandId}-HTMLMaskValue-${modalFormState.HTMLMaskRows.length}-En`,
       "",
     );
   }
 
   function HandleSaveModal() {
-    if (localComponentState.selectedParameterId === null) {
+    if (localComponentState.selectedCommandId === null) {
       return;
     }
 
-    const parameterId = localComponentState.selectedParameterId;
+    const commandId = localComponentState.selectedCommandId;
 
-    SaveModalFormIntoStore(parameterId);
+    SaveModalFormIntoStore(commandId);
 
     if (localComponentState.isNewRecord) {
       setComponentState((previousStateValue) => {
         return {
           ...previousStateValue,
-          parametersIds: [...previousStateValue.parametersIds, parameterId],
+          commandsIds: [...previousStateValue.commandsIds, commandId],
         };
       });
     }
@@ -482,17 +436,17 @@ function ParametersTabTag({
     HandleCloseModal();
   }
 
-  function HandleRemoveParameter(parameterId: number) {
+  function HandleRemoveCommand(commandId: number) {
     setComponentState((previousStateValue) => {
       return {
         ...previousStateValue,
-        parametersIds: previousStateValue.parametersIds.filter(
-          (singleId) => singleId !== parameterId,
+        commandsIds: previousStateValue.commandsIds.filter(
+          (singleId) => singleId !== commandId,
         ),
       };
     });
 
-    if (localComponentState.selectedParameterId === parameterId) {
+    if (localComponentState.selectedCommandId === commandId) {
       HandleCloseModal();
     }
   }
@@ -600,13 +554,13 @@ function ParametersTabTag({
             color: "#111827",
           }}
         >
-          Parameters
+          Commands
         </div>
 
         <Suspense fallback={<></>}>
           <ButtonTag
             clickCallBack={HandleOpenNewModal}
-            textToSee="Aggiungi Parameter"
+            textToSee="Aggiungi Command"
           />
         </Suspense>
       </div>
@@ -620,41 +574,30 @@ function ParametersTabTag({
           height: "60vh",
         }}
       >
-        {parametersIds.map((singleParameterId, index) => {
-          const labelValue =
-            inputSlice.value[
-              `${inputPrefix}-Parameters-${singleParameterId}-Label`
-            ] ?? "";
-
+        {commandsIds.map((singleCommandId, index) => {
           const nameValue =
+            inputSlice.value[`${inputPrefix}-Commands-${singleCommandId}-Name`] ??
+            "";
+
+          const valueCommandValue =
             inputSlice.value[
-              `${inputPrefix}-Parameters-${singleParameterId}-Name`
+              `${inputPrefix}-Commands-${singleCommandId}-ValueCommand`
             ] ?? "";
 
-          const categoryValue =
+          const aliasValue =
             inputSlice.value[
-              `${inputPrefix}-Parameters-${singleParameterId}-Category`
-            ] ?? "";
-
-          const measurementValue =
-            inputSlice.value[
-              `${inputPrefix}-Parameters-${singleParameterId}-Measurement`
+              `${inputPrefix}-Commands-${singleCommandId}-Alias`
             ] ?? "";
 
           const enableValue =
             inputSlice.value[
-              `${inputPrefix}-Parameters-${singleParameterId}-Enable`
+              `${inputPrefix}-Commands-${singleCommandId}-Enable`
             ] === "true";
-
-          const aliasValue =
-            inputSlice.value[
-              `${inputPrefix}-Parameters-${singleParameterId}-Alias`
-            ] ?? "";
 
           return (
             <div
-              key={singleParameterId}
-              onClick={() => HandleOpenEditModal(singleParameterId)}
+              key={singleCommandId}
+              onClick={() => HandleOpenEditModal(singleCommandId)}
               style={cardStyle}
               className="HoverTransform"
             >
@@ -675,7 +618,7 @@ function ParametersTabTag({
                     wordBreak: "break-word",
                   }}
                 >
-                  {labelValue !== "" ? labelValue : `Parameter ${index + 1}`}
+                  {nameValue !== "" ? nameValue : `Command ${index + 1}`}
                 </div>
 
                 <div
@@ -703,7 +646,7 @@ function ParametersTabTag({
                   <div
                     onClick={(event) => {
                       event.stopPropagation();
-                      HandleRemoveParameter(singleParameterId);
+                      HandleRemoveCommand(singleCommandId);
                     }}
                     style={trashButtonStyle}
                     className="HoverTransform"
@@ -728,18 +671,8 @@ function ParametersTabTag({
                 }}
               >
                 <div>
-                  <span style={cardLabelStyle}>Name:</span>{" "}
-                  {nameValue !== "" ? nameValue : "-"}
-                </div>
-
-                <div>
-                  <span style={cardLabelStyle}>Category:</span>{" "}
-                  {categoryValue !== "" ? categoryValue : "-"}
-                </div>
-
-                <div>
-                  <span style={cardLabelStyle}>Measurement:</span>{" "}
-                  {measurementValue !== "" ? measurementValue : "-"}
+                  <span style={cardLabelStyle}>ValueCommand:</span>{" "}
+                  {valueCommandValue !== "" ? valueCommandValue : "-"}
                 </div>
 
                 <div>
@@ -762,8 +695,8 @@ function ParametersTabTag({
           <Modal.Header>
             <Modal.Title>
               {localComponentState.isNewRecord
-                ? "Nuovo Parameter"
-                : "Modifica Parameter"}
+                ? "Nuovo Command"
+                : "Modifica Command"}
             </Modal.Title>
           </Modal.Header>
 
@@ -806,93 +739,17 @@ function ParametersTabTag({
                   </div>
 
                   <div>
-                    <div style={labelStyle}>Label</div>
+                    <div style={labelStyle}>ValueCommand</div>
                     <InputTag
-                      value={modalFormState.Label}
+                      value={modalFormState.ValueCommand}
                       onChange={(value) =>
                         setModalFormState((previousStateValue) => {
                           return {
                             ...previousStateValue,
-                            Label: value,
+                            ValueCommand: value,
                           };
                         })
                       }
-                    />
-                  </div>
-
-                  <div>
-                    <div style={labelStyle}>Alias</div>
-                    <InputTag
-                      value={modalFormState.Alias}
-                      onChange={(value) =>
-                        setModalFormState((previousStateValue) => {
-                          return {
-                            ...previousStateValue,
-                            Alias: value,
-                          };
-                        })
-                      }
-                    />
-                  </div>
-
-                  <div>
-                    <div style={labelStyle}>Category</div>
-                    <InputTag
-                      value={modalFormState.Category}
-                      onChange={(value) =>
-                        setModalFormState((previousStateValue) => {
-                          return {
-                            ...previousStateValue,
-                            Category: value,
-                          };
-                        })
-                      }
-                    />
-                  </div>
-
-                  <div>
-                    <div style={labelStyle}>Default</div>
-                    <InputTag
-                      value={modalFormState.Default}
-                      onChange={(value) =>
-                        setModalFormState((previousStateValue) => {
-                          return {
-                            ...previousStateValue,
-                            Default: value,
-                          };
-                        })
-                      }
-                    />
-                  </div>
-
-                  <div>
-                    <div style={labelStyle}>Visibility</div>
-                    <InputTag
-                      value={modalFormState.Visibility}
-                      onChange={(value) =>
-                        setModalFormState((previousStateValue) => {
-                          return {
-                            ...previousStateValue,
-                            Visibility: value,
-                          };
-                        })
-                      }
-                    />
-                  </div>
-
-                  <div>
-                    <div style={labelStyle}>AccessLevel</div>
-                    <InputNumberTag
-                      value={modalFormState.AccessLevel}
-                      onChange={(value) =>
-                        setModalFormState((previousStateValue) => {
-                          return {
-                            ...previousStateValue,
-                            AccessLevel: Number(value ?? 0),
-                          };
-                        })
-                      }
-                      style={{ width: "100%" }}
                     />
                   </div>
 
@@ -913,6 +770,21 @@ function ParametersTabTag({
                   </div>
 
                   <div>
+                    <div style={labelStyle}>Enable</div>
+                    <ToggleTag
+                      checked={modalFormState.Enable}
+                      onChange={(value) =>
+                        setModalFormState((previousStateValue) => {
+                          return {
+                            ...previousStateValue,
+                            Enable: value,
+                          };
+                        })
+                      }
+                    />
+                  </div>
+
+                  <div>
                     <div style={labelStyle}>Name</div>
                     <InputTag
                       value={modalFormState.Name}
@@ -921,6 +793,21 @@ function ParametersTabTag({
                           return {
                             ...previousStateValue,
                             Name: value,
+                          };
+                        })
+                      }
+                    />
+                  </div>
+
+                  <div>
+                    <div style={labelStyle}>Alias</div>
+                    <InputTag
+                      value={modalFormState.Alias}
+                      onChange={(value) =>
+                        setModalFormState((previousStateValue) => {
+                          return {
+                            ...previousStateValue,
+                            Alias: value,
                           };
                         })
                       }
@@ -967,21 +854,6 @@ function ParametersTabTag({
                           return {
                             ...previousStateValue,
                             Measurement: value,
-                          };
-                        })
-                      }
-                    />
-                  </div>
-
-                  <div>
-                    <div style={labelStyle}>Enable</div>
-                    <ToggleTag
-                      checked={modalFormState.Enable}
-                      onChange={(value) =>
-                        setModalFormState((previousStateValue) => {
-                          return {
-                            ...previousStateValue,
-                            Enable: value,
                           };
                         })
                       }
@@ -1142,61 +1014,57 @@ function ParametersTabTag({
                     gap: "12px",
                   }}
                 >
-                  {modalFormState.HTMLMaskRows.map(
-                    (singleRowValue, rowIndex) => {
-                      return (
-                        <div
-                          key={rowIndex}
-                          style={{
-                            display: "grid",
-                            gridTemplateColumns: "160px 1fr 1fr 120px",
-                            gap: "12px",
-                            alignItems: "end",
-                            border: "1px solid #eef2f7",
-                            borderRadius: "10px",
-                            padding: "12px",
-                          }}
-                        >
-                          <div>
-                            <div style={labelStyle}>Key</div>
-                            <InputTag
-                              value={singleRowValue.key}
-                              onChange={(value) =>
-                                HandleUpdateHtmlMaskRow(rowIndex, "key", value)
-                              }
-                            />
-                          </div>
-
-                          <div>
-                            <div style={labelStyle}>it</div>
-                            <InputTag
-                              value={singleRowValue.it}
-                              onChange={(value) =>
-                                HandleUpdateHtmlMaskRow(rowIndex, "it", value)
-                              }
-                            />
-                          </div>
-
-                          <div>
-                            <div style={labelStyle}>en</div>
-                            <InputTag
-                              value={singleRowValue.en}
-                              onChange={(value) =>
-                                HandleUpdateHtmlMaskRow(rowIndex, "en", value)
-                              }
-                            />
-                          </div>
-
-                          <ButtonTag
-                            clickCallBack={() =>
-                              HandleRemoveHtmlMaskRow(rowIndex)
+                  {modalFormState.HTMLMaskRows.map((singleRowValue, rowIndex) => {
+                    return (
+                      <div
+                        key={rowIndex}
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "160px 1fr 1fr 120px",
+                          gap: "12px",
+                          alignItems: "end",
+                          border: "1px solid #eef2f7",
+                          borderRadius: "10px",
+                          padding: "12px",
+                        }}
+                      >
+                        <div>
+                          <div style={labelStyle}>Key</div>
+                          <InputTag
+                            value={singleRowValue.key}
+                            onChange={(value) =>
+                              HandleUpdateHtmlMaskRow(rowIndex, "key", value)
                             }
-                            textToSee="Rimuovi"
                           />
                         </div>
-                      );
-                    },
-                  )}
+
+                        <div>
+                          <div style={labelStyle}>it</div>
+                          <InputTag
+                            value={singleRowValue.it}
+                            onChange={(value) =>
+                              HandleUpdateHtmlMaskRow(rowIndex, "it", value)
+                            }
+                          />
+                        </div>
+
+                        <div>
+                          <div style={labelStyle}>en</div>
+                          <InputTag
+                            value={singleRowValue.en}
+                            onChange={(value) =>
+                              HandleUpdateHtmlMaskRow(rowIndex, "en", value)
+                            }
+                          />
+                        </div>
+
+                        <ButtonTag
+                          clickCallBack={() => HandleRemoveHtmlMaskRow(rowIndex)}
+                          textToSee="Rimuovi"
+                        />
+                      </div>
+                    );
+                  })}
 
                   <div>
                     <ButtonTag
@@ -1287,4 +1155,4 @@ function ParametersTabTag({
   );
 }
 
-export default ParametersTabTag;
+export default CommandsTabTag;

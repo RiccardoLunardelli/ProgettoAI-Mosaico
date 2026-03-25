@@ -144,7 +144,23 @@ class ParametersSection(BaseModel):
 
 #---COMMANDS----
 class CommandsSection(BaseModel):
-    pass 
+    NameVariable: str 
+    ValueCommand: str 
+    AccessWriteLevel: int 
+    Enable: bool 
+    MultiLanguageDescription: str 
+    TroubleSettings: str 
+    Name: str 
+    Alias : str | None = None
+    Description: str
+    Type: int 
+    Measurement: str
+    ShowIndexPage: bool
+    HTMLViewEnable: int 
+    HTMLViewCategory: str
+    HTMLViewIndexPosition: int 
+    HTMLMaskValue: str
+    Modbus: ModbusInfo
 
 #--ALARMS---
 class AlarmsSection(BaseModel):
@@ -171,4 +187,5 @@ class CreateTemplateAdmin(BaseModel):
     TemplateInfo: TemplateInfoAdmin
     ContinuosReads: List[ContinuosReadsSection]
     Parameters: List[ParametersSection]
+    Commands: List[CommandsSection]
     

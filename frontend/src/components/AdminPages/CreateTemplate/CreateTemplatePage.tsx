@@ -22,6 +22,7 @@ const ButtonTag = lazy(() =>
 const TemplateInfoTabTag = lazy(() => import("./Tabs/TemplateInfoTab"));
 const ContinuosReadsTabTag = lazy(() => import("./Tabs/ContinuosReadsTab"));
 const ParametersTabTag = lazy(() => import("./Tabs/ParametersTab"));
+const CommandsTabTag = lazy(() => import("./Tabs/CommandsTab"));
 
 const inputPrefix = "CreateTemplate";
 
@@ -29,6 +30,7 @@ interface ComponentStateInterface {
   activeTab: string;
   continuosReadsIds: number[];
   parametersIds: number[];
+  commandsIds: number[];
 }
 
 interface InputSliceInterface {
@@ -64,12 +66,20 @@ function BuildHtmlMaskValueObject(
         `${inputPrefix}-ContinuosReads-${readId}-HTMLMaskValue-${rowIndex}-En`
       ];
 
-    if (rowKey === undefined && rowIt === undefined && rowEn === undefined) {
+    const isUndefinedRow =
+      rowKey === undefined && rowIt === undefined && rowEn === undefined;
+
+    const isEmptyRow =
+      (rowKey ?? "").trim() === "" &&
+      (rowIt ?? "").trim() === "" &&
+      (rowEn ?? "").trim() === "";
+
+    if (isUndefinedRow || isEmptyRow) {
       break;
     }
 
     if ((rowKey ?? "").trim() !== "") {
-      result[rowKey] = {
+      result[rowKey as string] = {
         it: rowIt ?? "",
         en: rowEn ?? "",
       };
@@ -110,12 +120,74 @@ function BuildHtmlMaskValueObjectForParameters(
         `${inputPrefix}-Parameters-${parameterId}-HTMLMaskValue-${rowIndex}-En`
       ];
 
-    if (rowKey === undefined && rowIt === undefined && rowEn === undefined) {
+    const isUndefinedRow =
+      rowKey === undefined && rowIt === undefined && rowEn === undefined;
+
+    const isEmptyRow =
+      (rowKey ?? "").trim() === "" &&
+      (rowIt ?? "").trim() === "" &&
+      (rowEn ?? "").trim() === "";
+
+    if (isUndefinedRow || isEmptyRow) {
       break;
     }
 
     if ((rowKey ?? "").trim() !== "") {
-      result[rowKey] = {
+      result[rowKey as string] = {
+        it: rowIt ?? "",
+        en: rowEn ?? "",
+      };
+    }
+
+    rowIndex += 1;
+  }
+
+  return result;
+}
+
+function BuildHtmlMaskValueObjectForCommands(
+  inputSlice: InputSliceInterface,
+  commandId: number,
+) {
+  const result: {
+    [key: string]: {
+      it: string;
+      en: string;
+    };
+  } = {};
+
+  let rowIndex = 0;
+
+  while (true) {
+    const rowKey =
+      inputSlice[
+        `${inputPrefix}-Commands-${commandId}-HTMLMaskValue-${rowIndex}-Key`
+      ];
+
+    const rowIt =
+      inputSlice[
+        `${inputPrefix}-Commands-${commandId}-HTMLMaskValue-${rowIndex}-It`
+      ];
+
+    const rowEn =
+      inputSlice[
+        `${inputPrefix}-Commands-${commandId}-HTMLMaskValue-${rowIndex}-En`
+      ];
+
+    const isUndefinedRow =
+      rowKey === undefined && rowIt === undefined && rowEn === undefined;
+
+    const isEmptyRow =
+      (rowKey ?? "").trim() === "" &&
+      (rowIt ?? "").trim() === "" &&
+      (rowEn ?? "").trim() === "";
+
+    if (isUndefinedRow || isEmptyRow) {
+      break;
+    }
+
+    if ((rowKey ?? "").trim() !== "") {
+      result[rowKey as string] = {
         it: rowIt ?? "",
         en: rowEn ?? "",
       };
@@ -131,6 +203,7 @@ function GetFinalTemplateJson(
   inputSlice: InputSliceInterface,
   continuosReadsIds: number[],
   parametersIds: number[],
+  commandsIds: number[],
 ) {
   function BuildMultiLangString(it: string, en: string): string {
     const result: { it?: string; en?: string } = {};
@@ -379,7 +452,107 @@ function GetFinalTemplateJson(
 
       return singleParameterResult;
     }),
-    /*Commands: [],*/
+    Commands: commandsIds.map((singleCommandId) => {
+      const multiLanguageDescriptionIt =
+        inputSlice[
+          `${inputPrefix}-Commands-${singleCommandId}-MultiLanguageDescription-It`
+        ] ?? "";
+
+      const multiLanguageDescriptionEn =
+        inputSlice[
+          `${inputPrefix}-Commands-${singleCommandId}-MultiLanguageDescription-En`
+        ] ?? "";
+
+      const htmlViewCategoryIt =
+        inputSlice[
+          `${inputPrefix}-Commands-${singleCommandId}-HTMLViewCategory-It`
+        ] ?? "";
+
+      const htmlViewCategoryEn =
+        inputSlice[
+          `${inputPrefix}-Commands-${singleCommandId}-HTMLViewCategory-En`
+        ] ?? "";
+
+      const aliasValue =
+        inputSlice[`${inputPrefix}-Commands-${singleCommandId}-Alias`] ?? "";
+
+      return {
+        NameVariable:
+          inputSlice[
+            `${inputPrefix}-Commands-${singleCommandId}-NameVariable`
+          ] ?? "",
+        ValueCommand:
+          inputSlice[
+            `${inputPrefix}-Commands-${singleCommandId}-ValueCommand`
+          ] ?? "",
+        AccessWriteLevel: Number(
+          inputSlice[
+            `${inputPrefix}-Commands-${singleCommandId}-AccessWriteLevel`
+          ] ?? 0,
+        ),
+        Enable:
+          inputSlice[`${inputPrefix}-Commands-${singleCommandId}-Enable`] ===
+          "true",
+        MultiLanguageDescription: BuildMultiLangString(
+          multiLanguageDescriptionIt,
+          multiLanguageDescriptionEn,
+        ),
+        TroubleSettings:
+          inputSlice[
+            `${inputPrefix}-Commands-${singleCommandId}-TroubleSettings`
+          ] ?? "[]",
+        Name:
+          inputSlice[`${inputPrefix}-Commands-${singleCommandId}-Name`] ?? "",
+        Alias: aliasValue.trim() === "" ? null : aliasValue,
+        Description:
+          inputSlice[
+            `${inputPrefix}-Commands-${singleCommandId}-Description`
+          ] ?? "",
+        Type: Number(
+          inputSlice[`${inputPrefix}-Commands-${singleCommandId}-Type`] ?? 0,
+        ),
+        Measurement:
+          inputSlice[
+            `${inputPrefix}-Commands-${singleCommandId}-Measurement`
+          ] ?? "",
+        ShowIndexPage:
+          inputSlice[
+            `${inputPrefix}-Commands-${singleCommandId}-ShowIndexPage`
+          ] === "true",
+        HTMLViewEnable: Number(
+          inputSlice[
+            `${inputPrefix}-Commands-${singleCommandId}-HTMLViewEnable`
+          ] ?? 0,
+        ),
+        HTMLViewCategory: BuildMultiLangString(
+          htmlViewCategoryIt,
+          htmlViewCategoryEn,
+        ),
+        HTMLViewIndexPosition: Number(
+          inputSlice[
+            `${inputPrefix}-Commands-${singleCommandId}-HTMLViewIndexPosition`
+          ] ?? 0,
+        ),
+        HTMLMaskValue: JSON.stringify(
+          BuildHtmlMaskValueObjectForCommands(inputSlice, singleCommandId),
+        ),
+        Modbus: {
+          Address: Number(
+            inputSlice[
+              `${inputPrefix}-Commands-${singleCommandId}-Modbus-Address`
+            ] ?? 0,
+          ),
+          GroupName:
+            inputSlice[
+              `${inputPrefix}-Commands-${singleCommandId}-Modbus-GroupName`
+            ] ?? "",
+          RegisterType:
+            inputSlice[
+              `${inputPrefix}-Commands-${singleCommandId}-Modbus-RegisterType`
+            ] ?? "Coils",
+        },
+      };
+    }),
   };
 }
 
@@ -397,6 +570,7 @@ function CreateTemplatePageTag() {
       activeTab: "TemplateInfo",
       continuosReadsIds: [],
       parametersIds: [],
+      commandsIds: [],
     },
   );
 
@@ -404,6 +578,7 @@ function CreateTemplatePageTag() {
     inputSlice.value ?? {},
     componentState.continuosReadsIds,
     componentState.parametersIds,
+    componentState.commandsIds,
   );
 
   function HandleResetTemplateInfo() {
@@ -423,8 +598,18 @@ function CreateTemplatePageTag() {
     });
   }
 
+  function HandleResetPageState() {
+    setComponentState({
+      activeTab: "TemplateInfo",
+      continuosReadsIds: [],
+      parametersIds: [],
+      commandsIds: [],
+    });
+  }
+
   useEffect(() => {
     HandleResetTemplateInfo();
+    HandleResetPageState();
   }, []);
 
   function HandleSaveTemplate() {
@@ -509,6 +694,13 @@ function CreateTemplatePageTag() {
               <TabTag eventKey="Parameters" title="Parameters">
                 <ParametersTabTag
                   parametersIds={componentState.parametersIds}
+                  setComponentState={setComponentState}
+                />
+              </TabTag>
+
+              <TabTag eventKey="Commands" title="Commands">
+                <CommandsTabTag
+                  commandsIds={componentState.commandsIds}
                   setComponentState={setComponentState}
                 />
               </TabTag>

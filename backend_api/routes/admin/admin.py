@@ -225,6 +225,7 @@ def build_template(payload: CreateTemplateAdmin) -> dict:
 
     props_continuosreads, values_continuosreads = builder(payload.ContinuosReads, "continuosReads")
     props_parameters, values_parameters = builder(payload.Parameters, "parameters")
+    props_commands, values_commands = builder(payload.Commands, "commands")
     
     template = {
         "ContinuosReads": {
@@ -234,6 +235,10 @@ def build_template(payload: CreateTemplateAdmin) -> dict:
         "Parameters": {
             "Properties": props_parameters,
             "Values": values_parameters,
+        },
+        "Commands": {
+            "Properties": props_commands,
+            "Values": values_commands,
         }
     }
 

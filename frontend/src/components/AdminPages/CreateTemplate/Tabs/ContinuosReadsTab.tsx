@@ -32,7 +32,8 @@ const inputPrefix = "CreateTemplate";
 interface ComponentStateInterface {
   activeTab: string;
   continuosReadsIds: number[];
-  parametersIds: number[]
+  parametersIds: number[];
+  commandsIds: number[]
 }
 
 interface ContinuosReadsTabTagPropsInterface {
@@ -123,8 +124,9 @@ function ContinuosReadsTabTag({
       isNewRecord: false,
     });
 
-  const [modalFormState, setModalFormState] =
-    useState<ModalFormStateInterface>(GetDefaultModalFormState());
+  const [modalFormState, setModalFormState] = useState<ModalFormStateInterface>(
+    GetDefaultModalFormState(),
+  );
 
   const inputSlice: { value: InputSliceInterface } = useSelector(
     (state: { inputSlice: { value: InputSliceInterface } }) => state.inputSlice,
@@ -157,7 +159,15 @@ function ContinuosReadsTabTag({
           `${inputPrefix}-ContinuosReads-${readId}-HTMLMaskValue-${rowIndex}-En`
         ];
 
-      if (rowKey === undefined && rowIt === undefined && rowEn === undefined) {
+      const isUndefinedRow =
+        rowKey === undefined && rowIt === undefined && rowEn === undefined;
+
+      const isEmptyRow =
+        (rowKey ?? "").trim() === "" &&
+        (rowIt ?? "").trim() === "" &&
+        (rowEn ?? "").trim() === "";
+
+      if (isUndefinedRow || isEmptyRow) {
         break;
       }
 
@@ -976,57 +986,61 @@ function ContinuosReadsTabTag({
                     gap: "12px",
                   }}
                 >
-                  {modalFormState.HTMLMaskRows.map((singleRowValue, rowIndex) => {
-                    return (
-                      <div
-                        key={rowIndex}
-                        style={{
-                          display: "grid",
-                          gridTemplateColumns: "160px 1fr 1fr 120px",
-                          gap: "12px",
-                          alignItems: "end",
-                          border: "1px solid #eef2f7",
-                          borderRadius: "10px",
-                          padding: "12px",
-                        }}
-                      >
-                        <div>
-                          <div style={labelStyle}>Key</div>
-                          <InputTag
-                            value={singleRowValue.key}
-                            onChange={(value) =>
-                              HandleUpdateHtmlMaskRow(rowIndex, "key", value)
+                  {modalFormState.HTMLMaskRows.map(
+                    (singleRowValue, rowIndex) => {
+                      return (
+                        <div
+                          key={rowIndex}
+                          style={{
+                            display: "grid",
+                            gridTemplateColumns: "160px 1fr 1fr 120px",
+                            gap: "12px",
+                            alignItems: "end",
+                            border: "1px solid #eef2f7",
+                            borderRadius: "10px",
+                            padding: "12px",
+                          }}
+                        >
+                          <div>
+                            <div style={labelStyle}>Key</div>
+                            <InputTag
+                              value={singleRowValue.key}
+                              onChange={(value) =>
+                                HandleUpdateHtmlMaskRow(rowIndex, "key", value)
+                              }
+                            />
+                          </div>
+
+                          <div>
+                            <div style={labelStyle}>it</div>
+                            <InputTag
+                              value={singleRowValue.it}
+                              onChange={(value) =>
+                                HandleUpdateHtmlMaskRow(rowIndex, "it", value)
+                              }
+                            />
+                          </div>
+
+                          <div>
+                            <div style={labelStyle}>en</div>
+                            <InputTag
+                              value={singleRowValue.en}
+                              onChange={(value) =>
+                                HandleUpdateHtmlMaskRow(rowIndex, "en", value)
+                              }
+                            />
+                          </div>
+
+                          <ButtonTag
+                            clickCallBack={() =>
+                              HandleRemoveHtmlMaskRow(rowIndex)
                             }
+                            textToSee="Rimuovi"
                           />
                         </div>
-
-                        <div>
-                          <div style={labelStyle}>it</div>
-                          <InputTag
-                            value={singleRowValue.it}
-                            onChange={(value) =>
-                              HandleUpdateHtmlMaskRow(rowIndex, "it", value)
-                            }
-                          />
-                        </div>
-
-                        <div>
-                          <div style={labelStyle}>en</div>
-                          <InputTag
-                            value={singleRowValue.en}
-                            onChange={(value) =>
-                              HandleUpdateHtmlMaskRow(rowIndex, "en", value)
-                            }
-                          />
-                        </div>
-
-                        <ButtonTag
-                          clickCallBack={() => HandleRemoveHtmlMaskRow(rowIndex)}
-                          textToSee="Rimuovi"
-                        />
-                      </div>
-                    );
-                  })}
+                      );
+                    },
+                  )}
 
                   <div>
                     <ButtonTag
