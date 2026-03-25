@@ -40,6 +40,9 @@ const GraphManagerTag = lazy(
   () => import("./components/AdminPages/Graph/GraphPageManager"),
 );
 const HomePageTag = lazy(() => import("./components/Home/HomePage"));
+const CreateTemplatePageTag = lazy(
+  () => import("./components/AdminPages/CreateTemplate/CreateTemplatePage"),
+);
 const ConfigManagementPage = lazy(
   () => import("./components/AdminPages/ConfigManagement/ConfigManagementPage"),
 );
@@ -244,6 +247,14 @@ let childrenRouterArr: any = [
         element: (
           <Suspense>
             <GraphManagerTag />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/CreateTemplate",
+        element: (
+          <Suspense>
+            <CreateTemplatePageTag />
           </Suspense>
         ),
       },

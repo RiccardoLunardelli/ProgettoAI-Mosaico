@@ -11,7 +11,8 @@ function TopNavbar() {
   const dispatch = useDispatch();
 
   const currentPathSlice: { value: string | null } = useSelector(
-    (state: { currentPathSlice: { value: string | null } }) => state.currentPathSlice,
+    (state: { currentPathSlice: { value: string | null } }) =>
+      state.currentPathSlice,
   );
 
   const isThisAdminPath =
@@ -21,7 +22,8 @@ function TopNavbar() {
     currentPathSlice.value === "Store Devices Management" ||
     currentPathSlice.value === "Artifact Management" ||
     currentPathSlice.value === "Config Management" ||
-    currentPathSlice.value === "Graph";
+    currentPathSlice.value === "Graph" ||
+    currentPathSlice.value === "Create Template";
 
   const isAdminRootPath = currentPathSlice.value === "Admin";
 

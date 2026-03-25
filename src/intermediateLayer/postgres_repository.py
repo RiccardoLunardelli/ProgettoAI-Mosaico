@@ -892,3 +892,11 @@ class Template():
                 cur.execute(sql, (str(id),))
                 rows = cur.fetchall()
                 return [dict(r) for r in rows]
+
+    def insert_templates_metadata(self, artifact_id: str, author: str, category: str, name: str, product: str, version: str, content: dict) -> None: 
+        # inserisce metadati in templates 
+
+        sql = "INSERT INTO templates (id, author, category, name, product, version, content) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (artifact_id, author, category, name, product, version, psycopg2.extras.Json(content),),)

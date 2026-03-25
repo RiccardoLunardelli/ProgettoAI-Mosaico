@@ -434,7 +434,7 @@ function AdminHomePageTag() {
             </span>
           </div>
         </div>
-        
+
         {/* Artifact */}
         <div
           style={{
@@ -526,7 +526,7 @@ function AdminHomePageTag() {
             </span>
           </div>
         </div>
-        
+
         {/* Config */}
         <div
           style={{
@@ -538,10 +538,7 @@ function AdminHomePageTag() {
           }}
           className="HoverTransform"
           onClick={() =>
-            HandleNavigateCardOnClick(
-              "/ConfigManagement",
-              "Config Management",
-            )
+            HandleNavigateCardOnClick("/ConfigManagement", "Config Management")
           }
         >
           {/* Icona + testo */}
@@ -618,7 +615,7 @@ function AdminHomePageTag() {
             </span>
           </div>
         </div>
-        
+
         {/* Graph */}
         <div
           style={{
@@ -629,12 +626,7 @@ function AdminHomePageTag() {
             flexDirection: "column",
           }}
           className="HoverTransform"
-          onClick={() =>
-            HandleNavigateCardOnClick(
-              "/Graph",
-              "Graph",
-            )
-          }
+          onClick={() => HandleNavigateCardOnClick("/Graph", "Graph")}
         >
           {/* Icona + testo */}
           <div
@@ -707,6 +699,95 @@ function AdminHomePageTag() {
               }}
             >
               Visualizza analisi con grafici
+            </span>
+          </div>
+        </div>
+
+        {/* Create Template */}
+        <div
+          style={{
+            borderRadius: "10px",
+            height: "180px",
+            padding: "15px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+          className="HoverTransform"
+          onClick={() =>
+            HandleNavigateCardOnClick("/CreateTemplate", "Create Template")
+          }
+        >
+          {/* Icona + testo */}
+          <div
+            style={{
+              marginLeft: "10px",
+              marginTop: "8px",
+              height: "80px",
+              width: "60px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            {/* Icona */}
+            <div
+              style={{
+                height: "60px",
+                width: "60px",
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <span
+                className="material-symbols-outlined"
+                style={{ fontSize: "40px", color: "#3268c5", zIndex: 1 }}
+              >
+                graph_1
+              </span>
+
+              <div
+                style={{
+                  position: "absolute",
+                  height: "100%",
+                  width: "100%",
+                  backgroundColor: "#477dda",
+                  opacity: "0.2",
+                  borderRadius: "6px",
+                }}
+              />
+            </div>
+          </div>
+          {/* Testo sotto icona */}
+          <div
+            style={{
+              marginLeft: "10px",
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "20px",
+                fontWeight: 500,
+                color: "var(--black)",
+              }}
+            >
+              Create Template
+            </span>
+            <span
+              style={{
+                fontSize: "14px",
+                fontWeight: 400,
+                color: "var(--black)",
+                opacity: 0.6,
+                marginTop: "4px",
+              }}
+            >
+              Crea un tamplate
             </span>
           </div>
         </div>

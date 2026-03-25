@@ -1,5 +1,5 @@
 from pydantic import BaseModel, UUID4, EmailStr, field_validator
-from typing import Any
+from typing import Any, Dict, List
 
 #----ROLE-----
 class UpdateRoleAdmin(BaseModel):
@@ -84,4 +84,91 @@ class DeleteDeviceAdmin(BaseModel):
 class EditConfigAdmin(BaseModel):
     id: str
     file: str 
+    
+#---CREATE TEMPLATE---
+#--INFO--
+class TemplateInfoAdmin(BaseModel):
+    Author: str 
+    Category: str 
+    Name: str 
+    Product: str 
+    Version: str 
+
+#--MODBUS--
+class ModbusInfo(BaseModel):
+    Address: int 
+    GroupName: str 
+    RegisterType: str
+
+#--CONTINUOS READS---
+class ContinuosReadsSection(BaseModel):
+    NameVariable: str 
+    Enable: bool 
+    MultiLanguageDescription: str 
+    TroubleSettings: str 
+    Name: str 
+    Alias : str | None = None
+    Description: str 
+    Type: int 
+    Measurement: str 
+    ShowIndexPage: bool
+    HTMLViewEnable: int 
+    HTMLViewCategory: str
+    HTMLViewIndexPosition: int 
+    HTMLMaskValue: str
+    Modbus: ModbusInfo
+
+#---PARAMETERS-----
+class ParametersSection(BaseModel):
+    NameVariable: str 
+    Label: str
+    Category: str
+    Default: str 
+    Visibility: str 
+    AccessLevel: int 
+    AccessWriteLevel: int 
+    Enable: bool 
+    MultiLanguageDescription: str 
+    TroubleSettings: str 
+    Name: str 
+    Alias : str | None = None
+    Description: str 
+    Type: int 
+    Measurement: str 
+    ShowIndexPage: bool
+    HTMLViewEnable: int 
+    HTMLViewCategory: str
+    HTMLViewIndexPosition: int 
+    HTMLMaskValue: str
+    Modbus: ModbusInfo
+
+#---COMMANDS----
+class CommandsSection(BaseModel):
+    pass 
+
+#--ALARMS---
+class AlarmsSection(BaseModel):
+    pass
+
+#--WARNINGS---
+class WarningsSection(BaseModel):
+    pass 
+
+#--VIRTUALVARIABLES---
+class VirtualVariablesSection(BaseModel):
+    pass
+
+#---DATALOGGERPEN-----
+class DataLoggerPenSection(BaseModel):
+    pass
+
+#---TEMPLATEGUID----
+class TemplateGuidSection(BaseModel):
+    pass
+
+#--CREAZIONE TEMPLATE---
+class CreateTemplateAdmin(BaseModel):
+    TemplateInfo: TemplateInfoAdmin
+    ContinuosReads: List[ContinuosReadsSection]
+    Parameters: List[ParametersSection]
     

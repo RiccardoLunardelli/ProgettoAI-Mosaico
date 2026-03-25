@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from backend_api.routes.auth import router as auth_router
 from backend_api.routes.artifacts import router as artifacts_router
 from backend_api.routes.runs import router as runs_router
-from backend_api.routes.admin import router as admin_router
+from backend_api.routes.admin.admin import router as admin_router
 
 from fastapi.middleware.cors import CORSMiddleware
 

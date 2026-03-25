@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
-from src.intermediateLayer.postgres_repository import UsersRepository, ArtifactRepository, Clients, Stores, Devices, RunRepository
+from src.intermediateLayer.postgres_repository import UsersRepository, ArtifactRepository, Clients, Stores, Devices, RunRepository, Template
 from backend_api.schemas.admin import UpdateRoleAdmin, DropArtifactAdmin, DeleteUserAdmin, InsertClientAdmin, DeleteClientAdmin, UpsertStoreAdmin, UpdateUser, DeleteStoreAdmin, UpdateClientAdmin, \
-    UpdateStoreAdmin, UpdateDeviceAdmin, InsertDeviceAdmin, DeleteDeviceAdmin, InsertArtifactAdmin, EditConfigAdmin
+    UpdateStoreAdmin, UpdateDeviceAdmin, InsertDeviceAdmin, DeleteDeviceAdmin, InsertArtifactAdmin, EditConfigAdmin, CreateTemplateAdmin
 
-from scripts.orchestrator import load_config
+from backend_api.routes.admin.builder_template import builder
+from backend_api.schemas.template_properties import ContinuosReadsProps, ParametersProps
 from backend_api.utils.deps import require_admin
 from uuid import UUID
 import yaml
@@ -22,6 +23,7 @@ clientClass = Clients(dsn)
 storeClass = Stores(dsn)
 deviceClass = Devices(dsn)
 runClass = RunRepository(dsn)
+templateClass = Template(dsn)
 
 # -------CHECK---------
 def check_user(id):
@@ -217,6 +219,26 @@ def _next_versioned_name(name: str) -> tuple[str, str]:
     old = f"_v{m.group(1)}.{m.group(2)}.{ext}"
     return name.replace(old, f"_v{new_v}.{ext}"), new_v
 
+#------HELPER CREAZIONE TEMPLATE-------
+def build_template(payload: CreateTemplateAdmin) -> dict:
+    # costruisce template
+
+    props_continuosreads, values_continuosreads = builder(payload.ContinuosReads, "continuosReads")
+    props_parameters, values_parameters = builder(payload.Parameters, "parameters")
+    
+    template = {
+        "ContinuosReads": {
+            "Properties": props_continuosreads,
+            "Values": values_continuosreads,
+        },
+        "Parameters": {
+            "Properties": props_parameters,
+            "Values": values_parameters,
+        }
+    }
+
+    return template
+
 # ------ENDPOINT--------
 
 #--USER--
@@ -314,3 +336,22 @@ def delete_device(payload: DeleteDeviceAdmin, user = Depends(require_admin)):
 @router.post("/edit/config")
 def edit_config_inline(payload: EditConfigAdmin, user = Depends(require_admin)):
     return editor_config_json_inline(payload.id, payload.file, user["sub"])
+
+#---CREATE TEMPLATE------
+@router.post("/create_template")
+def create_template(payload: CreateTemplateAdmin, user = Depends(require_admin)):
+    template_json = build_template(payload) # template
+
+    # salvataggio template in artifacts
+    artifact_name = f"{payload.TemplateInfo.Name}.json"
+    artifact_version = payload.TemplateInfo.Version
+    artifact_id = artifactClass.upsert_artifact(artifact_type="template", name=artifact_name, version=artifact_version, content=template_json)
+
+    # salvataggio metadata template in templates
+    author = payload.TemplateInfo.Author
+    category = payload.TemplateInfo.Category
+    name = payload.TemplateInfo.Name
+    product = payload.TemplateInfo.Product
+    version = payload.TemplateInfo.Version
+    content = payload.model_dump()
+    templateClass.insert_templates_metadata(artifact_id=artifact_id, author=author, category=category, name=name, product=product, version=version, content=content)
