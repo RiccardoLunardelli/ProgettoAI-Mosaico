@@ -558,9 +558,10 @@ function ContinuosReadsTabTag({
         }}
       >
         {continuosReadsIds.map((singleReadId, index) => {
-          const nameValue =
+            
+            const NameVariable =
             inputSlice.value[
-              `${inputPrefix}-ContinuosReads-${singleReadId}-Name`
+              `${inputPrefix}-ContinuosReads-${singleReadId}-NameVariable`
             ] ?? "";
 
           const descriptionValue =
@@ -612,7 +613,7 @@ function ContinuosReadsTabTag({
                     wordBreak: "break-word",
                   }}
                 >
-                  {nameValue !== "" ? nameValue : `Continuos Read ${index + 1}`}
+                  {NameVariable !== "" ? NameVariable : `Continuos Read ${index + 1}`}
                 </div>
 
                 <div

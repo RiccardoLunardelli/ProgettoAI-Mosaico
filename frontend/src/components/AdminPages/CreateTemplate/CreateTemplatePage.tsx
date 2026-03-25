@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { CreateTemplateAPIHook } from "../../../customHooks/API/CreateTemplate/CreateTemplateAPI";
 import { SetInputSlice } from "../../../stores/slices/Base/inputSlice";
 
+const MonacoEditorTag = lazy(() => import("@monaco-editor/react"));
+
 const TabsTag = lazy(() =>
   import("rsuite").then((module) => ({ default: module.Tabs })),
 );
@@ -732,21 +734,36 @@ function CreateTemplatePageTag() {
           }}
         >
           <Suspense fallback={<></>}>
-            <PanelTag bordered header="Preview JSON">
-              <pre
+            <PanelTag
+              bordered
+              header="Preview JSON"
+              style={{
+                width: "100%",
+              }}
+            >
+              <div
                 style={{
-                  margin: 0,
-                  whiteSpace: "pre-wrap",
-                  wordBreak: "break-word",
-                  fontSize: "12px",
-                  lineHeight: "18px",
-                  color: "#111827",
-                  maxHeight: "75vh",
-                  overflow: "auto",
+                  width: "100%",
+                  height: "75vh",
+                  borderRadius: "8px",
+                  overflow: "hidden",
                 }}
               >
-                {JSON.stringify(finalTemplateJson, null, 2)}
-              </pre>
+                <MonacoEditorTag
+                  height="100%"
+                  width="100%"
+                  defaultLanguage="json"
+                  value={JSON.stringify(finalTemplateJson, null, 2)}
+                  options={{
+                    readOnly: true,
+                    minimap: { enabled: false },
+                    fontSize: 12,
+                    wordWrap: "on",
+                    scrollBeyondLastLine: false,
+                    automaticLayout: true,
+                  }}
+                />
+              </div>
             </PanelTag>
           </Suspense>
         </div>

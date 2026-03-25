@@ -576,7 +576,7 @@ function CommandsTabTag({
       >
         {commandsIds.map((singleCommandId, index) => {
           const nameValue =
-            inputSlice.value[`${inputPrefix}-Commands-${singleCommandId}-Name`] ??
+            inputSlice.value[`${inputPrefix}-Commands-${singleCommandId}-NameVariable`] ??
             "";
 
           const valueCommandValue =

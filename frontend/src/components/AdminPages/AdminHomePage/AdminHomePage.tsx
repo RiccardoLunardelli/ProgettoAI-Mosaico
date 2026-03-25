@@ -744,7 +744,7 @@ function AdminHomePageTag() {
                 className="material-symbols-outlined"
                 style={{ fontSize: "40px", color: "#3268c5", zIndex: 1 }}
               >
-                graph_1
+                note_add
               </span>
 
               <div

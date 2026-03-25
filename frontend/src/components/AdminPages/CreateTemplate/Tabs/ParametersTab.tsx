@@ -621,9 +621,10 @@ function ParametersTabTag({
         }}
       >
         {parametersIds.map((singleParameterId, index) => {
-          const labelValue =
+            
+            const NameVariable =
             inputSlice.value[
-              `${inputPrefix}-Parameters-${singleParameterId}-Label`
+              `${inputPrefix}-Parameters-${singleParameterId}-NameVariable`
             ] ?? "";
 
           const nameValue =
@@ -675,7 +676,7 @@ function ParametersTabTag({
                     wordBreak: "break-word",
                   }}
                 >
-                  {labelValue !== "" ? labelValue : `Parameter ${index + 1}`}
+                  {NameVariable !== "" ? NameVariable : `Parameter ${index + 1}`}
                 </div>
 
                 <div
