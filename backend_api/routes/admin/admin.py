@@ -226,7 +226,7 @@ def build_template(payload: CreateTemplateAdmin) -> dict:
     props_continuosreads, values_continuosreads = builder(payload.ContinuosReads, "continuosReads")
     props_parameters, values_parameters = builder(payload.Parameters, "parameters")
     props_commands, values_commands = builder(payload.Commands, "commands")
-    
+    #sdjsdhsjd
     template = {
         "ContinuosReads": {
             "Properties": props_continuosreads,
