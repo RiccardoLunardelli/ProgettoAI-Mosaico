@@ -1,7 +1,7 @@
 from backend_api.schemas.admin import CreateTemplateAdmin
+import types
 from typing import Any, get_args, get_origin, Union
 
-# Mappa: tipo Python → stringa per "Properties"
 FIELD_TYPE_MAP = {
     str: "TextReadOnly",
     int: "Numeric",
@@ -9,63 +9,52 @@ FIELD_TYPE_MAP = {
     float: "Numeric",
 }
 
-def _unwrap_type(annotation: Any) -> Any:
+def resolve_type(annotation: Any) -> str:
+    # estrae il tipo della variabile escludendo None (str | None --> str)
+
     origin = get_origin(annotation)
-    if origin is Union:
-        args = [a for a in get_args(annotation) if a is not type(None)]
-        if len(args) == 1:
-            return args[0]
-    return annotation
+    
+    # gestisce sia Optional[str] (typing.Union) che str | None (types.UnionType)
+    if origin is Union or isinstance(annotation, types.UnionType):
+        inner = [a for a in get_args(annotation) if a is not type(None)]
+        if inner:
+            annotation = inner[0]
+    
+    return FIELD_TYPE_MAP.get(annotation, "Object")
 
-def get_property_type(field_type: Any) -> str:
-    base = _unwrap_type(field_type)
-    return FIELD_TYPE_MAP.get(base, "Object")
+def build_properties(pydantic_instance) -> dict:
+    # Produce Properties. Legge i model_fields (campi della classe) dell'istanza e mappa ogni campo al suo tipo. 
 
-def build_single_item(item) -> dict:
-
-     # serializza senza campi null
-    return item.model_dump(exclude_unset=True, exclude_none=True)
-
-def build_properties(item) -> dict:
-    """Inferisce Properties dai tipi dei campi del modello."""
-
-    props = {}
-    for field_name, field_info in item.__class__.model_fields.items():
-        props[field_name] = get_property_type(field_info.annotation)
-    return props
+    return {
+        field_name: resolve_type(field_info.annotation) for field_name, field_info in pydantic_instance.__class__.model_fields.items()
+    }
 
 def builder_section(payload: CreateTemplateAdmin) -> dict:
-
     result = {}
 
-    payload_dict = payload.model_dump(exclude_unset=True)
-    for section_name, section_value in payload_dict.items():
-        # sezione oggetto singolo (TemplateInfo)
-        if isinstance(section_value, dict):
+    for section_name, section_value in payload:
+
+        # oggetto singolo (es. TemplateInfo)
+        if hasattr(section_value, "model_fields"):
             result[section_name] = {
-                "Properties": {},
-                "Values": section_value,
+                "Properties": build_properties(section_value),
+                "Values": section_value.model_dump(exclude_unset=True),
             }
             continue
 
-        # sezione lista vuota/non valida
+        # lista vuota o None
         if not isinstance(section_value, list) or not section_value:
             result[section_name] = {"Properties": {}, "Values": {}}
             continue
 
-        # Properties inferite dal primo elemento Pydantic reale
-        model_list = getattr(payload, section_name, [])
-        if model_list:
-            properties = build_properties(model_list[0])
-        else:
-            properties = {}
-
+        # lista di oggetti (ContinuosReads, Parameters)
+        properties = build_properties(section_value[0])
         values = {}
-        for item in model_list:
+        for item in section_value:
             key = getattr(item, "name", None) or getattr(item, "Name", None)
             if not key or not str(key).strip():
                 continue
-            values[str(key).strip()] = build_single_item(item)
+            values[str(key).strip()] = item.model_dump(exclude_unset=True, exclude_none=True)
 
         result[section_name] = {
             "Properties": properties,
