@@ -3,8 +3,7 @@ from src.intermediateLayer.postgres_repository import UsersRepository, ArtifactR
 from backend_api.schemas.admin import UpdateRoleAdmin, DropArtifactAdmin, DeleteUserAdmin, InsertClientAdmin, DeleteClientAdmin, UpsertStoreAdmin, UpdateUser, DeleteStoreAdmin, UpdateClientAdmin, \
     UpdateStoreAdmin, UpdateDeviceAdmin, InsertDeviceAdmin, DeleteDeviceAdmin, InsertArtifactAdmin, EditConfigAdmin, CreateTemplateAdmin
 
-from backend_api.routes.admin.builder_template import builder
-from backend_api.schemas.template_properties import ContinuosReadsProps, ParametersProps
+from backend_api.routes.admin.template_builder import DefaultTemplateBuilder
 from backend_api.utils.deps import require_admin
 from uuid import UUID
 import yaml
@@ -223,27 +222,7 @@ def _next_versioned_name(name: str) -> tuple[str, str]:
 def build_template(payload: CreateTemplateAdmin) -> dict:
     # costruisce template
 
-    props_continuosreads, values_continuosreads = builder(payload.ContinuosReads, "continuosReads")
-    props_parameters, values_parameters = builder(payload.Parameters, "parameters")
-    props_commands, values_commands = builder(payload.Commands, "commands")
-    #sdjsdhsjd
-    template = {
-        "ContinuosReads": {
-            "Properties": props_continuosreads,
-            "Values": values_continuosreads,
-        },
-        "Parameters": {
-            "Properties": props_parameters,
-            "Values": values_parameters,
-        },
-        "Commands": {
-            "Properties": props_commands,
-            "Values": values_commands,
-        },
-        "TemplateGuid": payload.TemplateInfo.Name
-    }
-
-    return template
+    return DefaultTemplateBuilder().build(payload)
 
 # ------ENDPOINT--------
 
@@ -349,15 +328,16 @@ def create_template(payload: CreateTemplateAdmin, user = Depends(require_admin))
     template_json = build_template(payload) # template
 
     # salvataggio template in artifacts
-    artifact_name = f"{payload.TemplateInfo.Name}.json"
+    artifact_name = f"{payload.TemplateInfo.TemplateName}.json"
     artifact_version = payload.TemplateInfo.Version
     artifact_id = artifactClass.upsert_artifact(artifact_type="template", name=artifact_name, version=artifact_version, content=template_json)
 
     # salvataggio metadata template in templates
     author = payload.TemplateInfo.Author
     category = payload.TemplateInfo.Category
-    name = payload.TemplateInfo.Name
+    name = payload.TemplateInfo.TemplateName
     product = payload.TemplateInfo.Product
     version = payload.TemplateInfo.Version
     content = payload.model_dump()
     templateClass.insert_templates_metadata(artifact_id=artifact_id, author=author, category=category, name=name, product=product, version=version, content=content)
+    return {"status": "ok", "artifact_id": artifact_id}

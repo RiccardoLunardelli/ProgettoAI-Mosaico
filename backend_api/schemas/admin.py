@@ -86,103 +86,159 @@ class EditConfigAdmin(BaseModel):
     file: str 
     
 #---CREATE TEMPLATE---
-#--INFO--
+
+#--INFO TEMPLATE---
 class TemplateInfoAdmin(BaseModel):
-    Author: str 
-    Category: str 
-    Name: str 
-    Product: str 
-    Version: str 
+    Author: str | None = None
+    Category: str | None = None
+    TemplateName: str
+    Product: str | None = None
+    Version: str | None = None
 
-#--MODBUS--
-class ModbusInfo(BaseModel):
-    Address: int 
-    GroupName: str 
-    RegisterType: str
+#----SEZIONI DI BASE-----
+class AspectAdmin(BaseModel):
+    Decimals: int | None = None
+    Gain: int | None = None
+    LabelValues: str | None = None
+    Mask: int | None = None
+    Measurement: str | None = None
 
-#--CONTINUOS READS---
-class ContinuosReadsSection(BaseModel):
-    NameVariable: str 
-    Enable: bool 
-    MultiLanguageDescription: str 
-    TroubleSettings: str 
-    Name: str 
-    Alias : str | None = None
-    Description: str 
-    Type: int 
-    Measurement: str 
-    ShowIndexPage: bool
-    HTMLViewEnable: int 
-    HTMLViewCategory: str
-    HTMLViewIndexPosition: int 
-    HTMLMaskValue: str
-    Modbus: ModbusInfo
+class CompatibilityAdmin(BaseModel):
+    Alias: str | None = None 
 
-#---PARAMETERS-----
-class ParametersSection(BaseModel):
-    NameVariable: str 
-    Label: str
-    Category: str
-    Default: str 
-    Visibility: str 
-    AccessLevel: int 
-    AccessWriteLevel: int 
-    Enable: bool 
-    MultiLanguageDescription: str 
-    TroubleSettings: str 
-    Name: str 
-    Alias : str | None = None
-    Description: str 
-    Type: int 
-    Measurement: str 
-    ShowIndexPage: bool
-    HTMLViewEnable: int 
-    HTMLViewCategory: str
-    HTMLViewIndexPosition: int 
-    HTMLMaskValue: str
-    Modbus: ModbusInfo
+class ModbusAdmin(BaseModel):
+    Address: int | None = None 
+    GroupName: str | None = None 
+    RegisterType: str | None = None 
 
-#---COMMANDS----
-class CommandsSection(BaseModel):
-    NameVariable: str 
-    ValueCommand: str 
-    AccessWriteLevel: int 
-    Enable: bool 
-    MultiLanguageDescription: str 
-    TroubleSettings: str 
-    Name: str 
-    Alias : str | None = None
-    Description: str
-    Type: int 
-    Measurement: str
-    ShowIndexPage: bool
-    HTMLViewEnable: int 
-    HTMLViewCategory: str
-    HTMLViewIndexPosition: int 
-    HTMLMaskValue: str
-    Modbus: ModbusInfo
+class ReportAdmin(BaseModel):
+    Column: str | None = None 
 
-#--ALARMS---
-class AlarmsSection(BaseModel):
-    pass
+class SystemAdmin(BaseModel):
+    IsPersistent: bool | None = None 
 
-#--WARNINGS---
-class WarningsSection(BaseModel):
-    pass 
+class VariableAdmin(BaseModel):
+    Enable: bool | None = None 
+    MultiLanguageDescription: Dict[str, str] | None = None
+    Position: float | None = None
+    SwapByteToRead: bool | None = None
+    SwapByteToWrite: bool | None = None
+    Type: int | None = None
 
-#--VIRTUALVARIABLES---
-class VirtualVariablesSection(BaseModel):
-    pass
+class DataLoggersAdmin(BaseModel):
+    DataLoggerEnable: bool | None = None
 
-#---DATALOGGERPEN-----
-class DataLoggerPenSection(BaseModel):
-    pass
+#---CONTINUOS READS------
+class ContinuosReadsAdmin(BaseModel):
+    name: str
+    Description: str | None = None
+    Aspect: AspectAdmin | None = None
+    Compatibility: CompatibilityAdmin | None = None
+    Modbus: ModbusAdmin | None = None
+    Report: ReportAdmin | None = None
+    System: SystemAdmin | None = None
+    Variable: VariableAdmin | None = None
+    DataLoggers: DataLoggersAdmin | None = None
 
+#--PARAMETERS-----
+class ParameterSect(BaseModel):
+    AccessLevel: int | None = None
+    AccessWriteLevel: int | None = None
+    Category: Dict[str, str] | None = None
+    Default: str | None = None
+    Label: str | None = None
+    MaxValue: str | None = None
+    MinValue: str | None = None
+    Visibility: str | None = None
 
-#--CREAZIONE TEMPLATE---
+class ParametersAdmin(BaseModel):
+    name: str
+    Description: str | None = None
+    Aspect: AspectAdmin | None = None
+    Compatibility: CompatibilityAdmin | None = None
+    Modbus: ModbusAdmin | None = None
+    Parameter: ParameterSect | None = None
+    Report: ReportAdmin | None = None
+    System: SystemAdmin | None = None
+    Variable: VariableAdmin | None = None
+    DataLoggers: DataLoggersAdmin | None = None
+
+#--COMMANDS---
+class CommandsSect(BaseModel):
+    ValueCommand: str | None = None
+    WriteAccessLevel: int | None = None
+
+class CommandsAdmin(BaseModel):
+    name: str
+    Description: str | None = None
+    Aspect: AspectAdmin | None = None
+    Command: CommandsSect | None = None
+    Compatibility: CompatibilityAdmin | None = None
+    Modbus: ModbusAdmin | None = None
+    Report: ReportAdmin | None = None
+    System: SystemAdmin | None = None
+    Variable: VariableAdmin | None = None
+    DataLoggers: DataLoggersAdmin | None = None
+
+#--ALARMS----
+class MessageSect(BaseModel):
+    priority: int | None = None
+
+class MessageCodeSect(BaseModel):
+    Code: str | None = None
+
+class AlarmsAdmin(BaseModel):
+    name: str
+    Description: str | None = None
+    Aspect: AspectAdmin | None = None
+    Compatibility: CompatibilityAdmin | None = None
+    Message: MessageSect | None = None
+    Report: ReportAdmin | None = None
+    System: SystemAdmin | None = None
+    Variable: VariableAdmin | None = None
+    MessageCode: MessageCodeSect | None = None
+    DataLoggers: DataLoggersAdmin | None = None
+
+#--WARNINGS----
+class WarningsAdmin(BaseModel):
+    name: str
+    Description: str | None = None
+    Aspect: AspectAdmin | None = None
+    Compatibility: CompatibilityAdmin | None = None
+    Message: MessageSect | None = None
+    Report: ReportAdmin | None = None
+    System: SystemAdmin | None = None
+    Variable: VariableAdmin | None = None
+    MessageCode: MessageCodeSect | None = None
+    DataLoggers: DataLoggersAdmin | None = None
+
+#---VIRTUAL VARIABLES
+class VariableVirtualVariables(BaseModel):
+    AlwaysValidValue: bool | None = None
+    Enable: bool | None = None 
+    MultiLanguageDescription: Dict[str, str] | None = None
+    Position: float | None = None
+    SwapByteToRead: bool | None = None
+    SwapByteToWrite: bool | None = None
+    Type: int | None = None
+
+class VirtualVariablesAdmin(BaseModel):
+    name: str
+    Description: str | None = None
+    Aspect: AspectAdmin | None = None
+    Compatibility: CompatibilityAdmin | None = None
+    Report: ReportAdmin | None = None
+    System: SystemAdmin | None = None
+    Variable: VariableAdmin | None = None
+    MessageCode: MessageCodeSect | None = None
+    DataLoggers: DataLoggersAdmin | None = None
+
+#----CREAZIONE TEMPLATE------
 class CreateTemplateAdmin(BaseModel):
-    TemplateInfo: TemplateInfoAdmin
-    ContinuosReads: List[ContinuosReadsSection]
-    Parameters: List[ParametersSection]
-    Commands: List[CommandsSection]
-    
+    TemplateInfo: TemplateInfoAdmin 
+    ContinuosReads: List[ContinuosReadsAdmin] = []
+    Parameters: List[ParametersAdmin] = []
+    Commands: List[CommandsAdmin] = []
+    Alarms: List[AlarmsAdmin] = []
+    Warnings: List[WarningsAdmin] = []
+    VirtualVariables: List[VirtualVariablesAdmin] = []

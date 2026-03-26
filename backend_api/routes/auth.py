@@ -37,7 +37,8 @@ def signup(payload: SignupRequest):
 @router.post("/login")
 def login(payload: LoginRequest):
     try:
-        user = userClass.verify_user_password(payload.email, payload.password)
+        email = payload.email.lower()
+        user = userClass.verify_user_password(email, payload.password)
         if not user:
             raise HTTPException(status_code=401, detail="invalid credentials")
 
