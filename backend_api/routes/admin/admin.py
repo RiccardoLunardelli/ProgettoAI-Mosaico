@@ -239,7 +239,8 @@ def build_template(payload: CreateTemplateAdmin) -> dict:
         "Commands": {
             "Properties": props_commands,
             "Values": values_commands,
-        }
+        },
+        "TemplateGuid": payload.TemplateInfo.Name
     }
 
     return template

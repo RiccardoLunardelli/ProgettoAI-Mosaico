@@ -236,3 +236,19 @@ class CommandsProps:
                 "HTMLViewIndexPosition": HTMLViewIndexPosition,
                 "HTMLMaskValue": HTMLMaskValue
             }
+
+class AlarmsProps:
+
+    pass
+
+class WarningsProps: 
+
+    pass 
+
+class VirtualVariablesProps:
+
+    pass 
+
+class DataloggerPenProps:
+
+    pass

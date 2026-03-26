@@ -178,9 +178,6 @@ class VirtualVariablesSection(BaseModel):
 class DataLoggerPenSection(BaseModel):
     pass
 
-#---TEMPLATEGUID----
-class TemplateGuidSection(BaseModel):
-    pass
 
 #--CREAZIONE TEMPLATE---
 class CreateTemplateAdmin(BaseModel):

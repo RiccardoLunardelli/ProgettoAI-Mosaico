@@ -33,7 +33,7 @@ interface ComponentStateInterface {
   activeTab: string;
   continuosReadsIds: number[];
   parametersIds: number[];
-  commandsIds: number[]
+  commandsIds: number[];
 }
 
 interface ContinuosReadsTabTagPropsInterface {
@@ -83,8 +83,24 @@ const registerTypeOptions = [
   { label: "Coils", value: "Coils" },
   { label: "Discrete", value: "Discrete" },
   { label: "Registers", value: "Registers" },
-  { label: "Input", value: "Inputs" },
+  { label: "Inputs", value: "Inputs" },
   { label: "Nothing", value: "Nothing" },
+];
+
+const typeOptions = [
+  { label: "Boolean", value: 0 },
+  { label: "SByte", value: 1 },
+  { label: "Byte", value: 2 },
+  { label: "Int16", value: 3 },
+  { label: "UInt16", value: 4 },
+  { label: "Int32", value: 5 },
+  { label: "UInt32", value: 6 },
+  { label: "Int64", value: 7 },
+  { label: "UInt64", value: 8 },
+  { label: "Single", value: 9 },
+  { label: "Double", value: 10 },
+  { label: "DateTime", value: 11 },
+  { label: "String", value: 12 },
 ];
 
 function GetDefaultModalFormState(): ModalFormStateInterface {
@@ -138,6 +154,15 @@ function ContinuosReadsTabTag({
         id: inputId,
         value: value,
       }),
+    );
+  }
+
+  function GetTypeLabel(typeValue: number | string) {
+    const parsedType = Number(typeValue ?? 0);
+
+    return (
+      typeOptions.find((singleTypeOption) => singleTypeOption.value === parsedType)
+        ?.label ?? String(parsedType)
     );
   }
 
@@ -492,21 +517,26 @@ function ContinuosReadsTabTag({
     marginBottom: "8px",
   };
 
-  const cardLabelStyle = {
-    color: "#374151",
+  const tableHeaderStyle = {
+    textAlign: "left" as const,
+    padding: "12px 14px",
+    fontSize: "13px",
     fontWeight: 600,
+    color: "#374151",
+    backgroundColor: "#f9fafb",
+    borderBottom: "1px solid #e5e7eb",
+    whiteSpace: "nowrap" as const,
   };
 
-  const cardStyle = {
-    borderRadius: "12px",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.04)",
-    padding: "16px",
-    cursor: "pointer",
-    transition: "0.2s",
-    height: "150px",
+  const tableCellStyle = {
+    padding: "12px 14px",
+    fontSize: "13px",
+    color: "#4b5563",
+    borderBottom: "1px solid #eef2f7",
+    verticalAlign: "middle" as const,
   };
 
-  const trashButtonStyle = {
+  const actionButtonStyle = {
     width: "32px",
     height: "32px",
     borderRadius: "8px",
@@ -550,143 +580,181 @@ function ContinuosReadsTabTag({
 
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-          gap: "16px",
-          overflow: "auto",
-          height: "60vh",
+          border: "1px solid #e5e7eb",
+          borderRadius: "12px",
+          overflow: "hidden",
+          backgroundColor: "#ffffff",
         }}
       >
-        {continuosReadsIds.map((singleReadId, index) => {
-            
-            const NameVariable =
-            inputSlice.value[
-              `${inputPrefix}-ContinuosReads-${singleReadId}-NameVariable`
-            ] ?? "";
+        <div
+          style={{
+            overflow: "auto",
+            height: "60vh",
+          }}
+        >
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              minWidth: "1100px",
+            }}
+          >
+            <thead>
+              <tr>
+                <th style={tableHeaderStyle}>NameVariable</th>
+                <th style={tableHeaderStyle}>Description</th>
+                <th style={tableHeaderStyle}>Type</th>
+                <th style={tableHeaderStyle}>Measurement</th>
+                <th style={tableHeaderStyle}>Alias</th>
+                <th style={tableHeaderStyle}>Enabled</th>
+                <th style={tableHeaderStyle}>Azioni</th>
+              </tr>
+            </thead>
 
-          const descriptionValue =
-            inputSlice.value[
-              `${inputPrefix}-ContinuosReads-${singleReadId}-Description`
-            ] ?? "";
-
-          const typeValue =
-            inputSlice.value[
-              `${inputPrefix}-ContinuosReads-${singleReadId}-Type`
-            ] ?? "0";
-
-          const enableValue =
-            inputSlice.value[
-              `${inputPrefix}-ContinuosReads-${singleReadId}-Enable`
-            ] === "true";
-
-          const aliasValue =
-            inputSlice.value[
-              `${inputPrefix}-ContinuosReads-${singleReadId}-Alias`
-            ] ?? "";
-
-          const measurementValue =
-            inputSlice.value[
-              `${inputPrefix}-ContinuosReads-${singleReadId}-Measurement`
-            ] ?? "";
-
-          return (
-            <div
-              key={singleReadId}
-              onClick={() => HandleOpenEditModal(singleReadId)}
-              style={cardStyle}
-              className="HoverTransform"
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                  gap: "12px",
-                  marginBottom: "12px",
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: "15px",
-                    fontWeight: 600,
-                    color: "#111827",
-                    wordBreak: "break-word",
-                  }}
-                >
-                  {NameVariable !== "" ? NameVariable : `Continuos Read ${index + 1}`}
-                </div>
-
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    flexShrink: 0,
-                  }}
-                >
-                  <div
+            <tbody>
+              {continuosReadsIds.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={7}
                     style={{
-                      fontSize: "11px",
-                      fontWeight: 600,
-                      padding: "5px",
-                      borderRadius: "999px",
-                      backgroundColor: enableValue ? "#dcfce7" : "#fee2e2",
-                      color: enableValue ? "#166534" : "#991b1b",
-                      whiteSpace: "nowrap",
+                      ...tableCellStyle,
+                      textAlign: "center",
+                      color: "#6b7280",
+                      padding: "24px",
                     }}
                   >
-                    {enableValue ? "Enabled" : "Disabled"}
-                  </div>
+                    Nessun Continuos Read presente
+                  </td>
+                </tr>
+              ) : (
+                continuosReadsIds.map((singleReadId, index) => {
+                  const nameVariableValue =
+                    inputSlice.value[
+                      `${inputPrefix}-ContinuosReads-${singleReadId}-NameVariable`
+                    ] ?? "";
 
-                  <div
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      HandleRemoveContinuosRead(singleReadId);
-                    }}
-                    style={trashButtonStyle}
-                    className="HoverTransform"
-                  >
-                    <span
-                      className="material-symbols-outlined"
-                      style={{ color: "red", fontSize: "18px" }}
+                  const descriptionValue =
+                    inputSlice.value[
+                      `${inputPrefix}-ContinuosReads-${singleReadId}-Description`
+                    ] ?? "";
+
+                  const typeValue =
+                    inputSlice.value[
+                      `${inputPrefix}-ContinuosReads-${singleReadId}-Type`
+                    ] ?? "0";
+
+                  const measurementValue =
+                    inputSlice.value[
+                      `${inputPrefix}-ContinuosReads-${singleReadId}-Measurement`
+                    ] ?? "";
+
+                  const aliasValue =
+                    inputSlice.value[
+                      `${inputPrefix}-ContinuosReads-${singleReadId}-Alias`
+                    ] ?? "";
+
+                  const enableValue =
+                    inputSlice.value[
+                      `${inputPrefix}-ContinuosReads-${singleReadId}-Enable`
+                    ] === "true";
+
+                  return (
+                    <tr
+                      key={singleReadId}
+                      onClick={() => HandleOpenEditModal(singleReadId)}
+                      style={{
+                        cursor: "pointer",
+                        transition: "0.2s",
+                      }}
+                      className="HoverTransform"
                     >
-                      delete
-                    </span>
-                  </div>
-                </div>
-              </div>
+                      <td style={tableCellStyle}>
+                        {nameVariableValue !== ""
+                          ? nameVariableValue
+                          : `Continuos Read ${index + 1}`}
+                      </td>
 
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "8px",
-                  fontSize: "13px",
-                  color: "#6b7280",
-                }}
-              >
-                <div>
-                  <span style={cardLabelStyle}>Description:</span>{" "}
-                  {descriptionValue !== "" ? descriptionValue : "-"}
-                </div>
+                      <td style={tableCellStyle}>
+                        {descriptionValue !== "" ? descriptionValue : "-"}
+                      </td>
 
-                <div>
-                  <span style={cardLabelStyle}>Type:</span> {typeValue}
-                </div>
+                      <td style={tableCellStyle}>{GetTypeLabel(typeValue)}</td>
 
-                <div>
-                  <span style={cardLabelStyle}>Measurement:</span>{" "}
-                  {measurementValue !== "" ? measurementValue : "-"}
-                </div>
+                      <td style={tableCellStyle}>
+                        {measurementValue !== "" ? measurementValue : "-"}
+                      </td>
 
-                <div>
-                  <span style={cardLabelStyle}>Alias:</span>{" "}
-                  {aliasValue !== "" ? aliasValue : "-"}
-                </div>
-              </div>
-            </div>
-          );
-        })}
+                      <td style={tableCellStyle}>
+                        {aliasValue !== "" ? aliasValue : "-"}
+                      </td>
+
+                      <td style={tableCellStyle}>
+                        <div
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: "11px",
+                            fontWeight: 600,
+                            padding: "5px 10px",
+                            borderRadius: "999px",
+                            backgroundColor: enableValue ? "#dcfce7" : "#fee2e2",
+                            color: enableValue ? "#166534" : "#991b1b",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {enableValue ? "Enabled" : "Disabled"}
+                        </div>
+                      </td>
+
+                      <td style={tableCellStyle}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px",
+                          }}
+                        >
+                          <div
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              HandleOpenEditModal(singleReadId);
+                            }}
+                            style={actionButtonStyle}
+                            className="HoverTransform"
+                          >
+                            <span
+                              className="material-symbols-outlined"
+                              style={{ color: "#2563eb", fontSize: "18px" }}
+                            >
+                              edit
+                            </span>
+                          </div>
+
+                          <div
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              HandleRemoveContinuosRead(singleReadId);
+                            }}
+                            style={actionButtonStyle}
+                            className="HoverTransform"
+                          >
+                            <span
+                              className="material-symbols-outlined"
+                              style={{ color: "red", fontSize: "18px" }}
+                            >
+                              delete
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <Suspense fallback={<></>}>
@@ -789,7 +857,8 @@ function ContinuosReadsTabTag({
 
                   <div>
                     <div style={labelStyle}>Type</div>
-                    <InputNumberTag
+                    <SelectPickerTag
+                      data={typeOptions}
                       value={modalFormState.Type}
                       onChange={(value) =>
                         setModalFormState((previousStateValue) => {
@@ -799,6 +868,8 @@ function ContinuosReadsTabTag({
                           };
                         })
                       }
+                      searchable={false}
+                      cleanable={false}
                       style={{ width: "100%" }}
                     />
                   </div>
