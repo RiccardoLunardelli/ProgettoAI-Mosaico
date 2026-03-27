@@ -213,3 +213,18 @@ export function getVariableTypeLabel(typeValue: number) {
 
   return labels[typeValue] ?? String(typeValue);
 }
+
+export function getDefaultConceptIdBySection(sectionKey: string) {
+  const normalizedKey = String(sectionKey).toLowerCase();
+
+  const mapping: Record<string, string> = {
+    continuosreads: "measurement",
+    parameters: "parameter",
+    commands: "command",
+    alarms: "alarm",
+    warnings: "warning",
+    virtualvariables: "virtual_variable",
+  };
+
+  return mapping[normalizedKey] ?? "measurement";
+}

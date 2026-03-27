@@ -34,6 +34,7 @@ export function renderSchemaField({
   removeArrayItem,
   openAddArrayItemModal,
   openEditArrayItemModal,
+  openAddConceptModal,
   root = false,
 }: RenderSchemaFieldParams): React.ReactNode {
   if (!schema) return null;
@@ -79,6 +80,7 @@ export function renderSchemaField({
             removeArrayItem={removeArrayItem}
             openAddArrayItemModal={openAddArrayItemModal}
             openEditArrayItemModal={openEditArrayItemModal}
+            openAddConceptModal={openAddConceptModal}
           />
         </Panel>
       );
@@ -94,6 +96,7 @@ export function renderSchemaField({
         removeArrayItem={removeArrayItem}
         openAddArrayItemModal={openAddArrayItemModal}
         openEditArrayItemModal={openEditArrayItemModal}
+        openAddConceptModal={openAddConceptModal}
       />
     );
   }
@@ -177,7 +180,7 @@ export function renderSchemaField({
               <Cell dataKey="__typeLabel" />
             </Column>
 
-            <Column width={170} align="center" fixed="right">
+            <Column width={260} align="center" fixed="right">
               <HeaderCell>Azioni</HeaderCell>
               <Cell>
                 {(rowData: any) => (
@@ -188,6 +191,8 @@ export function renderSchemaField({
                       justifyContent: "center",
                       gap: "8px",
                       height: "100%",
+                      flexWrap: "wrap",
+                      padding: "4px 0",
                     }}
                   >
                     <Button
@@ -204,6 +209,20 @@ export function renderSchemaField({
                       }
                     >
                       Modifica
+                    </Button>
+
+                    <Button
+                      appearance="ghost"
+                      size="xs"
+                      onClick={() =>
+                        openAddConceptModal(
+                          fieldKey,
+                          rowData.__rowIndex,
+                          arrayValue[rowData.__rowIndex],
+                        )
+                      }
+                    >
+                      Add concept
                     </Button>
 
                     <Button
@@ -379,6 +398,7 @@ function ObjectContent({
   removeArrayItem,
   openAddArrayItemModal,
   openEditArrayItemModal,
+  openAddConceptModal
 }: ObjectContentProps) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
@@ -416,6 +436,7 @@ function ObjectContent({
                     removeArrayItem,
                     openAddArrayItemModal,
                     openEditArrayItemModal,
+                    openAddConceptModal
                   })}
                 </div>
               ))}
@@ -443,6 +464,7 @@ function ObjectContent({
                 removeArrayItem,
                 openAddArrayItemModal,
                 openEditArrayItemModal,
+                openAddConceptModal
               })}
             </div>
           );
@@ -488,6 +510,7 @@ function ObjectContent({
                     removeArrayItem,
                     openAddArrayItemModal,
                     openEditArrayItemModal,
+                    openAddConceptModal
                   })}
                 </div>
               ))}

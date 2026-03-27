@@ -61,6 +61,11 @@ export interface RenderSchemaFieldParams {
     currentValue: any,
     fieldKey?: string,
   ) => void;
+  openAddConceptModal: (
+    sectionKey: string,
+    rowIndex: number,
+    rowData: any,
+  ) => void;
   root?: boolean;
 }
 
@@ -83,4 +88,17 @@ export interface ObjectContentProps {
     currentValue: any,
     fieldKey?: string,
   ) => void;
+  openAddConceptModal: (
+    sectionKey: string,
+    rowIndex: number,
+    rowData: any,
+  ) => void;
+}
+
+export interface ConceptModalStateInterface {
+  open: boolean;
+  sectionKey: string;
+  rowIndex: number | null;
+  rowData: any;
+  initialValue: Record<string, any>;
 }

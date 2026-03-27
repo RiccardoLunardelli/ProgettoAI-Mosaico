@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button, Panel, Tabs } from "rsuite";
 import renderSchemaField from "./DynamicTemplateFieldRenderer";
 import DynamicTemplateArrayModal from "./DynamicTemplateArrayModal";
@@ -7,14 +7,17 @@ import {
   buildInitialValueFromRootSchema,
   buildInitialValueFromSchema,
   deepClone,
+  getDefaultConceptIdBySection,
   getNestedValue,
   updateNestedValue,
 } from "./dynamicTemplateHelpers";
 import type {
   ArrayModalStateInterface,
+  ConceptModalStateInterface,
   DynamicTemplateFormTagProps,
   SchemaProperty,
 } from "./dynamicTemplateTypes";
+import DynamicTemplateAddConceptModal from "./DynamicTemplateAddConceptModal";
 
 function DynamicTemplateFormTag({
   schema,
@@ -35,7 +38,14 @@ function DynamicTemplateFormTag({
       editIndex: null,
       initialValue: null,
     });
-
+  const [conceptModalState, setConceptModalState] =
+    useState<ConceptModalStateInterface>({
+      open: false,
+      sectionKey: "",
+      rowIndex: null,
+      rowData: null,
+      initialValue: {},
+    });
 
   useEffect(() => {
     if (value) {
@@ -145,6 +155,50 @@ function DynamicTemplateFormTag({
 
   const handleSave = () => {
     onSave?.(formValue);
+  };
+
+  const openAddConceptModal = (
+    sectionKey: string,
+    rowIndex: number,
+    rowData: any,
+  ) => {
+    const defaultConceptId = getDefaultConceptIdBySection(sectionKey);
+
+    setConceptModalState({
+      open: true,
+      sectionKey,
+      rowIndex,
+      rowData,
+      initialValue: {
+        category_id: defaultConceptId,
+        concept_id: "",
+        semantic_category: "",
+        label_it: rowData?.name ?? rowData?.Label ?? "",
+        label_en: rowData?.name ?? rowData?.Label ?? "",
+        description: rowData?.Description ?? "",
+      },
+    });
+  };
+
+  const closeConceptModal = () => {
+    setConceptModalState({
+      open: false,
+      sectionKey: "",
+      rowIndex: null,
+      rowData: null,
+      initialValue: {},
+    });
+  };
+
+  const saveConceptModal = (value: {
+    formValue: Record<string, any>;
+    patchJson: Record<string, any>;
+  }) => {
+    console.log("FORM VALUE", value.formValue);
+    console.log("PATCH JSON", value.patchJson);
+
+    // qui poi fai la chiamata API con l'id template che recuperi altrove
+    closeConceptModal();
   };
 
   return (
@@ -257,6 +311,7 @@ function DynamicTemplateFormTag({
                       removeArrayItem,
                       openAddArrayItemModal,
                       openEditArrayItemModal,
+                      openAddConceptModal,
                       root: true,
                     })}
                   </div>
@@ -291,6 +346,11 @@ function DynamicTemplateFormTag({
         arrayModalState={arrayModalState}
         closeArrayModal={closeArrayModal}
         saveArrayModal={saveArrayModal}
+      />
+      <DynamicTemplateAddConceptModal
+        conceptModalState={conceptModalState}
+        closeConceptModal={closeConceptModal}
+        saveConceptModal={saveConceptModal}
       />
     </>
   );

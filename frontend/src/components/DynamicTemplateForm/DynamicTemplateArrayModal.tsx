@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Modal } from "rsuite";
 import renderSchemaField from "./DynamicTemplateFieldRenderer";
 import { updateNestedValue } from "./dynamicTemplateHelpers";
@@ -57,6 +57,7 @@ function DynamicTemplateArrayModal({
             removeArrayItem: () => undefined,
             openAddArrayItemModal: () => undefined,
             openEditArrayItemModal: () => undefined,
+            openAddConceptModal: () => undefined,
             root: true,
           })}
         </div>
