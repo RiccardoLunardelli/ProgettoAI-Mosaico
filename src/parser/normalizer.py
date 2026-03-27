@@ -196,14 +196,14 @@ def normalize_template(raw_template: Dict[str, Any], schema: Dict[str, Any]) -> 
             if not isinstance(data, dict):
                 data = {}
 
-            extract_fields = section.get("extract_fields", [])
+            #extract_fields = section.get("extract_fields", [])
             normalizations = section.get("normalizations", {})
 
             for map_key, entry in data.items():
                 if not isinstance(entry, dict):
                     continue
 
-                extracted = {k: entry[k] for k in extract_fields if k in entry}
+                extracted = extracted = extract_entry_fields(entry, section, map_key)
                 extracted = apply_normalizations(extracted, normalizations)
 
                 if role == "core":
@@ -230,6 +230,38 @@ def normalization(template_path: str, schema_tipo_path: str) -> Dict[str, Any]:
 
     return normalized_payload
 
+def get_nested_value(data: Any, dotted_path: str) -> Any:
+    # es: "Variable.Type" -> data["Variable"]["Type"]
+
+    cur = data
+    for part in dotted_path.split("."):
+        if not isinstance(cur, dict) or part not in cur:
+            return None
+        cur = cur[part]
+    return cur
+
+def extract_entry_fields(entry: Dict[str, Any], section: Dict[str, Any], map_key: str) -> Dict[str, Any]:
+    # compatibilità:
+    # - v0.1 usa extract_fields top-level
+    # - v0.2 usa extract_map target->nested_path
+    extracted: Dict[str, Any] = {}
+
+    extract_map = section.get("extract_map")
+    if isinstance(extract_map, dict) and extract_map:
+        for target_key, source_path in extract_map.items():
+            extracted[target_key] = get_nested_value(entry, source_path)
+    else:
+        for k in section.get("extract_fields", []):
+            if k in entry:
+                extracted[k] = entry[k]
+
+    # fallback utile: Name dal map_key se non presente
+    if "Name" not in extracted and map_key:
+        extracted["Name"] = map_key
+
+    return extracted
+
+'''
 def main() -> None:
     # Entry point --> carica input, normalizza e screive output
 
@@ -254,3 +286,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+'''

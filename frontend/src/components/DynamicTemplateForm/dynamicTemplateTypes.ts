@@ -5,6 +5,8 @@ export interface SchemaProperty {
   required?: string[];
   enum?: (string | number)[];
   additionalProperties?: SchemaProperty;
+  minimum?: number;
+  maximum?: number;
 
   "ui:group"?: string;
   "ui:order"?: number;

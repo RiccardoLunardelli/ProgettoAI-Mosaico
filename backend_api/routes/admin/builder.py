@@ -25,9 +25,7 @@ def resolve_type(annotation: Any) -> str:
 def build_properties(pydantic_instance) -> dict:
     # Produce Properties. Legge i model_fields (campi della classe) dell'istanza e mappa ogni campo al suo tipo. 
 
-    return {
-        field_name: resolve_type(field_info.annotation) for field_name, field_info in pydantic_instance.__class__.model_fields.items()
-    }
+    return {field_name: resolve_type(field_info.annotation) for field_name, field_info in pydantic_instance.__class__.model_fields.items()}
 
 def builder_section(payload: CreateTemplateAdmin) -> dict:
     result = {}

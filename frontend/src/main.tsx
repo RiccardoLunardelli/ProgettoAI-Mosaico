@@ -35,6 +35,7 @@ import { storeListSliceReducer } from "./stores/slices/Base/storeListSlice";
 import { storeDevicesListSliceReducer } from "./stores/slices/Base/storeDevicesListSlice";
 import { artifactListSliceReducer } from "./stores/slices/Base/artifactListSlice";
 import { configListSliceReducer } from "./stores/slices/Base/configListSlice";
+import { createTemplateSliceReducer } from "./stores/slices/Base/createTemplateSlice";
 
 const GraphManagerTag = lazy(
   () => import("./components/AdminPages/Graph/GraphPageManager"),
@@ -340,6 +341,7 @@ function SecureRoot(): JSX.Element {
       storeDevicesListSlice: storeDevicesListSliceReducer,
       artifactListSlice: artifactListSliceReducer,
       configListSlice: configListSliceReducer,
+      createTemplateSlice: createTemplateSliceReducer
     },
     devTools:
       (import.meta.env.VITE_DEBUG_DEVTOOLS?.toString()?.toLowerCase() ?? "") ==

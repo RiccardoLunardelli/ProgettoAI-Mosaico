@@ -36,6 +36,7 @@ function DynamicTemplateFormTag({
       initialValue: null,
     });
 
+
   useEffect(() => {
     if (value) {
       setFormValue(value);
@@ -218,7 +219,7 @@ function DynamicTemplateFormTag({
                   gap: "12px",
                 }}
               >
-                <span style={{fontWeight: 600}}>Create Template</span>
+                <span style={{ fontWeight: 600 }}>Create Template</span>
 
                 <Button
                   appearance="primary"

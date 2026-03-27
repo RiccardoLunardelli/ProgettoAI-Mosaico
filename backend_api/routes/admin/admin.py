@@ -12,6 +12,7 @@ import re
 import json
 from scripts.report.report import build_run_report
 from scripts.summarize_diff.diff import summarize_config_diff
+from pathlib import Path
 
 router = APIRouter(prefix="/api", tags=["admin"], dependencies=[Depends(require_admin)])
 
@@ -341,3 +342,10 @@ def create_template(payload: CreateTemplateAdmin, user = Depends(require_admin))
     content = payload.model_dump()
     templateClass.insert_templates_metadata(artifact_id=artifact_id, author=author, category=category, name=name, product=product, version=version, content=content)
     return {"status": "ok", "artifact_id": artifact_id}
+
+#---SCHEMA TEMPLATE-----
+@router.get("/get_schema_template")
+def get_schema_template(user = Depends(require_admin)):
+    path_schema = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/schema_template.json")
+    with open(path_schema, "r", encoding="utf-8") as f:
+        return json.load(f)

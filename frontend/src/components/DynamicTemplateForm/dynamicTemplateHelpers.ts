@@ -87,7 +87,7 @@ export function buildInitialValueFromSchema(schema?: SchemaProperty): any {
     return "";
   }
 
-  if (schema.type === "number") {
+  if (schema.type === "number" || schema.type === "integer") {
     return 0;
   }
 
@@ -170,6 +170,25 @@ export function getArrayItemTypeLabel(item: any) {
 
   if (item?.Modbus?.RegisterType) {
     return String(item.Modbus.RegisterType);
+  }
+
+  return "-";
+}
+
+export function getArrayItemAddress(item: any) {
+  if (item?.Modbus?.Address !== undefined && item?.Modbus?.Address !== null) {
+    return String(item.Modbus.Address);
+  }
+
+  if (item?.Address !== undefined && item?.Address !== null) {
+    return String(item.Address);
+  }
+
+  if (
+    item?.Variable?.Address !== undefined &&
+    item?.Variable?.Address !== null
+  ) {
+    return String(item.Variable.Address);
   }
 
   return "-";

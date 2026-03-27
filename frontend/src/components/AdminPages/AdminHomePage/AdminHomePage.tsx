@@ -5,6 +5,8 @@ import { SetCurrentPathSlice } from "../../../stores/slices/Base/currentPath";
 import { useEffect } from "react";
 import { GetClientListAPIHook } from "../../../customHooks/API/Client/ClientAPI";
 import { GetStoreListAPIHook } from "../../../customHooks/API/Store/StoreAPI";
+import { toast } from "react-toastify";
+import { GetSchemaTemplateAPIHook } from "../../../customHooks/API/CreateTemplate/CreateTemplateAPI";
 
 function AdminHomePageTag() {
   const navigate = useNavigate();
@@ -12,6 +14,7 @@ function AdminHomePageTag() {
 
   const [GetStoreListAPI] = GetStoreListAPIHook();
   const [GetClientListAPI] = GetClientListAPIHook();
+  const [GetSchemaTemplateAPI] = GetSchemaTemplateAPIHook();
 
   const userInfoSlice: { value: UserInfoInterface } = useSelector(
     (state: { userInfoSlice: { value: UserInfoInterface } }) =>
@@ -713,9 +716,19 @@ function AdminHomePageTag() {
             flexDirection: "column",
           }}
           className="HoverTransform"
-          onClick={() =>
-            HandleNavigateCardOnClick("/CreateTemplate", "Create Template")
-          }
+          onClick={() => {
+            GetSchemaTemplateAPI({
+              saveResponse: true,
+              showLoader: true,
+              EndCallback(returnValue) {
+                if (returnValue?.otherResponseInfo) {
+                  toast.error("Impossibile caricare template")
+                  return
+                };
+                HandleNavigateCardOnClick("/CreateTemplate", "Create Template");
+              },
+            });
+          }}
         >
           {/* Icona + testo */}
           <div

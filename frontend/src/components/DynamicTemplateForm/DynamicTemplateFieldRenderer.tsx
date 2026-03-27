@@ -6,6 +6,7 @@ import DynamicTemplateKeyValueEditor, {
   FieldWrapper,
 } from "./DynamicTemplateKeyValueEditor";
 import {
+  getArrayItemAddress,
   getArrayItemDescription,
   getArrayItemTitle,
   getArrayItemTypeLabel,
@@ -148,6 +149,7 @@ export function renderSchemaField({
               __rowIndex: index,
               __title: getArrayItemTitle(item, fieldKey, index),
               __description: getArrayItemDescription(item),
+              __address: getArrayItemAddress(item),
               __typeLabel: getArrayItemTypeLabel(item),
             }))}
             autoHeight
@@ -164,6 +166,10 @@ export function renderSchemaField({
             <Column flexGrow={2} minWidth={240}>
               <HeaderCell>Descrizione</HeaderCell>
               <Cell dataKey="__description" />
+            </Column>
+            <Column flexGrow={2} minWidth={240}>
+              <HeaderCell>Address</HeaderCell>
+              <Cell dataKey="__address" />
             </Column>
 
             <Column flexGrow={1} minWidth={140}>
@@ -277,7 +283,7 @@ export function renderSchemaField({
     );
   }
 
-  if (type === "number") {
+  if (type === "number" || type === "integer") {
     if (widget === "select" || schema.enum) {
       const data = (schema.enum ?? []).map((singleValue) => ({
         label:
@@ -309,17 +315,37 @@ export function renderSchemaField({
         <Input
           type="number"
           value={value ?? ""}
+          min={schema.minimum}
+          max={schema.maximum}
+          step={type === "integer" ? 1 : "any"}
           onChange={(val) => {
             if (val === "" || val === null || val === undefined) {
               updateValueByPath(path, 0);
               return;
             }
 
-            const parsedValue = Number(val);
-            updateValueByPath(
-              path,
-              Number.isNaN(parsedValue) ? 0 : parsedValue,
-            );
+            let parsedValue =
+              type === "integer" ? parseInt(val, 10) : Number(val);
+
+            if (Number.isNaN(parsedValue)) {
+              parsedValue = 0;
+            }
+
+            if (
+              typeof schema.minimum === "number" &&
+              parsedValue < schema.minimum
+            ) {
+              parsedValue = schema.minimum;
+            }
+
+            if (
+              typeof schema.maximum === "number" &&
+              parsedValue > schema.maximum
+            ) {
+              parsedValue = schema.maximum;
+            }
+
+            updateValueByPath(path, parsedValue);
           }}
         />
       </FieldWrapper>

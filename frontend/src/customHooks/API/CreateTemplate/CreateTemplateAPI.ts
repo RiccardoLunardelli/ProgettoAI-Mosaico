@@ -10,7 +10,66 @@ import { toast, type Id } from "react-toastify";
 import {
   ResultTypeEnum,
   FetchResponseTypeEnum,
+  FetchMethodEnum,
 } from "../../../commons/commonsEnums";
+import { SetSchemaTemplateSlice } from "../../../stores/slices/Base/createTemplateSlice";
+
+const GetSchemaTemplateAPIHook = () => {
+  const dispatch = useDispatch();
+
+  const GetSchemaTemplateAPI = async (infoObj: {
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
+
+    try {
+      const apiCall = await fetch(apiDomainString + "/get_schema_template", {
+        method: FetchMethodEnum.Get,
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const response: string = await apiCall.text();
+      const jsonResponse = JSON.parse(response);
+
+
+      if (infoObj?.saveResponse ?? true) {
+        const createTemplateList: any = jsonResponse ?? {};
+        dispatch(SetSchemaTemplateSlice(createTemplateList));
+      }
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: !apiCall.ok,
+        });
+      }
+    } catch (err) {
+      console.error("StoreList error:", err);
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Error,
+          message: err,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [GetSchemaTemplateAPI];
+};
 
 const CreateTemplateAPIHook = () => {
   const dispatch = useDispatch();
@@ -102,4 +161,4 @@ const CreateTemplateAPIHook = () => {
   return [CreateTemplateAPI];
 };
 
-export { CreateTemplateAPIHook };
+export { CreateTemplateAPIHook, GetSchemaTemplateAPIHook };

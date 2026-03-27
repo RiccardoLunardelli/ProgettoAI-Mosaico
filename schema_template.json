@@ -60,7 +60,9 @@
               "ui:order": 3
             },
             "Mask": {
-              "type": "number",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615,
               "ui:order": 4
             },
             "Measurement": {
@@ -84,7 +86,9 @@
           "ui:group": "Modbus",
           "properties": {
             "Address": {
-              "type": "number",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 65535,
               "ui:order": 1
             },
             "GroupName": {
@@ -179,11 +183,11 @@
             }
           }
         },
-        "DataLoggers":{
+        "DataLoggers": {
           "type": "object",
           "ui:group": "DataLoggers",
           "properties": {
-            "DataLoggerEnable":{
+            "DataLoggerEnable": {
               "type": "boolean",
               "ui:widget": "checkbox",
               "ui:order": 1
@@ -229,7 +233,9 @@
               "ui:order": 3
             },
             "Mask": {
-              "type": "number",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615,
               "ui:order": 4
             },
             "Measurement": {
@@ -253,7 +259,9 @@
           "ui:group": "Modbus",
           "properties": {
             "Address": {
-              "type": "number",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 65535,
               "ui:order": 1
             },
             "GroupName": {
@@ -393,11 +401,11 @@
             }
           }
         },
-        "DataLoggers":{
+        "DataLoggers": {
           "type": "object",
           "ui:group": "DataLoggers",
           "properties": {
-            "DataLoggerEnable":{
+            "DataLoggerEnable": {
               "type": "boolean",
               "ui:widget": "checkbox",
               "ui:order": 1
@@ -443,7 +451,9 @@
               "ui:order": 3
             },
             "Mask": {
-              "type": "number",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615,
               "ui:order": 4
             },
             "Measurement": {
@@ -481,7 +491,9 @@
           "ui:group": "Modbus",
           "properties": {
             "Address": {
-              "type": "number",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 65535,
               "ui:order": 1
             },
             "GroupName": {
@@ -576,11 +588,11 @@
             }
           }
         },
-        "DataLoggers":{
+        "DataLoggers": {
           "type": "object",
           "ui:group": "DataLoggers",
           "properties": {
-            "DataLoggerEnable":{
+            "DataLoggerEnable": {
               "type": "boolean",
               "ui:widget": "checkbox",
               "ui:order": 1
@@ -624,7 +636,9 @@
               "ui:order": 3
             },
             "Mask": {
-              "type": "number",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615,
               "ui:order": 4
             },
             "Measurement": {
@@ -743,11 +757,11 @@
             }
           }
         },
-        "DataLoggers":{
+        "DataLoggers": {
           "type": "object",
           "ui:group": "DataLoggers",
           "properties": {
-            "DataLoggerEnable":{
+            "DataLoggerEnable": {
               "type": "boolean",
               "ui:widget": "checkbox",
               "ui:order": 1
@@ -791,7 +805,9 @@
               "ui:order": 3
             },
             "Mask": {
-              "type": "number",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615,
               "ui:order": 4
             },
             "Measurement": {
@@ -910,11 +926,11 @@
             }
           }
         },
-        "DataLoggers":{
+        "DataLoggers": {
           "type": "object",
           "ui:group": "DataLoggers",
           "properties": {
-            "DataLoggerEnable":{
+            "DataLoggerEnable": {
               "type": "boolean",
               "ui:widget": "checkbox",
               "ui:order": 1
@@ -958,7 +974,9 @@
               "ui:order": 3
             },
             "Mask": {
-              "type": "number",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615,
               "ui:order": 4
             },
             "Measurement": {
@@ -1072,11 +1090,11 @@
             }
           }
         },
-        "DataLoggers":{
+        "DataLoggers": {
           "type": "object",
           "ui:group": "DataLoggers",
           "properties": {
-            "DataLoggerEnable":{
+            "DataLoggerEnable": {
               "type": "boolean",
               "ui:widget": "checkbox",
               "ui:order": 1
