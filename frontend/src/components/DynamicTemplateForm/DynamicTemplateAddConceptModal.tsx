@@ -1,20 +1,20 @@
-import React, { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { Button, Modal } from "rsuite";
 import type { ConceptModalStateInterface } from "./dynamicTemplateTypes";
+import { InputCaseEnum } from "../../commons/commonsEnums";
 
 const SelectPickerTag = lazy(() =>
   import("rsuite").then((module) => ({ default: module.SelectPicker })),
 );
 
-const TextInputTitleTag = lazy(() => import("../input/TextInputTitle"));
+const TextInputTitleGenericTag = lazy(
+  () => import("../input/GenericInput/TextInputTitleGeneric"),
+);
 
 interface DynamicTemplateAddConceptModalProps {
   conceptModalState: ConceptModalStateInterface;
   closeConceptModal: () => void;
-  saveConceptModal: (value: {
-    formValue: Record<string, any>;
-    patchJson: Record<string, any>;
-  }) => void;
+  saveConceptModal: (operationPayload: Record<string, any>) => void;
 }
 
 interface AddConceptFieldInterface {
@@ -102,24 +102,26 @@ function DynamicTemplateAddConceptModal({
     }));
   };
 
+  const operationPayload = useMemo(() => {
+    return {
+      op: "add_base_concept",
+      category_id: formValue.category_id ?? "",
+      concept_id: formValue.concept_id ?? "",
+      semantic_category: formValue.semantic_category ?? "",
+      label: {
+        it: formValue.label_it ?? "",
+        en: formValue.label_en ?? "",
+      },
+      description: formValue.description ?? "",
+    };
+  }, [formValue]);
+
   const patchJson = useMemo(() => {
     return {
       target: "template_base",
-      operations: [
-        {
-          op: "add_base_concept",
-          category_id: formValue.category_id ?? "",
-          concept_id: formValue.concept_id ?? "",
-          semantic_category: formValue.semantic_category ?? "",
-          label: {
-            it: formValue.label_it ?? "",
-            en: formValue.label_en ?? "",
-          },
-          description: formValue.description ?? "",
-        },
-      ],
+      operations: [operationPayload],
     };
-  }, [formValue]);
+  }, [operationPayload]);
 
   const jsonPreview = useMemo(() => {
     return JSON.stringify(patchJson, null, 2);
@@ -156,12 +158,15 @@ function DynamicTemplateAddConceptModal({
       return (
         <div style={inputCardStyle}>
           <Suspense fallback={null}>
-            <TextInputTitleTag
+            <TextInputTitleGenericTag
               idInput={`add-concept-${field.id}`}
               title={field.label}
+              otherTitleInfo=""
               placeholder={field.placeholder ?? ""}
+              inputCase={InputCaseEnum.Insentive}
+              disabled={false}
               value={fieldValue}
-              changeCallBack={(value: string) => {
+              OnChange={(value: string) => {
                 updateField(field.id, value);
               }}
             />
@@ -194,13 +199,11 @@ function DynamicTemplateAddConceptModal({
                 value: singleOption.value,
               }))}
               value={fieldValue || null}
-              onChange={(value) => {
-                updateField(field.id, String(value ?? ""));
-              }}
               placeholder="Seleziona"
               cleanable={false}
               searchable={false}
               block
+              disabled
               style={{ width: "100%" }}
             />
           </Suspense>
@@ -209,6 +212,17 @@ function DynamicTemplateAddConceptModal({
     }
 
     return null;
+  };
+
+  const isFormValid = () => {
+    return (
+      formValue.category_id &&
+      String(formValue.concept_id ?? "").trim() !== "" &&
+      String(formValue.semantic_category ?? "").trim() !== "" &&
+      String(formValue.label_it ?? "").trim() !== "" &&
+      String(formValue.label_en ?? "").trim() !== "" &&
+      String(formValue.description ?? "").trim() !== ""
+    );
   };
 
   return (
@@ -235,23 +249,6 @@ function DynamicTemplateAddConceptModal({
             gap: "18px",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "4px",
-            }}
-          >
-            <span
-              style={{
-                fontSize: "13px",
-                color: "#6b7280",
-              }}
-            >
-              Form dedicato per aggiungere un concept al template base.
-            </span>
-          </div>
-
           <div
             style={{
               display: "grid",
@@ -326,14 +323,14 @@ function DynamicTemplateAddConceptModal({
       <Modal.Footer>
         <Button
           appearance="primary"
-          onClick={() =>
-            saveConceptModal({
-              formValue,
-              patchJson,
-            })
-          }
+          disabled={!isFormValid()}
+          style={{
+            opacity: isFormValid() ? 1 : 0.6,
+            cursor: isFormValid() ? "pointer" : "not-allowed",
+          }}
+          onClick={() => saveConceptModal(operationPayload)}
         >
-          Salva
+          Aggiungi patch
         </Button>
 
         <Button appearance="subtle" onClick={closeConceptModal}>

@@ -11,6 +11,7 @@ export const templateBaseListSlice = createSlice({
     value: null as TemplateBaseListInterface[] | null,
     detail: null as any,
     runIdTemplate: null as string[] | null,
+    lastTemplate: null as string | null,
   },
   reducers: {
     SetTemplateBaseListSlice: (
@@ -37,6 +38,14 @@ export const templateBaseListSlice = createSlice({
     ) => {
       state.runIdTemplate = action.payload;
     },
+    SetLastTemplateBaseSlice: (
+      state,
+      action: {
+        payload: string;
+      },
+    ) => {
+      state.lastTemplate = action.payload;
+    },
   },
 });
 
@@ -44,6 +53,7 @@ export const {
   SetTemplateBaseListSlice,
   SetTemplateBaseDetailSlice,
   SetRunIdTemplateDetailSlice,
+  SetLastTemplateBaseSlice
 } = templateBaseListSlice.actions;
 
 export const templateBaseListSliceReducer = templateBaseListSlice.reducer;

@@ -9,7 +9,7 @@ from backend_api.schemas.runs import (
 )
 from backend_api.utils.deps import get_current_user
 from scripts.config.config import RUNS_ROOT, generate_run_id
-from src.intermediateLayer.postgres_repository import RunRepository, ArtifactRepository
+from src.intermediateLayer.postgres_repository import RunRepository, ArtifactRepository, Schema
 
 from scripts.orchestrator import (
     start_template_run, llm_propose_for_run, template_run,
@@ -29,6 +29,7 @@ router = APIRouter(prefix="/api")
 dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
 runClass = RunRepository(dsn)
 artifactRepo = ArtifactRepository(dsn)
+schemaRepo = Schema(dsn)
 
 TEMPLATE_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates")
 DICTIONARIES_DIR = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionaries")
@@ -197,6 +198,7 @@ def _register_artifact_from_path(path: str, artifact_type: str, artifact_name: s
         name=artifact_name if artifact_name else p.name,
         version=artifact_version if artifact_version else _extract_version_from_path(p),
         content=content,
+        schema_id=None
     )
 
 def initialize(artifact_id: str, artifact_type: str, user_id: str) -> tuple[Path, Path, str]:
@@ -294,6 +296,8 @@ def run_template_start(payload: RunTemplateStartRequest, user = Depends(get_curr
     kb_payload = artifactRepo.get_artifact_content(payload.kb_id, "kb")
     template_base_payload = artifactRepo.get_artifact_content(payload.template_base_id, "template_base")
     device_context_payload = artifactRepo.get_artifact_content(payload.device_context_id, "dlc")
+    schema_id = artifactRepo.get_artifact_schema_id(payload.id)
+    schema_json = schemaRepo.get_schema_by_id(schema_id)
 
     result = start_template_run(
         user["sub"],
@@ -312,6 +316,7 @@ def run_template_start(payload: RunTemplateStartRequest, user = Depends(get_curr
         kb_payload=kb_payload,
         template_base_payload=template_base_payload,
         device_context_payload=device_context_payload,
+        schema_json=schema_json
     )
     return result
 

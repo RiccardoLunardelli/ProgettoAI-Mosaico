@@ -328,11 +328,11 @@ class ArtifactRepository():
     def __init__(self, dsn: str) -> None:
         self._dsn = dsn
 
-    def upsert_artifact(self, artifact_type: str, name: str, version: Optional[str], content: Dict[str, Any] | str) -> str:
+    def upsert_artifact(self, artifact_type: str, name: str, version: Optional[str], content: Dict[str, Any] | str, schema_id: str | None = None) -> str:
         select_sql = "SELECT id FROM artifacts WHERE type = %s AND name = %s AND COALESCE(version, '') = COALESCE(%s, '') LIMIT 1"
         insert_sql = """
-        INSERT INTO artifacts (id, type, name, version, content)
-        VALUES (%s, %s, %s, %s, %s)
+        INSERT INTO artifacts (id, type, name, version, content, schema_id)
+        VALUES (%s, %s, %s, %s, %s, %s)
         """
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
@@ -342,7 +342,7 @@ class ArtifactRepository():
                     return str(row[0])
 
                 artifact_id = str(uuid4())
-                cur.execute(insert_sql, (artifact_id, artifact_type, name, version, psycopg2.extras.Json(content)))
+                cur.execute(insert_sql, (artifact_id, artifact_type, name, version, psycopg2.extras.Json(content), schema_id,),)
                 return artifact_id
 
     def list_artifact(self, artifact_type) -> List[str]:
@@ -461,6 +461,29 @@ class ArtifactRepository():
                 row = cur.fetchone()
                 return dict(row) if row else None
 
+    def get_last_template_base_id(self) -> str:
+    # ritorna id dell'ultima versione di template_base
+
+        sql = """
+        SELECT id
+        FROM artifacts
+        WHERE type = 'template_base'
+        ORDER BY
+        COALESCE(NULLIF(split_part(version, '.', 1), ''), '0')::int DESC,
+        COALESCE(NULLIF(split_part(version, '.', 2), ''), '0')::int DESC,
+        id DESC
+        LIMIT 1
+        """
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql)
+                row = cur.fetchone()
+
+        if not row:
+            raise KeyError("template_base not found")
+
+        return str(row[0])
+
     def get_last_device_context_version_by_store(self, store: str) -> str | None:
         # recupera l'ultima versione di device_list_context dello store
 
@@ -489,6 +512,26 @@ class ArtifactRepository():
                 cur.execute(sql, (id,))
                 row = cur.fetchone()
         return row[0]
+
+    def get_artifact_schema_id(self, artifact_id: str) -> str | None:
+
+        sql = "SELECT schema_id FROM artifacts WHERE id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (artifact_id,))
+                row = cur.fetchone()
+                if not row:
+                    raise KeyError(f"artifact not found: {artifact_id}")
+                return str(row[0]) if row[0] is not None else None
+
+    def insert_schema_id(self, artifact_id: str, schema_id: str) -> None:
+
+        sql = "UPDATE artifacts SET schema_id = %s WHERE id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (schema_id, artifact_id))
+                if cur.rowcount == 0:
+                    raise KeyError(f"artifact_id not found: {artifact_id}")
 
     def drop_artifact(self, ids) -> Dict[str, Any]:
         # elimina file da db
@@ -900,3 +943,51 @@ class Template():
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
                 cur.execute(sql, (artifact_id, author, category, name, product, version, psycopg2.extras.Json(content),),)
+
+class Schema():
+
+    def __init__(self, dsn: str) -> None:
+        self._dsn = dsn
+    
+    def insert_schema(self, name: str, version: str, content: dict) -> str:
+        # inserisce schema nel db
+
+        sql = "INSERT INTO template_schemas (id, name, version, content) VALUES (%s, %s, %s, %s)"
+        schema_id = str(uuid4())
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (schema_id, name, version, psycopg2.extras.Json(content)),)
+
+        return schema_id
+    
+    def get_schema_by_id(self, schema_id: str) -> dict:
+        # ritorna lo schema dall id
+
+        sql = "SELECT content FROM template_schemas WHERE id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            psycopg2.extras.register_default_jsonb(conn, loads=json.loads)
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute(sql, (schema_id,))
+                row = cur.fetchone()
+                if row is None:
+                    raise KeyError(f"template_schema not found: {schema_id}")
+                return row["content"]
+
+    def list_schemas(self) -> List[Dict[str, Any]]:
+        # ritorna tutti gli schemi presenti nel db 
+
+        sql = "SELECT id, name, version FROM template_schemas ORDER BY name, version"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql)
+                rows = cur.fetchall()
+        return [{"id": str(r[0]), "name": r[1], "version": r[2]} for r in rows]
+
+    def drop_schema(self, schema_id: UUID) -> None:
+        # elimina schema dal db
+
+        sql = "DELETE FROM template_schemas WHERE id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (str(schema_id),))
+

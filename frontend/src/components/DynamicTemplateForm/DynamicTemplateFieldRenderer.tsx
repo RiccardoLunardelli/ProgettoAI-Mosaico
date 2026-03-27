@@ -1,15 +1,11 @@
 import React, { lazy, Suspense } from "react";
-import { Button, Input, Panel, SelectPicker, Table, Toggle } from "rsuite";
-import { Plus } from "@rsuite/icons";
+import { Input, Panel, SelectPicker, Toggle } from "rsuite";
+
 import { InputCaseEnum } from "../../commons/commonsEnums";
 import DynamicTemplateKeyValueEditor, {
   FieldWrapper,
 } from "./DynamicTemplateKeyValueEditor";
 import {
-  getArrayItemAddress,
-  getArrayItemDescription,
-  getArrayItemTitle,
-  getArrayItemTypeLabel,
   groupPropertiesByUiGroup,
   sortSchemaProperties,
 } from "./dynamicTemplateHelpers";
@@ -17,12 +13,12 @@ import type {
   ObjectContentProps,
   RenderSchemaFieldParams,
 } from "./dynamicTemplateTypes";
+import DynamicTemplateArrayFieldPanel from "./DynamicTemplateArrayFieldPanel";
 
 const TextInputTitleGenericTag = lazy(
   () => import("../input/GenericInput/TextInputTitleGeneric"),
 );
 
-const { Column, HeaderCell, Cell } = Table;
 
 export function renderSchemaField({
   fieldKey,
@@ -102,144 +98,17 @@ export function renderSchemaField({
   }
 
   if (type === "array") {
-    const arrayValue = Array.isArray(value) ? value : [];
-
     return (
-      <Panel
-        bordered
-        header={
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              width: "100%",
-            }}
-          >
-            <span>{fieldKey}</span>
-
-            <Button
-              appearance="primary"
-              size="sm"
-              startIcon={<Plus />}
-              onClick={() =>
-                openAddArrayItemModal(path, schema.items, fieldKey)
-              }
-            >
-              Aggiungi
-            </Button>
-          </div>
-        }
-        style={{
-          background: "#fafafa",
-          borderRadius: "10px",
-        }}
-      >
-        {arrayValue.length === 0 ? (
-          <div
-            style={{
-              color: "#6b7280",
-              fontSize: "13px",
-              padding: "12px 0",
-            }}
-          >
-            Nessun elemento presente
-          </div>
-        ) : (
-          <Table
-            data={arrayValue.map((item, index) => ({
-              ...item,
-              __rowIndex: index,
-              __title: getArrayItemTitle(item, fieldKey, index),
-              __description: getArrayItemDescription(item),
-              __address: getArrayItemAddress(item),
-              __typeLabel: getArrayItemTypeLabel(item),
-            }))}
-            autoHeight
-            bordered
-            cellBordered
-            rowHeight={46}
-            headerHeight={42}
-          >
-            <Column flexGrow={1.5} minWidth={220}>
-              <HeaderCell>Nome</HeaderCell>
-              <Cell dataKey="__title" />
-            </Column>
-
-            <Column flexGrow={2} minWidth={240}>
-              <HeaderCell>Descrizione</HeaderCell>
-              <Cell dataKey="__description" />
-            </Column>
-            <Column flexGrow={2} minWidth={240}>
-              <HeaderCell>Address</HeaderCell>
-              <Cell dataKey="__address" />
-            </Column>
-
-            <Column flexGrow={1} minWidth={140}>
-              <HeaderCell>Tipo</HeaderCell>
-              <Cell dataKey="__typeLabel" />
-            </Column>
-
-            <Column width={260} align="center" fixed="right">
-              <HeaderCell>Azioni</HeaderCell>
-              <Cell>
-                {(rowData: any) => (
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "8px",
-                      height: "100%",
-                      flexWrap: "wrap",
-                      padding: "4px 0",
-                    }}
-                  >
-                    <Button
-                      appearance="ghost"
-                      size="xs"
-                      onClick={() =>
-                        openEditArrayItemModal(
-                          path,
-                          schema.items,
-                          rowData.__rowIndex,
-                          arrayValue[rowData.__rowIndex],
-                          fieldKey,
-                        )
-                      }
-                    >
-                      Modifica
-                    </Button>
-
-                    <Button
-                      appearance="ghost"
-                      size="xs"
-                      onClick={() =>
-                        openAddConceptModal(
-                          fieldKey,
-                          rowData.__rowIndex,
-                          arrayValue[rowData.__rowIndex],
-                        )
-                      }
-                    >
-                      Add concept
-                    </Button>
-
-                    <Button
-                      appearance="ghost"
-                      color="red"
-                      size="xs"
-                      onClick={() => removeArrayItem(path, rowData.__rowIndex)}
-                    >
-                      Elimina
-                    </Button>
-                  </div>
-                )}
-              </Cell>
-            </Column>
-          </Table>
-        )}
-      </Panel>
+      <DynamicTemplateArrayFieldPanel
+        fieldKey={fieldKey}
+        schema={schema}
+        value={value}
+        path={path}
+        openAddArrayItemModal={openAddArrayItemModal}
+        openEditArrayItemModal={openEditArrayItemModal}
+        removeArrayItem={removeArrayItem}
+        openAddConceptModal={openAddConceptModal}
+      />
     );
   }
 
@@ -398,7 +267,7 @@ function ObjectContent({
   removeArrayItem,
   openAddArrayItemModal,
   openEditArrayItemModal,
-  openAddConceptModal
+  openAddConceptModal,
 }: ObjectContentProps) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
@@ -436,7 +305,7 @@ function ObjectContent({
                     removeArrayItem,
                     openAddArrayItemModal,
                     openEditArrayItemModal,
-                    openAddConceptModal
+                    openAddConceptModal,
                   })}
                 </div>
               ))}
@@ -464,7 +333,7 @@ function ObjectContent({
                 removeArrayItem,
                 openAddArrayItemModal,
                 openEditArrayItemModal,
-                openAddConceptModal
+                openAddConceptModal,
               })}
             </div>
           );
@@ -510,7 +379,7 @@ function ObjectContent({
                     removeArrayItem,
                     openAddArrayItemModal,
                     openEditArrayItemModal,
-                    openAddConceptModal
+                    openAddConceptModal,
                   })}
                 </div>
               ))}

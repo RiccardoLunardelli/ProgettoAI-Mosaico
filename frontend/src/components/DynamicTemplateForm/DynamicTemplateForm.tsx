@@ -1,8 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { Button, Panel, Tabs } from "rsuite";
+import { useDispatch, useSelector } from "react-redux";
+
 import renderSchemaField from "./DynamicTemplateFieldRenderer";
 import DynamicTemplateArrayModal from "./DynamicTemplateArrayModal";
 import DynamicTemplateJsonPreview from "./DynamicTemplateJsonPreview";
+import DynamicTemplateAddConceptModal from "./DynamicTemplateAddConceptModal";
+import DynamicTemplatePatchPreviewModal from "./DynamicTemplatePatchPreviewModal";
+
 import {
   buildInitialValueFromRootSchema,
   buildInitialValueFromSchema,
@@ -11,13 +16,15 @@ import {
   getNestedValue,
   updateNestedValue,
 } from "./dynamicTemplateHelpers";
+
 import type {
   ArrayModalStateInterface,
   ConceptModalStateInterface,
   DynamicTemplateFormTagProps,
   SchemaProperty,
 } from "./dynamicTemplateTypes";
-import DynamicTemplateAddConceptModal from "./DynamicTemplateAddConceptModal";
+
+import { SetInputSlice } from "../../stores/slices/Base/inputSlice";
 
 function DynamicTemplateFormTag({
   schema,
@@ -27,8 +34,17 @@ function DynamicTemplateFormTag({
   saveLabel = "Salva",
   saving = false,
 }: DynamicTemplateFormTagProps) {
+  const dispatch = useDispatch();
+
+  const inputSliceValue: Record<string, string> = useSelector((state: any) => {
+    return state.inputSlice?.value ?? {};
+  });
+
   const [formValue, setFormValue] = useState<Record<string, any>>({});
   const [previewValue, setPreviewValue] = useState<string>("{}");
+  const [showPatchPreviewModal, setShowPatchPreviewModal] =
+    useState<boolean>(false);
+
   const [arrayModalState, setArrayModalState] =
     useState<ArrayModalStateInterface>({
       open: false,
@@ -38,12 +54,11 @@ function DynamicTemplateFormTag({
       editIndex: null,
       initialValue: null,
     });
+
   const [conceptModalState, setConceptModalState] =
     useState<ConceptModalStateInterface>({
       open: false,
       sectionKey: "",
-      rowIndex: null,
-      rowData: null,
       initialValue: {},
     });
 
@@ -79,6 +94,27 @@ function DynamicTemplateFormTag({
       return (a["ui:order"] ?? 0) - (b["ui:order"] ?? 0);
     });
   }, [schema]);
+
+  const patchPreviewValue = useMemo(() => {
+    const rawPatch = inputSliceValue["TemplateBasePatch-TextArea"] ?? "";
+
+    if (!rawPatch || !rawPatch.trim()) {
+      return JSON.stringify(
+        {
+          target: "template_base",
+          operations: [],
+        },
+        null,
+        2,
+      );
+    }
+
+    try {
+      return JSON.stringify(JSON.parse(rawPatch), null, 2);
+    } catch {
+      return rawPatch;
+    }
+  }, [inputSliceValue]);
 
   const updateValueByPath = (path: (string | number)[], newValue: any) => {
     setFormValue((prev) => updateNestedValue(prev, path, newValue));
@@ -157,25 +193,19 @@ function DynamicTemplateFormTag({
     onSave?.(formValue);
   };
 
-  const openAddConceptModal = (
-    sectionKey: string,
-    rowIndex: number,
-    rowData: any,
-  ) => {
-    const defaultConceptId = getDefaultConceptIdBySection(sectionKey);
+  const openAddConceptModal = (sectionKey: string) => {
+    const defaultCategoryId = getDefaultConceptIdBySection(sectionKey);
 
     setConceptModalState({
       open: true,
       sectionKey,
-      rowIndex,
-      rowData,
       initialValue: {
-        category_id: defaultConceptId,
+        category_id: defaultCategoryId,
         concept_id: "",
         semantic_category: "",
-        label_it: rowData?.name ?? rowData?.Label ?? "",
-        label_en: rowData?.name ?? rowData?.Label ?? "",
-        description: rowData?.Description ?? "",
+        label_it: "",
+        label_en: "",
+        description: "",
       },
     });
   };
@@ -184,20 +214,54 @@ function DynamicTemplateFormTag({
     setConceptModalState({
       open: false,
       sectionKey: "",
-      rowIndex: null,
-      rowData: null,
       initialValue: {},
     });
   };
 
-  const saveConceptModal = (value: {
-    formValue: Record<string, any>;
-    patchJson: Record<string, any>;
-  }) => {
-    console.log("FORM VALUE", value.formValue);
-    console.log("PATCH JSON", value.patchJson);
+  const appendOperationToPatchJson = (
+    newOperation: Record<string, any>,
+    patchInputId: string,
+  ) => {
+    let currentPatch: {
+      target: string;
+      operations: Record<string, any>[];
+    } = {
+      target: "template_base",
+      operations: [],
+    };
 
-    // qui poi fai la chiamata API con l'id template che recuperi altrove
+    try {
+      const currentValue = inputSliceValue[patchInputId] ?? "";
+      const parsedValue = JSON.parse(currentValue);
+
+      currentPatch = {
+        target: parsedValue?.target ?? "template_base",
+        operations: Array.isArray(parsedValue?.operations)
+          ? parsedValue.operations
+          : [],
+      };
+    } catch {
+      currentPatch = {
+        target: "template_base",
+        operations: [],
+      };
+    }
+
+    const updatedPatch = {
+      target: "template_base",
+      operations: [...currentPatch.operations, newOperation],
+    };
+
+    dispatch(
+      SetInputSlice({
+        id: patchInputId,
+        value: JSON.stringify(updatedPatch, null, 2),
+      }),
+    );
+  };
+
+  const saveConceptModal = (operationPayload: Record<string, any>) => {
+    appendOperationToPatchJson(operationPayload, "TemplateBasePatch-TextArea");
     closeConceptModal();
   };
 
@@ -275,13 +339,24 @@ function DynamicTemplateFormTag({
               >
                 <span style={{ fontWeight: 600 }}>Create Template</span>
 
-                <Button
-                  appearance="primary"
-                  onClick={handleSave}
-                  loading={saving}
-                >
-                  {saveLabel}
-                </Button>
+                <div>
+                  <Button
+                    appearance="primary"
+                    onClick={handleSave}
+                    loading={saving}
+                  >
+                    {saveLabel}
+                  </Button>
+
+                  <Button
+                    appearance="default"
+                    onClick={() => setShowPatchPreviewModal(true)}
+                    loading={saving}
+                    style={{ marginLeft: "8px" }}
+                  >
+                    Mostra Patches
+                  </Button>
+                </div>
               </div>
             }
             style={{
@@ -347,10 +422,25 @@ function DynamicTemplateFormTag({
         closeArrayModal={closeArrayModal}
         saveArrayModal={saveArrayModal}
       />
+
       <DynamicTemplateAddConceptModal
         conceptModalState={conceptModalState}
         closeConceptModal={closeConceptModal}
         saveConceptModal={saveConceptModal}
+      />
+
+      <DynamicTemplatePatchPreviewModal
+        open={showPatchPreviewModal}
+        onClose={() => setShowPatchPreviewModal(false)}
+        value={patchPreviewValue}
+        onChange={(newValue) => {
+          dispatch(
+            SetInputSlice({
+              id: "TemplateBasePatch-TextArea",
+              value: newValue,
+            }),
+          );
+        }}
       />
     </>
   );

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from src.intermediateLayer.postgres_repository import UsersRepository, ArtifactRepository, Clients, Stores, Devices, RunRepository, Template
+from src.intermediateLayer.postgres_repository import UsersRepository, ArtifactRepository, Clients, Stores, Devices, RunRepository, Template, Schema
 from backend_api.schemas.admin import UpdateRoleAdmin, DropArtifactAdmin, DeleteUserAdmin, InsertClientAdmin, DeleteClientAdmin, UpsertStoreAdmin, UpdateUser, DeleteStoreAdmin, UpdateClientAdmin, \
     UpdateStoreAdmin, UpdateDeviceAdmin, InsertDeviceAdmin, DeleteDeviceAdmin, InsertArtifactAdmin, EditConfigAdmin, CreateTemplateAdmin
 
@@ -24,6 +24,7 @@ storeClass = Stores(dsn)
 deviceClass = Devices(dsn)
 runClass = RunRepository(dsn)
 templateClass = Template(dsn)
+schemaClass = Schema(dsn)
 
 # -------CHECK---------
 def check_user(id):
@@ -161,7 +162,7 @@ def editor_config_json_inline(artifact_id: str, yaml_text: str, user_id: str):
     new_name, new_version = _next_versioned_name(old_name)
 
     # salvataggio YAML come stringa nel JSONB
-    new_artifact_id = artifactClass.upsert_artifact(artifact_type="config", name=new_name, version=new_version, content=yaml_text)
+    new_artifact_id = artifactClass.upsert_artifact(artifact_type="config", name=new_name, version=new_version, content=yaml_text, schema_id=None)
 
     run_id = generate_run_id()
     run_dir = RUNS_ROOT / str(user_id) / run_id
@@ -264,7 +265,7 @@ def insert_artifact(payload: InsertArtifactAdmin, user = Depends(require_admin))
     if len(check) > 0:
         raise HTTPException(status_code=409, detail="Artifact already exists!")
 
-    return artifactClass.upsert_artifact(payload.type, payload.name, payload.version, payload.content)
+    return artifactClass.upsert_artifact(payload.type, payload.name, payload.version, payload.content, None)
 
 
 #--CLIENTS--
@@ -326,20 +327,21 @@ def edit_config_inline(payload: EditConfigAdmin, user = Depends(require_admin)):
 #---CREATE TEMPLATE------
 @router.post("/create_template")
 def create_template(payload: CreateTemplateAdmin, user = Depends(require_admin)):
-    template_json = build_template(payload) # template
+    template_json = build_template(payload.Template) # template
+    schema_id = payload.Schema_id # schema id
 
     # salvataggio template in artifacts
-    artifact_name = f"{payload.TemplateInfo.TemplateName}.json"
-    artifact_version = payload.TemplateInfo.Version
-    artifact_id = artifactClass.upsert_artifact(artifact_type="template", name=artifact_name, version=artifact_version, content=template_json)
+    artifact_name = f"{payload.Template.TemplateInfo.TemplateName}.json"
+    artifact_version = payload.Template.TemplateInfo.Version
+    artifact_id = artifactClass.upsert_artifact(artifact_type="template", name=artifact_name, version=artifact_version, content=template_json, schema_id=schema_id)
 
     # salvataggio metadata template in templates
-    author = payload.TemplateInfo.Author
-    category = payload.TemplateInfo.Category
-    name = payload.TemplateInfo.TemplateName
-    product = payload.TemplateInfo.Product
-    version = payload.TemplateInfo.Version
-    content = payload.model_dump()
+    author = payload.Template.TemplateInfo.Author
+    category = payload.Template.TemplateInfo.Category
+    name = payload.Template.TemplateInfo.TemplateName
+    product = payload.Template.TemplateInfo.Product
+    version = payload.Template.TemplateInfo.Version
+    content = payload.Template.model_dump()
     templateClass.insert_templates_metadata(artifact_id=artifact_id, author=author, category=category, name=name, product=product, version=version, content=content)
     return {"status": "ok", "artifact_id": artifact_id}
 
@@ -349,3 +351,8 @@ def get_schema_template(user = Depends(require_admin)):
     path_schema = Path("/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/schema_template.json")
     with open(path_schema, "r", encoding="utf-8") as f:
         return json.load(f)
+
+#--SCHEMA NORMALIZER TEMPLATE---
+@router.get("/list_schemas")
+def get_list_schemas(user = Depends(require_admin)):
+    return schemaClass.list_schemas()

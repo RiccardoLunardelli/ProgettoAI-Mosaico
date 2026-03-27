@@ -15,7 +15,7 @@ class EvidenceFields(BaseModel):
     Alias: Optional[str] = None
     MultiLanguageDescription: Optional[Any] = None
     Label: Optional[str] = None
-    Category: Optional[str] = None
+    Category: Optional[Any] = None
     Priority: Optional[int] = None
 
 class VariableNormalized(BaseModel):   
@@ -220,11 +220,11 @@ def normalize_template(raw_template: Dict[str, Any], schema: Dict[str, Any]) -> 
         support_only=support,
     )
 
-def normalization(template_path: str, schema_tipo_path: str) -> Dict[str, Any]:
+def normalization(template_path: str, schema_tipo_path: str | None, schema_json: dict) -> Dict[str, Any]:
     # normalizzazione 
     
     raw_template = load_json(template_path)
-    schema = load_json(schema_tipo_path)
+    schema = load_json(schema_tipo_path) if schema_tipo_path else schema_json
     normalized = normalize_template(raw_template, schema)
     normalized_payload = model_dump(normalized)
 

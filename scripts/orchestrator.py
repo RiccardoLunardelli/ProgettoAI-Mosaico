@@ -30,12 +30,8 @@ from pathlib import Path
 
 def start_template_run(user_id, template_name: str, dictionary_name: str, kb_name: str, template_base_name: str, device_context_name: str,
                        template_id: str, dictionary_id: str, kb_id: str, template_base_id: str, device_context_id: str, template_payload: dict,  dictionary_payload: dict,
-                        kb_payload: dict, template_base_payload: dict, device_context_payload: list | dict, config_path: str="config/config.yml") -> dict:
+                        kb_payload: dict, template_base_payload: dict, device_context_payload: list | dict, schema_json: dict) -> dict:
     # normalizzazione e matching
-
-    cfg = load_config(config_path)
-    paths = cfg.get("paths", {})
-    schema_tipo_path = paths.get("schema_tipo")
 
     run_id = generate_run_id()
     run_dir = RUNS_ROOT / user_id / run_id
@@ -70,7 +66,7 @@ def start_template_run(user_id, template_name: str, dictionary_name: str, kb_nam
     (run_dir / "run_context.json").write_text(json.dumps(run_context, ensure_ascii=False, indent=2), encoding="utf-8")
 
     # normalizzazione (usa snapshot template)
-    normalized_payload = normalization(str(template_input_path), schema_tipo_path)
+    normalized_payload = normalization(str(template_input_path), None, schema_json=schema_json)
     normalized_path = run_dir / "normalized_template_v0.1.json"
     normalized_path.write_text(json.dumps(normalized_payload, ensure_ascii=False, indent=2), encoding="utf-8")
 

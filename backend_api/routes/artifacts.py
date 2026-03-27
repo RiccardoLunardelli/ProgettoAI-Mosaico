@@ -195,6 +195,10 @@ def list_template_base(user = Depends(get_current_user)):
 def get_template_base(id: str, user = Depends(get_current_user)):
     return artifactClass.get_artifact_content(id, "template_base")
 
+@router.get("/last_version/template_base")
+def get_last_version_template_base(user = Depends(get_current_user)):
+    return artifactClass.get_last_template_base_id()
+
 #---DEVICE LIST----
 @router.get("/device_list")
 def list_device_list(user = Depends(get_current_user)):

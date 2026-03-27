@@ -12,7 +12,7 @@ import {
   FetchResponseTypeEnum,
   FetchMethodEnum,
 } from "../../../commons/commonsEnums";
-import { SetSchemaTemplateSlice } from "../../../stores/slices/Base/createTemplateSlice";
+import { SetSchemasListSlice, SetSchemaTemplateSlice } from "../../../stores/slices/Base/createTemplateSlice";
 
 const GetSchemaTemplateAPIHook = () => {
   const dispatch = useDispatch();
@@ -37,7 +37,6 @@ const GetSchemaTemplateAPIHook = () => {
 
       const response: string = await apiCall.text();
       const jsonResponse = JSON.parse(response);
-
 
       if (infoObj?.saveResponse ?? true) {
         const createTemplateList: any = jsonResponse ?? {};
@@ -71,13 +70,70 @@ const GetSchemaTemplateAPIHook = () => {
   return [GetSchemaTemplateAPI];
 };
 
+const GetSchemasListAPIHook = () => {
+  const dispatch = useDispatch();
+
+  const GetSchemasListAPI = async (infoObj: {
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
+
+    try {
+      const apiCall = await fetch(apiDomainString + "/list_schemas", {
+        method: FetchMethodEnum.Get,
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const response: string = await apiCall.text();
+      const jsonResponse = JSON.parse(response);
+
+      if (infoObj?.saveResponse ?? true) {
+        const schemasList: any = jsonResponse ?? {};
+        dispatch(SetSchemasListSlice(schemasList));
+      }
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: !apiCall.ok,
+        });
+      }
+    } catch (err) {
+      console.error("StoreList error:", err);
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Error,
+          message: err,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [GetSchemasListAPI];
+};
+
 const CreateTemplateAPIHook = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const CreateTemplateAPI = async (infoObj: {
     data: {
-      createTemplate: any;
+      Template: any;
+      Schema_id: string;
     };
     EndCallback?: (returnValue?: ResponseMessageInterface) => void;
     showLoader?: boolean;
@@ -97,7 +153,7 @@ const CreateTemplateAPIHook = () => {
       const apiCall = await fetch(apiDomainString + "/create_template", {
         method: "POST",
         credentials: "include",
-        body: JSON.stringify(infoObj.data.createTemplate),
+        body: JSON.stringify(infoObj.data),
         headers: {
           "Content-Type": "application/json",
         },
@@ -161,4 +217,6 @@ const CreateTemplateAPIHook = () => {
   return [CreateTemplateAPI];
 };
 
-export { CreateTemplateAPIHook, GetSchemaTemplateAPIHook };
+
+
+export { CreateTemplateAPIHook, GetSchemaTemplateAPIHook, GetSchemasListAPIHook };

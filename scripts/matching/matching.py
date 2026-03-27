@@ -113,10 +113,21 @@ def get_template_guid(input_path: str, mr: dict | None, artifact_type) -> str:
     try:
         with open(input_path, "r", encoding="utf-8") as f:
             tpl = json.load(f)
+
         if "TemplateGuid" in tpl:
             return tpl["TemplateGuid"]
         if "TemplateGUID" in tpl:
             return tpl["TemplateGUID"]
+        
+        # formato nuovo
+        ti = tpl.get("TemplateInfo")
+        tiv = ti.get("Values")
+        if isinstance(tiv, dict):
+            if tiv.get("TemplateName"):
+                return tiv["TemplateName"]
+            if tiv.get("Name"):
+                return tiv["Name"]
+        
     except Exception:
         pass
 

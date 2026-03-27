@@ -61,11 +61,7 @@ export interface RenderSchemaFieldParams {
     currentValue: any,
     fieldKey?: string,
   ) => void;
-  openAddConceptModal: (
-    sectionKey: string,
-    rowIndex: number,
-    rowData: any,
-  ) => void;
+  openAddConceptModal: (sectionKey: string) => void;
   root?: boolean;
 }
 
@@ -88,17 +84,57 @@ export interface ObjectContentProps {
     currentValue: any,
     fieldKey?: string,
   ) => void;
-  openAddConceptModal: (
-    sectionKey: string,
-    rowIndex: number,
-    rowData: any,
+  openAddConceptModal: (sectionKey: string) => void;
+}
+
+export interface RenderSchemaFieldParams {
+  fieldKey: string;
+  schema?: SchemaProperty;
+  value: any;
+  path: (string | number)[];
+  requiredFields?: string[];
+  updateValueByPath: (path: (string | number)[], newValue: any) => void;
+  removeArrayItem: (path: (string | number)[], index: number) => void;
+  openAddArrayItemModal: (
+    path: (string | number)[],
+    itemSchema?: SchemaProperty,
+    fieldKey?: string,
   ) => void;
+  openEditArrayItemModal: (
+    path: (string | number)[],
+    itemSchema: SchemaProperty | undefined,
+    index: number,
+    currentValue: any,
+    fieldKey?: string,
+  ) => void;
+  openAddConceptModal: (sectionKey: string) => void;
+  root?: boolean;
+}
+
+export interface ObjectContentProps {
+  schema: SchemaProperty;
+  value: Record<string, any>;
+  path: (string | number)[];
+  groupedProperties: [string, [string, SchemaProperty][]][];
+  updateValueByPath: (path: (string | number)[], newValue: any) => void;
+  removeArrayItem: (path: (string | number)[], index: number) => void;
+  openAddArrayItemModal: (
+    path: (string | number)[],
+    itemSchema?: SchemaProperty,
+    fieldKey?: string,
+  ) => void;
+  openEditArrayItemModal: (
+    path: (string | number)[],
+    itemSchema: SchemaProperty | undefined,
+    index: number,
+    currentValue: any,
+    fieldKey?: string,
+  ) => void;
+  openAddConceptModal: (sectionKey: string) => void;
 }
 
 export interface ConceptModalStateInterface {
   open: boolean;
   sectionKey: string;
-  rowIndex: number | null;
-  rowData: any;
   initialValue: Record<string, any>;
 }

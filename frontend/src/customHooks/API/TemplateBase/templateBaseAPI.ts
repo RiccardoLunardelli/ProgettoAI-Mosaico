@@ -11,6 +11,7 @@ import {
 } from "../../../commons/commonsEnums";
 import { apiDomainString } from "../../../commons/commonsVariables";
 import {
+  SetLastTemplateBaseSlice,
   SetRunIdTemplateDetailSlice,
   SetTemplateBaseDetailSlice,
   SetTemplateBaseListSlice,
@@ -73,6 +74,62 @@ const GetTemplateBaseIdsAPIHook = () => {
   };
 
   return [GetTemplateBaseIdsAPI];
+};
+
+const GetLastTemplateBaseAPIHook = () => {
+  const dispatch = useDispatch();
+
+  const GetLastTemplateBaseAPI = async (infoObj: {
+    EndCallback?: (returnValue?: ResponseMessageInterface) => void;
+    showLoader?: boolean;
+    saveResponse?: boolean;
+  }) => {
+    if (infoObj.showLoader) {
+      dispatch(OpenLoader());
+    }
+
+    try {
+      const apiCall = await fetch(apiDomainString + "/last_version/template_base", {
+        method: FetchMethodEnum.Get,
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const response: string = await apiCall.text();
+      const jsonResponse = JSON.parse(response);
+
+      if (infoObj?.saveResponse ?? true) {
+        const lastTemplateBase: string = jsonResponse ?? "";
+        dispatch(SetLastTemplateBaseSlice(lastTemplateBase));
+      }
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Success,
+          message: jsonResponse,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } catch (err) {
+      console.error("DataOra error:", err);
+
+      if (infoObj.EndCallback) {
+        infoObj.EndCallback({
+          result: ResultTypeEnum.Error,
+          message: err,
+          messageType: FetchResponseTypeEnum.Json,
+          otherResponseInfo: "",
+        });
+      }
+    } finally {
+      if (infoObj.showLoader) dispatch(CloseLoader());
+    }
+  };
+
+  return [GetLastTemplateBaseAPI];
 };
 
 const GetTemplateBaseDetailAPIHook = () => {
@@ -381,4 +438,5 @@ export {
   UpdateTemplateBaseDetailAPIHook,
   UpdateTemplateBasePatchAPIHook,
   GetRunIdTemplateAPIHook,
+  GetLastTemplateBaseAPIHook
 };

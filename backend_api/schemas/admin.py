@@ -233,8 +233,7 @@ class VirtualVariablesAdmin(BaseModel):
     MessageCode: MessageCodeSect | None = None
     DataLoggers: DataLoggersAdmin | None = None
 
-#----CREAZIONE TEMPLATE------
-class CreateTemplateAdmin(BaseModel):
+class TemplateCreation(BaseModel):
     TemplateInfo: TemplateInfoAdmin 
     ContinuosReads: List[ContinuosReadsAdmin] = []
     Parameters: List[ParametersAdmin] = []
@@ -242,3 +241,10 @@ class CreateTemplateAdmin(BaseModel):
     Alarms: List[AlarmsAdmin] = []
     Warnings: List[WarningsAdmin] = []
     VirtualVariables: List[VirtualVariablesAdmin] = []
+
+
+#----CREAZIONE TEMPLATE------
+class CreateTemplateAdmin(BaseModel):
+    Template: TemplateCreation
+    Schema_id: str
+
