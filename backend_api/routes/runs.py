@@ -182,7 +182,7 @@ def apply_patch(user_id: str, input_path: str | None, file_name: str | None, pat
 
         return {"status": "ok", "run_id": report.get("run_id"), "report_path": str(report_path), "warning": report.get("validation", {}).get("warnings"), "enriched_file": enriched_file}
 
-def _register_artifact_from_path(path: str, artifact_type: str, artifact_name: str | None = None, artifact_version: str | None = None) -> str:
+def _register_artifact_from_path(path: str, artifact_type: str, artifact_name: str | None = None, artifact_version: str | None = None, schema_id: str | None = None) -> str:
     # salva artifact nel db
 
     p = Path(path)
@@ -198,7 +198,7 @@ def _register_artifact_from_path(path: str, artifact_type: str, artifact_name: s
         name=artifact_name if artifact_name else p.name,
         version=artifact_version if artifact_version else _extract_version_from_path(p),
         content=content,
-        schema_id=None
+        schema_id=schema_id
     )
 
 def initialize(artifact_id: str, artifact_type: str, user_id: str) -> tuple[Path, Path, str]:
@@ -346,12 +346,18 @@ def run_template_finish(payload: RunTemplateFinishRequest, user = Depends(get_cu
     artifact_type = report.get("target", {}).get("artifact_type", "template")
     artifact_input = report.get("target", {}).get("input_path")
     artifact_output = report.get("target", {}).get("output_path")
-    _register_artifact_from_path(artifact_output, artifact_type)
+    schema_id = None 
+    if artifact_input:
+        input_name = Path(artifact_input).name
+        row = artifactRepo.get_artifacts_by_ids_or_name(id=None, ids=None, name=input_name)
+        if row: 
+            input_artifact_id = row[0]["id"]
+            schema_id = artifactRepo.get_artifact_schema_id(input_artifact_id)
+    
+
+    _register_artifact_from_path(artifact_output, artifact_type, schema_id=schema_id)
     artifact_id_input = _register_artifact_from_path(artifact_input, artifact_type)
     runClass.save_run(report, user["sub"], artifact_id_input)
-
-
-    #llm_progress.pop(payload.run_id, None)
 
     return result
 
