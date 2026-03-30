@@ -375,7 +375,19 @@ class ArtifactRepository():
     def get_artifacts(self) -> List[str]:    
         # ritorna tutti i file
 
-        sql = "SELECT * FROM artifacts"
+        sql = """
+            SELECT
+                a.id,
+                a.type,
+                a.name,
+                a.version,
+                a.schema_id,
+                ts.name AS schema_name,
+                ts.version AS schema_version
+            FROM artifacts a
+            LEFT JOIN template_schemas ts ON ts.id = a.schema_id
+            ORDER BY a.type, a.name, a.version
+            """
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
                 cur.execute(sql)
@@ -384,8 +396,11 @@ class ArtifactRepository():
             "id": r[0],
             "type": r[1],
             "name": r[2],
-            "version": r[3]
-        }for r in rows]     
+            "version": r[3],
+            "schema_id": r[4],
+            "schema_name": r[5],
+            "schema_version": r[6]
+        }for r in rows]
 
     def get_artifact_name_by_id(self, id: str) -> str:
         # ritorna il nome dell artefatto dall id
@@ -972,6 +987,18 @@ class Schema():
                 if row is None:
                     raise KeyError(f"template_schema not found: {schema_id}")
                 return row["content"]
+
+    def get_schema_name_by_id(self, schema_id: str) -> str:
+        # ritorna nome dello schema dall'id 
+
+        sql = "SELECT name FROM template_schemas WHERE id = %s"
+        with psycopg2.connect(self._dsn) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (schema_id,))
+                row = cur.fetchone()
+                if row is None:
+                    raise KeyError(f"template_schema not found: {schema_id}")
+                return row[0]
 
     def list_schemas(self) -> List[Dict[str, Any]]:
         # ritorna tutti gli schemi presenti nel db 

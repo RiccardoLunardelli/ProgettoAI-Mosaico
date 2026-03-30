@@ -162,7 +162,7 @@ def editor_config_json_inline(artifact_id: str, yaml_text: str, user_id: str):
     new_name, new_version = _next_versioned_name(old_name)
 
     # salvataggio YAML come stringa nel JSONB
-    new_artifact_id = artifactClass.upsert_artifact(artifact_type="config", name=new_name, version=new_version, content=yaml_text, schema_id=None)
+    new_artifact_id = artifactClass.upsert_artifact(artifact_type="config", name=new_name, version=new_version, content=new_obj, schema_id=None)
 
     run_id = generate_run_id()
     run_dir = RUNS_ROOT / str(user_id) / run_id

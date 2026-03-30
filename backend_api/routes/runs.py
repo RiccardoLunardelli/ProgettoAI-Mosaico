@@ -21,7 +21,6 @@ from scripts.orchestrator import (
 )
 
 from mcp_server.tools.dictionary_tool import _extract_version_from_path
-from mcp_server.tools.device_list_tool import load_rules
 import yaml
 
 router = APIRouter(prefix="/api")
@@ -395,9 +394,4 @@ def run_device_list_api(payload: RunDeviceListRequest, user = Depends(get_curren
 @router.get("/enum/{config_id}")
 def get_base_update_device_list(config_id: str, user = Depends(get_current_user)):
     rules = _get_device_rules_from_db(config_id)
-    return rules.get("enum", {})
-    # parte vecchia
-    file_config = "device_list_rules.yml"
-    path = CONFIG_DIR / file_config
-    rules = load_rules(str(path))
     return rules.get("enum", {})

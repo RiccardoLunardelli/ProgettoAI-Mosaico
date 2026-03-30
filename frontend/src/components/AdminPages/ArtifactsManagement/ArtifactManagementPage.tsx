@@ -175,7 +175,7 @@ function ArtifactManagementPageTag() {
           selectedArtifactIds: newSelectedIds,
           lastSelectedArtifactId:
             String(previousStateVal.lastSelectedArtifactId) === artifactIdString
-              ? newSelectedIds[newSelectedIds.length - 1] ?? ""
+              ? (newSelectedIds[newSelectedIds.length - 1] ?? "")
               : previousStateVal.lastSelectedArtifactId,
         };
       }
@@ -249,7 +249,7 @@ function ArtifactManagementPageTag() {
           const newLastSelectedId = artifactIdsToDelete.includes(
             currentLastSelectedId,
           )
-            ? newSelectedIds[newSelectedIds.length - 1] ?? ""
+            ? (newSelectedIds[newSelectedIds.length - 1] ?? "")
             : currentLastSelectedId;
 
           return {
@@ -604,8 +604,8 @@ function ArtifactManagementPageTag() {
                       fontWeight: 500,
                     }}
                   >
-                    Hai selezionato {componentState.selectedArtifactIds.length} artifact.
-                    In anteprima stai vedendo l’ultimo selezionato.
+                    Hai selezionato {componentState.selectedArtifactIds.length}{" "}
+                    artifact. In anteprima stai vedendo l’ultimo selezionato.
                   </div>
                 ) : (
                   <></>
@@ -615,23 +615,238 @@ function ArtifactManagementPageTag() {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    gap: "8px",
+                    gap: "10px",
                     marginBottom: "14px",
-                    fontSize: "14px",
                   }}
                 >
-                  <span>
-                    <b>ID:</b> {previewArtifact.id ?? "-"}
-                  </span>
-                  <span>
-                    <b>Name:</b> {previewArtifact.name ?? "-"}
-                  </span>
-                  <span>
-                    <b>Type:</b> {previewArtifact.type ?? "-"}
-                  </span>
-                  <span>
-                    <b>Version:</b> {previewArtifact.version ?? "-"}
-                  </span>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns:
+                        "repeat(auto-fit, minmax(140px, 1fr))",
+                      gap: "8px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        padding: "8px 10px",
+                        borderRadius: "8px",
+                        backgroundColor: "#f8fafc",
+                        border: "1px solid #e5e7eb",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: "11px",
+                          color: "#000000",
+                          fontWeight: 600,
+                          marginBottom: "2px",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.03em",
+                        }}
+                      >
+                        ID
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "13px",
+                          color: "#111827",
+                          fontWeight: 500,
+                          wordBreak: "break-word",
+                        }}
+                      >
+                        {previewArtifact.id ?? "-"}
+                      </div>
+                    </div>
+
+                    <div
+                      style={{
+                        padding: "8px 10px",
+                        borderRadius: "8px",
+                        backgroundColor: "#f8fafc",
+                        border: "1px solid #e5e7eb",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: "11px",
+                          color: "#000000",
+                          fontWeight: 600,
+                          marginBottom: "2px",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.03em",
+                        }}
+                      >
+                        Name
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "13px",
+                          color: "#111827",
+                          fontWeight: 500,
+                          wordBreak: "break-word",
+                        }}
+                      >
+                        {previewArtifact.name ?? "-"}
+                      </div>
+                    </div>
+
+                    <div
+                      style={{
+                        padding: "8px 10px",
+                        borderRadius: "8px",
+                        backgroundColor: "#f8fafc",
+                        border: "1px solid #e5e7eb",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: "11px",
+                          color: "#000000",
+                          fontWeight: 600,
+                          marginBottom: "2px",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.03em",
+                        }}
+                      >
+                        Type
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "13px",
+                          color: "#111827",
+                          fontWeight: 500,
+                          wordBreak: "break-word",
+                        }}
+                      >
+                        {previewArtifact.type ?? "-"}
+                      </div>
+                    </div>
+
+                    <div
+                      style={{
+                        padding: "8px 10px",
+                        borderRadius: "8px",
+                        backgroundColor: "#f8fafc",
+                        border: "1px solid #e5e7eb",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: "11px",
+                          color: "#000000",
+                          fontWeight: 600,
+                          marginBottom: "2px",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.03em",
+                        }}
+                      >
+                        Version
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "13px",
+                          color: "#111827",
+                          fontWeight: 500,
+                          wordBreak: "break-word",
+                        }}
+                      >
+                        {previewArtifact.version ?? "-"}
+                      </div>
+                    </div>
+                  </div>
+
+                  {previewArtifact.schema_id &&
+                  previewArtifact.schema_name &&
+                  previewArtifact.schema_version ? (
+                    <div
+                      style={{
+                        padding: "8px 10px",
+                        borderRadius: "8px",
+                        backgroundColor: "#f9fafb",
+                        border: "1px solid #e5e7eb",
+                        display: "grid",
+                        gridTemplateColumns:
+                          "repeat(auto-fit, minmax(140px, 1fr))",
+                        gap: "8px",
+                      }}
+                    >
+                      <div>
+                        <div
+                          style={{
+                            fontSize: "11px",
+                            color: "#000000",
+                            fontWeight: 600,
+                            marginBottom: "2px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.03em",
+                          }}
+                        >
+                          Schema ID
+                        </div>
+                        <div
+                          style={{
+                            fontSize: "13px",
+                            color: "#111827",
+                            fontWeight: 500,
+                            wordBreak: "break-word",
+                          }}
+                        >
+                          {previewArtifact.schema_id}
+                        </div>
+                      </div>
+
+                      <div>
+                        <div
+                          style={{
+                            fontSize: "11px",
+                            color: "#000000",
+                            fontWeight: 600,
+                            marginBottom: "2px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.03em",
+                          }}
+                        >
+                          Schema Name
+                        </div>
+                        <div
+                          style={{
+                            fontSize: "13px",
+                            color: "#111827",
+                            fontWeight: 500,
+                            wordBreak: "break-word",
+                          }}
+                        >
+                          {previewArtifact.schema_name}
+                        </div>
+                      </div>
+
+                      <div>
+                        <div
+                          style={{
+                            fontSize: "11px",
+                            color: "#000000",
+                            fontWeight: 600,
+                            marginBottom: "2px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.03em",
+                          }}
+                        >
+                          Schema Version
+                        </div>
+                        <div
+                          style={{
+                            fontSize: "13px",
+                            color: "#111827",
+                            fontWeight: 500,
+                            wordBreak: "break-word",
+                          }}
+                        >
+                          {previewArtifact.schema_version}
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
 
                 <div

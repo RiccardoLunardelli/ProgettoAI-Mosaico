@@ -5,6 +5,9 @@ export interface ArtifactListInterface {
   type: string;
   name: string;
   version: string;
+  schema_id: string;
+  schema_name: string;
+  schema_version: string;
 }
 
 export const artifactListSlice = createSlice({
