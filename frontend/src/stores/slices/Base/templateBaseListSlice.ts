@@ -5,12 +5,17 @@ export interface TemplateBaseListInterface {
   name: string;
 }
 
+export interface runIdTemplateInterface {
+  id: string;
+  template: string;
+}
+
 export const templateBaseListSlice = createSlice({
   name: "templateBaseListSlice",
   initialState: {
     value: null as TemplateBaseListInterface[] | null,
     detail: null as any,
-    runIdTemplate: null as string[] | null,
+    runIdTemplate: null as runIdTemplateInterface[] | null,
     lastTemplate: null as string | null,
   },
   reducers: {
@@ -33,7 +38,7 @@ export const templateBaseListSlice = createSlice({
     SetRunIdTemplateDetailSlice: (
       state,
       action: {
-        payload: string[];
+        payload: runIdTemplateInterface[];
       },
     ) => {
       state.runIdTemplate = action.payload;

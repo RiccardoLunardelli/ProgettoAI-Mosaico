@@ -13,6 +13,7 @@ import { GetRunIdTemplateAPIHook } from "../../customHooks/API/TemplateBase/temp
 import DictionaryPatchFormTag from "./DictionaryPatchForm";
 import type { DictionatyListInterface } from "../../stores/slices/Base/dictionaryListSlice";
 import WarningTag from "../Warning/Warning";
+import type { runIdTemplateInterface } from "../../stores/slices/Base/templateBaseListSlice";
 
 const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
 const BasicButtonGenericTag = lazy(
@@ -59,8 +60,8 @@ function DictionaryPageTag() {
     }) => state.dictionaryListSlice,
   );
 
-  const templateBaseListSlice: { runIdTemplate: string[] } = useSelector(
-    (state: { templateBaseListSlice: { runIdTemplate: string[] } }) =>
+  const templateBaseListSlice: { runIdTemplate: runIdTemplateInterface[] } = useSelector(
+    (state: { templateBaseListSlice: { runIdTemplate: runIdTemplateInterface[] } }) =>
       state.templateBaseListSlice,
   );
 
@@ -747,16 +748,18 @@ function DictionaryPageTag() {
                   >
                     {(templateBaseListSlice?.runIdTemplate ?? []).length > 0 ? (
                       (templateBaseListSlice?.runIdTemplate ?? []).map(
-                        (singleId: string) => {
+                        (singleId: runIdTemplateInterface) => {
                           const isSelected =
-                            componentState.selectedRunId === singleId;
+                            componentState.selectedRunId === singleId.id;
 
                           return (
                             <div
-                              key={singleId ?? ""}
+                              key={singleId.id ?? ""}
                               className="HoverTransform"
                               style={selectionItemStyle(isSelected)}
-                              onClick={() => HandleSelectRunIdOnClick(singleId)}
+                              onClick={() =>
+                                HandleSelectRunIdOnClick(singleId.id)
+                              }
                             >
                               <span
                                 style={{
@@ -764,7 +767,15 @@ function DictionaryPageTag() {
                                   fontWeight: 600,
                                 }}
                               >
-                                {singleId ?? ""}
+                                {singleId.id ?? ""}
+                              </span>
+                              <span
+                                style={{
+                                  fontSize: "14px",
+                                  fontWeight: 600,
+                                }}
+                              >
+                                {singleId.template ?? ""}
                               </span>
 
                               {isSelected && (

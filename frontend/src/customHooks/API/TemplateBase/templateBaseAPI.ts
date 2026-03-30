@@ -15,6 +15,7 @@ import {
   SetRunIdTemplateDetailSlice,
   SetTemplateBaseDetailSlice,
   SetTemplateBaseListSlice,
+  type runIdTemplateInterface,
   type TemplateBaseListInterface,
 } from "../../../stores/slices/Base/templateBaseListSlice";
 import { useTranslation } from "react-i18next";
@@ -218,7 +219,7 @@ const GetRunIdTemplateAPIHook = () => {
       const jsonResponse = JSON.parse(response);
 
       if (infoObj?.saveResponse ?? true) {
-        const idTempalate: string[] = jsonResponse ?? [];
+        const idTempalate: runIdTemplateInterface[] = jsonResponse ?? [];
         dispatch(SetRunIdTemplateDetailSlice(idTempalate));
       }
 
