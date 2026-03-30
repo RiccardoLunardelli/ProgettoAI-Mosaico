@@ -272,15 +272,15 @@ function DynamicTemplateFormTag({
     return false;
   };
 
-  const templateInfo = formValue?.TemplateInfo;
+  const templateInfoSchema = schema?.TemplateInfo;
+  const templateInfoProperties = templateInfoSchema?.properties ?? {};
 
-  const isSaveDisabled =
-    !templateInfo ||
-    typeof templateInfo !== "object" ||
-    Object.keys(templateInfo).length === 0 ||
-    Object.values(templateInfo).some((singleValue) =>
-      isEmptyValue(singleValue),
-    );
+  const isSaveDisabled = Object.keys(templateInfoProperties).some(
+    (singlePropertyKey) => {
+      const currentValue = formValue?.TemplateInfo?.[singlePropertyKey];
+      return isEmptyValue(currentValue);
+    },
+  );
 
   return (
     <>

@@ -56,7 +56,7 @@ function DynamicTemplatePatchPreviewModal({
               value={editorValue}
               onChange={handleChange}
               options={{
-                readOnly: false, // 👈 ORA EDITABILE
+                readOnly: false, 
                 minimap: { enabled: false },
                 formatOnPaste: true,
                 formatOnType: true,
