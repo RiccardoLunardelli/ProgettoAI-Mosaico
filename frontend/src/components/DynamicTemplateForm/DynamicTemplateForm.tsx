@@ -265,6 +265,23 @@ function DynamicTemplateFormTag({
     closeConceptModal();
   };
 
+  const isEmptyValue = (singleValue: any) => {
+    if (singleValue === null || singleValue === undefined) return true;
+    if (typeof singleValue === "string" && singleValue.trim() === "")
+      return true;
+    return false;
+  };
+
+  const templateInfo = formValue?.TemplateInfo;
+
+  const isSaveDisabled =
+    !templateInfo ||
+    typeof templateInfo !== "object" ||
+    Object.keys(templateInfo).length === 0 ||
+    Object.values(templateInfo).some((singleValue) =>
+      isEmptyValue(singleValue),
+    );
+
   return (
     <>
       <style>
@@ -344,6 +361,7 @@ function DynamicTemplateFormTag({
                     appearance="primary"
                     onClick={handleSave}
                     loading={saving}
+                    disabled={isSaveDisabled}
                   >
                     {saveLabel}
                   </Button>

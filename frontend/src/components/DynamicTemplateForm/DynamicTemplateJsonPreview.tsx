@@ -1,11 +1,6 @@
-import React from "react";
 import MonacoEditor from "@monaco-editor/react";
 
-const DynamicTemplateJsonPreview = React.memo(function DynamicTemplateJsonPreview({
-  value,
-}: {
-  value: string;
-}) {
+function DynamicTemplateJsonPreview({ value }: { value: string }) {
   return (
     <div
       style={{
@@ -33,6 +28,6 @@ const DynamicTemplateJsonPreview = React.memo(function DynamicTemplateJsonPrevie
       />
     </div>
   );
-});
+}
 
 export default DynamicTemplateJsonPreview;

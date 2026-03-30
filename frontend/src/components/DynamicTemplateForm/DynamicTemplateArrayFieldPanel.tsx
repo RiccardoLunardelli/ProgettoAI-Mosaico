@@ -66,10 +66,11 @@ function DynamicTemplateArrayFieldPanel({
           >
             <Button
               appearance="ghost"
+              startIcon={<Plus />}
               size="sm"
               onClick={() => openAddConceptModal(fieldKey)}
             >
-              Add concept
+              Template base
             </Button>
 
             <Button
