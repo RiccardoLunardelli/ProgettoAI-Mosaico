@@ -800,7 +800,7 @@ function AdminHomePageTag() {
                 marginTop: "4px",
               }}
             >
-              Crea un tamplate
+              Crea un template
             </span>
           </div>
         </div>

@@ -63,21 +63,6 @@ function NavbarUserInfoTag() {
           zIndex: 9999
         }}
       >
-        <DropdownMenu.Item
-          style={{
-            padding: "10px 15px",
-            cursor: "pointer",
-            color: "#477dda",
-            fontSize: "14px",
-            transition: "background 0.2s",
-          }}
-          onClick={() => {
-            navigate("/Settings");
-            dispatch(SetCurrentPathSlice(t("Settings")));
-          }}
-        >
-          Settings
-        </DropdownMenu.Item>
         {/* Se sono admin la vedo, se no non vedo */}
         {(userInfoSlice?.value?.role ?? 2) == 1 ? (
           <>
