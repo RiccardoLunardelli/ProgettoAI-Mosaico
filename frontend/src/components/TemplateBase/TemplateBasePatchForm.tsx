@@ -1,11 +1,13 @@
-import { lazy, Suspense, useEffect, useMemo } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Button, Modal } from "rsuite";
 import { SetInputSlice } from "../../stores/slices/Base/inputSlice";
 import TextInputTitleTag from "../input/TextInputTitle";
 
 const SelectPickerTag = lazy(() =>
   import("rsuite").then((module) => ({ default: module.SelectPicker })),
 );
+const MonacoEditorTag = lazy(() => import("@monaco-editor/react"));
 
 type TemplateBaseOperationType =
   | "add_base_concept"
@@ -31,6 +33,17 @@ interface TemplateBaseOperationConfigInterface {
   fields: TemplateBaseFieldInterface[];
 }
 
+interface AddBaseConceptStoredInterface {
+  category_id: string;
+  concept_id: string;
+  semantic_category: string;
+  label: {
+    it: string;
+    en: string;
+  };
+  description: string;
+}
+
 const CATEGORY_OPTIONS = [
   { label: "measurement", value: "measurement" },
   { label: "parameter", value: "parameter" },
@@ -46,7 +59,7 @@ const TEMPLATE_BASE_OPERATIONS: Record<
 > = {
   add_base_concept: {
     label: "Add Base Concept",
-    helperText: "Aggiunge un nuovo concept al template base.",
+    helperText: "Aggiunge uno o più concept al template base.",
     fields: [
       {
         id: "category_id",
@@ -156,6 +169,13 @@ function TemplateBasePatchFormTag({
 
   const operationInputId = `${inputPrefix}-operation`;
   const textAreaInputId = `${inputPrefix}-TextArea`;
+  const conceptsTextAreaInputId = `${inputPrefix}-Concepts-TextArea`;
+
+  const [conceptsList, setConceptsList] = useState<
+    AddBaseConceptStoredInterface[]
+  >([]);
+  const [showConceptsModal, setShowConceptsModal] = useState<boolean>(false);
+  const [conceptsEditorValue, setConceptsEditorValue] = useState<string>("[]");
 
   const currentOperation = (inputSliceValue[operationInputId] ?? "") as
     | TemplateBaseOperationType
@@ -178,6 +198,117 @@ function TemplateBasePatchFormTag({
     return inputSliceValue[`${inputPrefix}-${fieldId}`] ?? "";
   };
 
+  const clearAddBaseConceptForm = () => {
+    [
+      "category_id",
+      "concept_id",
+      "semantic_category",
+      "label_it",
+      "label_en",
+      "description",
+    ].forEach((fieldId) => {
+      dispatch(
+        SetInputSlice({
+          id: `${inputPrefix}-${fieldId}`,
+          value: "",
+        }),
+      );
+    });
+  };
+
+  const buildAddBaseConceptDraft = () => {
+    return {
+      category_id: getFieldValue("category_id"),
+      concept_id: getFieldValue("concept_id"),
+      semantic_category: getFieldValue("semantic_category"),
+      label_it: getFieldValue("label_it"),
+      label_en: getFieldValue("label_en"),
+      description: getFieldValue("description"),
+    };
+  };
+
+  const isAddBaseConceptDraftValid = () => {
+    const draft = buildAddBaseConceptDraft();
+
+    return (
+      draft.category_id.trim() !== "" &&
+      draft.concept_id.trim() !== "" &&
+      draft.semantic_category.trim() !== "" &&
+      draft.label_it.trim() !== "" &&
+      draft.label_en.trim() !== "" &&
+      draft.description.trim() !== ""
+    );
+  };
+
+  const handleAddBaseConcept = () => {
+    if (!isAddBaseConceptDraftValid()) return;
+
+    const draft = buildAddBaseConceptDraft();
+
+    setConceptsList((previousStateVal) => {
+      return [
+        ...previousStateVal,
+        {
+          category_id: draft.category_id.trim(),
+          concept_id: draft.concept_id.trim(),
+          semantic_category: draft.semantic_category.trim(),
+          label: {
+            it: draft.label_it.trim(),
+            en: draft.label_en.trim(),
+          },
+          description: draft.description.trim(),
+        },
+      ];
+    });
+
+    clearAddBaseConceptForm();
+  };
+
+  const handleOpenConceptsModal = () => {
+    const conceptsJson = JSON.stringify(conceptsList, null, 2);
+
+    setConceptsEditorValue(conceptsJson);
+
+    dispatch(
+      SetInputSlice({
+        id: conceptsTextAreaInputId,
+        value: conceptsJson,
+      }),
+    );
+
+    setShowConceptsModal(true);
+  };
+
+  const handleCloseConceptsModal = () => {
+    setShowConceptsModal(false);
+  };
+
+  const handleConceptsEditorChange = (value: string | undefined) => {
+    const newValue = value ?? "";
+
+    setConceptsEditorValue(newValue);
+
+    dispatch(
+      SetInputSlice({
+        id: conceptsTextAreaInputId,
+        value: newValue,
+      }),
+    );
+  };
+
+  const handleApplyConceptsEditor = () => {
+    try {
+      const parsedValue = JSON.parse(conceptsEditorValue);
+
+      if (!Array.isArray(parsedValue)) return;
+
+      setConceptsList(parsedValue);
+      setShowConceptsModal(false);
+    } catch {
+      return;
+    }
+  };
+
   const buildTemplateBasePatchJson = () => {
     if (!currentOperation) {
       return JSON.stringify(
@@ -190,23 +321,23 @@ function TemplateBasePatchFormTag({
       );
     }
 
+    if (currentOperation === "add_base_concept") {
+      return JSON.stringify(
+        {
+          target: "template_base",
+          operations: conceptsList.map((singleConcept) => ({
+            op: "add_base_concept",
+            ...singleConcept,
+          })),
+        },
+        null,
+        2,
+      );
+    }
+
     let operationPayload: Record<string, any> = {
       op: currentOperation,
     };
-
-    if (currentOperation === "add_base_concept") {
-      operationPayload = {
-        op: "add_base_concept",
-        category_id: getFieldValue("category_id"),
-        concept_id: getFieldValue("concept_id"),
-        semantic_category: getFieldValue("semantic_category"),
-        label: {
-          it: getFieldValue("label_it"),
-          en: getFieldValue("label_en"),
-        },
-        description: getFieldValue("description"),
-      };
-    }
 
     if (currentOperation === "remove_base_concept") {
       operationPayload = {
@@ -241,7 +372,18 @@ function TemplateBasePatchFormTag({
 
   const jsonPreview = useMemo(() => {
     return buildTemplateBasePatchJson();
-  }, [inputSliceValue, inputPrefix, currentOperation]);
+  }, [
+    inputPrefix,
+    currentOperation,
+    inputSliceValue[`${inputPrefix}-category_id`],
+    inputSliceValue[`${inputPrefix}-concept_id`],
+    inputSliceValue[`${inputPrefix}-semantic_category`],
+    inputSliceValue[`${inputPrefix}-label_it`],
+    inputSliceValue[`${inputPrefix}-label_en`],
+    inputSliceValue[`${inputPrefix}-description`],
+    inputSliceValue[`${inputPrefix}-category`],
+    conceptsList,
+  ]);
 
   useEffect(() => {
     dispatch(
@@ -251,6 +393,12 @@ function TemplateBasePatchFormTag({
       }),
     );
   }, [dispatch, jsonPreview, textAreaInputId]);
+
+  useEffect(() => {
+    if (currentOperation !== "add_base_concept") return;
+
+    clearAddBaseConceptForm();
+  }, [currentOperation]);
 
   const labelStyle = {
     fontSize: "13px",
@@ -345,152 +493,246 @@ function TemplateBasePatchFormTag({
   };
 
   return (
-    <div style={cardStyle}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "4px",
-        }}
-      >
-        <span
+    <>
+      <div style={cardStyle}>
+        <div
           style={{
-            fontSize: "20px",
-            fontWeight: 600,
-            color: "#111827",
+            display: "flex",
+            flexDirection: "column",
+            gap: "4px",
           }}
         >
-          Template Base Patch
-        </span>
-
-        <span
-          style={{
-            fontSize: "13px",
-            color: "#6b7280",
-          }}
-        >
-          Form dedicato per il target template_base.
-        </span>
-      </div>
-
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr",
-          gap: "16px",
-          alignItems: "start",
-        }}
-      >
-        <div style={inputCardStyle}>
-          <span style={labelStyle}>Operation</span>
-
-          <Suspense fallback={null}>
-            <SelectPickerTag
-              data={Object.entries(TEMPLATE_BASE_OPERATIONS).map(
-                ([operationKey, operationValue]) => ({
-                  label: operationValue.label,
-                  value: operationKey,
-                }),
-              )}
-              value={currentOperation || null}
-              onChange={(value) => {
-                HandleInputChange(operationInputId, String(value ?? ""));
-              }}
-              placeholder="Seleziona operazione"
-              cleanable={false}
-              searchable={false}
-              block
-              style={{ width: "100%" }}
-            />
-          </Suspense>
-        </div>
-      </div>
-
-      {currentOperationConfig ? (
-        <>
-          {currentOperationConfig.helperText ? (
-            <div
-              style={{
-                fontSize: "12px",
-                color: "#6b7280",
-                marginTop: "-8px",
-              }}
-            >
-              {currentOperationConfig.helperText}
-            </div>
-          ) : null}
-
-          <div
+          <span
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(2, minmax(260px, 1fr))",
-              gap: "16px",
-              alignItems: "start",
+              fontSize: "20px",
+              fontWeight: 600,
+              color: "#111827",
             }}
           >
-            {currentOperationConfig.fields.map((singleField) => (
-              <div
-                key={`${inputPrefix}-${singleField.id}`}
-                style={{
-                  width: "100%",
-                  minWidth: 0,
-                }}
-              >
-                {RenderField(singleField)}
-              </div>
-            ))}
-          </div>
-        </>
-      ) : null}
+            Template Base Patch
+          </span>
 
-      <div
-        style={{
-          borderTop: "1px solid #e5e7eb",
-          paddingTop: "14px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "8px",
-        }}
-      >
-        <span
-          style={{
-            fontSize: "14px",
-            fontWeight: 600,
-            color: "#111827",
-          }}
-        >
-          JSON preview
-        </span>
-
-        <span
-          style={{
-            fontSize: "12px",
-            color: "#6b7280",
-          }}
-        >
-          Anteprima generata automaticamente dal form.
-        </span>
+          <span
+            style={{
+              fontSize: "13px",
+              color: "#6b7280",
+            }}
+          >
+            Form dedicato per il target template_base.
+          </span>
+        </div>
 
         <div
           style={{
-            width: "100%",
-            minHeight: "260px",
-            borderRadius: "8px",
-            border: "1px solid #d1d5db",
-            padding: "12px",
-            boxSizing: "border-box",
-            fontSize: "13px",
-            fontFamily: "monospace",
-            backgroundColor: "#f9fafb",
-            overflow: "auto",
-            whiteSpace: "pre-wrap",
-            wordBreak: "break-word",
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            gap: "16px",
+            alignItems: "start",
           }}
         >
-          {jsonPreview}
+          <div style={inputCardStyle}>
+            <span style={labelStyle}>Operation</span>
+
+            <Suspense fallback={null}>
+              <SelectPickerTag
+                data={Object.entries(TEMPLATE_BASE_OPERATIONS).map(
+                  ([operationKey, operationValue]) => ({
+                    label: operationValue.label,
+                    value: operationKey,
+                  }),
+                )}
+                value={currentOperation || null}
+                onChange={(value) => {
+                  HandleInputChange(operationInputId, String(value ?? ""));
+                }}
+                placeholder="Seleziona operazione"
+                cleanable={false}
+                searchable={false}
+                block
+                style={{ width: "100%" }}
+              />
+            </Suspense>
+          </div>
+        </div>
+
+        {currentOperationConfig ? (
+          <>
+            {currentOperationConfig.helperText ? (
+              <div
+                style={{
+                  fontSize: "12px",
+                  color: "#6b7280",
+                  marginTop: "-8px",
+                }}
+              >
+                {currentOperationConfig.helperText}
+              </div>
+            ) : null}
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, minmax(260px, 1fr))",
+                gap: "16px",
+                alignItems: "start",
+              }}
+            >
+              {currentOperationConfig.fields.map((singleField) => (
+                <div
+                  key={`${inputPrefix}-${singleField.id}`}
+                  style={{
+                    width: "100%",
+                    minWidth: 0,
+                  }}
+                >
+                  {RenderField(singleField)}
+                </div>
+              ))}
+            </div>
+
+            {currentOperation === "add_base_concept" ? (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: "12px",
+                  flexWrap: "wrap",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "13px",
+                    color: "#6b7280",
+                  }}
+                >
+                  Concepts aggiunti: <b>{conceptsList.length}</b>
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "8px",
+                    alignItems: "center",
+                  }}
+                >
+                  <Button
+                    appearance="primary"
+                    onClick={handleAddBaseConcept}
+                    disabled={!isAddBaseConceptDraftValid()}
+                  >
+                    Aggiungi concept
+                  </Button>
+
+                  <Button
+                    appearance="default"
+                    onClick={handleOpenConceptsModal}
+                  >
+                    Mostra concepts
+                  </Button>
+                </div>
+              </div>
+            ) : null}
+          </>
+        ) : null}
+
+        <div
+          style={{
+            borderTop: "1px solid #e5e7eb",
+            paddingTop: "14px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+          }}
+        >
+          <span
+            style={{
+              fontSize: "14px",
+              fontWeight: 600,
+              color: "#111827",
+            }}
+          >
+            JSON preview
+          </span>
+
+          <span
+            style={{
+              fontSize: "12px",
+              color: "#6b7280",
+            }}
+          >
+            Anteprima generata automaticamente dal form.
+          </span>
+
+          <div
+            style={{
+              width: "100%",
+              minHeight: "260px",
+              borderRadius: "8px",
+              border: "1px solid #d1d5db",
+              padding: "12px",
+              boxSizing: "border-box",
+              fontSize: "13px",
+              fontFamily: "monospace",
+              backgroundColor: "#f9fafb",
+              overflow: "auto",
+              whiteSpace: "pre-wrap",
+              wordBreak: "break-word",
+            }}
+          >
+            {jsonPreview}
+          </div>
         </div>
       </div>
-    </div>
+
+      <Modal open={showConceptsModal} onClose={handleCloseConceptsModal} size="lg">
+        <Modal.Header>
+          <Modal.Title>Concepts preview</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <div
+            style={{
+              height: "60vh",
+              minHeight: "420px",
+              border: "1px solid #e5e7eb",
+              borderRadius: "10px",
+              overflow: "hidden",
+              background: "#ffffff",
+            }}
+          >
+            <Suspense
+              fallback={<div style={{ padding: "16px" }}>Caricamento editor...</div>}
+            >
+              <MonacoEditorTag
+                height="100%"
+                defaultLanguage="json"
+                value={conceptsEditorValue}
+                onChange={handleConceptsEditorChange}
+                options={{
+                  readOnly: false,
+                  minimap: { enabled: false },
+                  formatOnPaste: true,
+                  formatOnType: true,
+                  scrollBeyondLastLine: false,
+                  wordWrap: "on",
+                  automaticLayout: true,
+                }}
+              />
+            </Suspense>
+          </div>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button appearance="subtle" onClick={handleCloseConceptsModal}>
+            Chiudi
+          </Button>
+          <Button appearance="primary" onClick={handleApplyConceptsEditor}>
+            Applica
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }
 

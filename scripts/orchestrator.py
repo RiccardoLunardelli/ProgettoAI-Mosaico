@@ -533,21 +533,36 @@ def template_run(user_id, run_id: str, validate_only: bool, apply_llm: bool, llm
     template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = build_patch_and_validation(cfg_art, "template", template_apply_patch, summarize_template_real_diff,actions_payload_override=actions_payload)
 
     if validation_error:
+        dict_payload = load_json(dictionary_path) if dictionary_path else None
+        kb_payload = load_json(kb_path) if kb_path else None
+        tb_payload = load_json(template_base_path) if template_base_path else None
+        tb_version = tb_payload.get("template_base_version") if tb_payload else None
+
+        schema_versions = build_artifact_versions(
+            "template",
+            dict_payload=dict_payload,
+            kb_payload=kb_payload,
+            template_base_version=tb_version,
+        )
+
         run_report = build_run_report(
             cfg=cfg_art, run_id=run_id, artifact_type="template",
             input_path=template_path, output_path=template_path,
             diff=validation_error.get("diff", []),
-            schema_versions={}, committed=False, status="validation_error",
+            schema_versions=schema_versions, committed=False, status="validation_error",
             validation_block={
                 "status": "error",
                 "errors": validation_error.get("errors", []),
                 "warnings": validation_error.get("warnings", []),
                 "stage": validation_error.get("stage"),
             },
-            mr=mr, dictionary_payload=None, kb_payload=None,
+            mr=mr,
+            dictionary_payload=dict_payload,
+            kb_payload=kb_payload,
             template_base_path=template_base_path,
-            template_base_version=load_json(template_base_path).get("template_base_version") if template_base_path else None,
-            llm_attempt=llm_attempt, actions_payload=actions_payload
+            template_base_version=tb_version,
+            llm_attempt=llm_attempt,
+            actions_payload=actions_payload
         )
         report_path = run_dir / "run_report.json"
         report_path.write_text(json.dumps(run_report, ensure_ascii=False, indent=2), encoding="utf-8")

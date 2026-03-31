@@ -10,12 +10,12 @@ import {
 import { SetInputSlice } from "../../stores/slices/Base/inputSlice";
 import { IsValidJSON } from "../../commons/commonsFunctions";
 import { GetRunIdTemplateAPIHook } from "../../customHooks/API/TemplateBase/templateBaseAPI";
-import DictionaryPatchFormTag from "./DictionaryPatchForm";
 import type { DictionatyListInterface } from "../../stores/slices/Base/dictionaryListSlice";
 import WarningTag from "../Warning/Warning";
 import type { runIdTemplateInterface } from "../../stores/slices/Base/templateBaseListSlice";
 
 const RunsListSkeleton = lazy(() => import("../Skeleton/RunsListSkeleton"));
+const DictionaryPatchFormTag = lazy(() => import("./DictionaryPatchForm"));
 const BasicButtonGenericTag = lazy(
   () => import("../button/BasicButtonGeneric"),
 );

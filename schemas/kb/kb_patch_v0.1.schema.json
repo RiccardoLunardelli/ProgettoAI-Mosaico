@@ -103,16 +103,72 @@
           ],
           "default": null,
           "title": "Evidence"
+        },
+        "semantic_category": {
+          "anyOf": [{ "type": "string" }, { "type": "null" }],
+          "default": null,
+          "title": "Semantic Category"
         }
       },
-      "required": [
-        "op",
-        "scope_id",
-        "source_type",
-        "source_key"
-      ],
+      "required": ["op", "scope_id", "source_type", "source_key"],
       "title": "KBPatchUpdateRule",
       "type": "object"
+    },
+    "KBPatchAddScope": {
+      "type": "object",
+      "title": "KBPatchAddScope",
+      "properties": {
+        "op": {
+          "const": "add_scope",
+          "type": "string",
+          "title": "Op"
+        },
+        "scope": {
+          "type": "object",
+          "title": "Scope",
+          "properties": {
+            "scope_id": {
+              "type": "string",
+              "title": "Scope Id"
+            },
+            "match": {
+              "type": "object",
+              "title": "Match",
+              "properties": {
+                "template_guid": {
+                  "type": ["string", "null"],
+                  "default": null
+                },
+                "device_id": { "type": ["string", "null"], "default": null },
+                "device_role": { "type": ["string", "null"], "default": null },
+                "type_fam": { "type": ["string", "null"], "default": null },
+                "enum": { "type": ["string", "null"], "default": null }
+              },
+              "required": [
+                "template_guid",
+                "device_id",
+                "device_role",
+                "type_fam",
+                "enum"
+              ],
+              "additionalProperties": false
+            },
+            "source": {
+              "type": "object",
+              "title": "Source",
+              "properties": {
+                "evidence": { "type": "string", "title": "Evidence" }
+              },
+              "required": ["evidence"],
+              "additionalProperties": false
+            }
+          },
+          "required": ["scope_id", "match", "source"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["op", "scope"],
+      "additionalProperties": false
     }
   },
   "properties": {
@@ -129,6 +185,9 @@
           },
           {
             "$ref": "#/$defs/KBPatchUpdateRule"
+          },
+          {
+            "$ref": "#/$defs/KBPatchAddScope"
           }
         ]
       },
@@ -136,10 +195,7 @@
       "type": "array"
     }
   },
-  "required": [
-    "target",
-    "operations"
-  ],
+  "required": ["target", "operations"],
   "title": "KBPatch",
   "type": "object"
 }

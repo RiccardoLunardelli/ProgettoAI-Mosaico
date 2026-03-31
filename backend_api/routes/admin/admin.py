@@ -227,7 +227,6 @@ def build_template(payload: CreateTemplateAdmin) -> dict:
     return DefaultTemplateBuilder().build(payload)
 
 # ------ENDPOINT--------
-
 #--USER--
 @router.get("/users")
 def get_all_users(user = Depends(require_admin)):
@@ -340,9 +339,7 @@ def create_template(payload: CreateTemplateAdmin, user = Depends(require_admin))
     category = payload.Template.TemplateInfo.Category
     name = payload.Template.TemplateInfo.TemplateName
     product = payload.Template.TemplateInfo.Product
-    version = payload.Template.TemplateInfo.Version
-    content = payload.Template.model_dump()
-    templateClass.insert_templates_metadata(artifact_id=artifact_id, author=author, category=category, name=name, product=product, version=version, content=content)
+    templateClass.insert_templates_metadata(artifact_id=artifact_id, author=author, category=category, name=name, product=product)
     return {"status": "ok", "artifact_id": artifact_id}
 
 #---SCHEMA TEMPLATE-----

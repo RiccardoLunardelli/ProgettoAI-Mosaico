@@ -82,7 +82,7 @@ def compute_effectiveness_metrics(mr, actions_payload, llm_total_tokens: int) ->
     unmapped_pre = compute_metrics(mr, None).get("unmapped_count")
 
     tot = matched_pre + ambiguous_pre + unmapped_pre
-    dictionary_score = matched_pre / tot
+    dictionary_score = matched_pre / tot if tot else 0.0
 
     ambiguous_resolved = ambiguous_pre - ambiguous_post
     matched_gain = matched_post - matched_pre

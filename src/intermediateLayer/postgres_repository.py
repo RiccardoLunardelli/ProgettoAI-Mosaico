@@ -72,16 +72,41 @@ class RunRepository():
         # ritorna tutte le id di uno user specifico dove artefatto è template
 
         if user_id is not None:
-            sql = "SELECT run_id FROM runs WHERE user_id = %s AND report #>> '{target,artifact_type}' = 'template' ORDER BY created_at DESC"
-            params = (user_id,)
+            sql = """
+                SELECT
+                    r.run_id,
+                    a.name AS template_name
+                FROM runs r
+                LEFT JOIN artifacts a ON a.id = r.artifact_id
+                WHERE r.user_id = %s
+                AND r.report #>> '{target,artifact_type}' = 'template'
+                ORDER BY r.created_at DESC
+            """
+            params = (str(user_id),)
         else:
-            sql = "SELECT run_id FROM runs WHERE report #>> '{target,artifact_type}' = 'template' ORDER BY created_at DESC"
+            sql = """
+                SELECT
+                    r.run_id,
+                    a.name AS template_name
+                FROM runs r
+                LEFT JOIN artifacts a ON a.id = r.artifact_id
+                WHERE r.report #>> '{target,artifact_type}' = 'template'
+                ORDER BY r.created_at DESC
+            """
             params = ()
+
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
                 cur.execute(sql, params)
                 rows = cur.fetchall()
-        return [r[0] for r in rows]
+
+        return [
+            {
+                "id": r[0],
+                "template": r[1],
+            }
+            for r in rows
+        ]
 
     def get_run_id_by_user_id(self, user_id: str) -> List[str]:
         # ritorna tutte le run di uno user
@@ -951,13 +976,13 @@ class Template():
                 rows = cur.fetchall()
                 return [dict(r) for r in rows]
 
-    def insert_templates_metadata(self, artifact_id: str, author: str, category: str, name: str, product: str, version: str, content: dict) -> None: 
+    def insert_templates_metadata(self, artifact_id: str, author: str | None = None, category: str | None = None, name: str | None = None, product: str | None = None) -> None: 
         # inserisce metadati in templates 
 
-        sql = "INSERT INTO templates (id, author, category, name, product, version, content) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO templates (id, author, category, name, product) VALUES (%s, %s, %s, %s, %s)"
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
-                cur.execute(sql, (artifact_id, author, category, name, product, version, psycopg2.extras.Json(content),),)
+                cur.execute(sql, (artifact_id, author, category, name, product))
 
 class Schema():
 

@@ -30,6 +30,7 @@ def kb_upsert_mapping(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
 
     new_kb = copy.deepcopy(kb) # preview
     mappings = new_kb.setdefault("mappings", [])
+    scopes = new_kb.setdefault("scopes", [])
 
     for op in patch.get("operations", []):
         #-----ADD KB RULE-------
@@ -66,6 +67,42 @@ def kb_upsert_mapping(ctx: MCPContext, path: str, patch: Dict, dry_run: bool) ->
                     break 
             if not updated:
                 raise ValueError(f"KB rule not found for scope_id={scope_id}, source_type={source_type}, source_key={source_key}")
+        #---------ADD SCOPE----------
+        elif op["op"] == "add_scope":
+            scope = op.get("scope")
+            if not isinstance(scope, dict):
+                raise ValueError("add_scope richiede 'scope' (object)")
+
+            match = scope.get("match")
+            source = scope.get("source")
+            scope_id = scope.get("scope_id")
+
+            if not isinstance(match, dict):
+                raise ValueError("add_scope.scope.match deve essere un object")
+            if not isinstance(source, dict):
+                raise ValueError("add_scope.scope.source deve essere un object")
+            if not scope_id or not isinstance(scope_id, str):
+                raise ValueError("add_scope.scope.scope_id mancante o non valido")
+
+            # evita duplicati
+            if any(s.get("scope_id") == scope_id for s in scopes):
+                raise ValueError(f"scope_id già presente: {scope_id}")
+
+            scopes.append({
+                "scope_id": scope_id,
+                "match": {
+                    "template_guid": match.get("template_guid"),
+                    "device_id": match.get("device_id"),
+                    "device_role": match.get("device_role"),
+                    "type_fam": match.get("type_fam"),
+                    "enum": match.get("enum"),
+                },
+                "source": {
+                    "evidence": source.get("evidence")
+                }
+            })
+
+
         else:
             raise ValueError(f"Unsupported operation: {op['op']}")
         

@@ -203,7 +203,7 @@ def normalize_template(raw_template: Dict[str, Any], schema: Dict[str, Any]) -> 
                 if not isinstance(entry, dict):
                     continue
 
-                extracted = extracted = extract_entry_fields(entry, section, map_key)
+                extracted = extract_entry_fields(entry, section, map_key)
                 extracted = apply_normalizations(extracted, normalizations)
 
                 if role == "core":

@@ -137,6 +137,8 @@ def summarize_dictionary_diff(before: dict, after: dict) -> list[str]:
 
 def summarize_kb_diff(before: dict, after: dict) -> list[str]:
     summary = []
+
+    # ----mappings---------
     b_map = {(m["scope_id"], m["source_type"], m["source_key"]): m for m in before.get("mappings", [])}
     a_map = {(m["scope_id"], m["source_type"], m["source_key"]): m for m in after.get("mappings", [])}
 
@@ -147,8 +149,24 @@ def summarize_kb_diff(before: dict, after: dict) -> list[str]:
     for key in sorted(set(a_map) & set(b_map)):
         b = b_map[key]
         a = a_map[key]
-        if b.get("concept_id") != a.get("concept_id") or b.get("reason") != a.get("reason") or b.get("evidence") != a.get("evidence"):
+        if b.get("concept_id") != a.get("concept_id") or b.get("reason") != a.get("reason") or b.get("evidence") != a.get("evidence") or b.get("semantic_category") != a.get("semantic_category"):
             summary.append(f"update_kb_rule: {a['scope_id']} {a['source_type']} {a['source_key']}")
+
+     # ----scopes----
+    b_scopes = {s.get("scope_id"): s for s in before.get("scopes", []) if s.get("scope_id")}
+    a_scopes = {s.get("scope_id"): s for s in after.get("scopes", []) if s.get("scope_id")}
+
+    for scope_id in sorted(set(a_scopes) - set(b_scopes)):
+        summary.append(f"add_scope: {scope_id}")
+
+    for scope_id in sorted(set(b_scopes) - set(a_scopes)):
+        summary.append(f"remove_scope: {scope_id}")
+
+    for scope_id in sorted(set(a_scopes) & set(b_scopes)):
+        b = b_scopes[scope_id]
+        a = a_scopes[scope_id]
+        if b.get("match") != a.get("match") or b.get("source") != a.get("source"):
+            summary.append(f"update_scope: {scope_id}")
 
     return summary
 

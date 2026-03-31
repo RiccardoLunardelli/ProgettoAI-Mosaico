@@ -137,7 +137,7 @@ function CreateTemplatePageTag() {
             patch_json: parsedPatchJson,
           },
           EndCallback: () => {
-            runCreate(); // sempre create dopo
+            runCreate(); 
           },
         });
       },

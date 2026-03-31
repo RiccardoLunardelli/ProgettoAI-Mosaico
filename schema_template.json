@@ -23,8 +23,7 @@
         "type": "string",
         "ui:order": 5
       }
-    },
-    "required": ["TemplateName"]
+    }
   },
   "ContinuosReads": {
     "type": "array",
@@ -194,8 +193,7 @@
             }
           }
         }
-      },
-      "required": ["name"]
+      }
     }
   },
   "Parameters": {
