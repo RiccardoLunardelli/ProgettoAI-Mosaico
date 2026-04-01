@@ -195,13 +195,20 @@ class RunRepository():
             "templates_count": len(templates),
         }
 
-    def delete_run(self, run_id: str) -> None:
+    def delete_run(self, run_ids: List[str]) -> Dict[str, Any]:
         # delete di una run da runs
 
-        sql = "DELETE FROM runs WHERE run_id = %s"
+        sql = "DELETE FROM runs WHERE run_id = ANY(%s) RETURNING run_id"
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
-                cur.execute(sql, (run_id,))
+                cur.execute(sql, (run_ids,))
+                rows = cur.fetchall()
+
+        deleted_ids = [r[0] for r in rows]
+        return {
+            "deleted": len(deleted_ids),
+            "run_ids": deleted_ids
+        }
 
     def truncate_runs(self) -> None:
         # tronca la tabella delle runs

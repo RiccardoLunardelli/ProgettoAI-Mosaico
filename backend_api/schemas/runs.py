@@ -1,5 +1,9 @@
 from pydantic import BaseModel, UUID4
 
+from pydantic import BaseModel, UUID4
+from typing import Literal, Dict, Any
+
+
 class RunTemplateRequest(BaseModel):
     template_name: str
     validate_only: bool = True
@@ -47,3 +51,7 @@ class RunDeviceListRequest(BaseModel):
     validate_only: bool = True
     config_id: str | None = None
 
+class RunPatchPreviewRequest(BaseModel):
+    id: UUID4
+    artifact_type: Literal["dictionary", "kb", "template_base"]
+    patch_json: Dict[str, Any]

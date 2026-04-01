@@ -23,6 +23,12 @@ from scripts.orchestrator import (
 from mcp_server.tools.dictionary_tool import _extract_version_from_path
 import yaml
 
+
+# backend_api/routes/runs.py (imports)
+from scripts.validation.validation import build_patch_and_validation
+from backend_api.schemas.runs import RunPatchPreviewRequest
+
+
 router = APIRouter(prefix="/api")
 
 dsn = "dbname=semantic_ai_mapper user=semantic_user password=semantic_password host=localhost port=5432"
@@ -395,3 +401,63 @@ def run_device_list_api(payload: RunDeviceListRequest, user = Depends(get_curren
 def get_base_update_device_list(config_id: str, user = Depends(get_current_user)):
     rules = _get_device_rules_from_db(config_id)
     return rules.get("enum", {})
+
+# ----PREVIEW VALIDATE ONLY------
+@router.post("/run/preview")
+def run_patch_preview(payload: RunPatchPreviewRequest, user=Depends(get_current_user)):
+    artifact = payload.artifact_type
+
+    input_path, run_dir, _ = initialize(str(payload.id), artifact, user["sub"])
+    if not input_path.exists():
+        raise HTTPException(status_code=404, detail=f"{artifact} file not exists")
+
+    cfg = dict(ARTIFACTS[artifact])
+    cfg["input_path"] = str(input_path)
+
+    # per dictionary serve template_base per canonical validation
+    if artifact == "dictionary":
+        tb_path = _resolve_template_base_for_dictionary(run_dir)
+        cfg["template_base_path"] = str(tb_path)
+
+    patch_file_name = {
+        "dictionary": "dictionary_patch.json",
+        "kb": "kb_patch.json",
+        "template_base": "template_base_patch.json",
+    }[artifact]
+
+    upsert_map = {
+        "dictionary": dictionary_upsert,
+        "kb": kb_upsert_mapping,
+        "template_base": template_apply_patch,
+    }
+
+    diff_map = {
+        "dictionary": summarize_dictionary_diff,
+        "kb": summarize_kb_diff,
+        "template_base": summarize_template_base_diff,
+    }
+
+    patch_path = run_dir / patch_file_name
+    patch_path.write_text(json.dumps(payload.patch_json, ensure_ascii=False, indent=2), encoding="utf-8")
+    cfg["patch_path"] = str(patch_path)
+
+    template_patch, validation_block, validated_preview, validated_diff, actions_payload, validation_error = \
+        build_patch_and_validation(cfg, artifact, upsert_map[artifact], diff_map[artifact])
+
+    if validation_error:
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "status": "validation_error",
+                "errors": validation_error.get("errors", []),
+                "warnings": validation_error.get("warnings", []),
+                "stage": validation_error.get("stage"),
+            },
+        )
+
+    # ritorna SOLO il contenuto della preview
+    if validated_preview is not None:
+        return validated_preview
+
+    dry = upsert_map[artifact](path=str(input_path), patch=template_patch, dry_run=True)
+    return dry.get("preview")

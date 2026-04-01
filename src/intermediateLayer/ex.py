@@ -77,4 +77,6 @@ user_id = "d875ceed-5219-41f7-bc38-bb069f7514d7"
 "id schema 0.2 = 6437f2fa-7b49-4e4f-bb66-76db696f23d6"
 "id schema 0.1 = 234683f9-d45a-435d-8687-c3e698132c45"
 
-artifact.insert_schema_id("45af03a0-9ee5-47b5-9b2e-bbf0ccc852df", "6437f2fa-7b49-4e4f-bb66-76db696f23d6")
+#artifact.insert_schema_id("45af03a0-9ee5-47b5-9b2e-bbf0ccc852df", "6437f2fa-7b49-4e4f-bb66-76db696f23d6")
+
+repo.delete_run("run20260324_105804")

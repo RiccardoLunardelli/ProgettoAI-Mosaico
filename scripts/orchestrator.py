@@ -174,6 +174,8 @@ def run_patch(cfg: dict, artifact_type: str, upsert_fn, diff_fn, validate, input
         if not approve_commit:
             validate_only = True
 
+        
+
         output_path, committed, status, _ = apply_commit(input_path, template_patch, diff, validate_only, upsert_fn)
         if artifact_type == "dictionary":
             ARTIFACTS["dictionary"]["input_path"] = output_path

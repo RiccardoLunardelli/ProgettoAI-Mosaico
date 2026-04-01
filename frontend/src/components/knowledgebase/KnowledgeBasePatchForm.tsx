@@ -33,25 +33,33 @@ interface KnowledgeBaseOperationConfigInterface {
   fields: KnowledgeBaseFieldInterface[];
 }
 
-interface AddKbRuleStoredInterface {
-  scope_id: string;
-  source_type: string;
-  source_key: string;
-  concept_id: string;
-  reason: string;
-  evidence: string;
-  semantic_category: string;
-}
-
-interface AddScopeStoredInterface {
-  scope_id: string;
-  template_guid: string;
-  device_id: string;
-  device_role: string;
-  type_fam: string;
-  enum: string;
-  evidence: string;
-}
+type KnowledgeBaseMixedOperationInterface =
+  | {
+      op: "add_scope";
+      scope: {
+        scope_id: string;
+        match: {
+          template_guid: string;
+          device_id: string;
+          device_role: string;
+          type_fam: string;
+          enum: string | null;
+        };
+        source: {
+          evidence: string;
+        };
+      };
+    }
+  | {
+      op: "add_kb_rule";
+      scope_id: string;
+      source_type: string;
+      source_key: string;
+      concept_id: string;
+      reason: string;
+      evidence: string;
+      semantic_category: string;
+    };
 
 const SOURCE_TYPE_OPTIONS = [
   { label: "ContinuosReads", value: "ContinuosReads" },
@@ -68,7 +76,7 @@ const KB_OPERATIONS: Record<
 > = {
   add_scope: {
     label: "Add Scope",
-    helperText: "Aggiunge uno o più scope nella knowledge base.",
+    helperText: "Aggiunge uno scope nella knowledge base.",
     fields: [
       {
         id: "scope_id",
@@ -103,7 +111,7 @@ const KB_OPERATIONS: Record<
       {
         id: "enum",
         label: "Enum",
-        placeholder: "Es. null oppure un valore",
+        placeholder: "Lascia vuoto o scrivi null",
         type: "text",
       },
       {
@@ -117,7 +125,7 @@ const KB_OPERATIONS: Record<
 
   add_kb_rule: {
     label: "Add KB Rule",
-    helperText: "Aggiunge una o più regole nella knowledge base.",
+    helperText: "Aggiunge una regola nella knowledge base.",
     fields: [
       {
         id: "scope_id",
@@ -225,16 +233,15 @@ function KnowledgeBasePatchFormTag({
 
   const operationInputId = `${inputPrefix}-operation`;
   const textAreaInputId = `${inputPrefix}-TextArea`;
-  const rulesTextAreaInputId = `${inputPrefix}-Rules-TextArea`;
-  const scopesTextAreaInputId = `${inputPrefix}-Scopes-TextArea`;
+  const operationsTextAreaInputId = `${inputPrefix}-Operations-TextArea`;
 
-  const [rulesList, setRulesList] = useState<AddKbRuleStoredInterface[]>([]);
-  const [showRulesModal, setShowRulesModal] = useState<boolean>(false);
-  const [rulesEditorValue, setRulesEditorValue] = useState<string>("[]");
-
-  const [scopesList, setScopesList] = useState<AddScopeStoredInterface[]>([]);
-  const [showScopesModal, setShowScopesModal] = useState<boolean>(false);
-  const [scopesEditorValue, setScopesEditorValue] = useState<string>("[]");
+  const [operationsList, setOperationsList] = useState<
+    KnowledgeBaseMixedOperationInterface[]
+  >([]);
+  const [showOperationsModal, setShowOperationsModal] =
+    useState<boolean>(false);
+  const [operationsEditorValue, setOperationsEditorValue] =
+    useState<string>("[]");
 
   const currentOperation = (inputSliceValue[operationInputId] ?? "") as
     | KnowledgeBaseOperationType
@@ -257,25 +264,6 @@ function KnowledgeBasePatchFormTag({
     return inputSliceValue[`${inputPrefix}-${fieldId}`] ?? "";
   };
 
-  const clearAddKbRuleForm = () => {
-    [
-      "scope_id",
-      "source_type",
-      "source_key",
-      "concept_id",
-      "reason",
-      "evidence",
-      "semantic_category",
-    ].forEach((fieldId) => {
-      dispatch(
-        SetInputSlice({
-          id: `${inputPrefix}-${fieldId}`,
-          value: "",
-        }),
-      );
-    });
-  };
-
   const clearAddScopeForm = () => {
     [
       "scope_id",
@@ -295,188 +283,180 @@ function KnowledgeBasePatchFormTag({
     });
   };
 
-  const buildAddKbRuleDraft = (): AddKbRuleStoredInterface => {
-    return {
-      scope_id: getFieldValue("scope_id"),
-      source_type: getFieldValue("source_type"),
-      source_key: getFieldValue("source_key"),
-      concept_id: getFieldValue("concept_id"),
-      reason: getFieldValue("reason"),
-      evidence: getFieldValue("evidence"),
-      semantic_category: getFieldValue("semantic_category"),
-    };
-  };
-
-  const buildAddScopeDraft = (): AddScopeStoredInterface => {
-    return {
-      scope_id: getFieldValue("scope_id"),
-      template_guid: getFieldValue("template_guid"),
-      device_id: getFieldValue("device_id"),
-      device_role: getFieldValue("device_role"),
-      type_fam: getFieldValue("type_fam"),
-      enum: getFieldValue("enum"),
-      evidence: getFieldValue("evidence"),
-    };
-  };
-
-  const isAddKbRuleDraftValid = () => {
-    const draft = buildAddKbRuleDraft();
-
-    return (
-      draft.scope_id.trim() !== "" &&
-      draft.source_type.trim() !== "" &&
-      draft.source_key.trim() !== "" &&
-      draft.concept_id.trim() !== "" &&
-      draft.reason.trim() !== "" &&
-      draft.evidence.trim() !== "" &&
-      draft.semantic_category.trim() !== ""
-    );
-  };
-
-  const isAddScopeDraftValid = () => {
-    const draft = buildAddScopeDraft();
-
-    return (
-      draft.scope_id.trim() !== "" &&
-      draft.template_guid.trim() !== "" &&
-      draft.device_id.trim() !== "" &&
-      draft.device_role.trim() !== "" &&
-      draft.type_fam.trim() !== "" &&
-      draft.evidence.trim() !== ""
-    );
-  };
-
-  const handleAddKbRule = () => {
-    if (!isAddKbRuleDraftValid()) return;
-
-    const draft = buildAddKbRuleDraft();
-
-    setRulesList((previousStateVal) => {
-      return [
-        ...previousStateVal,
-        {
-          scope_id: draft.scope_id.trim(),
-          source_type: draft.source_type.trim(),
-          source_key: draft.source_key.trim(),
-          concept_id: draft.concept_id.trim(),
-          reason: draft.reason.trim(),
-          evidence: draft.evidence.trim(),
-          semantic_category: draft.semantic_category.trim(),
-        },
-      ];
+  const clearAddKbRuleForm = () => {
+    [
+      "scope_id",
+      "source_type",
+      "source_key",
+      "concept_id",
+      "reason",
+      "evidence",
+      "semantic_category",
+    ].forEach((fieldId) => {
+      dispatch(
+        SetInputSlice({
+          id: `${inputPrefix}-${fieldId}`,
+          value: "",
+        }),
+      );
     });
-
-    clearAddKbRuleForm();
   };
 
-  const handleAddScope = () => {
-    if (!isAddScopeDraftValid()) return;
+  const buildAddScopeOperation =
+    (): KnowledgeBaseMixedOperationInterface | null => {
+      const scope_id = getFieldValue("scope_id").trim();
+      const template_guid = getFieldValue("template_guid").trim();
+      const device_id = getFieldValue("device_id").trim();
+      const device_role = getFieldValue("device_role").trim();
+      const type_fam = getFieldValue("type_fam").trim();
+      const enumValue = getFieldValue("enum").trim();
+      const evidence = getFieldValue("evidence").trim();
 
-    const draft = buildAddScopeDraft();
+      if (
+        !scope_id ||
+        !template_guid ||
+        !device_id ||
+        !device_role ||
+        !type_fam ||
+        !evidence
+      ) {
+        return null;
+      }
 
-    setScopesList((previousStateVal) => {
-      return [
-        ...previousStateVal,
-        {
-          scope_id: draft.scope_id.trim(),
-          template_guid: draft.template_guid.trim(),
-          device_id: draft.device_id.trim(),
-          device_role: draft.device_role.trim(),
-          type_fam: draft.type_fam.trim(),
-          enum: draft.enum.trim(),
-          evidence: draft.evidence.trim(),
+      return {
+        op: "add_scope",
+        scope: {
+          scope_id,
+          match: {
+            template_guid,
+            device_id,
+            device_role,
+            type_fam,
+            enum:
+              enumValue === "" || enumValue.toLowerCase() === "null"
+                ? null
+                : enumValue,
+          },
+          source: {
+            evidence,
+          },
         },
-      ];
-    });
+      };
+    };
 
-    clearAddScopeForm();
+  const buildAddKbRuleOperation =
+    (): KnowledgeBaseMixedOperationInterface | null => {
+      const scope_id = getFieldValue("scope_id").trim();
+      const source_type = getFieldValue("source_type").trim();
+      const source_key = getFieldValue("source_key").trim();
+      const concept_id = getFieldValue("concept_id").trim();
+      const reason = getFieldValue("reason").trim();
+      const evidence = getFieldValue("evidence").trim();
+      const semantic_category = getFieldValue("semantic_category").trim();
+
+      if (
+        !scope_id ||
+        !source_type ||
+        !source_key ||
+        !concept_id ||
+        !reason ||
+        !evidence ||
+        !semantic_category
+      ) {
+        return null;
+      }
+
+      return {
+        op: "add_kb_rule",
+        scope_id,
+        source_type,
+        source_key,
+        concept_id,
+        reason,
+        evidence,
+        semantic_category,
+      };
+    };
+
+  const isCurrentAddOperationValid = () => {
+    if (currentOperation === "add_scope") {
+      return buildAddScopeOperation() !== null;
+    }
+
+    if (currentOperation === "add_kb_rule") {
+      return buildAddKbRuleOperation() !== null;
+    }
+
+    return false;
   };
 
-  const handleOpenRulesModal = () => {
-    const rulesJson = JSON.stringify(rulesList, null, 2);
+  const handleAddOperation = () => {
+    if (currentOperation === "add_scope") {
+      const operationPayload = buildAddScopeOperation();
+      if (!operationPayload) return;
 
-    setRulesEditorValue(rulesJson);
+      setOperationsList((previousStateVal) => [
+        ...previousStateVal,
+        operationPayload,
+      ]);
 
-    dispatch(
-      SetInputSlice({
-        id: rulesTextAreaInputId,
-        value: rulesJson,
-      }),
-    );
-
-    setShowRulesModal(true);
-  };
-
-  const handleCloseRulesModal = () => {
-    setShowRulesModal(false);
-  };
-
-  const handleRulesEditorChange = (value: string | undefined) => {
-    const newValue = value ?? "";
-
-    setRulesEditorValue(newValue);
-
-    dispatch(
-      SetInputSlice({
-        id: rulesTextAreaInputId,
-        value: newValue,
-      }),
-    );
-  };
-
-  const handleApplyRulesEditor = () => {
-    try {
-      const parsedValue = JSON.parse(rulesEditorValue);
-
-      if (!Array.isArray(parsedValue)) return;
-
-      setRulesList(parsedValue);
-      setShowRulesModal(false);
-    } catch {
+      clearAddScopeForm();
       return;
+    }
+
+    if (currentOperation === "add_kb_rule") {
+      const operationPayload = buildAddKbRuleOperation();
+      if (!operationPayload) return;
+
+      setOperationsList((previousStateVal) => [
+        ...previousStateVal,
+        operationPayload,
+      ]);
+
+      clearAddKbRuleForm();
     }
   };
 
-  const handleOpenScopesModal = () => {
-    const scopesJson = JSON.stringify(scopesList, null, 2);
+  const handleOpenOperationsModal = () => {
+    const operationsJson = JSON.stringify(operationsList, null, 2);
 
-    setScopesEditorValue(scopesJson);
+    setOperationsEditorValue(operationsJson);
 
     dispatch(
       SetInputSlice({
-        id: scopesTextAreaInputId,
-        value: scopesJson,
+        id: operationsTextAreaInputId,
+        value: operationsJson,
       }),
     );
 
-    setShowScopesModal(true);
+    setShowOperationsModal(true);
   };
 
-  const handleCloseScopesModal = () => {
-    setShowScopesModal(false);
+  const handleCloseOperationsModal = () => {
+    setShowOperationsModal(false);
   };
 
-  const handleScopesEditorChange = (value: string | undefined) => {
+  const handleOperationsEditorChange = (value: string | undefined) => {
     const newValue = value ?? "";
 
-    setScopesEditorValue(newValue);
+    setOperationsEditorValue(newValue);
 
     dispatch(
       SetInputSlice({
-        id: scopesTextAreaInputId,
+        id: operationsTextAreaInputId,
         value: newValue,
       }),
     );
   };
 
-  const handleApplyScopesEditor = () => {
+  const handleApplyOperationsEditor = () => {
     try {
-      const parsedValue = JSON.parse(scopesEditorValue);
+      const parsedValue = JSON.parse(operationsEditorValue);
 
       if (!Array.isArray(parsedValue)) return;
 
-      setScopesList(parsedValue);
-      setShowScopesModal(false);
+      setOperationsList(parsedValue);
+      setShowOperationsModal(false);
     } catch {
       return;
     }
@@ -494,71 +474,43 @@ function KnowledgeBasePatchFormTag({
       );
     }
 
-    if (currentOperation === "add_scope") {
+    if (currentOperation === "add_scope" || currentOperation === "add_kb_rule") {
       return JSON.stringify(
         {
           target: "kb",
-          operations: scopesList.map((singleScope) => ({
-            op: "add_scope",
-            scope: {
-              scope_id: singleScope.scope_id,
-              match: {
-                template_guid: singleScope.template_guid,
-                device_id: singleScope.device_id,
-                device_role: singleScope.device_role,
-                type_fam: singleScope.type_fam,
-                enum:
-                  singleScope.enum.trim() === "" ||
-                  singleScope.enum.trim().toLowerCase() === "null"
-                    ? null
-                    : singleScope.enum,
-              },
-              source: {
-                evidence: singleScope.evidence,
-              },
-            },
-          })),
+          operations: operationsList,
         },
         null,
         2,
       );
     }
-
-    if (currentOperation === "add_kb_rule") {
-      return JSON.stringify(
-        {
-          target: "kb",
-          operations: rulesList.map((singleRule) => ({
-            op: "add_kb_rule",
-            ...singleRule,
-          })),
-        },
-        null,
-        2,
-      );
-    }
-
-    let operationPayload: Record<string, any> = {
-      op: currentOperation,
-    };
 
     if (currentOperation === "update_kb_rule") {
-      operationPayload = {
-        op: "update_kb_rule",
-        scope_id: getFieldValue("scope_id"),
-        source_type: getFieldValue("source_type"),
-        source_key: getFieldValue("source_key"),
-        concept_id: getFieldValue("concept_id"),
-        reason: getFieldValue("reason"),
-        evidence: getFieldValue("evidence"),
-        semantic_category: getFieldValue("semantic_category"),
-      };
+      return JSON.stringify(
+        {
+          target: "kb",
+          operations: [
+            {
+              op: "update_kb_rule",
+              scope_id: getFieldValue("scope_id"),
+              source_type: getFieldValue("source_type"),
+              source_key: getFieldValue("source_key"),
+              concept_id: getFieldValue("concept_id"),
+              reason: getFieldValue("reason"),
+              evidence: getFieldValue("evidence"),
+              semantic_category: getFieldValue("semantic_category"),
+            },
+          ],
+        },
+        null,
+        2,
+      );
     }
 
     return JSON.stringify(
       {
         target: "kb",
-        operations: [operationPayload],
+        operations: [],
       },
       null,
       2,
@@ -568,7 +520,6 @@ function KnowledgeBasePatchFormTag({
   const jsonPreview = useMemo(() => {
     return buildKnowledgeBasePatchJson();
   }, [
-    inputPrefix,
     currentOperation,
     inputSliceValue[`${inputPrefix}-scope_id`],
     inputSliceValue[`${inputPrefix}-source_type`],
@@ -582,8 +533,7 @@ function KnowledgeBasePatchFormTag({
     inputSliceValue[`${inputPrefix}-device_role`],
     inputSliceValue[`${inputPrefix}-type_fam`],
     inputSliceValue[`${inputPrefix}-enum`],
-    rulesList,
-    scopesList,
+    operationsList,
   ]);
 
   useEffect(() => {
@@ -596,12 +546,12 @@ function KnowledgeBasePatchFormTag({
   }, [dispatch, jsonPreview, textAreaInputId]);
 
   useEffect(() => {
-    if (currentOperation === "add_kb_rule") {
-      clearAddKbRuleForm();
-    }
-
     if (currentOperation === "add_scope") {
       clearAddScopeForm();
+    }
+
+    if (currentOperation === "add_kb_rule") {
+      clearAddKbRuleForm();
     }
   }, [currentOperation]);
 
@@ -669,7 +619,9 @@ function KnowledgeBasePatchFormTag({
       return (
         <div style={inputCardStyle}>
           <span style={labelStyle}>{field.label}</span>
-          {field.helperText ? <div style={helperStyle}>{field.helperText}</div> : null}
+          {field.helperText ? (
+            <div style={helperStyle}>{field.helperText}</div>
+          ) : null}
 
           <Suspense fallback={null}>
             <SelectPickerTag
@@ -694,6 +646,9 @@ function KnowledgeBasePatchFormTag({
 
     return null;
   };
+
+  const showAccumulationActions =
+    currentOperation === "add_scope" || currentOperation === "add_kb_rule";
 
   return (
     <>
@@ -793,7 +748,7 @@ function KnowledgeBasePatchFormTag({
               ))}
             </div>
 
-            {currentOperation === "add_scope" ? (
+            {showAccumulationActions ? (
               <div
                 style={{
                   display: "flex",
@@ -809,7 +764,7 @@ function KnowledgeBasePatchFormTag({
                     color: "#6b7280",
                   }}
                 >
-                  Scope aggiunti: <b>{scopesList.length}</b>
+                  Operations aggiunte: <b>{operationsList.length}</b>
                 </div>
 
                 <div
@@ -821,55 +776,17 @@ function KnowledgeBasePatchFormTag({
                 >
                   <Button
                     appearance="primary"
-                    onClick={handleAddScope}
-                    disabled={!isAddScopeDraftValid()}
+                    onClick={handleAddOperation}
+                    disabled={!isCurrentAddOperationValid()}
                   >
-                    Aggiungi scope
+                    Aggiungi operation
                   </Button>
 
-                  <Button appearance="default" onClick={handleOpenScopesModal}>
-                    Mostra scope
-                  </Button>
-                </div>
-              </div>
-            ) : null}
-
-            {currentOperation === "add_kb_rule" ? (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  gap: "12px",
-                  flexWrap: "wrap",
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: "13px",
-                    color: "#6b7280",
-                  }}
-                >
-                  Rules aggiunte: <b>{rulesList.length}</b>
-                </div>
-
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "8px",
-                    alignItems: "center",
-                  }}
-                >
                   <Button
-                    appearance="primary"
-                    onClick={handleAddKbRule}
-                    disabled={!isAddKbRuleDraftValid()}
+                    appearance="default"
+                    onClick={handleOpenOperationsModal}
                   >
-                    Aggiungi rule
-                  </Button>
-
-                  <Button appearance="default" onClick={handleOpenRulesModal}>
-                    Mostra rules
+                    Mostra operations
                   </Button>
                 </div>
               </div>
@@ -926,9 +843,13 @@ function KnowledgeBasePatchFormTag({
         </div>
       </div>
 
-      <Modal open={showScopesModal} onClose={handleCloseScopesModal} size="lg">
+      <Modal
+        open={showOperationsModal}
+        onClose={handleCloseOperationsModal}
+        size="lg"
+      >
         <Modal.Header>
-          <Modal.Title>Scopes preview</Modal.Title>
+          <Modal.Title>Operations preview</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -943,13 +864,15 @@ function KnowledgeBasePatchFormTag({
             }}
           >
             <Suspense
-              fallback={<div style={{ padding: "16px" }}>Caricamento editor...</div>}
+              fallback={
+                <div style={{ padding: "16px" }}>Caricamento editor...</div>
+              }
             >
               <MonacoEditorTag
                 height="100%"
                 defaultLanguage="json"
-                value={scopesEditorValue}
-                onChange={handleScopesEditorChange}
+                value={operationsEditorValue}
+                onChange={handleOperationsEditorChange}
                 options={{
                   readOnly: false,
                   minimap: { enabled: false },
@@ -965,58 +888,10 @@ function KnowledgeBasePatchFormTag({
         </Modal.Body>
 
         <Modal.Footer>
-          <Button appearance="subtle" onClick={handleCloseScopesModal}>
+          <Button appearance="subtle" onClick={handleCloseOperationsModal}>
             Chiudi
           </Button>
-          <Button appearance="primary" onClick={handleApplyScopesEditor}>
-            Applica
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      <Modal open={showRulesModal} onClose={handleCloseRulesModal} size="lg">
-        <Modal.Header>
-          <Modal.Title>Rules preview</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          <div
-            style={{
-              height: "60vh",
-              minHeight: "420px",
-              border: "1px solid #e5e7eb",
-              borderRadius: "10px",
-              overflow: "hidden",
-              background: "#ffffff",
-            }}
-          >
-            <Suspense
-              fallback={<div style={{ padding: "16px" }}>Caricamento editor...</div>}
-            >
-              <MonacoEditorTag
-                height="100%"
-                defaultLanguage="json"
-                value={rulesEditorValue}
-                onChange={handleRulesEditorChange}
-                options={{
-                  readOnly: false,
-                  minimap: { enabled: false },
-                  formatOnPaste: true,
-                  formatOnType: true,
-                  scrollBeyondLastLine: false,
-                  wordWrap: "on",
-                  automaticLayout: true,
-                }}
-              />
-            </Suspense>
-          </div>
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button appearance="subtle" onClick={handleCloseRulesModal}>
-            Chiudi
-          </Button>
-          <Button appearance="primary" onClick={handleApplyRulesEditor}>
+          <Button appearance="primary" onClick={handleApplyOperationsEditor}>
             Applica
           </Button>
         </Modal.Footer>

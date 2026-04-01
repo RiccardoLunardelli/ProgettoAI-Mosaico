@@ -1,24 +1,38 @@
-import { lazy, useEffect, useMemo, useState } from "react";
+import { lazy, useEffect, useMemo, useState, Suspense } from "react";
 import { useSelector } from "react-redux";
 import { type RunListInterface } from "../../stores/slices/Base/runsListSlice";
-import { GetRunIdsAPIHook } from "../../customHooks/Runs/runsAPI";
+import { GetRunIdsAPIHook, DeleteRunsAPIHook } from "../../customHooks/Runs/runsAPI";
+import type { UserInfoInterface } from "../../stores/slices/Base/userInfoSlice";
+import { Modal } from "rsuite";
 
-const RunsPreviewModalTag = lazy(() => import("./RunsPreviewModal"));
+const RunsPreviewModal = lazy(() => import("./RunsPreviewModal"));
+const ButtonTag = lazy(() =>
+  import("rsuite").then((module) => ({ default: module.Button })),
+);
+
+const CheckboxTag = lazy(() =>
+  import("rsuite").then((module) => ({ default: module.Checkbox })),
+);
 
 interface ComponentStateInterface {
   selectedId: string;
   showModal: boolean;
   filterValue: string;
+  selectedRunIds: string[];
+  showDeleteConfirmModal: boolean;
 }
 
 function RunsListTag() {
   const [GetRunIdsAPI] = GetRunIdsAPIHook();
+  const [DeleteRunsAPI] = DeleteRunsAPIHook();
 
   const [componentState, setComponentState] = useState<ComponentStateInterface>(
     {
       selectedId: "",
       showModal: false,
       filterValue: "",
+      selectedRunIds: [],
+      showDeleteConfirmModal: false,
     },
   );
 
@@ -28,6 +42,13 @@ function RunsListTag() {
         runsListSlice: { value: RunListInterface[]; detail: string };
       }) => state.runsListSlice,
     );
+
+  const userInfoSlice: { value: UserInfoInterface | null } = useSelector(
+    (state: { userInfoSlice: { value: UserInfoInterface | null } }) =>
+      state.userInfoSlice,
+  );
+
+  const isAdmin = (userInfoSlice?.value?.role ?? 0) === 1;
 
   const HandleSelectRunIdOnClick = (singleRunId: string) => {
     setComponentState((previousStateVal: ComponentStateInterface) => {
@@ -59,6 +80,83 @@ function RunsListTag() {
         ...previousStateVal,
         filterValue: newValue,
       };
+    });
+  };
+
+  const HandleToggleRunSelection = (runId: string) => {
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      const isAlreadySelected = previousStateVal.selectedRunIds.includes(runId);
+
+      return {
+        ...previousStateVal,
+        selectedRunIds: isAlreadySelected
+          ? previousStateVal.selectedRunIds.filter(
+              (singleId: string) => singleId !== runId,
+            )
+          : [...previousStateVal.selectedRunIds, runId],
+      };
+    });
+  };
+
+  const HandleClearSelection = () => {
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        selectedRunIds: [],
+      };
+    });
+  };
+
+  const HandleOpenDeleteConfirmModal = () => {
+    if (componentState.selectedRunIds.length <= 0) {
+      return;
+    }
+
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        showDeleteConfirmModal: true,
+      };
+    });
+  };
+
+  const HandleCloseDeleteConfirmModal = () => {
+    setComponentState((previousStateVal: ComponentStateInterface) => {
+      return {
+        ...previousStateVal,
+        showDeleteConfirmModal: false,
+      };
+    });
+  };
+
+  const HandleDeleteSelectedRuns = async () => {
+    const idsToDelete = [...componentState.selectedRunIds];
+
+    if (idsToDelete.length <= 0) {
+      return;
+    }
+
+    await DeleteRunsAPI({
+      data: {
+        run_ids: idsToDelete,
+      },
+      showLoader: true,
+      showToast: true,
+      saveResponse: false,
+      EndCallback: () => {
+        GetRunIdsAPI({
+          saveResponse: true,
+          showLoader: false,
+        });
+
+        setComponentState((previousStateVal: ComponentStateInterface) => {
+          return {
+            ...previousStateVal,
+            selectedRunIds: [],
+            showDeleteConfirmModal: false,
+          };
+        });
+      },
     });
   };
 
@@ -127,10 +225,9 @@ function RunsListTag() {
           <div
             style={{
               display: "flex",
-              alignItems: "center",
+              flexDirection: "column",
               gap: "12px",
               marginBottom: "20px",
-              flexWrap: "wrap",
             }}
           >
             <input
@@ -150,6 +247,60 @@ function RunsListTag() {
                 boxSizing: "border-box",
               }}
             />
+
+            {isAdmin && componentState.selectedRunIds.length > 0 && (
+              <Suspense fallback={<></>}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: "12px",
+                    flexWrap: "wrap",
+                    padding: "10px 14px",
+                    borderRadius: "10px",
+                    backgroundColor: "#ffffff",
+                    border: "1px solid #dbe6ff",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "13px",
+                      color: "#477dda",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {componentState.selectedRunIds.length} run selezionate
+                  </span>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                    }}
+                  >
+                    <ButtonTag
+                      appearance="subtle"
+                      onClick={HandleClearSelection}
+                    >
+                      Pulisci
+                    </ButtonTag>
+
+                    <ButtonTag
+                      appearance="primary"
+                      style={{
+                        backgroundColor: "#477dda",
+                        borderColor: "#477dda",
+                      }}
+                      onClick={HandleOpenDeleteConfirmModal}
+                    >
+                      Elimina
+                    </ButtonTag>
+                  </div>
+                </div>
+              </Suspense>
+            )}
           </div>
 
           {filteredRunsList.length > 0 ? (
@@ -164,15 +315,20 @@ function RunsListTag() {
               }}
             >
               {filteredRunsList.map((singleRun: RunListInterface) => {
-                const isSelected =
-                  componentState.selectedId === (singleRun?.run_id ?? "");
+                const runId = singleRun?.run_id ?? "";
+                const isSelectedForDelete =
+                  componentState.selectedRunIds.includes(runId);
+                const isPreviewSelected =
+                  componentState.selectedId === runId;
 
                 return (
                   <div
-                    key={singleRun?.run_id ?? ""}
-                    className={`HoverTransform ${isSelected ? "RunSelected" : ""}`}
+                    key={runId}
+                    className={`HoverTransform ${
+                      isPreviewSelected ? "RunSelected" : ""
+                    }`}
                     onClick={() => {
-                      HandleSelectRunIdOnClick(singleRun.run_id);
+                      HandleSelectRunIdOnClick(runId);
                     }}
                     style={{
                       borderRadius: "12px",
@@ -186,15 +342,46 @@ function RunsListTag() {
                       cursor: "pointer",
                       overflow: "hidden",
                       transition: "all 0.18s ease",
-                      backgroundColor: "#ffffff",
+                      backgroundColor: isSelectedForDelete ? "#f8fbff" : "#ffffff",
+                      border: isSelectedForDelete
+                        ? "1px solid #dbe6ff"
+                        : "1px solid transparent",
+                      position: "relative",
                     }}
                   >
+                    {isAdmin && (
+                      <div
+                        onClick={(event) => {
+                          event.stopPropagation();
+                        }}
+                        style={{
+                          position: "absolute",
+                          top: "10px",
+                          right: "10px",
+                          zIndex: 2,
+                          backgroundColor: "#ffffff",
+                          borderRadius: "999px",
+                          padding: "2px 4px",
+                        }}
+                      >
+                        <Suspense fallback={<></>}>
+                          <CheckboxTag
+                            checked={isSelectedForDelete}
+                            onChange={() => {
+                              HandleToggleRunSelection(runId);
+                            }}
+                          />
+                        </Suspense>
+                      </div>
+                    )}
+
                     <div
                       style={{
                         display: "flex",
                         flexDirection: "column",
                         gap: "10px",
                         minWidth: 0,
+                        paddingRight: isAdmin ? "38px" : "0px",
                       }}
                     >
                       <span
@@ -207,7 +394,7 @@ function RunsListTag() {
                           overflowWrap: "anywhere",
                         }}
                       >
-                        {singleRun.run_id}
+                        {runId}
                       </span>
 
                       <span
@@ -263,11 +450,12 @@ function RunsListTag() {
                       <span
                         style={{
                           fontSize: "12px",
-                          color: "#9ca3af",
+                          color: isSelectedForDelete ? "#477dda" : "#9ca3af",
                           flexShrink: 0,
+                          fontWeight: isSelectedForDelete ? 600 : 400,
                         }}
                       >
-                        Apri
+                        {isSelectedForDelete ? "Selezionata" : "Apri"}
                       </span>
                     </div>
                   </div>
@@ -284,11 +472,62 @@ function RunsListTag() {
         </div>
       </div>
 
-      <RunsPreviewModalTag
+      <RunsPreviewModal
         showModal={componentState.showModal}
         selectedId={componentState.selectedId}
         onClose={HandleCloseModal}
       />
+
+      <Suspense fallback={<></>}>
+        <Modal
+          open={componentState.showDeleteConfirmModal}
+          onClose={HandleCloseDeleteConfirmModal}
+          size="xs"
+        >
+          <Modal.Header>
+            <Modal.Title>Conferma eliminazione</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+                color: "#374151",
+                fontSize: "14px",
+                lineHeight: "1.5",
+              }}
+            >
+              <span>
+                Vuoi eliminare <strong>{componentState.selectedRunIds.length}</strong>{" "}
+                run?
+              </span>
+              <span>Questa operazione non può essere annullata.</span>
+            </div>
+          </Modal.Body>
+
+          <Modal.Footer>
+            <ButtonTag
+              appearance="subtle"
+              onClick={HandleCloseDeleteConfirmModal}
+            >
+              Annulla
+            </ButtonTag>
+
+            <ButtonTag
+              appearance="primary"
+              style={{
+                backgroundColor: "#477dda",
+                borderColor: "#477dda",
+              }}
+              onClick={HandleDeleteSelectedRuns}
+            >
+              Elimina
+            </ButtonTag>
+          </Modal.Footer>
+        </Modal>
+      </Suspense>
     </>
   );
 }

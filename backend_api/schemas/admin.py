@@ -248,3 +248,6 @@ class CreateTemplateAdmin(BaseModel):
     Template: TemplateCreation
     Schema_id: str
 
+#----DELETE RUNS-----
+class DeleteRunAdmin(BaseModel):
+    run_ids: List[str]

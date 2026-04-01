@@ -106,7 +106,7 @@ def build_llm_prompt(llm_contexts: list[dict]) -> str:
         f"{json.dumps(llm_contexts, ensure_ascii=False)}\n"
     )
 
-def filter_low_confidence(actions_payload: dict, threshold: float = 0.9) -> dict:
+def filter_low_confidence(actions_payload: dict, threshold: float = 0.8) -> dict:
     # filtra le azioni con confidence bassa
 
     actions = actions_payload.get("actions", [])

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from src.intermediateLayer.postgres_repository import UsersRepository, ArtifactRepository, Clients, Stores, Devices, RunRepository, Template, Schema
 from backend_api.schemas.admin import UpdateRoleAdmin, DropArtifactAdmin, DeleteUserAdmin, InsertClientAdmin, DeleteClientAdmin, UpsertStoreAdmin, UpdateUser, DeleteStoreAdmin, UpdateClientAdmin, \
-    UpdateStoreAdmin, UpdateDeviceAdmin, InsertDeviceAdmin, DeleteDeviceAdmin, InsertArtifactAdmin, EditConfigAdmin, CreateTemplateAdmin
+    UpdateStoreAdmin, UpdateDeviceAdmin, InsertDeviceAdmin, DeleteDeviceAdmin, InsertArtifactAdmin, EditConfigAdmin, CreateTemplateAdmin, DeleteRunAdmin
 
 from backend_api.routes.admin.template_builder import DefaultTemplateBuilder
 from backend_api.utils.deps import require_admin
@@ -353,3 +353,8 @@ def get_schema_template(user = Depends(require_admin)):
 @router.get("/list_schemas")
 def get_list_schemas(user = Depends(require_admin)):
     return schemaClass.list_schemas()
+
+#----HISTORY RUN----
+@router.post("/delete_run")
+def delete_run(payload: DeleteRunAdmin, user = Depends(require_admin)):
+    return runClass.delete_run(payload.run_ids)
