@@ -65,12 +65,12 @@ def start_template_run(user_id, template_name: str, dictionary_name: str, kb_nam
     }
     (run_dir / "run_context.json").write_text(json.dumps(run_context, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    # normalizzazione (usa snapshot template)
+    # normalizzazione
     normalized_payload = normalization(str(template_input_path), None, schema_json=schema_json)
     normalized_path = run_dir / "normalized_template_v0.1.json"
     normalized_path.write_text(json.dumps(normalized_payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    # matching (usa snapshot input DB)
+    # matching
     matching_path = run_dir / "matching_report_v0.1.json"
     run_matching(
         normalized_path=str(normalized_path),
@@ -415,8 +415,8 @@ def run_device_list(cfg: dict, validate, version, run_dir, run_id, forced_contex
         else:
             output_path = commit.get("output_path")
 
-    committed = True
-    status = "success"
+        committed = True
+        status = "success"
     
     device_list_version = forced_context_version or extract_device_list_version(output_path or input_path)
     
