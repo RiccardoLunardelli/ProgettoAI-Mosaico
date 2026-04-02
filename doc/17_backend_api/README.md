@@ -54,48 +54,43 @@ e abilita CORS per frontend locale/LAN.
 
 ## Router Auth (`/api`)
 
-- `POST /signup`
-- `POST /login`
-- `POST /logout`
-- `GET /checkauth`
+- `POST /signup`: crea un nuovo utente e restituisce token JWT.
+- `POST /login`: autentica l’utente e restituisce token JWT.
+- `POST /logout`: invalida sessione client rimuovendo il cookie token.
+- `GET /checkauth`: verifica token e ritorna utente autenticato.
 
 **Note**
 - Signup/login usano email+password.
 - Logout rimuove il cookie token.
+- Checkauth controlla il token d'accesso.
 
 ---
 
 ## Router Artifacts (`/api`)
 
 ### Lettura artifact
-- `GET /templates`
-- `GET /templates/{id}`
-- `GET /template_usage/{id}`
-
-- `GET /dictionaries`
-- `GET /dictionaries/{id}`
-- `GET /dictionary/{version}/score`
-
-- `GET /kb`
-- `GET /kb/{id}`
-
-- `GET /template_base`
-- `GET /template_base/{id}`
-- `GET /last_version/template_base`
-
-- `GET /device_list`
-- `GET /device_list/{store}/{dl}`
-
-- `GET /enrich_device_list`
-- `GET /enrich/device_list/{store}/{dl}`
-
-- `GET /config/device_list`
-- `GET /config/content/{id}`
+- `GET /templates`: lista template disponibili (artifact type `template`).
+- `GET /templates/{id}`: ritorna contenuto completo del template selezionato.
+- `GET /template_usage/{id}`: mostra store/client/device che usano il template.
+- `GET /dictionaries`: lista dizionari disponibili.
+- `GET /dictionaries/{id}`: ritorna contenuto del dizionario selezionato.
+- `GET /dictionary/{version}/score`: ritorna score template per una versione dizionario.
+- `GET /kb`: lista knowledge base disponibili.
+- `GET /kb/{id}`: ritorna contenuto KB selezionata.
+- `GET /template_base`: lista template base disponibili.
+- `GET /template_base/{id}`: ritorna contenuto template base selezionato.
+- `GET /last_version/template_base`: ritorna id dell’ultima versione template base.
+- `GET /device_list`: lista device list per store.
+- `GET /device_list/{store}/{dl}`: ritorna una device list specifica.
+- `GET /enrich_device_list`: lista device list arricchite (`device_list_context`).
+- `GET /enrich/device_list/{store}/{dl}`: ritorna una device list arricchita specifica.
+- `GET /config/device_list`: lista configurazioni enrichment disponibili.
+- `GET /config/content/{id}`: ritorna contenuto della config selezionata.
 
 ### Edit inline (versionati)
-- `POST /dictionary/edit`
-- `POST /kb/edit`
-- `POST /template_base/edit`
+- `POST /dictionary/edit`: modifica inline dizionario creando nuova versione.
+- `POST /kb/edit`: modifica inline KB creando nuova versione.
+- `POST /template_base/edit`: modifica inline template base creando nuova versione.
 
 **Comportamento**
 - carica artifact dal DB,
@@ -109,38 +104,27 @@ e abilita CORS per frontend locale/LAN.
 ## Router Runs (`/api`)
 
 ### Lista e monitoraggio
-- `GET /cronology`
-- `GET /llm/percentual?run_id=...`
-- `GET /runs/ids`
-- `GET /run_id/{run_id}`
-- `GET /runid_template`
+- `GET /cronology`: ritorna cronologia diff delle run utente.
+- `GET /llm/percentual`: ritorna avanzamento percentuale job LLM della run.
+- `GET /runs/ids`: lista run id visibili all’utente (o tutte se admin).
+- `GET /run_id/{run_id}`: ritorna dettaglio completo di una run.
+- `GET /runid_template`: lista run template con info template associata.
 
 ### Template pipeline (3 step)
-1. `POST /run/template/start`
-   - normalizzazione + matching
-   - snapshot input in `runs/<user_id>/<run_id>/`
-   - output: `normalized_template_v0.1.json`, `matching_report_v0.1.json`
-2. `POST /run/template/llm`
-   - job background per proposte LLM
-3. `GET /run/template/llm/result/{run_id}`
-   - polling risultato LLM
-4. `POST /run/template/finish`
-   - applica patch deterministiche + opzionali LLM
-   - genera `run_report.json`
-   - registra output su DB
+- `POST /run/template/start`: avvia normalizzazione+matching e crea run template.
+- `POST /run/template/llm`: avvia proposta patch LLM in background.
+- `GET /run/template/llm/result/{run_id}`: recupera risultato patch LLM della run.
+- `POST /run/template/finish`: applica patch finali template e chiude run.
 
 ### Run patch artifact
-- `POST /run/dictionary`
-  - `mode=run_report` oppure `mode=manual` (`manual_mode=patch`)
-- `POST /run/kb`
-- `POST /run/template_base`
-- `POST /run/device_list`
+- `POST /run/dictionary`: esegue patch dizionario (manuale o da run report).
+- `POST /run/kb`: esegue patch KB con validazione e report.
+- `POST /run/template_base`: esegue patch template base con validazione e report.
+- `POST /run/device_list`: esegue enrichment device list con config scelta.
 
 ### Utility run
-- `GET /enum/{config_id}` (enum da config device list)
-- `POST /run/preview`
-  - preview validate-only per `dictionary|kb|template_base`
-  - ritorna direttamente il `preview_payload`
+- `GET /enum/{config_id}`: ritorna mapping enum dalla config enrichment.
+- `POST /run/preview`: genera preview validate-only per dictionary/kb/template_base.
 
 **Comportamento generale run**
 - input sempre da DB (snapshot in cartella run utente),
@@ -152,40 +136,40 @@ e abilita CORS per frontend locale/LAN.
 ## Router Admin (`/api`, admin-only)
 
 ### Users
-- `GET /users`
-- `POST /delete_user`
-- `POST /update_user`
+- `GET /users`: lista completa utenti.
+- `POST /delete_user`: elimina utente (con cascata sulle run collegate).
+- `POST /update_user`: aggiorna email/nome/password/ruolo utente.
 
 ### Artifacts
-- `GET /artifacts`
-- `POST /drop_artifact`
-- `GET /artifact_content/{id}`
-- `POST /insert_artifact`
+- `GET /artifacts`: lista completa artifact a sistema.
+- `POST /drop_artifact`: elimina uno o più artifact (con gestione vincoli).
+- `GET /artifact_content/{id}`: ritorna contenuto completo artifact.
+- `POST /insert_artifact`: inserisce manualmente un nuovo artifact.
 
 ### Clients / Stores / Devices
-- `GET /clients`
-- `POST /insert_client`
-- `POST /update_client`
-- `POST /delete_client`
+- `GET /clients`: lista clienti.
+- `POST /insert_client`: crea cliente.
+- `POST /update_client`: rinomina cliente.
+- `POST /delete_client`: elimina cliente.
 
-- `GET /list_store`
-- `POST /upsert_store`
-- `POST /update_store`
-- `POST /delete_store`
+- `GET /list_store`: lista store.
+- `POST /upsert_store`: inserisce store e relativi device dal content.
+- `POST /update_store`: aggiorna dati store.
+- `POST /delete_store`: elimina store (con cascata device).
 
-- `GET /devices`
-- `POST /insert_device`
-- `POST /update_device`
-- `POST /delete_device`
+- `GET /devices`: lista dispositivi.
+- `POST /insert_device`: inserisce dispositivo.
+- `POST /update_device`: aggiorna dispositivo.
+- `POST /delete_device`: elimina dispositivo.
 
 ### Config / Template authoring
-- `POST /edit/config`
-- `POST /create_template`
-- `GET /get_schema_template`
-- `GET /list_schemas`
+- `POST /edit/config`: modifica config YAML creando nuova versione.
+- `POST /create_template`: crea template da payload strutturato e lo salva.
+- `GET /get_schema_template`: ritorna schema condiviso per creazione template.
+- `GET /list_schemas`: lista schemi normalizer disponibili.
 
 ### Run management
-- `POST /delete_run` (bulk `run_ids`)
+- `POST /delete_run`: elimina una o più run (`run_ids`).
 
 ---
 
