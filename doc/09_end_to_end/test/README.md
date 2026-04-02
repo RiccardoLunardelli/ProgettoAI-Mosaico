@@ -4,42 +4,34 @@
 1. Avvio sistema:  
    `PYTHONPATH=. python3 test/run_completa.py`
 
-2. Inserire file di configurazione:  
-   `Path file di configurazione[config.yml]:`
+2. Configurazione opzionale runtime (es. modello LLM):  
+   `config.yml` (non usato come sorgente primaria degli input artifact).
 
 ---
 
 ## Inserimento input principali
-Il sistema richiede i path degli input:
+Nel flusso corrente gli input principali sono selezionati da DB (artifact ID) e salvati come snapshot per-run.
 
 - **Template reale**  
-  `Template path[inserisci quello da arricchire se non è presente]:`
+  selezionato da artifact `template`
 
 - **Dizionario**  
-  `Dictionary path:`
+  selezionato da artifact `dictionary`
 
 - **Knowledge Base**  
-  `KB path:`
+  selezionata da artifact `kb`
 
 - **Template Base**  
-  `Template base path:`
+  selezionato da artifact `template_base`
 
 - **Device List**  
-  `Device list path[inserisci quello da arricchire se non è presente]:`
-
-  Se il device list non è ancora arricchito:
-  - inserire path del device list grezzo, es.:  
-    `/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/101096_FABRIC/device_list.json`
-  - il sistema lo arricchisce e può produrre avvisi, es.:  
-    `Richiesta revisione umana per dispositivo 'centrale': CENTRALE TN MAT: 0VCD345201 ADR: 1.005`
-  - viene richiesto il path del device list arricchito:  
-    `Device list Path: /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/101096_FABRIC/device_list_context_v0.1.json`
+  selezionato da artifact `device_list` / `device_list_context`
 
 - **Schema normalizzazione**  
-  `Schema tipo path [schemas/schema_tipo_v0.1.json]:`
+  recuperato da schema associato al template selezionato
 
 - **Output folder**  
-  `Output dir [output_dir]:`
+  output salvato in `runs/<user_id>/<run_id>/`
 
 - **Modello LLM**  
   `LLM model [llama3.1:8b]:`

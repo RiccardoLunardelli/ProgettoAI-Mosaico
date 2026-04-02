@@ -1,5 +1,9 @@
 # 1. Normalizzazione
 
+> **Nota**: i path/versioni mostrati sono esempi.  
+> Nel flusso corrente DB-first gli input operativi sono gestiti via artifact nel database e snapshot per-run in `runs/<user_id>/<run_id>/`.
+
+
 ## Scopo
 La normalizzazione serve a trasformare il testo “rumoroso” dei template reali (abbreviazioni, encoding errato, punti, underscore, maiuscole/minuscole, nomi vendor-specific) in una forma **stabile, confrontabile e riproducibile**, prima di qualsiasi tentativo di matching semantico.
 

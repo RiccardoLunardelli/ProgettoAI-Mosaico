@@ -1,5 +1,9 @@
 # 8. Patch Actions & Patch Engine
 
+> **Nota**: i path/versioni mostrati sono esempi.  
+> Nel flusso corrente DB-first gli input operativi sono gestiti via artifact nel database e snapshot per-run in `runs/<user_id>/<run_id>/`.
+
+
 ## Scopo
 Descrive come una decisione di matching diventa una modifica reale,
 in modo **controllato**, **validato** e **auditabile**.

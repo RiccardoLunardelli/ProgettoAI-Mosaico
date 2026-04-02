@@ -49,3 +49,8 @@ Il sistema introduce:
 ## Backend & Grafana
 - **Backend API (FastAPI)**: espone autenticazione, artifacts e runs.
 - **Grafana**: la fonte unica è `runs.report` (JSONB) nel DB; nessuna tabella aggiuntiva.
+
+---
+
+## Database
+- **Salvataggio e recupero file**: tutti i file sono memorizzati in un database PostgreSQL

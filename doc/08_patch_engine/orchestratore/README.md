@@ -10,7 +10,7 @@ Il flusso Template è diviso in 3 fasi per la UI:
 
 ### `start_template_run(...)`
 - esegue `normalization()` e matching
-- salva `matching_report` in `runs/<run_id>/`
+- salva `matching_report` in `runs/<user_id>/<run_id>/`
 - ritorna: `run_id`, `matching_path`, `has_ambiguous`, `ambiguous_count`
 
 ### `llm_propose_for_run(...)`

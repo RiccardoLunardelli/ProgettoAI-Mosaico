@@ -2,14 +2,9 @@
 
 ## Flusso
 
-1) Avviare matcher: `python3 -m src.matcher.matcher`
-2) Inserire il path del template normalizzato: `/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/normalized_template_v0.1.json`
-3) Inserire il path del template base: Template base path: `/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/template_base_v0.1.json`
-4) Inserire il path del dizionario: Dictionary path: `/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionary_v0.1.json`
-5) Inserire il path della knowledge base: KB path: `/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/kb_v0.1.json`
-6) Inserire il device List arricchito: Device context path: `/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/101096_FABRIC/device_list_context_v0.1.json`
-7) Inserire il path della cartella in cui vogliamo l'output: Output dir: `/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir`
-8) Matching report viene generato: Matching report saved: `/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/matching_report_v0.1.json`
+1) Avviare una run template da API (`POST /run/template/start`) con artifact DB (`template`, `dictionary`, `kb`, `template_base`, `device_list_context`).  
+2) Il matcher usa gli snapshot della run corrente.  
+3) Il report viene salvato in `runs/<user_id>/<run_id>/matching_report_v0.1.json`.
 
 ## Esempio matching report
 

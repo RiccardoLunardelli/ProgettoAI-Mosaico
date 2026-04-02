@@ -1,5 +1,9 @@
 # 6. Matching Engine
 
+> **Nota**: i path/versioni mostrati sono esempi.  
+> Nel flusso corrente DB-first gli input operativi sono gestiti via artifact nel database e snapshot per-run in `runs/<user_id>/<run_id>/`.
+
+
 ## Scopo
 Il matching mette in relazione le variabili normalizzate con i concetti del Template Base,
 usando:
@@ -60,9 +64,6 @@ Esempio di un matching report: `test/README.md`
 - **`load_inputs(...)`**  
   Carica tutti gli input necessari al matching.
 
-- **`write_report(output_path, report, cache_path, cache)`**  
-  Scrive il report finale e aggiorna la cache.
-
 - **`run_matching(...)`**  
   Orchestratore principale:
   - prepara contesto
@@ -70,22 +71,6 @@ Esempio di un matching report: `test/README.md`
   - raccoglie risultati
   - calcola metriche
   - genera output finale
-
-### Cache
-
-- **`load_cache(path)` / `save_cache(path, cache)`**  
-  Gestione cache persistente dei risultati di matching.
-
-- **`build_cache_key(...)`**  
-  Costruisce una chiave deterministica basata su:
-  - testo normalizzato
-  - categoria attesa
-  - template_guid
-  - contesto device
-  - versioni di dizionario / KB / template base
-
-- **`emit_result(items, cache, cache_key, result)`**  
-  Aggiunge il risultato sia alla lista che alla cache.
 
 ### Funzioni linguistiche
 - **`normalize_str(s)`**  
@@ -145,10 +130,9 @@ Funzione centrale che esegue il matching di una singola variabile.
 
 ### Ordine di matching
 1. Override KB mapping  
-2. Cache lookup  
-3. Skip variabili disabilitate  
-4. Matching deterministico su sinonimi  
-5. Fallback fuzzy  
+2. Skip variabili disabilitate  
+3. Matching deterministico su sinonimi  
+4. Fallback fuzzy  
 
 ### Classi di risultato
 - `matched`

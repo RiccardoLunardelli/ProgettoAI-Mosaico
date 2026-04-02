@@ -70,6 +70,10 @@
 - `/doc/16_framework/README.md`
 - Librerie utilizzate con relative versioni
 
-## 17. Backend API
-- `/doc/17_backend_api/README.md`
-- Endpoints FastAPI: auth, artifacts, runs.
+## 17. Docker
+- `/doc/17_docker/README.md`
+- Avvio servizi infrastrutturali (PostgreSQL + Grafana) con Docker Compose.
+
+## 18. Backend API
+- `/doc/18_backend_api/README.md`
+- Endpoints FastAPI

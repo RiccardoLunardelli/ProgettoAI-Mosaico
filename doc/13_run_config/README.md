@@ -1,7 +1,7 @@
 # 13. Configurazione & Esecuzione
 
 ## Scopo
-Descrivere come eseguire il progetto in locale e quali parametri configurare.
+Descrivere come eseguire il progetto e quali parametri configurare nel flusso DB-first.
 
 ---
 
@@ -19,23 +19,12 @@ L’orchestratore espone tre step separati:
 - `llm_propose_for_run` → proposta LLM + `llm_attempt.json`
 - `finish_template_run` → patch deterministiche, merge LLM (se attivo), report finale
 
-Nota: `run_template_pipeline` è stato rimosso.
-
 ---
 
 ## Configurazione
-È possibile usare un file `config.yml` (presente in `config/config.yml`) per pre‑compilare i path:
+Il flusso operativo usa artifact selezionati da DB (ID artifact) e crea snapshot runtime in `runs/<user_id>/<run_id>/`.
 
-- `template`
-- `dictionary`
-- `kb`
-- `template_base`
-- `device_context`
-- `schema_tipo`
-- `output_dir`
-- `llm_model`
-
-Se un input è vuoto, viene usato il valore dal config.
+`config.yml` resta opzionale per parametri generali (es. modello LLM), non come sorgente primaria degli input.
 
 ---
 
@@ -47,5 +36,5 @@ Ogni esecuzione può essere:
 ---
 
 ## Output
-- `output_dir/` con artefatti intermedi
-- `runs/<run_id>/run_report.json`
+- `runs/<user_id>/<run_id>/` con snapshot input, file intermedi e `run_report.json`
+- eventuali output versionati committati vengono registrati nel DB (`artifacts`) e tracciati in `runs.report`

@@ -1,5 +1,9 @@
 # 9. Flusso End-to-End
 
+> **Nota**: i path/versioni mostrati sono esempi.  
+> Nel flusso corrente DB-first gli input operativi sono gestiti via artifact nel database e snapshot per-run in `runs/<user_id>/<run_id>/`.
+
+
 ## Scopo
 Descrivere la pipeline completa, dall’input reale fino al report finale.
 

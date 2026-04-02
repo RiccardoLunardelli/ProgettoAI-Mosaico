@@ -11,25 +11,22 @@
 ---
 
 ## Caso 1 — Dizionario
-- Inserire percorso dizionario:  
-  `Percorso file input: /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/dictionary_v0.1.json`
+- Selezionare dizionario da DB (artifact `dictionary`) e lavorare sullo snapshot run.
 - Scegliere modalità:  
   `Validate only? (y --> ONLY report /n --> Commit):`
 - Patch manuali o da run report:  
   `Patch manuale o da run report? (m/r):`
   - **Manuale**: inserire path patch
-  - **Run report**: inserire path report  
-    `Run report path: /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/runs/run20260212_113453/run_report.json`
+  - **Run report**: usare `run_id`/report della run già salvata
 - Output:
-  - `output_dir/dictionary_patch.json`
-  - `output_dir/dictionary_suggestions.json`
+  - `runs/<user_id>/<run_id>/dictionary_patch.json`
+  - `runs/<user_id>/<run_id>/dictionary_suggestions.json`
   - `run_report.json`
 
 ---
 
 ## Caso 2 — Knowledge Base
-- Inserire percorso KB:  
-  `Percorso file input: /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/kb_v0.1.json`
+- Selezionare KB da DB (artifact `kb`) e lavorare sullo snapshot run.
 - Scegliere modalità:  
   `Validate only? (y --> ONLY report /n --> Commit):`
 - Patch manuali:  
@@ -41,8 +38,7 @@
 ---
 
 ## Caso 3 — Template
-- Inserire percorso template:  
-  `Percorso file input: /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/1e14c88b-12d9-523c-c481-0d0fdba8b193.json`
+- Selezionare template da DB (artifact `template`) e lavorare sullo snapshot run.
 - Scegliere modalità:  
   `Validate only? (y --> ONLY report /n --> Commit):`
 - Patch manuali o automatiche:  
@@ -58,8 +54,7 @@
 ---
 
 ## Caso 4 — Template Base
-- Inserire percorso Template Base:  
-  `Percorso file input: /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/data/template_base_v0.1.json`
+- Selezionare template base da DB (artifact `template_base`) e lavorare sullo snapshot run.
 - Scegliere modalità:  
   `Validate only? (y --> ONLY report /n --> Commit):`
 - Patch manuali:  
@@ -71,8 +66,7 @@
 ---
 
 ## Caso 5 — Device List
-- Inserire percorso device_list:  
-  `Percorso file input: /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/pvs/101096_FABRIC/device_list.json`
+- Selezionare device list da DB (artifact `device_list`) e lavorare sullo snapshot run.
 - Scegliere modalità:  
   `Validate only? (y --> ONLY report /n --> Commit):`
 - Output:

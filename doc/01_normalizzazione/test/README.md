@@ -2,11 +2,9 @@
 
 ## Flusso
 
-1) Avviare normalizer: `python3 src/parser/normalizer.py`
-2) Scegliere Template da normalizzare: `Template path: /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/pv_datas/templates/1e14c88b-12d9-523c-c481-0d0fdba8b193.json`
-3) Scegliere lo schema su cui si basa il normalizzatore: Schema path: `/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/schemas/schema_tipo_v0.1.json`
-4) Scegliere la Folder in cui si vuole l'output (template normalizzato): `Output dir: /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir`
-5) Template viene normalizzato: `Normalized template saved: /home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/output_dir/normalized_template_v0.1.json`
+1) Avviare una run template da API (`POST /run/template/start`) selezionando artifact da DB.  
+2) La normalizzazione usa il contenuto del template selezionato e lo schema associato.  
+3) L'output viene salvato nello snapshot run: `runs/<user_id>/<run_id>/normalized_template_v0.1.json`.
 
 ## Esempio Template reale input
 
