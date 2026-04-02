@@ -295,10 +295,12 @@ def match_variable(var: dict, template_guid: str, device_ctx: dict, versions: di
     text = normalize_str(var.get("normalized_text"))
     expected_category = SECTION_TO_CATEGORY.get(section)
 
+    '''
     cache_key = build_cache_key(text, expected_category, template_guid, device_ctx, versions)
     cached = cache.get("matching_cache", {}).get(cache_key) # lookup nella cache 
     if cached:
         return cached
+    '''
 
     # ENABLE FALSE
     if enabled is False:
@@ -627,8 +629,9 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
     dictionary = inputs["dictionary"]
     kb = inputs["kb"]
 
-    cache_path = "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/cache/matching_cache_v0.1.json"
-    cache = load_cache(cache_path) # carica la cache
+    #cache_path = "/home/ricky-lu/rickylu-workspace/ProgettiAI/Progetto-MCP/cache/matching_cache_v0.1.json"
+    #cache = load_cache(cache_path) # carica la cache
+    cache = {"matching_cache": {}, "normalized_cache": {}}
 
     versions = build_versions(dictionary, kb, template_base) # ritorna le versioni 
     concept_category = build_concept_index(template_base) # costruisce indice: concept_id = cateogyr, sem_cat,...
@@ -667,7 +670,9 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
             device_ctx,
             versions
         )
-        emit_result(items, cache, cache_key, result) # salva risultato del matching 
+        #emit_result(items, cache, cache_key, result) # salva risultato del matching 
+        items.append(result)
+
 
     metrics = build_metrics(items)
     report = {
@@ -678,7 +683,10 @@ def run_matching(normalized_path: str, template_base_path: str, dictionary_path:
         "items": items
     }
 
-    write_report(output_path, report, cache_path, cache)
+    #write_report(output_path, report, cache_path, cache)
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(report, f, ensure_ascii=False, indent=2)
+
 
 
 if __name__ == "__main__":

@@ -136,7 +136,7 @@ function RunsListTag() {
       return;
     }
 
-    await DeleteRunsAPI({
+    DeleteRunsAPI({
       data: {
         run_ids: idsToDelete,
       },

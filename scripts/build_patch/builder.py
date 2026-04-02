@@ -141,7 +141,6 @@ def build_dictionary_suggestions_from_run_report(run_report_paths: list[str], di
             continue
         terms_by_category.setdefault(category, []).append(text)
 
-
     suggestions = []
     for category, terms in terms_by_category.items():
         result = dictionary_bulk_suggest(terms=terms, path=dictionary_path, expected_category=category)

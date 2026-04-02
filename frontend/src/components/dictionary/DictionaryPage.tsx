@@ -43,6 +43,7 @@ interface ComponentStateInterface {
   previewResponse: string;
   previewPatchToSave: string;
   previewSaveValidateOnly: boolean;
+  runReportValidateOnly: boolean;
 }
 
 const inputIdList = ["DictionaryDetails-Edit", "DictionaryPatch-TextArea"];
@@ -103,6 +104,7 @@ function DictionaryPageTag() {
       previewResponse: "",
       previewPatchToSave: "",
       previewSaveValidateOnly: false,
+      runReportValidateOnly: false,
     },
   );
 
@@ -167,6 +169,7 @@ function DictionaryPageTag() {
       previewResponse: "",
       previewPatchToSave: "",
       previewSaveValidateOnly: false,
+      runReportValidateOnly: false,
     }));
   };
 
@@ -334,7 +337,7 @@ function DictionaryPageTag() {
       RunReportDictionaryAPI({
         data: {
           id: componentState.selectedId,
-          validate_only: false,
+          validate_only: componentState.runReportValidateOnly,
           mode: "run_report",
           run_id: componentState.selectedRunId,
           manual_mode: "",
@@ -875,11 +878,64 @@ function DictionaryPageTag() {
 
                     <div
                       style={{
+                        marginTop: "18px",
                         display: "flex",
-                        justifyContent: "flex-end",
-                        marginTop: "16px",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        gap: "16px",
+                        flexWrap: "wrap",
                       }}
                     >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "12px",
+                          backgroundColor: "#f9fafb",
+                          border: "1px solid #e5e7eb",
+                          borderRadius: "12px",
+                          padding: "10px 14px",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-start",
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontWeight: 600,
+                              fontSize: "14px",
+                              color: "#111827",
+                            }}
+                          >
+                            Validate Only
+                          </span>
+                          <span
+                            style={{
+                              fontSize: "12px",
+                              color: "#6b7280",
+                            }}
+                          >
+                            Se attivo non sarà creata la nuova versione.
+                          </span>
+                        </div>
+
+                        <Suspense fallback="">
+                          <Toggle
+                            checked={componentState.runReportValidateOnly}
+                            onChange={(val: boolean) => {
+                              setComponentState((previousStateVal) => ({
+                                ...previousStateVal,
+                                runReportValidateOnly: val,
+                              }));
+                            }}
+                          />
+                        </Suspense>
+                      </div>
+
                       <BasicButtonGenericTag
                         textToSee="Genera suggerimenti e patch"
                         disabledButton={componentState.selectedRunId === ""}
