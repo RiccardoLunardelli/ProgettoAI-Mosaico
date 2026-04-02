@@ -43,7 +43,6 @@ Ogni entry descrive **come un concetto può apparire** nei template reali.
 - `semantic_category`: Categoria semantica (coerente con il Template Base).
 - `synonyms`: Sinonimi testuali espliciti, divisi per lingua.
 - `abbreviations`
-- `patterns`
 
 ---
 

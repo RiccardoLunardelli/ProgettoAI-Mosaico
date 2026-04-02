@@ -26,4 +26,4 @@ Serve a ridurre ambiguità e aumentare determinismo nel tempo.
 
 ## Regole
 - Aggiornamenti versionati
-- Patch controllate (`add_kb_rule`, `update_kb_rule`)
+- Patch controllate (`add_kb_rule`, `update_kb_rule`, `add_scope`)
