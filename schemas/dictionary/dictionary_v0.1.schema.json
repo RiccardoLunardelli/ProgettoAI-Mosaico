@@ -1,6 +1,8 @@
 {
   "$defs": {
     "DictionaryEntry": {
+      "type": "object",
+      "additionalProperties": false,
       "properties": {
         "concept_id": {
           "title": "Concept Id",
@@ -39,8 +41,7 @@
         "synonyms",
         "abbreviations"
       ],
-      "title": "DictionaryEntry",
-      "type": "object"
+      "title": "DictionaryEntry"
     }
   },
   "properties": {
@@ -69,5 +70,6 @@
     "entries"
   ],
   "title": "Dictionary",
-  "type": "object"
+  "type": "object",
+  "additionalProperties": false
 }

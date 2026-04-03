@@ -91,10 +91,10 @@ interface ComponentStateInterface {
 
 const inputIdList = ["LLMSuggestionPatch-Edit"];
 
-const mainCardWidth = "35vw";
-const mainCardMinWidth = "520px";
+const mainCardWidth = "25vw";
+const mainCardMinWidth = "800px";
 const contentWidth = "80%";
-const infoCardHeight = "300px";
+const infoCardHeight = "200px";
 const listCardHeight = "260px";
 const footerWidth = "80%";
 

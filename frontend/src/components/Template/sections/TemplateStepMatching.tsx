@@ -4,13 +4,15 @@ import ollamaLogo from "../../../../public/logo/ollama.png";
 const BasicButtonGenericTag = lazy(
   () => import("../../button/BasicButtonGeneric"),
 );
-const TextareaTag = lazy(() => import("rsuite/esm/Textarea"));
+
 const CheckboxTag = lazy(() =>
   import("rsuite").then((module) => ({ default: module.Checkbox })),
 );
 const Toggle = lazy(() =>
   import("rsuite").then((module) => ({ default: module.Toggle })),
 );
+
+const MonacoEditorTag = lazy(() => import("@monaco-editor/react"));
 
 interface StepOneResponseInterface {
   run_id: string;
@@ -40,8 +42,6 @@ function TemplateStepMatchingTag({
   llmSuggestion,
   checkboxValue,
   llmPatchValue,
-  mainCardMinWidth,
-  footerWidth,
   onToggleUseLLM,
   onGeneratePatchLLM,
   onPatchChange,
@@ -52,42 +52,45 @@ function TemplateStepMatchingTag({
     <div
       style={{
         width: "100%",
-        height: "100%",
+        minHeight: "100%",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "flex-start",
+        padding: "16px",
+        boxSizing: "border-box",
+        overflow: "auto"
       }}
     >
       <div
         style={{
+          width: "100%",
+          maxWidth: "900px",
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
+          alignItems: "stretch",
         }}
       >
         <div
           style={{
             backgroundColor: "#ffffff",
             borderRadius: "8px",
-            padding: "10px",
+            padding: "16px",
             boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
             boxSizing: "border-box",
             width: "100%",
-            maxWidth: "900px",
-            minWidth: mainCardMinWidth,
+            minWidth: 0,
             minHeight: "560px",
             display: "flex",
-            justifyContent: "flex-start",
-            height: "700px",
+            flexDirection: "column",
           }}
         >
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              margin: "10px",
-              alignItems: "flex-start",
+              alignItems: "stretch",
               width: "100%",
+              minWidth: 0,
             }}
           >
             {/* HEADER */}
@@ -96,6 +99,7 @@ function TemplateStepMatchingTag({
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
+                minWidth: 0,
               }}
             >
               <img
@@ -103,13 +107,16 @@ function TemplateStepMatchingTag({
                 style={{
                   width: "40px",
                   height: "40px",
+                  flexShrink: 0,
                 }}
               />
               <span
                 style={{
                   fontSize: "20px",
                   fontWeight: 600,
-                  marginLeft: "5px",
+                  marginLeft: "8px",
+                  minWidth: 0,
+                  wordBreak: "break-word",
                 }}
               >
                 Modello LLM
@@ -120,6 +127,7 @@ function TemplateStepMatchingTag({
             <div
               style={{
                 width: "100%",
+                minWidth: 0,
                 marginTop: "14px",
                 display: "flex",
                 flexDirection: "column",
@@ -138,6 +146,8 @@ function TemplateStepMatchingTag({
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
+                  gap: "12px",
+                  flexWrap: "wrap",
                 }}
               >
                 <div
@@ -148,6 +158,8 @@ function TemplateStepMatchingTag({
                     fontSize: "14px",
                     fontWeight: 500,
                     color: "#9a3412",
+                    minWidth: 0,
+                    flex: 1,
                   }}
                 >
                   <span
@@ -155,11 +167,18 @@ function TemplateStepMatchingTag({
                     style={{
                       fontSize: "18px",
                       color: "#f97316",
+                      flexShrink: 0,
                     }}
                   >
                     warning
                   </span>
-                  Ambiguità trovate
+                  <span
+                    style={{
+                      wordBreak: "break-word",
+                    }}
+                  >
+                    Ambiguità trovate
+                  </span>
                 </div>
 
                 <span
@@ -167,6 +186,7 @@ function TemplateStepMatchingTag({
                     fontSize: "13px",
                     fontWeight: 600,
                     color: "#ea580c",
+                    flexShrink: 0,
                   }}
                 >
                   {stepOneResponse?.ambigouous_count ?? 0}
@@ -179,6 +199,8 @@ function TemplateStepMatchingTag({
                   display: "flex",
                   alignItems: "center",
                   gap: "12px",
+                  flexWrap: "wrap",
+                  minWidth: 0,
                 }}
               >
                 <Suspense fallback="">
@@ -194,6 +216,8 @@ function TemplateStepMatchingTag({
                   style={{
                     fontSize: "14px",
                     fontWeight: 500,
+                    minWidth: 0,
+                    wordBreak: "break-word",
                   }}
                 >
                   Usa LLM per risolvere le ambiguità
@@ -215,6 +239,7 @@ function TemplateStepMatchingTag({
                       <div
                         style={{
                           width: "100%",
+                          minWidth: 0,
                           display: "flex",
                           flexDirection: "column",
                         }}
@@ -225,31 +250,48 @@ function TemplateStepMatchingTag({
                             opacity: "0.7",
                             marginBottom: "8px",
                             fontWeight: 500,
+                            wordBreak: "break-word",
                           }}
                         >
                           PATCH LLM PROPOSTE (MODIFICABILE)
                         </span>
 
-                        <Suspense fallback="">
-                          <TextareaTag
-                            style={{
-                              width: "100%",
-                              borderRadius: "8px",
-                              border: "1px solid #d1d5db",
-                              padding: "12px",
-                              boxSizing: "border-box",
-                              fontSize: "13px",
-                              fontFamily: "monospace",
-                              backgroundColor: "#f9fafb",
-                            }}
-                            minHeight="300px"
-                            minWidth="600px"
-                            value={llmPatchValue}
-                            onChange={(e: any) => {
-                              onPatchChange(e);
-                            }}
-                          />
-                        </Suspense>
+                        <div
+                          style={{
+                            width: "100%",
+                            maxWidth: "100%",
+                            minWidth: 0,
+                            height: "300px",
+                            borderRadius: "8px",
+                            overflow: "hidden",
+                            border: "1px solid #d1d5db",
+                            backgroundColor: "#f9fafb",
+                            boxSizing: "border-box",
+                          }}
+                        >
+                          <Suspense fallback="">
+                            <MonacoEditorTag
+                              key={useLLM && llmSuggestion ? "llm-editor-open" : "llm-editor-closed"}
+                              height="300px"
+                              width="100%"
+                              defaultLanguage="json"
+                              theme="vs-light"
+                              value={llmPatchValue}
+                              onChange={(value) => {
+                                onPatchChange(value ?? "");
+                              }}
+                              options={{
+                                minimap: { enabled: false },
+                                fontSize: 13,
+                                wordWrap: "on",
+                                automaticLayout: true,
+                                scrollBeyondLastLine: false,
+                                formatOnPaste: true,
+                                formatOnType: true,
+                              }}
+                            />
+                          </Suspense>
+                        </div>
                       </div>
 
                       <Suspense fallback="">
@@ -274,8 +316,8 @@ function TemplateStepMatchingTag({
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-end",
-            width: footerWidth,
-            minWidth: mainCardMinWidth,
+            width: "100%",
+            minWidth: 0,
             marginTop: "18px",
           }}
         >

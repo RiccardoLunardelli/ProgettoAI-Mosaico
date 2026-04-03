@@ -8,6 +8,7 @@ export interface ArtifactListInterface {
   schema_id: string;
   schema_name: string;
   schema_version: string;
+  created_at: Date
 }
 
 export const artifactListSlice = createSlice({

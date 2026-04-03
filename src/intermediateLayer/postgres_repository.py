@@ -363,8 +363,8 @@ class ArtifactRepository():
     def upsert_artifact(self, artifact_type: str, name: str, version: Optional[str], content: Dict[str, Any] | str, schema_id: str | None = None) -> str:
         select_sql = "SELECT id FROM artifacts WHERE type = %s AND name = %s AND COALESCE(version, '') = COALESCE(%s, '') LIMIT 1"
         insert_sql = """
-        INSERT INTO artifacts (id, type, name, version, content, schema_id)
-        VALUES (%s, %s, %s, %s, %s, %s)
+        INSERT INTO artifacts (id, type, name, version, content, schema_id, created_at)
+        VALUES (%s, %s, %s, %s, %s, %s, NOW())
         """
         with psycopg2.connect(self._dsn) as conn:
             with conn.cursor() as cur:
@@ -374,7 +374,7 @@ class ArtifactRepository():
                     return str(row[0])
 
                 artifact_id = str(uuid4())
-                cur.execute(insert_sql, (artifact_id, artifact_type, name, version, psycopg2.extras.Json(content), schema_id,),)
+                cur.execute(insert_sql, (artifact_id, artifact_type, name, version, psycopg2.extras.Json(content), schema_id),)
                 return artifact_id
 
     def list_artifact(self, artifact_type) -> List[str]:
@@ -415,7 +415,8 @@ class ArtifactRepository():
                 a.version,
                 a.schema_id,
                 ts.name AS schema_name,
-                ts.version AS schema_version
+                ts.version AS schema_version,
+                a.created_at
             FROM artifacts a
             LEFT JOIN template_schemas ts ON ts.id = a.schema_id
             ORDER BY a.type, a.name, a.version
@@ -431,7 +432,8 @@ class ArtifactRepository():
             "version": r[3],
             "schema_id": r[4],
             "schema_name": r[5],
-            "schema_version": r[6]
+            "schema_version": r[6],
+            "created_at": r[7],
         }for r in rows]
 
     def get_artifact_name_by_id(self, id: str) -> str:

@@ -450,11 +450,26 @@ function ArtifactManagementPageTag() {
             >
               {(filteredArtifactList ?? []).length > 0 ? (
                 <>
-                  {(filteredArtifactList ?? []).map(
-                    (singleArtifact: ArtifactListInterface) => {
+                  {[...(filteredArtifactList ?? [])]
+                    .sort((a, b) => {
+                      const dateA = a.created_at
+                        ? new Date(a.created_at).getTime()
+                        : 0;
+                      const dateB = b.created_at
+                        ? new Date(b.created_at).getTime()
+                        : 0;
+                      return dateB - dateA;
+                    })
+                    .map((singleArtifact: ArtifactListInterface) => {
                       const artifactId = String(singleArtifact.id ?? "");
                       const isSelected =
                         componentState.selectedArtifactIds.includes(artifactId);
+
+                      const formattedDate = singleArtifact.created_at
+                        ? new Date(singleArtifact.created_at).toLocaleString(
+                            "it-IT",
+                          )
+                        : "";
 
                       return (
                         <div
@@ -519,10 +534,23 @@ function ArtifactManagementPageTag() {
                           >
                             {singleArtifact.type} - v{singleArtifact.version}
                           </span>
+
+                   
+                          <span
+                            style={{
+                              fontSize: "11px",
+                              opacity: "0.6",
+                              marginTop: "4px",
+                              fontStyle: singleArtifact.created_at
+                                ? "normal"
+                                : "italic",
+                            }}
+                          >
+                            {formattedDate}
+                          </span>
                         </div>
                       );
-                    },
-                  )}
+                    })}
                 </>
               ) : (
                 <RunsListSkeleton />

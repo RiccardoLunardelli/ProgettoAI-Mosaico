@@ -30,7 +30,8 @@
         "description"
       ],
       "title": "Concept",
-      "type": "object"
+      "type": "object",
+      "additionalProperties": false
     },
     "ConceptLabel": {
       "properties": {
@@ -95,5 +96,6 @@
     "categories"
   ],
   "title": "TemplateBase",
-  "type": "object"
+  "type": "object",
+  "additionalProperties": false
 }
