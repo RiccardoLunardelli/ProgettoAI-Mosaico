@@ -84,11 +84,11 @@ function UserManagementModalTag({
         value: selectedUser.created_at ?? "",
       }),
     );
-
+    
     dispatch(
       SetInputSlice({
         id: `${inputPrefix}-password`,
-        value: selectedUser.password ?? "",
+        value:  "",
       }),
     );
 
@@ -111,9 +111,8 @@ function UserManagementModalTag({
     const role = inputSlice?.value?.[`${inputPrefix}-role`] ?? "";
     const parsedRole = parseInt(role.replaceAll(" ", ""));
 
-    const currentUser = (userListSlice?.value ?? []).find((singleUser: UserListInterface) => singleUser.id == user_id)
 
-    const isSamePassword = currentUser?.password == password
+    const isPaswordEmpty = password == ""
 
     UpdateUserListAPI({
       showLoader: true,
@@ -122,7 +121,7 @@ function UserManagementModalTag({
         user_id,
         email,
         name,
-        password: isSamePassword ? null : password,
+        password: isPaswordEmpty ? null : password,
         role: parseInt(role.replaceAll(" ", "")),
       },
       EndCallback: () => {
