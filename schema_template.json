@@ -42,6 +42,12 @@
           "ui:group": "Informazioni principali",
           "ui:order": 2
         },
+        "Alias_Description": {
+          "type": "string",
+          "ui:widget": "textarea",
+          "ui:group": "Informazioni principali",
+          "ui:order": 2
+        },
         "Aspect": {
           "type": "object",
           "ui:group": "Aspect",
