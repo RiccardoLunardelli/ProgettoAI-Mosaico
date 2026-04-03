@@ -6,7 +6,7 @@ class UpdateRoleAdmin(BaseModel):
     role: int
     user_id: UUID4
 
-#-----USER------
+#-----USER-------
 class UpdateUser(BaseModel):
     user_id: UUID4
     email: EmailStr | None = None 
