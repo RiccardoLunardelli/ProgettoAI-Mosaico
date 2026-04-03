@@ -1,9 +1,14 @@
+-------------------------------------------------------------------------------------------------------------------------
+
 ## PER INIZIALIZZAZIONE
 
 uv sync
 source .venv/bin/activate
 
+cd fronted/
+npm ci
 
+---------------------------------------------------------------------------------------------------------------------------------
 
 ### PER ESEGUIRE NORMALIZER
 uv run python src/parser/normalizer.py   --template pv_datas/templates/028d14de-71dc-6e64-9587-c7111a39793e.json   --schema schemas/schema_tipo_v0.1.json   --output output_dir/normalized_template_v0.1.json
